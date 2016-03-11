@@ -396,7 +396,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p { font-si
 .exampleblock > .content > :last-child > :last-child, .exampleblock > .content .olist > ol > li:last-child > :last-child, .exampleblock > .content .ulist > ul > li:last-child > :last-child, .exampleblock > .content .qlist > ol > li:last-child > :last-child, .sidebarblock > .content > :last-child > :last-child, .sidebarblock > .content .olist > ol > li:last-child > :last-child, .sidebarblock > .content .ulist > ul > li:last-child > :last-child, .sidebarblock > .content .qlist > ol > li:last-child > :last-child { margin-bottom: 0; }
 
 .literalblock pre, .listingblock pre:not(.highlight), .listingblock pre[class="highlight"], .listingblock pre[class^="highlight "], .listingblock pre.CodeRay, .listingblock pre.prettyprint { background: rgba(16, 195, 196, 0.05); }
-.sidebarblock .literalblock pre, .sidebarblock .listingblock pre:not(.highlight), .sidebarblock .listingblock pre[class="highlight"], .sidebarblock .listingblock pre[class^="highlight "], .sidebarblock .listingblock pre.CodeRay, .sidebarblock .listingblock pre.prettyprint { background: #f2f1f1; }
+/*.sidebarblock .literalblock pre, .sidebarblock .listingblock pre:not(.highlight), .sidebarblock .listingblock pre[class="highlight"], .sidebarblock .listingblock pre[class^="highlight "], .sidebarblock .listingblock pre.CodeRay, .sidebarblock .listingblock pre.prettyprint { background: #f2f1f1; }*/
 
 .literalblock pre, .literalblock pre[class], .listingblock pre, .listingblock pre[class] { border: 2px solid #dddddd; -webkit-border-radius: 3px; border-radius: 3px; word-wrap: break-word; padding: 0.66667em; font-size: 0.86667em; }
 .literalblock pre.nowrap, .literalblock pre[class].nowrap, .listingblock pre.nowrap, .listingblock pre[class].nowrap { overflow-x: auto; white-space: pre; word-wrap: normal; }
@@ -689,7 +689,7 @@ b.conum * { color: inherit !important; }
 
 .paragraph.lead > p, #preamble > .sectionbody > .paragraph:first-of-type p { color: black; }
 
-pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }
+/*pre.pygments.highlight { background-color: rgba(16, 195, 196, 0.05); }*/
 
 .pygments .tok-err { border: none !important; color: #800000 !important; }
 
@@ -7633,11 +7633,11 @@ section.parallax_section_holder{
 /* ==========================================================================
    Highlight shortcode start styles
    ========================================================================== */
-.highlight{
+/*.highlight{
 	background-color: #1abc9c;
 	color: #fff;
 	padding: 0 3px;
-}
+}*/
 /* ==========================================================================
    Highlight shortcode end styles
    ========================================================================== */
