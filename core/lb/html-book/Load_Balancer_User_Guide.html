@@ -1,0 +1,1989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.4">
+<title>SIP Load Balancer User Guide</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
+/* Remove comment around @import statement below when using as a custom stylesheet */
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
+audio,canvas,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+[hidden],template{display:none}
+script{display:none!important}
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+body{margin:0}
+a{background:transparent}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+abbr[title]{border-bottom:1px dotted}
+b,strong{font-weight:bold}
+dfn{font-style:italic}
+hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}
+input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+body{-webkit-font-smoothing:antialiased}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.center{margin-left:auto;margin-right:auto}
+.spread{width:100%}
+p.lead,.paragraph.lead>p,#preamble>.sectionbody>.paragraph:first-of-type p{font-size:1.21875em;line-height:1.6}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0;direction:ltr}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:none}
+p{font-family:inherit;font-weight:400;font-size:1em;line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #ddddd8;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em;height:0}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol,ul.no-bullet,ol.no-bullet{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ul.no-bullet{list-style:none}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+abbr,acronym{text-transform:uppercase;font-size:90%;color:rgba(0,0,0,.8);border-bottom:1px dotted #ddd;cursor:help}
+abbr{text-transform:none}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote cite{display:block;font-size:.9375em;color:rgba(0,0,0,.6)}
+blockquote cite:before{content:"\2014 \0020"}
+blockquote cite a,blockquote cite a:visited{color:rgba(0,0,0,.6)}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media only screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede}
+table thead,table tfoot{background:#f7f8f7;font-weight:bold}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt,table tr:nth-of-type(even){background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+body{tab-size:4}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.clearfix:before,.clearfix:after,.float-group:before,.float-group:after{content:" ";display:table}
+.clearfix:after,.float-group:after{clear:both}
+*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre,pre>code{line-height:1.45;color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;text-rendering:optimizeSpeed}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background-color:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menu{color:rgba(0,0,0,.8)}
+b.button:before,b.button:after{position:relative;top:-1px;font-weight:400}
+b.button:before{content:"[";padding:0 3px 0 2px}
+b.button:after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin-left:auto;margin-right:auto;margin-top:0;margin-bottom:0;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header:before,#header:after,#content:before,#content:after,#footnotes:before,#footnotes:after,#footer:before,#footer:after{content:" ";display:table}
+#header:after,#content:after,#footnotes:after,#footer:after{clear:both}
+#content{margin-top:1.25em}
+#content:before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #ddddd8}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #ddddd8;padding-bottom:8px}
+#header .details{border-bottom:1px solid #ddddd8;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span:before{content:"\00a0\2013\00a0"}
+#header .details br+span.author:before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark:before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber:after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #ddddd8;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #efefed;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media only screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background-color:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #efefed;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #efefed;left:auto;right:0}}
+@media only screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:100%;background-color:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:rgba(255,255,255,.8);line-height:1.44}
+.sect1{padding-bottom:.625em}
+@media only screen and (min-width:768px){.sect1{padding-bottom:1.25em}}
+.sect1+.sect1{border-top:1px solid #efefed}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor:before,h2>a.anchor:before,h3>a.anchor:before,#toctitle>a.anchor:before,.sidebarblock>.content>.title>a.anchor:before,h4>a.anchor:before,h5>a.anchor:before,h6>a.anchor:before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock>caption.title{white-space:nowrap;overflow:visible;max-width:0}
+.paragraph.lead>p,#preamble>.sectionbody>.paragraph:first-of-type p{color:rgba(0,0,0,.85)}
+table.tableblock #preamble>.sectionbody>.paragraph:first-of-type p{font-size:inherit}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #ddddd8;color:rgba(0,0,0,.6)}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border-style:solid;border-width:1px;border-color:#e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;-webkit-border-radius:4px;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock pre:not(.highlight),.listingblock pre[class="highlight"],.listingblock pre[class^="highlight "],.listingblock pre.CodeRay,.listingblock pre.prettyprint{background:#f7f7f8}
+.sidebarblock .literalblock pre,.sidebarblock .listingblock pre:not(.highlight),.sidebarblock .listingblock pre[class="highlight"],.sidebarblock .listingblock pre[class^="highlight "],.sidebarblock .listingblock pre.CodeRay,.sidebarblock .listingblock pre.prettyprint{background:#f2f1f1}
+.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;padding:1em;font-size:.8125em}
+.literalblock pre.nowrap,.literalblock pre[class].nowrap,.listingblock pre.nowrap,.listingblock pre[class].nowrap{overflow-x:auto;white-space:pre;word-wrap:normal}
+@media only screen and (min-width:768px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:.90625em}}
+@media only screen and (min-width:1280px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:1em}}
+.literalblock.output pre{color:#f7f7f8;background-color:rgba(0,0,0,.9)}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]:before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:#999}
+.listingblock:hover code[data-lang]:before{display:block}
+.listingblock.terminal pre .command:before{content:attr(data-prompt);padding-right:.5em;color:#999}
+.listingblock.terminal pre .command:not([data-prompt]):before{content:"$"}
+table.pyhltable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.pyhltable td{vertical-align:top;padding-top:0;padding-bottom:0;line-height:1.45}
+table.pyhltable td.code{padding-left:.75em;padding-right:0}
+pre.pygments .lineno,table.pyhltable td:not(.code){color:#999;padding-left:0;padding-right:.5em;border-right:1px solid #ddddd8}
+pre.pygments .lineno{display:inline-block;margin-right:.25em}
+table.pyhltable .linenodiv{background:none!important;padding-right:0!important}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock blockquote p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote:before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.5em;margin-right:.5ex;text-align:right}
+.quoteblock .quoteblock{margin-left:0;margin-right:0;padding:.5em 0;border-left:3px solid rgba(0,0,0,.6)}
+.quoteblock .quoteblock blockquote{padding:0 0 0 .75em}
+.quoteblock .quoteblock blockquote:before{display:none}
+.verseblock{margin:0 1em 1.25em 1em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract{margin:0 0 1.25em 0;display:block}
+.quoteblock.abstract blockquote,.quoteblock.abstract blockquote p{text-align:left;word-spacing:0}
+.quoteblock.abstract blockquote:before,.quoteblock.abstract blockquote p:first-of-type:before{display:none}
+table.tableblock{max-width:100%;border-collapse:separate}
+table.tableblock td>.paragraph:last-child p>p:last-child,table.tableblock th>p:last-child,table.tableblock td>p:last-child{margin-bottom:0}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all th.tableblock,table.grid-all td.tableblock{border-width:0 1px 1px 0}
+table.grid-all tfoot>tr>th.tableblock,table.grid-all tfoot>tr>td.tableblock{border-width:1px 1px 0 0}
+table.grid-cols th.tableblock,table.grid-cols td.tableblock{border-width:0 1px 0 0}
+table.grid-all *>tr>.tableblock:last-child,table.grid-cols *>tr>.tableblock:last-child{border-right-width:0}
+table.grid-rows th.tableblock,table.grid-rows td.tableblock{border-width:0 0 1px 0}
+table.grid-all tbody>tr:last-child>th.tableblock,table.grid-all tbody>tr:last-child>td.tableblock,table.grid-all thead:last-child>tr>th.tableblock,table.grid-rows tbody>tr:last-child>th.tableblock,table.grid-rows tbody>tr:last-child>td.tableblock,table.grid-rows thead:last-child>tr>th.tableblock{border-bottom-width:0}
+table.grid-rows tfoot>tr>th.tableblock,table.grid-rows tfoot>tr>td.tableblock{border-width:1px 0 0 0}
+table.frame-all{border-width:1px}
+table.frame-sides{border-width:0 1px}
+table.frame-topbot{border-width:1px 0}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{display:table-cell;line-height:1.6;background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+td>div.verse{white-space:pre}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.unstyled,ol.unnumbered,ul.checklist,ul.none{list-style-type:none}
+ul.unstyled,ol.unnumbered,ul.checklist{margin-left:.625em}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1em;font-size:.85em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{width:1em;position:relative;top:1px}
+ul.inline{margin:0 auto .625em auto;margin-left:-1.375em;margin-right:0;padding:0;list-style:none;overflow:hidden}
+ul.inline>li{list-style:none;float:left;margin-left:1.375em;display:block}
+ul.inline>li>*{display:block}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist>table tr>td:first-of-type{padding:0 .75em;line-height:1}
+.colist>table tr>td:last-of-type{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
+.imageblock.left,.imageblock[style*="float: left"]{margin:.25em .625em 1.25em 0}
+.imageblock.right,.imageblock[style*="float: right"]{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em 0;border-width:1px 0 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;text-indent:-1.05em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
+.gist .file-data>table td.line-data{width:99%}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background-color:#00fafa}
+.black{color:#000}
+.black-background{background-color:#000}
+.blue{color:#0000bf}
+.blue-background{background-color:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background-color:#fa00fa}
+.gray{color:#606060}
+.gray-background{background-color:#7d7d7d}
+.green{color:#006000}
+.green-background{background-color:#007d00}
+.lime{color:#00bf00}
+.lime-background{background-color:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background-color:#7d0000}
+.navy{color:#000060}
+.navy-background{background-color:#00007d}
+.olive{color:#606000}
+.olive-background{background-color:#7d7d00}
+.purple{color:#600060}
+.purple-background{background-color:#7d007d}
+.red{color:#bf0000}
+.red-background{background-color:#fa0000}
+.silver{color:#909090}
+.silver-background{background-color:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background-color:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background-color:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background-color:#fafa00}
+span.icon>.fa{cursor:default}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note:before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip:before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning:before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution:before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important:before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background-color:rgba(0,0,0,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]:after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background-color:#fffef7;border-color:#e0e0dc;-webkit-box-shadow:0 1px 4px #e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@media print{@page{margin:1.25cm .75cm}
+*{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare):after,a[href^="https:"]:not(.bare):after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]:after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #ddddd8!important;padding-bottom:0!important}
+.sect1{padding-bottom:0!important}
+.sect1+.sect1{border:0!important}
+#header>h1:first-child{margin-top:1.25rem}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em 0}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span:before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]:before{display:block}
+#footer{background:none!important;padding:0 .9375em}
+#footer-text{color:rgba(0,0,0,.6)!important;font-size:.9em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+</head>
+<body class="book">
+<div id="header">
+<h1>SIP Load Balancer User Guide</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#preface">Preface</a></li>
+<li><a href="#document-conventions">Document Conventions</a>
+<ul class="sectlevel2">
+<li><a href="#typographic-conventions">Typographic Conventions</a></li>
+<li><a href="#pull-quote-conventions">Pull-quote Conventions</a></li>
+<li><a href="#notes-and-warnings">Notes and Warnings</a></li>
+</ul>
+</li>
+<li><a href="#provide-feedback-to-the-authors">Provide feedback to the authors!</a></li>
+<li><a href="#_sslb_mss_load_balancer">1. Load Balancer</a>
+<ul class="sectlevel2">
+<li><a href="#_sslb_binary_sip_load_balancer_installing_configuring_and_running">1.1. SIP and SMPP Load Balancers: Installing, Configuring andRunning</a></li>
+<li><a href="#_sslb_sip_load_balancing_basics">1.2. SIP Load Balancing Basics</a></li>
+<li><a href="#http-load-balancing-basics">1.3. HTTP Load Balancing Basics</a></li>
+<li><a href="#smpp-load-balancing-basics">1.4. SMPP Load Balancing Basics</a></li>
+<li><a href="#pluggable-balancer-algorithms">1.5. Pluggable balancer algorithms</a></li>
+<li><a href="#distributed-load-balancing">1.6. Distributed load balancing</a></li>
+<li><a href="#_sslb_sip_load_balancer_implementation">1.7. Implementation of the Restcomm  Load Balancer</a></li>
+<li><a href="#_sslb_smpp_load_balancer_implementation">1.8. Implementation of the SMPP Load Balancer</a></li>
+<li><a href="#sip-message-flow">1.9. SIP Message Flow</a></li>
+<li><a href="#using-the-load-balancer-with-third-party-sip-servers">1.10. Using the Load Balancer with Third-Party SIP Servers</a></li>
+<li><a href="#enabling-tls-wss-for-load-balancers">1.11. Enabling TLS/WSS for Load Balancers</a></li>
+<li><a href="#getting-statistic">1.12. Getting statistic</a></li>
+</ul>
+</li>
+<li><a href="#revision-history">Appendix A: Revision History</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="preface"><a class="anchor" href="#preface"></a>Preface</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="document-conventions"><a class="anchor" href="#document-conventions"></a>Document Conventions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This manual uses several conventions to highlight certain words and phrases and draw attention to specific pieces of information.</p>
+</div>
+<div class="paragraph">
+<p>In PDF and paper editions, this manual uses typefaces drawn from the <a href="https://fedorahosted.org/liberation-fonts/">Liberation Fonts</a> set.
+The Liberation Fonts set is also used in HTML editions if the set is installed on your system.
+If not, alternative but equivalent typefaces are displayed.
+Note: Red Hat Enterprise Linux 5 and later includes the Liberation Fonts set by default.</p>
+</div>
+<div class="sect2">
+<h3 id="typographic-conventions"><a class="anchor" href="#typographic-conventions"></a>Typographic Conventions</h3>
+<div class="paragraph">
+<p>Four typographic conventions are used to call attention to specific words and phrases.
+These conventions, and the circumstances they apply to, are as follows.</p>
+</div>
+<div class="paragraph">
+<p><code>Mono-spaced Bold</code></p>
+</div>
+<div class="paragraph">
+<p>Used to highlight system input, including shell commands, file names and paths.
+Also used to highlight key caps and key-combinations.
+For example:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+To see the contents of the file <em class="path">my_next_bestselling_novel</em> in your current working directory, enter the <code>cat my_next_bestselling_novel</code> command at the shell prompt and press <kbd>Enter</kbd> to execute the command.
+</blockquote>
+</div>
+<div class="paragraph">
+<p>The above includes a file name, a shell command and a key cap, all presented in Mono-spaced Bold and all distinguishable thanks to context.</p>
+</div>
+<div class="paragraph">
+<p>Key-combinations can be distinguished from key caps by the hyphen connecting each part of a key-combination.
+For example:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Press <kbd>Enter</kbd> to execute the command.</p>
+</div>
+<div class="paragraph">
+<p>Press  to switch to the first virtual terminal.
+Press  to return to your X-Windows session.</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>The first sentence highlights the particular key cap to press.
+The second highlights two sets of three key caps, each set pressed simultaneously.</p>
+</div>
+<div class="paragraph">
+<p>If source code is discussed, class names, methods, functions, variable names and returned values mentioned within a paragraph will be presented as above, in <code>Mono-spaced Bold</code>.
+For example:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+File-related classes include <code class="class">filesystem</code> for file systems, <code class="class">file</code> for files, and <code class="class">dir</code> for directories.
+Each class has its own associated set of permissions.
+</blockquote>
+</div>
+<div class="paragraph">
+<p><code class="app">Proportional Bold</code></p>
+</div>
+<div class="paragraph">
+<p>This denotes words or phrases encountered on a system, including application names; dialogue box text; labelled buttons; check-box and radio button labels; menu titles and sub-menu titles.
+For example:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Choose <span class="menu">System &gt; Preferences &gt; Mouse</span> from the main menu bar to launch <code class="app">Mouse Preferences</code>.
+In the <span class="label">Buttons</span> tab, click the <span class="label">Left-handed mouse</span> check box and click <b class="button">Close</b> to switch the primary mouse button from the left to the right (making the mouse suitable for use in the left hand).</p>
+</div>
+<div class="paragraph">
+<p>To insert a special character into a <code class="app">gedit</code> file, choose <span class="menu">Applications &gt; Accessories &gt; Character Map</span> from the main menu bar.
+Next, choose <span class="menu">Search &gt; Find</span> from the <code class="app">Character Map</code> menu bar, type the name of the character in the <span class="label">Search</span> field and click <b class="button">Next</b>.
+The character you sought will be highlighted in the <span class="label">Character Table</span>.
+Double-click this highlighted character to place it in the <span class="label">Text to copy</span> field and then click the <b class="button">Copy</b> button.
+Now switch back to your document and choose <span class="menu">Edit &gt; Paste</span> from the <code class="app">gedit</code> menu bar.</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>The above text includes application names; system-wide menu names and items; application-specific menu names; and buttons and text found within a GUI interface, all presented in Proportional Bold and all distinguishable by context.</p>
+</div>
+<div class="paragraph">
+<p>Note the menu:&gt;[] shorthand used to indicate traversal through a menu and its sub-menus.
+This is to avoid the difficult-to-follow 'Select  from the <span class="menuseq"><span class="menu">Preferences</span>&#160;&#9656; <span class="menuitem">] sub-menu in the menu:System[</span></span> menu of the main menu bar' approach.</p>
+</div>
+<div class="paragraph">
+<p><code>Mono-spaced Bold Italic</code> or <code class="app">Proportional Bold Italic</code></p>
+</div>
+<div class="paragraph">
+<p>Whether Mono-spaced Bold or Proportional Bold, the addition of Italics indicates replaceable or variable text.
+Italics denotes text you do not input literally or displayed text that changes depending on circumstance.
+For example:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>To connect to a remote machine using ssh, type <code>ssh <a href="mailto:username@domain.name">username@domain.name</a></code> at a shell prompt.
+If the remote machine is <em class="path">example.com</em> and your username on that machine is john, type <code>ssh <a href="mailto:john@example.com">john@example.com</a></code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>mount -o remount file-system</code> command remounts the named file system.
+For example, to remount the <em class="path">/home</em> file system, the command is <code>mount -o remount /home</code>.</p>
+</div>
+<div class="paragraph">
+<p>To see the version of a currently installed package, use the <code>rpm -q package</code> command.
+It will return a result as follows: <code>package-version-release</code>.</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>Note the words in bold italics above &mdash;username, domain.name, file-system, package, version and release.
+Each word is a placeholder, either for text you enter when issuing a command or for text displayed by the system.</p>
+</div>
+<div class="paragraph">
+<p>Aside from standard usage for presenting the title of a work, italics denotes the first use of a new and important term.
+For example:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+When the Apache HTTP Server accepts requests, it dispatches child processes or threads to handle them.
+This group of child processes or threads is known as a <em class="term">server-pool</em>.
+Under Apache HTTP Server 2.0, the responsibility for creating and maintaining these server-pools has been abstracted to a group of modules called <em class="term">Multi-Processing Modules</em> (<em class="term">MPMs</em>). Unlike other modules, only one module from the MPM group can be loaded by the Apache HTTP Server.
+</blockquote>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pull-quote-conventions"><a class="anchor" href="#pull-quote-conventions"></a>Pull-quote Conventions</h3>
+<div class="paragraph">
+<p>Two, commonly multi-line, data types are set off visually from the surrounding text.</p>
+</div>
+<div class="paragraph">
+<p>Output sent to a terminal is set in <code>Mono-spaced Roman</code> and presented thus:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>books        Desktop   documentation  drafts  mss    photos   stuff  svn
+books_tests  Desktop1  downloads      images  notes  scripts  svgs</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Source-code listings are also set in <code>Mono-spaced Roman</code> but are presented and highlighted as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">package org.jboss.book.jca.ex1;
+
+import javax.naming.InitialContext;
+
+public class ExClient
+{
+   public static void main(String args[])
+       throws Exception
+   {
+      InitialContext iniCtx = new InitialContext();
+      Object         ref    = iniCtx.lookup("EchoBean");
+      EchoHome       home   = (EchoHome) ref;
+      Echo           echo   = home.create();
+
+      System.out.println("Created Echo");
+
+      System.out.println("Echo.echo('Hello') = " + echo.echo("Hello"));
+   }
+
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="notes-and-warnings"><a class="anchor" href="#notes-and-warnings"></a>Notes and Warnings</h3>
+<div class="paragraph">
+<p>Finally, we use three visual styles to draw attention to information that might otherwise be overlooked.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Note</div>
+<div class="paragraph">
+<p>A note is a tip or shortcut or alternative approach to the task at hand.
+Ignoring a note should have no negative consequences, but you might miss out on a trick that makes your life easier.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="title">Important</div>
+<div class="paragraph">
+<p>Important boxes detail things that are easily missed: configuration changes that only apply to the current session, or services that need restarting before an update will apply.
+Ignoring Important boxes won&#8217;t cause data loss but may cause irritation and frustration.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="title">Warning</div>
+<div class="paragraph">
+<p>A Warning should not be ignored.
+Ignoring warnings will most likely cause data loss.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="provide-feedback-to-the-authors"><a class="anchor" href="#provide-feedback-to-the-authors"></a>Provide feedback to the authors!</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>If you find a typographical error in this manual, or if you have thought of a way to make this manual better, we would love to hear from you! Please submit a report in the the {this-issue.tracker.ur}, against the product Restcomm Load Balancer`   `, or contact the authors.</p>
+</div>
+<div class="paragraph">
+<p>When submitting a bug report, be sure to mention the manual&#8217;s identifier: Restcomm Load Balancer</p>
+</div>
+<div class="paragraph">
+<p>If you have a suggestion for improving the documentation, try to be as specific as possible when describing it.
+If you have found an error, please include the section number and some of the surrounding text so we can find it easily.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_sslb_mss_load_balancer"><a class="anchor" href="#_sslb_mss_load_balancer"></a>1. Load Balancer</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="./images/mss-MSSSIPLoadBalancer-dia-StarNetworkTopology.jpg" alt="mss MSSSIPLoadBalancer dia StarNetworkTopology">
+</div>
+<div class="title">Figure 1. Star Cluster Topology.</div>
+</div>
+<div class="paragraph">
+<p>The Restcomm Load Balancer is used to balance the load of SIP service requests and responses between nodes in a SIP Server cluster, such as Restcomm JAIN SLEE or SIP Servlets.
+Both Restcomm servers can be used in conjunction with the Restcomm Load Balancer to increase the performance and availability of SIP services and applications.</p>
+</div>
+<div class="paragraph">
+<p>In terms of functionality, the Restcomm Load Balancer is a simple stateless proxy server that intelligently forwards SIP session requests and responses between User Agents (UAs) on a Wide Area Network (WAN), and SIP Server nodes, which are almost always located on a Local Area Network (LAN). All SIP requests and responses pass through the Restcomm Load Balancer.</p>
+</div>
+<div class="paragraph">
+<p>Starting with the 7.0.0.GA release, Restcomm Load Balancer can handle WebSocket requests supporting up to version 13 of the wire protocol - RFC 6455 (version 17 of the draft hybi specification - <a href="http://tools.ietf.org/html/draft-ietf-hybi-thewebsocketprotocol-17" class="bare">http://tools.ietf.org/html/draft-ietf-hybi-thewebsocketprotocol-17</a>  ). Restcomm Load Balancer will accept HTTP requests and if the request contains header Sec-WebSocket-Protocol it will upgrade the connection and dispatch the reuqest to a node capable to handle WebSocket requests (a node that has a WebSocket connector).</p>
+</div>
+<div class="paragraph">
+<p>One major advantage of having WebSocket support for Restcomm Load Balancer is to allow tunneling over HTTP port for SIP traffic and thus bypass proxy and firewall servers that might be blocking SIP traffic.</p>
+</div>
+<div class="sect2">
+<h3 id="_sslb_binary_sip_load_balancer_installing_configuring_and_running"><a class="anchor" href="#_sslb_binary_sip_load_balancer_installing_configuring_and_running"></a>1.1. SIP and SMPP Load Balancers: Installing, Configuring andRunning</h3>
+<div class="sect3">
+<h4 id="_sslb_binary_sip_load_balancer_preinstall_requirements_and_prerequisites"><a class="anchor" href="#_sslb_binary_sip_load_balancer_preinstall_requirements_and_prerequisites"></a>1.1.1. Pre-Install Requirements and Prerequisites</h4>
+<div class="dlist">
+<div class="title">Software Prerequisites</div>
+<dl>
+<dt class="hdlist1">A JAIN SIP HA-enabled application server such as Restcomm  JAIN SLEE or Restcomm SIP Servlets is required.</dt>
+<dd>
+<p>Running the Restcomm Load Balancer requires at least two instances of the application server as cluster nodes nodes.
+Therefore, before configuring the Restcomm Load Balancer, we should make sure we&#8217;ve installed a the SIP application server first.
+The Restcomm Restcomm Load Balancer will work with a SIP Servlets-enabled JBoss Application Server <em>or</em>            a JAIN SLEE application server with SIP RA.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_sslb_binary_sip_load_balancer_downloading"><a class="anchor" href="#_sslb_binary_sip_load_balancer_downloading"></a>1.1.2. Downloading</h4>
+<div class="paragraph">
+<p>The load balancer is located in the <em class="path">sip-balancer</em> top-level directory of the Restcomm  distribution.
+You will find the following files in the directory:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">SIP and SMPP load balancer executable JAR file</dt>
+<dd>
+<p>This is the binary file with all dependencies, include SMPP load balancer</p>
+</dd>
+<dt class="hdlist1">SIP and SMPP load balancer Configuration Properties file</dt>
+<dd>
+<p>This is the properties files with various settings</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_sslb_binary_sip_load_balancer_installing"><a class="anchor" href="#_sslb_binary_sip_load_balancer_installing"></a>1.1.3. Installing</h4>
+<div class="paragraph">
+<p>The SIP and SMPP load balancer executable JAR file can be extracted anywhere in the file system.
+It is recommended that the file is placed in the directory containing other JAR executables, so it can be easily located in the future.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_sslb_binary_sip_load_balancer_configuring"><a class="anchor" href="#_sslb_binary_sip_load_balancer_configuring"></a>1.1.4. Configuring</h4>
+<div class="paragraph">
+<p>Configuring the Restcomm Load Balancer and the two SIP Servlets-enabled Server nodes is described in <a href="#_sslb_configuring_the_sip_load_balancer_and_servlet_server_nodes">Procedure: Configuring the Restcomm  Restcomm Load Balancer and SIPServer Nodes</a>      .</p>
+</div>
+<div id="_sslb_configuring_the_sip_load_balancer_and_servlet_server_nodes" class="olist arabic">
+<div class="title">Procedure: Configuring the Restcomm  Restcomm Load Balancer and SIPServer Nodes</div>
+<ol class="arabic">
+<li>
+<p>Configure lb.properties Configuration Properties File</p>
+<div class="paragraph">
+<p>Configure the SIP and SMPP Load Balancer&#8217;s Configuration Properties file by substituting valid values for your personal setup. <a href="#_sslb_complete_sample_lb.properties_file">Complete Sample lb.properties File</a>          shows a sample <em class="path">lb.properties</em> file, with key element descriptions provided after the example.
+The lines beginning with the pound sign are comments.</p>
+</div>
+<div id="_sslb_complete_sample_lb.properties_file" class="exampleblock">
+<div class="title">Example 1. Complete Sample lb.properties File</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code># Mobicents Load Balancer Settings
+# For an overview of the Mobicents Load Balancer visit http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm
+
+# The binding address of the load balancer
+host=192.168.1.70
+
+# The RMI port used for heartbeat signals
+rmiRegistryPort=2000
+# The port to be used used for the Remote Object
+rmiRemoteObjectPort=2001
+
+# The SIP port used where client should connect
+externalPort=5060
+# The SIP TLS port used where clients should connect
+externalSecurePort=5061
+
+# The SIP port from where servers will receive messages
+# delete if you want to use only one port for both inbound and outbound)
+# if you like to activate the integrated HTTP load balancer, this is the entry point
+internalPort=5065
+# The SIP TLS port from where servers will receive messages
+internalSecurePort=5066
+
+# The HTTP port for HTTP forwarding
+httpPort=2080
+# The HTTPS port for HTTPS forwarding
+httpsPort=2081
+#If no nodes are active the LB can redirect the traffic to the unavailableHost specified in this property,
+#otherwise, it will return 503 Service Unavailable
+#unavailableHost=google.com
+
+#Specify UDP or TCP or TLS (for now both must be the same)
+internalTransport=UDP
+externalTransport=UDP
+#Enables ws/wss transport
+#isTransportWs = false
+# If you are using IP load balancer, put the IP address and port here, for TLS put externalSecureIpLoadBalancerPort
+#externalIpLoadBalancerAddress=127.0.0.1
+#externalIpLoadBalancerPort=111
+#externalSecureIpLoadBalancerPort=112
+
+# Requests initited from the App Servers can route to this address (if you are using 2 IP load balancers for bidirectional SIP LB)
+# For TLS put internalSecureIpLoadBalancerPort
+#internalIpLoadBalancerAddress=127.0.0.1
+#internalIpLoadBalancerPort=111
+#internalSecureIpLoadBalancerPort=112
+
+# Designate extra IP addresses as serer nodes
+#extraServerNodes=222.221.21.12:21,45.6.6.7:9003,33.5.6.7,33.9.9.2
+
+# Call-ID affinity algortihm settings. This algorithm is the default. No need to uncomment it.
+#algorithmClass=org.mobicents.tools.sip.balancer.CallIDAffinityBalancerAlgorithm
+algorithmClass=org.mobicents.tools.telestaxproxy.TelestaxProxyAlgorithm
+# This property specifies how much time to keep an association before being evitcted.
+# It is needed to avoid memory leaks on dead calls. The time is in seconds.
+#callIdAffinityMaxTimeInCache=500
+
+# Uncomment to enable the consistent hash based on Call-ID algorithm.
+#algorithmClass=org.mobicents.tools.sip.balancer.HeaderConsistentHashBalancerAlgorithm
+# This property is not required, it defaults to Call-ID if not set, cna be "from.user" or "to.user" when you want the SIP URI username
+#sipHeaderAffinityKey=Call-ID
+#specify the GET HTTP parameter to be used as hash key
+#httpAffinityKey=appsession
+
+# Uncomment to enable the persistent consistent hash based on Call-ID algorithm.
+#algorithmClass=org.mobicents.tools.sip.balancer.PersistentConsistentHashBalancerAlgorithm
+# This property is not required, it defaults to Call-ID if not set
+#sipHeaderAffinityKey=Call-ID
+#specify the GET HTTP parameter to be used as hash key
+#httpAffinityKey=appsession
+
+#This is the JBoss Cache 3.1 configuration file (with jgroups), if not specified it will use default
+#persistentConsistentHashCacheConfiguration=/home/config.xml
+
+# Call-ID affinity algortihm settings. This algorithm is the default. No need to uncomment it.
+#algorithmClass=org.mobicents.tools.sip.balancer.CallIDAffinityBalancerAlgorithm
+# This property specifies how much time to keep an association before being evitcted.
+# It is needed to avoid memory leaks on dead calls. The time is in seconds.
+#callIdAffinityMaxTimeInCache=500
+
+# Uncomment to enable the consistent hash based on Call-ID algorithm.
+#algorithmClass=org.mobicents.tools.sip.balancer.HeaderConsistentHashBalancerAlgorithm
+# This property is not required, it defaults to Call-ID if not set, cna be "from.user" or "to.user" when you want the SIP URI username
+#sipHeaderAffinityKey=Call-ID
+#specify the GET HTTP parameter to be used as hash key
+#httpAffinityKey=appsession
+
+# Uncomment to enable the persistent consistent hash based on Call-ID algorithm.
+#algorithmClass=org.mobicents.tools.sip.balancer.PersistentConsistentHashBalancerAlgorithm
+# This property is not required, it defaults to Call-ID if not set
+#sipHeaderAffinityKey=Call-ID
+#specify the GET HTTP parameter to be used as hash key
+#httpAffinityKey=appsession
+
+#This is the JBoss Cache 3.1 configuration file (with jgroups), if not specified it will use default
+#persistentConsistentHashCacheConfiguration=/home/config.xml
+
+#JSIP stack configuration.....
+javax.sip.STACK_NAME = SipBalancerForwarder
+javax.sip.AUTOMATIC_DIALOG_SUPPORT = off
+# You need 16 for logging traces. 32 for debug + traces.
+# Your code will limp at 32 but it is best for debugging.
+# LOG4J means the level will be configurable from the JOG4J config file
+gov.nist.javax.sip.TRACE_LEVEL = LOG4J
+
+#Specify if message contents should be logged.
+gov.nist.javax.sip.LOG_MESSAGE_CONTENT=false
+
+gov.nist.javax.sip.DEBUG_LOG = logs/sipbalancerforwarderdebug.txt
+gov.nist.javax.sip.SERVER_LOG = logs/sipbalancerforwarder.xml
+gov.nist.javax.sip.THREAD_POOL_SIZE = 64
+gov.nist.javax.sip.REENTRANT_LISTENER = true
+gov.nist.javax.sip.AGGRESSIVE_CLEANUP=true
+#this property we set statically "gov.nist.javax.sip.stack.LoadBalancerNioMessageProcessorFactory"
+#for statistic correct working
+#gov.nist.javax.sip.MESSAGE_PROCESSOR_FACTORY=gov.nist.javax.sip.stack.NioMessageProcessorFactory
+
+#If a node doesnt check in within that time (in ms), it is considered dead.
+nodeTimeout=8400
+#The consistency of the above condition is checked every heartbeatInterval milliseconds
+heartbeatInterval=150
+
+#SMPP Load Balancer Settings
+smppName = SMPP Load Balancer
+# The address of the load balancer
+smppHost = 127.0.0.1
+# The port of the load balancer
+smppPort = 2776
+# The port of the load balancer for SSL protocol
+smppSslPort = 2876
+# Remote SMPP servers (use comma between servers and colon between IP and port)
+remoteServers = 127.0.0.1:10021,127.0.0.1:10022,127.0.0.1:10023
+# it is recommended that at any time there were no more than
+#10 (ten) SMPP messages are outstanding
+maxConnectionSize = 10
+# Is NIO enabled
+nonBlockingSocketsEnabled = true
+# Is default session counters enabled
+defaultSessionCountersEnabled = true
+# Response timeout for load balancer in milliseconds
+timeoutResponse = 10000
+# Session initialization timer
+timeoutConnection = 1000
+# Enquire Link Timer
+timeoutEnquire = 50000
+# Time between reconnection
+reconnectPeriod = 1000
+# Connection check timer in load balancer
+timeoutConnectionCheckClientSide = 1000
+# Connection check server side timer
+timeoutConnectionCheckServerSide = 1000
+
+# SSL configuration
+#points to the keystore file we generated before
+javax.net.ssl.keyStore=/home/konstantinnosach/tmp/keystore
+#provides the password we used when we generated the keystore
+javax.net.ssl.keyStorePassword=123456
+#points to the truststore file we generated before
+javax.net.ssl.trustStore=/home/konstantinnosach/tmp/keystore
+#provides the password we used when we generated the truststore
+javax.net.ssl.trustStorePassword=123456
+#this is important because sipp supports only TLSv1 and so we need to restrict the protocols only to that
+gov.nist.javax.sip.TLS_CLIENT_PROTOCOLS=TLSv1
+#can be : Enabled, Disabled, DisabledAll, Want
+#if Enabled, used to request and require client certificate authentication: the connection will terminate if no suitable client certificate is presented
+#if Want, used to request client certificate authentication, but keep the connection if no authentication is provided
+#if Disabled or DisabledAll does not use authentication
+gov.nist.javax.sip.TLS_CLIENT_AUTH_TYPE=Disabled
+#ssl will provide some extra debugging information for the SSL if uncomment it
+#javax.net.debug=ssl
+# should smpp and http use secured connection towards servers or regular
+isRemoteServerSsl = true
+
+#Statistic
+#port for statistic
+statisticPort=2006</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">host</dt>
+<dd>
+<p>Local IP address, or interface, on which the Restcomm Load Balancer will listen for incoming requests.</p>
+</dd>
+<dt class="hdlist1">externalPort</dt>
+<dd>
+<p>Port on which the Restcomm Load Balancer listens for incoming requests from SIP User Agents.</p>
+</dd>
+<dt class="hdlist1">externalSecurePort</dt>
+<dd>
+<p>TLS port on which the Restcomm Load Balancer listens for incoming requests from SIP User Agents.</p>
+</dd>
+<dt class="hdlist1">internalPort</dt>
+<dd>
+<p>Port on which the Restcomm Load Balancer forwards incoming requests to available, and healthy, SIP Server cluster nodes.</p>
+</dd>
+<dt class="hdlist1">internalSecurePort</dt>
+<dd>
+<p>TLS port on which the Restcomm Load Balancer forwards incoming requests to available, and healthy, SIP Server cluster nodes.</p>
+</dd>
+<dt class="hdlist1">rmiRegistryPort</dt>
+<dd>
+<p>Port on which the Restcomm Load Balancer will establish the RMI heartbeat connection to the application servers.
+When this connection fails or a disconnection instruction is received, an application server node is removed and handling of requests continues without it by redirecting the load to the lie nodes.</p>
+</dd>
+<dt class="hdlist1">rmiRemoteObjectPort</dt>
+<dd>
+<p>Port on which the Restcomm Load Balancer will use to export the RMI Remote Object.</p>
+</dd>
+<dt class="hdlist1">httpPort</dt>
+<dd>
+<p>Port on which the Restcomm Load Balancer will accept HTTP requests to be distributed across the nodes.</p>
+</dd>
+<dt class="hdlist1">httpsPort</dt>
+<dd>
+<p>Port on which the Restcomm Load Balancer will accept HTTPS requests to be distributed across the nodes.</p>
+</dd>
+<dt class="hdlist1">internalTransport</dt>
+<dd>
+<p>Transport protocol for the internal SIP connections associated with the internal SIP port of the load balancer.
+Possible choices are <code>UDP</code> , <code>TCP</code> and <code>TLS</code> .</p>
+</dd>
+<dt class="hdlist1">externalTransport</dt>
+<dd>
+<p>Transport protocol for the external SIP connections associated with the external SIP port of the load balancer.
+Possible choices are <code>UDP</code> , <code>TCP</code> and <code>TLS</code> . It must match the transport of the internal port.</p>
+</dd>
+<dt class="hdlist1">externalIpLoadBalancerAddress</dt>
+<dd>
+<p>Address of the IP load balancer (if any) used for incoming requests to be distributed in the direction of the application server nodes.
+This address may be used by the Restcomm Load Balancer to be put in SIP headers where the external address of the Restcomm Load Balancer is needed.</p>
+</dd>
+<dt class="hdlist1">externalIpLoadBalancerPort</dt>
+<dd>
+<p>The port of the external IP load balancer.
+Any messages arriving at this port should be distributed across the external SIP ports of a set of Restcomm Load Balancers.</p>
+</dd>
+<dt class="hdlist1">externalSecureIpLoadBalancerPort</dt>
+<dd>
+<p>The TLS port of the external IP load balancer.
+Any messages arriving at this port should be distributed across the external SIP ports of a set of Restcomm Load Balancers.</p>
+</dd>
+<dt class="hdlist1">internalIpLoadBalancerAddresst</dt>
+<dd>
+<p>Address of the IP load balancer (if any) used for outgoing requests (requests initiated from the servers) to be distributed in the direction of the clients.
+This address may be used by the Restcomm Load Balancer to be put in SIP headers where the internal address of the Restcomm Load Balancer is needed.</p>
+</dd>
+<dt class="hdlist1">internalIpLoadBalancerPort</dt>
+<dd>
+<p>The port of the internal IP load balancer.
+Any messages arriving at this port should be distributed across the internal SIP ports of a set of Restcomm Load Balancers.</p>
+</dd>
+<dt class="hdlist1">internalSecureIpLoadBalancerPort</dt>
+<dd>
+<p>The TLS port of the internal IP load balancer.
+Any messages arriving at this port should be distributed across the internal SIP ports of a set of Restcomm Load Balancers.</p>
+</dd>
+<dt class="hdlist1">extraServerNodes</dt>
+<dd>
+<p>Comma-separated list of hosts that are server nodes.
+You can put here alternative names of the application servers here and they will be recognized.
+Names are important, because they might be used for direction-analysis.
+Requests coming from these server will go in the direction of the clients and will not be routed back to the cluster.</p>
+</dd>
+<dt class="hdlist1">algorithmClass</dt>
+<dd>
+<p>The fully-qualified Java class name of the balancing algorithm to be used.
+There are three algorithms to choose from and you can write your own to implement more complex routing behaviour.
+Refer to the sample configuration file for details about the available options for each algorithm.
+Each algorithm can have algorithm-specific properties for fine-grained configuration.</p>
+</dd>
+<dt class="hdlist1">nodeTimeout</dt>
+<dd>
+<p>In milliseonds.
+Default value is 5100.
+If a server node doesnt check in within this time (in ms), it is considered dead.</p>
+</dd>
+<dt class="hdlist1">heartbeatInterval</dt>
+<dd>
+<p>In milliseconds.
+Default value is 150 milliseonds.
+The hearbeat interval must be much smaller than the interval specified in the JAIN SIP property on the server machines - <code>org.mobicents.ha.javax.sip.HEARTBEAT_INTERVAL</code></p>
+</dd>
+<dt class="hdlist1">smppName</dt>
+<dd>
+<p>Name of SMPP load balancer.</p>
+</dd>
+<dt class="hdlist1">smppHost</dt>
+<dd>
+<p>Local IP address on which the SMPP load balancer will listen for incoming requests from clients.</p>
+</dd>
+<dt class="hdlist1">smppPort</dt>
+<dd>
+<p>Port on which the SMPP load balancer will listen for incoming requests from clients.</p>
+</dd>
+<dt class="hdlist1">remoteServers</dt>
+<dd>
+<p>IP adresses and ports of remote SMPP servers.</p>
+</dd>
+<dt class="hdlist1">maxConnectionSize</dt>
+<dd>
+<p>It is recommended that at any time there were no more than ten SMPP messages are outstanding.</p>
+</dd>
+<dt class="hdlist1">nonBlockingSocketsEnabled</dt>
+<dd>
+<p>Turn off/on blocking.</p>
+</dd>
+<dt class="hdlist1">defaultSessionCountersEnabled</dt>
+<dd>
+<p>Turn off/on server counters.</p>
+</dd>
+<dt class="hdlist1">timeoutResponse</dt>
+<dd>
+<p>In milliseconds.
+Max time allowable between request and response, after which operation assumed to have failed.</p>
+</dd>
+<dt class="hdlist1">timeoutConnection</dt>
+<dd>
+<p>In milliseconds.
+Max time allowable between connection to SMPP load balancer by client and bind request from client, after which client will disconnect.</p>
+</dd>
+<dt class="hdlist1">timeoutEnquire</dt>
+<dd>
+<p>In milliseconds.
+Time interval <code>after which
+                balancer check connection to server and
+                client.</code></p>
+</dd>
+<dt class="hdlist1">reconnectPeriod</dt>
+<dd>
+<p>In milliseconds.
+Time period after which balancer reconnects to server if connection to server was lost.</p>
+</dd>
+<dt class="hdlist1">timeoutConnectionCheckClientSide</dt>
+<dd>
+<p>In milliseconds.
+After sending enquire link to client for checking connection, balancer wait this time and if not receive response close connection.</p>
+</dd>
+<dt class="hdlist1">timeoutConnectionCheckServerSide</dt>
+<dd>
+<p>In milliseconds.
+After sending enquire link to server for checking connection, balancer wait this time and if not receive response close connection.</p>
+</dd>
+<dt class="hdlist1">javax.net.ssl.keyStore</dt>
+<dd>
+<p>Points to the keystore file we generated before.</p>
+</dd>
+<dt class="hdlist1">javax.net.ssl.keyStorePassword</dt>
+<dd>
+<p>Provides the password we used when we generated the keystore.</p>
+</dd>
+<dt class="hdlist1">javax.net.ssl.trustStore</dt>
+<dd>
+<p>Points to the truststore file we generated before.</p>
+</dd>
+<dt class="hdlist1">javax.net.ssl.trustStorePassword</dt>
+<dd>
+<p>Provides the password we used when we generated the truststore.</p>
+</dd>
+<dt class="hdlist1">gov.nist.javax.sip.TLS_CLIENT_PROTOCOLS</dt>
+<dd>
+<p>This is important because sipp supports only TLSv1 and so we need to restrict the protocols only to that.</p>
+</dd>
+<dt class="hdlist1">gov.nist.javax.sip.TLS_CLIENT_AUTH_TYPE</dt>
+<dd>
+<p>If Enabled, used to request and require client certificate authentication: the connection will terminate if no suitable client certificate is presented.
+If Want, used to request client certificate authentication, but keep the connection if no authentication is provided.
+If Disabled or DisabledAll does not use authentication.</p>
+</dd>
+<dt class="hdlist1">javax.net.debug</dt>
+<dd>
+<p>SSL will provide some extra debugging information for the SSL if uncomment it.</p>
+</dd>
+<dt class="hdlist1">isRemoteServerSsl</dt>
+<dd>
+<p>Should smpp and http use secured connection towards servers or regular.</p>
+</dd>
+<dt class="hdlist1">isTransportWs</dt>
+<dd>
+<p>Enables ws/wss transport in Restcomm Load Balancer.</p>
+</dd>
+<dt class="hdlist1">statisticPort</dt>
+<dd>
+<p>Port for statistic</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The remaining keys and properties in the configuration properties file can be used to tune the JAIN SIP stack, but are not specifically required for load balancing.
+To assist with tuning, a comprehensive list of implementing classes for the SIP Stack is available from the <a href="http://snad.ncsl.nist.gov/proj/iptel/jain-sip-1.2/javadoc/javax/sip/SipStack.html">Interface
+            SIP Stack page on nist.gov</a> . For a comprehensive list of properties associated with the SIP Stack implementation, refer to <a href="http://snad.ncsl.nist.gov/proj/iptel/jain-sip-1.2/javadoc/gov/nist/javax/sip/SipStackImpl.html">Class
+            SipStackImpl page on nist.gov</a> .
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If Restcomm Load Balancer is behind firewall you will need to open all the required ports.
+The default ports are: TCP: 2000, 2001, 2080, 5060, 5065, 8000 UDP: 5060, 5065
+</td>
+</tr>
+</table>
+</div>
+</dd>
+</dl>
+</div>
+</li>
+<li>
+<p>Configure logging</p>
+<div class="paragraph">
+<p>The Restcomm Load Balancer uses <a href="http://logging.apache.org/log4j">Log4J</a> as a logging mechanism.
+You can configure it through the typical log4j xml configuration file and specify the path as follows <code>-DlogConfigFile=./log4j.xml</code> . Please refer to Log4J documentation for more information on how to configure the logging.
+A shortcut exists if you want to switch between INFO/DEBUG/WARN logging levels.
+The JVM option <code>-DlogLevel=DEBUG</code> will allow you to switch all loggig categories to the specified log level.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="sect4">
+<h5 id="converged-load-balancing"><a class="anchor" href="#converged-load-balancing"></a>Converged Load Balancing</h5>
+<div class="sect5">
+<h6 id="apache-http-load-balancer"><a class="anchor" href="#apache-http-load-balancer"></a>Apache HTTP Load Balancer</h6>
+<div class="paragraph">
+<p>The Restcomm Restcomm Load Balancer can work in concert with HTTP load balancers such as <code>mod_jk</code> . Whenever an HTTP session is bound to a particular node, an instruction is sent to the Restcomm Load Balancer to direct the SIP calls from the same application session to the same node.</p>
+</div>
+<div class="paragraph">
+<p>It is sufficient to configure <code>mod_jk</code> to work for HTTP in JBoss in order to enable cooperative load balancing. Restcomm  will read the configuration and will use it without any extra configuration.
+You can read more about configuring <code>mod_jk</code> with JBoss in your JBoss Application Server documentation.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="integrated-http-load-balancer"><a class="anchor" href="#integrated-http-load-balancer"></a>Integrated HTTP Load Balancer</h6>
+<div class="paragraph">
+<p>To use the integrated HTTP Load Balancer, no extra configuration is needed.
+If a unique <code>jvmRoute</code> is specified and enabled in each application server, it will behave exactly as the apache balancer.
+If <code>jvmRoute</code> is not present, it will use the session ID as a hash value and attempt to create a sticky session.
+The integrated balancer can be used together with the apache balancer at the same time.</p>
+</div>
+<div class="paragraph">
+<p>In addition to the apache behavior, there is a consistent hash balancer algorithm that can be enabled for both HTTP and SIP messages.
+For both HTTP and SIP messages, there is a configurable affinity key, which is evaluated and hashed against each unassigned request.
+All requests with the same hash value will always be routed to the same application server node.
+For example, the SIP affinity key could be the callee user name and the HTTP affinity key could the &#8220;appsession&#8221; HTTP GET parameter of the request.
+If the desired behaviour group these requests, we can just make sure the affinity values (user name and GET parameter) are the same.</p>
+</div>
+<div id="_sslb_converged_http_sip_affinity" class="imageblock">
+<div class="content">
+<img src="./images/converged-integrated-lb.png" alt="converged integrated lb">
+</div>
+<div class="title">Figure 2. Ensuring SIP and HTTP requests are being grouped by commonaffinity value.</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_sslb_binary_sip_load_balancer_running"><a class="anchor" href="#_sslb_binary_sip_load_balancer_running"></a>1.1.5. Running</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Running the SIP/SMPP Load Balancer and SIP Server Nodes</div>
+<ol class="arabic">
+<li>
+<p>Start the SIP/SMPP Load Balancer</p>
+<div class="paragraph">
+<p>Start the SIP/SMPP load balancer, ensuring the Configuration Properties file ( <em class="path">lb.properties</em> in this example) is specified.
+In the Linux terminal, or using the Windows Command Prompt, the SIP and SMPP Load Balancers are started by issuing a command similar to this one:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>java -DlogConfigFile=./lb-log4j.xml -jar sip-balancer-jar-with-dependencies.jar -mobicents-balancer-config=lb-configuration.properties</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Executing the Restcomm Load Balancer produces output similar to the following example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>home]$ java -DlogConfigFile=./lb-log4j.xml -jar sip-balancer-jar-with-dependencies.jar -mobicents-balancer-config=lb-configuration.properties
+2016-02-08 15:54:28,036 INFO main - nodeTimeout=8400
+2016-02-08 15:54:28,038 INFO main - heartbeatInterval=150
+2016-02-08 15:54:28,039 INFO main - Node registry starting...
+2016-02-08 15:54:28,103 INFO main - RMI heartbeat listener bound to internalHost, port 2000
+2016-02-08 15:54:28,103 INFO main - Node expiration task created
+2016-02-08 15:54:28,103 INFO main - Node registry started
+2016-02-08 15:54:28,130 INFO main - value -1000 will be used for reliableConnectionKeepAliveTimeout stack property
+2016-02-08 15:54:28,131 INFO main - Setting Stack Thread priority to 10
+2016-02-08 15:54:28,134 INFO main - using Disabled tls auth policy
+2016-02-08 15:54:28,159 WARN main - using default tls security policy
+2016-02-08 15:54:28,162 WARN main - Using default keystore type jks
+2016-02-08 15:54:28,162 WARN main - Using default truststore type jks
+2016-02-08 15:54:28,173 INFO main - the sip stack timer gov.nist.javax.sip.stack.timers.DefaultSipTimer has been started
+2016-02-08 15:54:28,325 INFO main - Sip Balancer started on external address 127.0.0.1, external port : 5060, internalPort : 5065
+2016-02-08 15:54:28,365 INFO main - HTTP LB listening on port 2080
+2016-02-08 15:54:28,377 INFO main - HTTPS LB listening on port 2081
+2016-02-08 15:54:28,432 INFO main - SMPP Load Balancer started at 127.0.0.1 : 2776
+2016-02-08 15:54:28,433 INFO main - SMPP Load Balancer uses port : 2876 for TLS clients.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output shows the IP address on which the Restcomm Load Balancer is listening, as well as the external and internal listener ports.</p>
+</div>
+</li>
+<li>
+<p>Configure SIP/SMPP Server Nodes</p>
+<div class="paragraph">
+<p>The information about configuring your SIP Server, SMPP Server, SIP Servlets or JAIN SLEE, is in the respective server User Guide.</p>
+</div>
+</li>
+<li>
+<p>Start Load Balancer Client Nodes</p>
+<div class="paragraph">
+<p>Start all SIP and SMPP load balancer client nodes.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_sslb_binary_sip_load_balancer_testing"><a class="anchor" href="#_sslb_binary_sip_load_balancer_testing"></a>1.1.6. Testing</h4>
+<div class="paragraph">
+<p>To test load balancing, the same application must be deployed manually on each node, and two SIP Softphones must be installed.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure: Testing Load Balancing with Sip Servlets</div>
+<ol class="arabic">
+<li>
+<p>Deploy an Application</p>
+<div class="paragraph">
+<p>Ensure that for each node, the DAR file location is specified in the <em class="path">server.xml</em> file.</p>
+</div>
+<div class="paragraph">
+<p>Deploy the Location service manually on both nodes.</p>
+</div>
+</li>
+<li>
+<p>Start the "Sender" SIP softphone</p>
+<div class="paragraph">
+<p>Start a SIP softphone client with the SIP address of <code>sip:sender@sip-servlets-com</code> , listening on port 5055.
+The outbound proxy must be specified as the sip-balancer (<a href="http://127.0.0.1:5060" class="bare">http://127.0.0.1:5060</a>)</p>
+</div>
+</li>
+<li>
+<p>Start the "Receiver" SIP softphone</p>
+<div class="paragraph">
+<p>Start a SIP softphone client with the SIP address of <code>sip:receiver-failover@sip-servlets-com</code> , listening on port 5090.</p>
+</div>
+</li>
+<li>
+<p>Initiate two calls from "Sender" SIP softphone</p>
+<div class="paragraph">
+<p>Initiate one call from <code>sip:sender@sip-servlets-com</code> to <code>sip:receiver-failover@sip-servlets-com</code> . Tear down the call once completed.</p>
+</div>
+<div class="paragraph">
+<p>Initiate a second call using the same SIP address, and tear down the call once completed.
+Notice that the call is handled by the second node.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure: Testing Load Balancing with JAIN SLEE and SIP RA</div>
+<ol class="arabic">
+<li>
+<p>Deploy SIP RA</p>
+</li>
+<li>
+<p>Configure the JAIN SIP HA properties for load balancing according to the JAIN SLEE User Guide</p>
+</li>
+<li>
+<p>Deploy a sample application</p>
+</li>
+<li>
+<p>Run the sample scenario for the application using the Restcomm Load Balancer</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_sslb_binary_sip_load_balancer_stopping"><a class="anchor" href="#_sslb_binary_sip_load_balancer_stopping"></a>1.1.7. Stopping</h4>
+<div class="paragraph">
+<p>Assuming that you started the JBoss Application Server as a foreground process in the Linux terminal, the easiest way to stop it is by pressing the  key combination in the same terminal in which you started it.</p>
+</div>
+<div class="paragraph">
+<p>This should produce similar output to the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>^C2016-02-08 16:16:59,788 INFO Thread-142 - Stopping the sip forwarder
+2016-02-08 16:16:59,789 INFO Thread-142 - Removing the following Listening Point gov.nist.javax.sip.ListeningPointImpl@40185808
+2016-02-08 16:16:59,791 INFO NioSelector-TLS-127.0.0.1/5061 - Selector is closed
+2016-02-08 16:16:59,791 INFO Thread-142 - Removing the following Listening Point gov.nist.javax.sip.ListeningPointImpl@a440543
+2016-02-08 16:16:59,796 INFO Thread-142 - Removing the following Listening Point gov.nist.javax.sip.ListeningPointImpl@a0d78e9
+2016-02-08 16:16:59,796 INFO NioSelector-TCP-127.0.0.1/5060 - Selector is closed
+2016-02-08 16:16:59,796 INFO Thread-142 - Removing the sip provider
+2016-02-08 16:16:59,797 INFO Thread-142 - Removing the following Listening Point gov.nist.javax.sip.ListeningPointImpl@1ce21add
+2016-02-08 16:16:59,798 INFO NioSelector-TLS-127.0.0.1/5066 - Selector is closed
+2016-02-08 16:16:59,798 INFO Thread-142 - Removing the following Listening Point gov.nist.javax.sip.ListeningPointImpl@2a859dc9
+2016-02-08 16:16:59,800 INFO Thread-142 - Removing the following Listening Point gov.nist.javax.sip.ListeningPointImpl@63a80928
+2016-02-08 16:16:59,804 INFO NioSelector-TCP-127.0.0.1/5065 - Selector is closed
+2016-02-08 16:16:59,808 INFO Thread-142 - Removing the sip provider
+2016-02-08 16:16:59,808 INFO Thread-142 - the sip stack timer gov.nist.javax.sip.stack.timers.DefaultSipTimer has been stopped
+2016-02-08 16:17:00,809 INFO Thread-142 - the sip stack timer gov.nist.javax.sip.stack.timers.DefaultSipTimer has been stopped
+2016-02-08 16:17:01,839 INFO Thread-142 - Sip forwarder SIP stack stopped
+2016-02-08 16:17:01,839 INFO Thread-142 - Stopping the http forwarder
+2016-02-08 16:17:01,953 INFO Thread-142 - Stopping the SMPP balancer
+2016-02-08 16:17:01,957 INFO Thread-142 - SMPP Load Balancer stopped at 127.0.0.1
+2016-02-08 16:17:01,958 INFO Thread-142 - Unregistering the node registry
+2016-02-08 16:17:01,958 INFO Thread-142 - Unregistering the node adapter
+2016-02-08 16:17:01,962 INFO Thread-142 - Stopping the node registry
+2016-02-08 16:17:01,962 INFO Thread-142 - Stopping node registry...
+2016-02-08 16:17:01,963 INFO Thread-142 - Node Expiration Task cancelled true
+2016-02-08 16:17:01,963 INFO Thread-142 - Node registry stopped.</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_sslb_binary_sip_load_balancer_uninstalling"><a class="anchor" href="#_sslb_binary_sip_load_balancer_uninstalling"></a>1.1.8. Uninstalling</h4>
+<div class="paragraph">
+<p>To uninstall the SIP and SMPP load balancers, delete the JAR file you installed.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sslb_sip_load_balancing_basics"><a class="anchor" href="#_sslb_sip_load_balancing_basics"></a>1.2. SIP Load Balancing Basics</h3>
+<div class="paragraph">
+<p>All User Agents send SIP messages, such as <code>INVITE</code>    and <code>MESSAGE</code> , to the same SIP URI (the IP address and port number of the Restcomm Load Balancer on the WAN). The Load Balancer then parses, alters, and forwards those messages to an available node in the cluster.
+If the message was sent as a part of an existing SIP session, it will be forwarded to the cluster node which processed that User Agent&#8217;s original transaction request.</p>
+</div>
+<div class="paragraph">
+<p>The SIP Server that receives the message acts upon it and sends a response back to the Restcomm Load Balancer.
+The Restcomm Load Balancer reparses, alters and forwards the message back to the original User Agent.
+This entire proxying and provisioning process is carried out independent of the User Agent, which is only concerned with the SIP service or application it is using.</p>
+</div>
+<div class="paragraph">
+<p>By using the Load Balancer, SIP traffic is balanced across a pool of available SIP Servers, increasing the overall throughput of the SIP service or application running on either individual nodes of the cluster.
+In the case of a Restcomm server with <code>&lt;/distributed&gt;</code> capabilities, load balancing advantages are applied across the entire cluster.</p>
+</div>
+<div class="paragraph">
+<p>The Restcomm Load Balancer is also able to failover requests mid-call from unavailable nodes to available ones, thus increasing the reliability of the SIP service or application.
+The Load Balancer increases throughput and reliability by dynamically provisioning SIP service requests and responses across responsive nodes in a cluster.
+This enables SIP applications to meet the real-time demand for SIP services.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="http-load-balancing-basics"><a class="anchor" href="#http-load-balancing-basics"></a>1.3. HTTP Load Balancing Basics</h3>
+<div class="paragraph">
+<p>In addition to the SIP load balancing, there are several options for coordinated or cooperative load balancing with other protocols such as HTTP.</p>
+</div>
+<div class="paragraph">
+<p>Typically, a JBoss Application Server will use apache HTTP server with mod_jk, mod_proxy, mod_cluster or similar extension installed as an HTTP load balancer.
+This apache-based load balancer will parse incoming HTTP requests and will look for the session ID of those requests in order to ensure all requests from the same session arrive at the same application server.</p>
+</div>
+<div class="paragraph">
+<p>By default, this is done by examining the <code>jsessionid</code> HTTP cookie or GET parameter and looking for the <code>jvmRoute</code> assigned to the session.
+The typical <code>jsessionid</code> value is of the form <code>&lt;sessionId&gt;.&lt;jvmRoute&gt;</code> . The very first request for each new HTTP session does not have a session ID assigned; the apache routes the request to a random application server node.</p>
+</div>
+<div class="paragraph">
+<p>When the node responds it assigns a session ID and <code>jvmRoute</code> to the response of the request in a HTTP cookie.
+This response goes back to the client through apache, which keeps track of which node owns each <code>jvmRoute</code> . Once the very first request is served this way, the subsequent requests from this session will carry the assigned cookie, and the apache load balancer will always route the requests to the node, which advertised itself as the <code>jvmRoute</code> owner.</p>
+</div>
+<div class="paragraph">
+<p>Instead of using apache, an integrated HTTP Load Balancer is also available.
+The Restcomm Load Balancer has a HTTP port where you can direct all incoming HTTP requests.
+The integrated HTTP load balancer behaves exactly like apache by default, but this behavior is extensible and can be overridden completely with the pluggable balancer algorithms.
+The integrated HTTP load balancer is much easier to configure and generally requires no effort, because it reuses most SIP settings and assumes reasonable default values.</p>
+</div>
+<div class="paragraph">
+<p>Unlike the native apache, the integrated HTTP Load Balancer is written completely in Java, thus a performance penalty should be expected when using it.
+However, the integrated HTTP Balancer has an advantage when related SIP and HTTP requests must stick to the same node.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="smpp-load-balancing-basics"><a class="anchor" href="#smpp-load-balancing-basics"></a>1.4. SMPP Load Balancing Basics</h3>
+<div class="paragraph">
+<p>SMPP load balancer is used for balancing load from SMPP clients (ESME) to SMPP servers (SMSC) based on round-robin algorithm.
+Because of SMPP protocol based on an application layer TCP/IP connection between the ESME and SMSC and is initiated by the ESME, we should use connection handling.
+SMPP load balancer includes three main parts: server part, client part and dispatcher.
+When new clients connect to SMPP load balancer, application creates instances of ClientConnectionImpl (client part) and ServerConnectionImpl (server part) classes that bind by session ID.
+They are used to establish a connection between client (ESME) and server (SMSC). When connection established it can be used in both directions: ESME and SMSC can initiate new messages or send back messages through the SMPP load balancer.
+Dispatcher is used for logical connection of client and server parts of SMPP load balancer.
+Each packet that is received by the client part, the dispatcher throws to server part (unless error is detected) and vice versa.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/SMPP-lb-diagram.png" alt="SMPP lb diagram">
+</div>
+<div class="title">Figure 3. SMPP load balancer diagram</div>
+</div>
+<div class="paragraph">
+<p>Main goal of application is to reduce the load on servers (SMSC) and simply transfer packets between client (ESME) and server(SMSC). But also it can inspect the received packets for correct command ID and will not send incorrect packets forward instead turn them back.</p>
+</div>
+<div class="paragraph">
+<p>When connection to server drops, SMPP load balancer can reconnect (rebind) to the next working server.
+During this process (reconnect) it turns back all received packets until the new connection is established.
+If there are no established connections with the servers, the client connection is closed and vice versa.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pluggable-balancer-algorithms"><a class="anchor" href="#pluggable-balancer-algorithms"></a>1.5. Pluggable balancer algorithms</h3>
+<div class="paragraph">
+<p>The SIP/HTTP Load Balancer exposes an interface to allow users to customize the routing decision making for special purposes.
+By default there are three built-in algorithms.
+Only one algorithm is active at any time and it is specified with the <code>algorithmClass</code>    property in the configuration file.</p>
+</div>
+<div class="paragraph">
+<p>It is up to the algorithm how and whether to support distributed architecture or how to store the information needed for session affinity.
+The algorithms will be called for every SIP and HTTP request and other significant events to make more informed decisions.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Users must be aware that by default requests explicitly addressed to a live server node passing through the load balancer will be forwarded directly to the server node.
+This allows for pre-specified routing use-cases, where the target node is known by the SIP client through other means.
+If the target node is dead, then the node selection algorithm is used to route the request to an available node.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following is a list of the built-in algorithms:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">org.mobicents.tools.sip.balancer.CallIDAffinityBalancerAlgorithm</dt>
+<dd>
+<p>This algorithm is not distributable.
+It selects nodes randomly to serve a give Call-ID extracted from the requests and responses.
+It keeps a map with <code>Call-ID &#8594;
+            nodeId</code> associations and this map is not shared with other load balancers which will cause them to make different decisions.
+For HTTP it behaves like apache.</p>
+</dd>
+<dt class="hdlist1">org.mobicents.tools.sip.balancer.HeaderConsistentHashBalancerAlgorithm</dt>
+<dd>
+<p>This algorithm is distributable and can be used in distributed load balancer configurations.
+It extracts the hash value of specific headers from SIP and HTTP messages to decide which application server node will handle the request.
+Information about the options in this algorithms is available in the balancer configuration file comments.</p>
+</dd>
+<dt class="hdlist1">org.mobicents.tools.sip.balancer.PersistentConsistentHashBalancerAlgorithm</dt>
+<dd>
+<p>This algorithm is distributable and is similar to the previous algorithm, but it attempts to keep session affinity even when the cluster nodes are removed or added, which would normally cause hash values to point to different nodes.</p>
+</dd>
+<dt class="hdlist1">org.mobicents.tools.sip.balancer.ClusterSubdomainAffinityAlgorithm</dt>
+<dd>
+<p>This algorithm is not distributable, but supports grouping server nodes to act as a subcluster.
+Any call of a node that belongs to a cluster group will be preferentially failed over to a node from the same group.
+To configure a group you can just add the <code>subclusterMap</code> property in the load balancer properties and listing the IP addresses of the nodes.
+The groups are enclosed in parentheses and the IP addresses are separate by commas as follows:</p>
+<div class="listingblock">
+<div class="content">
+<pre>subclusterMap=( 192.168.1.1, 192.168.1.2 ) ( 10.10.10.10,20.20.20.20, 30.30.30.30)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The nodes specified in a group do not have to alive and nodes that are not specified are still allowed to join the cluster. Otherwise the algorthim behaves exactly as the default Call-ID affinity algorthim.</p>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="distributed-load-balancing"><a class="anchor" href="#distributed-load-balancing"></a>1.6. Distributed load balancing</h3>
+<div class="paragraph">
+<p>When the capacity of a single load balancer is exceeded, multiple load balancers can be used.
+With the help of an IP load balancer the traffic can be distributed between all SIP/HTTP load balancers based on some IP rules or round-robin.
+With consistent hash and <code>jvmRoute</code> -based balancer algorithms it doesn&#8217;t matter which SIP/HTTP load balancer will process the request, because they would all make the same decisions based on information in the requests (headers, parameters or cookies) and the list of available nodes.
+With consistent hash algorithms there is no state to be preserved in the SIP/HTTP balancers.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/bidirectional-distributed-sip-lb.gif" alt="bidirectional distributed sip lb">
+</div>
+<div class="title">Figure 4. Example deployment: IP load balancers serving both directions forincoming/outgoing requests in a cluster</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sslb_sip_load_balancer_implementation"><a class="anchor" href="#_sslb_sip_load_balancer_implementation"></a>1.7. Implementation of the Restcomm  Load Balancer</h3>
+<div class="paragraph">
+<p>Each individual Restcomm SIP Server in the cluster is responsible for contacting the Restcomm Load Balancer and relaying its health status and regular "heartbeats".</p>
+</div>
+<div class="paragraph">
+<p>From these health status reports and heartbeats, the Restcomm Load Balancer creates and maintains a list of all available and healthy nodes in the cluster.
+The Load Balancer forwards SIP requests between these cluster nodes, providing that the provisioning algorithm reports that each node is healthy and is still sending heartbeats.</p>
+</div>
+<div class="paragraph">
+<p>If an abnormality is detected, the Restcomm Load Balancer removes the unhealthy or unresponsive node from the list of available nodes.
+In addition, mid-session and mid-call messages are failed over to a healthy node.</p>
+</div>
+<div class="paragraph">
+<p>The Restcomm Load Balancer first receives SIP requests from endpoints on a port that is specified in its Configuration Properties configuration file.
+The Restcomm Load Balancer, using a round-robin algorithm, then selects a node to which it forwards the SIP requests.
+The Load Balancer forwards all same-session requests to the first node selected to initiate the session, providing that the node is healthy and available.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sslb_smpp_load_balancer_implementation"><a class="anchor" href="#_sslb_smpp_load_balancer_implementation"></a>1.8. Implementation of the SMPP Load Balancer</h3>
+<div class="paragraph">
+<p>SMPP load balancer implements timers: enquire link timer, session initialization timer and response timer for connection handling.
+Timers of SMPP load balancer have next behaviour:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Session initialization timer disconnects client (ESME) if it does not send bind request in defined time;</p>
+</li>
+<li>
+<p>Response timer sends response with system error if sender does not receive response in defined time;</p>
+</li>
+<li>
+<p>Enquire link timer with a fixed rate checks the connections with client (ESME) and server (SMSC).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Server part of SMPP load balancer has next states:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>OPEN - it can receive only bind requests from client (ESME);</p>
+</li>
+<li>
+<p>BINDING - it can&#8217;t receive any messages, in this state we wait for client&#8217;s response;</p>
+</li>
+<li>
+<p>BOUND - it can receive all PDU packets from client (ESME), which he can send according SMPP protocol, except bind requests;</p>
+</li>
+<li>
+<p>REBINDING - it can also receive all PDU packets from client (ESME), but returns them back, because the client part at this time is trying to reconnect to server;</p>
+</li>
+<li>
+<p>UNBINDING - it can receive only unbind response from client (ESME);</p>
+</li>
+<li>
+<p>CLOSED - it can&#8217;t receive any messages, this is last state of life cycle, which indicate that connection is closed.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Client part of SMPP load balancer has next states:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>INITIAL - it can&#8217;t receive any messages, this is first state of life cycle, at this state the client part is trying to connect to the server (SMSC) and if the connection is successful state changes to OPEN;</p>
+</li>
+<li>
+<p>OPEN - it can&#8217;t receive any messages, at this state the client part sends a bind request to the server (SMSC), and changes state to binding;</p>
+</li>
+<li>
+<p>BINDING - it can receive only bind response from server, and if response does not have errors, the client part changes ones state to bound;</p>
+</li>
+<li>
+<p>BOUND - it can receive all packets from server (SMSC), which can be sent according SMPP protocol, except unbind response;</p>
+</li>
+<li>
+<p>REBINDING - if connection drops to the server (SMSC), the client part changes ones state to rebinding until reconnect.
+If reconnect fails, connection is closed;</p>
+</li>
+<li>
+<p>UNBINDING - it can receive unbind response from server only, after which state changes to closed state;</p>
+</li>
+<li>
+<p>CLOSED - it can&#8217;t receive any messages, this is the last state of the life cycle, which indicates that the connection is closed.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sip-message-flow"><a class="anchor" href="#sip-message-flow"></a>1.9. SIP Message Flow</h3>
+<div class="paragraph">
+<p>The Restcomm Load Balancer appends itself to the <code>Via</code>    header of each request, so that returned responses are sent to the SIP Balancer before they are sent to the originating endpoint.</p>
+</div>
+<div class="paragraph">
+<p>The Load Balancer also adds itself to the path of subsequent requests by adding Record-Route headers.
+It can subsequently handle mid-call failover by forwarding requests to a different node in the cluster if the node that originally handled the request fails or becomes unavailable.
+The Restcomm Load Balancer immediately fails over if it receives an unhealthy status, or irregular heartbeats from a node.</p>
+</div>
+<div class="paragraph">
+<p>Additionally, Restcomm Load Balancer will add two custom header containing the initial remote address and port of the sip client for every REGISTER request or requests with content.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>X-Sip-Balancer-InitialRemoteAddr</p>
+</li>
+<li>
+<p>X-Sip-Balancer-InitialRemotePort</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Application can use these two headers to have the correct location of the sip client that sent the REGISTER request.</p>
+</div>
+<div class="paragraph">
+<p>In advanced configurations, it is possible to run more than one Restcomm Load Balancer.
+Simply edit the balancers connection string in your SIP Server - the list is separated with semi-colon.</p>
+</div>
+<div class="paragraph">
+<p><a href="#_figure_mss_basic_ip_and_port_cluster_configuration">Basic IP and Port Cluster Configuration</a>    describes a basic IP and Port Cluster Configuration.
+In the diagram, the Restcomm Load Balancer is the server with the IP address of <code>192.168.1.1</code> .</p>
+</div>
+<div id="_figure_mss_basic_ip_and_port_cluster_configuration" class="imageblock">
+<div class="content">
+<img src="./images/mss-MSSSIPLoadBalancer-dia-ClusterIPsAndPorts.jpg" alt="mss MSSSIPLoadBalancer dia ClusterIPsAndPorts">
+</div>
+<div class="title">Figure 5. Basic IP and Port Cluster Configuration</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="using-the-load-balancer-with-third-party-sip-servers"><a class="anchor" href="#using-the-load-balancer-with-third-party-sip-servers"></a>1.10. Using the Load Balancer with Third-Party SIP Servers</h3>
+<div class="paragraph">
+<p>The load balancer only forwards requests to servers that send heartbeat signals.
+A third party server can send metadata using a SIP OPTIONS or SIP INFO message towards the internal port of the Restcomm Load Balancer.
+For security reasons heartbeat messages arriving at the external entry-point will be ignored and using a single internal and external entry-point is not allowed.
+The third party SIP server must advertise it&#8217;s metadata in the SIP message contents.</p>
+</div>
+<div class="paragraph">
+<p>For example, this request will advertise a SIP server listening on 127.0.0.1:5070, both TCP and UDP .</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>OPTIONS sip:X@127.0.0.1:5065;lr SIP/2.0
+Call-ID: 2298704dc4d6706e53cb61123ea7833e@127.0.0.1
+CSeq: 1 OPTIONS
+From: &lt;sip:third-party-app-server-heartbeating-service@sip-servlets.com&gt;;tag=4481411
+To: &lt;sip:sip-load-balancer@sip-servlets.com&gt;
+Via: SIP/2.0/UDP 127.0.0.1:5070;branch=z9hG4bK-373335-ec2c7452cfd0130bd409ba4f8ea5f54e
+Max-Forwards: 70
+Contact: &lt;sip:sender@127.0.0.1:4060;transport=udp;lr&gt;
+Route: &lt;sip:lbaddress_InternalPort@127.0.0.1:5065;node_host=127.0.0.1;node_port=5070;lr&gt;
+Content-Type: text/plain;charset=UTF-8
+Mobicents-Heartbeat: 1
+Content-Length: 54
+
+tcpPort=5070
+udpPort=5070
+hostname=sipHeartbeat
+ip=127.0.0.1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The important headers to be filled in this request are <code>Mobicents-Heartbeat</code> , the Route header with <code>;node_host=127.0.0.1;node_port=5070</code> and the message contents.
+The message contents are interpreted as properties of the <code>SIPNode</code> object representing the node in the load balancer and can be further interpreted by load balancing algorithms for load balancing purposes.
+The value of the <code>Mobicents-Heartbeat</code> header is arbitrary and reserved for future use, the presence of the header is sufficient to instruct the load balancer how to process the request.</p>
+</div>
+<div class="paragraph">
+<p>All requests initiated by the SIP Server must have the following hint in their Route header <code>;node_host=127.0.0.1;node_port=5070</code> . This hint instructs the Restcomm Load Balancer that the dialog initated by the application server must stay on the node advertised in the hint.
+This function is cruicial when the direction of the requests withing the dialog is reversed.</p>
+</div>
+<div class="paragraph">
+<p>Since this SIP request represents a heartbeat signal, it must be sent regularly at least once every 5 seconds (by default). Sending this request is responsibility of the third party server.
+The load balancer will respond to every heartbeat request with 200 OK immediately.
+The third party server must expect the OK response.
+If no response if received within a threshhold time then the third party SIP server must assume the Restcomm Load Balancer is not available and use another (backup) load balancer.</p>
+</div>
+<div class="paragraph">
+<p>The regular Restcomm Load Balancer setting are still in effect for third party servers and you can expect the same behavior as the Mobicents-specific RMI heartbeat configuration.</p>
+</div>
+<div class="paragraph">
+<p>If you are desgning a pluggable algorithm using the SIP metadata, you can access the properties passed in the SIP message contents using <code>SIPNode.getProperties()</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enabling-tls-wss-for-load-balancers"><a class="anchor" href="#enabling-tls-wss-for-load-balancers"></a>1.11. Enabling TLS/WSS for Load Balancers</h3>
+<div class="sect3">
+<h4 id="enabling-tls-wss-for-restcomm-load-balancer"><a class="anchor" href="#enabling-tls-wss-for-restcomm-load-balancer"></a>1.11.1. Enabling TLS/WSS for Restcomm Load Balancer</h4>
+<div class="paragraph">
+<p>For enabling TLS support for Restcomm Load Balancer, you should correctly specify next property:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>javax.net.ssl.keyStore;</p>
+</li>
+<li>
+<p>javax.net.ssl.keyStorePassword;</p>
+</li>
+<li>
+<p>javax.net.ssl.trustStore;</p>
+</li>
+<li>
+<p>javax.net.ssl.trustStorePassword;</p>
+</li>
+<li>
+<p>gov.nist.javax.sip.TLS_CLIENT_AUTH_TYPE</p>
+</li>
+<li>
+<p>gov.nist.javax.sip.TLS_CLIENT_PROTOCOLS;</p>
+</li>
+<li>
+<p>externalSecurePort;</p>
+</li>
+<li>
+<p>internalSecurePort;</p>
+</li>
+<li>
+<p>externalSecureIpLoadBalancerPort (if you are using IP load balancer);</p>
+</li>
+<li>
+<p>internalSecureIpLoadBalancerPort (if you are using IP load balancer)</p>
+</li>
+<li>
+<p>isTransportWs(enables WSS/WS instead of TLS/TCP).</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="enabling-https"><a class="anchor" href="#enabling-https"></a>1.11.2. Enabling HTTPS</h4>
+<div class="paragraph">
+<p>For enabling HTTPS and Secure WebSockets support for HTTP load balancer, you should correctly specify next property (httpsPort property enables HTTPS support):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>httpsPort;</p>
+</li>
+<li>
+<p>javax.net.ssl.keyStore;</p>
+</li>
+<li>
+<p>javax.net.ssl.keyStorePassword;</p>
+</li>
+<li>
+<p>javax.net.ssl.trustStore;</p>
+</li>
+<li>
+<p>javax.net.ssl.trustStorePassword;</p>
+</li>
+<li>
+<p>isRemoteServerSsl (if remote HTTP server uses TLS).</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="enabling-tls-for-smpp-load-balancer"><a class="anchor" href="#enabling-tls-for-smpp-load-balancer"></a>1.11.3. Enabling TLS for SMPP load balancer</h4>
+<div class="paragraph">
+<p>For enabling TLS support for SMPP load balancer, you should correctly specify next property (smppSslPort property enables TLS suport):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>smppSslPort;</p>
+</li>
+<li>
+<p>javax.net.ssl.keyStore;</p>
+</li>
+<li>
+<p>javax.net.ssl.keyStorePassword;</p>
+</li>
+<li>
+<p>javax.net.ssl.trustStore;</p>
+</li>
+<li>
+<p>javax.net.ssl.trustStorePassword;</p>
+</li>
+<li>
+<p>isRemoteServerSsl (if remote SMPP server uses TLS).</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="getting-statistic"><a class="anchor" href="#getting-statistic"></a>1.12. Getting statistic</h3>
+<div class="paragraph">
+<p>Load balancers provide some statistic by Java Management Extensions and JSON.
+You should use url <a href="http://host:statisticPort/lbstat" class="bare">http://host:statisticPort/lbstat</a> for getting JSON statistic data from load balancer.
+You can get next data:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>SIP balancer statistic:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Number of processed requests;</p>
+</li>
+<li>
+<p>Number of processed responses;</p>
+</li>
+<li>
+<p>Number of transferred bytes;</p>
+</li>
+<li>
+<p>Number of requests processed by method;</p>
+</li>
+<li>
+<p>Number of responses processed by status code;</p>
+</li>
+<li>
+<p>Number of active connections(if transport is UDP we can&#8217;t get this value);</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>HTTP balancer statistic:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Number of HTTP request;</p>
+</li>
+<li>
+<p>Number of bytes transferred to server;</p>
+</li>
+<li>
+<p>Number of bytes transferred to client;</p>
+</li>
+<li>
+<p>Number of requests processed by HTTP method;</p>
+</li>
+<li>
+<p>Number of responses processed by HTTP code;</p>
+</li>
+<li>
+<p>Number of active connections;</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>SMPP balancer statistic:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Number of requests to server;</p>
+</li>
+<li>
+<p>Number of requests to client;</p>
+</li>
+<li>
+<p>Number of bytes transferred to server;</p>
+</li>
+<li>
+<p>Number of bytes transferred to client;</p>
+</li>
+<li>
+<p>Number of requests processed by SMPP Command ID;</p>
+</li>
+<li>
+<p>Number of responses processed by SMPP Command ID;</p>
+</li>
+<li>
+<p>Number of active connections;</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Other data:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Recent CPU usage for the Java Virtual Machine process;</p>
+</li>
+<li>
+<p>Amount of used memory of the heap in bytes.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="revision-history"><a class="anchor" href="#revision-history"></a>Appendix A: Revision History</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2016-03-23 11:30:32 WET
+</div>
+</div>
+</body>
+</html>
