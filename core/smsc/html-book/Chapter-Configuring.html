@@ -1,0 +1,2029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.4">
+<title>Configuring</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
+/* Remove comment around @import statement below when using as a custom stylesheet */
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
+audio,canvas,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+[hidden],template{display:none}
+script{display:none!important}
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+body{margin:0}
+a{background:transparent}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+abbr[title]{border-bottom:1px dotted}
+b,strong{font-weight:bold}
+dfn{font-style:italic}
+hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}
+input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+body{-webkit-font-smoothing:antialiased}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.center{margin-left:auto;margin-right:auto}
+.spread{width:100%}
+p.lead,.paragraph.lead>p,#preamble>.sectionbody>.paragraph:first-of-type p{font-size:1.21875em;line-height:1.6}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0;direction:ltr}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:none}
+p{font-family:inherit;font-weight:400;font-size:1em;line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #ddddd8;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em;height:0}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol,ul.no-bullet,ol.no-bullet{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ul.no-bullet{list-style:none}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+abbr,acronym{text-transform:uppercase;font-size:90%;color:rgba(0,0,0,.8);border-bottom:1px dotted #ddd;cursor:help}
+abbr{text-transform:none}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote cite{display:block;font-size:.9375em;color:rgba(0,0,0,.6)}
+blockquote cite:before{content:"\2014 \0020"}
+blockquote cite a,blockquote cite a:visited{color:rgba(0,0,0,.6)}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media only screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede}
+table thead,table tfoot{background:#f7f8f7;font-weight:bold}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt,table tr:nth-of-type(even){background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+body{tab-size:4}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.clearfix:before,.clearfix:after,.float-group:before,.float-group:after{content:" ";display:table}
+.clearfix:after,.float-group:after{clear:both}
+*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre,pre>code{line-height:1.45;color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;text-rendering:optimizeSpeed}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background-color:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menu{color:rgba(0,0,0,.8)}
+b.button:before,b.button:after{position:relative;top:-1px;font-weight:400}
+b.button:before{content:"[";padding:0 3px 0 2px}
+b.button:after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin-left:auto;margin-right:auto;margin-top:0;margin-bottom:0;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header:before,#header:after,#content:before,#content:after,#footnotes:before,#footnotes:after,#footer:before,#footer:after{content:" ";display:table}
+#header:after,#content:after,#footnotes:after,#footer:after{clear:both}
+#content{margin-top:1.25em}
+#content:before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #ddddd8}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #ddddd8;padding-bottom:8px}
+#header .details{border-bottom:1px solid #ddddd8;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span:before{content:"\00a0\2013\00a0"}
+#header .details br+span.author:before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark:before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber:after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #ddddd8;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #efefed;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media only screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background-color:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #efefed;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #efefed;left:auto;right:0}}
+@media only screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:100%;background-color:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:rgba(255,255,255,.8);line-height:1.44}
+.sect1{padding-bottom:.625em}
+@media only screen and (min-width:768px){.sect1{padding-bottom:1.25em}}
+.sect1+.sect1{border-top:1px solid #efefed}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor:before,h2>a.anchor:before,h3>a.anchor:before,#toctitle>a.anchor:before,.sidebarblock>.content>.title>a.anchor:before,h4>a.anchor:before,h5>a.anchor:before,h6>a.anchor:before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock>caption.title{white-space:nowrap;overflow:visible;max-width:0}
+.paragraph.lead>p,#preamble>.sectionbody>.paragraph:first-of-type p{color:rgba(0,0,0,.85)}
+table.tableblock #preamble>.sectionbody>.paragraph:first-of-type p{font-size:inherit}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #ddddd8;color:rgba(0,0,0,.6)}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border-style:solid;border-width:1px;border-color:#e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;-webkit-border-radius:4px;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock pre:not(.highlight),.listingblock pre[class="highlight"],.listingblock pre[class^="highlight "],.listingblock pre.CodeRay,.listingblock pre.prettyprint{background:#f7f7f8}
+.sidebarblock .literalblock pre,.sidebarblock .listingblock pre:not(.highlight),.sidebarblock .listingblock pre[class="highlight"],.sidebarblock .listingblock pre[class^="highlight "],.sidebarblock .listingblock pre.CodeRay,.sidebarblock .listingblock pre.prettyprint{background:#f2f1f1}
+.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;padding:1em;font-size:.8125em}
+.literalblock pre.nowrap,.literalblock pre[class].nowrap,.listingblock pre.nowrap,.listingblock pre[class].nowrap{overflow-x:auto;white-space:pre;word-wrap:normal}
+@media only screen and (min-width:768px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:.90625em}}
+@media only screen and (min-width:1280px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:1em}}
+.literalblock.output pre{color:#f7f7f8;background-color:rgba(0,0,0,.9)}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]:before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:#999}
+.listingblock:hover code[data-lang]:before{display:block}
+.listingblock.terminal pre .command:before{content:attr(data-prompt);padding-right:.5em;color:#999}
+.listingblock.terminal pre .command:not([data-prompt]):before{content:"$"}
+table.pyhltable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.pyhltable td{vertical-align:top;padding-top:0;padding-bottom:0;line-height:1.45}
+table.pyhltable td.code{padding-left:.75em;padding-right:0}
+pre.pygments .lineno,table.pyhltable td:not(.code){color:#999;padding-left:0;padding-right:.5em;border-right:1px solid #ddddd8}
+pre.pygments .lineno{display:inline-block;margin-right:.25em}
+table.pyhltable .linenodiv{background:none!important;padding-right:0!important}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock blockquote p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote:before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.5em;margin-right:.5ex;text-align:right}
+.quoteblock .quoteblock{margin-left:0;margin-right:0;padding:.5em 0;border-left:3px solid rgba(0,0,0,.6)}
+.quoteblock .quoteblock blockquote{padding:0 0 0 .75em}
+.quoteblock .quoteblock blockquote:before{display:none}
+.verseblock{margin:0 1em 1.25em 1em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract{margin:0 0 1.25em 0;display:block}
+.quoteblock.abstract blockquote,.quoteblock.abstract blockquote p{text-align:left;word-spacing:0}
+.quoteblock.abstract blockquote:before,.quoteblock.abstract blockquote p:first-of-type:before{display:none}
+table.tableblock{max-width:100%;border-collapse:separate}
+table.tableblock td>.paragraph:last-child p>p:last-child,table.tableblock th>p:last-child,table.tableblock td>p:last-child{margin-bottom:0}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all th.tableblock,table.grid-all td.tableblock{border-width:0 1px 1px 0}
+table.grid-all tfoot>tr>th.tableblock,table.grid-all tfoot>tr>td.tableblock{border-width:1px 1px 0 0}
+table.grid-cols th.tableblock,table.grid-cols td.tableblock{border-width:0 1px 0 0}
+table.grid-all *>tr>.tableblock:last-child,table.grid-cols *>tr>.tableblock:last-child{border-right-width:0}
+table.grid-rows th.tableblock,table.grid-rows td.tableblock{border-width:0 0 1px 0}
+table.grid-all tbody>tr:last-child>th.tableblock,table.grid-all tbody>tr:last-child>td.tableblock,table.grid-all thead:last-child>tr>th.tableblock,table.grid-rows tbody>tr:last-child>th.tableblock,table.grid-rows tbody>tr:last-child>td.tableblock,table.grid-rows thead:last-child>tr>th.tableblock{border-bottom-width:0}
+table.grid-rows tfoot>tr>th.tableblock,table.grid-rows tfoot>tr>td.tableblock{border-width:1px 0 0 0}
+table.frame-all{border-width:1px}
+table.frame-sides{border-width:0 1px}
+table.frame-topbot{border-width:1px 0}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{display:table-cell;line-height:1.6;background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+td>div.verse{white-space:pre}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.unstyled,ol.unnumbered,ul.checklist,ul.none{list-style-type:none}
+ul.unstyled,ol.unnumbered,ul.checklist{margin-left:.625em}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1em;font-size:.85em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{width:1em;position:relative;top:1px}
+ul.inline{margin:0 auto .625em auto;margin-left:-1.375em;margin-right:0;padding:0;list-style:none;overflow:hidden}
+ul.inline>li{list-style:none;float:left;margin-left:1.375em;display:block}
+ul.inline>li>*{display:block}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist>table tr>td:first-of-type{padding:0 .75em;line-height:1}
+.colist>table tr>td:last-of-type{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
+.imageblock.left,.imageblock[style*="float: left"]{margin:.25em .625em 1.25em 0}
+.imageblock.right,.imageblock[style*="float: right"]{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em 0;border-width:1px 0 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;text-indent:-1.05em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
+.gist .file-data>table td.line-data{width:99%}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background-color:#00fafa}
+.black{color:#000}
+.black-background{background-color:#000}
+.blue{color:#0000bf}
+.blue-background{background-color:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background-color:#fa00fa}
+.gray{color:#606060}
+.gray-background{background-color:#7d7d7d}
+.green{color:#006000}
+.green-background{background-color:#007d00}
+.lime{color:#00bf00}
+.lime-background{background-color:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background-color:#7d0000}
+.navy{color:#000060}
+.navy-background{background-color:#00007d}
+.olive{color:#606000}
+.olive-background{background-color:#7d7d00}
+.purple{color:#600060}
+.purple-background{background-color:#7d007d}
+.red{color:#bf0000}
+.red-background{background-color:#fa0000}
+.silver{color:#909090}
+.silver-background{background-color:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background-color:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background-color:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background-color:#fafa00}
+span.icon>.fa{cursor:default}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note:before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip:before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning:before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution:before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important:before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background-color:rgba(0,0,0,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]:after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background-color:#fffef7;border-color:#e0e0dc;-webkit-box-shadow:0 1px 4px #e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@media print{@page{margin:1.25cm .75cm}
+*{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare):after,a[href^="https:"]:not(.bare):after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]:after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #ddddd8!important;padding-bottom:0!important}
+.sect1{padding-bottom:0!important}
+.sect1+.sect1{border:0!important}
+#header>h1:first-child{margin-top:1.25rem}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em 0}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span:before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]:before{display:block}
+#footer{background:none!important;padding:0 .9375em}
+#footer-text{color:rgba(0,0,0,.6)!important;font-size:.9em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Configuring</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#memory-settings">Memory Settings</a></li>
+<li><a href="#_logging">Configuring log4j Logging Service</a></li>
+<li><a href="#_routing_fundamentals">SMSC GW routing fundamentals</a>
+<ul class="sectlevel2">
+<li><a href="#_routing_fundamentals_1">The procedure based on dividing of separated routing area into several areas ("subnetworks").</a></li>
+<li><a href="#_routing_fundamentals_2">The procedure of routing messages to destinations inside subnetworks.</a></li>
+<li><a href="#_routing_fundamentals_3">Using of different routing procedures.</a></li>
+<li><a href="#_routing_fundamentals_4">Routing model examples.</a></li>
+</ul>
+</li>
+<li><a href="#_mproc_rules_fundamentals">Message processing rules (mproc rules)</a>
+<ul class="sectlevel2">
+<li><a href="#_mproc_rules_default">Default message processing rules implementation</a></li>
+<li><a href="#_mproc_rules_customized">Customized message processing rules</a></li>
+</ul>
+</li>
+<li><a href="#sms-home-routing">SMS Home Routing</a></li>
+<li><a href="#_diameter_ocs_server">Interworking with Diameter OCS server</a>
+<ul class="sectlevel2">
+<li><a href="#_diameter_ocs_server_general">General information</a></li>
+<li><a href="#_diameter_ocs_server_conig">Configuring</a></li>
+</ul>
+</li>
+<li><a href="#cdr-logging-settings">CDR Logging Settings</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>You must fine-tune Memory and Database settings for better performance before using Restcomm SMSC in production.
+Once you complete setting up the Gateway you must configure the SS7 Stack the SMSC Gateway following the instructions specified in this guide.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="memory-settings"><a class="anchor" href="#memory-settings"></a>Memory Settings</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You should fine tune the JVM memory settings based on your needs but we recommend you allocate a minimum of 3 GB for initial and maximum heap size.
+These settings are specified in the file <em class="path">restcomm-smscgateway-version&gt;/jboss-5.1.0.GA/bin/run.conf</em>.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">-Xms3072m</dt>
+<dd>
+<p>Initial heap size, set in megabytes</p>
+</dd>
+<dt class="hdlist1">-Xmx3072m</dt>
+<dd>
+<p>Maximum heap size, set in megabytes</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_logging"><a class="anchor" href="#_logging"></a>Configuring log4j Logging Service</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Restcomm SMSC uses <code>Apache log4j</code> for logging.
+If you are not familiar with the <code>log4j</code> package, you can read more about it at the Jakarta <a href="http://jakarta.apache.org/log4j/">website</a>.</p>
+</div>
+<div class="paragraph">
+<p>Logging is controlled from a central configuration file located at <em class="path">restcomm-smscgateway-&lt;version&gt;/jboss-5.1.0.GA/server/&lt;profile&gt;/conf/jboss-log4j.xml</em>, one for each JBoss AS configuration profile.
+This file defines a set of appenders specifying the log files, what categories of messages should go there, the message format and the level of filtering.
+For more details, please refer to Section 9.6.3, "Logging Service" in the JBoss AS Getting Started Guide available <a href="https://community.jboss.org/wiki/JBossAS5InstallationAndGettingStartedGuide">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>You must make sure <code>log4j</code> is fine tuned for optimal performance in production.
+We recommend that you set logging threshold to <code>WARN</code> and let the CDR appender be <code>DEBUG</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_routing_fundamentals"><a class="anchor" href="#_routing_fundamentals"></a>SMSC GW routing fundamentals</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>SMSC GW needs clear info to where it must route messages that have come to SMSC GW from SMPP / SS7 / SIP connectors or created inside SMSC GW receipts.
+Routing procedures gives the answer to this questions, that a user must configure before SMSC GW can properly work.</p>
+</div>
+<div class="paragraph">
+<p>SMSC GW has two routing procedures:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The procedure based on dividing of separated routing area into several areas ("subnetworks") and routing of messages between subnetworks.</p>
+</li>
+<li>
+<p>The procedure of routing messages to destinations inside subnetworks.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_routing_fundamentals_1"><a class="anchor" href="#_routing_fundamentals_1"></a>The procedure based on dividing of separated routing area into several areas ("subnetworks").</h3>
+<div class="paragraph">
+<p>Each area has its unique digital "netwokId" value.
+Each SMPP connection (ESME), SS7 SCCP service access point (SAP), SIP connector and a database routing rule (if you use them instead of default ESME routing rules) belongs to one of network (to each of the a networkId value is assigned). Default netwokId value is "0". If a user does not specify a netwokId value when ESME, SAP, SIP or a database routing rule creation, networkId=0 will be assigned.</p>
+</div>
+<div class="paragraph">
+<p>When a message has come to SMSC GW a networkId value from ESME, SAP or SIP is assigned for the message.
+The message can be routed only inside the area with the same networkId to what the message belongs.
+So this means that by default a message can not leave a "networkId" area via which it has come to SMSC GW.</p>
+</div>
+<div class="paragraph">
+<p>If a user needs that a message will be delivered to another "networkId" area, he can configure "message processing" rules ("mproc" rules). There we can configure that a message from a specified networkId1 and which fits some other conditions (like destination address fit to some mask) must be moved to networkId2 (newNetworkId option of a mproc rule). And the message will be delivered via ESME, SAP or SIP that belongs to networkId2.</p>
+</div>
+<div class="paragraph">
+<p>Multi-tenancy support is also based on this routing procedure.
+For each networkId we can configure a separate SS7 GlobalTitle and for an external peer each networkId can play a role as a separate independed SMSC.</p>
+</div>
+<div class="paragraph">
+<p>NetworkId for a generated inside SMSC receipt is assigned by two algoritms:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>if the option "Delivery receipts will be routed to the origination networkId" is set to true - networkId from ESME/SIP/SAP via what an original message has left SMSC GW will be assigned</p>
+</li>
+<li>
+<p>if the option "Delivery receipts will be routed to the origination networkId" is set to false - networkId from ESME/SIP/SAP via what an original message has come to SMSC GW will be assigned</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>NetworkId are specified at different places:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>for JSS7 level SAPs and SCCP routing rules are configured for this.
+See "7.4.5.
+Create a new Service Access Point" and "7.4.17.
+Create a new SCCP Rule" chapters of "JSS7 stack User Guide".</p>
+</li>
+<li>
+<p>for ESMEs see the chapter <a href="#_esme_settings">[_esme_settings]</a>.</p>
+</li>
+<li>
+<p>for SIP level see the chapter <a href="#_sip">[_sip]</a>.</p>
+</li>
+<li>
+<p>for database routing rules see <a href="#_db_routing_rule_settings">[_db_routing_rule_settings]</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For configuring of mproc rules - see chapters <a href="#_mproc_rules_fundamentals">Message processing rules (mproc rules)</a> and <a href="#_mproc_rule_settings">[_mproc_rule_settings]</a>.</p>
+</div>
+<div class="paragraph">
+<p>For configuring of option "Delivery receipts will be routed to the origination networkId" - see the chapter <a href="#_smsc_gateway_server_routing_dlv">[_smsc_gateway_server_routing_dlv]</a>.</p>
+</div>
+<div class="paragraph">
+<p>For configuring of SMSC Global Titles - see chapters <a href="#_set_scgt">[_set_scgt]</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_routing_fundamentals_2"><a class="anchor" href="#_routing_fundamentals_2"></a>The procedure of routing messages to destinations inside subnetworks.</h3>
+<div class="paragraph">
+<p>Inside each subnetwork there may be several ESME, SAP or SIP configured.
+If we use default routing rules, then for routing SMSC GW makes following steps:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>it checks all ESMEs that belongs to the networkId.
+It checks if TON, NPI and AddressRange of an ESME Routing Address fit to a message destination TON, NPI and address digits the the message will be routed to this ESME.
+There is one exception of this rule.
+A message will not be routed in any case to the ESME from which it has come.</p>
+</li>
+<li>
+<p>if no ESME found for routing SMSC GW then checks SIP connector if it&#8217;s settings (TON, NPI and routing AddressRange) fits to a message destination TON, NPI and address digits.
+If yes the message will be routed to SIP</p>
+</li>
+<li>
+<p>if SIP also does not fit, a message will be routed to SS7 network.
+Then routing rules at SCCP level will be taken into account for further routing.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For configuring of ESME and SIP routing parameters see <a href="#_esme_settings">[_esme_settings]</a> and <a href="#_sip">[_sip]</a>.</p>
+</div>
+<div class="paragraph">
+<p>Instead of default routing rules database routing rules can be used.
+This is a set of stored in the cassandra database rules that describes where SMSC GW will route a message (to some ESME / SIP) depending on a message destination address.
+Messages that fit to no rules will be routed to SS7 network.
+For configuring of database routing rules see the chapter <a href="#_mproc_rule_settings">[_mproc_rule_settings]</a>| |</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_routing_fundamentals_3"><a class="anchor" href="#_routing_fundamentals_3"></a>Using of different routing procedures.</h3>
+<div class="paragraph">
+<p>You can use only the procedure based on subnetworks (networkId) areas, only the procedure of routing messages inside subnetworks or both.</p>
+</div>
+<div class="paragraph">
+<p>If you want to use only the procedure based on subnetworks (networkId) areas you need:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>configure SMSC GW so that only one SAP / ESME / SIP belongs to each networkId.</p>
+</li>
+<li>
+<p>for every ESME / SIP specify for "Routing Type of number (TON)"=-1, "Routing Number plan indicator (NPI)"=-1, "Routing Range"="^[0-9a-zA-Z]*" (that fits to any message destination address).</p>
+</li>
+<li>
+<p>configure a set of mproc rules that will manage of routing of messages from one subnetwork (networkId) to another.| |</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If you want to use only the procedure based on subnetworks (networkId) areas you need:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>configured for all SAP / SCCP routing rules / ESME / SIP the same networkId (default networkId=0 is usually used)</p>
+</li>
+<li>
+<p>for every ESME / SIP specify proper values for "Routing Type of number (TON)", "Routing Number plan indicator (NPI)" and "Routing Range" or configure database routing rules</p>
+</li>
+<li>
+<p>you do not need to configure mproc rules for routing| |</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If you want to use both, you need to configure both parts.
+Messages will be routed between subnetworks (networkIds) by mproc rules and inside a subnetwork (networkId) by configuring of ESME / SIP "Routing Type of number (TON)", "Routing Number plan indicator (NPI)" and "Routing Range" (or database routing rules).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_routing_fundamentals_4"><a class="anchor" href="#_routing_fundamentals_4"></a>Routing model examples.</h3>
+<div class="paragraph">
+<p>If you have one ESME and JSS7 connector, and the only traffic is ESME &#8594; JSS7</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>use networkId=0 for all</p>
+</li>
+<li>
+<p>configure "Routing Range" value of the ESME to a value that fits to no mobile subscriber (for example "0")</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If you use the model "all JSS7 originated messages must be routed to ESME and all ESME originated messages must be routed to JSS7", you can:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>set networkId=0 for JSS7 and networkId=1 for ESME</p>
+</li>
+<li>
+<p>set ESME routing address so it accepts all messages</p>
+</li>
+<li>
+<p>set mproc rules:</p>
+<div class="paragraph">
+<p>smsc mproc add mproc 1 networkIdMask=1 newNetworkId=0</p>
+</div>
+<div class="paragraph">
+<p>smsc mproc add mproc 2 networkIdMask=0 newNetworkId=1</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If you have several ESMEs that send message to one SS7 connection and you need that delivery receipts come back to an originator ESME (and no more traffic), you can:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>put SS7 SAP / SCCP rules to networkId=0</p>
+</li>
+<li>
+<p>put each ESME to each own networkId (1,2,3)</p>
+</li>
+<li>
+<p>create a set of mproc rules that move ESME originated messages into SS7 network.
+CLI commabd can be like:</p>
+<div class="paragraph">
+<p>smsc mproc add mproc 1 networkIdMask=1 newNetworkId=0</p>
+</div>
+<div class="paragraph">
+<p>smsc mproc add mproc 2 networkIdMask=2 newNetworkId=0</p>
+</div>
+<div class="paragraph">
+<p>smsc mproc add mproc 3 networkIdMask=3 newNetworkId=0</p>
+</div>
+</li>
+<li>
+<p>set the option "Delivery receipts will be routed to the origination networkId" is set to true</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_mproc_rules_fundamentals"><a class="anchor" href="#_mproc_rules_fundamentals"></a>Message processing rules (mproc rules)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Message processing rules (mproc rules) is a tool for processing messages and changing properties of message, for example source/destination TON, NPI, NetworkId etc.
+MProc rules are only applied if pre configured criterian match&#8217;s.</p>
+</div>
+<div class="paragraph">
+<p>Following are the states at which mproc rules can be applied to messages:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>onPostArrival</code> : When a message arrives in SMSC GW and has been already processed (accepted) by Diameter server (if Diameter server is configured). <code>onPostArrival</code> following actions are possible:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>message can be dropped (a success response will be returned to a message originator)</p>
+</li>
+<li>
+<p>message can be rejected (a reject response will be returned to a message originator)</p>
+</li>
+<li>
+<p>most of a message parameters can be updated (for example destination address, networkId  (this is needed for routing such messages to another subnetwork area (networkId)  (see chapter <a href="#_routing_fundamentals">SMSC GW routing fundamentals</a>)) or even a message content)</p>
+</li>
+<li>
+<p>a new message(es) can be posted for delivering. To post new messages at this step no Diameter server request and  no mproc rules will be applied</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Only after actions applying messages will be stored into a database or/and delivered to a destination.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>onPostImsiRequest</code> : When a successful SRI response has been received from HLR for an SS7 destination message.
+At this step a message can be dropped (to prevent further delivery). This can be very useful feature to prevent SMS being delivered to off-net or roaming subscribers.</p>
+</li>
+<li>
+<p><code>onPostDelivery</code> : When a message delivery was succeeded or failed.
+At this step a new message(es) can be posted  for delivering (it can be for example some delivery report). | |</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>SMSC comes with predifined set of mproc rules (default implementation) (see chapter <a href="#_mproc_rules_default">Default message processing rules implementation</a>). However users can make their own customized implementation of mproc rules by using java programming and implementing provided interfaces  (see chapter <a href="#_mproc_rules_customized">Customized message processing rules</a>). All mproc rules implementation has its Class Name.
+The Class Name of a default implementation is "mproc".  This is the name by which users can create new mproc rule instances.</p>
+</div>
+<div class="paragraph">
+<p>Users can create one or more mproc rules, modify, show and remove some of them by CLI or GUI interface.
+See details in chapter <a href="#_mproc_rule_settings">[_mproc_rule_settings]</a>.
+Each mproc rule has it&#8217;s unique serial id.
+Mproc rule are sorted by this id value.
+SMSC appliec mproc rules to a message in ascending order,  that is mproc rule with the least id is applied before mproc rule with next id etc.</p>
+</div>
+<div class="paragraph">
+<p>While checking if mproc rule conditions match to a message, updates (that were made after previous rules applying) are taken into account.
+For example if a message destination address has been changed by rule 1, then rule 2 will check if this updated destination address matches to rules 2 or not.</p>
+</div>
+<div class="sect2">
+<h3 id="_mproc_rules_default"><a class="anchor" href="#_mproc_rules_default"></a>Default message processing rules implementation</h3>
+<div class="paragraph">
+<p>SMSC GW contains a default implementation of mproc rules that cover some requirenments.
+Information how to manage rules can be found in chapter <a href="#_mproc_rule_settings">[_mproc_rule_settings]</a>.
+This chapter covers a description of conditions and actions that are present in default mproc rules implementation.</p>
+</div>
+<div class="paragraph">
+<p>Parameters for mproc rule are divided into two cathegories:</p>
+</div>
+<div class="paragraph">
+<p>a) Conditions.
+If a message fits to all conditions then the rule will be applied to the message.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. The list of possible conditions</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter name</th>
+<th class="tableblock halign-left valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">desttonmask</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;destination type of number&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if message destination Type of Number is equal to this value "desttonmask"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages with any TON will match.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">destnpimask</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;destination numbering plan indicator&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if message destination Numbering Plan Indicator is equal to this value "destnpimask".</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages with any NPI will match.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">destdigmask</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;java regular expression - destination number digits mask&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if message destination address digits match&#8217;s with "destdigmask" java regular expression.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages with any destination number will match.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">originatingmask</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;SS7_MO | SS7_HR | SMPP | SIP&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if message arrived in SMSC GW via a defined "originatingmask" connector.
+</p><p class="tableblock">. SS7_MO: SMS Originated from Mobile - SS7 connection
+. SS7_HR: SMS Originated from Home Routing configuartion - SS7 connection
+. SMPP: SMS Originated from SMPP connector and SIP connector.
+. SIP: SMS Originated from SIP connector.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages originated from any channel will match.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">originatorsccpaddress- mask</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;java regular expression - originator CallingPartyAddress digits mask&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if CallingPartyAddress digits match&#8217;s with "originatorsccpaddress mask" java regular expression.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages with any CallingPartyAddress digits or without it will match.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">networkidmask</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;networkId value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if message has come to SMSC GW via a subnetwork with networkId which is equal to this value "networkidmask".</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages from any network will match.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">origesmenamemask</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;java regualar expression - origination ESME name mask&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if message has come to SMSC GW from SMPP connector from ESME with a name that fits "origesmenamemask".</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence any message will match (never mind if it came from SS7 or SIP).</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>b) Actions, which will be applied to messages.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 2. The list of possible actions</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter name</th>
+<th class="tableblock halign-left valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">newnetworkid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;new networkId value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">networkId of the message will be changed to "newnetworkid" value. This means that the message will be delivered via connectors that belong to the new networId.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that networkId of the message will not be changed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">newdestton</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;new destination type of number&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a message destination Type of Number will be changed to "newdestton" value.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that destination Type of Number of the message will not be changed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">newdestnpi</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;new destination numbering plan indicator&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a message destination Numbering Plan Indicator will be changed to "newdestnpi" value.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that destination Numbering Plan Indicator of the message will not be changed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">adddestdigprefix</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;prefix&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">adddestdigprefix will be added into a begin of a message destination address digits. For example if adddestdigprefix is "22" and destination address digits are "3333333", then the new value of destination address digits will be "223333333".</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that destination address digits of the message will not be changed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">makecopy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;false | true&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If the makecopy action is present then SMSC GW makes a copy of a message and then post the copy for further message processing in addition to the original message. All other actions in the rule will be applied only to the copy. For example user wants to make copies of messages and send them to another destinations (by sending of copies into another networkId), then for this you can create a rule and set for the rule "makecopy true" and "newnetworkid &lt;new networkId value&gt;" parameters. This makes a copy of a message and set for the copy a new networkId value.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dropaftersri</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;false | true&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This is an action at the step when a successful SRI response has been received from HLR for an SS7 destination message. If a SRI success response has received then the message will be dropped without delivery attempt. A delivery response in this case will contain extra fields (IMSI and NetworkNodeNumber values).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_mproc_rules_customized"><a class="anchor" href="#_mproc_rules_customized"></a>Customized message processing rules</h3>
+<div class="paragraph">
+<p>Default mproc rules allows to change the properties of a message in pre defined way, however if user wants to achieve more, SMSC allows users to implement their own  custom logic.
+Below steps describes how to implement custom mproc rules.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure: Steps for custom mproc rules implementing</div>
+<ol class="arabic">
+<li>
+<p>User should implement the business logic as java code.
+There are couple of interfaces exposed by SMSC, <code class="class">MProcRuleFactory</code> and <code class="class">MProcRule</code> that must be implemented and add the custom business logic.
+User needs to cover two parts of rules usage - a rule configuring part and a rule applying part.</p>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Please pay attention that in your code you may not perform long delays in order not to dramatically decrease of SMSC GW productivity.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Once custom rule is implemented, user will have to create jar file and deploy it into SMSC Gateway.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>User needs to decide a rule class name that will be used to uniquely identify the custom rules.
+This can be any word without spaces.
+For default mproc rules implementation the rule class name is "mproc". For example consider rule class name as "testrule".</p>
+</li>
+<li>
+<p>User needs to impelent two interfaces: <code class="class">MProcRuleFactory</code> and <code class="class">MProcRule</code>.
+For example consider <code class="class">MProcRuleFactoryTestImpl</code> and <code class="class">MProcRuleTestImpl</code>.</p>
+</li>
+<li>
+<p>User needs to decide which actions will custom rules perform and for which messages. For example create a custom rule that will be applied to any message at <code>onPostArrival</code> state  who&#8217;s destination address digits are starting with a configurable parameter "par1". For all the messages which match&#8217;s this rules condition,  prefix "par2" (the configurable parameter) is to be applied to message destination address.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Creating custom classes:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.smsc.mproc.testimpl;
+
+import org.mobicents.smsc.mproc.MProcRuleFactory;
+
+public class MProcRuleFactoryTestImpl implements MProcRuleFactory {
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.smsc.mproc.testimpl;
+
+import org.mobicents.smsc.mproc.MProcRule;
+
+public class MProcRuleTestImpl implements MProcRule {
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Implementing <code class="class">MProcRuleFactory</code> interface.
+The interface is:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.smsc.mproc;
+
+public interface MProcRuleFactory {
+    String getRuleClassName();
+    MProcRule createMProcRuleInstance();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Method <code>getRuleClassName()</code> must return the rule class name.
+Method <code>createMProcRuleInstance()</code> must return a custom implementation of <code class="class">MProcRule</code>  (in this example instance of <code class="class">MProcRuleTestImpl</code> class). Here is an example of implementation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.smsc.mproc.testimpl;
+
+import org.mobicents.smsc.mproc.MProcRule;
+import org.mobicents.smsc.mproc.MProcRuleFactory;
+
+public class MProcRuleFactoryTestImpl implements MProcRuleFactory {
+    public static final String CLASS_NAME = "testrule";
+
+    @Override
+    public String getRuleClassName() {
+        return CLASS_NAME;
+    }
+
+    @Override
+    public MProcRule createMProcRuleInstance() {
+        return new MProcRuleTestImpl();
+    }
+
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Next is actual business logic that should go in implement of <code class="class">MProcRule</code> interface.
+Let&#8217;s start with learning of the interface.
+The content of the interface is the following:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.smsc.mproc;
+
+public interface MProcRule extends MProcRuleMBean {
+
+    void setId(int val);
+
+    /**
+     * @return true if the mproc rule fits to a message when a message has just come to SMSC
+     */
+    boolean matchesPostArrival(MProcMessage message);
+
+    /**
+     * @return true if the mproc rule fits to a message when IMSI / NNN has been received from HLR
+     */
+    boolean matchesPostImsiRequest(MProcMessage message);
+
+    /**
+     * @return true if the mproc rule fits to a message when a message has just been delivered
+     * (or delivery failure)
+     */
+    boolean matchesPostDelivery(MProcMessage message);
+
+    /**
+     * the event occurs when a message has just come to SMSC
+     */
+    void onPostArrival(PostArrivalProcessor factory, MProcMessage message) throws Exception;
+
+    /**
+     * the event occurs when IMSI / NNN has been received from HLR
+     */
+    void onPostImsiRequest(PostImsiProcessor factory, MProcMessage message) throws Exception;
+
+    /**
+     * the event occurs when a message has just been delivered (or delivery failure)
+     */
+    void onPostDelivery(PostDeliveryProcessor factory, MProcMessage message) throws Exception;
+
+    /**
+     * this method must implement setting of rule parameters as for provided CLI string at
+     * the step of rule creation
+     */
+    void setInitialRuleParameters(String parametersString) throws Exception;
+
+    /**
+     * this method must implement setting of rule parameters as for provided CLI string at
+     * the step of rules modifying
+     */
+    void updateRuleParameters(String parametersString) throws Exception;
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and the parent interface content is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.smsc.mproc;
+
+public interface MProcRuleMBean {
+
+    /**
+     * @return the id of the mproc rule
+     */
+    int getId();
+
+    /**
+     * @return Rule class of the mproc rule ("default" or other when a customer implementation)
+     */
+    String getRuleClassName();
+
+    /**
+     * @return true if the mproc rule is used for the phase when a message has just come to SMSC
+     */
+    boolean isForPostArrivalState();
+
+    /**
+     * @return true if the mproc rule is used for the phase when IMSI / NNN has been received
+     * from HLR
+     */
+    boolean isForPostImsiRequestState();
+
+    /**
+     * @return true if the mproc rule is used for the phase when a message has just been
+     * delivered (or delivery failure)
+     */
+    boolean isForPostDeliveryState();
+
+    /**
+     * @return rule parameters as CLI return string
+     */
+    String getRuleParameters();
+
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 3. <code class="class">MProcRule</code> and <code class="class">MProcRuleMBean</code> interfaces methods description</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Methods</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">getId(), setId()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule id getter and setter. id value is unique for each mproc rule inside SMSC GW.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">getRuleClassName()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the rule class name ("testrule" in this example)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">getRuleParameters(), setInitialRuleParameters(), updateRuleParameters()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Getter and setters of configured parameters for a rule instance. Parameters are formed as a plain text string, that can be provided by CLI interface. In this example we need to configure two parameters par1 and par2. Let&#8217;s specify the parameters strinf as "par1" and "par2" (two values after a space, for example "11 34").</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">isForPostArrivalState(), isForPostImsiRequestState(), isForPostDeliveryState()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns true if this rule affects to a message processing step (for onPostArrival, onPostDelivery and onPostImsi requests) and false if not. You have to check configured parameters of a rule and return a proper value</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">matchesPostArrival(MProcMessage message), matchesPostImsiRequest(MProcMessage message), matchesPostDelivery(MProcMessage message)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">These methods must return true if rule should be applied false if not (for onPostArrival, onPostImsi and onPostDelivery requests).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">onPostArrival(), onPostImsiRequest(), onPostDelivery()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">These methods are needed for implementing of rule applying actions.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Id parameter and custom rule parameters ("par1" and "par2" in this example) must be stored into xml config file (it is located in <em class="path">restcomm-smscgateway-&lt;version&gt;/jboss-5.1.0.GA/server/&lt;profile&gt;/data/SmscManagement_mproc.xml</em>). For this user needs to implement several extra methods that will be described later.</p>
+</div>
+</li>
+<li>
+<p>Reusing of base <code class="class">MProcRuleBaseImpl</code> class.
+It is recommended for your custom <code class="class">MProcRuleTestImpl</code> to extend  <code class="class">MProcRuleBaseImpl</code> provided by SMSC. <code class="class">MProcRuleBaseImpl</code> class contains some useful methods that cover getter and setter  and code for persisting of this parameter into xml config file (read() and write() methods), default stubs for <code>matches()</code> and <code>onPost*()</code> methods and a service method for splitting of a parameters plain text string into subparameters (splitParametersString()).</p>
+<div class="paragraph">
+<p>Here is the new template of <code class="class">MProcRuleTestImpl</code> class implementation that reuses the base class <code class="class">MProcRuleBaseImpl</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.smsc.mproc.testimpl;
+
+import org.mobicents.smsc.mproc.MProcRuleBaseImpl;
+
+public class MProcRuleTestImpl extends MProcRuleBaseImpl {
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Implementing of <code>getRuleClassName()</code> method of <code class="class">MProcRule</code>.
+Below is an example:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">    @Override
+    public String getRuleClassName() {
+        return MProcRuleFactoryTestImpl.CLASS_NAME;
+    }</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Implementing of methods that cover getter / setters for message custom parameters and storing them into xml config file.</p>
+<div class="paragraph">
+<p>In the example setInitialRuleParameters() and updateRuleParameters() methods are implemented in the same way.
+You can implement them in different ways so that updateRuleParameters() method can accept not the whole set of parameters but only that ones that a user wants to change.</p>
+</div>
+<div class="paragraph">
+<p>M_PROC_RULE_TEST_XML is responsible for XML serializing / deserializing.
+See more info for them in javolution library specification.</p>
+</div>
+<div class="paragraph">
+<p>Here is an example (only the part that is described in this step):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.smsc.mproc.testimpl;
+
+import javolution.xml.XMLFormat;
+import javolution.xml.stream.XMLStreamException;
+import org.mobicents.smsc.mproc.MProcRuleBaseImpl;
+
+public class MProcRuleTestImpl extends MProcRuleBaseImpl {
+
+    private static final String PAR1 = "par1";
+    private static final String PAR2 = "par2";
+    private String par1, par2;
+
+    @Override
+    public void setInitialRuleParameters(String parametersString) throws Exception {
+        String[] args = splitParametersString(parametersString);
+        if (args.length != 2) {
+            throw new Exception("parametersString must contains 2 parameters");
+        }
+        par1 = args[0];
+        par2 = args[1];
+    }
+
+    @Override
+    public void updateRuleParameters(String parametersString) throws Exception {
+        String[] args = splitParametersString(parametersString);
+        if (args.length != 2) {
+            throw new Exception("parametersString must contains 2 parameters");
+        }
+        par1 = args[0];
+        par2 = args[1];
+    }
+
+    @Override
+    public String getRuleParameters() {
+        return par1 + " " + par2;
+    }
+
+    /**
+     * XML Serialization/Deserialization
+     */
+    protected static final XMLFormat&lt;MProcRuleTestImpl&gt; M_PROC_RULE_TEST_XML = new
+            XMLFormat&lt;MProcRuleTestImpl&gt;(MProcRuleTestImpl.class) {
+
+        @Override
+        public void read(javolution.xml.XMLFormat.InputElement xml, MProcRuleTestImpl
+            mProcRule) throws XMLStreamException {
+            M_PROC_RULE_BASE_XML.read(xml, mProcRule);
+
+            mProcRule.par1 = xml.getAttribute(PAR1, "");
+            mProcRule.par2 = xml.getAttribute(PAR2, "");
+        }
+
+        @Override
+        public void write(MProcRuleTestImpl mProcRule, javolution.xml.XMLFormat.OutputElement
+            xml) throws XMLStreamException {
+            M_PROC_RULE_BASE_XML.write(mProcRule, xml);
+
+            xml.setAttribute(PAR1, mProcRule.par1);
+            xml.setAttribute(PAR2, mProcRule.par2);
+        }
+    };
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Overiding one of <code>isForPost*()</code> methods (for allowing of processing of a needed message processing step). In our example it is <code>isForPostArrivalState()</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">    @Override
+    public boolean isForPostArrivalState() {
+        return true;
+    }</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Implementing of a needed <code>matches***()</code> methods.
+In our example we process messages which destination address digits are started with a configurable parameter "par1".</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">    @Override
+    public boolean matchesPostArrival(MProcMessage message) {
+        if (message.getDestAddr().startsWith(par1))
+            return true;
+        else
+            return false;
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For <code>matches***()</code> methods we will use interface <code class="class">MProcMessage</code> interface which provides info for processing message fields.
+Here is a code of these interfaces.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.smsc.mproc;
+
+import java.util.Date;
+
+public interface MProcMessage {
+
+    // source address part
+    int getSourceAddrTon();
+
+    int getSourceAddrNpi();
+
+    String getSourceAddr();
+
+    // dest address part
+    int getDestAddrTon();
+
+    int getDestAddrNpi();
+
+    String getDestAddr();
+
+    // message content part
+    String getShortMessageText();
+
+    byte[] getShortMessageBin();
+
+    // other options
+    int getNetworkId();
+
+    int getOrigNetworkId();
+
+    String getOrigEsmeName();
+
+    OrigType getOriginationType();
+
+    Date getScheduleDeliveryTime();
+
+    Date getValidityPeriod();
+
+    int getDataCoding();
+
+    int getNationalLanguageSingleShift();
+
+    int getNationalLanguageLockingShift();
+
+    int getEsmClass();
+
+    int getPriority();
+
+    int getRegisteredDelivery();
+
+    String getOriginatorSccpAddress();
+
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Implementing of methods that make some actions: In example above this is <code>onPostArrival()</code> and the action is adding "par2" prefix into destination address digits.
+These methods will be invoked for all messages that match rule&#8217;s conditions.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">    @Override
+    public void onPostArrival(PostArrivalProcessor factory, MProcMessage message) throws Exception {
+        String destAddr = this.par2 + message.getDestAddr();
+        factory.updateMessageDestAddr(message, destAddr);
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In <code>onPostArrival()</code>, <code>onPostImsiRequest()</code> and <code>onPostDelivery()</code> methods user can use provided interfaces  <code class="class">PostArrivalProcessor</code>, <code class="class">PostImsiProcessor</code> and <code class="class">PostDeliveryProcessor</code> that provide methods for message processing / adding / dropping / rejecting.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code class="class">PostArrivalProcessor</code> interface content:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.smsc.mproc;
+
+import java.util.Date;
+
+import org.apache.log4j.Logger;
+
+public interface PostArrivalProcessor {
+
+    // access to environmental parameters
+    /**
+     * @return the logger that an application can use for logging info into server.log
+     */
+    Logger getLogger();
+
+    // actions
+    /**
+     * Drop the message. Success response (that a message is accepted) will be return to
+     * a message originator.
+     */
+    void dropMessage();
+
+    /**
+     * Drop the message. A reject will be sent to a message originator.
+     */
+    void rejectMessage();
+
+    // updating of a message section
+    void updateMessageNetworkId(MProcMessage message, int newNetworkId);
+
+    /**
+     * Updating of destination address message TON. In case of bad value (&lt;0 or &gt;6)
+     * MProcRuleException will be thrown
+     *
+     * @param message
+     * @param newDestTon
+     * @throws MProcRuleException
+     */
+    void updateMessageDestAddrTon(MProcMessage message, int newDestTon) throws MProcRuleException;
+
+
+    /**
+     * Updating of destination address message NPI. In case of bad value (&lt;0 or &gt;6)
+     * MProcRuleException will be thrown
+     *
+     * @param message
+     * @param newDestNpi
+     * @throws MProcRuleException
+     */
+    void updateMessageDestAddrNpi(MProcMessage message, int newDestNpi) throws MProcRuleException;
+
+    /**
+     * Updating of destination address message digits. Value can not be null and must have length
+     * 1-21 characters. In case of bad value MProcRuleException will be thrown
+     *
+     * @param message
+     * @param newDigits
+     * @throws MProcRuleException
+     */
+    void updateMessageDestAddr(MProcMessage message, String newDigits) throws MProcRuleException;
+
+    /**
+     * Updating of source address message TON. In case of bad value (&lt;0 or &gt;6)
+     * MProcRuleException will be thrown
+     *
+     * @param message
+     * @param newDestTon
+     * @throws MProcRuleException
+     */
+    void updateMessageSourceAddrTon(MProcMessage message, int newDestTon) throws MProcRuleException;
+
+    /**
+     * Updating of source address message NPI. In case of bad value (&lt;0 or &gt;6)
+     * MProcRuleException will be thrown
+     *
+     * @param message
+     * @param newDestNpi
+     * @throws MProcRuleException
+     */
+    void updateMessageSourceAddrNpi(MProcMessage message, int newDestNpi) throws MProcRuleException;
+
+    /**
+     * Updating of source address message digits. Value can not be null and must have length
+     * 1-21 characters. In case of bad value MProcRuleException will be thrown
+     *
+     * @param message
+     * @param newDigits
+     * @throws MProcRuleException
+     */
+    void updateMessageSourceAddr(MProcMessage message, String newDigits) throws MProcRuleException;
+
+    /**
+     * Updating of message text. Value must not be null and must have length 0-4300. In case
+     * of bad value MProcRuleException will be thrown
+     *
+     * @param message
+     * @param newShortMessageText
+     * @throws MProcRuleException
+     */
+    void updateShortMessageText(MProcMessage message, String newShortMessageText) throws MProcRuleException;
+
+    /**
+     * Updating of UDH binary content. Value can be null or must have length &gt; 0. In case
+     * of bad value MProcRuleException will be thrown
+     *
+     * @param message
+     * @param newShortMessageText
+     * @throws MProcRuleException
+     */
+    void updateShortMessageBin(MProcMessage message, byte[] newShortMessageBin) throws MProcRuleException;
+
+    /**
+     * Updating of ScheduleDeliveryTime - the time before which a message will not be
+     * delivered. This value can be null, this means that the message will be tried to
+     * delivery immediately. This value must be at least 3 hours before a delivery
+     * period end. If you pass the value that is later then 3 hours before a delivery
+     * period end, then 3 hours before a delivery period end will be set. If you
+     * change both ValidityPeriod and ScheduleDeliveryTime values, then you have to
+     * setup ValidityPeriod value firstly.
+     *
+     * @param message
+     * @param newScheduleDeliveryTime
+     */
+    void updateScheduleDeliveryTime(MProcMessage message, Date newScheduleDeliveryTime);
+
+    /**
+     * Updating delivery period end time. This value can be null, this means that
+     * delivery period will be set to a default delivery period value of SMSC GW.
+     * If the value is more than max validity period that is configured for SMSC GW,
+     * then max validity period will be used instead of a provided value. If you change
+     * both ValidityPeriod and ScheduleDeliveryTime values, then you have to setup
+     * ValidityPeriod value firstly.
+     *
+     * @param message
+     * @param newValidityPeriod
+     */
+    void updateValidityPeriod(MProcMessage message, Date newValidityPeriod);
+
+    void updateDataCoding(MProcMessage message, int newDataCoding);
+
+    void updateDataCodingGsm7(MProcMessage message);
+
+    void updateDataCodingGsm8(MProcMessage message);
+
+    void updateDataCodingUcs2(MProcMessage message);
+
+    void updateNationalLanguageSingleShift(MProcMessage message,
+        int newNationalLanguageSingleShift);
+
+    void updateNationalLanguageLockingShift(MProcMessage message,
+        int newNationalLanguageLockingShift);
+
+    void updateEsmClass(MProcMessage message, int newEsmClass);
+
+    void updateEsmClass_ModeDatagram(MProcMessage message);
+
+    void updateEsmClass_ModeTransaction(MProcMessage message);
+
+    void updateEsmClass_ModeStoreAndForward(MProcMessage message);
+
+    void updateEsmClass_TypeNormalMessage(MProcMessage message);
+
+    void updateEsmClass_TypeDeliveryReceipt(MProcMessage message);
+
+    void updateEsmClass_UDHIndicatorPresent(MProcMessage message);
+
+    void updateEsmClass_UDHIndicatorAbsent(MProcMessage message);
+
+    void updatePriority(MProcMessage message, int newPriority);
+
+    void updateRegisteredDelivery(MProcMessage message, int newRegisteredDelivery);
+
+    void updateRegisteredDelivery_DeliveryReceiptNo(MProcMessage message);
+
+    void updateRegisteredDelivery_DeliveryReceiptOnSuccessOrFailure(MProcMessage message);
+
+    void updateRegisteredDelivery_DeliveryReceiptOnFailure(MProcMessage message);
+
+    void updateRegisteredDelivery_DeliveryReceiptOnSuccess(MProcMessage message);
+
+    // new message posting section
+    /**
+     * Creating a new message template for filling and sending by postNewMessage() method
+     */
+    MProcNewMessage createNewEmptyMessage(OrigType originationType);
+
+    MProcNewMessage createNewCopyMessage(MProcMessage message);
+
+    MProcNewMessage createNewResponseMessage(MProcMessage message);
+
+    /**
+     * Posting a new message. To post a new message you need: create a message template
+     * by invoking of createNewMessage(), fill it and post it be invoking of
+     * postNewMessage(). For this new message no mproc rule and diameter request will
+     * be applied.
+     */
+    void postNewMessage(MProcNewMessage message);
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><code class="class">PostImsiProcessor</code> interface content:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.smsc.mproc;
+
+import org.apache.log4j.Logger;
+
+public interface PostImsiProcessor {
+
+    // access to environmental parameters
+    /**
+     * @return the logger that an application can use for logging info into server.log
+     */
+    Logger getLogger();
+
+    // actions
+    void dropMessages();
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><code class="class">PostDeliveryProcessor</code> interface content:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.smsc.mproc;
+
+import org.apache.log4j.Logger;
+
+public interface PostDeliveryProcessor {
+
+    // access to environmental parameters
+    /**
+     * @return the logger that an application can use for logging info into server.log
+     */
+    Logger getLogger();
+
+    boolean isDeliveryFailure();
+
+    // actions
+    /**
+     * Creating a new message template for filling and sending by postNewMessage() method
+     */
+    MProcNewMessage createNewEmptyMessage(OrigType originationType);
+
+    MProcNewMessage createNewCopyMessage(MProcMessage message);
+
+    MProcNewMessage createNewResponseMessage(MProcMessage message);
+
+    /**
+     * Posting a new message. To post a new message you need: create a message template
+     * by invoking of createNewMessage(), fill it and post it be invoking of
+     * postNewMessage(). For this new message no mproc rule and diameter request will
+     * be applied.
+     */
+    void postNewMessage(MProcNewMessage message);
+
+}</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Once all the source code is fully implemented, user should deploy it.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>User must compile java code and create a jar library.
+Copy the created jar into the folder <em class="path">restcomm-smscgateway-&lt;version&gt;/jboss-5.1.0.GA/server/&lt;profile&gt;/deploy/restcomm-smsc-server/lib</em>.</p>
+</li>
+<li>
+<p>You need to update <em class="path">restcomm-smscgateway-&lt;version&gt;/jboss-5.1.0.GA/server/&lt;profile&gt;/deploy/restcomm-smsc-server/META-INF/jboss-beans.xml</em> config file.</p>
+<div class="paragraph">
+<p>Define factory implementing <code class="class">MProcRuleFactory</code>in above example it will be <code class="class">MProcRuleFactoryTestImpl</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">    &lt;bean name="MProcRuleFactoryTest" class="org.mobicents.smsc.mproc.testimpl.MProcRuleFactoryTestImpl"&gt;
+    &lt;/bean&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>bean name can be some unique name.</p>
+</div>
+<div class="paragraph">
+<p>In the "bean name="SmscManagement"" section - property &lt;property name="MProcRuleFactories"&gt; - after the line &lt;inject bean="MProcRuleFactoryDefault"/&gt; (that means default mproc rules implementing) - add the line that describes your new created bean:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">        &lt;property name="MProcRuleFactories"&gt;
+            &lt;list elementClass="org.mobicents.smsc.mproc.MProcRuleFactory"&gt;
+                &lt;inject bean="MProcRuleFactoryDefault"/&gt;
+                &lt;inject bean="MProcRuleFactoryTest"/&gt;
+            &lt;/list&gt;
+        &lt;/property&gt;</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Start SMSC GW</p>
+</li>
+<li>
+<p>Create an mproc rule by using CLI interface.
+Let&#8217;s create a rule with id=1 that will be applied for messages which destination adresses are started with "22" and this rule will add prefix "33". To achive it run CLI console and run the following command</p>
+<div class="paragraph">
+<p>smsc mproc add testrule 1 22 33</p>
+</div>
+<div class="paragraph">
+<p>where "testrule" is an implemented class name, "22 33" is aparameter string.</p>
+</div>
+</li>
+<li>
+<p>Send a message to the destination address that starts with "22" (for example "221111") and find that the message will be delivered to the address with prefix "33" ("33221111" in our example).| |</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sms-home-routing"><a class="anchor" href="#sms-home-routing"></a>SMS Home Routing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>According to traditional GSM specifications, all outbound messages pass through an SMSC in the sending network.
+This allows the SMSC to convert the Mobile Originated (MO) messages into Mobile Terminated (MT) messages and deliver them directly to the destination devices, regardless of what network they are on.
+As a result, inbound messages generated on other networks will be sent directly to the destination devices under the control of the SMSC in the sending network, not the home network.
+In this traditional setup, operators can add value to the MO messages but not to the MT messages that the customer may receive from other networks, since they do not pass through an SMSC in the home network.</p>
+</div>
+<div class="paragraph">
+<p>SMS Home Routing is a modification to the original GSM specifications, adopted by the 3GPP in 2007, that changed the way inbound messages are treated by the mobile networks.
+Home Routing uses the recipient network&#8217;s Home Location Register (HLR) to change the flow of inbound messages, directing them to an MT Services Platform, rather than straight to the destination devices.
+The MT Services platform can add value to the MT messages and apply advanced services such as anti-spam, protection, divert, archiving, etc.
+to the messages prior to delivery.</p>
+</div>
+<div class="paragraph">
+<p>Home Routing enables operators to offer a full range of value-added services to both inbound and outbound SMS thereby enhancing customer experience while generating additional revenue for the operators.</p>
+</div>
+<div class="paragraph">
+<p>Restcomm SMSC supports SMS Home Routing that enables you to handle Mobile Terminated messages in the network that owns the customer so you can offer a full range of advanced and value added services on both inbound and outbound SMS.
+You need to configure SMSC GW before you can use SMS Home Routing.
+For more details refer to <a href="#_smsc_gateway_server_hr">[_smsc_gateway_server_hr]</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_diameter_ocs_server"><a class="anchor" href="#_diameter_ocs_server"></a>Interworking with Diameter OCS server</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_diameter_ocs_server_general"><a class="anchor" href="#_diameter_ocs_server_general"></a>General information</h3>
+<div class="paragraph">
+<p>SMSC GW can interoperate with an OCS server via Diameter protocol connection.</p>
+</div>
+<div class="paragraph">
+<p>For this case SMSC GW can be configured so any incoming SMPP, MO SS7, Home Routing SS7 and SIP originated messages before next processing will be sent to OCS server.
+Then OCS server can check if SMSC GW must accept the message or not.
+If yes, SMSC GW will process the message, if not, the message will be dropped.
+OCS server can also make any charging operations as needed.</p>
+</div>
+<div class="paragraph">
+<p>For SMPP and MO SS7 originated messages SMSC GW will return error (reject) in the response back to the orgiginated message submit message.
+So MO and SMPP part will be informed if the message is rejected.
+(This functionality is not implemented now for Home Routing SS7 and SIP originated messages).</p>
+</div>
+<div class="paragraph">
+<p>For interconnecting with OCS Server SMSC GW uses diameter CCR (Credit-Control Request) with following filled AVPs (all of them are located in AVP Service-Information (873)):</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 4. The AVP list</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">AVP name</th>
+<th class="tableblock halign-left valign-top">AVP code</th>
+<th class="tableblock halign-left valign-top">AVP Type</th>
+<th class="tableblock halign-left valign-top">Parent AVP</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMS-Information</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Grouped</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Service-Information</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMS service specific information elements</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Originator-SCCP-Address</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2008</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Address</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMS-Information</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The CallingParty SCCP Address of MO message</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMSC-Address</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2017</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Address</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMS-Information</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMSC address as it is present in SM_RP_DA field in MO request. For not MO messages the value will be taken as a configured SMSC GT for networkId area</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Data-Coding-Scheme</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer 32</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMS-Information</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Data Coding Scheme of a message (for example 0 for GSM7 encoding or 8 for UCS2 encoding)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SM-Message-Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2007</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Message type, usually SUBMISSION (value = 0)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Originator-Interface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2009</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Grouped</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMS-Information</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Information related to the Interface on which the message originated.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interface-Id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2003</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UTF8-String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Originator-Interface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NetworkID value of the Interface on which the message originated.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interface-Text</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2005</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UTF8-String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Originator-Interface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of ESME / SIP connector on which the message originated.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Recipient-Info</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2026</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Grouped</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMS-Information</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Information associated with a recipient.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Recipient-Address</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1201</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Grouped</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Recipient-Info</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The address of message receiver (destination address)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Address-Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">899</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enum</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Recipient-Address</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type of Recipient-Address: 1-MSISDN (for TON=1 - international) or 6-Other (for TON!=1)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Address-Data</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">897</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UTF8-String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Recipient-Address</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Digits of Recipient-Address</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Originator-Received-Address</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2027</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Grouped</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMS-Information</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The address of message sender (source address)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Address-Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">899</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enum</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Originator-Received-Address</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type of Originator-Received-Address: 1-MSISDN (for TON=1 - international) or 6-Other (for TON!=1)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Address-Data</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">897</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UTF8-String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Originator-Received-Address</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Digits of Originator-Received-Address</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>When OCS server responds with 2001 code (access granted) SMSC GW will accept the message, all other respond codes will reject the message.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_diameter_ocs_server_conig"><a class="anchor" href="#_diameter_ocs_server_conig"></a>Configuring</h3>
+<div class="paragraph">
+<p>You can use Telestax OCS server or any third party OCS server as you wish.
+SMSC GW party configuring is the same for both.
+Here there is a describtion for the case of Telestax OCS server and as an example - the simpliest case when we have OCS at the same host as SMSC GW.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure: Steps for configuring of SMSC GW and OCS server</div>
+<ol class="arabic">
+<li>
+<p>SMSC GW must be already configured for accepting and sending messages (general, SS7, SMPP, etc parts)</p>
+</li>
+<li>
+<p>You can download for testing the Telestax OCS server from <a href="https://telestax.zendesk.com/forums/22947518-Product-Downloads" class="bare">https://telestax.zendesk.com/forums/22947518-Product-Downloads</a>.
+Download and unpack it to a separate folder.</p>
+</li>
+<li>
+<p>SMSC GW uses the updated AVP dictionary library.
+Before using of OCS server copy from SMSC GW the file &lt;smsc gw root folder&gt;/resource/ocs/dictionary.xml to Telestax OCS server to the folder &lt;jboss&gt;/server/default/deploy/RestComm-diameter-mux-6.2.0.GA.sar/config.</p>
+</li>
+<li>
+<p>for simple test configuring of SMSC GW and OCS server you can copy example config files jdiameter-config.xml</p>
+<div class="ulist">
+<ul>
+<li>
+<p>from &lt;smsc gw root folder&gt;/resource/ocs/smsc-part to SMSC GW &lt;jboss&gt;/server/default/deploy/RestComm-diameter-mux-6.2.0.GA.sar/config</p>
+</li>
+<li>
+<p>from &lt;smsc gw root folder&gt;/resource/ocs/ocs-part to OCS server &lt;jboss&gt;/server/default/deploy/RestComm-diameter-mux-6.2.0.GA.sar/config</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Those configs suppose that you use Telestax OCS server and it is on the same host.
+If not you need to make extra configuring.
+In the testing config files SMSC GW plays a role of a diameter client and OCS server - a diameter server.
+In this case for OCS server part we need to update jdiameter-config.xml file:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>&lt;LocalPeer&gt; section with URI, IPAddresses and Realm.</p>
+</li>
+<li>
+<p>In &lt;Network&gt; we need to specify &lt;Peer&gt; (SMSC GW diameter IP) and &lt;Realm&gt; (name and the same Realm that is configured in SMSC GW part)</p>
+<div class="paragraph">
+<p>For SMSC GW part we need to update:</p>
+</div>
+</li>
+<li>
+<p>&lt;LocalPeer&gt; section with URI, IPAddresses and Realm.</p>
+</li>
+<li>
+<p>In &lt;Network&gt; we need to specify &lt;Peer&gt; (OCS server diameter IP) and &lt;Realm&gt; (name and the same Realm that is configured in OCS server part)
+You can read more for configuring in the manuals for Telestax Diameter protocol and Telestax OCS server.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Start OCS server.
+If it is located in the same host as SMSC GW you need to run it "-b 127.0.0.2" parameter so it uses 127.0.0.2 IP address (127.0.0.1 is used by SMSC GW) Use fo starting the command like:</p>
+<div class="listingblock">
+<div class="content">
+<pre>run -b 127.0.0.2</pre>
+</div>
+</div>
+</li>
+<li>
+<p>For accessing OCS managing console (after OCS server is started) use a browser with URL: <a href="http://127.0.0.2:8080/charging-server-rest-management/#/users" class="bare">http://127.0.0.2:8080/charging-server-rest-management/#/users</a></p>
+<div class="paragraph">
+<p>Avoid of using of Microsoft Internet Explorer, OCS server does not work correctly with it.</p>
+</div>
+<div class="paragraph">
+<p>Add one or more test subscribers by the console.
+You need to specify an address of message sender (source address). OCS Server idendifies a subscriber by its sender address.</p>
+</div>
+</li>
+<li>
+<p>Start SMSC GW</p>
+</li>
+<li>
+<p>You need to configure Destination Realm, Destination Host, Destination Port and User Name (of OCS server) - see the chapter "6.1.5.
+Diameter Settings" of SMSC GW Admin guide.
+You can take values from jdiameter-config.xml.
+You can assign for User Name any value (for example "telestax").</p>
+</li>
+<li>
+<p>You need to specify which messages will be sent to OCS server (see chapter <a href="#_smsc_diameter_settings">[_smsc_diameter_settings]</a>). For example if you want to charge mobile originated messages -  specify "Mobile Originated SMS Charged" to value "diameter".</p>
+</li>
+<li>
+<p>SMSC GW is configured</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="cdr-logging-settings"><a class="anchor" href="#cdr-logging-settings"></a>CDR Logging Settings</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Restcomm SMSC is configured to generate CDR in a plain text file located at <em class="path">restcomm-smscgateway-&lt;version&gt;/jboss-5.1.0.GA/server/&lt;profile&gt;/log/cdr.log</em> and also detailed CDR in Cassandra table <code>MESSAGES_yyyy_mm_dd</code>.</p>
+</div>
+<div class="paragraph">
+<p>Restcomm SMSC can be configured to generate CDR for different message processing modes (<code>datagramm, transactional, storeAndForward</code>) and also for both receipt and regular messages or generate CDR only for regular messages.
+This is configurable by setting <code>generateCdr</code>, <code>generateArchiveTable</code> and <code>generateReceiptCdr</code> using the CLI or the GUI.
+For more details refer to Sections <a href="#_generatecdr">[_generatecdr]</a>, <a href="#_generatearchivetable">[_generatearchivetable]</a> and <a href="#_generatereceiptcdr">[_generatereceiptcdr]</a>.</p>
+</div>
+<div class="paragraph">
+<p>The CDR generated in a text file is of a specific format.
+The details of the format and the possible values for the fields recorded in the CDR log file are explained in <a href="#_monitoring_smsc_cdr_log">[_monitoring_smsc_cdr_log]</a>.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2016-03-24 22:54:44 WET
+</div>
+</div>
+</body>
+</html>
