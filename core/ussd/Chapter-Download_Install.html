@@ -22746,7 +22746,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Installing Restcomm USSD GATEWAY is easy and quick with the binary download.
+<p>Installing Restcomm GMLC is easy and quick with the binary download.
 You can either download the binary release or download the source code and set up from source.</p>
 </div>
 </div>
@@ -22755,7 +22755,7 @@ You can either download the binary release or download the source code and set u
 <h2 id="_downloading_binary"><a class="anchor" href="#_downloading_binary"></a>Binary Download and Installation</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The binary release is available for download at TeleStax Customer Support Portal &amp;THIS.RELEASE_BINARY_URL;link:</p>
+<p>The binary release is available for download at <a href="https://github.com/Restcomm/gmlc/" class="bare">https://github.com/Restcomm/gmlc/</a></p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure: Binary Download and Installation</div>
@@ -22782,15 +22782,15 @@ You can either download the binary release or download the source code and set u
 <h2 id="_dir_structure"><a class="anchor" href="#_dir_structure"></a>Directory Structure</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>When you download the binary release, you will notice that the top level directory is named <code>mobicents-ussdgateway-&lt;version&gt;</code> and immediately below this are five sub-directories as explained below:</p>
+<p>When you download the binary release, you will notice that the top level directory is named <code>restcomm-gmlc-&lt;version&gt;</code> and immediately below this are five sub-directories as explained below:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>docs: Contains all relevant documentation in respective subfolders for JSLEE, jSS7, Management-HQ and USSD.</p>
+<p>docs: Contains all relevant documentation in respective subfolders for JSLEE, jSS7, Management-HQ and GMLC.</p>
 </li>
 <li>
-<p>jboss-5.1.0.GA: The core server with two profiles "default" and "simulator". The "default" profile is a clean profile where you will have to start from scratch and configure the entire SS7 Stack and USSD Gateway.
+<p>jboss-5.1.0.GA: The core server with two profiles "default" and "simulator". The "default" profile is a clean profile where you will have to start from scratch and configure the entire SS7 Stack and GMLC Gateway.
 The "simulator" profile is a pre-configured profile to work with jss7-simulator.
 Refer to the Admin Guide for instructions on how to start the server in either of the profiles.</p>
 </li>
@@ -22804,11 +22804,11 @@ Refer to the Admin Guide for instructions on how to start the server in either o
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>|- mobicents-ussdgateway-&lt;version&gt;
+<pre>|- restcomm-gmlc-&lt;version&gt;
 		|- docs
 				|+ jss7
 				|+ slee
-				|+ ussd
+				|+ GMLC
 				|+ management-hq
 		|- jboss-5.1.0.GA
 				|+ bin    //contains start up and shutdown scripts for the Server and the start up script for Shell.
@@ -22821,16 +22821,13 @@ Refer to the Admin Guide for instructions on how to start the server in either o
 					|+ simulator	//pre-configured profile to work with the jss7-simulator
 		|- resources
 				|+ http-client
-				|+ http-servlet
-				|+ jdbc
 				|+ map
 		|- tools
 				|+ eclipslee
 				|+ jopr-plugin
 				|+ remote-slee-connection
 				|+ snmp
-				|+ Mobicents-jss7-simulator
-				|+ Mobicents-ussd-simulator
+				|+ restcomm-jss7-simulator
 				|+ twiddle</pre>
 </div>
 </div>
@@ -22840,12 +22837,12 @@ Refer to the Admin Guide for instructions on how to start the server in either o
 <h2 id="_source_code"><a class="anchor" href="#_source_code"></a>Setup from Source</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Restcomm USSD GATEWAY is an open source project and you have the freedom to build from source.
+<p>Restcomm GMLC is an open source project and you have the freedom to build from source.
 Building from source means you can stay on top with the latest features.
-Whilst aspects of Restcomm USSD GATEWAY are quite  complicated, you may find ways to become contributors.</p>
+Whilst aspects of Restcomm GMLC are quite  complicated, you may find ways to become contributors.</p>
 </div>
 <div class="paragraph">
-<p>Restcomm USSD GATEWAY works with JDK1.7 or above.
+<p>Restcomm GMLC works with JDK1.7 or above.
 In addition you must have the following tools installed.</p>
 </div>
 <div class="ulist">
@@ -22857,7 +22854,7 @@ In addition you must have the following tools installed.</p>
 <p><code>Maven 3.2.X</code> : Instructions for using Maven, including install, can be found at <a href="http://maven.apache.org/" class="bare">http://maven.apache.org/</a></p>
 </li>
 <li>
-<p><code>Ant 1.7.0</code> : Instructions for using Ant, including install, can be found at <a href="http://ant.apache.org" class="bare">http://ant.apache.org</a></p>
+<p><code>Ant 1.9.X</code> : Instructions for using Ant, including install, can be found at <a href="http://ant.apache.org" class="bare">http://ant.apache.org</a></p>
 </li>
 </ul>
 </div>
@@ -22872,8 +22869,8 @@ In addition you must have the following tools installed.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>[usr]$ git clone &amp;THIS.TRUNK_SOURCE_CODE_URL;
-[usr]$ cd ussdgateway
+<pre class="highlight"><code>[usr]$ git clone https://userid@bitbucket.org/telestax/restcomm-gmlc.git
+[usr]$ cd restcomm-gmlc
 [usr]$ git checkout &lt;version&gt;</code></pre>
 </div>
 </div>
@@ -22882,7 +22879,7 @@ In addition you must have the following tools installed.</p>
 <p>Building the source code</p>
 <div class="paragraph">
 <p>Now that we have the source the next step is to build and install the source.
- Restcomm USSD GATEWAY uses Maven 2 to build the system.
+ Restcomm GMLC uses Maven 2 to build the system.
 You must ensure that <code>JAVA_HOME</code> environment variable is set properly prior to building the source.</p>
 </div>
 <div class="listingblock">
@@ -22905,7 +22902,7 @@ You must ensure that <code>JAVA_HOME</code> environment variable is set properly
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-03-23 11:27:30 WET
+Last updated 2016-03-24 10:13:50 WET
 </div>
 </div>
 <footer>

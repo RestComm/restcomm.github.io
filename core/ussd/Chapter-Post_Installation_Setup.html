@@ -22733,7 +22733,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <ul class="sectlevel1">
 <li><a href="#memory-settings">Memory Settings</a></li>
 <li><a href="#database-settings">Database Settings</a></li>
-<li><a href="#_ss7_ussd_settings">Configuring the Gateway</a></li>
+<li><a href="#_ss7_gmlc_settings">Configuring the Gateway</a></li>
 </ul>
 </div>
 </div>
@@ -22762,15 +22762,15 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <h2 id="database-settings"><a class="anchor" href="#database-settings"></a>Database Settings</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Every transaction in the Restcomm USSD GATEWAY is logged in a Database.
+<p>Every transaction in the Restcomm GMLC is logged in a Database.
 By default, transactions are logged in the HSQLDB that comes bundled with JBoss AS and leverages the JBoss AS DataSource.
-However this is only made available to allow the platform to run "out of the box". You must configure a production ready Database prior to using the Gateway in a production environment. Restcomm USSD GATEWAY has been tested with PostgreSQL and MySQL.</p>
+However this is only made available to allow the platform to run "out of the box". You must configure a production ready Database prior to using the Gateway in a production environment. Restcomm GMLC has been tested with PostgreSQL and MySQL.</p>
 </div>
 <div class="paragraph">
-<p>The example HSQLDB DataSource is bound to the JNDI name java:/DefaultDS and its descriptor is available in the file <em class="path">mobicents-ussdgateway-version&gt;/jboss-5.1.0.GA/server/default/deploy/hsqldb-ds.xml</em>.
+<p>The example HSQLDB DataSource is bound to the JNDI name java:/DefaultDS and its descriptor is available in the file <em class="path">restcomm-gmlc-version&gt;/jboss-5.1.0.GA/server/default/deploy/hsqldb-ds.xml</em>.
 You must delete this datasource and configure the Platform to use your choice of Database.
 For instructions on configuring an alternate DataSource, please refer to Chapter 14, "Using Other Databases" in the JBoss AS Getting Started Guide available <a href="https://community.jboss.org/wiki/JBossAS5InstallationAndGettingStartedGuide">here</a>.
-You will also find a lot of examples in the folder <em class="path">mobicents-ussdgateway-version&gt;/jboss-5.1.0.GA/docs/examples/jca/</em>.</p>
+You will also find a lot of examples in the folder <em class="path">restcomm-gmlc-version&gt;/jboss-5.1.0.GA/docs/examples/jca/</em>.</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -22788,22 +22788,22 @@ You must ensure that you delete this datasource and configure a production-frien
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ss7_ussd_settings"><a class="anchor" href="#_ss7_ussd_settings"></a>Configuring the Gateway</h2>
+<h2 id="_ss7_gmlc_settings"><a class="anchor" href="#_ss7_gmlc_settings"></a>Configuring the Gateway</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Now that you have installed Restcomm USSD GATEWAY to suit your needs, you can go ahead and configure the SS7 Stack and the USSD Gateway to meet your requirements.
-The Restcomm jSS7 Stack User Guide in the <em class="path">mobicents-ussdgateway-&lt;version&gt;/docs/ss7/</em> folder will assist you in configuring and managing the SS7 Stack.
-Only when you have completely configured the SS7 Stack to meet your requirements, you must go ahead with configuring the USSD Gateway.
-The Restcomm  USSD GATEWAY  Admin Guide in the <em class="path">mobicents-ussdgateway-&lt;version&gt;/docs/ussd/</em> folder will assist you in configuring and managing the USSD Gateway.
+<p>Now that you have installed Restcomm GMLC to suit your needs, you can go ahead and configure the SS7 Stack and the GMLC Gateway to meet your requirements.
+The Restcomm jSS7 Stack User Guide in the <em class="path">restcomm-gmlc-&lt;version&gt;/docs/ss7/</em> folder will assist you in configuring and managing the SS7 Stack.
+Only when you have completely configured the SS7 Stack to meet your requirements, you must go ahead with configuring the GMLC Gateway.
+The Restcomm  GMLC  Admin Guide in the <em class="path">restcomm-gmlc-&lt;version&gt;/docs/GMLC/</em> folder will assist you in configuring and managing the GMLC Gateway.
 To configure and manage both the Stack and the Gateway you must use the Command Line Interface (CLI) tool that comes with the platform.
-For instructions on starting the Shell and help with commands, please refer to the Restcomm  USSD GATEWAY  Admin Guide.</p>
+For instructions on starting the Shell and help with commands, please refer to the Restcomm  GMLC  Admin Guide.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-03-23 11:27:30 WET
+Last updated 2016-03-24 10:13:50 WET
 </div>
 </div>
 <footer>
