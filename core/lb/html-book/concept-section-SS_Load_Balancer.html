@@ -453,6 +453,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#getting-statistic">Getting statistic</a></li>
+<li><a href="#configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine">Configuring Load-balancer and two Restcomm servers on the one local machine</a></li>
 </ul>
 </div>
 </div>
@@ -1334,7 +1335,7 @@ With consistent hash algorithms there is no state to be preserved in the SIP/HTT
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/bidirectional-distributed-sip-lb.gif" alt="bidirectional distributed sip lb">
+<img src="./images/WSS_Failover_Goal.png" alt="WSS Failover Goal">
 </div>
 <div class="title">Figure 4. Example deployment: IP load balancers serving both directions forincoming/outgoing requests in a cluster</div>
 </div>
@@ -1745,10 +1746,430 @@ You can get next data:</p>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine"><a class="anchor" href="#configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine"></a>Configuring Load-balancer and two Restcomm servers on the one local machine</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="./images/Restcomm_servers-LB.png" alt="Restcomm servers LB">
+</div>
+<div class="title">Figure 6. Load balancer and Restcomm servers diagram</div>
+</div>
+<div class="paragraph">
+<p>This chapter will show you how to configure two Restcomm instances and Load Balancer instance on one machine with OS Ubuntu.</p>
+</div>
+<div class="paragraph">
+<div class="title">Step 0: Create three sub interfaces</div>
+<p>Example for Ubuntu:</p>
+</div>
+<div class="paragraph">
+<p>Restcomm-server1</p>
+</div>
+<div class="paragraph">
+<p>root@ubuntu:~# ifconfig lo:1 127.0.0.2 netmask 255.255.255.0</p>
+</div>
+<div class="paragraph">
+<p>Restcomm-server2</p>
+</div>
+<div class="paragraph">
+<p>root@ubuntu:~# ifconfig lo:2 127.0.0.3 netmask 255.255.255.0</p>
+</div>
+<div class="paragraph">
+<p>Load balancer</p>
+</div>
+<div class="paragraph">
+<p>root@ubuntu:~# ifconfig lo:3 127.0.0.4 netmask 255.255.255.0</p>
+</div>
+<div class="paragraph">
+<div class="title">Step 1: Install Mysql</div>
+<p>Example for Ubuntu: <a href="https://www.linode.com/docs/databases/mysql/install-mysql-on-ubuntu-14-04" class="bare">https://www.linode.com/docs/databases/mysql/install-mysql-on-ubuntu-14-04</a></p>
+</div>
+<div class="olist arabic">
+<div class="title">Step 2: Download the latest version of Restcomm</div>
+<ol class="arabic">
+<li>
+<p>Download the latest version of Restcomm zip file from:
+<a href="https://mobicents.ci.cloudbees.com/job/RestComm/lastSuccessfulBuild/artifact/" class="bare">https://mobicents.ci.cloudbees.com/job/RestComm/lastSuccessfulBuild/artifact/</a></p>
+</li>
+<li>
+<p>Unzip the binary to a local directory. It should be similar to this Mobicents-Restcomm-JBoss-AS7-&lt;version-number&gt;.
+We shall refer to this above Restcomm directory as the $RESTCOMM_HOME.</p>
+</li>
+</ol>
+</div>
+<div class="olist arabic">
+<div class="title">Step 3: Configuring the mybatis.xml file to use Mysql</div>
+<ol class="arabic">
+<li>
+<p>Edit the file $RESTCOMM_HOME/standalone/deployments/restcomm.war/WEB-INF/conf/mybatis.xml</p>
+</li>
+<li>
+<p>Change the &lt;environments default="production"&gt; to  &lt;environments default="mariadb"&gt;</p>
+</li>
+<li>
+<p>Add the MariaDB configuration environment tag as shown below</p>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;environment id="mariadb"&gt;
+  &lt;transactionManager type="JDBC"/&gt;
+  &lt;dataSource type="POOLED"&gt;
+    &lt;property name="driver" value="com.mysql.jdbc.Driver"/&gt;
+    &lt;property name="url" value="jdbc:mysql://127.0.0.1:3306/restcomm"/&gt;
+    &lt;property name="username" value="SQL_Login"/&gt;
+    &lt;property name="password" value="SQL_Password"/&gt;
+  &lt;/dataSource&gt;
+&lt;/environment&gt;</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Save and exit the mybatis.xml file</p>
+</li>
+</ol>
+</div>
+<div class="olist arabic">
+<div class="title">Step 4: Start Mysql and Create the restcomm Database</div>
+<ol class="arabic">
+<li>
+<p>Start mysql service if it is not already started  – sudo /etc/init.d/mysql start</p>
+</li>
+<li>
+<p>Go to the directory $RESTCOMM_HOME/standalone/deployments/restcomm.war/WEB-INF/scripts/mariadb</p>
+</li>
+<li>
+<p>There will be an init.sql file and an sql directory</p>
+</li>
+<li>
+<p>Create the restcomm database from the init.sql as follows:</p>
+<div class="literalblock">
+<div class="content">
+<pre>mysql -u root -p &lt; init.sql</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Log into mysql and make sure the restcomm database is created :  show databases</p>
+</li>
+</ol>
+</div>
+<div class="olist arabic">
+<div class="title">Step 5: Edit the restcomm.xml file to point the DAO to mysql</div>
+<ol class="arabic">
+<li>
+<p>Edit the file $RESTCOMM_HOME/standalone/deployments/restcomm.war/WEB-INF/conf/restcomm.xml</p>
+</li>
+<li>
+<p>Find the dao-manager tag and change the sql-files path to mariadb as shown below</p>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;dao-manager class="org.mobicents.servlet.restcomm.dao.mybatis.MybatisDaoManager"&gt;
+  &lt;configuration-file&gt;${restcomm:home}/WEB-INF/conf/mybatis.xml&lt;/configuration-file&gt;
+  &lt;data-files&gt;&lt;/data-files&gt;
+  &lt;sql-files&gt;${restcomm:home}/WEB-INF/scripts/mariadb/sql&lt;/sql-files&gt;
+&lt;/dao-manager&gt;</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="olist arabic">
+<div class="title">Step 6: Download Mysql Java Client Driver</div>
+<ol class="arabic">
+<li>
+<p>Download the latest mysql java connector client driver jar file from <a href="http://mvnrepository.com/artifact/mysql/mysql-connector-java" class="bare">http://mvnrepository.com/artifact/mysql/mysql-connector-java</a>.</p>
+</li>
+<li>
+<p>Put jar file in $RESTCOMM_HOME/standalone/deployments/restcomm.war/WEB-INF/lib/</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<div class="title">Step 7: Download key store file for SSL</div>
+<p>You can download file from
+<a href="https://github.com/RestComm/load-balancer/blob/master/config-examples/keystore" class="bare">https://github.com/RestComm/load-balancer/blob/master/config-examples/keystore</a>
+(password 123456) or create independently and put this file
+in package $RESTCOMM_HOME/standalone/configuration/</p>
+</div>
+<div class="olist arabic">
+<div class="title">Step 8: Edit mss-sip-stack.properties file</div>
+<ol class="arabic">
+<li>
+<p>Edit the file $RESTCOMM_HOME/standalone/configuration/mss-sip-stack.properties</p>
+</li>
+<li>
+<p>Add next lines to file</p>
+<div class="literalblock">
+<div class="content">
+<pre>org.mobicents.ha.javax.sip.BALANCERS=127.0.0.4:5082
+org.mobicents.ha.javax.sip.LOCAL_HTTP_PORT=8080
+org.mobicents.ha.javax.sip.LOCAL_SSL_PORT=8443
+org.mobicents.ha.javax.sip.REACHABLE_CHECK=false
+gov.nist.javax.sip.TLS_CLIENT_AUTH_TYPE=Disabled
+javax.net.ssl.keyStore=/absolutePathToKeystore/keystore
+javax.net.ssl.keyStorePassword=123456
+javax.net.ssl.trustStorePassword=123456
+javax.net.ssl.trustStore=/absolutePathToKeystore/keystore
+javax.net.ssl.keyStoreType=JKS</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="olist arabic">
+<div class="title">Step 9: Configure Restcomm IP information and Text-to-speech</div>
+<ol class="arabic">
+<li>
+<p>Go to the directory $RESTCOMM_HOME/bin/restcomm</p>
+</li>
+<li>
+<p>Open the file restcomm.conf</p>
+</li>
+<li>
+<p>Go to the section # Network configuration</p>
+</li>
+<li>
+<p>Configure the following variables with the network configuration details of your first server.</p>
+<div class="literalblock">
+<div class="content">
+<pre>#Network configuration
+NET_INTERFACE='lo:1'
+PRIVATE_IP='127.0.0.2'
+SUBNET_MASK='255.255.255.0'
+NETWORK='127.0.0.0'
+BROADCAST_ADDRESS='127.0.0.255'</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Add next parameters for enabling https connector (password and alias for file from github example)</p>
+<div class="literalblock">
+<div class="content">
+<pre>#HTTPS Settings
+#File should be located at $RESTCOMM_HOME/standalone/configuration folder.
+#Provide just the name of the trustore file. Leave it blank to disable HTTPS
+TRUSTSTORE_FILE='keystore'
+#Password for the trustore file
+TRUSTSTORE_PASSWORD='123456'
+#The certificate alias
+TRUSTSTORE_ALIAS='smpp'
+#Control whether or not Restcomm will accept self-signed certificates.
+#Values allowall=allow #self-signed certificates,
+#strict=don't allow self signed certificates
+SSL_MODE='allowall'</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Add your VoiceRSS API key to the variable</p>
+<div class="literalblock">
+<div class="content">
+<pre>VOICERSS_KEY=‘f4840af6675b4d20a8d96dea8466296b‘</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Also edit next lines</p>
+<div class="literalblock">
+<div class="content">
+<pre>ACTIVATE_LB='TRUE'
+LB_ADDRESS='127.0.0.4'
+LB_INTERNAL_PORT='5082'
+LB_SIP_PORT_UDP='5080'
+LB_SIP_PORT_TCP='5080'
+LB_SIP_PORT_TLS='5081'
+LB_SIP_PORT_WS='5082'
+LB_SIP_PORT_WSS='5083'</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Save and exit the restcomm.conf file</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<div class="title">Step 10: Configure proxy.conf file</div>
+<p>Change in $RESTCOMM_HOME/bin/restcomm/proxy.conf file next lines</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>ACTIVE_PROXY='true'
+PROXY_IP='172.21.0.104'
+PROXY_PRIVATE_IP='127.0.0.4'</pre>
+</div>
+</div>
+<div class="olist arabic">
+<div class="title">Step 11: Configuration second Restcomm server</div>
+<ol class="arabic">
+<li>
+<p>Copy $RESTCOMM_HOME folder to separate folder and change next files there:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>$RESTCOMM_HOME/bin/restcomm/restcomm.conf</p>
+<div class="literalblock">
+<div class="content">
+<pre>NET_INTERFACE='lo:2'
+PRIVATE_IP='127.0.0.3'</pre>
+</div>
+</div>
+</li>
+<li>
+<p>$RESTCOMM_HOME/bin/restcomm/start-restcomm.sh</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Because we are going to start second Restcomm server on same machine,
+we should change name of screen session "restcomm" to "restcomm2"
+or something like that and name of screen session "mms" to "mms2".
+Also we should add property -bmanagement=$bind_address, as shown below:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>if screen -list | grep -q 'restcomm2'; then
+echo 'TelScale RestComm is already running on screen session "restcomm2"!'
+....
+echo 'TelScale RestComm started running on standalone mode. Screen session: restcomm2.'
+....
+$RESTCOMM_HOME/bin/standalone.sh -b $bind_address -bmanagement=$bind_address
+else
+screen -dmS 'restcomm2' $RESTCOMM_HOME/bin/standalone.sh -b $bind_address -bmanagement=$bind_address
+....
+screen -dmS 'restcomm2' $RESTCOMM_HOME/bin/domain.sh -b $bind_address -bmanagement=$bind_address
+echo 'TelScale RestComm started running on domain mode. Screen session: restcomm2.'
+....
+screen -dmS 'restcomm2' $RESTCOMM_HOME/bin/standalone.sh -b $bind_address -bmanagement=$bind_address
+echo 'TelScale RestComm started running on standalone mode. Screen session: restcomm2.'
+....
+if screen -ls | grep -q 'mms2'; then
+echo '...Mobicents Media Server is already running on screen session "mms2"!'
+else
+chmod +x $MMS_HOME/bin/run.sh
+screen -dmS 'mms2'  $MMS_HOME/bin/run.sh
+echo '...Mobicents Media Server started running on screen "mms2"!'</pre>
+</div>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>$RESTCOMM_HOME/bin/restcomm/stop-restcomm.sh</p>
+<div class="literalblock">
+<div class="content">
+<pre>if screen -ls | grep -q 'mms2'; then
+screen -S 'mms2' -p 0 -X 'quit'
+echo '...stopped Mobicents Media Server instance running on screen session "mms2"...'
+....
+if screen -list | grep -q 'restcomm2'; then
+screen -S 'restcomm2' -p 0 -X 'quit'
+echo '...stopped RestComm instance running on screen session "restcomm2"!'</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="olist arabic">
+<div class="title">Step 12: Start Restcomm servers and Open the Admin GUI</div>
+<ol class="arabic">
+<li>
+<p>Go to the directory Restcomm by running the $RESTCOMM_HOME/bin/restcomm/</p>
+</li>
+<li>
+<p>Run the command below to start Restcomm and the media server:</p>
+<div class="literalblock">
+<div class="content">
+<pre>./start-restcomm.sh</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Open your web browser and go to the url – <a href="http://127.0.0.2:8080/" class="bare">http://127.0.0.2:8080/</a></p>
+</li>
+<li>
+<p>Log in with the username=<a href="mailto:administrator@company.com">administrator@company.com</a> and the password=RestComm
+You will be prompted to change the default password.</p>
+</li>
+<li>
+<p>For stopping Restcomm run the command:</p>
+<div class="literalblock">
+<div class="content">
+<pre>./stop-restcomm.sh</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="olist arabic">
+<div class="title">Step 13: Download and configuring of Load Balancer</div>
+<ol class="arabic">
+<li>
+<p>Download last version of load balancer jar file from <a href="https://mobicents.ci.cloudbees.com/job/Restcomm-LoadBalancer/lastSuccessfulBuild/artifact/jar/target/sip-balancer-jar-x.x.xx-jar-with-dependencies.jar" class="bare">https://mobicents.ci.cloudbees.com/job/Restcomm-LoadBalancer/lastSuccessfulBuild/artifact/jar/target/sip-balancer-jar-x.x.xx-jar-with-dependencies.jar</a>.
+Where &lt;x.x.xx&gt; is the release version number</p>
+</li>
+<li>
+<p>Download configuration file for load balancer from <a href="https://mobicents.ci.cloudbees.com/job/Restcomm-LoadBalancer/ws/lb-configuration.properties" class="bare">https://mobicents.ci.cloudbees.com/job/Restcomm-LoadBalancer/ws/lb-configuration.properties</a></p>
+</li>
+<li>
+<p>Download log4g file for load balancer from <a href="https://mobicents.ci.cloudbees.com/job/Restcomm-LoadBalancer/ws/lb-log4j.xml" class="bare">https://mobicents.ci.cloudbees.com/job/Restcomm-LoadBalancer/ws/lb-log4j.xml</a></p>
+</li>
+<li>
+<p>Put this files in one folder</p>
+</li>
+<li>
+<p>Modify lb-configuration.properties file for correct work. Comment #host= line, and uncomment end set up next lines:</p>
+<div class="literalblock">
+<div class="content">
+<pre>externalHost=172.21.0.104
+externalPort=5090
+internalHost=127.0.0.4
+internalPort=5082</pre>
+</div>
+</div>
+</li>
+<li>
+<p>If you need the transport UDP,TCP,TLS the property isTransportWs must be "false", if UDP, WS, WSS this propery must be "true" and set up next lines:</p>
+<div class="literalblock">
+<div class="content">
+<pre>externalSecurePort=5091
+internalSecurePort=5083</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<div class="title">Step 14: Use Olympus with Restcomm for WS and WSS</div>
+<p>For adding certificate of Load balancer to your browser you should connect to it:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://127.21.0.104:5091" class="bare">https://127.21.0.104:5091</a></p>
+</div>
+<div class="paragraph">
+<p>and confirm certificate.</p>
+</div>
+<div class="paragraph">
+<p>For WS:</p>
+</div>
+<div class="paragraph">
+<p>Login to Restcomm server <a href="http://127.0.0.2:8080/olympus/" class="bare">http://127.0.0.2:8080/olympus/</a>
+Fill in form: Load Balancer&#8217;s ip adress (externalHost) 172.21.0.104 and port(externalPort) 5090</p>
+</div>
+<div class="paragraph">
+<p>For WSS:</p>
+</div>
+<div class="paragraph">
+<p>Login to Restcomm server <a href="https://127.0.0.2:8443/olympus/" class="bare">https://127.0.0.2:8443/olympus/</a>
+Fill in form: Load Balancer&#8217;s ip adress (externalHost) 172.21.0.104 and port (externalSecurePort) 5091</p>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-04-05 10:54:34 WEST
+Last updated 2016-04-06 10:52:47 WEST
 </div>
 </div>
 </body>
