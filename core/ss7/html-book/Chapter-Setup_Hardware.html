@@ -428,7 +428,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="paragraph">
 <p>Restcomm jSS7 supports <code>dahdi</code> based SS7 cards like <code>diguim</code> and <code>sangoma</code> as well as <code>dialogic</code> cards.
-Since <code>dahdi</code> based SS7 crads do not have MTP2/MTP3 support on board they rely on external software to provide these services.
+Since <code>dahdi</code> based SS7 cards do not have MTP2/MTP3 support on board they rely on external software to provide these services.
 But <code>dialogic</code> based SS7 cards have on board support for MTP2/MTP3 and recommended.</p>
 </div>
 <div class="paragraph">
@@ -457,6 +457,9 @@ The following external links point to information that will assist you in settin
 </td>
 <td class="content">
 <div class="paragraph">
+<p>Before JSS7 stack can interoperate with an installed card you need to provide extra native libs for both Dialogic and dahdi cards. The way where you can obtain native libs is explains &#8230;&#8203;&#8230;&#8203;&#8230;&#8203;&#8230;&#8203;&#8230;&#8203;&#8230;&#8203;..</p>
+</div>
+<div class="paragraph">
 <p>The corresponding native libraries for <code>dialogic</code> and <code>dahdi</code> from folder  <code>restcomm-jss7-&lt;version&gt;/ss7/native/32</code> or <code>restcomm-jss7-&lt;version&gt;/ss7/native/64</code> should be copied  to <code>$JBOSS_HOME/bin/META-INF/lib/linux2/x86</code> if OS is 32 bit or copied to  <code>$JBOSS_HOME/bin/META-INF/lib/linux2/x64</code> if OS is 64 bit.</p>
 </div>
 <div class="paragraph">
@@ -484,7 +487,7 @@ The following external links point to information that will assist you in settin
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-04-06 10:41:03 WEST
+Last updated 2016-04-07 09:43:54 WEST
 </div>
 </div>
 </body>
