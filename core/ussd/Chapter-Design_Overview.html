@@ -22749,23 +22749,43 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>&amp;THIS.PLATFORM;&amp;THIS.APPLICATION;is based on robust and proven &amp;THIS.PLATFORM;JAIN SLEE 1.1 Server and &amp;THIS.PLATFORM;jSS7 Stack.</p>
+<p>Restcomm  USSD GATEWAY is based on robust and proven Restcomm  JAIN SLEE 1.1 Server and Restcomm  jSS7 Stack.</p>
 </div>
 <div class="paragraph">
-<p>&amp;THIS.PLATFORM;JAIN SLEE Server is a highly scalable event-driven application server with a robust component model and fault tolerant execution environment.
+<p>Restcomm  JAIN SLEE Server is a highly scalable event-driven application server with a robust component model and fault tolerant execution environment.
 It provides a set of connectors to a variety of networks elements: SS7 MAP, TCAP, INAP, ISUP, SMPP, XMPP, SIP, MGCP, HTTP, XDM, XCAP, Diameter and many others.
 It is fully compliant with JSR 240 (JSLEE 1.1).</p>
 </div>
 <div class="paragraph">
-<p>&amp;THIS.PLATFORM;jSS7 is a software based implementation of the SS7 protocol.
-It provides implementation for Level 2 and above in the SS7 protocol Stack. &amp;THIS.PLATFORM;jSS7 Stack User Guide is bundled within and you can refer to the guide for more details on the Stack.</p>
+<p>Restcomm  jSS7 is a software based implementation of the SS7 protocol.
+It provides implementation for Level 2 and above in the SS7 protocol Stack. Restcomm  jSS7 Stack User Guide is bundled within and you can refer to the guide for more details on the Stack.</p>
 </div>
 <div class="paragraph">
 <p>The diagram below depicts top design overview:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/GMLC-application-design-overview.png" alt="GMLC application design overview">
+<img src="./images/ussd-application-design-overview.png" alt="ussd application design overview">
+</div>
+</div>
+<div class="paragraph">
+<p>Restcomm  USSD GATEWAY provides Load Balancing and Fault Tolerance.
+Two or more third-party Application Servers can be paired to provide Fault-Tolerance on the Gateway and GSM Network level.</p>
+</div>
+<div class="paragraph">
+<p>Geographic Redundancy can be achieved as shown in the diagram below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/MultipleGeoghraphicSite.png" alt="MultipleGeoghraphicSite">
+</div>
+</div>
+<div class="paragraph">
+<p>Below diagram shows how to achieve load-balancing by connecting to two STP&#8217;s from Operator side.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/Load-balanced-USSD-Topology.png" alt="Load balanced USSD Topology">
 </div>
 </div>
 <div class="admonitionblock important">
@@ -22778,6 +22798,16 @@ It provides implementation for Level 2 and above in the SS7 protocol Stack. &amp
 <div class="paragraph">
 <p>As of now, the Gateway supports the following protocols for proxying:</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>HTTP</p>
+</li>
+<li>
+<p>SIP</p>
+</li>
+</ul>
+</div>
 </td>
 </tr>
 </table>
@@ -22787,7 +22817,7 @@ It provides implementation for Level 2 and above in the SS7 protocol Stack. &amp
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-04-07 09:54:36 WEST
+Last updated 2016-04-07 11:54:12 WEST
 </div>
 </div>
 <footer>
@@ -22878,7 +22908,7 @@ var qodeLike = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php"};
 <script type='text/javascript' src='http://telestax.com/wp-content/themes/bridge/js/ScrollToPlugin.min.js?ver=4.4.2'></script>
 <script type='text/javascript' src='http://telestax.com/wp-content/themes/bridge/js/smoothPageScroll.min.js?ver=4.4.2'></script>
 <script type='text/javascript' src='http://telestax.com/wp-content/themes/bridge/js/default_dynamic.js?ver=1457115435'></script-->
-<script type='text/javascript' src='./js/default.js?ver=4.4.2'></script>
+<script type='text/javascript' src='http://documentation.telestax.com/js/default.js?ver=4.4.2'></script>
 <!--script type='text/javascript' src='http://telestax.com/wp-content/themes/bridge/js/custom_js.js?ver=1457115435'></script-->
 </body>
 </html>

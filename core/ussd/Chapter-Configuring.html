@@ -22748,9 +22748,36 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#memory-settings">1. Memory Settings</a></li>
-<li><a href="#_java_setting">2. JSupported Java Version</a></li>
+<li><a href="#cdr-logging-settings">2. CDR Logging Settings</a>
+<ul class="sectlevel2">
+<li><a href="#_configure_datasource">2.1. Configuring an Alternate DataSource</a></li>
+<li><a href="#_configure_jslee_jdbc_ra">2.2. Configuring JSLEE JDBC RA</a></li>
+<li><a href="#_table_structure">2.3. CDR Table Structure</a></li>
+</ul>
+</li>
 <li><a href="#_http_client_ra">3. Configuring JSLEE http-client RA</a></li>
-<li><a href="#_configuring_ss7">4. Configuring the SS7 Stack</a></li>
+<li><a href="#_logging">4. Configuring log4j Logging Service</a></li>
+<li><a href="#_configuring_ss7">5. Configuring the SS7 Stack</a></li>
+<li><a href="#_configuring_ussd_gw">6. Configuring the USSD Gateway</a>
+<ul class="sectlevel2">
+<li><a href="#_set_noroutingruleconfigerrmssg">6.1. No Routing Rule Configured Error Message</a></li>
+<li><a href="#_set_dialogtimeouterrmssg">6.2. Dialog Timeout Error Message</a></li>
+<li><a href="#_set_servererrmssg">6.3. Server Error Message</a></li>
+<li><a href="#_set_dialogtimeout">6.4. Dialog Timeout</a></li>
+<li><a href="#_set_hrhlrnumber">6.5. Special HLR addressing</a></li>
+<li><a href="#_set_cdrlogging">6.6. CDR logging - Database / Textfile</a></li>
+<li><a href="#_setting_ussd_gt">6.7. USSD Global Title</a></li>
+<li><a href="#_setting_ussd_ssn">6.8. USSD Sub System Number</a></li>
+<li><a href="#_setting_ussd_hlrssn">6.9. HLR Sub System Number</a></li>
+<li><a href="#_setting_ussd_mscssn">6.10. MSC Sub System Number</a></li>
+<li><a href="#_setting_ussd_maxmapv">6.11. MAP Application Context version</a></li>
+<li><a href="#_setting_ussd_routing_rules_show">6.12. View USSD Rules</a></li>
+<li><a href="#_setting_ussd_routing_rules_create">6.13. Create new USSD Rule</a></li>
+<li><a href="#_setting_ussd_routing_rules_modify">6.14. Modify an existing USSD Rule</a></li>
+<li><a href="#_setting_ussd_routing_rules_delete">6.15. Delete USSD Rule</a></li>
+</ul>
+</li>
+<li><a href="#_configuring_ussd_simulator_profile">7. Simulator Profile</a></li>
 </ul>
 </div>
 </div>
@@ -22758,9 +22785,9 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>You must fine-tune Memory and Database settings for better performance before using Restcomm GMLC in production.
-Once you complete setting up the Gateway you must configure the SS7 Stack and GMLC paramters. Restcomm GMLC comes with a convenient user-friendly Graphical User Interface (GUI) and a Command Line Interface (CLI) that will allow you to configure, monitor and manage the Gateway.
-While the CLI tool allows complete configuration and control of the Gateway, the GUI-based management enhances the usability of the Gateway and gives you the ability to configure and manage the GMLC Gateway dynamically.
+<p>You must fine-tune Memory and Database settings for better performance before using Restcomm USSD GATEWAY in production.
+Once you complete setting up the Gateway you must configure the SS7 Stack, USSD routing rules and USSD paramters. Restcomm USSD GATEWAY comes with a convenient user-friendly Graphical User Interface (GUI) and a Command Line Interface (CLI) that will allow you to configure, monitor and manage the Gateway.
+While the CLI tool allows complete configuration and control of the Gateway, the GUI-based management enhances the usability of the Gateway and gives you the ability to configure and manage the USSD Gateway dynamically.
 This chapter will explain how to manage the Gateway effectively using both the GUI and the CLI.</p>
 </div>
 </div>
@@ -22770,7 +22797,7 @@ This chapter will explain how to manage the Gateway effectively using both the G
 <div class="sectionbody">
 <div class="paragraph">
 <p>You should fine tune the JVM memory settings based on your needs but we recommend you allocate a minimum of 3 GB for initial and maximum heap size.
-These settings are specified in the file[path]<em>restcomm-gmlc-/jboss-5.1.0.GA/bin/run.conf</em>.</p>
+These settings are specified in the file[path]<em>mobicents-ussdgateway-/jboss-5.1.0.GA/bin/run.conf</em>.</p>
 </div>
 <div class="dlist">
 <dl>
@@ -22787,11 +22814,261 @@ These settings are specified in the file[path]<em>restcomm-gmlc-/jboss-5.1.0.GA/
 </div>
 </div>
 <div class="sect1">
-<h2 id="_java_setting"><a class="anchor" href="#_java_setting"></a>2. JSupported Java Version</h2>
+<h2 id="cdr-logging-settings"><a class="anchor" href="#cdr-logging-settings"></a>2. CDR Logging Settings</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>GMLC Gateway can run only with Java 7 JRE or JDK.
-We refered Oracle Java 7 JDK.</p>
+<p>Every transaction in the Restcomm USSD GATEWAY is logged either in a Textfile or a Database as per the configuration.
+By default, transactions are logged in a plain text file.
+Alternatively, you can choose to have CDR logged in a Database instead of a plain text file.
+You will find instructions for both in the sections below.</p>
+</div>
+<div class="paragraph">
+<p>If you change the configuration to log CDR in a Database, then you must be aware that transactions are logged into the default Database HSQLDB that comes bundled with JBoss AS and leverages the JBoss AS DataSource.
+However this is only made available to allow the platform to run "out of the box". You must configure a production ready Database prior to using the Gateway in a production environment. Restcomm USSD GATEWAY has been tested with PostgreSQL and MySQL.</p>
+</div>
+<div class="paragraph">
+<p>To switch between Database and plain text file, you can make use of the CLI command <code>ussd set cdrloggingto &lt;Database|Textfile&gt;</code> or configure this in the GUI.
+Refer to  <a href="#_set_cdrlogging">CDR logging - Database / Textfile</a> for more details.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+HSQLDB must not be used in a production environment.
+You must ensure that you delete this datasource and configure a production-friendly Database like PostgreSQL or MySQL.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_configure_datasource"><a class="anchor" href="#_configure_datasource"></a>2.1. Configuring an Alternate DataSource</h3>
+<div class="paragraph">
+<p>The example HSQLDB DataSource is bound to the JNDI name java:/DefaultDS and its descriptor is available in the file <em class="path">mobicents-ussdgateway-/jboss-5.1.0.GA/server/&lt;profile&gt;/deploy/hsqldb-ds.xml</em>.
+You must delete this datasource and configure the Platform to use your choice of Database.
+For instructions on configuring an alternate DataSource with an example, please refer to <a href="#_configuring_mysql">[_configuring_mysql]</a>.
+For detailed instructions and explanation please refer to the JBoss AS Getting Started Guide available <a href="https://community.jboss.org/wiki/JBossAS5InstallationAndGettingStartedGuide">here</a>.
+You will also find a lot of examples in the folder <em class="path">mobicents-ussdgateway-/jboss-5.1.0.GA/docs/examples/jca/</em>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configure_jslee_jdbc_ra"><a class="anchor" href="#_configure_jslee_jdbc_ra"></a>2.2. Configuring JSLEE JDBC RA</h3>
+<div class="paragraph">
+<p>Restcomm USSD GATEWAY leverages JSLEE JDBC RA for persistence.
+Detailed JSLEE JDBC RA documentation is available in <em class="path">mobicents-ussdgateway-/docs/slee/Mobicents_SLEE_RA_JDBC_User_Guide.pdf</em> that explains how to point to the new DataSource.
+An example configuration is explained in this admin guide in the section <a href="#_configuring_mysql">[_configuring_mysql]</a>.
+When you have completed configuring an alternate DataSource in JBoss AS, you can proceed to modify JSLEE configurations accordingly.
+You must change the Dialect in the file <em class="path">mobicents-ussdgateway-/jboss-5.1.0.GA/server/&lt;profile&gt;/deploy/mobicents-slee/META-INF/jboss-beans.xml</em> to reflect your alternate DataSource.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_table_structure"><a class="anchor" href="#_table_structure"></a>2.3. CDR Table Structure</h3>
+<div class="listingblock">
+<div class="content">
+<pre>CREATE TABLE USSD_GW_CDRS (ID VARCHAR(150) NOT NULL, L_SPC INT, L_SSN SMALLINT, L_RI SMALLINT, L_GT_I SMALLINT, L_GT_DIGITS VARCHAR(18), R_SPC INT, R_SSN SMALLINT, R_RI SMALLINT, R_GT_I SMALLINT, R_GT_DIGITS VARCHAR(18), SERVICE_CODE VARCHAR(50), OR_NATURE SMALLINT, OR_PLAN SMALLINT, OR_DIGITS VARCHAR(18), DE_NATURE SMALLINT, DE_PLAN SMALLINT, DE_DIGITS VARCHAR(18), ISDN_NATURE SMALLINT, ISDN_PLAN SMALLINT, ISDN_DIGITS VARCHAR(18), VLR_NATURE SMALLINT, VLR_PLAN SMALLINT, VLR_DIGITS VARCHAR(18), IMSI VARCHAR(100), STATUS VARCHAR(30) NOT NULL , TYPE VARCHAR(30) NOT NULL , TSTAMP TIMESTAMP NOT NULL , LOCAL_DIALOG_ID BIGINT, REMOTE_DIALOG_ID BIGINT, PRIMARY KEY(ID,TSTAMP));
+
+where
+
+ID : Primary unique key
+
+L_SPC : Local Signaling Pointcode
+
+L_SSN : Local Subsystem Number
+
+L_RI : Local Routing Indicator
+
+L_GT_I : Local Global Title Indicator whose values are
+NO_GLOBAL_TITLE_INCLUDED(0)
+GLOBAL_TITLE_INCLUDES_NATURE_OF_ADDRESS_INDICATOR_ONLY(1)
+GLOBAL_TITLE_INCLUDES_TRANSLATION_TYPE_ONLY(2)
+GLOBAL_TITLE_INCLUDES_TRANSLATION_TYPE_NUMBERING_PLAN_AND_ENCODING_SCHEME(3)
+GLOBAL_TITLE_INCLUDES_TRANSLATION_TYPE_NUMBERING_PLAN_ENCODING_
+					     SCHEME_AND_NATURE_OF_ADDRESS(4)
+
+L_GT_DIGITS : Local Global Title Digits
+
+R_SPC : Remote Signaling Pointcode
+
+R_SSN : Remote Subsystem Number
+
+R_RI : Remote Routing Indicator
+
+R_GT_I : Remote Global Title Indicator
+
+R_GT_DIGITS : Remote Global Title Digits
+
+SERVICE_CODE : The short code dialed by user, for example *519#
+
+OR_NATURE : AddressNature of origination
+If the MAP Dialog carries Originating Address Reference this is captured in this column
+Possible values are:
+unknown(0), international_number(1), national_significant_number(2), network_specific_number(3),
+subscriber_number(4), reserved( 5), abbreviated_number(6) and reserved_for_extension(7)
+
+OR_PLAN : Numbering Plan of origination.
+Possible values are:
+unknown(0), ISDN(1), spare_2(2), data(3), telex(4), spare_5(5), land_mobile(6),
+spare_7(7), national(8), private_plan(9), reserved(15);
+
+OR_DIGITS : Digits of origination
+
+DE_NATURE : AddressNature of Destination
+
+DE_PLAN : Numbering Plan of Destination
+
+DE_DIGITS : Digits of destination
+
+ISDN_NATURE : AddressNature
+The incoming MAP Dialog carries ISDN Address of mobile that dialed this shortcode.
+The column ISDN_NATURE captures ISDN details.
+
+ISDN_PLAN : Numbering Plan as explained above
+
+ISDN_DIGITS : Digits of MSISDN
+
+VLR_NATURE : AddressNature
+If MAP version is Ericsson MAP (E-MAP), it carries VLR address and IMSI
+
+VLR_PLAN : Numbering Plan as explained above
+
+VLR_DIGITS : Digits of VLR
+
+IMSI : IMSI
+
+STATUS : Final status of Dialog. Possible values are explained below:
+
+
+TYPE : If the USSD request is pull, its value is PULL or its PUSH
+
+TSTAMP : Time stamp when this request was executed
+
+LOCAL_DIALOG_ID : Local Transaction Id of TCAP Dialog
+
+REMOTE_DIALOG_ID : Remote Transaction Id of TCAP Dialog</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Status : Final status of Dialog can be</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">SUCCESS</dt>
+<dd>
+<p>Dialog ended successfully</p>
+</dd>
+<dt class="hdlist1">FAILED_INVOKE_TIMEOUT</dt>
+<dd>
+<p>Invoke (TCAP) sent from USSD Gateway to peer timed out.</p>
+</dd>
+<dt class="hdlist1">FAILED_DIALOG_TIMEOUT</dt>
+<dd>
+<p>Dialog (TCAP) timed out as there is no activity on Dialog.
+The default dialog timeout is 60 seconds which can be configured on TCAP stack.</p>
+</dd>
+<dt class="hdlist1">FAILED_APP_TIMEOUT</dt>
+<dd>
+<p>Request sent by USSD Gateway to Application timed out.
+Application took longer than configured <code>dialogtimeout</code>.</p>
+</dd>
+<dt class="hdlist1">FAILED_CORRUPTED_MESSAGE</dt>
+<dd>
+<p>Message received by USSD Gateway from HTTP/SIP Application is corrupted.
+Usually this will also create some ERROR traces in server.log</p>
+</dd>
+<dt class="hdlist1">FAILED_TRANSPORT_ERROR</dt>
+<dd>
+<p>Used only for SIP transport for now.
+Indicates transportation error</p>
+</dd>
+<dt class="hdlist1">FAILED_TRANSPORT_FAILURE</dt>
+<dd>
+<p>In case of USSD PULL if Application sennds back non OK (200) response</p>
+</dd>
+<dt class="hdlist1">FAILED_PROVIDER_ABORT</dt>
+<dd>
+<p>Dialog (TCAP) was aborted by peer</p>
+</dd>
+<dt class="hdlist1">FAILED_DIALOG_USER_ABORT</dt>
+<dd>
+<p>Dialog (TCAP) was aborted by user</p>
+</dd>
+<dt class="hdlist1">FAILED_DIALOG_REJECTED</dt>
+<dd>
+<p>Dialog (TCAP) was rejected by user</p>
+</dd>
+<dt class="hdlist1">FAILED_SYSTEM_FAILURE</dt>
+<dd>
+<p>Error happened while parsing the received USSD/SS7 messsage from SS7 peer.
+Usually this will also create some ERROR traces in server.log</p>
+</dd>
+<dt class="hdlist1">FAILED_ABSENT_SUBSCRIBER</dt>
+<dd>
+<p>Subscriber is absent (sent by HLR). Only for USSD PUSH and after MAP SRI is successful</p>
+</dd>
+<dt class="hdlist1">FAILED_ILLEGAL_SUBSCRIBER</dt>
+<dd>
+<p>Subscriber is illegal (sent by HLR). Only for USSD PUSH when MAP SRI is sent</p>
+</dd>
+<dt class="hdlist1">FAILED_USSD_BUSY</dt>
+<dd>
+<p>Subscriber is busy (sent by HLR). Only for USSD PUSH when MAP SRI is sent</p>
+</dd>
+<dt class="hdlist1">FAILED_MAP_ERROR_COMPONENT</dt>
+<dd>
+<p>Some error sent by HLR.</p>
+</dd>
+<dt class="hdlist1">FAILED_MAP_REJECT_COMPONENT</dt>
+<dd>
+<p>Component (Invoke) rejected by HLR.</p>
+</dd>
+<dt class="hdlist1">ABORT_APP</dt>
+<dd>
+<p>Application requested to Abort the Dialog (TCAP)</p>
+</dd>
+<dt class="hdlist1">SRI_DIALOG_REJECTED</dt>
+<dd>
+<p>Dialog (TCAP) was rejected by HLR specifcally when MAP SRI request was sent</p>
+</dd>
+<dt class="hdlist1">SRI_PROVIDER_ABORT</dt>
+<dd>
+<p>Dialog (TCAP) was aborted by peer specifcally when MAP SRI request was sent</p>
+</dd>
+<dt class="hdlist1">SRI_DIALOG_USER_ABORT</dt>
+<dd>
+<p>Dialog (TCAP) was aborted by user specifcally when MAP SRI request was sent</p>
+</dd>
+<dt class="hdlist1">SRI_DIALOG_TIMEOUT</dt>
+<dd>
+<p>Dialog (TCAP) was timedout specifcally MAP SRI Dialog</p>
+</dd>
+<dt class="hdlist1">SRI_MAP_REJECT_COMPONENT</dt>
+<dd>
+<p>Component (Invoke) rejected by HLR specifcally for MAP SRI request</p>
+</dd>
+<dt class="hdlist1">SRI_ABSENT_SUBSCRIBER</dt>
+<dd>
+<p>Subscriber is absent (sent by HLR) specifcally for MAP SRI request</p>
+</dd>
+<dt class="hdlist1">SRI_CALL_BARRED</dt>
+<dd>
+<p>Call is bared (sent by HLR) specifcally for MAP SRI request</p>
+</dd>
+<dt class="hdlist1">SRI_TELESERVICE_NOT_PROVISIONED</dt>
+<dd>
+<p>Teleservice no provisioned (sent by HLR) specifcally for MAP SRI request</p>
+</dd>
+<dt class="hdlist1">SRI_UNKNOWN_SUBSCRIBER</dt>
+<dd>
+<p>Unknown subscriber (sent by HLR) specifcally for MAP SRI request</p>
+</dd>
+<dt class="hdlist1">SRI_MAP_ERROR_COMPONENT</dt>
+<dd>
+<p>Some error (sent by HLR) specifcally for MAP SRI request</p>
+</dd>
+</dl>
+</div>
 </div>
 </div>
 </div>
@@ -22799,27 +23076,1165 @@ We refered Oracle Java 7 JDK.</p>
 <h2 id="_http_client_ra"><a class="anchor" href="#_http_client_ra"></a>3. Configuring JSLEE http-client RA</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Restcomm GMLC acts as a HTTP Client to achieve GMLC pull by sending a HTTP POST/GET request to GMLC gateway.
+<p>Restcomm USSD GATEWAY acts as a HTTP Client to achieve USSD pull by sending a HTTP POST request to third party applications (HTTP Server) for every dialled short code.
 You must configure the HTTP Client JSLEE Resource Adaptor&#8217;s properties to suit your requirements.
-Please refer to the SLEE RA HTTP Client User Guide available in <em class="path">restcomm-gmlc-/docs/slee/RestComm_SLEE_RA_HTTP_Client_User_Guide.pdf</em>.</p>
+Please refer to the SLEE RA HTTP Client User Guide available in <em class="path">mobicents-ussdgateway-/docs/slee/Mobicents_SLEE_RA_HTTP_Client_User_Guide.pdf</em>.</p>
+</div>
+<div class="paragraph">
+<p>For every Short Code Routing rule added in the USSD Gateway, you must ensure that there is a corresponding <code>MAX_CONNECTIONS_FOR_ROUTES</code> property appropriately configured in the HTTP Client JSLEE RA.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+HTTP Client JSLEE RA&#8217;s default configuration allows the http-client to handle only two concurrent connections at a time.
+You must modify the <code>MAX_CONNECTIONS_FOR_ROUTES</code> property to meet your Short Code Routing Rules requirements in production.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_configuring_ss7"><a class="anchor" href="#_configuring_ss7"></a>4. Configuring the SS7 Stack</h2>
+<h2 id="_logging"><a class="anchor" href="#_logging"></a>4. Configuring log4j Logging Service</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>You must configure the SS7 Stack prior to configuring GMLC.
-For details on configuring the SS7 Stack please refer to the RestComm SS7 Stack User Guide.
-The RestComm SS7 Stack User Guide lists all available Shell commands and GUI operations to configure SS7.
+<p>Restcomm USSD GATEWAY uses <code>Apache log4j</code> for logging.
+If you are not familiar with the <code>log4j</code> package, you can read more about it at the Jakarta <a href="http://jakarta.apache.org/log4j/">website</a>.</p>
+</div>
+<div class="paragraph">
+<p>Logging is controlled from a central configuration file located at <em class="path">mobicents-ussdgateway-/jboss-5.1.0.GA/server/&lt;profile&gt;/conf/jboss-log4j.xml</em>, one for each JBoss AS configuration profile.
+This file defines a set of appenders specifying the log files, what categories of messages should go there, the message format and the level of filtering.
+For more details, please refer to Section 9.6.3, "Logging Service" in the JBoss AS Getting Started Guide available <a href="https://community.jboss.org/wiki/JBossAS5InstallationAndGettingStartedGuide">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>You must make sure <code>log4j</code> is fine tuned for optimal performance in production.
+We recommend that you set logging threshold to <code>WARN</code> and let the CDR appender be <code>DEBUG</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuring_ss7"><a class="anchor" href="#_configuring_ss7"></a>5. Configuring the SS7 Stack</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You must configure the SS7 Stack prior to configuring USSD.
+For details on configuring the SS7 Stack please refer to the Mobicents SS7 Stack User Guide.
+The Mobicents SS7 Stack User Guide lists all available Shell commands and GUI operations to configure SS7.
 In addition, help files are also available for every Shell command providing all details relevant to the command.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuring_ussd_gw"><a class="anchor" href="#_configuring_ussd_gw"></a>6. Configuring the USSD Gateway</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Once you have configured the SS7 Stack you can continue with USSD configuration using the CLI tool or the GUI.
+In order to use the CLI you must follow the instructions specified in <a href="#_running_shell">[_running_shell]</a> to run the shell and connect to the managed instance.
+Alternatively you can use the GUI to configure the USSD Gateway through simple GUI operations.
+The GUI will allow you to manage your USSD Gateway efficiently using an user-friendly interface.
+Open a Web Browser, navigate to <a href="http://localhost:8080/mobicents-management/" class="bare">http://localhost:8080/mobicents-management/</a> and switch to the 'USSD GW' tab.</p>
+</div>
+<div class="paragraph">
+<p>You must first set appropriate values for the below USSD parameters and then configure USSD Routing Rules for short codes.
+You can do these using the CLI tool or the GUI.</p>
+</div>
+<div class="dlist">
+<div class="title">USSD Parameters</div>
+<dl>
+<dt class="hdlist1">noroutingruleconfigerrmssg</dt>
+<dd>
+<p>Message shown to end user if USSD Gateway is not configured for the dialed shortcode.</p>
+</dd>
+<dt class="hdlist1">dialogtimeouterrmssg</dt>
+<dd>
+<p>Error message shown to user when request timesout.</p>
+</dd>
+<dt class="hdlist1">servererrmssg</dt>
+<dd>
+<p>The error message shown to user when something goes wrong on the USSD gateway.</p>
+</dd>
+<dt class="hdlist1">dialogtimeout</dt>
+<dd>
+<p>The maximum time allowed by the Gateway for the	application to respond.</p>
+</dd>
+<dt class="hdlist1">cdrloggingto</dt>
+<dd>
+<p>If CDR should be logged to Database or Textfile</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>If the USSD Gateway will be used for network push as well, the following parameters should also be configured:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">ussdgt</dt>
+<dd>
+<p>USSD Gateway Global Title.</p>
+</dd>
+<dt class="hdlist1">ussdssn</dt>
+<dd>
+<p>Sub-System Number (SSN) for USSD Gateway.</p>
+</dd>
+<dt class="hdlist1">hlrssn</dt>
+<dd>
+<p>HLR&#8217;s Sub-System Number (SSN).</p>
+</dd>
+<dt class="hdlist1">mscssn</dt>
+<dd>
+<p>MSC&#8217;s Sub-System Number (SSN).</p>
+</dd>
+<dt class="hdlist1">maxmapv</dt>
+<dd>
+<p>Value of MAP Application Context version (for SendRoutingInfo operation).</p>
+</dd>
+</dl>
+</div>
+<div class="sect2">
+<h3 id="_set_noroutingruleconfigerrmssg"><a class="anchor" href="#_set_noroutingruleconfigerrmssg"></a>6.1. No Routing Rule Configured Error Message</h3>
+<div class="sect3">
+<h4 id="_set_noroutingruleconfigerrmssg_cli"><a class="anchor" href="#_set_noroutingruleconfigerrmssg_cli"></a>6.1.1. Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'No Routing Rule Configured Error Message' by issuing the command <code>ussd set noroutingruleconfigerrmssg</code> with appropriate parameters as described below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	ussd set noroutingruleconfigerrmssg
+
+SYNOPSIS
+	ussd set noroutingruleconfigerrmssg &lt;message&gt;
+
+DESCRIPTION
+	This command is used to set the message to be displayed to the end user if the
+	USSD Gateway is not configured for the dialled short code. For example, if the
+	dialled short code is *345#, but the USSD Gateway is not configured with an
+	appropriate routing rule for this code, then the message displayed to the
+	end user will be the value set for the parameter 'noroutingruleconfigerrmssg'.
+
+EXAMPLES
+	ussd set noroutingruleconfigerrmssg Not valid short code. Please dial valid
+	short code.
+
+	The above command will set the value of the parameter
+	'noroutingruleconfigerrmssg' as "Not valid short code. Please dial valid short
+	code." and the terminal will display the message "Parameter has been successfully
+	set".
+
+	You can verify this by issuing the 'ussd get noroutingruleconfigerrmssg' command
+	whose output will be as below:
+
+	ussd get noroutingruleconfigerrmssg
+	noroutingruleconfigerrmssg = Not valid short code. Please dial valid short code</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_set_noroutingruleconfigerrmssg_gui"><a class="anchor" href="#_set_noroutingruleconfigerrmssg_gui"></a>6.1.2. Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Set No Routing Rule Configured Error Message using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for USSD Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Server Settings (if any), segregated into three tabs: Error Messages, SS7 Settings, Various.
+Switch to the 'Error Messages' tab in the GUI.</p>
+</li>
+<li>
+<p>In the text field 'No routing rule configured error message', you can enter any message to be displayed to the end user if the USSD Gateway is not configured for the dialled short code.
+For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_set_dialogtimeouterrmssg"><a class="anchor" href="#_set_dialogtimeouterrmssg"></a>6.2. Dialog Timeout Error Message</h3>
+<div class="sect3">
+<h4 id="_set_dialogtimeouterrmssg_cli"><a class="anchor" href="#_set_dialogtimeouterrmssg_cli"></a>6.2.1. Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'Dialog Timeout Error Message' by issuing the command <code>ussd set dialogtimeouterrmssg</code> with appropriate parameters as described below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	ussd set dialogtimeouterrmssg
+
+SYNOPSIS
+	ussd set dialogtimeouterrmssg &lt;message&gt;
+
+DESCRIPTION
+	This command is used to set the error message to be displayed to the end user
+	when a request timeout occurs. For example, if the dialed short code is *123#, and
+	the USSD Gateway is configured to route this request to a third party application
+	'xyz' but the application 'xyz' takes longer than the time specified by the
+	value of the parameter 'dialogtimeout' to respond, then the USSD Gateway will kill
+	the session and send an error message to be displayed to the user. This error
+	message displayed to the end user will be the value set for the parameter
+	'dialogtimeouterrmssg'.
+
+EXAMPLES
+	ussd set dialogtimeouterrmssg Request timedout please try again after
+	sometime.
+
+	The above command will set the value of the parameter 'dialogtimeouterrmssg' as
+	"Request timedout please try again after sometime." and the terminal will display
+	the message "Parameter has been successfully set".
+
+	You can verify this by issuing
+	the 'ussd get dialogtimeouterrmssg' command whose output will be as below:
+
+	ussd get dialogtimeouterrmssg
+	dialogtimeouterrmssg = Request timedout please try again after sometime</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_set_dialogtimeouterrmssg_gui"><a class="anchor" href="#_set_dialogtimeouterrmssg_gui"></a>6.2.2. Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Set Dialog Timeout Error Message using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for USSD Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Server Settings (if any), segregated into three tabs: Error Messages, SS7 Settings, Various.
+Switch to the 'Error Messages' tab in the GUI.</p>
+</li>
+<li>
+<p>In the text field 'Dialog timeout error message', you can set the error message to be displayed to the end user when a request timeout occurs.
+For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_set_servererrmssg"><a class="anchor" href="#_set_servererrmssg"></a>6.3. Server Error Message</h3>
+<div class="sect3">
+<h4 id="_set_servererrmssg_cli"><a class="anchor" href="#_set_servererrmssg_cli"></a>6.3.1. Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'Server Error Message' by issuing the command <code>ussd set servererrmssg</code> with appropriate parameters as described below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	ussd set servererrmssg
+
+SYNOPSIS
+	ussd set servererrmssg &lt;message&gt;
+
+DESCRIPTION
+	This command is used to set the message to be displayed to the end user when there
+	is an error in the USSD Gateway. For example if the application server
+	responds to the Gateway's request with a NOT OK (200) response or with an OK
+	response but the XML Payload is corrupt, then the USSD Gateway will kill the
+	session and send a Server error message to be displayed to the end user specified
+	by the value of this paramter 'servererrmssg'.
+
+EXAMPLES
+	ussd set servererrmssg Server error, please try again after sometime
+
+	The above command will set the value for the parameter 'servererrmssg' to "Server
+	error, please try again after sometime" and the terminal will display the message
+	"Parameter has been successfully set".
+
+	You can verify this by issuing the
+	'ussd get servererrmssg' command whose output will be as below:
+
+	ussd get servererrmssg
+	servererrmssg = Server error, please try again after sometime</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_set_servererrmssg_gui"><a class="anchor" href="#_set_servererrmssg_gui"></a>6.3.2. Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Set Server Error Message using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for USSD Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Server Settings (if any), segregated into three tabs: Error Messages, SS7 Settings, Various.
+Switch to the 'Error Messages' tab in the GUI.</p>
+</li>
+<li>
+<p>In the text field 'Server error message', you can set the message to be displayed to the end user when there is an error in the USSD Gateway.
+For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_set_dialogtimeout"><a class="anchor" href="#_set_dialogtimeout"></a>6.4. Dialog Timeout</h3>
+<div class="sect3">
+<h4 id="_set_dialogtimeout_cli"><a class="anchor" href="#_set_dialogtimeout_cli"></a>6.4.1. Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'Dialog Timeout' value by issuing the command <code>ussd set dialogtimeout</code> with appropriate parameters as described below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	ussd set dialogtimeout
+
+SYNOPSIS
+	ussd set dialogtimeout &lt;timeout-value&gt;
+
+DESCRIPTION
+	This command is used to set the request timeout duration in milliseconds.
+	For	example, the end user dials the short code *123#, and the USSD
+	Gateway is configured to route this request to a third party application
+	'xyz'. The value of the parameter 'dialogtimeout' is the maximum time
+	allowed by the Gateway for the application 'xyz' to respond. If the
+	application 'xyz' takes longer than the time specified by the value of
+	the parameter 'dialogtimeout' to respond, then the USSD Gateway will kill
+	the session and send an error message to be displayed to the user.
+	Pay attention that "Dialog Timeout" can not be bigger than TCAP Dialog
+	timeout value (that equals by default 1 minute by default). If you want to
+	setup "Dialog Timeout" value you have to care also for TCAP Dialog timeout.
+	Look at "TCAP" chapture of Mobicents jSS7 Stack User Guide.
+
+EXAMPLES
+	ussd set dialogtimeout 25000
+
+	The above command will set the value of the parameter 'dialogtimeout' to  25000
+	milliseconds and the terminal will display the message "Parameter has been
+	successfully set".
+
+	You can verify this by issuing the 'ussd get dialogtimeout' command whose
+	output will be as below:
+
+	ussd get dialogtimeout
+	dialogtimeout = 25000</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_set_dialogtimeout_gui"><a class="anchor" href="#_set_dialogtimeout_gui"></a>6.4.2. Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Set Dialog Timeout using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for USSD Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Server Settings (if any), segregated into three tabs: Error Messages, SS7 Settings, Various.
+Switch to the 'Various' tab in the GUI.</p>
+</li>
+<li>
+<p>In the text field 'Dialog Timeout', you can set the request timeout duration in milliseconds.
+For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_set_hrhlrnumber"><a class="anchor" href="#_set_hrhlrnumber"></a>6.5. Special HLR addressing</h3>
+<div class="sect3">
+<h4 id="_set_hrhlrnumber_cli"><a class="anchor" href="#_set_hrhlrnumber_cli"></a>6.5.1. Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'HLR address' (for SRI) to be used if SMSC is also present and configured in Home Routing mode, by issuing the command <code>ussd set hrhlrnumber</code> with appropriate parameters as described below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	ussd set hrhlrnumber
+
+SYNOPSIS
+	ussd set hrhlrnumber &lt;hlr GT digits&gt;
+
+DESCRIPTION
+	This command is used to set the HLR address to be used, instead of MSISDN, to
+	be included in the 'calledPartyAddress' field of the SCCP address in the
+	'SendRoutingInfo' message (PUSH mode). This parameter is required in scenarios
+	when the SMSC GW is also configured, specifically in Home Routing mode.
+	If this parameter is not set the default value is '-1' implying MSISDN address
+	will be used.
+
+EXAMPLES
+	ussd set hrhlrnumber 9823232322
+
+	The above command will set the value of the parameter 'hrhlrnumber' to
+	9823232322. You can verify this by issuing the 'ussd get hrhlrnumber' command.</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_set_hrhlrnumber_gui"><a class="anchor" href="#_set_hrhlrnumber_gui"></a>6.5.2. Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Set HLR (for SRI) using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for USSD Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Server Settings (if any), segregated into three tabs: Error Messages, SS7 Settings, Various.
+Switch to the 'Various' tab in the GUI.</p>
+</li>
+<li>
+<p>In the text field 'HLR Address', you can set the HLR GT digits to be used instead of MSISDN.
+For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_set_cdrlogging"><a class="anchor" href="#_set_cdrlogging"></a>6.6. CDR logging - Database / Textfile</h3>
+<div class="sect3">
+<h4 id="_set_cdrlogging_cli"><a class="anchor" href="#_set_cdrlogging_cli"></a>6.6.1. Using CLI</h4>
+<div class="paragraph">
+<p>You can switch between Database and Textfile for CDR logging, by setting the 'cdrloggingto' value issuing the command <code>ussd set cdrloggingto</code> with appropriate parameters as described below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	ussd set cdrloggingto
+
+SYNOPSIS
+	ussd set cdrloggingto &lt;Database | Textfile&gt;
+
+DESCRIPTION
+	This command is used to set CDR logging to either Database or Textfile.
+	By default, the value is Textfile and all transactions are logged to a
+	plain text file.</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_set_cdrlogging_gui"><a class="anchor" href="#_set_cdrlogging_gui"></a>6.6.2. Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Set CDR logging using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for USSD Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Server Settings (if any), segregated into three tabs: Error Messages, SS7 Settings, Various.
+Switch to the 'Various' tab in the GUI.</p>
+</li>
+<li>
+<p>You can set the 'CDR logging to' value as required.
+You can switch between Database and plain Textfile by setting this parameter appropriately.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_setting_ussd_gt"><a class="anchor" href="#_setting_ussd_gt"></a>6.7. USSD Global Title</h3>
+<div class="sect3">
+<h4 id="_setting_ussd_gt_cli"><a class="anchor" href="#_setting_ussd_gt_cli"></a>6.7.1. Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'USSD Global Title' by issuing the command <code>ussd set ussdgt</code> with appropriate parameters as described below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	ussd set ussdgt
+
+SYNOPSIS
+	ussd set ussdgt &lt;globalTitle&gt; networkid &lt;networkId&gt;
+
+DESCRIPTION
+	This command is used to set a value for USSD Global Title.
+
+	networkId - a specifies Global Title for a virtual SS7
+	subnetwork (this is for Multi-tenancy support). By using of
+	this command with different networkIds you can specify
+	Global Titles for several subnetworks.
+	If this parameter is skipped - networkId will be set to "0"
+	when Global Title creation (master networkId).
+	When we do not specify Global Title for some networkid -
+	Global Title for master networkId will be used. When we
+	use "0" as Global Title value
+	(like "ussd set ussdgt 0 networkid &lt;xxx&gt;") -
+	this will just clear Global Title for an specified networkid.
+
+EXAMPLES
+	ussd set ussdgt 912020015
+	ussd set ussdgt 912020015 networkid 2
+
+	The above command will set the value for the parameter 'globalTitle' to
+	'912020015'and the terminal will display the message
+	"Parameter has been successfully set".
+	The first command assigns ussdgt for networkId=0,
+	the second command assigns ussdgt for networkId=2
+
+	You can verify this by issuing the 'ussd get ussdgt' command.
+
+	ussd get ussdgt
+	ussdgt = 912020015</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_setting_ussd_gt_gui"><a class="anchor" href="#_setting_ussd_gt_gui"></a>6.7.2. Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Set USSD Gateway Global Title using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for USSD Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Server Settings (if any), segregated into three tabs: Error Messages, SS7 Settings, Various.
+Switch to the 'SS7 Settings' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify the USSD Global Title by entering values into fields pair 'USSD Gateway Global Title Indicator Network Id' and 'USSD Gateway Global Title'. You are able to set Global Title for definite networkId.
+Setting of Global Title for networkId to "0" leads clearing of Global Title for networkId.
+For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_setting_ussd_ssn"><a class="anchor" href="#_setting_ussd_ssn"></a>6.8. USSD Sub System Number</h3>
+<div class="sect3">
+<h4 id="_setting_ussd_ssn_cli"><a class="anchor" href="#_setting_ussd_ssn_cli"></a>6.8.1. Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'USSD Sub System Number' by issuing the command <code>ussd set ussdssn</code> with appropriate parameters as described below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	ussd set ussdssn
+
+SYNOPSIS
+	ussd set ussdssn &lt;ussdSubSystemNumber&gt;
+
+DESCRIPTION
+	This command is used to set the value for USSD Sub System Number (SSN). Issuing
+	this command in CLI will set the SSN value but you must ensure that the SSN value
+	is properly configured in the TCAP Stack in the xml descriptor file
+	'mobicents-ussdgateway-version/jboss-5.1.0.GA/server/&lt;profile&gt;/deploy/
+	 mobicents-ussd-gateway/META-INF/jboss-beans.xml'
+
+EXAMPLES
+	ussd set ussdssn 6
+
+	The above command will set the value for the parameter 'ussdSubSystemNumber' to
+	'6'and the terminal will display the message
+	"Parameter has been successfully set".
+
+	You can verify this by issuing the 'ussd get ussdssn' command.
+
+	ussd get ussdssn
+	ussdssn = 6</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_setting_ussd_ssn_gui"><a class="anchor" href="#_setting_ussd_ssn_gui"></a>6.8.2. Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Set USSD Sub System Number (SSN) using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for USSD Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Server Settings (if any), segregated into three tabs: Error Messages, SS7 Settings, Various.
+Switch to the 'SS7 Settings' tab in the GUI.</p>
+</li>
+<li>
+<p>In the text field 'USSD Gateway subsystem number', you can set a value for USSD Sub System Number (SSN). Issuing this command in CLI will set the SSN value but you must ensure that the SSN value is properly configured in the TCAP Stack in the xml descriptor file <em class="path">mobicents-ussdgateway-version/jboss-5.1.0.GA/server/&lt;profile&gt;/deploy/mobicents-ussd-gateway/META-INF/jboss-beans.xml</em>.
+For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_setting_ussd_hlrssn"><a class="anchor" href="#_setting_ussd_hlrssn"></a>6.9. HLR Sub System Number</h3>
+<div class="sect3">
+<h4 id="_setting_ussd_hlrssn_cli"><a class="anchor" href="#_setting_ussd_hlrssn_cli"></a>6.9.1. Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'HLR Sub System Number' by issuing the command <code>ussd set hlrssn</code> with appropriate parameters as described below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	ussd set hlrssn
+
+SYNOPSIS
+	ussd set hlrssn &lt;hlrSubSystemNumber&gt;
+
+DESCRIPTION
+	This command is used to set the value for HLR Sub System Number (SSN).
+
+EXAMPLES
+	ussd set hlrssn 7
+
+	The above command will set the value for the parameter 'hlrSubSystemNumber' to
+	'7'and the terminal will display the message
+	"Parameter has been successfully set".
+
+	You can verify this by issuing the 'ussd get hlrssn' command.
+
+	ussd get hlrssn
+	hlrssn = 7</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_setting_ussd_hlrssn_gui"><a class="anchor" href="#_setting_ussd_hlrssn_gui"></a>6.9.2. Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Set HLR Sub System Number (SSN) using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for USSD Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Server Settings (if any), segregated into three tabs: Error Messages, SS7 Settings, Various.
+Switch to the 'SS7 Settings' tab in the GUI.</p>
+</li>
+<li>
+<p>In the text field 'HLR subsystem number', you can set a value for HLR Sub System Number (SSN). For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_setting_ussd_mscssn"><a class="anchor" href="#_setting_ussd_mscssn"></a>6.10. MSC Sub System Number</h3>
+<div class="sect3">
+<h4 id="_setting_ussd_mscssn_cli"><a class="anchor" href="#_setting_ussd_mscssn_cli"></a>6.10.1. Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'MSC Sub System Number' by issuing the command <code>ussd set mscssn</code> with appropriate parameters as described below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	ussd set mscssn
+
+SYNOPSIS
+	ussd set mscssn &lt;mscSubSystemNumber&gt;
+
+DESCRIPTION
+	This command is used to set the value for MSC Sub System Number (SSN).
+
+EXAMPLES
+	ussd set mscssn 8
+
+	The above command will set the value for the parameter 'mscSubSystemNumber' to
+	'8'and the terminal will display the message
+	"Parameter has been successfully set".
+
+	You can verify this by issuing the 'ussd get mscssn' command.
+
+	ussd get mscssn
+	mscssn = 8</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_setting_ussd_mscssn_gui"><a class="anchor" href="#_setting_ussd_mscssn_gui"></a>6.10.2. Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Set MSC Sub System Number (SSN) using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for USSD Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Server Settings (if any), segregated into three tabs: Error Messages, SS7 Settings, Various.
+Switch to the 'SS7 Settings' tab in the GUI.</p>
+</li>
+<li>
+<p>In the text field 'MSC subsystem number', you can set a value for MSC Sub System Number (SSN). For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_setting_ussd_maxmapv"><a class="anchor" href="#_setting_ussd_maxmapv"></a>6.11. MAP Application Context version</h3>
+<div class="sect3">
+<h4 id="_setting_ussd_maxmapv_cli"><a class="anchor" href="#_setting_ussd_maxmapv_cli"></a>6.11.1. Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'MAP Application Context version' by issuing the command <code>ussd set maxmapv</code> with appropriate parameters as described below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	ussd set maxmapv
+
+SYNOPSIS
+	ussd set maxmapv &lt;version-number&gt;
+
+DESCRIPTION
+	This command is used to set the value for MAP Application Context version. The
+	version number set here will be used for SendRoutingInfo operation.
+	Mobicents USSD Gateway supports version negotiation.  So if you set this to a
+	higher version (say for example version 2, however your network only understands
+	version 1), the ussd Gateway will automatically do the version negotiation and
+	exchange V1 messages when V2 exchange fails. However this causes additional
+	messages to be exchanged and increases the overall load on the system.
+	Therefore it is advisable to always set the correct version.
+
+EXAMPLES
+	ussd set maxmapv 3
+
+	The above command will set the value for the parameter 'version-number' to
+	'3'and the terminal will display the message
+	"Parameter has been successfully set".
+
+	You can verify this by issuing the 'ussd get maxmapv' command.
+
+	ussd get maxmapv
+	maxmapv = 3</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_setting_ussd_maxmapv_gui"><a class="anchor" href="#_setting_ussd_maxmapv_gui"></a>6.11.2. Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Set MAP Application Context version using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for USSD Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Server Settings (if any), segregated into three tabs: Error Messages, SS7 Settings, Various.
+Switch to the 'SS7 Settings' tab in the GUI.</p>
+</li>
+<li>
+<p>In the text field 'MAP version supported', you can set a value for MAP Application Context version.
+The version number set here will be used for USSD messages exchanged.
+For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_setting_ussd_routing_rules_show"><a class="anchor" href="#_setting_ussd_routing_rules_show"></a>6.12. View USSD Rules</h3>
+<div class="sect3">
+<h4 id="_setting_ussd_routing_rules_show_cli"><a class="anchor" href="#_setting_ussd_routing_rules_show_cli"></a>6.12.1. Using CLI</h4>
+<div class="paragraph">
+<p>You can view the details of all or specified configured routing rules in the USSD Gateway by issuing the command <code>ussd scrule show</code> with appropriate parameters as described below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	ussd scrule show
+
+SYNOPSIS
+	ussd scrule show &lt;short-code&gt; &lt;networkid&gt;
+
+DESCRIPTION
+	This command is used to view the details of all or specified configured
+	routing rules in the USSD Gateway.
+	If you run a CLI command without &lt;short-code&gt; and &lt;networkid&gt; parameters,
+	then all rules will be displayed. If you specify both &lt;short-code&gt; and
+	&lt;networkid&gt; parameters, then the rule for the specified short code and
+	the networkid if such rule is configured. If you specify only
+	&lt;short-code&gt; parameter, then the rule for the specified short code and
+	networkid==0 if such rule is configured.</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_setting_ussd_routing_rules_show_gui"><a class="anchor" href="#_setting_ussd_routing_rules_show_gui"></a>6.12.2. Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: View USSD Routing Rule</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for USSD Gateway, click on 'Routing Rule' in the left panel.
+The main panel will display the existing Short Code Routing Rules (if any) in a tabular format.</p>
+</li>
+<li>
+<p>To refresh the Short Code list, you must click on the green 'refresh' button at the top.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_setting_ussd_routing_rules_create"><a class="anchor" href="#_setting_ussd_routing_rules_create"></a>6.13. Create new USSD Rule</h3>
+<div class="sect3">
+<h4 id="_setting_ussd_routing_rules_create_cli"><a class="anchor" href="#_setting_ussd_routing_rules_create_cli"></a>6.13.1. Using CLI</h4>
+<div class="paragraph">
+<p>You can create a new USSD Routing Rule for every possible short code by issuing the command <code>ussd scrule create</code> with appropriate parameters as described below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	ussd scrule create
+
+SYNOPSIS
+	ussd scrule create &lt;short-code&gt; &lt;url&gt; &lt;flag&gt; &lt;protocol&gt; &lt;network-id&gt;
+
+DESCRIPTION
+	This command is used to create a new routing rule for a short code for
+	PULL case only. This is not applicable for PUSH case.
+	You can create a separate routing rule for an equal short code for each
+	networkId. This means that a short code and networkId pair is used as a
+	routing rule identifier.
+
+PARAMETERS
+	Standard Parameters
+
+	short-code  - USSD short code which when dialed by user and received
+				by USSD Gw, will forward request to configured URL
+
+	url			- If rule is configured as HTTP, this should be the URL
+				where HTTP POST with XML payload should be forwarded to.
+				If rule is configured as SIP, INVITE will be sent to this
+				ip:port
+
+    Optional Parameters
+
+	flag		- flag is either true or false, default is true. If true that
+				means this is exact match between the configured short code and the
+				dialed by subscriber value. If false, that means the dialed
+				short-code begins with configured short-code. For example
+				if you created below rule, and user dials *123*7776543*223#,
+				it will match the rule and request will be forwarded to the
+				URL http://myip:8080/mobiussd/recharge.
+
+				ussd scrule create *123* http://myip:8080/mobiussd/recharge false
+
+	protocol	- USSD Gateway supports 2 protocols - HTTP and SIP (3GPP
+				Specification 24.390). If not specified default is HTTP.
+				If protocol is HTTP, gateway will forward request as HTTP POST.
+				If its SIP, INVITE will be sent SIP Client.
+
+	networkid	- USSD Gateway can be connected to multiple operators/network
+				at same time and each operator exposing same or different short-code.
+				Each operator (jSS7 stack configured) has its unique networkid assigned
+				and incoming request can be matched with configured networkid here.
+				Only if short-code and networkid match's, request is forwarded to
+				corresponding url. Default value is 0.
+
+EXAMPLES
+    ussd scrule create *519# http://localhost:8080/ussddemo/test
+
+	The above command will create a new routing rule in the USSD Gateway for
+	the short code *519#. When the user dials the short code *519#, the USSD
+	Gateway will direct the HTTP POST request to the URL
+	http://localhost:8080/ussddemo/test as specified by the routing rule.
+	This rule will belong to the default networkId 0.
+
+    ussd scrule create *916* http://localhost:8080/ussddemo/test2 true HTTP 2
+
+	The above command will create a new routing rule in the USSD Gateway for
+	the short codes that are started from *916*.
+	Gateway will direct the HTTP POST request to the URL
+	http://localhost:8080/ussddemo/test2 as specified by the routing rule.
+	This rule will belong to the networkId 2.
+
+    ussd scrule create *123* 127.0.0.1:5065 true SIP
+
+	The above command will create a new routing rule in the USSD Gateway for
+	the short codes that are started from *123*.
+	Gateway will direct the SIP INVITE request to 127.0.0.1:5065.
+	This rule will belong to the default networkId 0.
+
+    ussd scrule create *321# 127.0.0.1:5066 SIP 4
+
+	The above command will create a new routing rule in the USSD Gateway for
+	the short code *321#.
+	Gateway will direct the SIP INVITE request to 127.0.0.1:5066.
+	This rule will belong to the networkId 4.</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_setting_ussd_routing_rules_create_gui"><a class="anchor" href="#_setting_ussd_routing_rules_create_gui"></a>6.13.2. Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Create new USSD Routing Rule</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for USSD Gateway, click on 'Routing Rule' in the left panel.
+The main panel will display the existing Short Code Routing Rules (if any) in a tabular format.</p>
+</li>
+<li>
+<p>To create a new Routing Rule, click on the 'Create Rule' button.</p>
+</li>
+<li>
+<p>Enter the values for Short Code, Rule Type (HTTP / SIP), URL or SIP Proxy, Exact Match (Yes/No) and Network ID.
+For more details of these parameters, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>Click on the 'Create' button to create a new USSD Routing Rule with values as specified.
+If there is an error in creating the Rule, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_setting_ussd_routing_rules_modify"><a class="anchor" href="#_setting_ussd_routing_rules_modify"></a>6.14. Modify an existing USSD Rule</h3>
+<div class="sect3">
+<h4 id="_setting_ussd_routing_rules_modify_cli"><a class="anchor" href="#_setting_ussd_routing_rules_modify_cli"></a>6.14.1. Using CLI</h4>
+<div class="paragraph">
+<p>You can modify an existing USSD Routing Rule for by issuing the command <code>ussd scrule modify</code> with appropriate parameters as described below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	ussd scrule modify
+
+SYNOPSIS
+    ussd scrule modify &lt;short-code&gt; &lt;url&gt; &lt;flag&gt; &lt;protocol&gt; &lt;network-id&gt;
+
+DESCRIPTION
+	This command is used to modify a new routing rule for a short code for
+	PULL case only. This is not applicable for PUSH case.
+	A short code and networkId pair is used as a unique routing rule identifier.
+
+PARAMETERS
+	Standard Parameters
+
+	short-code	- USSD short code which when dialed by user and received
+				by USSD Gw, will forward request to configured URL
+
+	url			- If rule is configured as HTTP, this should be the URL
+				where HTTP POST with XML payload should be forwarded to.
+				If rule is configured as SIP, INVITE will be sent to this
+				ip:port
+
+    Optional Parameters
+
+	flag		- flag is either true or false, default is true. If true that
+				means this is exact match between the configured short code and the
+				dialed by subscriber value. If false, that means the dialed
+				short-code begins with configured short-code. For example
+				if you created below rule, and user dials *123*7776543*223#,
+				it will match the rule and request will be forwarded to the
+				URL http://myip:8080/mobiussd/recharge.
+
+				ussd scrule create *123* http://myip:8080/mobiussd/recharge false
+
+	protocol	- USSD Gateway supports 2 protocols - HTTP and SIP (3GPP
+				Specification 24.390). If not specified default is HTTP. If
+				protocol is HTTP, gateway will forward request as HTTP POST.
+				If its SIP, INVITE will be sent SIP Client.
+
+    networkid	- USSD Gateway can be connected to multiple operators/network at same time
+				and each operator exposing same or different short-code. Each operator
+				(jSS7 stack configured) has its unique networkid assigned and incoming
+				request can be matched with configured networkid here. Only if short-code
+				and networkid match's, request is forwarded to corresponding url. Default
+				value is 0.
+
+EXAMPLES
+    ussd scrule modify *519# http://localhost:8080/ussddemo/test
+
+    Above rule will update the routing rule for the short code *519# and
+    networkId 0 for HTTP url http://localhost:8080/ussddemo/test and the
+    matching flag "false".
+
+    ussd scrule modify *916* http://localhost:8080/ussddemo/test2 true HTTP 2
+
+    Above rule will update the routing rule for the short code *916* and
+    networkId 2 for HTTP url http://localhost:8080/ussddemo/test2 and the
+    matching flag "true".
+
+    ussd scrule modify *123* 127.0.0.1:5065 true SIP
+
+    Above rule will update the routing rule for the short code *123* and
+    networkId 0 for SIP destination 127.0.0.1:5065 and the matching flag
+    "true".
+
+    ussd scrule modify *321# 127.0.0.1:5066 SIP 4
+
+    Above rule will update the routing rule for the short code *321# and
+    networkId 4 for SIP destination 127.0.0.1:5066 and the matching flag
+    "false".</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_setting_ussd_routing_rules_modify_gui"><a class="anchor" href="#_setting_ussd_routing_rules_modify_gui"></a>6.14.2. Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Modify an existing USSD Routing Rule</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for USSD Gateway, click on 'Routing Rule' in the left panel.
+The main panel will display the existing Short Code Routing Rules (if any) in a tabular format.</p>
+</li>
+<li>
+<p>To modify an existing Routing Rule, click on the 'Modify Rule' button (blue button).</p>
+</li>
+<li>
+<p>Enter the values for Rule Type (HTTP / SIP), URL or SIP Proxy, Exact Match (Yes/No) and Network Id.
+For more details of these parameters, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>Click on the 'Modify' button to create a new USSD Routing Rule with values as specified.
+If there is an error in creating the Rule, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_setting_ussd_routing_rules_delete"><a class="anchor" href="#_setting_ussd_routing_rules_delete"></a>6.15. Delete USSD Rule</h3>
+<div class="sect3">
+<h4 id="_setting_ussd_routing_rules_delete_cli"><a class="anchor" href="#_setting_ussd_routing_rules_delete_cli"></a>6.15.1. Using CLI</h4>
+<div class="paragraph">
+<p>You can delete an existing USSD Routing Rule by issuing the command <code>ussd scrule delete</code> with appropriate parameters as described below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	ussd scrule delete
+
+SYNOPSIS
+	ussd scrule delete &lt;short-code&gt; &lt;networkid&gt;
+
+DESCRIPTION
+	This command is used to delete an existing routing rule for a short code .
+	A short code and networkId pair is used as a unique routing rule identifier.
+
+	Standard Parameters
+
+	short-code	- USSD short code which when dialed by user and received
+				by USSD Gw, will forward request to configured URL
+
+	Optional Parameters
+
+	networkid	- USSD Gateway can be connected to multiple operators/network at
+				same time and each operator exposing same or different short-code.
+				Each operator (jSS7 stack configured) has its unique networkid assigned
+				and incoming request can be matched with configured networkid here.
+				Only if short-code and networkid match's, request is forwarded to
+				corresponding url. Default value is 0.
+
+EXAMPLES
+	ussd scrule delete *519#
+
+	The above command will delete the routing rule in the USSD Gateway for the
+	short code *519# and network-id 0.
+
+	ussd scrule delete *519# 1
+
+	The above command will delete the routing rule in the USSD Gateway for the
+	short code *519# and network-id 1.</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_setting_ussd_routing_rules_delete_gui"><a class="anchor" href="#_setting_ussd_routing_rules_delete_gui"></a>6.15.2. Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Delete USSD Routing Rule</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for USSD Gateway, click on 'Routing Rule' in the left panel.
+The main panel will display the existing Short Code Routing Rules (if any) in a tabular format.</p>
+</li>
+<li>
+<p>Locate the row corresponding to the Short Code Routing Rule you wish to delete.</p>
+</li>
+<li>
+<p>Click on the 'x' (delete) button in the Actions column of the row corresponding to the Rule you wish to delete.
+If there is an error in deleting the Rule, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuring_ussd_simulator_profile"><a class="anchor" href="#_configuring_ussd_simulator_profile"></a>7. Simulator Profile</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Restcomm USSD GATEWAY offers you an option to run the Gateway with a "simulator" profile for testing purpose.
+The "simulator" profile is a pre-configured profile to work with the jss7-simulator.
+The USSD GATEWAY in a Simulator profile is pre-configured as if you have configured it using the following CLI commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>sctp server create serv1 127.0.0.1 8012 sockettype SCTP
+sctp server start serv1
+sctp association create ass1 SERVER serv1 127.0.0.1 8011 sockettype SCTP
+
+m3ua as create as1 IPSP mode SE ipspType server rc 101 traffic-mode loadsharing network-appearance 102
+m3ua asp create asp1 ass1
+m3ua as add as1 asp1
+m3ua asp start asp1
+m3ua route add as1 1 2 3
+
+sccp sap create 1 1 2 2
+sccp dest create 1 1 1 1 0 255 255
+sccp address create 1 82 1 8 0 1 4 000
+sccp address create 2 82 2 8 0 1 4 000
+sccp rule create 1 K 82 0 8 0 1 4 * solitary 1 origination-type localOriginated
+sccp rule create 2 K 82 0 8 0 1 4 * solitary 2 origination-type remoteOriginated
+sccp rsp create 1 1 0 0
+sccp rss create 1 1 8 0
+
+ussd set dialogtimeout 25000
+ussd set ussdgt 923330053058
+ussd set ussdssn 8
+ussd set hlrssn 6
+ussd set mscssn 8
+ussd set maxmapv 3
+
+ussd scrule create *519# http://127.0.0.1:8080/ussddemo/test true HTTP
+ussd scrule create *518# http://127.0.0.1:5080 true SIP</pre>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-04-07 09:54:36 WEST
+Last updated 2016-04-07 11:54:12 WEST
 </div>
 </div>
 <footer>
@@ -22910,7 +24325,7 @@ var qodeLike = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php"};
 <script type='text/javascript' src='http://telestax.com/wp-content/themes/bridge/js/ScrollToPlugin.min.js?ver=4.4.2'></script>
 <script type='text/javascript' src='http://telestax.com/wp-content/themes/bridge/js/smoothPageScroll.min.js?ver=4.4.2'></script>
 <script type='text/javascript' src='http://telestax.com/wp-content/themes/bridge/js/default_dynamic.js?ver=1457115435'></script-->
-<script type='text/javascript' src='./js/default.js?ver=4.4.2'></script>
+<script type='text/javascript' src='http://documentation.telestax.com/js/default.js?ver=4.4.2'></script>
 <!--script type='text/javascript' src='http://telestax.com/wp-content/themes/bridge/js/custom_js.js?ver=1457115435'></script-->
 </body>
 </html>
