@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>RCML</title>
+<title>RCML - The Restcomm Markup Language</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22741,16 +22741,131 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 
 </header>
 </head>
-<body id="RCML" class="article">
+<body class="article">
 <div id="header">
-<h1>RCML</h1>
+<h1>RCML - The Restcomm Markup Language</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#overview">Overview</a></li>
+<li><a href="#the-rcml-verbs">The RCML Verbs</a></li>
+<li><a href="#how-twilio-interacts-with-your-application">How Twilio Interacts with Your Application</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
-
+<div class="sect1">
+<h2 id="overview"><a class="anchor" href="#overview"></a>Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>RCML is a set of instructions you can use to tell Restcomm what to do when you receive an incoming call or SMS.</p>
+</div>
+<div class="paragraph">
+<p>When someone makes a call or sends an SMS to one of your Restcomm numbers#, Restcomm will look up the URL associated with that phone number and make a request to that URL. Restcomm will read RCML instructions at that URL to determine what to do: record the call#, play a message for the caller#, prompt the caller to press digits on their keypad#, etc.</p>
+</div>
+<div class="paragraph">
+<p>For example#, the following will say a short message#, and then record the caller&#8217;s voice:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Response&gt;
+    &lt;Say voice="woman"&gt;Please leave a message after the tone.&lt;/Say&gt;
+    &lt;Record maxLength="20" /&gt;
+&lt;/Response&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>RCML is similar to HTML. Only one RCML document is rendered to the caller at once#, but many documents can be linked together to build complex interactive voice applications.</p>
+</div>
+<div class="paragraph">
+<p>Calls from a Twilio number to an outside number are controlled using RCML in the same manner as incoming calls. The initial URL for the call is provided as a parameter to the Twilio REST API request you make to initiate the call.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="the-rcml-verbs"><a class="anchor" href="#the-rcml-verbs"></a>The RCML Verbs</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can use different combinations of the verbs below to create all kinds of interactive voice and messaging applications.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="dial-rcml.html#dial">Dial - Add another party to the call</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="client-rcml.html#client">Client</a></p>
+</li>
+<li>
+<p><a href="conference-rcml.html#conference">Conference</a></p>
+</li>
+<li>
+<p><a href="number-rcml.html#number">Number</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="email-rcml.html#email">Email- Send an Email</a></p>
+</li>
+<li>
+<p><a href="fax-rcml.html#fax">Fax- Send a Fax</a></p>
+</li>
+<li>
+<p><a href="gather-rcml.html#gather">Gather - Collect digits the caller types on their keypad</a></p>
+</li>
+<li>
+<p><a href="hangup-rcml.html#hangup">Hangup - Hang up the call</a></p>
+</li>
+<li>
+<p><a href="pause-rcml.html#pause">Pause - Wait before executing more instructions</a></p>
+</li>
+<li>
+<p><a href="play-rcml.html#play">Play - Play an audio file for the caller</a></p>
+</li>
+<li>
+<p><a href="record-rcml.html#record">Record - Record the caller&#8217;s voice</a></p>
+</li>
+<li>
+<p><a href="redirect-rcml.html#redirect">Redirect - Redirect call flow to a different TwiML document.</a></p>
+</li>
+<li>
+<p><a href="reject-rcml.html#reject">Reject - Decline an incoming call without being billed.</a></p>
+</li>
+<li>
+<p><a href="say-rcml.html#say">Say - Read text to the caller</a></p>
+</li>
+<li>
+<p><a href="sms-rcml.html#sms">SMS - Send an SMS message during a phone call</a></p>
+</li>
+<li>
+<p><a href="ussd-collect-rcml.html#ussd-collect">USSD Collect - Collect USSD</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="how-twilio-interacts-with-your-application"><a class="anchor" href="#how-twilio-interacts-with-your-application"></a>How Twilio Interacts with Your Application</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="request-rcml.html">Requests</a></p>
+</li>
+<li>
+<p><a href="response-rcml.html">Responses</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-04-15 10:36:50 WEST
+Last updated 2016-04-16 00:16:56 WEST
 </div>
 </div>
 <footer>
