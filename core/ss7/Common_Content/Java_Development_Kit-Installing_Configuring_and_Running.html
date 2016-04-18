@@ -22748,7 +22748,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div id="content">
 <div class="paragraph">
 <p>The [app]` Platform` is written in Java; therefore, before running any <code class="app"> server, you must have a working Java Runtime Environment () or Java Development Kit () installed on your system.
-In addition, the JRE or JDK you are using to run [app]</code> must be version 5 or higher<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup>.</p>
+In addition, the JRE or JDK you are using to run [app]</code> must be version 5 or higher (version 7 is recommended, version 8 is not supported now) <sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup>.</p>
 </div>
 <div class="paragraph">
 <div class="title">Should I Install the JRE or JDK?</div>
@@ -22783,12 +22783,12 @@ Barring memory issues, 64-bit hardware with the same relative clock speed and ar
 </div>
 <div class="paragraph">
 <div class="title">Downloading</div>
-<p>You can download the Sun JDK 5.0 (Java 2 Development Kit) from Sun&#8217;s website: <a href="http://java.sun.com/javase/downloads/index_jdk5.jsp" class="bare">http://java.sun.com/javase/downloads/index_jdk5.jsp</a>.
-Click on the <span class="label">Download</span> link next to "JDK 5.0 Update <code class="replaceable">&lt;x&gt;`" (where [replaceable]</code>&lt;x&gt;` is the latest minor version release number). On the next page, select your language and platform (both architecture&#8212;&#8203;whether 32- or 64-bit&#8212;&#8203;and operating system), read and agree to the <code>Java Development Kit 5.0 License Agreement</code>, and proceed to the download page.</p>
+<p>You can download the Oracle JDK 7 (Java Development Kit) from Oracle&#8217;s website: <a href="http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html" class="bare">http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html</a>.
+Click on the <span class="label">Download</span> link next to "Java SE Development Kit <code class="replaceable">&lt;version&gt;`" (where [replaceable]</code>&lt;version&gt;` is the latest release number). On the next page, select your language and platform (both architecture - whether 32- or 64-bit - and operating system), read and agree to the <code>Oracle Binary Code License Agreement for Java</code> , and proceed to the download page.</p>
 </div>
 <div class="paragraph">
-<p>The Sun website will present two download alternatives to you: one is an RPM inside a self-extracting file (for example, <em class="path">jdk-1_5_0_16-linux-i586-rpm.bin</em>), and the other is merely a self-extracting file (e.g. <em class="path">jdk-1_5_0_16-linux-i586.bin</em>). If you are installing the JDK on Red Hat Enterprise Linux, Fedora, or another RPM-based Linux system, we suggest that you download the self-extracting file containing the RPM package, which will set up and use the SysV service scripts in addition to installing the JDK.
-We also suggest installing the self-extracting RPM file if you will be running [app]`` in a production environment.</p>
+<p>The Oracle website will present two download alternatives to you: one is an RPM inside a self-extracting file (for example, <em class="path">jdk-&lt;version&gt;-linux-i586.rpm</em>), and the other is merely a self-extracting file (e.g. <em class="path">jdk-&lt;version&gt;-linux-i586.tar.gz</em>). If you are installing the JDK on Red Hat Enterprise Linux, Fedora, or another RPM-based Linux system, we suggest that you download the self-extracting file containing the RPM package, which will set up and use the SysV service scripts in addition to installing the JDK.
+We also suggest installing the self-extracting RPM file if you will be running jSS7 in a production environment.</p>
 </div>
 <div class="paragraph">
 <div class="title">Installing</div>
@@ -22801,8 +22801,8 @@ We also suggest installing the self-extracting RPM file if you will be running [
 <p>Regardless of which file you downloaded, you can install it on Linux by simply making sure the file is executable and then running it:</p>
 <div class="listingblock">
 <div class="content">
-<pre>~]$ chmod +x "jdk-1_5_0_&lt;minor_version&gt;-linux-&lt;architecture&gt;-rpm.bin"
-~]$ ./"jdk-1_5_0_&lt;minor_version&gt;-linux-&lt;architecture&gt;-rpm.bin"</pre>
+<pre>~]$ chmod +x "jdk-&lt;version&gt;-linux-&lt;architecture&gt;-rpm.bin"
+~]$ ./"jdk-&lt;version&gt;-linux-&lt;architecture&gt;-rpm.bin"</pre>
 </div>
 </div>
 </li>
@@ -22848,7 +22848,7 @@ You do not need to install a <code>-compat</code> package in addition to the JDK
 <div class="paragraph">
 <div class="title">Configuring</div>
 <p>Configuring your system for the JDK consists in two tasks: setting the <code class="var">JAVA_HOME</code> environment variable, and ensuring that the system is using the proper JDK (or JRE) using the <code>alternatives</code> command.
-Setting <code class="var">JAVA_HOME</code> usually overrides the values for <code>java</code>, <code>javac</code> and <code>java_sdk_1.5.0</code> in <code>alternatives</code>, but we will set them all just to be safe and consistent.</p>
+Setting <code class="var">JAVA_HOME</code> usually overrides the values for <code>java</code>, <code>javac</code> and <code>java_sdk_1.7.0</code> in <code>alternatives</code>, but we will set them all just to be safe and consistent.</p>
 </div>
 <div class="dlist">
 <dl>
@@ -22856,7 +22856,7 @@ Setting <code class="var">JAVA_HOME</code> usually overrides the values for <cod
 <dd>
 <p>After installing the JDK, you must ensure that the <code class="var">JAVA_HOME</code> environment variable exists and points to the location of your JDK installation.</p>
 </dd>
-<dt class="hdlist1">Setting <code class="var">java</code>, <code class="var">javac</code> and <code class="var">java_sdk_1.5.0</code> Using the <code>alternatives</code> command </dt>
+<dt class="hdlist1">Setting <code class="var">java</code>, <code class="var">javac</code> and <code class="var">java_sdk_1.7.0</code> Using the <code>alternatives</code> command </dt>
 <dd>
 <p><em>As the root user</em>, call <code>/usr/sbin/alternatives</code> with the <code class="option">--config java</code> option to select between JDKs and JREs installed on your system:</p>
 </dd>
@@ -22868,15 +22868,14 @@ Setting <code class="var">JAVA_HOME</code> usually overrides the values for <cod
 </div>
 <div class="paragraph">
 <div class="title">Testing</div>
-<p>Finally, to make sure that you are using the correct JDK or Java version (5 or higher), and that the java executable is in your <code class="var">PATH</code>, run the `java -version
-			` command in the terminal from your home directory:</p>
+<p>Finally, to make sure that you are using the correct JDK or Java version (5 or higher), and that the java executable is in your <code class="var">PATH</code>, run the <code>java -version</code> command in the terminal from your home directory:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>~]$ java -version
-java version "1.5.0_16"
-Java(TM) 2 Runtime Environment, Standard Edition (build 1.5.0_16-b03)
-Java HotSpot(TM) Client VM (build 1.5.0_16-b03, mixed mode, sharing)</pre>
+java version "1.7.0_16"
+Java(TM) 2 Runtime Environment, Standard Edition (build 1.7.0_16-b03)
+Java HotSpot(TM) Client VM (build 1.7.0_16-b03, mixed mode, sharing)</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -22885,8 +22884,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_16-b03, mixed mode, sharing)</pre>
 </div>
 <div class="paragraph">
 <div class="title">Uninstalling the JDK on Linux</div>
-<p>On RPM-based systems, you can uninstall the JDK using the `yum remove &lt;jdk_rpm_name&gt;
-			` command.</p>
+<p>On RPM-based systems, you can uninstall the JDK using the <code>yum remove &lt;jdk_rpm_name&gt;</code> command.</p>
 </div>
 <div class="paragraph">
 <div class="title">Uninstalling the JDK on Windows</div>
@@ -22901,7 +22899,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_16-b03, mixed mode, sharing)</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-04-17 10:47:50 WEST
+Last updated 2016-04-18 12:54:24 WEST
 </div>
 </div>
 <footer>

@@ -22847,13 +22847,13 @@ All the functional modules of the Stack reside in the <em class="path">ss7</em> 
 		|- sctp
 
 		|- ss7
-				|+ native
 				|+ protocols
 				|+ shell
 				|+ restcomm-ss7-service
 				|+ restcomm-ss7-sgw
 				|+ restcomm-ss7-simulator
-				|+ restcomm-ss7-traceparser</pre>
+				|+ restcomm-ss7-traceparser
+				|+ template</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -22902,16 +22902,16 @@ It is also a good example of how to use this stack.</p>
 <p><em class="path">restcomm-ss7-traceparser</em> : mobicents jSS7 Stack Trace Parser is a simple tool that can parse trace capture data files (of some formats) and log its content in some log file in a text form</p>
 </li>
 <li>
-<p><em class="path">native</em> : This folder contains the native libraries to interact with the SS7 Cards installed on the server.
-As of now, native libraries are compiled and available only for linux OS.</p>
-</li>
-<li>
 <p><em class="path">protocols</em> : Restcomm  jSS7  User Protocols libraries.
 Your application will directly  call the APIs exposed by these libraries.
 Depending on the application, you may be interested in either <code>TCAP</code> or <code>MAP</code>, or both, or <code>ISUP</code> libraries.</p>
 </li>
 <li>
 <p><em class="path">shell</em> : This holds the Command Line Interface (CLI) module to manage the Restcomm  jSS7 .</p>
+</li>
+<li>
+<p><em class="path">template</em> : This folder contains templates that are needed for JSS7 stack configuring.
+As of now, native libraries are compiled and available only for linux OS.</p>
 </li>
 </ul>
 </div>
@@ -23166,6 +23166,12 @@ Depending on your testing goals, you can configure each of these layers separate
 <li>
 <p>MAP ATI server test</p>
 </li>
+<li>
+<p>MAP Check IMEI client test</p>
+</li>
+<li>
+<p>MAP Check IMEI server test</p>
+</li>
 </ul>
 </div>
 </li>
@@ -23178,7 +23184,7 @@ Depending on your testing goals, you can configure each of these layers separate
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-04-17 10:47:50 WEST
+Last updated 2016-04-18 12:54:24 WEST
 </div>
 </div>
 <footer>

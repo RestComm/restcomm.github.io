@@ -22747,15 +22747,14 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div id="content">
 <div class="paragraph">
-<p>The [app]` Platform` (<code class="app">) is built on top of the [app]</code>.
-You do not need to set the <code class="var">JBOSS_HOME</code> environment variable to run any of the [app]` Platform` servers <em>unless</em> <code class="var">JBOSS_HOME</code> is <em>already</em> set.</p>
+<p>The Restcomm Platform (<code>Restcomm</code>) is built on top of the JBoss Application Server. You do not need to set the <code class="var">JBOSS_HOME</code> environment variable to run any of the Restcomm Platform servers unless <code class="var">JBOSS_HOME</code> is already set.</p>
 </div>
 <div class="paragraph">
 <p>The best way to know for sure whether <code class="var">JBOSS_HOME</code> was set previously or not is to perform a simple check which may save you time and frustration.</p>
 </div>
 <div class="paragraph">
 <div class="title">Checking to See If JBOSS_HOME is Set on Unix</div>
-<p>At the command line, <code>echo</code>			<code>$JBOSS_HOME</code> to see if it is currently defined in your environment:</p>
+<p>At the command line, <code>echo $JBOSS_HOME</code> to see if it is currently defined in your environment:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -22763,15 +22762,13 @@ You do not need to set the <code class="var">JBOSS_HOME</code> environment varia
 </div>
 </div>
 <div class="paragraph">
-<p>The [app]` Platform` and most &amp;THIS.PLATFORM; servers are built on top of the <code class="app"> ([app]</code>). When the [app]` Platform` or &amp;THIS.PLATFORM; servers are built <em>from source</em>, then <code class="var">JBOSS_HOME</code> <em>must</em> be set, because the &amp;THIS.PLATFORM; files are installed into (or &#8220;over top of&#8221; if you prefer) a clean <code class="app"> installation, and the build process assumes that the location pointed to by the <code class="var">JBOSS_HOME</code> environment variable at the time of building is the [app]</code> installation into which you want it to install the &amp;THIS.PLATFORM; files.</p>
+<p>The Restcomm Platform or most of Restcomm servers are built on top of the JBoss Application Server (<code>JBoss Application Server</code>). When the Restcomm Platform or Restcomm servers are built on top of the JBoss Application Server (<code>JBoss Application Server</code>), then <code class="var">JBOSS_HOME</code> <em>must</em> be set, because the <code>Restcomm</code> files are installed into (or &#8220;over top of&#8221; if you prefer) a clean JBoss Application Server installation, and the build process assumes that the location pointed to by the <code class="var">JBOSS_HOME</code> environment variable at the time of building is the JBoss Application Server installation into which you want it to install the <code>Restcomm</code> files.</p>
 </div>
 <div class="paragraph">
-<p>This guide does not detail building the [app]` Platform` or any &amp;THIS.PLATFORM; servers from source.
-It is nevertheless useful to understand the role played by <code class="app">JBoss AS</code> and <code class="var">JBOSS_HOME</code> in the &amp;THIS.PLATFORM; ecosystem.</p>
+<p>This guide does not detail building the <code class="app">Restcomm</code> or any <code>Restcomm</code> servers from source. It is nevertheless useful to understand the role played by <code class="app">JBoss Application Server</code> and <code class="var">JBOSS_HOME</code> in the <code>jSS7</code> ecosystem.</p>
 </div>
 <div class="paragraph">
-<p>The immediately-following section considers whether you need to set <code class="var">JBOSS_HOME</code> at all and, if so, when.
-The subsequent sections detail how to set <code class="var">JBOSS_HOME</code> on Unix and Windows</p>
+<p>The immediately-following section considers whether you need to set <code class="var">JBOSS_HOME</code> at all and, if so, when. The subsequent sections detail how to set <code class="var">JBOSS_HOME</code> on Unix and Windows</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -22793,10 +22790,10 @@ This can save you both time and frustration.
 <div class="ulist">
 <ul>
 <li>
-<p>&#8230;&#8203;you have installed the [app]` Platform` binary distribution.</p>
+<p>&#8230;&#8203;you have installed the <code class="app">Restcomm</code> binary distribution.</p>
 </li>
 <li>
-<p>&#8230;&#8203;you have installed a &amp;THIS.PLATFORM;server binary distribution <em>which bundles [app]``.</em></p>
+<p>&#8230;&#8203;you have installed a Restcomm server binary distribution <em>which bundles <code class="app">JBoss Application Server</code>.</em></p>
 </li>
 </ul>
 </div>
@@ -22806,19 +22803,19 @@ This can save you both time and frustration.
 <div class="ulist">
 <ul>
 <li>
-<p>&#8230;&#8203;you are installing the [app]` Platform` or any of the &amp;THIS.PLATFORM; servers <em>from source</em>.</p>
+<p>&#8230;&#8203;you are installing the <code class="app">Restcomm</code> or any of the Restcomm servers <em>from source</em>.</p>
 </li>
 <li>
-<p>&#8230;&#8203;you are installing the [app]` Platform` binary distribution, or one of the &amp;THIS.PLATFORM; server binary distributions, which <em>do not</em> bundle [app]``.</p>
+<p>&#8230;&#8203;you are installing the <code class="app">Restcomm</code> binary distribution, or one of the Restcomm server binary distributions, which <em>do not</em> bundle <code class="app">JBoss Application Server</code>.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Naturally, if you installed the [app]` Platform` or one of the &amp;THIS.PLATFORM; server binary releases which <em>do not</em> bundle <code class="app">`, yet requires it to run, then you should install before setting [var]`JBOSS_HOME</code> or proceeding with anything else.</p>
+<p>Naturally, if you installed the <code class="app">Restcomm</code> or one of the Restcomm server binary releases which <em>do not</em> bundle <code class="app">JBoss Application Server</code>, yet requires it to run, then you should install before setting <code class="var">JBOSS_HOME</code> or proceeding with anything else.</p>
 </div>
 <div class="paragraph">
 <div class="title">Setting the JBOSS_HOME Environment Variable on Unix</div>
-<p>The <code class="var">JBOSS_HOME</code> environment variable must point to the directory which contains all of the files for the [app]` Platform` or individual &amp;THIS.PLATFORM; server that you installed.
+<p>The <code class="var">JBOSS_HOME</code> environment variable must point to the directory which contains all of the files for the <code class="app">Restcomm</code> or individual Restcomm; server that you installed.
 As another hint, this topmost directory contains a <em class="path">bin</em> subdirectory.</p>
 </div>
 <div class="paragraph">
@@ -22857,9 +22854,9 @@ On Unix, it is possible to set <code class="var">JBOSS_HOME</code> as a system-w
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The command line usage below is based upon a binary installation of the [app]` Platform`.
-In this sample output, <code class="var">JBOSS_HOME</code> has been set correctly to the <code class="replaceable">topmost_directory</code> of the <code class="app"> installation.
-Note that if you are installing one of the standalone [app]</code> servers (with <code class="app">JBoss AS</code> bundled!), then <code class="var">JBOSS_HOME</code> would point to the <code class="replaceable">topmost_directory</code> of your server installation.
+The command line usage below is based upon a binary installation of the <code class="app">Restcomm</code>.
+In this sample output, <code class="var">JBOSS_HOME</code> has been set correctly to the <code class="replaceable">topmost_directory</code> of the <code class="app">Restcomm</code> installation.
+Note that if you are installing one of the standalone <code class="app">Restcomm</code> servers (with <code class="app">JBoss Application Server</code> bundled!), then <code class="var">JBOSS_HOME</code> would point to the <code class="replaceable">topmost_directory</code> of your server installation.
 </td>
 </tr>
 </table>
@@ -22875,7 +22872,7 @@ Note that if you are installing one of the standalone [app]</code> servers (with
 </div>
 <div class="paragraph">
 <div class="title">Setting the JBOSS_HOME Environment Variable on Windows</div>
-<p>The <code class="var">JBOSS_HOME</code> environment variable must point to the directory which contains all of the files for the &amp;THIS.PLATFORM;Platform or individual &amp;THIS.PLATFORM;server that you installed.
+<p>The <code class="var">JBOSS_HOME</code> environment variable must point to the directory which contains all of the files for the jSS7 Platform or individual jSS7 server that you installed.
 As another hint, this topmost directory contains a <em class="path">bin</em> subdirectory.</p>
 </div>
 <div class="paragraph">
@@ -22890,7 +22887,7 @@ As another hint, this topmost directory contains a <em class="path">bin</em> sub
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-04-17 10:47:50 WEST
+Last updated 2016-04-18 12:54:24 WEST
 </div>
 </div>
 <footer>

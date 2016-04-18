@@ -449,43 +449,59 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>		org.mobicents.protocols.api.Management sctpManagement = null;
-		sctpManagement = org.mobicents.protocols.sctp.ManagementImpl("Client");
-		this.sctpManagement.setSingleThread(true);
-		this.sctpManagement.setConnectDelay(10000);
-		this.sctpManagement.start();</code></pre>
+<pre class="highlight"><code>    org.mobicents.protocols.api.Management sctpManagement = null;
+    sctpManagement = new org.mobicents.protocols.sctp.ManagementImpl("Client");
+    sctpManagement.setPersistDir("&lt;your directory path&gt;");
+
+    sctpManagement.start();
+
+    sctpManagement.setConnectDelay(10000);</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>How did jSS7 know where the configuration file was located and which one to load?</p>
 </div>
 <div class="paragraph">
-<p>When <code>this.sctpManagement.start()</code> is called, jSS7 searches for a file named <em class="path">Client_sctp.xml</em> in the directory path set by user by calling  <code>this.sctpManagement.setPersistDir("&lt;your directory path&gt;")</code>.
+<p>When <code>sctpManagement.start()</code> is called, jSS7 searches for a file named <em class="path">Client_sctp.xml</em> in the directory path set by user by calling  <code>sctpManagement.setPersistDir("&lt;your directory path&gt;")</code>.
 For example in case of linux you can pass something like  <code>this.sctpManagement.setPersistDir("/home/abhayani/workarea/mobicents/git/jss7/master/map/load/client")</code>.
 If directory path is not set, Management searches for system property  <code>sctp.persist.dir</code> to get the path for directory.
 Even if <code>sctp.persist.dir</code> system property is not set, Management will look at System set property  <code>user.dir</code>.</p>
 </div>
 <div class="paragraph">
-<p>Once you know SCTP layer is configured and started, next step is add the Association and/or Server depending on whether this setup will be acting as client or server or both.</p>
+<p>Once you know SCTP layer is configured and started, you can set Stack level parameters like <code>connectionDelay</code> by calling setters like: <code>sctpManagement.setConnectDelay(10000);</code></p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>For client side : <code>sctpManagement.addAssociation(CLIENT_IP, CLIENT_PORT, SERVER_IP, SERVER_PORT, CLIENT_ASSOCIATION_NAME, ipChannelType, null);</code></p>
-</li>
-<li>
-<p>For server side : <code>sctpManagement.addServerAssociation(CLIENT_IP, CLIENT_PORT, SERVER_NAME, SERVER_ASSOCIATION_NAME, ipChannelType);</code></p>
-</li>
-</ul>
+<div class="paragraph">
+<p>Next step is adding of the Association and/or Server depending on whether this setup will be acting as client or server or both. Normally a configured set of Association and/or Server are stored in the xml config file and this way is recommended. But if you want to remove all previously configured Associations and Servers you need to call this command (after a Stack start).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>    sctpManagement.removeAllResourses();</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Before adding server side association the server should also be defined and started as below:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>		sctpManagement.addServer(SERVER_NAME, SERVER_IP, SERVER_PORT, ipChannelType, null);
-		sctpManagement.addServerAssociation(CLIENT_IP, CLIENT_PORT, SERVER_NAME, SERVER_ASSOCIATION_NAME, ipChannelType);
-		sctpManagement.startServer(SERVER_NAME);</code></pre>
+<pre class="highlight"><code>    boolean acceptAnonymousConnections = false;
+    int maxConcurrentConnectionsCount = 0; // for AnonymousConnections, 0 means unlimited
+    String[] extraHostAddresses = null; // for multi-homing
+    IpChannelType ipChannelType = IpChannelType.SCTP;
+
+    sctpManagement.addServer(SERVER_NAME, SERVER_IP, SERVER_PORT, ipChannelType, acceptAnonymousConnections, maxConcurrentConnectionsCount, extraHostAddresses);
+    sctpManagement.addServerAssociation(PEER_IP, PEER_PORT, SERVER_NAME, SERVER_ASSOCIATION_NAME, ipChannelType);
+    sctpManagement.startServer(SERVER_NAME);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For Client side association the code is the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>    String[] extraHostAddresses = null; // for multi-homing
+    IpChannelType ipChannelType = IpChannelType.SCTP;
+
+    sctpManagement.addAssociation(HOST_IP, HOST_PORT, PEER_IP, PEER_PORT, CLIENT_ASSOCIATION_NAME, ipChannelType, extraHostAddresses);</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -514,31 +530,47 @@ Association will be started automatically when layer above M3UA&#8217;s ASP is s
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>                org.mobicents.protocols.ss7.m3ua.impl clientM3UAMgmt = null;
-                this.clientM3UAMgmt = new M3UAManagement("Client");
-                this.clientM3UAMgmt.setTransportManagement(this.sctpManagement);
-                this.clientM3UAMgmt.start();</code></pre>
+<pre class="highlight"><code>    org.mobicents.protocols.ss7.m3ua.impl clientM3UAMgmt = null;
+    clientM3UAMgmt = new M3UAManagement("Client", null);
+    clientM3UAMgmt.setPersistDir("&lt;your directory path&gt;");
+    clientM3UAMgmt.setTransportManagement(sctpManagement);
+    clientM3UAMgmt.setDeliveryMessageThreadCount(DELIVERY_TRANSFER_MESSAGE_THREAD_COUNT);
+
+    clientM3UAMgmt.start();</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>For M3UA, it should know which underlying SCTP layer to use <code>this.clientM3UAMgmt.setTransportManagement(this.sctpManagement);</code>.</p>
+<p>For M3UA, it should know which underlying SCTP layer to use <code>clientM3UAMgmt.setTransportManagement(sctpManagement);</code>.</p>
 </div>
 <div class="paragraph">
-<p>Once M3UA is configured and started, next step is to add the As, Asp and routing rules for M3UA.
-These depends on whether stack acts as Application Server side or Signaling Gateway side or just  peer-to-peer (IPSP) client/server side.
+<p>Once M3UA is configured and started, next step is to add the As, Asp and routing rules for M3UA. Configured set of As, Asp and routing rules is trored in <em class="path">Client_m3ua1.xml</em> (in "your directory path" folder). But if you want to remove all previously configured As, Asp and routing rules you need to call this command (after a Stack start).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>    clientM3UAMgmt.removeAllResourses();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A set of As, Asp and routing rules depends on whether stack acts as Application Server side or Signaling Gateway side or just  peer-to-peer (IPSP) client/server side.
 Below is an example of IPSP peer acting as client.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>		RoutingContext rc = factory.createRoutingContext(new long[] { 100l });
-                TrafficModeType trafficModeType = factory.createTrafficModeType(TrafficModeType.Loadshare);
-                this.clientM3UAMgmt.createAs("AS1", Functionality.AS, ExchangeType.SE, IPSPType.CLIENT, rc, trafficModeType, null);
-                // Step 2 : Create ASP
-                this.clientM3UAMgmt.createAspFactory("ASP1", CLIENT_ASSOCIATION_NAME);
-                // Step3 : Assign ASP to AS
-                Asp asp = this.clientM3UAMgmt.assignAspToAs("AS1", "ASP1");
-                // Step 4: Add Route. Remote point code is 2
-                clientM3UAMgmt.addRoute(SERVET_SPC, -1, -1, "AS1");</code></pre>
+<pre class="highlight"><code>    ParameterFactoryImpl factory = new ParameterFactoryImpl();
+
+    // Step 1 : Create App Server
+    RoutingContext rc = factory.createRoutingContext(new long[] { 100l });
+    TrafficModeType trafficModeType = factory.createTrafficModeType(TrafficModeType.Loadshare);
+    As as = clientM3UAMgmt.createAs("AS1", Functionality.AS, ExchangeType.SE, IPSPType.CLIENT, rc, trafficModeType, 1, null);
+
+    // Step 2 : Create ASP
+    AspFactory aspFactor = clientM3UAMgmt.createAspFactory("ASP1", CLIENT_ASSOCIATION_NAME);
+
+    // Step3 : Assign ASP to AS
+    Asp asp = clientM3UAMgmt.assignAspToAs("AS1", "ASP1");
+
+    // Step 4: Add Route. Remote point code is 2
+    clientM3UAMgmt.addRoute(SERVET_SPC, -1, -1, "AS1");</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -555,36 +587,57 @@ Once M3UA is configured depending on whether you are trying to build voice appli
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>		org.mobicents.protocols.ss7.sccp.SccpStack sccpStack = null;
-               this.sccpStack = new SccpStackImpl("MapLoadClientSccpStack");
-               this.sccpStack.setMtp3UserPart(1, this.clientM3UAMgmt);
-               this.sccpStack.start();</code></pre>
+<pre class="highlight"><code>    org.mobicents.protocols.ss7.sccp.SccpStack sccpStack = null;
+    sccpStack = new SccpStackImpl("MapLoadClientSccpStack");
+    clientM3UAMgmt.setPersistDir("&lt;your directory path&gt;");
+    sccpStack.setMtp3UserPart(1, this.clientM3UAMgmt);
+
+    sccpStack.start();</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Before starting SCCP stack all it needs to know is underlying MTP3 layer.
-Above sections explained building SCTP and M3UA,  however if you are using Dialogic boards or dahdi based boards (Diguim/Sangoma), you need to build and configure respective MTP3 layers depending on hardware used and set  those in SCCP Stack <code>this.sccpStack.setMtp3UserPart(1, this.clientM3UAMgmt)</code>.</p>
+Above sections explained building SCTP and M3UA,  however if you are using Dialogic boards or dahdi based boards (Diguim/Sangoma), you need to build and configure respective MTP3 layers depending on hardware used and set those in SCCP Stack <code>sccpStack.setMtp3UserPart(1, this.clientM3UAMgmt)</code>.</p>
 </div>
 <div class="paragraph">
 <p>One of the best features of jSS7 is it supports multiple MTP3 layers and hence you can have combination of many MTP3 layers (each of different or same type like M3UA, Dialogic and Dahid;  all used at same time).</p>
 </div>
 <div class="paragraph">
-<p>Once SCCP stack is started, it should be configured for local and remote signaling point-code, network indicator, remote sub system number and routing rules.</p>
+<p>Once SCCP stack is started, it should be configured for local and remote signaling point-code, network indicator, remote sub system number and routing rules. For removing all previously configured resources you need to call this command (after a Stack start).</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>               RemoteSignalingPointCode rspc = new RemoteSignalingPointCode(SERVET_SPC, 0, 0);
-               RemoteSubSystem rss = new RemoteSubSystem(SERVET_SPC, SSN, 0, false);
-               this.sccpStack.getSccpResource().addRemoteSpc(0, rspc);
-               this.sccpStack.getSccpResource().addRemoteSsn(0, rss);
-               Mtp3ServiceAccessPoint sap = new Mtp3ServiceAccessPoint(1, CLIENT_SPC, NETWORK_INDICATOR);
-               Mtp3Destination dest = new Mtp3Destination(SERVET_SPC, SERVET_SPC, 0, 255, 255);
-               this.sccpStack.getRouter().addMtp3ServiceAccessPoint(1, sap);
-               this.sccpStack.getRouter().addMtp3Destination(1, 1, dest);</code></pre>
+<pre class="highlight"><code>    sccpStack.removeAllResourses();</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Once SCCP is configured and started, next step it to build TCAP layer</p>
+<p>Here is an example for adding resources:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>    sccpStack.getSccpResource().addRemoteSpc(0, SERVET_SPC, 0, 0);
+    sccpStack.getSccpResource().addRemoteSsn(0, SERVET_SPC, SSN, 0, false);
+
+    sccpStack.getRouter().addMtp3ServiceAccessPoint(1, 1, CLIENT_SPC, NETWORK_INDICATOR, 0);
+    sccpStack.getRouter().addMtp3Destination(1, 1, SERVET_SPC, SERVET_SPC, 0, 255, 255);
+
+    ParameterFactoryImpl fact = new ParameterFactoryImpl();
+    EncodingScheme ec = new BCDEvenEncodingScheme();
+    GlobalTitle gt1 = fact.createGlobalTitle("-", 0, org.mobicents.protocols.ss7.indicator.NumberingPlan.ISDN_TELEPHONY, ec, NatureOfAddress.INTERNATIONAL);
+    GlobalTitle gt2 = fact.createGlobalTitle("-", 0, org.mobicents.protocols.ss7.indicator.NumberingPlan.ISDN_TELEPHONY, ec, NatureOfAddress.INTERNATIONAL);
+    SccpAddress localAddress = new SccpAddressImpl(RoutingIndicator.ROUTING_BASED_ON_GLOBAL_TITLE, gt1, CLIENT_SPC, 0);
+    sccpStack.getRouter().addRoutingAddress(1, localAddress);
+    SccpAddress remoteAddress = new SccpAddressImpl(RoutingIndicator.ROUTING_BASED_ON_GLOBAL_TITLE, gt2, SERVET_SPC, 0);
+    sccpStack.getRouter().addRoutingAddress(2, remoteAddress);
+
+    GlobalTitle gt = fact.createGlobalTitle("*", 0, org.mobicents.protocols.ss7.indicator.NumberingPlan.ISDN_TELEPHONY, ec, NatureOfAddress.INTERNATIONAL);
+    SccpAddress pattern = new SccpAddressImpl(RoutingIndicator.ROUTING_BASED_ON_GLOBAL_TITLE, gt, 0, 0);
+    sccpStack.getRouter().addRule(1, RuleType.SOLITARY, LoadSharingAlgorithm.Bit0, OriginationType.REMOTE, pattern, "K", 1, -1, null, 0);
+    sccpStack.getRouter().addRule(2, RuleType.SOLITARY, LoadSharingAlgorithm.Bit0, OriginationType.LOCAL, pattern, "K", 2, -1, null, 0);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once SCCP is configured and started, next step it to build TCAP layer.</p>
 </div>
 </div>
 </div>
@@ -596,12 +649,13 @@ Above sections explained building SCTP and M3UA,  however if you are using Dialo
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>                org.mobicents.protocols.ss7.tcap.api tcapStack = null;
-                this.tcapStack = new TCAPStackImpl(this.sccpStack.getSccpProvider(), SSN);
-                this.tcapStack.setDialogIdleTimeout(60000);
-                this.tcapStack.setInvokeTimeout(30000);
-                this.tcapStack.setMaxDialogs(2000);
-                this.tcapStack.start();</code></pre>
+<pre class="highlight"><code>    org.mobicents.protocols.ss7.tcap.api tcapStack = null;
+    tcapStack = new TCAPStackImpl("Client", this.sccpStack.getSccpProvider(), SSN);
+
+    tcapStack.start();
+
+    this.tcapStack.setDialogIdleTimeout(60000);
+    this.tcapStack.setMaxDialogs(MAX_DIALOGS);</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -617,7 +671,7 @@ Above sections explained building SCTP and M3UA,  however if you are using Dialo
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>                this.mapStack = new MAPStackImpl(this.tcapStack.getProvider());</code></pre>
+<pre class="highlight"><code>    mapStack = new MAPStackImpl("Client", tcapStack.getProvider());</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -626,7 +680,7 @@ In this case MAPStack itself creates the TCAPStack and leverages TCAPProvider:</
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>                this.mapStack = new MAPStackImpl(this.sccpStack.getSccpProvider(), SSN);</code></pre>
+<pre class="highlight"><code>    mapStack = new MAPStackImpl("Client", sccpStack.getSccpProvider(), SSN);</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -634,11 +688,11 @@ In this case MAPStack itself creates the TCAPStack and leverages TCAPProvider:</
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>		this.mapProvider = this.mapStack.getMAPProvider();
-                this.mapProvider.addMAPDialogListener(this);
-                this.mapProvider.getMAPServiceSupplementary().addMAPServiceListener(this);
-                this.mapProvider.getMAPServiceSupplementary().acivate();
-                this.mapStack.start();</code></pre>
+<pre class="highlight"><code>    mapProvider = mapStack.getMAPProvider();
+    mapProvider.addMAPDialogListener(this);
+    mapProvider.getMAPServiceSupplementary().addMAPServiceListener(this);
+    mapProvider.getMAPServiceSupplementary().acivate();
+    mapStack.start();</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -646,12 +700,11 @@ In this case MAPStack itself creates the TCAPStack and leverages TCAPProvider:</
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>		 public class Client extends MAPDialogListener, MAPServiceSupplementaryListener  {
-                	//Implemet all MAPDialogListener methods here
+<pre class="highlight"><code>    public class Client extends MAPDialogListener, MAPServiceSupplementaryListener  {
+        //Implemet all MAPDialogListener methods here
 
-
-                	//Implement all MAPServiceSupplementaryListener methods here
-        	}</code></pre>
+        //Implement all MAPServiceSupplementaryListener methods here
+    }</code></pre>
 </div>
 </div>
 </div>
@@ -664,28 +717,28 @@ In this case MAPStack itself creates the TCAPStack and leverages TCAPProvider:</
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>        // MTP Details
-        protected final int CLIENT_SPC = 1;
-        protected final int SERVET_SPC = 2;
-        protected final int NETWORK_INDICATOR = 2;
-        protected final int SERVICE_INIDCATOR = 3; //SCCP
-        protected final int SSN = 8;
+<pre class="highlight"><code>    // MTP Details
+    protected final int CLIENT_SPC = 1;
+    protected final int SERVET_SPC = 2;
+    protected final int NETWORK_INDICATOR = 2;
+    protected final int SERVICE_INIDCATOR = 3; //SCCP
+    protected final int SSN = 8;
 
-        protected final String CLIENT_IP = "127.0.0.1";
-        protected final int CLIENT_PORT = 2345;
+    protected final String CLIENT_IP = "127.0.0.1";
+    protected final int CLIENT_PORT = 2345;
 
-        protected final String SERVER_IP = "127.0.0.1";
-        protected final int SERVER_PORT = 3434;
+    protected final String SERVER_IP = "127.0.0.1";
+    protected final int SERVER_PORT = 3434;
 
-        protected final int ROUTING_CONTEXT = 100;
+    protected final int ROUTING_CONTEXT = 100;
 
-        protected final String SERVER_ASSOCIATION_NAME = "serverAsscoiation";
-        protected final String CLIENT_ASSOCIATION_NAME = "clientAsscoiation";
+    protected final String SERVER_ASSOCIATION_NAME = "serverAsscoiation";
+    protected final String CLIENT_ASSOCIATION_NAME = "clientAsscoiation";
 
-        protected final String SERVER_NAME = "testserver";
+    protected final String SERVER_NAME = "testserver";
 
-.....
-.....</code></pre>
+    .....
+    .....</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -699,7 +752,7 @@ Don&#8217;t forget to include your compiled Application class file in classpath 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-04-17 10:47:50 WEST
+Last updated 2016-04-18 12:54:24 WEST
 </div>
 </div>
 </body>

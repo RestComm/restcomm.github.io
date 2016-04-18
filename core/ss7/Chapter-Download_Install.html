@@ -22770,7 +22770,7 @@ You can either download the binary release or download the source code and set u
 <h2 id="_downloading_binary"><a class="anchor" href="#_downloading_binary"></a>Binary Download</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The binary release is available for download at TeleStax Customer Support Portal <a href="https://github.com/Restcomm/jss7/" class="bare">https://github.com/Restcomm/jss7/</a></p>
+<p>The binary release is available for download at TeleStax Customer Support Portal <a href="https://github.com/RestComm/jss7/releases/latest" class="bare">https://github.com/RestComm/jss7/releases/latest</a></p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure: Binary Download</div>
@@ -22831,7 +22831,8 @@ For details on what is included in the sub-directories, please refer to the Rest
 				|+ restcomm-ss7-service
 				|+ restcomm-ss7-sgw
 				|+ restcomm-ss7-simulator
-				|+ restcomm-ss7-trace-parser</pre>
+				|+ restcomm-ss7-trace-parser
+				|+ template</pre>
 </div>
 </div>
 </div>
@@ -22901,24 +22902,24 @@ Alternatively you can register it.</p>
 <p>Downloading the source code</p>
 <div class="paragraph">
 <p>Checkout a specific release source using GIT.
-The base URL to clone from is &amp;THIS.TRUNK_SOURCE_CODE_URL;.
-Then add the specific release version, in the below example we are downloading the version release-2.0.0.BETA3.</p>
+The base URL to clone from is <a href="https://github.com/Restcomm/jss7" class="bare">https://github.com/Restcomm/jss7</a>.
+Then add the specific release version, in the below example we are downloading the version "3.0.0".</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>[usr]$ git clone
 [usr]$ cd jss7
-[usr]$ git checkout release-2.0.0.BETA3</code></pre>
+[usr]$ git checkout 3.0.0</code></pre>
 </div>
 </div>
 </li>
 <li>
 <p>Building the source code</p>
 <div class="paragraph">
-<p>Now that we have the source code, the next step is to build and install the source. Restcomm jSS7 uses Maven 2 to build the system.
-There are three build profiles namely default, dahdilinux and dialogiclinux.
+<p>Now that we have the source code, the next step is to build and install the source. Restcomm jSS7 uses Maven 3 to build the system.
+There are two build profiles namely default and dahdilinux.
 The Default profile builds only the java source code.
-The other two profiles "dahdilinux" and "dialogiclinux" compile relevant native modules in addition to building the java source.</p>
+The profile "dahdilinux" compile relevant native modules in addition to building the java source.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -22971,21 +22972,6 @@ Make sure you pass the "include.zap" system property with a value pointing to th
 </div>
 </div>
 </li>
-<li>
-<p>Building using "dialogiclinux" profile</p>
-<div class="paragraph">
-<p>Use this profile only if the linux server on which this code is built has <code>dialogic</code> module installed.
-Make sure you pass the "include.dialogic" and "include.dialogic.gctlib" system properties with values pointing to appropriate directories.
-The "include.dialogic" property must point to the directory where <code>dialogic</code> libraries are installed.
-The "include.dialogic.gctlib" property must point to the directory where <code>gctload</code> is present (generally /opt/dpklnx for linux OS).</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>[usr]$ cd jss7
-[usr]$ mvn install -Pdialogclinux -Dinclude.dialogic=/opt/dpklnx/INC -Dinclude.dialogic.gctlib=/opt/dpklnx</code></pre>
-</div>
-</div>
-</li>
 </ul>
 </div>
 </li>
@@ -23022,7 +23008,7 @@ The "include.dialogic.gctlib" property must point to the directory where <code>g
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-04-17 10:47:50 WEST
+Last updated 2016-04-18 12:54:24 WEST
 </div>
 </div>
 <footer>

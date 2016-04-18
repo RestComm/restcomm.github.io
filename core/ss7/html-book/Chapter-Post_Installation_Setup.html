@@ -433,6 +433,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_running_without_jboss">Restcomm jSS7  as a Standalone Component</a></li>
 </ul>
 </li>
+<li><a href="#_restcomm_ss7_install_hardware_libraries">Installing of hardware native libraries.</a>
+<ul class="sectlevel2">
+<li><a href="#_restcomm_ss7_install_hardware_libraries_dahdi">Installing of hardware native libraries for dahdi cards.</a></li>
+<li><a href="#_restcomm_ss7_install_hardware_libraries_dialogic">Installing of hardware native libraries for dialogic cards.</a></li>
+</ul>
+</li>
 <li><a href="#_setup_configuration">Post Installation Configuration</a>
 <ul class="sectlevel2">
 <li><a href="#memory-settings">Memory Settings</a></li>
@@ -472,8 +478,7 @@ The SS7 Service wraps SS7 Level 4 (i.e., MAP, CAP and ISUP) and the lower layers
 <div class="ulist">
 <ul>
 <li>
-<p>The Restcomm SS7 Service binary requires that you have JBoss Application Server installed and <code>JBOSS_HOME</code> Environment variable set properly.
-For more details on setting the <code>JBOSS_HOME</code> variable, please refer to the section <a href="#_jboss_home_setup">[_jboss_home_setup]</a>.</p>
+<p>The Restcomm SS7 Service binary requires that you have JBoss Application Server installed and <code>JBOSS_HOME</code> Environment variable set properly. The latest binaries of JBoss Application Server can by obtained from <a href="https://github.com/RestComm/jain-slee/releases/latest" class="bare">https://github.com/RestComm/jain-slee/releases/latest</a>. For more details on setting the <code>JBOSS_HOME</code> variable, please refer to the section <a href="#_jboss_home_setup">[_jboss_home_setup]</a>.</p>
 </li>
 <li>
 <p>Ant 1.6 (or higher) must be used to install the binary.
@@ -661,6 +666,117 @@ If you do not intend to use it with JBoss AS, then you must follow the regular w
 </div>
 </div>
 <div class="sect1">
+<h2 id="_restcomm_ss7_install_hardware_libraries"><a class="anchor" href="#_restcomm_ss7_install_hardware_libraries"></a>Installing of hardware native libraries.</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you use hardware SS7 cards you need to make extra actions for installing of hardware native libraries. A hardware SS7 card must be already installed (refer to the section <a href="#_setup_hardware">[_setup_hardware]</a>).</p>
+</div>
+<div class="sect2">
+<h3 id="_restcomm_ss7_install_hardware_libraries_dahdi"><a class="anchor" href="#_restcomm_ss7_install_hardware_libraries_dahdi"></a>Installing of hardware native libraries for dahdi cards.</h3>
+<div class="paragraph">
+<p>Follow steps for installing of native libraries dahdi cards:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>We have the driver only for 32-bit JAVA for linux. Other OS and 64-bit is not supported.</p>
+</li>
+<li>
+<p>We need to have <code>JAVA 7</code> and <code>GCC</code> compiler installed</p>
+</li>
+<li>
+<p>Download latest dahdi complete from their site
+<a href="http://downloads.asterisk.org/pub/telephony/dahdi-linux-complete/" class="bare">http://downloads.asterisk.org/pub/telephony/dahdi-linux-complete/</a>
+and unzip it</p>
+</li>
+<li>
+<p>Copy "dahdi_config.h" and "user.h"
+from the unzipped folder like: <code>dahdi-linux-complete-&lt;version&gt;/linux/include/dahdi/</code>
+to the linux "include" folder: <code>/usr/include/dahdi</code> (in case when linux "include" files are located in <code>/usr/include</code> folder)</p>
+</li>
+<li>
+<p>Compile dahdi native lib - run from the folder of downloaded jss7 sources (how to download source code - check <a href="#_source_code">[_source_code]</a>) <code>jss7/hardware/dahdi</code> by the command:
+<code>mvn install -Pdahdilinux -Dinclude.zap=/usr/include/dahdi</code></p>
+</li>
+<li>
+<p>Copy the compiled native lib "libmobicents-dialogic-linux.so" from <code>jss7/hardware/dahdi/native/linux/target</code> folder to</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>jboss-5.1.0.GA/bin/META-INF/lib/linux2/x86</code> folder if you run JSS7 under jboss</p>
+</li>
+<li>
+<p>other folder where JSS7 will search a native lib in case of a stand-alone usage</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>in JBOSS case by default "jboss-beans.xml" config file in the jboss deploy folder (the folder like <code>jboss-5.1.0.GA/server/default/deploy/Restcomm-ss7-service/META-INF</code>)
+is configured to use m3ua stack by default. If you want to use SS7 hardware cards you need to update it - update the definition of bean "Mtp3UserPart" to the corresponded hardware depended bean.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_restcomm_ss7_install_hardware_libraries_dialogic"><a class="anchor" href="#_restcomm_ss7_install_hardware_libraries_dialogic"></a>Installing of hardware native libraries for dialogic cards.</h3>
+<div class="paragraph">
+<p>Follow steps for installing of native libraries dialogic cards:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download latest DSI Software from <a href="https://www.dialogic.com/en/products/signaling-and-ss7-components/download/dsi-interface-protocol-stacks.aspx" class="bare">https://www.dialogic.com/en/products/signaling-and-ss7-components/download/dsi-interface-protocol-stacks.aspx</a> and unzip it (it may be already done during the hardware installation procedure)</p>
+</li>
+<li>
+<p>copy the native library "libgctjni.so"</p>
+<div class="ulist">
+<ul>
+<li>
+<p>for 32-bit JAVA: from subfolder <code>32</code> to jboss folder <code>jboss-5.1.0.GA/bin/META-INF/lib/linux2/x86</code> or other folder where JSS7 will search a native lib in case of a stand-alone usage</p>
+</li>
+<li>
+<p>for 64-bit JAVA: from subfolder <code>64</code> to jboss folder <code>jboss-5.1.0.GA/bin/META-INF/lib/linux2/x64</code> or other folder where JSS7 will search a native lib in case of a stand-alone usage</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>copy the gctApi library "gctApi.jar" from subfolder <code>JAVA</code> to the folder where JSS7 stack jar files are deployed.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>In JBOSS case the target folder may be folder <code>jboss-5.1.0.GA/server/default/deploy/Restcomm-ss7-service/lib</code> for the default profile and <code>jboss-5.1.0.GA/server/simulator/deploy/Restcomm-ss7-service/lib</code> for the simulator profile.</p>
+</li>
+<li>
+<p>For products like SMSC GW, USSD GW, CAMEL GW, GMLC the target folder will be the folders like <code>jboss-5.1.0.GA/server/default/deploy/Restcomm-smsc-server/lib</code> for the default profile and <code>jboss-5.1.0.GA/server/simulator/deploy/Restcomm-smsc-server/lib</code> for the simulator profile.</p>
+</li>
+<li>
+<p>For stand-alone installation the target folder is where SS7 stack jars are deployed</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>in JBOSS case by default "jboss-beans.xml" config file in the jboss deploy folder (the folder like <code>jboss-5.1.0.GA/server/default/deploy/Restcomm-ss7-service/META-INF</code>)
+is configured to use m3ua stack by default. If you want to use SS7 hardware cards you need to update it - update the definition of bean "Mtp3UserPart" to the corresponded hardware depended bean. Examples of jboss-beans.xml you can find in the following folders (you can just these files to <code>META-INF</code> folder):</p>
+<div class="ulist">
+<ul>
+<li>
+<p>for usage only a Dialogic board without m3ua (sigtran) - <code>ss7/template/META-INF-dialogic</code></p>
+</li>
+<li>
+<p>for usage a Dialogic board together with m3ua (sigtran) - <code>ss7/template/META-INF-m3ua-dialogic</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_setup_configuration"><a class="anchor" href="#_setup_configuration"></a>Post Installation Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -691,7 +807,7 @@ The Shell Management module will enable you to easily configure the Stack using 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-04-17 10:47:50 WEST
+Last updated 2016-04-18 12:54:24 WEST
 </div>
 </div>
 </body>

@@ -22762,13 +22762,36 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#_setup_downloading">4. Downloading</a>
 <ul class="sectlevel2">
 <li><a href="#_downloading_binary">4.1. Binary Download</a></li>
-<li><a href="#_source_code">4.2. Setup from Source</a></li>
+<li><a href="#_source_code">4.2. Setup from Source</a>
+<ul class="sectlevel3">
+<li><a href="#_source_building">4.2.1. Release Source Code Building</a></li>
+<li><a href="#_trunk_source_building">4.2.2. Development Trunk Source Building</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_setup_running">5. Installing Restcomm jSS7</a>
 <ul class="sectlevel2">
-<li><a href="#installation-options">5.1. Installation Options</a></li>
-<li><a href="#_setup_configuration">5.2. Post Installation Configuration</a></li>
+<li><a href="#installation-options">5.1. Installation Options</a>
+<ul class="sectlevel3">
+<li><a href="#_running_with_jboss">5.1.1. Restcomm jSS7  as a JBoss AS Service</a></li>
+<li><a href="#_restcomm_ss7_sgw">5.1.2. Restcomm jSS7  as a Signaling Gateway</a></li>
+<li><a href="#_restcomm_ss7_shell">5.1.3. Shell - Command Line Interface (CLI)</a></li>
+<li><a href="#_restcomm_ss7_simulator">5.1.4. Installing the Restcomm jSS7  Simulator</a></li>
+<li><a href="#_running_without_jboss">5.1.5. Restcomm jSS7  as a Standalone Component</a></li>
+</ul>
+</li>
+<li><a href="#_restcomm_ss7_install_hardware_libraries">5.2. Installing of hardware native libraries.</a>
+<ul class="sectlevel3">
+<li><a href="#_restcomm_ss7_install_hardware_libraries_dahdi">5.2.1. Installing of hardware native libraries for dahdi cards.</a></li>
+<li><a href="#_restcomm_ss7_install_hardware_libraries_dialogic">5.2.2. Installing of hardware native libraries for dialogic cards.</a></li>
+</ul>
+</li>
+<li><a href="#_setup_configuration">5.3. Post Installation Configuration</a>
+<ul class="sectlevel3">
+<li><a href="#memory-settings">5.3.1. Memory Settings</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_setup_uninstalling">6. Uninstalling</a></li>
@@ -23036,8 +23059,9 @@ If you have found an error, please include the section number and some of the su
 <h2 id="introduction"><a class="anchor" href="#introduction"></a>1. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Restcomm jSS7 (Java SS7) is the only Open Source Java based implementation of the SS7 protocol stack.
-It provides implementation for <code>MTP2</code>, <code>MTP3</code>,  <code>ISUP</code>, <code>SCCP</code>, <code>TCAP</code>, <code>CAMEL</code> and <code>MAP</code> protocols for a dedicated equipment and also has in-built support for <code>SIGTRAN (M3UA)</code> over IP. Restcomm  jSS7  strictly adheres to the standards and specifications defined by the  International Telecommunications Union (ITU).</p>
+<p>Restcomm jSS7 is the only Open Source Java based implementation of the SS7 protocol stack.
+It provides implementation for <code>MTP2</code>, <code>MTP3</code>, <code>ISUP</code>, <code>SCCP</code>, <code>TCAP</code>, <code>CAMEL (Phase I, Phase II, Phase III and Phase IV)</code> and <code>MAP</code> protocols for a dedicated equipment.
+It also has in-built support for <code>SIGTRAN (M3UA)</code> over IP and strictly adheres to the standards and specifications defined by the International Telecommunications Union (ITU) and American National Standards Institute (ANSI). The platform offers developers with a flexible API set that hides the lower layer details (legacy SS7 links or SIGTRAN) and therefore makes it simple and easy to develop SS7 applications as well as to migrate your applications from TDM equipments to M3UA. Restcomm  jSS7  is based on an easily scalable and configurable load-balancing architecture.</p>
 </div>
 <div class="paragraph">
 <p>The platform offers developers with a flexible API set that hides the lower layer details (legacy SS7 links or SIGTRAN) and therefore makes it simple and easy to develop SS7 applications as well as to  migrate your applications from TDM equipments to M3UA. Restcomm jSS7 is based on an easily scalable and configurable load-balancing architecture.</p>
@@ -23108,7 +23132,7 @@ The following table details the Hardware, Operating System and Software requirem
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">JBoss Application Server</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Restcomm jSS7 Stack can work as a standalone library if you do not require JSLEE Resource Adaptors and the Shell Management Tool (Command Line Interface) for run-time configuration of the platform. But if you wish to avail of these, then you must have JBoss Application Server (version 5.1.0.GA or above) installed on your machine.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Restcomm jSS7 Stack can work as a standalone library if you do not require JSLEE Resource Adaptors and the Shell Management Tool (Command Line Interface) for run-time configuration of the platform. But if you wish to avail of these, then you must have JBoss Application Server (version 5.1.0.GA) installed on your machine.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Refer to the appendix section for more details.</p></td>
 </tr>
 <tr>
@@ -23170,28 +23194,7 @@ The following external links point to information that will assist you in settin
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Before JSS7 stack can interoperate with an installed card you need to provide extra native libs for both Dialogic and dahdi cards. The way where you can obtain native libs is explains &#8230;&#8203;&#8230;&#8203;&#8230;&#8203;&#8230;&#8203;&#8230;&#8203;&#8230;&#8203;..</p>
-</div>
-<div class="paragraph">
-<p>The corresponding native libraries for <code>dialogic</code> and <code>dahdi</code> from folder  <code>restcomm-jss7-&lt;version&gt;/ss7/native/32</code> or <code>restcomm-jss7-&lt;version&gt;/ss7/native/64</code> should be copied  to <code>$JBOSS_HOME/bin/META-INF/lib/linux2/x86</code> if OS is 32 bit or copied to  <code>$JBOSS_HOME/bin/META-INF/lib/linux2/x64</code> if OS is 64 bit.</p>
-</div>
-<div class="paragraph">
-<p>libraries are compiled only for linux OS for now.</p>
-</div>
-<div class="paragraph">
-<p><code>restcomm-jss7-&lt;version&gt;/ss7/native/32</code> and <code>restcomm-jss7-&lt;version&gt;/ss7/native/64</code> folders carries  libraries compiled for 32 bit and 64 bit linux OS.</p>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">libgctjni</dt>
-<dd>
-<p>Native library for Dialogic</p>
-</dd>
-<dt class="hdlist1">libmobicents-dahdi-linux</dt>
-<dd>
-<p>Native library for <code>dahdi</code> based cards - Diguim and Sangoma</p>
-</dd>
-</dl>
+<p>Before JSS7 stack can interoperate with an installed card you need to provide extra native libs for both Dialogic and dahdi cards. The way where you can obtain native libs is explained in <a href="#_restcomm_ss7_install_hardware_libraries">Installing of hardware native libraries.</a>.</p>
 </div>
 </td>
 </tr>
@@ -23209,7 +23212,7 @@ You can either download the binary release or download the source code and set u
 <div class="sect2">
 <h3 id="_downloading_binary"><a class="anchor" href="#_downloading_binary"></a>4.1. Binary Download</h3>
 <div class="paragraph">
-<p>The binary release is available for download at TeleStax Customer Support Portal <a href="https://github.com/Restcomm/jss7/" class="bare">https://github.com/Restcomm/jss7/</a></p>
+<p>The binary release is available for download at TeleStax Customer Support Portal <a href="https://github.com/RestComm/jss7/releases/latest" class="bare">https://github.com/RestComm/jss7/releases/latest</a></p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure: Binary Download</div>
@@ -23270,7 +23273,8 @@ For details on what is included in the sub-directories, please refer to the Rest
 				|+ restcomm-ss7-service
 				|+ restcomm-ss7-sgw
 				|+ restcomm-ss7-simulator
-				|+ restcomm-ss7-trace-parser</pre>
+				|+ restcomm-ss7-trace-parser
+				|+ template</pre>
 </div>
 </div>
 </div>
@@ -23338,24 +23342,24 @@ Alternatively you can register it.</p>
 <p>Downloading the source code</p>
 <div class="paragraph">
 <p>Checkout a specific release source using GIT.
-The base URL to clone from is &amp;THIS.TRUNK_SOURCE_CODE_URL;.
-Then add the specific release version, in the below example we are downloading the version release-2.0.0.BETA3.</p>
+The base URL to clone from is <a href="https://github.com/Restcomm/jss7" class="bare">https://github.com/Restcomm/jss7</a>.
+Then add the specific release version, in the below example we are downloading the version "3.0.0".</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>[usr]$ git clone
 [usr]$ cd jss7
-[usr]$ git checkout release-2.0.0.BETA3</code></pre>
+[usr]$ git checkout 3.0.0</code></pre>
 </div>
 </div>
 </li>
 <li>
 <p>Building the source code</p>
 <div class="paragraph">
-<p>Now that we have the source code, the next step is to build and install the source. Restcomm jSS7 uses Maven 2 to build the system.
-There are three build profiles namely default, dahdilinux and dialogiclinux.
+<p>Now that we have the source code, the next step is to build and install the source. Restcomm jSS7 uses Maven 3 to build the system.
+There are two build profiles namely default and dahdilinux.
 The Default profile builds only the java source code.
-The other two profiles "dahdilinux" and "dialogiclinux" compile relevant native modules in addition to building the java source.</p>
+The profile "dahdilinux" compile relevant native modules in addition to building the java source.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -23405,21 +23409,6 @@ Make sure you pass the "include.zap" system property with a value pointing to th
 <div class="content">
 <pre class="highlight"><code>[usr]$ cd jss7
 [usr]$ mvn install -Pdahdilinux -Dinclude.zap=/usr/include/dahdi</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Building using "dialogiclinux" profile</p>
-<div class="paragraph">
-<p>Use this profile only if the linux server on which this code is built has <code>dialogic</code> module installed.
-Make sure you pass the "include.dialogic" and "include.dialogic.gctlib" system properties with values pointing to appropriate directories.
-The "include.dialogic" property must point to the directory where <code>dialogic</code> libraries are installed.
-The "include.dialogic.gctlib" property must point to the directory where <code>gctload</code> is present (generally /opt/dpklnx for linux OS).</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>[usr]$ cd jss7
-[usr]$ mvn install -Pdialogclinux -Dinclude.dialogic=/opt/dpklnx/INC -Dinclude.dialogic.gctlib=/opt/dpklnx</code></pre>
 </div>
 </div>
 </li>
@@ -23489,8 +23478,7 @@ The SS7 Service wraps SS7 Level 4 (i.e., MAP, CAP and ISUP) and the lower layers
 <div class="ulist">
 <ul>
 <li>
-<p>The Restcomm SS7 Service binary requires that you have JBoss Application Server installed and <code>JBOSS_HOME</code> Environment variable set properly.
-For more details on setting the <code>JBOSS_HOME</code> variable, please refer to the section <a href="#_jboss_home_setup">Setting the JBOSS_HOME Environment Variable</a>.</p>
+<p>The Restcomm SS7 Service binary requires that you have JBoss Application Server installed and <code>JBOSS_HOME</code> Environment variable set properly. The latest binaries of JBoss Application Server can by obtained from <a href="https://github.com/RestComm/jain-slee/releases/latest" class="bare">https://github.com/RestComm/jain-slee/releases/latest</a>. For more details on setting the <code>JBOSS_HOME</code> variable, please refer to the section <a href="#_jboss_home_setup">Setting the JBOSS_HOME Environment Variable</a>.</p>
 </li>
 <li>
 <p>Ant 1.6 (or higher) must be used to install the binary.
@@ -23677,14 +23665,123 @@ If you do not intend to use it with JBoss AS, then you must follow the regular w
 </div>
 </div>
 <div class="sect2">
-<h3 id="_setup_configuration"><a class="anchor" href="#_setup_configuration"></a>5.2. Post Installation Configuration</h3>
+<h3 id="_restcomm_ss7_install_hardware_libraries"><a class="anchor" href="#_restcomm_ss7_install_hardware_libraries"></a>5.2. Installing of hardware native libraries.</h3>
+<div class="paragraph">
+<p>If you use hardware SS7 cards you need to make extra actions for installing of hardware native libraries. A hardware SS7 card must be already installed (refer to the section <a href="#_setup_hardware">Hardware Setup</a>).</p>
+</div>
+<div class="sect3">
+<h4 id="_restcomm_ss7_install_hardware_libraries_dahdi"><a class="anchor" href="#_restcomm_ss7_install_hardware_libraries_dahdi"></a>5.2.1. Installing of hardware native libraries for dahdi cards.</h4>
+<div class="paragraph">
+<p>Follow steps for installing of native libraries dahdi cards:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>We have the driver only for 32-bit JAVA for linux. Other OS and 64-bit is not supported.</p>
+</li>
+<li>
+<p>We need to have <code>JAVA 7</code> and <code>GCC</code> compiler installed</p>
+</li>
+<li>
+<p>Download latest dahdi complete from their site
+<a href="http://downloads.asterisk.org/pub/telephony/dahdi-linux-complete/" class="bare">http://downloads.asterisk.org/pub/telephony/dahdi-linux-complete/</a>
+and unzip it</p>
+</li>
+<li>
+<p>Copy "dahdi_config.h" and "user.h"
+from the unzipped folder like: <code>dahdi-linux-complete-&lt;version&gt;/linux/include/dahdi/</code>
+to the linux "include" folder: <code>/usr/include/dahdi</code> (in case when linux "include" files are located in <code>/usr/include</code> folder)</p>
+</li>
+<li>
+<p>Compile dahdi native lib - run from the folder of downloaded jss7 sources (how to download source code - check <a href="#_source_code">Setup from Source</a>) <code>jss7/hardware/dahdi</code> by the command:
+<code>mvn install -Pdahdilinux -Dinclude.zap=/usr/include/dahdi</code></p>
+</li>
+<li>
+<p>Copy the compiled native lib "libmobicents-dialogic-linux.so" from <code>jss7/hardware/dahdi/native/linux/target</code> folder to</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>jboss-5.1.0.GA/bin/META-INF/lib/linux2/x86</code> folder if you run JSS7 under jboss</p>
+</li>
+<li>
+<p>other folder where JSS7 will search a native lib in case of a stand-alone usage</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>in JBOSS case by default "jboss-beans.xml" config file in the jboss deploy folder (the folder like <code>jboss-5.1.0.GA/server/default/deploy/Restcomm-ss7-service/META-INF</code>)
+is configured to use m3ua stack by default. If you want to use SS7 hardware cards you need to update it - update the definition of bean "Mtp3UserPart" to the corresponded hardware depended bean.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_restcomm_ss7_install_hardware_libraries_dialogic"><a class="anchor" href="#_restcomm_ss7_install_hardware_libraries_dialogic"></a>5.2.2. Installing of hardware native libraries for dialogic cards.</h4>
+<div class="paragraph">
+<p>Follow steps for installing of native libraries dialogic cards:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download latest DSI Software from <a href="https://www.dialogic.com/en/products/signaling-and-ss7-components/download/dsi-interface-protocol-stacks.aspx" class="bare">https://www.dialogic.com/en/products/signaling-and-ss7-components/download/dsi-interface-protocol-stacks.aspx</a> and unzip it (it may be already done during the hardware installation procedure)</p>
+</li>
+<li>
+<p>copy the native library "libgctjni.so"</p>
+<div class="ulist">
+<ul>
+<li>
+<p>for 32-bit JAVA: from subfolder <code>32</code> to jboss folder <code>jboss-5.1.0.GA/bin/META-INF/lib/linux2/x86</code> or other folder where JSS7 will search a native lib in case of a stand-alone usage</p>
+</li>
+<li>
+<p>for 64-bit JAVA: from subfolder <code>64</code> to jboss folder <code>jboss-5.1.0.GA/bin/META-INF/lib/linux2/x64</code> or other folder where JSS7 will search a native lib in case of a stand-alone usage</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>copy the gctApi library "gctApi.jar" from subfolder <code>JAVA</code> to the folder where JSS7 stack jar files are deployed.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>In JBOSS case the target folder may be folder <code>jboss-5.1.0.GA/server/default/deploy/Restcomm-ss7-service/lib</code> for the default profile and <code>jboss-5.1.0.GA/server/simulator/deploy/Restcomm-ss7-service/lib</code> for the simulator profile.</p>
+</li>
+<li>
+<p>For products like SMSC GW, USSD GW, CAMEL GW, GMLC the target folder will be the folders like <code>jboss-5.1.0.GA/server/default/deploy/Restcomm-smsc-server/lib</code> for the default profile and <code>jboss-5.1.0.GA/server/simulator/deploy/Restcomm-smsc-server/lib</code> for the simulator profile.</p>
+</li>
+<li>
+<p>For stand-alone installation the target folder is where SS7 stack jars are deployed</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>in JBOSS case by default "jboss-beans.xml" config file in the jboss deploy folder (the folder like <code>jboss-5.1.0.GA/server/default/deploy/Restcomm-ss7-service/META-INF</code>)
+is configured to use m3ua stack by default. If you want to use SS7 hardware cards you need to update it - update the definition of bean "Mtp3UserPart" to the corresponded hardware depended bean. Examples of jboss-beans.xml you can find in the following folders (you can just these files to <code>META-INF</code> folder):</p>
+<div class="ulist">
+<ul>
+<li>
+<p>for usage only a Dialogic board without m3ua (sigtran) - <code>ss7/template/META-INF-dialogic</code></p>
+</li>
+<li>
+<p>for usage a Dialogic board together with m3ua (sigtran) - <code>ss7/template/META-INF-m3ua-dialogic</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_setup_configuration"><a class="anchor" href="#_setup_configuration"></a>5.3. Post Installation Configuration</h3>
 <div class="paragraph">
 <p>Now that you have installed Restcomm jSS7 to suit your needs, you can go ahead and configure the Stack to meet your requirements.
 The User Guide (available along with this Installation Guide) in the <em class="path">Restcomm-jSS7-3.0.0-SNAPSHOT/docs</em> folder will assist you in configuring and managing the Stack.
 The Shell Management module will enable you to easily configure the Stack using the Command Line Interface (CLI) tool.</p>
 </div>
 <div class="sect3">
-<h4 id="memory-settings"><a class="anchor" href="#memory-settings"></a>5.2.1. Memory Settings</h4>
+<h4 id="memory-settings"><a class="anchor" href="#memory-settings"></a>5.3.1. Memory Settings</h4>
 <div class="paragraph">
 <p>You should fine tune the JVM memory settings based on your needs but we recommend you allocate a minimum of 3 GB for initial and maximum heap size.</p>
 </div>
@@ -23743,7 +23840,7 @@ Total time: 0 seconds</code></pre>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The [app]` Platform` is written in Java; therefore, before running any <code class="app"> server, you must have a working Java Runtime Environment () or Java Development Kit () installed on your system.
-In addition, the JRE or JDK you are using to run [app]</code> must be version 5 or higher<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup>.</p>
+In addition, the JRE or JDK you are using to run [app]</code> must be version 5 or higher (version 7 is recommended, version 8 is not supported now) <sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup>.</p>
 </div>
 <div class="paragraph">
 <div class="title">Should I Install the JRE or JDK?</div>
@@ -23778,12 +23875,12 @@ Barring memory issues, 64-bit hardware with the same relative clock speed and ar
 </div>
 <div class="paragraph">
 <div class="title">Downloading</div>
-<p>You can download the Sun JDK 5.0 (Java 2 Development Kit) from Sun&#8217;s website: <a href="http://java.sun.com/javase/downloads/index_jdk5.jsp" class="bare">http://java.sun.com/javase/downloads/index_jdk5.jsp</a>.
-Click on the <span class="label">Download</span> link next to "JDK 5.0 Update <code class="replaceable">&lt;x&gt;`" (where [replaceable]</code>&lt;x&gt;` is the latest minor version release number). On the next page, select your language and platform (both architecture&#8212;&#8203;whether 32- or 64-bit&#8212;&#8203;and operating system), read and agree to the <code>Java Development Kit 5.0 License Agreement</code>, and proceed to the download page.</p>
+<p>You can download the Oracle JDK 7 (Java Development Kit) from Oracle&#8217;s website: <a href="http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html" class="bare">http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html</a>.
+Click on the <span class="label">Download</span> link next to "Java SE Development Kit <code class="replaceable">&lt;version&gt;`" (where [replaceable]</code>&lt;version&gt;` is the latest release number). On the next page, select your language and platform (both architecture - whether 32- or 64-bit - and operating system), read and agree to the <code>Oracle Binary Code License Agreement for Java</code> , and proceed to the download page.</p>
 </div>
 <div class="paragraph">
-<p>The Sun website will present two download alternatives to you: one is an RPM inside a self-extracting file (for example, <em class="path">jdk-1_5_0_16-linux-i586-rpm.bin</em>), and the other is merely a self-extracting file (e.g. <em class="path">jdk-1_5_0_16-linux-i586.bin</em>). If you are installing the JDK on Red Hat Enterprise Linux, Fedora, or another RPM-based Linux system, we suggest that you download the self-extracting file containing the RPM package, which will set up and use the SysV service scripts in addition to installing the JDK.
-We also suggest installing the self-extracting RPM file if you will be running [app]`` in a production environment.</p>
+<p>The Oracle website will present two download alternatives to you: one is an RPM inside a self-extracting file (for example, <em class="path">jdk-&lt;version&gt;-linux-i586.rpm</em>), and the other is merely a self-extracting file (e.g. <em class="path">jdk-&lt;version&gt;-linux-i586.tar.gz</em>). If you are installing the JDK on Red Hat Enterprise Linux, Fedora, or another RPM-based Linux system, we suggest that you download the self-extracting file containing the RPM package, which will set up and use the SysV service scripts in addition to installing the JDK.
+We also suggest installing the self-extracting RPM file if you will be running jSS7 in a production environment.</p>
 </div>
 <div class="paragraph">
 <div class="title">Installing</div>
@@ -23796,8 +23893,8 @@ We also suggest installing the self-extracting RPM file if you will be running [
 <p>Regardless of which file you downloaded, you can install it on Linux by simply making sure the file is executable and then running it:</p>
 <div class="listingblock">
 <div class="content">
-<pre>~]$ chmod +x "jdk-1_5_0_&lt;minor_version&gt;-linux-&lt;architecture&gt;-rpm.bin"
-~]$ ./"jdk-1_5_0_&lt;minor_version&gt;-linux-&lt;architecture&gt;-rpm.bin"</pre>
+<pre>~]$ chmod +x "jdk-&lt;version&gt;-linux-&lt;architecture&gt;-rpm.bin"
+~]$ ./"jdk-&lt;version&gt;-linux-&lt;architecture&gt;-rpm.bin"</pre>
 </div>
 </div>
 </li>
@@ -23843,7 +23940,7 @@ You do not need to install a <code>-compat</code> package in addition to the JDK
 <div class="paragraph">
 <div class="title">Configuring</div>
 <p>Configuring your system for the JDK consists in two tasks: setting the <code class="var">JAVA_HOME</code> environment variable, and ensuring that the system is using the proper JDK (or JRE) using the <code>alternatives</code> command.
-Setting <code class="var">JAVA_HOME</code> usually overrides the values for <code>java</code>, <code>javac</code> and <code>java_sdk_1.5.0</code> in <code>alternatives</code>, but we will set them all just to be safe and consistent.</p>
+Setting <code class="var">JAVA_HOME</code> usually overrides the values for <code>java</code>, <code>javac</code> and <code>java_sdk_1.7.0</code> in <code>alternatives</code>, but we will set them all just to be safe and consistent.</p>
 </div>
 <div class="dlist">
 <dl>
@@ -23851,7 +23948,7 @@ Setting <code class="var">JAVA_HOME</code> usually overrides the values for <cod
 <dd>
 <p>After installing the JDK, you must ensure that the <code class="var">JAVA_HOME</code> environment variable exists and points to the location of your JDK installation.</p>
 </dd>
-<dt class="hdlist1">Setting <code class="var">java</code>, <code class="var">javac</code> and <code class="var">java_sdk_1.5.0</code> Using the <code>alternatives</code> command </dt>
+<dt class="hdlist1">Setting <code class="var">java</code>, <code class="var">javac</code> and <code class="var">java_sdk_1.7.0</code> Using the <code>alternatives</code> command </dt>
 <dd>
 <p><em>As the root user</em>, call <code>/usr/sbin/alternatives</code> with the <code class="option">--config java</code> option to select between JDKs and JREs installed on your system:</p>
 </dd>
@@ -23863,15 +23960,14 @@ Setting <code class="var">JAVA_HOME</code> usually overrides the values for <cod
 </div>
 <div class="paragraph">
 <div class="title">Testing</div>
-<p>Finally, to make sure that you are using the correct JDK or Java version (5 or higher), and that the java executable is in your <code class="var">PATH</code>, run the `java -version
-			` command in the terminal from your home directory:</p>
+<p>Finally, to make sure that you are using the correct JDK or Java version (5 or higher), and that the java executable is in your <code class="var">PATH</code>, run the <code>java -version</code> command in the terminal from your home directory:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>~]$ java -version
-java version "1.5.0_16"
-Java(TM) 2 Runtime Environment, Standard Edition (build 1.5.0_16-b03)
-Java HotSpot(TM) Client VM (build 1.5.0_16-b03, mixed mode, sharing)</pre>
+java version "1.7.0_16"
+Java(TM) 2 Runtime Environment, Standard Edition (build 1.7.0_16-b03)
+Java HotSpot(TM) Client VM (build 1.7.0_16-b03, mixed mode, sharing)</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23880,8 +23976,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_16-b03, mixed mode, sharing)</pre>
 </div>
 <div class="paragraph">
 <div class="title">Uninstalling the JDK on Linux</div>
-<p>On RPM-based systems, you can uninstall the JDK using the `yum remove &lt;jdk_rpm_name&gt;
-			` command.</p>
+<p>On RPM-based systems, you can uninstall the JDK using the <code>yum remove &lt;jdk_rpm_name&gt;</code> command.</p>
 </div>
 <div class="paragraph">
 <div class="title">Uninstalling the JDK on Windows</div>
@@ -23893,15 +23988,14 @@ Java HotSpot(TM) Client VM (build 1.5.0_16-b03, mixed mode, sharing)</pre>
 <h2 id="_jboss_home_setup"><a class="anchor" href="#_jboss_home_setup"></a>Appendix B: Setting the JBOSS_HOME Environment Variable</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The [app]` Platform` (<code class="app">) is built on top of the [app]</code>.
-You do not need to set the <code class="var">JBOSS_HOME</code> environment variable to run any of the [app]` Platform` servers <em>unless</em> <code class="var">JBOSS_HOME</code> is <em>already</em> set.</p>
+<p>The Restcomm Platform (<code>Restcomm</code>) is built on top of the JBoss Application Server. You do not need to set the <code class="var">JBOSS_HOME</code> environment variable to run any of the Restcomm Platform servers unless <code class="var">JBOSS_HOME</code> is already set.</p>
 </div>
 <div class="paragraph">
 <p>The best way to know for sure whether <code class="var">JBOSS_HOME</code> was set previously or not is to perform a simple check which may save you time and frustration.</p>
 </div>
 <div class="paragraph">
 <div class="title">Checking to See If JBOSS_HOME is Set on Unix</div>
-<p>At the command line, <code>echo</code>			<code>$JBOSS_HOME</code> to see if it is currently defined in your environment:</p>
+<p>At the command line, <code>echo $JBOSS_HOME</code> to see if it is currently defined in your environment:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23909,15 +24003,13 @@ You do not need to set the <code class="var">JBOSS_HOME</code> environment varia
 </div>
 </div>
 <div class="paragraph">
-<p>The [app]` Platform` and most &amp;THIS.PLATFORM; servers are built on top of the <code class="app"> ([app]</code>). When the [app]` Platform` or &amp;THIS.PLATFORM; servers are built <em>from source</em>, then <code class="var">JBOSS_HOME</code> <em>must</em> be set, because the &amp;THIS.PLATFORM; files are installed into (or &#8220;over top of&#8221; if you prefer) a clean <code class="app"> installation, and the build process assumes that the location pointed to by the <code class="var">JBOSS_HOME</code> environment variable at the time of building is the [app]</code> installation into which you want it to install the &amp;THIS.PLATFORM; files.</p>
+<p>The Restcomm Platform or most of Restcomm servers are built on top of the JBoss Application Server (<code>JBoss Application Server</code>). When the Restcomm Platform or Restcomm servers are built on top of the JBoss Application Server (<code>JBoss Application Server</code>), then <code class="var">JBOSS_HOME</code> <em>must</em> be set, because the <code>Restcomm</code> files are installed into (or &#8220;over top of&#8221; if you prefer) a clean JBoss Application Server installation, and the build process assumes that the location pointed to by the <code class="var">JBOSS_HOME</code> environment variable at the time of building is the JBoss Application Server installation into which you want it to install the <code>Restcomm</code> files.</p>
 </div>
 <div class="paragraph">
-<p>This guide does not detail building the [app]` Platform` or any &amp;THIS.PLATFORM; servers from source.
-It is nevertheless useful to understand the role played by <code class="app">JBoss AS</code> and <code class="var">JBOSS_HOME</code> in the &amp;THIS.PLATFORM; ecosystem.</p>
+<p>This guide does not detail building the <code class="app">Restcomm</code> or any <code>Restcomm</code> servers from source. It is nevertheless useful to understand the role played by <code class="app">JBoss Application Server</code> and <code class="var">JBOSS_HOME</code> in the <code>jSS7</code> ecosystem.</p>
 </div>
 <div class="paragraph">
-<p>The immediately-following section considers whether you need to set <code class="var">JBOSS_HOME</code> at all and, if so, when.
-The subsequent sections detail how to set <code class="var">JBOSS_HOME</code> on Unix and Windows</p>
+<p>The immediately-following section considers whether you need to set <code class="var">JBOSS_HOME</code> at all and, if so, when. The subsequent sections detail how to set <code class="var">JBOSS_HOME</code> on Unix and Windows</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -23939,10 +24031,10 @@ This can save you both time and frustration.
 <div class="ulist">
 <ul>
 <li>
-<p>&#8230;&#8203;you have installed the [app]` Platform` binary distribution.</p>
+<p>&#8230;&#8203;you have installed the <code class="app">Restcomm</code> binary distribution.</p>
 </li>
 <li>
-<p>&#8230;&#8203;you have installed a &amp;THIS.PLATFORM;server binary distribution <em>which bundles [app]``.</em></p>
+<p>&#8230;&#8203;you have installed a Restcomm server binary distribution <em>which bundles <code class="app">JBoss Application Server</code>.</em></p>
 </li>
 </ul>
 </div>
@@ -23952,19 +24044,19 @@ This can save you both time and frustration.
 <div class="ulist">
 <ul>
 <li>
-<p>&#8230;&#8203;you are installing the [app]` Platform` or any of the &amp;THIS.PLATFORM; servers <em>from source</em>.</p>
+<p>&#8230;&#8203;you are installing the <code class="app">Restcomm</code> or any of the Restcomm servers <em>from source</em>.</p>
 </li>
 <li>
-<p>&#8230;&#8203;you are installing the [app]` Platform` binary distribution, or one of the &amp;THIS.PLATFORM; server binary distributions, which <em>do not</em> bundle [app]``.</p>
+<p>&#8230;&#8203;you are installing the <code class="app">Restcomm</code> binary distribution, or one of the Restcomm server binary distributions, which <em>do not</em> bundle <code class="app">JBoss Application Server</code>.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Naturally, if you installed the [app]` Platform` or one of the &amp;THIS.PLATFORM; server binary releases which <em>do not</em> bundle <code class="app">`, yet requires it to run, then you should install before setting [var]`JBOSS_HOME</code> or proceeding with anything else.</p>
+<p>Naturally, if you installed the <code class="app">Restcomm</code> or one of the Restcomm server binary releases which <em>do not</em> bundle <code class="app">JBoss Application Server</code>, yet requires it to run, then you should install before setting <code class="var">JBOSS_HOME</code> or proceeding with anything else.</p>
 </div>
 <div class="paragraph">
 <div class="title">Setting the JBOSS_HOME Environment Variable on Unix</div>
-<p>The <code class="var">JBOSS_HOME</code> environment variable must point to the directory which contains all of the files for the [app]` Platform` or individual &amp;THIS.PLATFORM; server that you installed.
+<p>The <code class="var">JBOSS_HOME</code> environment variable must point to the directory which contains all of the files for the <code class="app">Restcomm</code> or individual Restcomm; server that you installed.
 As another hint, this topmost directory contains a <em class="path">bin</em> subdirectory.</p>
 </div>
 <div class="paragraph">
@@ -24003,9 +24095,9 @@ On Unix, it is possible to set <code class="var">JBOSS_HOME</code> as a system-w
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The command line usage below is based upon a binary installation of the [app]` Platform`.
-In this sample output, <code class="var">JBOSS_HOME</code> has been set correctly to the <code class="replaceable">topmost_directory</code> of the <code class="app"> installation.
-Note that if you are installing one of the standalone [app]</code> servers (with <code class="app">JBoss AS</code> bundled!), then <code class="var">JBOSS_HOME</code> would point to the <code class="replaceable">topmost_directory</code> of your server installation.
+The command line usage below is based upon a binary installation of the <code class="app">Restcomm</code>.
+In this sample output, <code class="var">JBOSS_HOME</code> has been set correctly to the <code class="replaceable">topmost_directory</code> of the <code class="app">Restcomm</code> installation.
+Note that if you are installing one of the standalone <code class="app">Restcomm</code> servers (with <code class="app">JBoss Application Server</code> bundled!), then <code class="var">JBOSS_HOME</code> would point to the <code class="replaceable">topmost_directory</code> of your server installation.
 </td>
 </tr>
 </table>
@@ -24021,7 +24113,7 @@ Note that if you are installing one of the standalone [app]</code> servers (with
 </div>
 <div class="paragraph">
 <div class="title">Setting the JBOSS_HOME Environment Variable on Windows</div>
-<p>The <code class="var">JBOSS_HOME</code> environment variable must point to the directory which contains all of the files for the &amp;THIS.PLATFORM;Platform or individual &amp;THIS.PLATFORM;server that you installed.
+<p>The <code class="var">JBOSS_HOME</code> environment variable must point to the directory which contains all of the files for the jSS7 Platform or individual jSS7 server that you installed.
 As another hint, this topmost directory contains a <em class="path">bin</em> subdirectory.</p>
 </div>
 <div class="paragraph">
@@ -24044,7 +24136,7 @@ As another hint, this topmost directory contains a <em class="path">bin</em> sub
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-04-17 10:47:50 WEST
+Last updated 2016-04-18 12:54:24 WEST
 </div>
 </div>
 <footer>

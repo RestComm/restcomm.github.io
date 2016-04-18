@@ -6264,7 +6264,11 @@ SYNOPSIS
 
 DESCRIPTION
 	Sets millisecond value for dialog timeout. It specifies how long
-	dialog can be idle - not receive/send any messages
+	dialog can be idle - not receive/send any messages.
+	When a timeout occurs the method `TCListener.onDialogTimeout()` will be
+	invoked. If a TCAP-User does not invoke `Dialog.keepAlive()` inside
+	the method `TCListener.onDialogTimeout()`, the TCAP Dialog will be
+	released.
 
 PARAMETERS
 
@@ -6292,7 +6296,15 @@ Change value and save.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_tcap_property_dialogidrangeend"><a class="anchor" href="#_tcap_property_dialogidrangeend"></a>Dialog Id Rang End</h4>
+<h4 id="_tcap_property_dialogidrangeend"><a class="anchor" href="#_tcap_property_dialogidrangeend"></a>Dialog Id Range End</h4>
+<div class="paragraph">
+<p>TCAP stack can be configured to use a range of local DialogId values.
+You may install a set of TCAP Stack instances with different DialogId ranges.
+These ranges can be used for loadsharing of SS7 traffic between the TCAP instances.
+All the outgoing Dialogs will have id starting with <code>dialogIdRangeStart</code>.
+This value of <code>dialogIdRangeStart</code> cannt be greater than <code>dialogIdRangeEnd</code>.
+In addition, the value of <code>dialogIdRangeEnd - dialogIdRangeStart</code> must always be less than the value of <code>maxDialogs</code>.</p>
+</div>
 <div class="sect4">
 <h5 id="_tcap_property_dialogidrangeend_cli"><a class="anchor" href="#_tcap_property_dialogidrangeend_cli"></a>Using CLI</h5>
 <div class="paragraph">
@@ -6442,10 +6454,14 @@ SYNOPSIS
 	tcap set invoketimeout &lt;invoketimeout&gt; stackname &lt;stack-name&gt;
 
 DESCRIPTION
-	Sets the Invoke timeout for this invoke. Peer should respond back
-	within invoke timeout, else stack will callback TCListener
-	for application to take corrective. invoketimeout should always be
-	less than dialogidletimeout
+	Sets the Invoke timeout for this invoke. This property specifies,
+	by default, how long Invoke will wait for a response from a peer
+	before a timeout occurs.
+	If a TCAP-User does not specify a custom Invoke timeout when
+	sending a new Invoke, this default value will be used for outgoing
+	Invoke timeout. When this timeout occurs `TCListener.onInvokeTimeout()`
+	will be invoked.
+	invoketimeout should always be less than dialogidletimeout.
 
 PARAMETERS
 
@@ -6796,7 +6812,7 @@ But as of now, only currently active alarms will be displayed in this window.</p
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-04-17 10:47:50 WEST
+Last updated 2016-04-18 12:54:24 WEST
 </div>
 </div>
 </body>
