@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.4">
+<title>Configuring the Media Server</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
+/* Remove comment around @import statement below when using as a custom stylesheet */
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
+audio,canvas,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+[hidden],template{display:none}
+script{display:none!important}
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+body{margin:0}
+a{background:transparent}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+abbr[title]{border-bottom:1px dotted}
+b,strong{font-weight:bold}
+dfn{font-style:italic}
+hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}
+input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+body{-webkit-font-smoothing:antialiased}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.center{margin-left:auto;margin-right:auto}
+.spread{width:100%}
+p.lead,.paragraph.lead>p,#preamble>.sectionbody>.paragraph:first-of-type p{font-size:1.21875em;line-height:1.6}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0;direction:ltr}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:none}
+p{font-family:inherit;font-weight:400;font-size:1em;line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #ddddd8;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em;height:0}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol,ul.no-bullet,ol.no-bullet{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ul.no-bullet{list-style:none}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+abbr,acronym{text-transform:uppercase;font-size:90%;color:rgba(0,0,0,.8);border-bottom:1px dotted #ddd;cursor:help}
+abbr{text-transform:none}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote cite{display:block;font-size:.9375em;color:rgba(0,0,0,.6)}
+blockquote cite:before{content:"\2014 \0020"}
+blockquote cite a,blockquote cite a:visited{color:rgba(0,0,0,.6)}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media only screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede}
+table thead,table tfoot{background:#f7f8f7;font-weight:bold}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt,table tr:nth-of-type(even){background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+body{tab-size:4}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.clearfix:before,.clearfix:after,.float-group:before,.float-group:after{content:" ";display:table}
+.clearfix:after,.float-group:after{clear:both}
+*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre,pre>code{line-height:1.45;color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;text-rendering:optimizeSpeed}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background-color:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menu{color:rgba(0,0,0,.8)}
+b.button:before,b.button:after{position:relative;top:-1px;font-weight:400}
+b.button:before{content:"[";padding:0 3px 0 2px}
+b.button:after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin-left:auto;margin-right:auto;margin-top:0;margin-bottom:0;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header:before,#header:after,#content:before,#content:after,#footnotes:before,#footnotes:after,#footer:before,#footer:after{content:" ";display:table}
+#header:after,#content:after,#footnotes:after,#footer:after{clear:both}
+#content{margin-top:1.25em}
+#content:before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #ddddd8}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #ddddd8;padding-bottom:8px}
+#header .details{border-bottom:1px solid #ddddd8;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span:before{content:"\00a0\2013\00a0"}
+#header .details br+span.author:before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark:before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber:after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #ddddd8;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #efefed;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media only screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background-color:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #efefed;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #efefed;left:auto;right:0}}
+@media only screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:100%;background-color:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:rgba(255,255,255,.8);line-height:1.44}
+.sect1{padding-bottom:.625em}
+@media only screen and (min-width:768px){.sect1{padding-bottom:1.25em}}
+.sect1+.sect1{border-top:1px solid #efefed}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor:before,h2>a.anchor:before,h3>a.anchor:before,#toctitle>a.anchor:before,.sidebarblock>.content>.title>a.anchor:before,h4>a.anchor:before,h5>a.anchor:before,h6>a.anchor:before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock>caption.title{white-space:nowrap;overflow:visible;max-width:0}
+.paragraph.lead>p,#preamble>.sectionbody>.paragraph:first-of-type p{color:rgba(0,0,0,.85)}
+table.tableblock #preamble>.sectionbody>.paragraph:first-of-type p{font-size:inherit}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #ddddd8;color:rgba(0,0,0,.6)}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border-style:solid;border-width:1px;border-color:#e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;-webkit-border-radius:4px;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock pre:not(.highlight),.listingblock pre[class="highlight"],.listingblock pre[class^="highlight "],.listingblock pre.CodeRay,.listingblock pre.prettyprint{background:#f7f7f8}
+.sidebarblock .literalblock pre,.sidebarblock .listingblock pre:not(.highlight),.sidebarblock .listingblock pre[class="highlight"],.sidebarblock .listingblock pre[class^="highlight "],.sidebarblock .listingblock pre.CodeRay,.sidebarblock .listingblock pre.prettyprint{background:#f2f1f1}
+.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;padding:1em;font-size:.8125em}
+.literalblock pre.nowrap,.literalblock pre[class].nowrap,.listingblock pre.nowrap,.listingblock pre[class].nowrap{overflow-x:auto;white-space:pre;word-wrap:normal}
+@media only screen and (min-width:768px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:.90625em}}
+@media only screen and (min-width:1280px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:1em}}
+.literalblock.output pre{color:#f7f7f8;background-color:rgba(0,0,0,.9)}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]:before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:#999}
+.listingblock:hover code[data-lang]:before{display:block}
+.listingblock.terminal pre .command:before{content:attr(data-prompt);padding-right:.5em;color:#999}
+.listingblock.terminal pre .command:not([data-prompt]):before{content:"$"}
+table.pyhltable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.pyhltable td{vertical-align:top;padding-top:0;padding-bottom:0;line-height:1.45}
+table.pyhltable td.code{padding-left:.75em;padding-right:0}
+pre.pygments .lineno,table.pyhltable td:not(.code){color:#999;padding-left:0;padding-right:.5em;border-right:1px solid #ddddd8}
+pre.pygments .lineno{display:inline-block;margin-right:.25em}
+table.pyhltable .linenodiv{background:none!important;padding-right:0!important}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock blockquote p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote:before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.5em;margin-right:.5ex;text-align:right}
+.quoteblock .quoteblock{margin-left:0;margin-right:0;padding:.5em 0;border-left:3px solid rgba(0,0,0,.6)}
+.quoteblock .quoteblock blockquote{padding:0 0 0 .75em}
+.quoteblock .quoteblock blockquote:before{display:none}
+.verseblock{margin:0 1em 1.25em 1em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract{margin:0 0 1.25em 0;display:block}
+.quoteblock.abstract blockquote,.quoteblock.abstract blockquote p{text-align:left;word-spacing:0}
+.quoteblock.abstract blockquote:before,.quoteblock.abstract blockquote p:first-of-type:before{display:none}
+table.tableblock{max-width:100%;border-collapse:separate}
+table.tableblock td>.paragraph:last-child p>p:last-child,table.tableblock th>p:last-child,table.tableblock td>p:last-child{margin-bottom:0}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all th.tableblock,table.grid-all td.tableblock{border-width:0 1px 1px 0}
+table.grid-all tfoot>tr>th.tableblock,table.grid-all tfoot>tr>td.tableblock{border-width:1px 1px 0 0}
+table.grid-cols th.tableblock,table.grid-cols td.tableblock{border-width:0 1px 0 0}
+table.grid-all *>tr>.tableblock:last-child,table.grid-cols *>tr>.tableblock:last-child{border-right-width:0}
+table.grid-rows th.tableblock,table.grid-rows td.tableblock{border-width:0 0 1px 0}
+table.grid-all tbody>tr:last-child>th.tableblock,table.grid-all tbody>tr:last-child>td.tableblock,table.grid-all thead:last-child>tr>th.tableblock,table.grid-rows tbody>tr:last-child>th.tableblock,table.grid-rows tbody>tr:last-child>td.tableblock,table.grid-rows thead:last-child>tr>th.tableblock{border-bottom-width:0}
+table.grid-rows tfoot>tr>th.tableblock,table.grid-rows tfoot>tr>td.tableblock{border-width:1px 0 0 0}
+table.frame-all{border-width:1px}
+table.frame-sides{border-width:0 1px}
+table.frame-topbot{border-width:1px 0}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{display:table-cell;line-height:1.6;background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+td>div.verse{white-space:pre}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.unstyled,ol.unnumbered,ul.checklist,ul.none{list-style-type:none}
+ul.unstyled,ol.unnumbered,ul.checklist{margin-left:.625em}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1em;font-size:.85em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{width:1em;position:relative;top:1px}
+ul.inline{margin:0 auto .625em auto;margin-left:-1.375em;margin-right:0;padding:0;list-style:none;overflow:hidden}
+ul.inline>li{list-style:none;float:left;margin-left:1.375em;display:block}
+ul.inline>li>*{display:block}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist>table tr>td:first-of-type{padding:0 .75em;line-height:1}
+.colist>table tr>td:last-of-type{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
+.imageblock.left,.imageblock[style*="float: left"]{margin:.25em .625em 1.25em 0}
+.imageblock.right,.imageblock[style*="float: right"]{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em 0;border-width:1px 0 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;text-indent:-1.05em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
+.gist .file-data>table td.line-data{width:99%}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background-color:#00fafa}
+.black{color:#000}
+.black-background{background-color:#000}
+.blue{color:#0000bf}
+.blue-background{background-color:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background-color:#fa00fa}
+.gray{color:#606060}
+.gray-background{background-color:#7d7d7d}
+.green{color:#006000}
+.green-background{background-color:#007d00}
+.lime{color:#00bf00}
+.lime-background{background-color:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background-color:#7d0000}
+.navy{color:#000060}
+.navy-background{background-color:#00007d}
+.olive{color:#606000}
+.olive-background{background-color:#7d7d00}
+.purple{color:#600060}
+.purple-background{background-color:#7d007d}
+.red{color:#bf0000}
+.red-background{background-color:#fa0000}
+.silver{color:#909090}
+.silver-background{background-color:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background-color:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background-color:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background-color:#fafa00}
+span.icon>.fa{cursor:default}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note:before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip:before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning:before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution:before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important:before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background-color:rgba(0,0,0,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]:after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background-color:#fffef7;border-color:#e0e0dc;-webkit-box-shadow:0 1px 4px #e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@media print{@page{margin:1.25cm .75cm}
+*{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare):after,a[href^="https:"]:not(.bare):after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]:after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #ddddd8!important;padding-bottom:0!important}
+.sect1{padding-bottom:0!important}
+.sect1+.sect1{border:0!important}
+#header>h1:first-child{margin-top:1.25rem}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em 0}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span:before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]:before{display:block}
+#footer{background:none!important;padding:0 .9375em}
+#footer-text{color:rgba(0,0,0,.6)!important;font-size:.9em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+</head>
+<body id="_ctms_core_components" class="article">
+<div id="header">
+<h1>Configuring the Media Server</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#system-clock-and-scheduler">System clock and scheduler</a></li>
+<li><a href="#udp-manager">UDP Manager</a>
+<ul class="sectlevel2">
+<li><a href="#bindaddress-and-localbindaddress">bindAddress and localBindAddress.</a></li>
+<li><a href="#localnetwork-localsubnet-and-usesbc">LocalNetwork, localSubnet and useSbc.</a></li>
+<li><a href="#rtptimeout">RtpTimeout</a></li>
+</ul>
+</li>
+<li><a href="#ss7-channels-manager">SS7 Channels Manager</a></li>
+<li><a href="#_channels_manager">Channel Manager</a>
+<ul class="sectlevel2">
+<li><a href="#jitter-buffer-size">Jitter buffer size</a></li>
+</ul>
+</li>
+<li><a href="#dsp-factory">DSP Factory</a></li>
+<li><a href="#resource-pool">Resource Pool</a>
+<ul class="sectlevel2">
+<li><a href="#dtmfdetectordbi">DtmfDetectorDbi</a></li>
+</ul>
+</li>
+<li><a href="#mgcp-controller">MGCP Controller</a>
+<ul class="sectlevel2">
+<li><a href="#port-parameter">Port Parameter</a></li>
+<li><a href="#configuration-parameter">Configuration parameter</a></li>
+<li><a href="#pool-size">Pool Size</a></li>
+</ul>
+</li>
+<li><a href="#media-server">Media Server</a>
+<ul class="sectlevel2">
+<li><a href="#heartbeat-time">Heartbeat Time</a></li>
+</ul>
+</li>
+<li><a href="#endpoints">Endpoints</a>
+<ul class="sectlevel2">
+<li><a href="#startchannelid">startChannelID</a></li>
+<li><a href="#channels-manager">Channels Manager</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="system-clock-and-scheduler"><a class="anchor" href="#system-clock-and-scheduler"></a>System clock and scheduler</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Scheduler is the core component of Media Server.
+It is responsible for organizing all tasks executed by the media server and executing them.
+Current scheduler implementation is a time wheel like implementation.
+All tasks are executed in 20ms cycle which is best optimized for audio.</p>
+</div>
+<div class="paragraph">
+<p>Clock is the class that implements basic clock settings, providing current time and translations needed between time unit and time.</p>
+</div>
+<div class="paragraph">
+<p>Configuration changes are required only in case you want to develop your own version of scheduler/clock.</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 1. System Clock and Scheduler</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;!-- System clock --&gt;
+&lt;bean name="SystemClock" class="org.mobicents.media.server.scheduler.DefaultClock"/&gt;
+
+&lt;!-- EDF scheduler --&gt;
+&lt;bean name="Scheduler" class="org.mobicents.media.server.scheduler.Scheduler"&gt;
+&lt;property name="clock"&gt;&lt;inject bean="SystemClock"/&gt;&lt;/property&gt;
+&lt;/bean&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="udp-manager"><a class="anchor" href="#udp-manager"></a>UDP Manager</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>UDP manager is responsible for receiving all the data that comes through UDP channels to the Media Server, including RTP packets and control protocol packets, like MGCP.</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 2. UDP Manager</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;!-- Network interfaces definition --&gt;
+&lt;bean name="localhost" class="org.mobicents.media.server.io.network.UdpManager"&gt;
+&lt;constructor&gt;
+&lt;parameter&gt;&lt;inject bean="Scheduler"/&gt;&lt;/parameter&gt;
+&lt;/constructor&gt;
+&lt;property name="bindAddress"&gt;127.0.0.1&lt;/property&gt;
+&lt;property name="localBindAddress"&gt;127.0.0.1&lt;/property&gt;
+&lt;property name="localNetwork"&gt;127.0.0.1&lt;/property&gt;
+&lt;property name="localSubnet"&gt;255.255.255.255&lt;/property&gt;
+&lt;property name="useSbc"&gt;false&lt;/property&gt;
+&lt;property name="rtpTimeout"&gt;0&lt;/property&gt;
+&lt;/bean&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="bindaddress-and-localbindaddress"><a class="anchor" href="#bindaddress-and-localbindaddress"></a>bindAddress and localBindAddress.</h3>
+<div class="paragraph">
+<p>Current release of MMS allows 2 network interfaces, a local and a remote interface.
+By default all RTP channels are opened on bindAddress, while MGCP control interface starts on localBindAddress.
+Using both interfaces is useful in the following scenarios:</p>
+</div>
+<div class="paragraph">
+<p>When you want to separate control traffic from data traffic.</p>
+</div>
+<div class="paragraph">
+<p>When you want an SBC like border media server, in this case, the remote interface will send/ receive data from the UA.
+The local interface will be used for inter-server traffic and control traffic (MGCP).</p>
+</div>
+<div class="paragraph">
+<p>To establish RTP connection on local interface, you should add TypeOfNetwork.Local local connection option to CRCX (create connection) of MGCPrequest.</p>
+</div>
+<div class="paragraph">
+<p>Any RTP connection that will be opened on remote interface will have jitter buffer enabled , while any RTP connection that will be opened on local interface will have jitter buffer disabled.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="localnetwork-localsubnet-and-usesbc"><a class="anchor" href="#localnetwork-localsubnet-and-usesbc"></a>LocalNetwork, localSubnet and useSbc.</h3>
+<div class="paragraph">
+<p>Media server can work in 2 modes : SBC mode and standard mode.</p>
+</div>
+<div class="paragraph">
+<p>When useSbc is set to false, MMS will establish a channel based on address/port pair it receives from SDP.
+However, RTP packet is used within a NAT context, data sent in SDP is the original data and not the natted IP address/port (this is often the scenario). Furthermore, when useSbc is set to false, data will be sent to invalid address and also will not be accepted since MMS does not know the correct address of UA.</p>
+</div>
+<div class="paragraph">
+<p>In order to resolve the above mentioned issue, you  should set useSbc to true.
+As a result, MMS will wait for first RTP packet; learn remote IP address port and then will send data based on learned address and not on SDP data.
+That said, inter-server traffic will not work since both sides will be waiting for first packet.
+To resolve this,  you should set local network and local  subnet to range that will include all your media servers.
+If the media server detects that the IP address and port  in SDP are within the local IP network range, it will start sending packets immediately and not wait.
+This is similar to when useSbc is set to false.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="rtptimeout"><a class="anchor" href="#rtptimeout"></a>RtpTimeout</h3>
+<div class="paragraph">
+<p>Most SIP UA do not support any type of keepalive between 200 OK and BYE response/ request.
+Therefore, if the network goes down while a call is established, the call may hang forever.
+That is why RTP traffic should always be sent (the exception to this rule is during recvonly and inactive modes). With the this in mind, MMS enables RTP timeout parameter.</p>
+</div>
+<div class="paragraph">
+<p>When RtpTimeout is set to greater than 0,  MMS will monitor RTP traffic and if it finds period equal or greater then the RTP timeout ( in seconds ) it will delete connection and notify controlling server that connection was removed ( by sending DLCX MGCP command ). Consequently, any border server will receive a reliable notification that the call is still alive even when the communication network is no longer available.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Note that while enabling RTP timeout, it is recommended that you do not set the mode to inactive/ sendonly when you expect to receive data (after 180 or 200 OK) depending on your application
+</td>
+</tr>
+</table>
+</div>
+<div class="exampleblock">
+<div class="title">Example 3. Call Flow</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">Similar call flow may be like this
+
+UA ----&gt; INVITE ----&gt; Control Server
+Control Server ----&gt; CRCX with mode inactive ----&gt; Media Server
+Control Server ----&gt; INVITE ----&gt; inside network or to other side
+Inside network or other side ----&gt; 183 with SDP ----&gt; Control Server
+Control Server ---&gt; MDCX with mode sendonly ---&gt; Media Server
+Control Server ---&gt; 183 with SDP ----&gt; UA
+Inside network or other side ----&gt; 200 ----&gt; Control Server
+Control Server ---&gt; MDCX with mode sendrecv ---&gt; Media Server
+Control Server ---&gt; 200 ----&gt; UA</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>In case of 180 or 183 without SDP response , intermediate MDCX is not required.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ss7-channels-manager"><a class="anchor" href="#ss7-channels-manager"></a>SS7 Channels Manager</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Current release of Media Server supports SS7 channels(DS0 ) makes it possible to communicate with old PSTN networks.</p>
+</div>
+<div class="paragraph">
+<p>To allow SS7 B channels to be used, you must install and configure your card properly and enable SS7 manager, dahdi native driver and configure DS0 channels on Media Server.
+By default SS7 is disabled.</p>
+</div>
+<div class="paragraph">
+<p>Below you can see the SS7 manager example configuration.
+Changes are required only when you want to implement your own version of the manager.</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 4. Channel Manager</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">	  &lt;!-- SS7 interface definition --&gt;
+
+	&lt;!--
+	&lt;bean name="SS7" class="org.mobicents.media.server.io.ss7.SS7&gt;
+	&lt;constructor&gt;
+	&lt;parameter&gt;&lt;inject bean="Scheduler"/&gt;&lt;/parameter&gt;
+	&lt;/constructor&gt;
+	&lt;/bean&gt;
+	--&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>To compile and create dahdi native library you must get a Media Server code from <a href="https://github.com/RestComm/mediaserver">https://github.com/RestComm/mediaserver</a> by using a GIT</p>
+</div>
+<div class="paragraph">
+<p>Once you have the source, you need to build it using Maven from a terminal console as shown below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>mvn clean install –p dahdilinux</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Under <em>bootstrap/target/mms-server</em> you will have a newly compiled version of media server. There will be a native dahdi driver included in the sub-directories</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Known Issues</div>
+<div class="paragraph">
+<p>Currently only dahdi based cards are supported Only linux OS is supported for SS7</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You must compile Media Server on the production server on which it will be used.
+This must be done for each server that you plan to put in service.</p>
+</div>
+<div class="paragraph">
+<p>For help on configuring DS0 channels please see <a href="#_endpoints_config">Endpoints configuration section</a> .</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_channels_manager"><a class="anchor" href="#_channels_manager"></a>Channel Manager</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Channel manager is responsible for creating all data channels on media server(RTP data channel , local channel and SS7 channel).</p>
+</div>
+<div class="paragraph">
+<p>Below you can see default configuration.
+By default, SS7 is disabled and should be enabled only in case you want to use DS0 channels.
+Apart from SS7, no other configuration changes are required.</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 5. Channel Manager</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">		&lt;!-- Channels manager definition --&gt;
+		&lt;bean name="channelsManager"
+		class="org.mobicents.media.server.impl.rtp.ChannelsManager"&gt;
+		&lt;constructor&gt;
+		&lt;parameter&gt;&lt;inject bean="localhost"/&gt;&lt;/parameter&gt;
+		&lt;/constructor&gt;
+		&lt;property name="scheduler"&gt;&lt;inject bean="Scheduler" /&gt;&lt;/property&gt;
+		&lt;property name="jitterBufferSize"&gt;50&lt;/property&gt;
+		&lt;!--&lt;property name="SS7Manager" &gt; &lt;inject bean="SS7" /&gt;&lt;/property&gt;--&gt;
+		&lt;/bean&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="jitter-buffer-size"><a class="anchor" href="#jitter-buffer-size"></a>Jitter buffer size</h3>
+<div class="paragraph">
+<p>Jitter buffer size parameter allows you to set the jitter buffer in milliseconds.
+Please see the <a href="#_channels_manager">Channel Manager</a> for details about configuring jitterBufferSize.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="dsp-factory"><a class="anchor" href="#dsp-factory"></a>DSP Factory</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>DSP factory allows transcoding between different codecs.
+Currently media server comes with 5 codecs : G711 A/U, Linear PCM Raw, GSM and G.729.
+ILBC codec is currently being worked on and will  be released in future iterations of the Media Server.</p>
+</div>
+<div class="paragraph">
+<p>By default, only 3 are enabled : G711A/U and linear.</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 6. Default Codecs</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">	 &lt;!-- Signal processor factory --&gt;
+		&lt;bean name="DSP" class="org.mobicents.media.server.component.DspFactoryImpl"&gt;
+		&lt;property name="codecs"&gt;
+		&lt;list value-type="java.lang.String"&gt;
+		&lt;value&gt;org.mobicents.media.server.impl.dsp.audio.l16.Encoder&lt;/value&gt;
+		&lt;value&gt;org.mobicents.media.server.impl.dsp.audio.l16.Decoder&lt;/value&gt;
+		&lt;value&gt;org.mobicents.media.server.impl.dsp.audio.g711.alaw.Encoder&lt;/value&gt;
+		&lt;value&gt;org.mobicents.media.server.impl.dsp.audio.g711.alaw.Decoder&lt;/value&gt;
+		&lt;value&gt;org.mobicents.media.server.impl.dsp.audio.g711.ulaw.Encoder&lt;/value&gt;
+		&lt;value&gt;org.mobicents.media.server.impl.dsp.audio.g711.ulaw.Decoder&lt;/value&gt;
+		&lt;/list&gt;
+		&lt;/property&gt;
+		&lt;/bean&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>To enable G729 codec you should add the following values :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>		org.mobicents.media.server.impl.dsp.audio.g729.Encoder
+		org.mobicents.media.server.impl.dsp.audio. g729.Decoder</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">G.729 usage</div>
+<div class="paragraph">
+<p>Please note that a valid license is required to use G.729 , therefore you should purchase a license prior to enabling this codec.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To enable GSM codec you should add the following values :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>org.mobicents.media.server.impl.dsp.audio.gsm.Encoder
+org.mobicents.media.server.impl.dsp.audio.gsm.Decoder</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you decide to use a single codec for encoding or decoding data, you should leave one RAW or 2 Raw pair.
+This is useful only in case of a one way activity.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Use of L16 codec</div>
+<div class="paragraph">
+<p>L16 codec is useful only in server to server communication where you have enough network bandwidth.
+It is not recommended to allow L16 codec for UA – server connections, this can lead to degradation of the signal quality due to increased jitter and packet loss.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="resource-pool"><a class="anchor" href="#resource-pool"></a>Resource Pool</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the current Media Server release, global pool of resources is used to decrease garbage collection and allow faster resources allocation.
+Any resource may be used by any endpoint.
+For example, RTP connection 1 may be for endpoint 1 and then released and reused by endpoint 2.</p>
+</div>
+<div class="paragraph">
+<p>You can see default configuration below :</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 7. Default Codecs</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">	  &lt;!-- Resources pool definition --&gt;
+		&lt;bean name="resourcesPool" class="org.mobicents.media.core.ResourcesPool"&gt;
+		&lt;constructor&gt;
+		&lt;parameter&gt;&lt;inject bean="Scheduler"/&gt;&lt;/parameter&gt;
+		&lt;parameter&gt;&lt;inject bean="channelsManager"/&gt;&lt;/parameter&gt;
+		&lt;parameter&gt;&lt;inject bean="DSP"/&gt;&lt;/parameter&gt;
+		&lt;/constructor&gt;
+		&lt;property name="defaultPlayers"&gt;5&lt;/property&gt;
+		&lt;property name="defaultRecorders"&gt;5&lt;/property&gt;
+		&lt;property name="defaultDtmfDetectors"&gt;5&lt;/property&gt;
+		&lt;property name="defaultDtmfGenerators"&gt;0&lt;/property&gt;
+		&lt;property name="defaultSignalDetectors"&gt;0&lt;/property&gt;
+		&lt;property name="defaultSignalGenerators"&gt;0&lt;/property&gt;
+		&lt;property name="defaultLocalConnections"&gt;10&lt;/property&gt;
+		&lt;property name="defaultRemoteConnections"&gt;10&lt;/property&gt;
+		&lt;property name="dtmfDetectorDbi"&gt;-35&lt;/property&gt;
+		&lt;/bean&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>As can be seen above, the default pool size is configured for player(audio player), recorder (audio recorder), DTMF generator (for generation out of band DTMF tones through sl MGCP package ), DTMF detector(to detect both inband/out of band tones), signal detector(used to detect ss7 tones) and signal generator(used to generate ss7 tones).</p>
+</div>
+<div class="paragraph">
+<p>Signal detector and signal generator are currently used only for connectivity tests for DS0 channel (COT isup signal), CO1, CO2, CT( Continuity transport ) and Loopback test modes are supported by the Media Server.</p>
+</div>
+<div class="paragraph">
+<p>For more information please see <a href="#_msep_ms_event_packages">[_msep_ms_event_packages]</a></p>
+</div>
+<div class="paragraph">
+<p>Local connections and remote connections pools are also configured here.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">When the specified resource type is not available</div>
+<div class="paragraph">
+<p>Please note that a resource will be automatically allocated if the specified resource type is not available in the resource pool.
+This will require more memory allocation and in some cases may impact performance.
+The more resources you have preconfigured on startup in the resource pool, the more memory the media server will require on startup.
+Its up to you to decide the best trade-off for your setup( greater memory usage on startup vs slower response when new resources are required in runtime )</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="dtmfdetectordbi"><a class="anchor" href="#dtmfdetectordbi"></a>DtmfDetectorDbi</h3>
+<div class="paragraph">
+<p>Often, audio data is mixed with DTMF inband tones.
+As a result, Media Server may detect false positive tones, or it may not detect tones which are sent.
+By setting DTMF detector dbi parameter,  you can optimize tone detection for your server.
+If you have problems with inband DTMF detection,  you can fine-tune this parameter.
+However, default value has been tested and found to be the most  appropriate.
+For best results it, is recommended that you use inband tones only in SS7/IP mixed network.
+Out-of-band tones are recommended for IP only networks.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mgcp-controller"><a class="anchor" href="#mgcp-controller"></a>MGCP Controller</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The controller is the main component that allows MGCP control protocol.
+Enabling MGCP is always required as the jsr-309 implementation is based on the current MGCP implementation.</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 8. MGCP Controller</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">		&lt;!-- MGCP Controller definition --&gt;
+		&lt;bean name="MGCP" class ="org.mobicents.media.server.mgcp.controller.Controller"&gt;
+		&lt;property name="udpInterface"&gt;&lt;inject bean="localhost"/&gt;&lt;/property&gt;
+		&lt;property name="port"&gt;2427&lt;/property&gt;
+		&lt;property name="scheduler"&gt;&lt;inject bean="Scheduler"/&gt;&lt;/property&gt;
+		&lt;property name="server"&gt;&lt;inject bean="MediaServer"/&gt;&lt;/property&gt;
+		&lt;property name="configuration"&gt;mgcp-conf.xml&lt;/property&gt;
+		&lt;property name="poolSize"&gt;25&lt;/property&gt;
+		&lt;/bean&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="port-parameter"><a class="anchor" href="#port-parameter"></a>Port Parameter</h3>
+<div class="paragraph">
+<p>UDP port is used for MGCP traffic.
+By default, it is set to 2427.
+However you can change it to whatever you want to.
+Note that you will have to change your control server configuration/code in case you decide to  use a number different from the default.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configuration-parameter"><a class="anchor" href="#configuration-parameter"></a>Configuration parameter</h3>
+<div class="paragraph">
+<p>Configuration parameter points to the xml file located in [path]_ conf_ directory which configures MGCP packages, signals and packages mapping to endpoints.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pool-size"><a class="anchor" href="#pool-size"></a>Pool Size</h3>
+<div class="paragraph">
+<p>Pool Size is the size of MGCP requests that Media Server will handle concurrently.
+The current MGCP offers better performance and ensures that new elements are allocated when there isn&#8217;t enough in the pool (most requests are executed under 4ms). That said, RQNT can take up 20ms.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="media-server"><a class="anchor" href="#media-server"></a>Media Server</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Media server component is the core of the software.
+Its job is to start all the elements and stop them when the Media Server is stopped.
+It is recommended that you only change the heartBeatTime parameter if required and leave the rest as default.</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 9. MGCP Controller</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">			&lt;!-- Media Server --&gt;
+			&lt;bean name="MediaServer" class="org.mobicents.media.core.Server"&gt;
+			&lt;property name="clock"&gt;&lt;inject bean="SystemClock"/&gt;&lt;/property&gt;
+			&lt;property name="scheduler"&gt;&lt;inject bean="Scheduler"/&gt;&lt;/property&gt;
+			&lt;property name="udpManager"&gt;&lt;inject bean="localhost"/&gt;&lt;/property&gt;
+			&lt;property name="resourcesPool"&gt;&lt;inject bean="resourcesPool"/&gt;&lt;/property&gt;
+			&lt;property name="heartBeatTime"&gt;0&lt;/property&gt;
+			&lt;incallback method="addInstaller"/&gt;
+			&lt;uncallback method="removeInstaller"/&gt;
+			&lt;/bean&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="heartbeat-time"><a class="anchor" href="#heartbeat-time"></a>Heartbeat Time</h3>
+<div class="paragraph">
+<p>When you need to debug Media Server, you can set heartBeatTime to a specific value(in seconds). In this case, on each heartBeatTime period, MMS will write one raw to log and will notify that it is alive.
+This is useful when you suspect communication problems with the Media Server.
+It will help you get closer to the source of the problem.
+Enabling hearbeat will let you know if the server is up and running.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="endpoints"><a class="anchor" href="#endpoints"></a>Endpoints</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Endpoints configuration allows you to configure all MGCP endpoints groups you want to use with the Media Server instance.
+For all endpoints types, you can configure the initial size.
+This value will determine the number of endpoints that are preloaded on startup.
+If all available endpoints are used and a request for  additional endpoint is received, Media Server will allocate a new endpoint and store it in a resource pool.
+The only exception to this rule is DS0 endpoint type.
+The DS0 endpoint can not be increased as it is directly related to the number of channels available on an E1/T1 card.</p>
+</div>
+<div class="paragraph">
+<p>NamePattern is the name to use for all MGCP requests.
+Note that an integer value will be appended to the name used.
+For example, a NamePattern called "mobicents/aap" will be  created and accessed as "mobicents/aap/$" (where $ is an interger).</p>
+</div>
+<div class="paragraph">
+<p>Class is the class of installer.
+Currently 2 types of installers are available : <em class="path">VirtualEndpointInstaller</em> which allows you to install most endpoints and <em class="path">VirtualSS7EndpointInstaller</em> which is used for DS0 endpoints.</p>
+</div>
+<div class="paragraph">
+<p>Endpoint class – defines the class which implements endpoints.</p>
+</div>
+<div class="paragraph">
+<p>Currently, the following endpoint classes are available :</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Endpoint Classes</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Endpoint Class</th>
+<th class="tableblock halign-left valign-top">Available Resources</th>
+<th class="tableblock halign-left valign-top">Connection Types</th>
+<th class="tableblock halign-left valign-top">Types</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.media.core.endpoints.impl.AnnouncementEndpoint</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Player</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Local+RTP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mixer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.media.core.endpoints.impl.IvrEndpoint</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Player,Recorder,Dtmf Detector,Dtmf Generator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Local+RTP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mixer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.media.core.endpoints.impl.ConferenceEndpoint</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Local+RTP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mixer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.media.core.endpoints.impl.BridgeEndpoint</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Local+RTP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Splitter</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.media.core.endpoints.impl.PacketRelayEndpoint</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RTP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mixer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.media.core.endpoints.impl.Ds0Endpoint</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Signal Detector,Signal Generator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Local+RTP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Splitter</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Mixer Type means all connections and resources data will be mixed together.
+This implies that  it will still be available even without the appropriate setting mode.</p>
+</div>
+<div class="paragraph">
+<p>Bridge endpoint is not the same as the MGCP standard endpoint type.
+This means that there are 2 resources groups.
+The first group uses local connections whereas the second group uses RTP connections.
+This implies that non RTP connections can communicate with RTP endpoints and none local connections can still access local endpoints.
+The Bridge endpoint type is useful in the scenarios shown below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/bridge-endpoint-ivr-conference.png" alt="bridge endpoint ivr conference">
+</div>
+</div>
+<div class="paragraph">
+<p>IVR and Conference endpoints will be connected through Local connection pair to Bridge Endpoint (which is recommended). There will be no cross over of IVR Resources ( player , recorder , etc ) to conference.
+The same applies to any conference traffic, it will not cross over to IVR.
+This is useful for recording RTP data for specific groups of users.</p>
+</div>
+<div class="paragraph">
+<p>DS0 endpoint is a type Splitter.
+All connections, signal detector and signal generator are in group 1,  while signalling channel SS7 is placed in group 2.
+That means that any SS7 channel data  will be sent to any connection and signal detector, while data from signal generator and any connection will be sent only to SS7 channel.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Endpoint Groups</div>
+<div class="paragraph">
+<p>In order to configure multiple groups of endpoints of the same type per Media Server instance, you must change the name of each group.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Below you can see an example for endpoints configuration</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 10. Endpoints Configuration</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">			 &lt;!-- Endpoints --&gt;
+&lt;bean name="Announcement"
+class="org.mobicents.media.core.endpoints.VirtualEndpointInstaller"&gt;
+&lt;property name="namePattern"&gt;mobicents/aap/&lt;/property&gt;
+&lt;property
+name="endpointClass"&gt;org.mobicents.media.core.endpoints.impl.AnnouncementEndpoint&lt;/
+property&gt;
+&lt;property name="initialSize"&gt;1&lt;/property&gt;
+&lt;/bean&gt;
+
+&lt;bean name="IVR" class="org.mobicents.media.core.endpoints.VirtualEndpointInstaller"&gt;
+&lt;property name="namePattern"&gt;mobicents/ivr/&lt;/property&gt;
+&lt;property name="endpointClass"&gt;org.mobicents.media.core.endpoints.impl.IvrEndpoint&lt;/
+property&gt;
+&lt;property name="initialSize"&gt;5&lt;/property&gt;
+
+&lt;/bean&gt;
+
+&lt;bean name="CNF" class="org.mobicents.media.core.endpoints.VirtualEndpointInstaller"&gt;
+&lt;property name="namePattern"&gt;mobicents/cnf/&lt;/property&gt;
+&lt;property
+name="endpointClass"&gt;org.mobicents.media.core.endpoints.impl.ConferenceEndpoint&lt;/
+property&gt;
+&lt;property name="initialSize"&gt;5&lt;/property&gt;
+&lt;/bean&gt;
+
+&lt;bean name="Bridge" class="org.mobicents.media.core.endpoints.VirtualEndpointInstaller"&gt;
+&lt;property name="namePattern"&gt;mobicents/bridge/&lt;/property&gt;
+&lt;property
+name="endpointClass"&gt;org.mobicents.media.core.endpoints.impl.BridgeEndpoint&lt;/property&gt;
+&lt;property name="initialSize"&gt;5&lt;/property&gt;
+&lt;/bean&gt;
+
+&lt;bean name="Relay" class="org.mobicents.media.core.endpoints.VirtualEndpointInstaller"&gt;
+&lt;property name="namePattern"&gt;mobicents/relay/&lt;/property&gt;
+&lt;property
+name="endpointClass"&gt;org.mobicents.media.core.endpoints.impl.PacketRelayEndpoint&lt;/
+property&gt;
+&lt;property name="initialSize"&gt;1&lt;/property&gt;
+&lt;/bean&gt;
+
+&lt;!-- DS0 Endpoints configuration sample --&gt;
+&lt;!--&lt;bean name="DS0"
+class="org.mobicents.media.core.endpoints.VirtualSS7EndpointInstaller"&gt;
+&lt;property name="namePattern"&gt;mobicents/ds0/&lt;/property&gt;
+&lt;property name="channelsManager"&gt;&lt;inject bean="channelsManager"/&gt;&lt;/property&gt;
+&lt;property name="endpointClass"&gt;org.mobicents.media.core.endpoints.impl.Ds0Endpoint&lt;/
+property&gt;
+&lt;property name="startChannelID"&gt;125&lt;/property&gt;
+&lt;property name="initialSize"&gt;15&lt;/property&gt;
+&lt;property name="isALaw"&gt;true&lt;/property&gt;
+&lt;/bean&gt;--&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">SS7 Default</div>
+<div class="paragraph">
+<p>SS7 ( DS0 ) endpoints are disabled by default.
+There are additional configurable parameters.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="startchannelid"><a class="anchor" href="#startchannelid"></a>startChannelID</h3>
+<div class="paragraph">
+<p>Start channel id is the first CIC number.
+For example, if you have 4E1 card and want to allocate to specific group 50 channels starting from channel 5, on E1 number 2 , you will have to set start channel id to 35 ( 30 channels per E1) and initial Size to 50.
+Once agai, the number of DS0 will not be increased by Media Server.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="channels-manager"><a class="anchor" href="#channels-manager"></a>Channels Manager</h3>
+<div class="paragraph">
+<p>Channels manager is the bean mention in the section  <a href="#_channel_manager">Channel Manager</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2016-04-28 10:39:47 WEST
+</div>
+</div>
+</body>
+</html>
