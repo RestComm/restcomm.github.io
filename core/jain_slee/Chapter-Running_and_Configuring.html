@@ -23244,6 +23244,7 @@ For new ones, ensure that the name attribute of the bean element is unique.
 	&lt;property name="entitiesRemovalDelay"&gt;1&lt;/property&gt;
 	&lt;property name="timerThreads"&gt;8&lt;/property&gt;
 	&lt;property name="loadClassesFirstFromAS"&gt;true&lt;/property&gt;
+	&lt;property name="initializeReferenceDataTypesWithNull"&gt;true&lt;/property&gt;
 &lt;/bean&gt;</code></pre>
 </div>
 </div>
@@ -23271,6 +23272,11 @@ For new ones, ensure that the name attribute of the bean element is unique.
 <td class="tableblock halign-left valign-top"><p class="tableblock">timerThreads</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The number of threads used by the timer facility.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">initializeReferenceDataTypesWithNull</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The flag for initializing SBB CMP fields with Numeric Reference Data types to 0 (false) or null (true).</p></td>
 </tr>
 </tbody>
 </table>
@@ -23300,7 +23306,7 @@ The JMX Console can be used to use this MBean, as described in <a href="#_manage
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-06 10:45:08 WEST
+Last updated 2016-05-07 10:43:11 WEST
 </div>
 </div>
 <footer>
