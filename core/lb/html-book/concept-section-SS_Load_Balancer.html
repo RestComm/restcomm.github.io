@@ -602,7 +602,7 @@ algorithmClass=org.mobicents.tools.telestaxproxy.TelestaxProxyAlgorithm
 
 # Uncomment to enable the consistent hash based on Call-ID algorithm.
 #algorithmClass=org.mobicents.tools.sip.balancer.HeaderConsistentHashBalancerAlgorithm
-# This property is not required, it defaults to Call-ID if not set, cna be "from.user" or "to.user" when you want the SIP URI username
+# This property is not required, it defaults to Call-ID if not set, can be "From" or "To" when you want the SIP URI username
 #sipHeaderAffinityKey=Call-ID
 #specify the GET HTTP parameter to be used as hash key
 #httpAffinityKey=appsession
@@ -625,7 +625,7 @@ algorithmClass=org.mobicents.tools.telestaxproxy.TelestaxProxyAlgorithm
 
 # Uncomment to enable the consistent hash based on Call-ID algorithm.
 #algorithmClass=org.mobicents.tools.sip.balancer.HeaderConsistentHashBalancerAlgorithm
-# This property is not required, it defaults to Call-ID if not set, cna be "from.user" or "to.user" when you want the SIP URI username
+# This property is not required, it defaults to Call-ID if not set, can be "From" or "To" when you want the SIP URI username
 #sipHeaderAffinityKey=Call-ID
 #specify the GET HTTP parameter to be used as hash key
 #httpAffinityKey=appsession
@@ -1292,6 +1292,15 @@ If the target node is dead, then the node selection algorithm is used to route t
 <p>This algorithm is not distributable.
 It selects nodes randomly to serve a give Call-ID extracted from the requests and responses.
 It keeps a map with <code>Call-ID &#8594;
+            nodeId</code> associations and this map is not shared with other load balancers which will cause them to make different decisions.
+For HTTP it behaves like apache.</p>
+</dd>
+<dt class="hdlist1">org.mobicents.tools.sip.balancer.UserBasedAlgorithm</dt>
+<dd>
+<p>This algorithm algorithm tie all calls for a given DID/Number to the same node.
+All participants for a given conference will be on the same node.
+It selects nodes randomly to serve a give To header extracted from the requests and responses.
+It keeps a map with <code>To &#8594;
             nodeId</code> associations and this map is not shared with other load balancers which will cause them to make different decisions.
 For HTTP it behaves like apache.</p>
 </dd>
@@ -2169,7 +2178,7 @@ Fill in form: Load Balancer&#8217;s ip adress (externalHost) 172.21.0.104 and po
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-11 14:10:10 WEST
+Last updated 2016-05-11 14:43:50 WEST
 </div>
 </div>
 </body>
