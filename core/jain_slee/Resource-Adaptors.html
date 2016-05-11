@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Activity Context Interface Factory</title>
+<title>JAIN SLEE Resource Adaptors</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22737,36 +22737,34 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 
 </header>
 </head>
-<body id="_ratype_aci_factory" class="article">
+<body class="article">
 <div id="header">
-<h1>Activity Context Interface Factory</h1>
+<h1>JAIN SLEE Resource Adaptors</h1>
 </div>
 <div id="content">
 <div class="paragraph">
-<p>The interface of the CAP resource adaptor type specific Activity Context Interface Factory is defined as follows:</p>
+<p>You can use different Resource Adaptors depending on which protocols you need in your JAIN SLEE application.</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.slee.resource.cap;
-
-import javax.slee.ActivityContextInterface;
-import javax.slee.FactoryException;
-import javax.slee.UnrecognizedActivityException;
-
-import org.mobicents.protocols.ss7.cap.api.CAPDialog;
-
-public interface CAPContextInterfaceFactory {
-
-	public ActivityContextInterface getActivityContextInterface(CAPDialog dialog)
-		throws NullPointerException, UnrecognizedActivityException, FactoryException;
-
-}</code></pre>
-</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://documentation.telestax.com/core/core/jain_slee/ras/ss7/cap/User_Guide.html">SS7 CAP Resource Adaptor</a></p>
+</li>
+<li>
+<p><a href="http://documentation.telestax.com/core/core/jain_slee/ras/ss7/isup/User_Guide.html">SS7 ISUP Resource Adaptor</a></p>
+</li>
+<li>
+<p><a href="http://documentation.telestax.com/core/core/jain_slee/ras/ss7/map/User_Guide.html">SS7 MAP Resource Adaptor</a></p>
+</li>
+<li>
+<p><a href="http://documentation.telestax.com/core/core/jain_slee/ras/ss7/tcap/User_Guide.html">SS7 TCAP Resource Adaptor</a></p>
+</li>
+</ul>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-11 15:04:49 WEST
+Last updated 2016-05-11 14:56:43 WEST
 </div>
 </div>
 <footer>
