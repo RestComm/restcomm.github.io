@@ -29579,7 +29579,7 @@ SYNOPSIS
 	connect-timeout &lt;connectTimeout&gt; request-expiry-timeout &lt;requestExpiryTimeout&gt;
 	window-monitor-interval &lt;windowMonitorInterval&gt;
 	window-wait-timeout &lt;windowWaitTimeout&gt; counters-enabled &lt;true | false&gt;
-	enquire-link-delay &lt;30000&gt; charging-enabled &lt;true | false&gt;
+	enquire-link-delay &lt;30000&gt; enquire-link-delay-server &lt;0&gt; charging-enabled &lt;true | false&gt;
 	source-ton &lt;source address ton&gt; source-npi &lt;source address npi&gt;
 	source-range &lt;source address range&gt; routing-ton &lt;routing address ton&gt;
 	routing-npi &lt;routing address npi&gt; routing-range &lt;routing address range&gt;
@@ -29750,6 +29750,11 @@ PARAMETERS
 				  When SMSC connects to a remote server as CLIENT, it
 				  sends an 'ENQUIRE_LINK' after every configured
 				  enquire-link-delay.
+
+	enquire-link-delay-server - Default value is 0 milli seconds.
+				  When SMSC connects to a remote server as SERVER, it
+				  sends an 'ENQUIRE_LINK' after every configured
+				  enquire-link-delay-server.
 
 	charging-enabled	- Flag to enable or disable charging for every SMS
 				  arriving from SIP.
@@ -29988,7 +29993,7 @@ SYNOPSIS
 	connect-timeout &lt;connectTimeout&gt; request-expiry-timeout &lt;requestExpiryTimeout&gt;
 	window-monitor-interval &lt;windowMonitorInterval&gt;
 	window-wait-timeout &lt;windowWaitTimeout&gt; counters-enabled &lt;true | false&gt;
-	enquire-link-delay &lt;30000&gt; charging-enabled &lt;true | false&gt;
+	enquire-link-delay &lt;30000&gt; enquire-link-delay-server &lt;0&gt; charging-enabled &lt;true | false&gt;
 	source-ton &lt;source address ton&gt; source-npi &lt;source address npi&gt;
 	source-range &lt;source address range&gt; routing-ton &lt;routing address ton&gt;
 	routing-npi &lt;routing address npi&gt; routing-range &lt;routing address range&gt;
@@ -30126,6 +30131,17 @@ PARAMETERS
 				  When SMSC connects to a remote server as CLIENT, it
 				  sends an 'ENQUIRE_LINK' after every configured
 				  enquire-link-delay.
+
+				  0 means disabled. SMSC will not send ENQUIRE_LINK.
+
+				  The new value takes effect immediately.
+
+	enquire-link-delay-server - Default value is 0 milli seconds.
+				  When SMSC connects to a remote server as SERVER, it
+				  sends an 'ENQUIRE_LINK' after every configured
+				  enquire-link-delay-server.
+
+				  0 means disabled. SMSC will not send ENQUIRE_LINK.
 
 				  The new value takes effect immediately.
 
@@ -30303,6 +30319,12 @@ PARAMETERS
 					The default value for this parameter is "-1" and it
 					implies "no limitations". Any other negative value
 					also implies "no limitations".
+
+    enquire-server-enabled    - This parameter is used to enable or
+                    disable SMPP server sending enquire message.
+
+                    The default value for this parameter is "false".
+
 
 SEE ALSO
 	smsc get scgt, smsc set scgt, smsc get scssn, smsc set scssn, smsc get hlrssn,
@@ -32442,7 +32464,7 @@ Some error codes are reserved for future use and will be put to use in future ve
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-10 10:49:33 WEST
+Last updated 2016-05-11 10:49:24 WEST
 </div>
 </div>
 <footer>
