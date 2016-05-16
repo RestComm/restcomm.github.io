@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Untitled</title>
+<title>Starting Restcomm-Connect</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22737,42 +22737,67 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 
 </header>
 </head>
-<body class="article">
+<body id="start-restcomm-connect" class="article">
 <div id="header">
+<h1>Starting Restcomm-Connect</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#download-and-unzip-restcomm-binary">Download and unzip Restcomm binary</a></li>
+<li><a href="#configure-restcomm-ip-information-and-text-to-speech">Configure Restcomm IP information and Text-to-speech</a>
+<ul class="sectlevel2">
+<li><a href="#add-your-ip-address">Add your IP address</a></li>
+<li><a href="#add-your-text-to-speech-key">Add your Text-to-Speech Key</a></li>
+</ul>
+</li>
+<li><a href="#start-restcomm-and-open-the-admin-gui">Start Restcomm and Open the Admin GUI</a></li>
+<li><a href="#making-test-sip-calls-using-the-demo-apps">Making Test SIP Calls using the Demo Apps</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
-<div id="start-restcomm-connect" class="paragraph">
-<p><strong>Starting Restcomm-Connect</strong></p>
-</div>
-<div class="paragraph">
-<p><strong>Requirements</strong></p>
-</div>
+<div class="sect1">
+<h2 id="requirements"><a class="anchor" href="#requirements"></a>Requirements</h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p>Install the GNU screen (it is optional but recommended)</p>
+<p>Install the <a href="https://www.linode.com/docs/networking/ssh/using-gnu-screen-to-manage-persistent-terminal-sessions">GNU screen</a> (it is optional but recommended)</p>
 </li>
 <li>
-<p>Install IPCalc</p>
+<p>Install <a href="http://linuxaria.com/howto/linux-subnet-calculator-cidr">IPCalc</a></p>
 </li>
 <li>
-<p>You must have <strong>JDK - 7</strong> installed on your computer</p>
+<p>Install <a href="http://dev.mysql.com/doc/refman/5.7/en/installing.html">MySQL</a></p>
+</li>
+<li>
+<p>You must have <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html">JDK - 7</a> installed on your computer</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p><strong>Step 1 – Download and unzip Restcomm binary</strong></p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="download-and-unzip-restcomm-binary"><a class="anchor" href="#download-and-unzip-restcomm-binary"></a>Download and unzip Restcomm binary</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p><em>If you you have already installed Restcomm you can skip the Step 1 and move to Step 2.</em></p>
+<p><em>If you you have already installed Restcomm you can <a href="#configure-restcomm-ip-information-and-text-to-speech">Configure Restcomm IP information and Text-to-speech</a> at once</em></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Go to a local directory on your computer and run the following command:
-<strong>wget <a href="https://mobicents.ci.cloudbees.com/job/RestComm/lastSuccessfulBuild/artifact/Mobicents-Restcomm-JBoss-AS7-&lt;xxx&gt;.zip" class="bare">https://mobicents.ci.cloudbees.com/job/RestComm/lastSuccessfulBuild/artifact/Mobicents-Restcomm-JBoss-AS7-&lt;xxx&gt;.zip</a></strong>,
-where &lt;xxx&gt; is the release version number.</p>
+<p>Go to a local directory on your computer and run the following command ( &lt;xxx&gt; is the release version number):</p>
 </li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">wget https://mobicents.ci.cloudbees.com/job/RestComm/lastSuccessfulBuild/artifact/Mobicents-Restcomm-JBoss-AS7-&lt;xxx&gt;.zip</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>Unzip the binary to a local directory. It should be similar to this one:
 <strong>Restcomm-JBoss-AS7-7.6.0.869.zip</strong>.
@@ -22780,8 +22805,18 @@ where &lt;xxx&gt; is the release version number.</p>
 </li>
 </ul>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configure-restcomm-ip-information-and-text-to-speech"><a class="anchor" href="#configure-restcomm-ip-information-and-text-to-speech"></a>Configure Restcomm IP information and Text-to-speech</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="add-your-ip-address"><a class="anchor" href="#add-your-ip-address"></a>Add your IP address</h3>
 <div class="paragraph">
-<p><strong>Step 2 – Configure Restcomm IP information and Text-to-speech</strong></p>
+<p><em>A single host may have multiple IP addresses.
+To get Restcomm working properly it is important to indicate the right IP address.
+For local testing you can use localhost address (e.g. 127.0.0.1), in real working environment you will
+need to use your public IP address.</em></p>
 </div>
 <div class="ulist">
 <ul>
@@ -22792,20 +22827,71 @@ where &lt;xxx&gt; is the release version number.</p>
 <p>Open the file <strong>restcomm.conf</strong>.</p>
 </li>
 <li>
-<p>Go to the section <strong># Network configuration</strong>.</p>
+<p>Go to the section <strong># Network configuration</strong>. You have to indicate the following information:</p>
 </li>
 </ul>
 </div>
-<div class="imageblock">
+<div class="listingblock">
 <div class="content">
-<img src="./images/7.png" alt="7">
+<pre class="highlight"><code class="language-bash" data-lang="bash"># Network configuration
+NET_INTERFACE=''
+PRIVATE_IP=''
+SUBNET_MASK=''
+NETWORK=''
+BROADCAST_ADDRESS=''</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="obtaining-the-network-interface"><a class="anchor" href="#obtaining-the-network-interface"></a>Obtaining the network interface</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>First you have to get the information on your network interface. Run the command:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash"> netstat -r</code></pre>
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>In order to get the details of your server you should run the <strong>ifconfig</strong> command in the terminal.
-You will see something like this:</p>
+<p>Picture below shows sample output for the command.
+Your <strong>network interface</strong> you can find in the Iface column in the same row where Gateway is indicated (for example wlx60e32716068a).</p>
+</li>
+<li>
+<p>You will have multiple rows for the same network interface.
+One of the rows in the Destination column contains the <strong>network address</strong> (for example 172.21.0.0).</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/10.png" alt="10">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="obtaining-the-public-ip"><a class="anchor" href="#obtaining-the-public-ip"></a>Obtaining the public IP</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>In order to get your public ip address you should run the following command:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">ifconfig</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You will have to find the same network interface name.
+The information you will need can be found in the output:</p>
 </li>
 </ul>
 </div>
@@ -22817,34 +22903,72 @@ You will see something like this:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Run the command <strong>netstat -r</strong> to get the Network address of your computer:</p>
+<p>Your <strong>IP address</strong> (for example 172.21.0.107) you will see in</p>
 </li>
 </ul>
 </div>
-<div class="imageblock">
+<div class="listingblock">
 <div class="content">
-<img src="./images/10.png" alt="10">
+<pre>inet addr</pre>
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Configure the following variables with the network configuration details of your server:</p>
+<p>Your <strong>subnet mask</strong> (for example 255.255.255.0) you will see in</p>
 </li>
 </ul>
 </div>
-<div class="imageblock">
+<div class="listingblock">
 <div class="content">
-<img src="./images/9.png" alt="9">
+<pre>Mask</pre>
 </div>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>Your <strong>broadcast address</strong> (for example 172.21.0.255) you will see in</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Bcast</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="network-configuration"><a class="anchor" href="#network-configuration"></a>Network configuration</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Insert the network configuration details of your server in the following variables:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash"># Network configuration
+NET_INTERFACE='wlx60e32716068a'
+PRIVATE_IP='172.21.0.107'
+SUBNET_MASK='255.255.255.0'
+NETWORK='172.21.0.0'
+BROADCAST_ADDRESS='172.21.0.255'</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="add-your-text-to-speech-key"><a class="anchor" href="#add-your-text-to-speech-key"></a>Add your Text-to-Speech Key</h3>
 <div class="paragraph">
-<p><strong>Add your Text-to-Speech Key</strong></p>
+<p><em>Text-to-Speech (TTS) is the technology which enables mobile, desktop and web applications
+to read text aloud. Voice RSS provides free Text-to-Speech API as web service.
+This TTS API key allows to convert the text to speech without installation of special software.</em></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Register at <strong>www.voicerss.org</strong> and get your personal VoiceRSS API key. It is for free.</p>
+<p>Register at <a href="http://www.voicerss.org">voicerss.org</a> and get your personal <strong>VoiceRSS API key</strong>. It is for free.</p>
 </li>
 <li>
 <p>Go to <strong>$RESTCOMM_HOME/bin/restcomm</strong> and open <strong>restcomm.conf</strong> file.</p>
@@ -22854,9 +22978,10 @@ You will see something like this:</p>
 </li>
 </ul>
 </div>
-<div class="imageblock">
+<div class="listingblock">
 <div class="content">
-<img src="./images/11.png" alt="11">
+<pre class="highlight"><code class="language-bash" data-lang="bash"># VoiceRSS variable declarations
+#VOICERSS_KEY='797e69a254fc431b818bb37f35fb62df'</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -22866,21 +22991,53 @@ You will see something like this:</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p><strong>Step 3 – Start Restcomm and Open the Admin GUI</strong></p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="start-restcomm-and-open-the-admin-gui"><a class="anchor" href="#start-restcomm-and-open-the-admin-gui"></a>Start Restcomm and Open the Admin GUI</h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
 <p>Go to the <strong>$RESTCOMM_HOME/bin/restcomm/</strong> directory.</p>
 </li>
 <li>
-<p>To start Restcomm and media server run the following command: <strong>./start-restcomm.sh</strong></p>
+<p>To start Restcomm and media server run the following command:</p>
 </li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>./start-restcomm.sh</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
 <li>
-<p>To see the Restcomm startup process run <strong>screen -r restcomm</strong> (only works if you have screen installed).
-To see the MMS startup process run the <strong>screen -r mms</strong> command.</p>
+<p>To see the Restcomm startup process run the following command (only works if you have screen installed):</p>
 </li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>screen -r restcomm</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>To see the Restcomm Media Server startup process run the command:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>screen -r mms</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>Open your web browser and go to the url – <strong><a href="http://IP:8080" class="bare">http://IP:8080</a></strong>.
 Instead of "IP" you should put your IP.</p>
@@ -22890,41 +23047,43 @@ Instead of "IP" you should put your IP.</p>
 Then you should change the default password.</p>
 </li>
 <li>
-<p>If you need to stop the Restcomm you need to run <strong>$RESTCOMM_HOME/bin/restcomm/stop-restcomm.sh</strong> command.</p>
+<p>If you need to stop the Restcomm you need to go to <strong>$RESTCOMM_HOME/bin/restcomm</strong>
+directory and run</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p><strong>Step 4 – Making Test SIP Calls using the Demo Apps</strong></p>
+<div class="listingblock">
+<div class="content">
+<pre>./stop-restcomm.sh</pre>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="making-test-sip-calls-using-the-demo-apps"><a class="anchor" href="#making-test-sip-calls-using-the-demo-apps"></a>Making Test SIP Calls using the Demo Apps</h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
 <p>Open any SIP phone of your choice.
-You may use <a href="http://www.linphone.org/downloads-for-desktop.html">Linphone</a> which doesn’t require registration.</p>
+You may use <strong>Olympus</strong>. Here you can find <a href="http://docs.telestax.com/how-to-use-olympus-with-restcomm">how to use Olympus with Restcomm</a>.</p>
 </li>
 <li>
-<p>Make sip calls at the following numbers. Take into account that first you should put you IP instead of "Restcomm_IP":</p>
-<div class="ulist">
-<ul>
-<li>
-<p>1234@Restcomm_IP:5080 – you will hear a welcome message</p>
-</li>
-<li>
-<p>1235@Restcomm_IP:5080 – you will hear an hello world message in 3 languages</p>
-</li>
-<li>
-<p>1236@Restcomm_IP:5080 – this will test the collect verb</p>
+<p>Go to the <strong>Contacts</strong> and make a test call at +1234 number. You will hear the standard voice message that is 2-3 seconds long.</p>
 </li>
 </ul>
 </div>
-</li>
-</ul>
+<div class="imageblock">
+<div class="content">
+<img src="./images/15.png" alt="15">
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-16 10:36:02 WEST
+Last updated 2016-05-16 17:08:00 WEST
 </div>
 </div>
 <footer>

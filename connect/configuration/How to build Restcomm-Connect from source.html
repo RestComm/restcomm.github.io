@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Untitled</title>
+<title>How to build Restcomm-Connect from source</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22737,35 +22737,44 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 
 </header>
 </head>
-<body class="article">
+<body id="build-from-source" class="article">
 <div id="header">
+<h1>How to build Restcomm-Connect from source</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#obtaining-git-url">Obtaining git URL</a></li>
+<li><a href="#restcomm-connect-cloning">Restcomm-Connect cloning</a></li>
+<li><a href="#restcomm-connect-building">Restcomm-Connect building</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
-<div id="build-from-source" class="paragraph">
-<p><strong>How to build Restcomm-Connect from source</strong></p>
-</div>
-<div class="paragraph">
-<p><strong>Requirements</strong></p>
-</div>
+<div class="sect1">
+<h2 id="requirements"><a class="anchor" href="#requirements"></a>Requirements</h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p>You must have <strong>git</strong> installed on your computer</p>
+<p>You must have <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">git</a> installed on your computer</p>
 </li>
 <li>
-<p>You must have <strong>ant</strong> installed on your computer</p>
+<p>You must have <a href="http://ant.apache.org/manual/install.html">ant</a> installed on your computer</p>
 </li>
 <li>
-<p>You must have <strong>JDK - 7</strong> installed on your computer</p>
+<p>You must have <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html">JDK - 7</a> installed on your computer</p>
 </li>
 <li>
-<p>You must be running <strong>maven</strong> version 3.x.x on your computer</p>
+<p>You must be running <a href="https://maven.apache.org/download.cgi">maven</a> version 3.x.x on your computer</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p><strong>Step 1</strong></p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="obtaining-git-url"><a class="anchor" href="#obtaining-git-url"></a>Obtaining git URL</h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
@@ -22780,27 +22789,47 @@ The URL should look like this: <a href="https://github.com/RestComm/Restcomm-Con
 <img src="./images/1.png" alt="1">
 </div>
 </div>
-<div class="paragraph">
-<p><strong>Step 2</strong></p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="restcomm-connect-cloning"><a class="anchor" href="#restcomm-connect-cloning"></a>Restcomm-Connect cloning</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>In the bash window of your local computer create a directory where you should clone Restcomm-Connect:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>run the command : <strong>git clone <a href="https://github.com/RestComm/Restcomm-Connect.git" class="bare">https://github.com/RestComm/Restcomm-Connect.git</a></strong>.
-This command will create a new directory called RestComm-Connect. Go to this directory entering the command:
- <strong>cd Restcomm-Connect</strong>.
-The content of the directory should contain the following:</p>
+<p>run the command :</p>
 </li>
 </ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">git clone https://github.com/RestComm/Restcomm-Connect.git</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This command will create a new directory called RestComm-Connect. Go to this directory entering the command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash"> cd Restcomm-Connect</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The content of the directory should contain the following:</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="./images/6.png" alt="6">
 </div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="restcomm-connect-building"><a class="anchor" href="#restcomm-connect-building"></a>Restcomm-Connect building</h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
@@ -22812,7 +22841,7 @@ In this tutorial, the script below is stored in the file <strong>restcomm-connec
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>#!/bin/bash
+<pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/bash
 export RESTCOMM_HOME=/home/yuliachornobrivets/Restcomm-Connect
 export MAJOR_VERSION_NUMBER=7.6
 export BUILD_NUMBER=0
@@ -22822,17 +22851,23 @@ mkdir $WORKSPACE/dependencies
 export DEPENDENCIES_HOME=$WORKSPACE/dependencies
 
 
-ant release -f ./release/build.xml -Drestcomm.release.version=$MAJOR_VERSION_NUMBER.$BUILD_NUMBER -Drestcomm.branch.name=restcomm-release-$MAJOR_VERSION_NUMBER.$BUILD_NUMBER -Dcheckout.restcomm.dir=$RESTCOMM_HOME -Dworkspace.restcomm.dir=$RESTCOMM_HOME/restcomm -Dcheckout.dir=$DEPENDENCIES_HOME</pre>
+ant release -f ./release/build.xml -Drestcomm.release.version=$MAJOR_VERSION_NUMBER.$BUILD_NUMBER -Drestcomm.branch.name=restcomm-release-$MAJOR_VERSION_NUMBER.$BUILD_NUMBER -Dcheckout.restcomm.dir=$RESTCOMM_HOME -Dworkspace.restcomm.dir=$RESTCOMM_HOME/restcomm -Dcheckout.dir=$DEPENDENCIES_HOME</code></pre>
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Change the restcomm-connect-build.sh permission to make it executable as follows:
-<strong>chmod +x ./restcomm-connect-build.sh</strong>.
-  The RestComm directory should now display the following content:</p>
+<p>Change the restcomm-connect-build.sh permission to make it executable as follows</p>
 </li>
 </ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">chmod +x ./restcomm-connect-build.sh</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The RestComm directory should now display the following content:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -22842,23 +22877,28 @@ ant release -f ./release/build.xml -Drestcomm.release.version=$MAJOR_VERSION_NUM
 <div class="ulist">
 <ul>
 <li>
-<p>Now, run the build script as follows: <strong>./restcomm-connect-build.sh</strong></p>
+<p>Now, run the build script as follows:</p>
 </li>
 </ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>./restcomm-connect-build.sh</pre>
+</div>
 </div>
 <div class="paragraph">
 <p>This may take a while to build. If the build is successful, you should see this output at the end of the build:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>make-final-zip:
+<pre class="highlight"><code class="language-bash" data-lang="bash">make-final-zip:
 
     [zip] Building zip: /home/username/Restcomm-Connect/release/Restcomm-JBoss-AS7-7.6.0.zip
 
 release:
 
 BUILD SUCCESSFUL
-Total time: 42 minutes 11 seconds</pre>
+Total time: 42 minutes 11 seconds</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -22889,10 +22929,15 @@ Total time: 42 minutes 11 seconds</pre>
 <p>Note that the zip file called <strong>Restcomm-JBoss-AS7-7.6.2</strong> is the binary for JBoss container.
 You can copy this zip file into a directory on your computer and unzip the content.</p>
 </div>
+<div class="paragraph">
+<p>Here you can read the detailed information on <a href="Starting Restcomm-Connect.html#configure-restcomm-iP-information-and-text-to-speech">Starting Restcomm-Connect</a>.</p>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-16 10:36:02 WEST
+Last updated 2016-05-16 17:08:00 WEST
 </div>
 </div>
 <footer>

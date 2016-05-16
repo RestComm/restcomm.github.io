@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Untitled</title>
+<title>How to get started with Restcomm-Connect and Mysql</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22737,29 +22737,51 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 
 </header>
 </head>
-<body class="article">
+<body id="restcomm-connect-mysql" class="article">
 <div id="header">
+<h1>How to get started with Restcomm-Connect and Mysql</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#configuring-the-mybatis-xml-file-to-use-mysql">Configuring the mybatis.xml file to use Mysql</a></li>
+<li><a href="#start-mysql-and-create-the-restcomm-database">Start Mysql and Create the Restcomm database</a></li>
+<li><a href="#edit-the-restcomm-xml-file-to-point-the-dao-to-mysql">Edit the restcomm.xml file to point the DAO to MySQL</a></li>
+<li><a href="#download-mysql-java-client-driver">Download Mysql Java Client Driver</a></li>
+<li><a href="#verify-the-setup-was-successful">Verify the setup was successful</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
-<div id="restcomm-connect-mysql" class="paragraph">
-<p><strong>How to get started with Restcomm-Connect and Mysql</strong></p>
-</div>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p><strong>Requirements</strong></p>
+<p><em>When working with the binary version of Restcomm, the default database is hsqlDB.
+This is of course not suitable for production but it is provided as a way for you
+to conveniently and quickly start up Restcomm.
+For those who would like to run Restcomm on a local server or on another cloud based system,
+the following tutorial will show how to get started with Restcomm and Mysql.</em></p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="requirements"><a class="anchor" href="#requirements"></a>Requirements</h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p>Install Restcomm using our previous guides</p>
+<p>Install Restcomm using our <a href="How to build Restcomm-Connect from source.html#requirements">previous guide</a>.</p>
 </li>
 <li>
-<p>Install MySQL - 5.1.38</p>
+<p>Install <a href="http://dev.mysql.com/doc/refman/5.7/en/installing.html">MySQL</a></p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p><strong>Step 1 – Configuring the mybatis.xml file to use Mysql</strong></p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="configuring-the-mybatis-xml-file-to-use-mysql"><a class="anchor" href="#configuring-the-mybatis-xml-file-to-use-mysql"></a>Configuring the mybatis.xml file to use Mysql</h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
@@ -22767,8 +22789,25 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 Open the <strong>mybatis.xml</strong>. $RESTCOMM_HOME is conventional name for unzipped <strong>Restcomm-JBoss-AS7-7.6.0.869</strong> directory.</p>
 </li>
 <li>
-<p>Change the &lt;environments default="production"&gt; to &lt;environments default="mariadb"&gt;</p>
+<p>Change the</p>
 </li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">&lt;environments default="production"&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>to</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">&lt;environments default="mariadb"&gt;</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>Add the MariaDB configuration environment tag as shown below.
 Make sure that you have indicated the correct MySQL username, password
@@ -22778,7 +22817,7 @@ and IP of the computer where the database is located (it is 172.21.0.107 in the 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&lt;environment id="mariadb"&gt;
+<pre class="highlight"><code class="language-bash" data-lang="bash">&lt;environment id="mariadb"&gt;
 &lt;transactionManager type="JDBC"/&gt;
 &lt;dataSource type="POOLED"&gt;
 &lt;property name="driver" value="com.mysql.jdbc.Driver"/&gt;
@@ -22786,7 +22825,7 @@ and IP of the computer where the database is located (it is 172.21.0.107 in the 
 &lt;property name="username" value="MySQL_Username"/&gt;
 &lt;property name="password" value="MySQL_Password"/&gt;
 &lt;/dataSource&gt;
-&lt;/environment&gt;</pre>
+&lt;/environment&gt;</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -22796,16 +22835,30 @@ and IP of the computer where the database is located (it is 172.21.0.107 in the 
 </li>
 </ul>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="start-mysql-and-create-the-restcomm-database"><a class="anchor" href="#start-mysql-and-create-the-restcomm-database"></a>Start Mysql and Create the Restcomm database</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Start Mysql by running the command</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo /etc/init.d/mysql start</code></pre>
+</div>
+</div>
 <div class="paragraph">
-<p><strong>Step 2 – Start Mysql and Create the Restcomm database</strong></p>
+<p>Or use <a href="http://dev.mysql.com/doc/refman/5.7/en/windows-start-command-line.html">MySQL guide</a>.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Start Mysql by running the command <strong>sudo /etc/init.d/mysql start</strong>.</p>
-</li>
-<li>
-<p>Go to the <strong>$RESTCOMM_HOME/standalone/deployments/restcomm.war/WEB-INF/scripts/mariadb</strong> directory. There will be the <strong>init.sql</strong> file and sql directory:</p>
+<p>Go to the <strong>$RESTCOMM_HOME/standalone/deployments/restcomm.war/WEB-INF/scripts/mariadb</strong> directory. There will be the <strong>init.sql</strong> file and <strong>sql</strong> directory:</p>
 </li>
 </ul>
 </div>
@@ -22817,23 +22870,40 @@ and IP of the computer where the database is located (it is 172.21.0.107 in the 
 <div class="ulist">
 <ul>
 <li>
-<p>Create the Restcomm database running the following command:
-<strong>mysql -u root -p &lt; init.sql</strong></p>
-</li>
-<li>
-<p>Log into Mysql and make sure the Restcomm database was created by running the <strong>show databases;</strong> command.
-If the process was successful you will see the following:</p>
+<p>Create the Restcomm database running the following command:</p>
 </li>
 </ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">mysql -u root -p &lt; init.sql</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Log into Mysql and make sure the Restcomm database was created by running the command:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">show databases;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the process was successful you will see the following:</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="./images/14.png" alt="14">
 </div>
 </div>
-<div class="paragraph">
-<p><strong>Step 3 – Edit the restcomm.xml file to point the DAO to MySQL</strong></p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="edit-the-restcomm-xml-file-to-point-the-dao-to-mysql"><a class="anchor" href="#edit-the-restcomm-xml-file-to-point-the-dao-to-mysql"></a>Edit the restcomm.xml file to point the DAO to MySQL</h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
@@ -22847,31 +22917,69 @@ Open the <strong>restcomm.xml</strong> file.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&lt;dao-manager class="org.mobicents.servlet.restcomm.dao.mybatis.MybatisDaoManager"&gt;
+<pre class="highlight"><code class="language-bash" data-lang="bash">&lt;dao-manager class="org.mobicents.servlet.restcomm.dao.mybatis.MybatisDaoManager"&gt;
   &lt;configuration-file&gt;${restcomm:home}/WEB-INF/conf/mybatis.xml&lt;/configuration-file&gt;
   &lt;data-files&gt;&lt;/data-files&gt;
   &lt;sql-files&gt;${restcomm:home}/WEB-INF/scripts/mariadb/sql&lt;/sql-files&gt;
-&lt;/dao-manager&gt;</pre>
+&lt;/dao-manager&gt;</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p><strong>Step 4 – Download Mysql Java Client Driver</strong></p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="download-mysql-java-client-driver"><a class="anchor" href="#download-mysql-java-client-driver"></a>Download Mysql Java Client Driver</h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p>Download the latest MySQL Java Connector from <a href="http://mvnrepository.com/artifact/mysql/mysql-connector-java" class="bare">http://mvnrepository.com/artifact/mysql/mysql-connector-java</a>.</p>
+<p>Download the latest <strong>MySQL Java Connector</strong> from <a href="http://mvnrepository.com/artifact/mysql/mysql-connector-java" class="bare">http://mvnrepository.com/artifact/mysql/mysql-connector-java</a>.</p>
 </li>
 <li>
 <p>Put the jar file in
 <strong>$RESTCOMM_HOME/standalone/deployments/restcomm.war/WEB-INF/lib/</strong>.</p>
 </li>
+<li>
+<p>Go to the $RESTCOMM_HOME/bin/restcomm/ directory.</p>
+</li>
 </ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="verify-the-setup-was-successful"><a class="anchor" href="#verify-the-setup-was-successful"></a>Verify the setup was successful</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>In order to verify the setup was correctly done, first you have to start Restcomm and media server running the following command:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">./start-restcomm.sh</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open your web browser and go to the url – <a href="http://IP:8080" class="bare">http://IP:8080</a>. Instead of "IP" you should put your IP.</p>
+</li>
+<li>
+<p>Log in with the <a href="mailto:administrator@company.com">administrator@company.com</a> username and the RestComm password. Then you should change the default password.
+If you have changed the default password before, you should insert your own password at once.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Here you can read the detailed information on <a href="Starting Restcomm-Connect.html#configure-restcomm-iP-information-and-text-to-speech">Starting Restcomm-Connect</a>.</p>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-16 10:36:02 WEST
+Last updated 2016-05-16 17:08:00 WEST
 </div>
 </div>
 <footer>

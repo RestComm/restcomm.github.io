@@ -23116,18 +23116,11 @@ Where &lt;x.x.xx&gt; is the release version number</p>
 <div class="literalblock">
 <div class="content">
 <pre>externalHost=172.21.0.104
-externalPort=5090
+externalWsPort=5090
+externalWssPort=5091
 internalHost=127.0.0.4
-internalPort=5082</pre>
-</div>
-</div>
-</li>
-<li>
-<p>If you need the transport UDP,TCP,TLS the property isTransportWs must be "false", if UDP, WS, WSS this propery must be "true" and set up next lines:</p>
-<div class="literalblock">
-<div class="content">
-<pre>externalSecurePort=5091
-internalSecurePort=5083</pre>
+internalWsPort=5082
+internalWssPort=5083</pre>
 </div>
 </div>
 </li>
@@ -23148,19 +23141,19 @@ internalSecurePort=5083</pre>
 </div>
 <div class="paragraph">
 <p>Login to Restcomm server <a href="http://127.0.0.2:8080/olympus/" class="bare">http://127.0.0.2:8080/olympus/</a>
-Fill in form: Load Balancer&#8217;s ip adress (externalHost) 172.21.0.104 and port(externalPort) 5090</p>
+Fill in form: Load Balancer&#8217;s ip adress (externalHost) 172.21.0.104 and port(externalWsPort) 5090</p>
 </div>
 <div class="paragraph">
 <p>For WSS:</p>
 </div>
 <div class="paragraph">
 <p>Login to Restcomm server <a href="https://127.0.0.2:8443/olympus/" class="bare">https://127.0.0.2:8443/olympus/</a>
-Fill in form: Load Balancer&#8217;s ip adress (externalHost) 172.21.0.104 and port (externalSecurePort) 5091</p>
+Fill in form: Load Balancer&#8217;s ip adress (externalHost) 172.21.0.104 and port (externalWssPort) 5091</p>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-16 10:35:26 WEST
+Last updated 2016-05-16 17:07:23 WEST
 </div>
 </div>
 <footer>
