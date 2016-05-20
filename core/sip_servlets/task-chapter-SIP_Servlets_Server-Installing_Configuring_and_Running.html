@@ -23631,6 +23631,22 @@ There is no need to change this property.</p>
 <p>Specifies the transport on which the container will be able to receive SIP messages.
 Supported Values are "udp", "tcp", "tls" and "ws".</p>
 </dd>
+<dt class="hdlist1">use-load-balancer</dt>
+<dd>
+<p>Enable to specify if that particular connector will be using the Load Balancer for outbound traffic. The Load Balancer to be used is defined by the next <code>load-balancer</code> attributes below</p>
+</dd>
+<dt class="hdlist1">load-balancer-address </dt>
+<dd>
+<p>Specifies the Load Balancer address used to route outbound traffic for this SIP Connector.</p>
+</dd>
+<dt class="hdlist1">load-balancer-rmi-port</dt>
+<dd>
+<p>Specifies the RMI Port used to connect to the Load Balancer for this SIP Connector. This enables the connector to advertise to the Load Balancer the IP and Port it is listening on so that the Load Balancer can route traffic to that connector as well.</p>
+</dd>
+<dt class="hdlist1">load-balancer-sip-port</dt>
+<dd>
+<p>Specifies the SIP Port of the Load Balancer to use for outbound traffic for this SIP Connector. This enables the connector to choose to which Load Balancer it sends outbound traffic. This is particularly useful for supporting different Load Balancers over different network interfaces</p>
+</dd>
 <dt class="hdlist1">use-stun</dt>
 <dd>
 <p>Enables Session Traversal Utilities for NAT (STUN) support for this Connector.
@@ -23714,6 +23730,22 @@ There is no need to change this property.</p>
 <dd>
 <p>Specifies the transport on which the container will be able to receive SIP messages.
 For example, "udp".</p>
+</dd>
+<dt class="hdlist1">useLoadBalancer</dt>
+<dd>
+<p>Enable to specify if that particular connector will be using the Load Balancer for outbound traffic. The Load Balancer to be used is defined by the next <code>loadBalancer</code> attributes below</p>
+</dd>
+<dt class="hdlist1">loadBalancerAddress </dt>
+<dd>
+<p>Specifies the Load Balancer address used to route outbound traffic for this SIP Connector.</p>
+</dd>
+<dt class="hdlist1">loadBalancerRmiPort</dt>
+<dd>
+<p>Specifies the RMI Port used to connect to the Load Balancer for this SIP Connector. This enables the connector to advertise to the Load Balancer the IP and Port it is listening on so that the Load Balancer can route traffic to that connector as well.</p>
+</dd>
+<dt class="hdlist1">loadBalancerSipPort</dt>
+<dd>
+<p>Specifies the SIP Port of the Load Balancer to use for outbound traffic for this SIP Connector. This enables the connector to choose to which Load Balancer it sends outbound traffic. This is particularly useful for supporting different Load Balancers over different network interfaces</p>
 </dd>
 <dt class="hdlist1">useStun</dt>
 <dd>
@@ -24087,7 +24119,7 @@ The log4j configuration file is located in $CATALINA_HOME/lib/ directory</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-19 10:37:57 WEST
+Last updated 2016-05-20 10:38:22 WEST
 </div>
 </div>
 <footer>
