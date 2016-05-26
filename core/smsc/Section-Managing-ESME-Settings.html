@@ -22834,7 +22834,7 @@ SYNOPSIS
 	esme-npi &lt;esme address npi&gt; esme-range &lt;esme address range&gt;
 	cluster-name &lt;clusterName&gt; window-size &lt;windowSize&gt;
 	connect-timeout &lt;connectTimeout&gt; request-expiry-timeout &lt;requestExpiryTimeout&gt;
-	window-monitor-interval &lt;windowMonitorInterval&gt;
+	client-bind-timeout &lt;clientBindTimeout&gt; window-monitor-interval &lt;windowMonitorInterval&gt;
 	window-wait-timeout &lt;windowWaitTimeout&gt; counters-enabled &lt;true | false&gt;
 	enquire-link-delay &lt;30000&gt; enquire-link-delay-server &lt;0&gt; charging-enabled &lt;true | false&gt;
 	source-ton &lt;source address ton&gt; source-npi &lt;source address npi&gt;
@@ -22969,6 +22969,15 @@ PARAMETERS
 				  This parameter is used to specify the time to wait in
 				  milli seconds for an endpoint to respond to before it
 				  expires.
+
+				  This is useful only when ESME is defined as Client Side.
+				  For Server side this value is taken from the
+				  the 'SMPP Server Settings'.
+
+	client-bind-timeout  - Default value is 5000 milli seconds.
+				  This parameter is used to specify the time to wait in
+				  milli seconds for an ESME client bind to a SMPP
+				  server.
 
 				  This is useful only when ESME is defined as Client Side.
 				  For Server side this value is taken from the
@@ -23250,7 +23259,7 @@ SYNOPSIS
 	esme-ton &lt;esme address ton&gt; esme-npi &lt;esme address npi&gt;
 	esme-range &lt;esme address range&gt; window-size &lt;windowSize&gt;
 	connect-timeout &lt;connectTimeout&gt; request-expiry-timeout &lt;requestExpiryTimeout&gt;
-	window-monitor-interval &lt;windowMonitorInterval&gt;
+	client-bind-timeout &lt;clientBindTimeout&gt; window-monitor-interval &lt;windowMonitorInterval&gt;
 	window-wait-timeout &lt;windowWaitTimeout&gt; counters-enabled &lt;true | false&gt;
 	enquire-link-delay &lt;30000&gt; enquire-link-delay-server &lt;0&gt; charging-enabled &lt;true | false&gt;
 	source-ton &lt;source address ton&gt; source-npi &lt;source address npi&gt;
@@ -23344,6 +23353,17 @@ PARAMETERS
 				  This parameter is used to specify the time to wait in
 				  milli seconds for an endpoint to respond to before it
 				  expires.
+
+				  This is useful only when ESME is defined as Client Side.
+				  For Server side this value is taken from the
+				  the 'SMPP Server Settings'.
+
+				  The new value takes effect when SMPP is restarted.
+
+	client-bind-timeout  - Default value is 5000 milli seconds.
+				  This parameter is used to specify the time to wait in
+				  milli seconds for an ESME client bind to a SMPP
+				  server.
 
 				  This is useful only when ESME is defined as Client Side.
 				  For Server side this value is taken from the
@@ -23842,7 +23862,7 @@ All relevant details of the ESME will be displayed in an expanded format.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-25 10:52:08 WEST
+Last updated 2016-05-26 10:52:14 WEST
 </div>
 </div>
 <footer>

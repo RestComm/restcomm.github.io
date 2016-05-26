@@ -964,8 +964,8 @@ gov.nist.javax.sip.TLS_CLIENT_PROTOCOLS=TLSv1
 gov.nist.javax.sip.TLS_CLIENT_AUTH_TYPE=Disabled
 #ssl will provide some extra debugging information for the SSL if uncomment it
 #javax.net.debug=ssl
-# should smpp and http use secured connection towards servers or regular
-isRemoteServerSsl = true
+#Terminate all secure traffic coming from the outside world HTTPs, SIP TLS, WSS will be terminated at LB side
+terminateTLSTraffic = true
 
 #Statistic
 #port for statistic
@@ -1141,9 +1141,9 @@ If Disabled or DisabledAll does not use authentication.</p>
 <dd>
 <p>SSL will provide some extra debugging information for the SSL if uncomment it.</p>
 </dd>
-<dt class="hdlist1">isRemoteServerSsl</dt>
+<dt class="hdlist1">terminateTLSTraffic</dt>
 <dd>
-<p>Should smpp and http use secured connection towards servers or regular.</p>
+<p>Terminate all secure traffic coming from the outside world HTTPs, SIP TLS, WSS will be terminated at LB side.</p>
 </dd>
 <dt class="hdlist1">statisticPort</dt>
 <dd>
@@ -1808,10 +1808,7 @@ If no response if received within a threshhold time then the third party SIP ser
 <p>javax.net.ssl.trustStore;</p>
 </li>
 <li>
-<p>javax.net.ssl.trustStorePassword;</p>
-</li>
-<li>
-<p>isRemoteServerSsl (if remote HTTP server uses TLS).</p>
+<p>javax.net.ssl.trustStorePassword.</p>
 </li>
 </ul>
 </div>
@@ -1836,10 +1833,7 @@ If no response if received within a threshhold time then the third party SIP ser
 <p>javax.net.ssl.trustStore;</p>
 </li>
 <li>
-<p>javax.net.ssl.trustStorePassword;</p>
-</li>
-<li>
-<p>isRemoteServerSsl (if remote SMPP server uses TLS).</p>
+<p>javax.net.ssl.trustStorePassword.</p>
 </li>
 </ul>
 </div>
@@ -2370,7 +2364,7 @@ Fill in form: Load Balancer&#8217;s ip adress (externalHost) 172.21.0.104 and po
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-25 10:58:27 WEST
+Last updated 2016-05-26 10:58:51 WEST
 </div>
 </div>
 </body>
