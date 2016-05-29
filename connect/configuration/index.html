@@ -22648,8 +22648,8 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </li>
 	<li id="nav-menu-item-17477" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/gmlc/GMLC_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>GMLC</span><span class="plus"></span></a>
 	<ul>
-		<li id="nav-menu-item-18015" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/ussd/GMLC_Installation_Guide.html" class=""><i class="menu_icon blank fa"></i><span>INSTALLATION GUIDE</span><span class="plus"></span></a></li>
-		<li id="nav-menu-item-17999" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/ussd/GMLC_Admin_Guide.html" class=""><i class="menu_icon blank fa"></i><span>USER GUIDE</span><span class="plus"></span></a></li>
+		<li id="nav-menu-item-18015" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/gmlc/GMLC_Installation_Guide.html" class=""><i class="menu_icon blank fa"></i><span>INSTALLATION GUIDE</span><span class="plus"></span></a></li>
+		<li id="nav-menu-item-17999" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/gmlc/GMLC_Admin_Guide.html" class=""><i class="menu_icon blank fa"></i><span>USER GUIDE</span><span class="plus"></span></a></li>
 	</ul>
 </li>
 	<li id="nav-menu-item-17478" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/ss7/SS7_Stack_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>JSS7</span><span class="plus"></span></a>
@@ -22740,8 +22740,24 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#configuration-resources">Configuration Resources</a></li>
-<li><a href="#developer-resources">Developer Resources</a></li>
+<li><a href="#basic-configuration-resources">Basic Configuration Resources</a>
+<ul class="sectlevel2">
+<li><a href="#docker-installation-and-start">Docker Installation and Start</a></li>
+<li><a href="#binary-installation-and-start">Binary Installation and Start</a></li>
+<li><a href="#database-configuration">Database Configuration</a></li>
+<li><a href="#did-configuration">DID Configuration</a></li>
+</ul>
+</li>
+<li><a href="#advanced-configuration-resources">Advanced Configuration Resources</a>
+<ul class="sectlevel2">
+<li><a href="#upgrade">Upgrade</a></li>
+<li><a href="#media">Media</a></li>
+<li><a href="#security">Security</a></li>
+<li><a href="#sms">SMS</a></li>
+<li><a href="#high-availability-and-load-balancing">High Availability and Load Balancing</a></li>
+</ul>
+</li>
+<li><a href="#contributor-resources">Contributor Resources</a></li>
 </ul>
 </div>
 </div>
@@ -22754,25 +22770,176 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 </div>
 <div class="sect1">
-<h2 id="configuration-resources"><a class="anchor" href="#configuration-resources"></a>Configuration Resources</h2>
+<h2 id="basic-configuration-resources"><a class="anchor" href="#basic-configuration-resources"></a>Basic Configuration Resources</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>There is two different ways to install Restcomm Connect. Either through Docker or through binary. You will find below instructions for both</p>
+</div>
+<div class="sect2">
+<h3 id="docker-installation-and-start"><a class="anchor" href="#docker-installation-and-start"></a>Docker Installation and Start</h3>
 <div class="ulist">
 <ul>
 <li>
+<p><a href="Restcomm - Docker Quick Start Guide.adoc.html#restcomm-docker">Restcomm Connect Docker Quick Start Guide</a></p>
+</li>
+<li>
+<p><a href="Restcomm - Docker Image in OSX host.html#restcomm-docker-osx">Restcomm Connect Docker Image in OSX host</a></p>
+</li>
+<li>
+<p><a href="Restcomm - Docker Important Ports.html#google-cloud">Restcomm Connect Docker Important Ports</a></p>
+</li>
+<li>
+<p><a href="Restcomm - Docker Environment Variables.html#docker-environment">Restcomm Connect Docker Environment Variables</a></p>
+</li>
+<li>
+<p><a href="Restcomm - Docker Advanced Configuration.html#docker-advanced">Restcomm Connect Docker Advanced Configuration</a></p>
+</li>
+<li>
+<p><a href="Restcomm - Docker Using Self-signed Certificate.html#docker-certificate">Restcomm Connect Docker Using Self-signed Certificate</a></p>
+</li>
+<li>
+<p><a href="Restcomm - Docker Adding a Jar File to an Existing Container.html#docker-jar">Restcomm Connect Docker Adding a Jar File to an Existing Container</a></p>
+</li>
+<li>
+<p><a href="Restcomm - Docker How to Load Environment Variable from a File.html#docker-certificate">Restcomm Connect Docker How to Load Environment Variable from a File</a></p>
+</li>
+<li>
+<p><a href="Restcomm - Docker How to Persist Your Work on a Filesystem.html#docker-persist">Restcomm Connect Docker How to Persist Your Work on a Filesystem</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="binary-installation-and-start"><a class="anchor" href="#binary-installation-and-start"></a>Binary Installation and Start</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="Restcomm - Installing Restcomm from GitHub.html#restcomm-github-install">Installing Restcomm-Connect from GitHub</a></p>
+</li>
+<li>
+<p><a href="Running Restcomm Binary on a Linux Server.html#restcomm-linux">Running Restcomm Binary on a Linux Server</a></p>
+</li>
+<li>
+<p><a href="Restcomm - Installing on Google Cloud.html#google-cloud">Installing on Google Cloud</a></p>
+</li>
+<li>
 <p><a href="Starting Restcomm-Connect.html#start-restcomm-connect">Starting Restcomm-Connect</a></p>
 </li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="database-configuration"><a class="anchor" href="#database-configuration"></a>Database Configuration</h3>
+<div class="ulist">
+<ul>
 <li>
 <p><a href="How to get started with Restcomm-Connect and Mysql.html#restcomm-connect-mysql">How to get started with Restcomm-Connect and Mysql</a></p>
 </li>
 <li>
+<p><a href="Restcomm - Install and Configure Restcomm to use MariaDB.html#restcomm-connect-maria">Restcomm - Install and Configure Restcomm Connect to use MariaDB</a></p>
+</li>
+<li>
 <p><a href="How to use Mysql schema upgrade scripts.html#mysql-schema-upgrade">How to use Mysql schema upgrade scripts</a></p>
+</li>
+<li>
+<p><a href="Restcomm - How to Reset Admin Password.html#admin-pwd">How to Reset Admin Password</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="did-configuration"><a class="anchor" href="#did-configuration"></a>DID Configuration</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="Restcomm - Automatic DID Provisioning.html#did-provisioning">Automatic DID Provisioning</a></p>
+</li>
+<li>
+<p><a href="Restcomm - Configure and Connect to External DID Providers.html#did-provisioning">Configure and Connect to External DID Providers</a></p>
+</li>
+<li>
+<p><a href="Restcomm - Connecting SMPP Endpoint through Nexmo.html#nexmo">Connecting SMPP Endpoint through Nexmo</a></p>
+</li>
+<li>
+<p><a href="Restcomm - Connecting to Bandwidth for DID Calls.html#badnwidth">Connecting to Bandwidth for DID Calls</a></p>
+</li>
+<li>
+<p><a href="Restcomm - Connecting to French Legos SIP BornSIP Trunk.html#legos">Connecting to French Legos SIP BornSIP Trunk</a></p>
 </li>
 </ul>
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
-<h2 id="developer-resources"><a class="anchor" href="#developer-resources"></a>Developer Resources</h2>
+<h2 id="advanced-configuration-resources"><a class="anchor" href="#advanced-configuration-resources"></a>Advanced Configuration Resources</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="upgrade"><a class="anchor" href="#upgrade"></a>Upgrade</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="Restcomm - Upgrade Process.html#upgrade">Upgrade Process</a></p>
+</li>
+<li>
+<p><a href="RVD Workspace Upgrade.adoc.html#rvd-upgrade">Restcomm Visual Designer Workspace Upgrade</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="media"><a class="anchor" href="#media"></a>Media</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="Restcomm - Working with RestComm and Dialogic XMS.html#google-cloud">Integrate RestComm-Connect with Dialogic XMS Media Server</a></p>
+</li>
+<li>
+<p><a href="Restcomm - How to Add G729 Codec to the Media Server.html#g729">How to Add G729 Codec to the Media Server</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="security"><a class="anchor" href="#security"></a>Security</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="Restcomm - Enable HTTPS secure connector on JBoss AS 7 or EAP 6.html#secure">Enable HTTPS secure connector on JBoss AS 7 or EAP 6</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sms"><a class="anchor" href="#sms"></a>SMS</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="Restcomm - Route SMS to SS7 SMPP via Telscale SMSC.html#smpp">Route SMS to SS7 SMPP via Restcomm SMSC</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="high-availability-and-load-balancing"><a class="anchor" href="#high-availability-and-load-balancing"></a>High Availability and Load Balancing</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="Restcomm - Configuring Load-balancer.html#load-balancer">Configuring Load-balancer</a></p>
+</li>
+<li>
+<p><a href="Restcomm - Using a Single Mysql Database for 2 Restcomm Servers.html#mysql">Using a Single Mysql Database for 2 Restcomm Connect Servers</a></p>
+</li>
+<li>
+<p><a href="Restcomm - Single RVD Workspace for two Restcomm Instances.html#rvd">Single RVD Workspace for two Restcomm Instances.adoc</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributor-resources"><a class="anchor" href="#contributor-resources"></a>Contributor Resources</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -22786,7 +22953,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-29 10:36:14 WEST
+Last updated 2016-05-29 16:31:23 WEST
 </div>
 </div>
 <footer>
