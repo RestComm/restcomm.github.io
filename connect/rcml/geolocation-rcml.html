@@ -22667,7 +22667,8 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 	</ul>
 </li>
 	<li id="nav-menu-item-17480" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/diameter/Diameter_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>JDIAMETER</span><span class="plus"></span></a></li>
-<li id="nav-menu-item-17481" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/lb/Load_Balancer_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>LOAD-BALANCER</span><span class="plus"></span></a></li>
+	<li id="nav-menu-item-17481" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/lb/Load_Balancer_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>LOAD-BALANCER</span><span class="plus"></span></a></li>
+	<li id="nav-menu-item-17482" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/tutorials/index.html" class=""><i class="menu_icon blank fa"></i><span>TUTORIALS</span><span class="plus"></span></a></li>
 	<!--li id="nav-menu-item-17482" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/sip/SIP_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>SIP</span><span class="plus"></span></a></li>
 	<li id="nav-menu-item-17483" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/charging_server/SIP_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>Charging Server</span><span class="plus"></span></a></li-->
 </ul></div></div>
@@ -22783,16 +22784,6 @@ call, USSD request or after reception of an SMS.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">See below</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">source</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Phone number or client name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">See below</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">desiredAccuracy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">See below</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">action</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Relative or absolute URL</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
@@ -22813,28 +22804,6 @@ call, USSD request or after reception of an SMS.</p>
 <p>●      <strong>deviceIdentifier</strong>. The <em>‘deviceIdentifier’</em> attribute takes a
 valid E.164 phone number, an IP or MAC address as a value. RestComm will
 send a location request to this target.</p>
-</div>
-<div class="paragraph">
-<p>●      <strong>source.</strong> The ‘source’ attribute takes a valid E.164 phone
-number or a location client name as a value. When sending a location
-request during a voice call, USSD session or SMS message, ‘from’
-attribute defaults to the originating E.164 phone number.</p>
-</div>
-<div class="paragraph">
-<p>●      <strong>desiredAccuracy.</strong> The ‘desiredAccuracy’ attribute takes a
-string as value, referring to the expected quality of location
-information or estimated precision for this Geolocation service. The
-following values are available:</p>
-</div>
-<div class="paragraph">
-<p>o       <em>High</em>: when the error margin must be less than 100 metres.</p>
-</div>
-<div class="paragraph">
-<p>o       <em>Average</em>: when the error margin can be between 100 and 300
-metres.</p>
-</div>
-<div class="paragraph">
-<p>o       <em>Low</em>: when the error margin can be greater than 300 metres.</p>
 </div>
 <div class="paragraph">
 <p>●      <strong>action</strong>. The <em>‘action’</em> attribute takes a URL as an argument.
@@ -23022,7 +22991,7 @@ action:</p>
 <div class="content">
 <pre>&lt;Response&gt;
 	&lt;Geolocation&gt;
-		&lt;Immediate deviceIdentifier="59899549878" source="59898071997" desiredAccuracy="High" action="http://my.controller.net" method="POST"/&gt;
+		&lt;Immediate deviceIdentifier="59899549878" action="http://my.controller.net" method="POST"/&gt;
     &lt;/Geolocation&gt;
 &lt;/Response&gt;</pre>
 </div>
@@ -23035,7 +23004,7 @@ POST:</p>
 <div class="content">
 <pre>&lt;Response&gt;
     &lt;Geolocation&gt;
-        &lt;Immediate deviceIdentifier="59899549878" source="59898071997" desiredAccuracy="High" statusCallback="http://192.16.1.19:8080/ACae6e420f425248d6a26948c17a9e2acf"/&gt;
+        &lt;Immediate deviceIdentifier="59899549878" statusCallback="http://192.16.1.19:8080/ACae6e420f425248d6a26948c17a9e2acf"/&gt;
     &lt;/Geolocation&gt;
 &lt;/Response&gt;</pre>
 </div>
@@ -23048,7 +23017,7 @@ GET action:</p>
 <div class="content">
 <pre>&lt;Response&gt;
     &lt;Geolocation&gt;
-        &lt;Notification deviceIdentifier="59899549878" source="BLE01" desiredAccuracy="High" eventGeofencingLatitude="-33.426280" eventGeofencingLatitude="-70.566560W" geofenceRange="500" geofenceEvent="in-out" action="http://192.16.1.19:8080/ACae6e420f425248d6a26948c17a9e2acf" method="GET"/&gt;
+        &lt;Notification deviceIdentifier="59899549878" eventGeofencingLatitude="-33.426280" eventGeofencingLatitude="-70.566560W" geofenceRange="500" geofenceEvent="in-out" action="http://192.16.1.19:8080/ACae6e420f425248d6a26948c17a9e2acf" method="GET"/&gt;
     &lt;/Geolocation&gt;
 &lt;/Response&gt;</pre>
 </div>
@@ -23061,7 +23030,7 @@ POST:</p>
 <div class="content">
 <pre>&lt;Response&gt;
     &lt;Geolocation&gt;
-        &lt;Notification deviceIdentifier="59899549878" source="LATU" desiredAccuracy="High" eventGeofencingLatitude="-33.426280" eventGeofencingLatitude="-70.566560W" geofenceRange="500" geofenceEvent="in-out" statusCallback="http://192.16.1.19:8080/ACae6e420f425248d6a26948c17a9e2acf"/&gt;
+        &lt;Notification deviceIdentifier="59899549878" eventGeofencingLatitude="-33.426280" eventGeofencingLatitude="-70.566560W" geofenceRange="500" geofenceEvent="in-out" statusCallback="http://192.16.1.19:8080/ACae6e420f425248d6a26948c17a9e2acf"/&gt;
     &lt;/Geolocation&gt;
 &lt;/Response&gt;</pre>
 </div>
@@ -23092,7 +23061,7 @@ either ‘sent’ or ‘failed’ requests.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-29 18:22:46 WEST
+Last updated 2016-05-30 09:40:50 WEST
 </div>
 </div>
 <footer>

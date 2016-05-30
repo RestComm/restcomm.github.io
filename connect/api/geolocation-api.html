@@ -22667,7 +22667,8 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 	</ul>
 </li>
 	<li id="nav-menu-item-17480" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/diameter/Diameter_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>JDIAMETER</span><span class="plus"></span></a></li>
-<li id="nav-menu-item-17481" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/lb/Load_Balancer_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>LOAD-BALANCER</span><span class="plus"></span></a></li>
+	<li id="nav-menu-item-17481" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/lb/Load_Balancer_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>LOAD-BALANCER</span><span class="plus"></span></a></li>
+	<li id="nav-menu-item-17482" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/tutorials/index.html" class=""><i class="menu_icon blank fa"></i><span>TUTORIALS</span><span class="plus"></span></a></li>
 	<!--li id="nav-menu-item-17482" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/sip/SIP_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>SIP</span><span class="plus"></span></a></li>
 	<li id="nav-menu-item-17483" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/charging_server/SIP_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>Charging Server</span><span class="plus"></span></a></li-->
 </ul></div></div>
@@ -22799,12 +22800,26 @@ E911, friend/family finder, etc.).</p>
 </li>
 <li>
 <p>Notify Restcomm if client X or certain MSISDN enters or exits a
-geofence (many mobile advertising use cases apply to this).</p>
+geofence. Use cases like mobile advertising use cases apply to this type of Geolocation service.</p>
 </li>
 <li>
-<p>Notify Restcomm if client X is within N meters from client Y
-(tracking anklets for offenders, prison breaks, transportation services,
-social networks type of apps, etc.).</p>
+<p>Notify Restcomm if client X is within N meters from client Y. Many use cases apply to this type of Geolocation service, namely:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Parental control: Notify a parent when their child/children are further than X metres away.</p>
+</li>
+<li>
+<p>Hanging out: Notify friends when they are within X Kms.</p>
+</li>
+<li>
+<p>Business matching: at a conference, notify attendees of other attendees within range who also have related interest based on LinkedIn profile.</p>
+</li>
+<li>
+<p>Court restraining order: when someone is legally not allowed to be writhing certain range of another individual.</p>
+</li>
+</ul>
+</div>
 </li>
 </ol>
 </div>
@@ -23234,31 +23249,9 @@ created or updated</p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Source</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A string that uniquely identifies the Geolocation service
-client, phone number or device that initiated the Geolocation service.</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">DeviceIdentifier</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The target E.164 phone number or device identity of
 this Geolocation service.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DesiredAccuracy</p></td>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>Expected quality of location information or estimated precision for this
-Geolocation service. The following values are available:</p>
-</div>
-<div class="paragraph">
-<p>●        High: when the error margin must be is less than 100 metres.</p>
-</div>
-<div class="paragraph">
-<p>●        Average: when the error margin can be between 100 and 300
-metres.</p>
-</div>
-<div class="paragraph">
-<p>●        Low: when the error margin can be greater than 300 metres.</p>
-</div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">StatusCallback</p></td>
@@ -23294,10 +23287,7 @@ corresponding Status Callback URL.</p>
 <div class="literalblock">
 <div class="content">
 <pre>curl -X POST -H "application/json"
-http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate
--d "Source=david@cloud.restcomm.com" -d "DeviceIdentifier=client:david"
--d "DesiredAccuracy=High" -d
-"StatusCallback=http://192.16.1.19:8080/ACae6e420f425248d6a26948c17a9e2acf"</pre>
+http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate -d "DeviceIdentifier=client:david" -d "StatusCallback=http://192.16.1.19:8080/ACae6e420f425248d6a26948c17a9e2acf"</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23422,10 +23412,7 @@ stations) as well as core and radio access network identifiers:</p>
 <div class="literalblock">
 <div class="content">
 <pre>curl -X POST -H "application/json"
-http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate
--d "Source=59897018375" -d "DeviceIdentifier=59897018375" -d
-"DesiredAccuracy=High" -d
-"StatusCallback=http://192.16.1.19:8080/ACae6e420f425248d6a26948c17a9e2acf"</pre>
+http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate -d "DeviceIdentifier=59897018375" -d "StatusCallback=http://192.16.1.19:8080/ACae6e420f425248d6a26948c17a9e2acf"</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23481,10 +23468,7 @@ network identifiers are available (typical of 2G cellular networks):</p>
 <div class="literalblock">
 <div class="content">
 <pre>curl -X POST -H "application/json"
-http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate
--d "Source=39897018375" -d "DeviceIdentifier=39897018375" -d
-"DesiredAccuracy=Low" -d
-"StatusCallback=http://192.16.1.19:8080/ACae6e420f425248d6a26948c17a9e2acf"</pre>
+http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate -d "DeviceIdentifier=39897018375" -d "StatusCallback=http://192.16.1.19:8080/ACae6e420f425248d6a26948c17a9e2acf"</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23533,10 +23517,7 @@ system):</p>
 <div class="literalblock">
 <div class="content">
 <pre>curl -X POST -H "application/json"
-http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate
--d "Source=david@cloud.restcomm.com" -d
-"DeviceIdentifier=sip:david@65.17.24.177" -d "DesiredAccuracy=High" -d
-"StatusCallback=http://192.16.1.19:8080/ACae6e420f425248d6a26948c17a9e2acf"</pre>
+http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate -d "DeviceIdentifier=sip:david@65.17.24.177" -d "StatusCallback=http://192.16.1.19:8080/ACae6e420f425248d6a26948c17a9e2acf"</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23572,7 +23553,7 @@ retrieved by a GET request.</p>
 <div class="sect3">
 <h4 id="example-5-geolocation-update-of-a-previously-failed-request"><a class="anchor" href="#example-5-geolocation-update-of-a-previously-failed-request"></a>Example 5.- Geolocation update of a previously failed request</h4>
 <div class="paragraph">
-<p>See below a curl example for a Geolocation update request of the previous example. In this case, the last known location is set instead of the empty location data response obtained previously due to a network failure.</p>
+<p>See below a curl example for updating the previous Geolocation request example. In this case, the last known location is set instead of the empty location data response obtained previously due to a network failure.</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -23651,6 +23632,31 @@ retrieved by a GET request.</p>
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="example-7-rejected-immediate-geolocation-request"><a class="anchor" href="#example-7-rejected-immediate-geolocation-request"></a>Example 7.- Rejected Immediate Geolocation request</h4>
+<div class="paragraph">
+<p>See below a curl example for a Geolocation request originated from a RestComm Location Client, but on this occasion with a ‘rejected’ result as a mandatory parameter is missing:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -X POST -H "application/json"
+http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate -d "DeviceIdentifier=4498750163"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This request gets an HTTP/1.1 400 Bad Request response with the following text:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>StatusCallback value can not be null</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>No records are persisted for HTTP/1.1 400 Bad Request responses,
+thus they cannot be updated by either a further POST or PUT request, or
+retrieved through a GET request.</p>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -23717,11 +23723,6 @@ sensor/beacon detects a threshold surpassed, etc.</p>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Source</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A string that uniquely identifies the Geolocation service
-client, phone number or device that initiated the Geolocation service.</p></td>
-</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">DeviceIdentifier</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The target E.164 phone number or device identity of
@@ -23856,23 +23857,6 @@ either entering or leaving the specified location area.</p>
 </div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DesiredAccuracy</p></td>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>Expected quality of location information or estimated precision for this
-Geolocation service. The following values are available:</p>
-</div>
-<div class="paragraph">
-<p>●        High: when the error margin must be is less than 100 metres.</p>
-</div>
-<div class="paragraph">
-<p>●        Average: when the error margin can be between 100 and 300
-metres.</p>
-</div>
-<div class="paragraph">
-<p>●        Low: when the error margin can be greater than 300 metres.</p>
-</div></div></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">StatusCallback</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A URL that RestComm will use when the Geolocation
 service reaches a state that demands notifying the requesting
@@ -23899,12 +23883,10 @@ time the target device enters such location area.</p>
 <div class="literalblock">
 <div class="content">
 <pre>curl -X POST -H "application/json"
-http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification
--d "Source=BLE002" -d "DeviceIdentifier=56790122158" -d
+http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification-d "DeviceIdentifier=56790122158" -d
 "EventGeofenceLatitude=-33.426280" -d
 "EventGeofenceLongitude=-70.566560" -d "GeofenceRange=1000" -d
-"GeofenceEvent=in" -d "DesiredAccuracy=High" -d
-"StatusCallback=http://192.16.1.19:8080/ACae6e420f425248d6a26948c17a9e2acf"</pre>
+"GeofenceEvent=in" -d "StatusCallback=http://192.16.1.19:8080/ACae6e420f425248d6a26948c17a9e2acf"</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -24022,11 +24004,10 @@ request but for an unauthorized device at the AP management system:</p>
 <div class="literalblock">
 <div class="content">
 <pre>curl -X POST -H "application/json"
-http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification
--d "Source=XXX" -d "DeviceIdentifier=56790122158" -d
+http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification -d "DeviceIdentifier=56790122158" -d
 "EventGeofenceLatitude=-33.426280" -d
 "EventGeofenceLongitude=-70.566560" -d "GeofenceRange=1000" -d
-"GeofenceEvent=in" -d "DesiredAccuracy=High" -d
+"GeofenceEvent=in" -d
 "StatusCallback=http://192.16.1.19:8080/ACae6e420f425248d6a26948c17a9e2acf"</pre>
 </div>
 </div>
@@ -24042,12 +24023,11 @@ http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0
    &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:36:12 -0500&lt;/DateUpdated&gt;
    &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateExecuted&gt;
    &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
-   &lt;/Source&gt;XXX&lt;/Source&gt;
    &lt;DeviceIdentifier&gt;56790122158&lt;/DeviceIdentifier&gt;
    &lt;GeolocationType&gt;notification&lt;/GeolocationType&gt;
    &lt;ResponseStatus&gt;unauthorized&lt;/ResponseStatus&gt;
    &lt;/GeolocationData&gt;
-   &lt;Cause&gt;Source not allowed&lt;/Cause&gt;
+   &lt;Cause&gt;Target device not allowed by the network&lt;/Cause&gt;
    &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
    &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification/GLfa51b104354440b09213d04752f50276&lt;/Uri&gt;
   &lt;/Geolocation&gt;
@@ -24062,13 +24042,12 @@ http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0
 <h4 id="example-3-geolocation-of-a-specific-ip-device-when-it-enters-a-1km-range-of-a-specific-geolocation-rejected-answer"><a class="anchor" href="#example-3-geolocation-of-a-specific-ip-device-when-it-enters-a-1km-range-of-a-specific-geolocation-rejected-answer"></a>Example 3.- Geolocation of a specific IP device when it enters a 1km range of a specific Geolocation: Rejected Answer</h4>
 <div class="paragraph">
 <p>See below a curl of the exact same example of the latter Geolocation
-request but inappropriately set for the “GeofenceEvent” parameter:</p>
+request but inappropriately as “GeofenceEvent” parameter is missing:</p>
 </div>
 <div class="literalblock">
 <div class="content">
 <pre>curl -X POST -H "application/json"
-http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification
--d "Source=BLE002" -d "DeviceIdentifier=56790122158" -d
+http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification -d "DeviceIdentifier=56790122158" -d
 "EventGeofenceLatitude=-33.426280" -d
 "EventGeofenceLongitude=-70.566560" -d "GeofenceRange=1000" -d
 "GeofenceEvent=both" -d
@@ -24076,30 +24055,15 @@ http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0
 </div>
 </div>
 <div class="paragraph">
-<p>See the corresponding response below:</p>
+<p>This request gets an HTTP/1.1 400 Bad Request response with the following text:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>&lt;RestcommResponse&gt;
-  &lt;Geolocation&gt;
-   &lt;Sid&gt;GLfa51b104354440b09213d04752f50277&lt;/Sid&gt;
-   &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateCreated&gt;
-   &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateUpdated&gt;
-   &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
-   &lt;/Source&gt;BLE002&lt;/Source&gt;
-   &lt;DeviceIdentifier&gt;56790122158&lt;/DeviceIdentifier&gt;
-   &lt;GeolocationType&gt;notification&lt;/GeolocationType&gt;
-   &lt;ResponseStatus&gt;rejected&lt;/ResponseStatus&gt;
-   &lt;/GeolocationData&gt;
-   &lt;Cause&gt;Incorrect API parameter setup for GeofenceEvent&lt;/Cause&gt;
-   &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
-   &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification/GLfa51b104354440b09213d04752f50277&lt;/Uri&gt;
-  &lt;/Geolocation&gt;
-&lt;/RestcommResponse&gt;</pre>
+<pre>StatusCallback value can not be null</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Note: no records are persisted when ResponseStatus equals “rejected”,
+<p>No records are persisted for HTTP/1.1 400 Bad Request responses,
 thus they cannot be updated by either a further POST or PUT request, or
 retrieved through a GET request.</p>
 </div>
@@ -24121,11 +24085,9 @@ containing a special offer):</p>
 <div class="literalblock">
 <div class="content">
 <pre>curl -X POST -H "application/json"
-http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification
--d "Source=SW123" -d "DeviceIdentifier=SB7089A" -d
+http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification -d "DeviceIdentifier=SB7089A" -d
 "EventGeofenceLatitude=35.526280" -d "EventGeofenceLongitude=139.566560"
 -d "GeofenceRange=200" -d "GeofenceEvent=in-out" -d
-"DesiredAccuracy=High" -d
 "StatusCallback=http://192.16.1.19:8080/ACae6e420f425248d6a26948c17a9e2acf"</pre>
 </div>
 </div>
@@ -24237,8 +24199,8 @@ http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0
 <div class="sect3">
 <h4 id="example-6-update-previous-geolocation-request-for-a-specific-ip-device-when-it-exits-a-300m-range-of-a-specific-geolocation-success-answer"><a class="anchor" href="#example-6-update-previous-geolocation-request-for-a-specific-ip-device-when-it-exits-a-300m-range-of-a-specific-geolocation-success-answer"></a>Example 6.- Update previous GeoLocation request for a specific IP device when it exits a 300m range of a specific Geolocation: Success Answer</h4>
 <div class="paragraph">
-<p>See below a curl example for the update of the previous Geolocation
-request, where geographic coordinates of the geofence location are
+<p>See below a curl example for updating the previous Geolocation
+request example, where geographic coordinates of the geofence location are
 modified, as well as the event type (leaving the location area instead
 of entering it as set in the previous example).</p>
 </div>
@@ -24420,7 +24382,7 @@ password are optional for GMLC.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-29 18:22:46 WEST
+Last updated 2016-05-30 09:40:50 WEST
 </div>
 </div>
 <footer>
