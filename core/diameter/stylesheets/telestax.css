@@ -19,7 +19,7 @@ script { display: none !important; }
 /** 1. Set default font family to sans-serif. 2. Prevent iOS text size adjust after orientation change, without disabling user zoom. */
 
 /** Remove default margin. */
-body { margin: 0; }
+body { margin-bottom: 0.5em; margin-top: 0.5em; }
 
 /* ========================================================================== Links ========================================================================== */
 /** Remove the gray background color from active links in IE 10. */
@@ -176,7 +176,7 @@ p.lead, .paragraph.lead > p, #preamble > .sectionbody > .paragraph:first-of-type
 .subheader, .admonitionblock td.content > .title, .audioblock > .title, .exampleblock > .title, .imageblock > .title, .listingblock > .title, .literalblock > .title, .stemblock > .title, .openblock > .title, .paragraph > .title, .quoteblock > .title, table.tableblock > .title, .verseblock > .title, .videoblock > .title, .dlist > .title, .olist > .title, .ulist > .title, .qlist > .title, .hdlist > .title { line-height: 1.25; color: #002c5e; font-weight: 300; margin-top: 0.2em; margin-bottom: 0.5em; }
 
 /* Typography resets */
-div, dl, dt, dd, ul, ol, li, h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6, pre, form, p, blockquote, th, td { margin: 0; padding: 0; direction: ltr; list-style: disc }
+div, dl, dt, dd, ul, ol, li, h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6, pre, form, p, blockquote, th, td { margin-bottom: 0.5em; margin-top: 0.5em; padding: 0; direction: ltr; list-style: disc }
 
 /* Default Link Styles */
 a { color: #005580; text-decoration: underline; line-height: inherit; }
@@ -184,7 +184,7 @@ a:hover, a:focus { color: #078d71; }
 a img { border: none; }
 
 /* Default paragraph styles */
-p { font-family: inherit; font-weight: normal; font-size: 1em; line-height: 1.5; margin-bottom: 1.25em; text-rendering: optimizeLegibility; }
+p { font-family: inherit; font-weight: normal; font-size: 1em; line-height: 1.5; margin-bottom: 1.25em; margin-top: 20%; text-rendering: optimizeLegibility; }
 p aside { font-size: 0.875em; line-height: 1.35; font-style: italic; }
 
 /* Default header styles */
@@ -777,7 +777,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 	{
 	background: transparent;
 	border: 0;
-	margin: 0;
+	margin-bottom: 1em; margin-top: 1em;
 	padding: 0;
 	vertical-align: baseline;
 	outline: none;
