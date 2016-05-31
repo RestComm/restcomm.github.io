@@ -426,6 +426,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel1">
 <li><a href="#restcomm-jss7-tcap-usage">Restcomm jSS7  TCAP Usage</a></li>
 <li><a href="#restcomm-jss7-tcap-user-part-example">Restcomm jSS7  TCAP User Part Example</a></li>
+<li><a href="#restcomm-jss7-tcap-statistic-counters">Restcomm jSS7 TCAP statistic counters</a></li>
 </ul>
 </div>
 </div>
@@ -469,7 +470,7 @@ The TCAP User Part gets access to <code class="class">TCAPProvider</code> by doi
 <div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">		InitialContext ctx = new InitialContext();
 		try {
-			String providerJndiName = "java:/mobicents/ss7/tcap";
+			String providerJndiName = "java:/restcomm/ss7/tcap";
 			this.tcapProvider = ((TCAPProvider) ctx.lookup(providerJndiName));
 		} finally {
 			ctx.close();
@@ -608,7 +609,7 @@ public class ClientTest implements TCListener {
 
 		InitialContext ctx = new InitialContext();
 		try {
-			String providerJndiName = "java:/mobicents/ss7/tcap";
+			String providerJndiName = "java:/restcomm/ss7/tcap";
 			this.tcapProvider = ((TCAPProvider) ctx.lookup(providerJndiName));
 		} finally {
 			ctx.close();
@@ -705,10 +706,230 @@ public class ClientTest implements TCListener {
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="restcomm-jss7-tcap-statistic-counters"><a class="anchor" href="#restcomm-jss7-tcap-statistic-counters"></a>Restcomm jSS7 TCAP statistic counters</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Below is a list of provided by TCAP Stack statistic counters. Please see the info how to enable statistics in the following chapters: <a href="#_tcap_property_statisticsenabled">[_tcap_property_statisticsenabled]</a>, <a href="#_managing_statistics">[_managing_statistics]</a>.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. TCAP statistic counters</caption>
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 66.6668%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">CounterType</th>
+<th class="tableblock halign-left valign-top">Id</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TcUniReceivedCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of received TC-UNI messages</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TcUniSentCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of sent TC-UNI messages</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TcBeginReceivedCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of received TC-BEGIN messages</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TcBeginSentCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of sent TC-BEGIN messages</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TcContinueReceivedCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of received TC-CONTINUE messages</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TcContinueSentCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of sent TC-CONTINUE messages</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TcEndReceivedCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of received TC-END messages</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TcEndSentCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of sent TC-END messages</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TcPAbortReceivedCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of received TC-PROVIDER-ABORT messages</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TcPAbortSentCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of sent TC-PROVIDER-ABORT messages</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TcUserAbortReceivedCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of received TC-USER-ABORT messages</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TcUserAbortSentCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of sent TC-USER-ABORT messages</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">InvokeReceivedCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of received Invoke components</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">InvokeSentCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of sent Invoke components</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ReturnResultReceivedCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of received ReturtResult components</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ReturnResultSentCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of sent ReturtResult components</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ReturnResultLastReceivedCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of received ReturtResultLast components</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ReturnResultLastSentCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of sent ReturtResultLast components</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ReturnErrorReceivedCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of received ReturnError components</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ReturnErrorSentCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of sent ReturnError components</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RejectReceivedCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of received Reject components</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RejectSentCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of sent Reject components</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DialogTimeoutCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of received DialogTimeouts</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DialogReleaseCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of received DialogReleases</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AllEstablishedDialogsCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of all established Dialogs</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AllLocalEstablishedDialogsCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of all established local originated Dialogs</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Summary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AllRemoteEstablishedDialogsCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of all established remote originated Dialogs</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Minimal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MinDialogsCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A min count of established Dialogs</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MaxDialogsCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A max count of established Dialogs</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SummaryDouble</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AllDialogsDuration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A total duration of all released Dialogs (in seconds)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Average</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AverageDialogsDuration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An average duration of all released Dialogs (in seconds)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ComplexValue</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OutgoingDialogsPerApplicatioContextName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An outgoing Dialogs count per ApplicationContextNames (in string form)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ComplexValue</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IncomingDialogsPerApplicatioContextName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An incoming Dialogs count per ApplicationContextNames (in string form)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ComplexValue</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OutgoingInvokesPerOperationCode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An outgoing Invokes count per OperationCodes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ComplexValue</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IncomingInvokesPerOperationCode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An incoming Invokes count per OperationCodes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ComplexValue</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OutgoingErrorsPerErrorCode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An outgoing ReturtError count per ErrorCodes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ComplexValue</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IncomingErrorsPerErrorCode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An incoming ReturtError count per ErrorCodes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ComplexValue</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OutgoingRejectPerProblem</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An outgoing Reject count per Problem</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ComplexValue</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IncomingRejectPerProblem</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An incoming Reject count per Problem</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-31 09:59:33 WEST
+Last updated 2016-05-31 11:14:42 WEST
 </div>
 </div>
 </body>

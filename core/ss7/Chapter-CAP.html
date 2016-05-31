@@ -22544,7 +22544,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 	<!-- Google Analytics start -->
 			<script>
 			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', 'UA-50398491-1']);
+			_gaq.push(['_setAccount', 'UA-26513010-1']);
 			_gaq.push(['_trackPageview']);
 
 			(function() {
@@ -22846,7 +22846,7 @@ CAPServiceCircuitSwitchedCallListener</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">String providerJndiName = "java:/mobicents/ss7/cap";
+<pre class="highlight"><code class="language-java" data-lang="java">String providerJndiName = "java:/restcomm/ss7/cap";
 this.capProvider = ((CAPProvider) ctx.lookup(providerJndiName));
 ...</code></pre>
 </div>
@@ -23034,7 +23034,7 @@ currentCapDialog.send();</code></pre>
 </div>
 <div class="paragraph">
 <p>This is the request for CAP Dialog processing.
-A CAP-User can reject the Dialog by invoking <code>capDialog.refuse()</code> method.</p>
+A CAP-User can reject the Dialog by invoking <code>capDialog.abort(CAPUserAbortReason abortReason)</code> method.</p>
 </div>
 <div class="paragraph">
 <p>Then the incoming primitives corresponding events (one or more) occur.
@@ -23356,7 +23356,7 @@ public class CallSsfExample implements CAPDialogListener, CAPServiceCircuitSwitc
 	public CallSsfExample() throws NamingException {
 		InitialContext ctx = new InitialContext();
 		try {
-			String providerJndiName = "java:/mobicents/ss7/cap";
+			String providerJndiName = "java:/restcomm/ss7/cap";
 			this.capProvider = ((CAPProvider) ctx.lookup(providerJndiName));
 		} finally {
 			ctx.close();
@@ -23765,7 +23765,7 @@ public class CallScfExample implements CAPDialogListener, CAPServiceCircuitSwitc
 	public CallScfExample() throws NamingException {
 		InitialContext ctx = new InitialContext();
 		try {
-			String providerJndiName = "java:/mobicents/ss7/cap";
+			String providerJndiName = "java:/restcomm/ss7/cap";
 			this.capProvider = ((CAPProvider) ctx.lookup(providerJndiName));
 		} finally {
 			ctx.close();
@@ -24149,7 +24149,7 @@ public class CallScfExample implements CAPDialogListener, CAPServiceCircuitSwitc
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-31 09:59:33 WEST
+Last updated 2016-05-31 11:14:42 WEST
 </div>
 </div>
 <footer>

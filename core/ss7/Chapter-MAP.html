@@ -22544,7 +22544,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 	<!-- Google Analytics start -->
 			<script>
 			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', 'UA-50398491-1']);
+			_gaq.push(['_setAccount', 'UA-26513010-1']);
 			_gaq.push(['_trackPageview']);
 
 			(function() {
@@ -22861,7 +22861,7 @@ The MAP-User application gets a reference to <code class="class">MAPProvider</co
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">String providerJndiName = "java:/mobicents/ss7/map";
+<pre class="highlight"><code class="language-java" data-lang="java">String providerJndiName = "java:/restcomm/ss7/map";
 this.mapProvider = ((MAPProvider) ctx.lookup(providerJndiName));
 ...</code></pre>
 </div>
@@ -23190,7 +23190,7 @@ public class UssdClientExample implements MAPDialogListener, MAPServiceSupplemen
 
 	public UssdClientExample() throws NamingException {
 		InitialContext ctx = new InitialContext();
-		try {String providerJndiName = "java:/mobicents/ss7/map";this.mapProvider = ((MAPProvider) ctx.lookup(providerJndiName));
+		try {String providerJndiName = "java:/restcomm/ss7/map";this.mapProvider = ((MAPProvider) ctx.lookup(providerJndiName));
 		} finally {ctx.close();
 		}
 	}
@@ -23386,7 +23386,7 @@ public class UssdServerExample implements MAPDialogListener, MAPServiceSupplemen
 
 	public UssdServerExample() throws NamingException {
 		InitialContext ctx = new InitialContext();
-		try {String providerJndiName = "java:/mobicents/ss7/map";this.mapProvider = ((MAPProvider) ctx.lookup(providerJndiName));
+		try {String providerJndiName = "java:/restcomm/ss7/map";this.mapProvider = ((MAPProvider) ctx.lookup(providerJndiName));
 		} finally {ctx.close();
 		}
 	}
@@ -23529,7 +23529,7 @@ currentMapDialog.addProcessUnstructuredSSResponse(ind.getInvokeId(), ussdDataCod
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-31 09:59:33 WEST
+Last updated 2016-05-31 11:14:42 WEST
 </div>
 </div>
 <footer>

@@ -22544,7 +22544,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 	<!-- Google Analytics start -->
 			<script>
 			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', 'UA-50398491-1']);
+			_gaq.push(['_setAccount', 'UA-26513010-1']);
 			_gaq.push(['_trackPageview']);
 
 			(function() {
@@ -23522,7 +23522,7 @@ The second constructor argument is <code class="class">TcapStack</code>. CAP use
         &lt;constructor&gt;&lt;parameter&gt;TCAP&lt;/parameter&gt;&lt;/constructor&gt;
         &lt;annotation&gt;@org.jboss.aop.microcontainer.aspects.jmx.JMX(name="org.mobicents.ss7:service=TCAPSS7Service",exposedInterface=org.mobicents.ss7.SS7ServiceMBean.class,registerDirectly=true)
         &lt;/annotation&gt;
-        &lt;property name="jndiName"&gt;java:/mobicents/ss7/tcap&lt;/property&gt;
+        &lt;property name="jndiName"&gt;java:/restcomm/ss7/tcap&lt;/property&gt;
         &lt;property name="stack"&gt;
             &lt;inject bean="TcapStack" property="provider" /&gt;
         &lt;/property&gt;
@@ -23531,7 +23531,7 @@ The second constructor argument is <code class="class">TcapStack</code>. CAP use
         &lt;constructor&gt;&lt;parameter&gt;MAP&lt;/parameter&gt;&lt;/constructor&gt;
         &lt;annotation&gt;@org.jboss.aop.microcontainer.aspects.jmx.JMX(name="org.mobicents.ss7:service=MAPSS7Service",exposedInterface=org.mobicents.ss7.SS7ServiceMBean.class,registerDirectly=true)
         &lt;/annotation&gt;
-        &lt;property name="jndiName"&gt;java:/mobicents/ss7/map&lt;/property&gt;
+        &lt;property name="jndiName"&gt;java:/restcomm/ss7/map&lt;/property&gt;
         &lt;property name="stack"&gt;
             &lt;inject bean="MapStack" property="MAPProvider" /&gt;
         &lt;/property&gt;
@@ -23540,7 +23540,7 @@ The second constructor argument is <code class="class">TcapStack</code>. CAP use
         &lt;constructor&gt;&lt;parameter&gt;CAP&lt;/parameter&gt;&lt;/constructor&gt;
         &lt;annotation&gt;@org.jboss.aop.microcontainer.aspects.jmx.JMX(name="org.mobicents.ss7:service=CAPSS7Service",exposedInterface=org.mobicents.ss7.SS7ServiceMBean.class,registerDirectly=true)
         &lt;/annotation&gt;
-        &lt;property name="jndiName"&gt;java:/mobicents/ss7/cap&lt;/property&gt;
+        &lt;property name="jndiName"&gt;java:/restcomm/ss7/cap&lt;/property&gt;
         &lt;property name="stack"&gt;
             &lt;inject bean="CapStack" property="CAPProvider" /&gt;
         &lt;/property&gt;
@@ -23549,7 +23549,7 @@ The second constructor argument is <code class="class">TcapStack</code>. CAP use
         &lt;constructor&gt;&lt;parameter&gt;ISUP&lt;/parameter&gt;&lt;/constructor&gt;
         &lt;annotation&gt;@org.jboss.aop.microcontainer.aspects.jmx.JMX(name="org.mobicents.ss7:service=ISUPSS7Service",exposedInterface=org.mobicents.ss7.SS7ServiceMBean.class,registerDirectly=true)
         &lt;/annotation&gt;
-        &lt;property name="jndiName"&gt;java:/mobicents/ss7/isup&lt;/property&gt;
+        &lt;property name="jndiName"&gt;java:/restcomm/ss7/isup&lt;/property&gt;
         &lt;property name="stack"&gt;
             &lt;inject bean="IsupStack" property="isupProvider" /&gt;
         &lt;/property&gt;
@@ -23557,16 +23557,16 @@ The second constructor argument is <code class="class">TcapStack</code>. CAP use
 </div>
 </div>
 <div class="paragraph">
-<p>TCAPSS7Service binds TcapStack to JNDI <code>java:/mobicents/ss7/tcap</code>.</p>
+<p>TCAPSS7Service binds TcapStack to JNDI <code>java:/restcomm/ss7/tcap</code>.</p>
 </div>
 <div class="paragraph">
-<p>MAPSS7Service binds MapStack to JNDI <code>java:/mobicents/ss7/map</code>.</p>
+<p>MAPSS7Service binds MapStack to JNDI <code>java:/restcomm/ss7/map</code>.</p>
 </div>
 <div class="paragraph">
-<p>CAPSS7Service binds CapStack to JNDI <code>java:/mobicents/ss7/cap</code>.</p>
+<p>CAPSS7Service binds CapStack to JNDI <code>java:/restcomm/ss7/cap</code>.</p>
 </div>
 <div class="paragraph">
-<p>ISUPSS7Service binds IsupStack to JNDI <code>java:/mobicents/ss7/isup</code>.</p>
+<p>ISUPSS7Service binds IsupStack to JNDI <code>java:/restcomm/ss7/isup</code>.</p>
 </div>
 <div class="paragraph">
 <p>The JNDI name can be configured to any valid JNDI name specific to your application.</p>
@@ -23935,7 +23935,7 @@ The shell commands are exchanged over TCP/IP.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-31 09:59:33 WEST
+Last updated 2016-05-31 11:14:42 WEST
 </div>
 </div>
 <footer>
