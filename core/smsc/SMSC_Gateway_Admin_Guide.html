@@ -29130,6 +29130,53 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
+<h5 id="_enableintermediatereceipts"><a class="anchor" href="#_enableintermediatereceipts"></a>Allowing of generating of intermediate receipts</h5>
+<div class="sect5">
+<h6 id="_enableintermediatereceipts_cli"><a class="anchor" href="#_enableintermediatereceipts_cli"></a>Using CLI</h6>
+<div class="paragraph">
+<p>SMCS can generate intermediate receipts (for temporary failures). You can set the 'enableintermediatereceipts' value to true/false by issuing the command <code>smsc set enableintermediatereceipts</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get enableintermediatereceipts</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+    smsc set enableintermediatereceipts
+
+SYNOPSIS
+    smsc set enableintermediatereceipts &lt;true | false&gt;
+
+DESCRIPTION
+    The SMSC can be configured to generate or not delivery intermediate receipts
+	(these are receipts for temporary delivery failures).
+	Default value: false (intermediate receipts will not be generated).</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_enableintermediatereceipts_gui"><a class="anchor" href="#_enableintermediatereceipts_gui"></a>Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Allowing of generating of intermediate receipts using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Processing' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify if the SMSC should disable of receipt generating by setting the value for the field 'Enable intermediate receipts' to true or false accordingly.
+For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
 <h5 id="_smsc_gateway_server_routing_dlv"><a class="anchor" href="#_smsc_gateway_server_routing_dlv"></a>Routing of delivery receipts</h5>
 <div class="sect5">
 <h6 id="_smsc_gateway_server_routing_dlv_cli"><a class="anchor" href="#_smsc_gateway_server_routing_dlv_cli"></a>Using CLI</h6>
@@ -32474,7 +32521,7 @@ Some error codes are reserved for future use and will be put to use in future ve
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-06-06 17:15:50 WEST
+Last updated 2016-06-07 10:53:36 WEST
 </div>
 </div>
 <footer>
