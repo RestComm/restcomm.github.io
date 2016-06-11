@@ -996,12 +996,25 @@ The log4j configuration file is located in $CATALINA_HOME/lib/ directory</p>
 <div class="paragraph">
 <p>For this category to be used in Restcomm SIP Servlets, you need to specify it in <em class="path">JBOSS_HOME/standalone/configuration/mss-sip-stack.properties</em> or <em class="path">CATALINE_HOME/conf/mss-sip-stack.properties</em>, add the <code>gov.nist.javax.sip.LOG4J_LOGGER_NAME=gov.nist</code> property, and set the <code>gov.nist.javax.sip.TRACE_LEVEL=LOG4J</code> property.</p>
 </div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p><strong>NOTE</strong>
+When using <code>loadbalanceraddress</code> algorithm for LB it is necessary to add the following at <code>mss-sip-stack.properties</code> file for the keepalive mechanism:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>org.mobicents.ha.javax.sip.LoadBalancerHeartBeatingServiceClassName=org.mobicents.ha.javax.sip.MultiNetworkLoadBalancerHeartBeatingServiceImpl</pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-06-10 10:42:16 WEST
+Last updated 2016-06-11 10:41:19 WEST
 </div>
 </div>
 </body>
