@@ -22825,8 +22825,8 @@ This chapter will explain how to manage the Gateway effectively using both the G
 <div class="paragraph">
 <div class="title">Configuring the SS7 Stack</div>
 <p>You must configure the SS7 stack prior to configuring SMSC.
-For details on configuring the SS7 Stack please refer to the RestComm SS7 Stack User Guide.
-The RestComm SS7 Stack User Guide lists all available Shell commands and GUI operations to configure SS7.
+For details on configuring the SS7 Stack please refer to the Restcomm SS7 Stack User Guide.
+The Restcomm SS7 Stack User Guide lists all available Shell commands and GUI operations to configure SS7.
 In addition, help files are also available for every Shell command providing all details relevant to the command.</p>
 </div>
 <div class="paragraph">
@@ -25229,7 +25229,7 @@ If there is an error in setting the value, then you will find the details of the
 <div class="sect2">
 <h3 id="_smsc_gateway_server_hr"><a class="anchor" href="#_smsc_gateway_server_hr"></a>Home Routing Settings</h3>
 <div class="paragraph">
-<p>RestComm SMSC Gateway supports Non Transparent Home Routing as explained in 3GPP 23.840 5.2.3.
+<p>Restcomm SMSC Gateway supports Non Transparent Home Routing as explained in 3GPP 23.840 5.2.3.
 This option can be disabled by setting "hrcharging" option to "reject" (see <a href="#_dest_hrcharging">Home routing Charge Settings</a>). SMSC GW will accept SendRoutinInfo requests from a remote SMSC, then create a unique "correlationId" value for a requested MSISDN, then send SendRoutinInfo request to HLR, store received by HLR info into a cache and sends back to the remote SMSC SendRoutinInfo response with "correlationId" value in IMSI field and SMSC GlobalTytle (or another special configured GlobalTytle value) in LocationInfo field.
 Then SMSC GW will accept MtForwardSM messages from the remote SMSC, seaches in the cache for "correlationId" and HLR subscriber&#8217;s and use this data for processing a message further.</p>
 </div>
@@ -27562,7 +27562,7 @@ For example:</p>
 <div class="paragraph">
 <p>The above methodology can work if the routing rule is based on MSISDN range, however if the range is not fixed (like in case of Number Portability) the above process will break.
 In such cases you can define a Database routing rule.
-You must change the value of the property <code>smsRoutingRuleClass</code> in the file <em class="path">RestComm-smscgateway-&lt;version&gt;/jboss-5.1.0.GA/server/default/deploy/restcomm-smsc-server/META-INF/jboss-beans.xml</em> to look like below and un-comment if its commented out:</p>
+You must change the value of the property <code>smsRoutingRuleClass</code> in the file <em class="path">restcomm-smscgateway-&lt;version&gt;/jboss-5.1.0.GA/server/default/deploy/restcomm-smsc-server/META-INF/jboss-beans.xml</em> to look like below and un-comment if its commented out:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -28132,7 +28132,7 @@ Hence graph will show historic data from the point the page was loaded.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-06-13 18:48:52 WEST
+Last updated 2016-06-14 10:56:07 WEST
 </div>
 </div>
 <footer>

@@ -22819,23 +22819,23 @@ Refer to the Admin Guide for instructions on how to start the server in either o
 <div class="ulist">
 <ul>
 <li>
-<p>RestComm-hlr-simulator: Command line HLR simulator used for load testing of SMSC.
-RestComm-hlr-simulator is pre-configured to integrate with SMSC run in simulator profile.</p>
+<p>restcomm-hlr-simulator: Command line HLR simulator used for load testing of SMSC.
+restcomm-hlr-simulator is pre-configured to integrate with SMSC run in simulator profile.</p>
 </li>
 <li>
-<p>RestComm-jss7-simulator: jSS7 Simulator that can be run in GUI or command line mode.
+<p>restcomm-jss7-simulator: jSS7 Simulator that can be run in GUI or command line mode.
 This tool is useful to test <code>MoForwardSM</code> and other such functionality of SMSC like "when subscriber absent", etc.
-For more details on using this tool, please refer to RestComm SS7Stack User Guide.
-RestComm-jss7-simulator is pre-configured to integrate with SMSC run in simulator profile.</p>
+For more details on using this tool, please refer to Restcomm SS7Stack User Guide.
+restcomm-jss7-simulator is pre-configured to integrate with SMSC run in simulator profile.</p>
 </li>
 <li>
-<p>RestComm-smpp-load: smpp-load tool is a Command line simulator to generate SMPP load.
+<p>restcomm-smpp-load: smpp-load tool is a Command line simulator to generate SMPP load.
 You must have <code>ant</code> installed to be able to run this tool.
 The smpp-load tool can be started to run as a SMPP Server accepting in-coming connection (BIND) from Restcomm  SMSC  or run as a SMPP Client to send BIND to Restcomm  SMSC .
 You can confiugre this tool by editing the <em class="path">build.xml</em> to define how many SMPP connections should be initiated, what kind of load should be generated, etc.</p>
 </li>
 <li>
-<p>RestComm-smpp-simulator: smpp-simulator is a GUI tool to generate SMPP load.
+<p>restcomm-smpp-simulator: smpp-simulator is a GUI tool to generate SMPP load.
 It can only initiate BIND and act as a SMPP Client. You can also use it to test other functionalities like <code>UCS2</code>, breaking <code>SUBMIT_SM</code> into multiple SMS etc.</p>
 </li>
 </ul>
@@ -22845,7 +22845,7 @@ It can only initiate BIND and act as a SMPP Client. You can also use it to test 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>|- mobicents-smsc-&lt;version&gt;
+<pre>|- restcomm-smsc-<-version->
 		|- cassandra
 		|- docs
 				|+ container
@@ -22874,10 +22874,10 @@ It can only initiate BIND and act as a SMPP Client. You can also use it to test 
 				|+ jopr-plugin
 				|+ remote-slee-connection
 				|+ snmp
-				|+ RestComm-hlr-simulator
-				|+ RestComm-jss7-simulator
-				|+ RestComm-smpp-load
-				|+ RestComm-smpp-simulator
+				|+ restcomm-hlr-simulator
+				|+ restcomm-jss7-simulator
+				|+ restcomm-smpp-load
+				|+ restcomm-smpp-simulator
 				|+ twiddle</pre>
 </div>
 </div>
@@ -22919,8 +22919,8 @@ In addition you must have the following tools installed.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>[usr]$ git clone https://userid@bitbucket.org/telestax/restcomm-smscgateway.git
-[usr]$ cd restcomm-smscgateway
+<pre class="highlight"><code>[usr]$ git clone https://userid@bitbucket.org/telestax/{this-folder}-smscgateway.git
+[usr]$ cd {this-folder}-smscgateway
 [usr]$ git checkout &lt;version&gt;</code></pre>
 </div>
 </div>
@@ -22952,7 +22952,7 @@ You must ensure that <code>JAVA_HOME</code> environment variable is set properly
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-06-13 18:48:52 WEST
+Last updated 2016-06-14 10:56:07 WEST
 </div>
 </div>
 <footer>
