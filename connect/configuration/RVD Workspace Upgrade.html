@@ -23022,6 +23022,11 @@ To backup database structures execute <a href="./RVDWorkspaceMigrationBackup.sql
 <td class="tableblock halign-left valign-top"><p class="tableblock">The file system can be inaccessible, with insufficient permission to write or without enough space to make a copy of the workspace. Check workspace location, permissions and available free space in the partition before a new attempt.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">14</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Multiple applications are using the same FriendlyName for a project that has not been upgraded. One of them is probably already linked to the project. The rest will need to be taken care of manually.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+</tr>
 </tbody>
 </table>
 <div class="paragraph">
@@ -23095,7 +23100,7 @@ In a new attempt of execution, the projects that were successfully migrated will
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-06-24 10:39:44 WEST
+Last updated 2016-06-25 10:40:56 WEST
 </div>
 </div>
 <footer>
