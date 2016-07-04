@@ -22757,6 +22757,9 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#_tcap_property_maxdialogs">Max Dialogs</a></li>
 <li><a href="#_tcap_property_previewmode">Preview Mode</a></li>
 <li><a href="#_tcap_property_statisticsenabled">Statistics Enabled</a></li>
+<li><a href="#_tcap_property_executordelaythreshold">Thresholds for Executors congestion control</a></li>
+<li><a href="#_tcap_property_memorythreshold">Thresholds for Memory congestion control</a></li>
+<li><a href="#_tcap_property_blockingincomingtcapmessages">Blocking of incoming messages in congestion case</a></li>
 </ul>
 </li>
 </ul>
@@ -23213,12 +23216,206 @@ Change value and save.</p>
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_tcap_property_executordelaythreshold"><a class="anchor" href="#_tcap_property_executordelaythreshold"></a>Thresholds for Executors congestion control</h3>
+<div class="sect3">
+<h4 id="_tcap_property_executordelaythreshold_cli"><a class="anchor" href="#_tcap_property_executordelaythreshold_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>TCAP stack and lower level stacks measure delays between the time when an incoming message has come from a peer for processing and scheduled for execution and the time when the execution of the message starts. The more time this delay the more we have a congestion level at Thread executors side.</p>
+</div>
+<div class="paragraph">
+<p>The delay thresholds when the congestion level is increased to level 1, 2 and 3 is configured by parameters executordelaythreshold_1, executordelaythreshold_2 and executordelaythreshold_3 (in seconds).</p>
+</div>
+<div class="paragraph">
+<p>The delay thresholds when the congestion level is decreased to level 0, 1, and 2 is configured by parameters executorbacktonormaldelaythreshold_1, executorbacktonormaldelaythreshold_2 and executorbacktonormaldelaythreshold_3 (in seconds).</p>
+</div>
+<div class="paragraph">
+<p>You can set the thresholds (in seconds) by issuing the commands <code>tcap set executordelaythreshold_1</code>, <code>tcap set executordelaythreshold_2</code>, <code>tcap set executordelaythreshold_3</code>, <code>tcap set executorbacktonormaldelaythreshold_1</code>, <code>tcap set executorbacktonormaldelaythreshold_2</code> or <code>tcap set executorbacktonormaldelaythreshold_3</code> with appropriate parameters as described below. You can verify this by issuing the commands <code>tcap get executordelaythreshold_1</code>, <code>tcap get executordelaythreshold_2</code>, <code>tcap get executordelaythreshold_3</code>, <code>tcap get executorbacktonormaldelaythreshold_1</code>, <code>tcap get executorbacktonormaldelaythreshold_2</code> or <code>tcap get executorbacktonormaldelaythreshold_3</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	tcap set executordelaythreshold_1
+	tcap set executordelaythreshold_2
+	tcap set executordelaythreshold_3
+	tcap set executorbacktonormaldelaythreshold_1
+	tcap set executorbacktonormaldelaythreshold_2
+	tcap set executorbacktonormaldelaythreshold_3
+
+SYNOPSIS
+	tcap set executordelaythreshold_1 &lt;executordelaythreshold_1&gt; stackname &lt;stack-name&gt;
+	tcap set executordelaythreshold_2 &lt;executordelaythreshold_2&gt; stackname &lt;stack-name&gt;
+	tcap set executordelaythreshold_3 &lt;executordelaythreshold_3&gt; stackname &lt;stack-name&gt;
+	tcap set executorbacktonormaldelaythreshold_1 &lt;executorbacktonormaldelaythreshold_1&gt; stackname &lt;stack-name&gt;
+	tcap set executorbacktonormaldelaythreshold_2 &lt;executorbacktonormaldelaythreshold_2&gt; stackname &lt;stack-name&gt;
+	tcap set executorbacktonormaldelaythreshold_3 &lt;executorbacktonormaldelaythreshold_3&gt; stackname &lt;stack-name&gt;
+
+DESCRIPTION
+    For Thresholds Executors congestion control stack needs to have 3 thresholds
+	- delays in seconds between the time when an incoming message has come from a peer
+	and scheduled for execution and the time when the execution of the message starts
+	(3 levels - 1, 2, 3). If a delay time in seconds becomes more then value for
+	level 1, 2 or 3, the Executors' congestion level becomes to 1, 2 or 3.
+	Default values:
+	for executordelaythreshold_1 is 1 second
+	for executordelaythreshold_2 is 6 seconds
+	for executordelaythreshold_3 is 12 seconds
+	for executorbacktonormaldelaythreshold_1 is 0.5 seconds
+	for executorbacktonormaldelaythreshold_2 is 3 seconds
+	for executorbacktonormaldelaythreshold_3 is 8 seconds
+
+PARAMETERS
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	tcap set executordelaythreshold_1 1
+	tcap set executordelaythreshold_2 6
+	tcap set executordelaythreshold_3 12
+	tcap set executorbacktonormaldelaythreshold_1 0.5
+	tcap set executorbacktonormaldelaythreshold_2 3
+	tcap set executorbacktonormaldelaythreshold_3 8</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_tcap_property_executordelaythreshold_gui"><a class="anchor" href="#_tcap_property_executordelaythreshold_gui"></a>Using GUI</h4>
+<div class="paragraph">
+<p>On TCAP management page, click on pencil against the 'Executor congestion Threshold 1' property or other needed property and text box becomes editable.
+Change value and save.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_tcap_property_memorythreshold"><a class="anchor" href="#_tcap_property_memorythreshold"></a>Thresholds for Memory congestion control</h3>
+<div class="sect3">
+<h4 id="_tcap_property_memorythreshold_cli"><a class="anchor" href="#_tcap_property_memorythreshold_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>TCAP stack and lower level stacks measure the percentage of message usage. The more memory we use the more we have a congestion level at memory resourse consuming.</p>
+</div>
+<div class="paragraph">
+<p>The memory thresholds when the congestion level is increased to level 1, 2 and 3 is configured by parameters memorythreshold_1, memorythreshold_2 and memorythreshold_3 (in percents).</p>
+</div>
+<div class="paragraph">
+<p>The memory thresholds when the congestion level is decreased to level 0, 1, and 2 is configured by parameters backtonormalmemorythreshold_1, backtonormalmemorythreshold_2 and backtonormalmemorythreshold_3 (in percents).</p>
+</div>
+<div class="paragraph">
+<p>You can set the thresholds (in percents) by issuing the commands <code>tcap set memorythreshold_1</code>, <code>tcap set memorythreshold_2</code>, <code>tcap set memorythreshold_3</code>, <code>tcap set backtonormalmemorythreshold_1</code>, <code>tcap set backtonormalmemorythreshold_2</code> or <code>tcap set backtonormalmemorythreshold_3</code> with appropriate parameters as described below. You can verify this by issuing the commands <code>tcap get memorythreshold_1</code>, <code>tcap get memorythreshold_2</code>, <code>tcap get memorythreshold_3</code>, <code>tcap get backtonormalmemorythreshold_1</code>, <code>tcap get backtonormalmemorythreshold_2</code> or <code>tcap get backtonormalmemorythreshold_3</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	tcap set memorythreshold_1
+	tcap set memorythreshold_2
+	tcap set memorythreshold_3
+	tcap set backtonormalmemorythreshold_1
+	tcap set backtonormalmemorythreshold_2
+	tcap set backtonormalmemorythreshold_3
+
+SYNOPSIS
+	tcap set memorythreshold_1 &lt;memorythreshold_1&gt; stackname &lt;stack-name&gt;
+	tcap set memorythreshold_2 &lt;memorythreshold_2&gt; stackname &lt;stack-name&gt;
+	tcap set memorythreshold_3 &lt;memorythreshold_3&gt; stackname &lt;stack-name&gt;
+	tcap set backtonormalmemorythreshold_1 &lt;backtonormalmemorythreshold_1&gt; stackname &lt;stack-name&gt;
+	tcap set backtonormalmemorythreshold_2 &lt;backtonormalmemorythreshold_2&gt; stackname &lt;stack-name&gt;
+	tcap set backtonormalmemorythreshold_3 &lt;backtonormalmemorythreshold_3&gt; stackname &lt;stack-name&gt;
+
+DESCRIPTION
+    For Memory congestion control stack needs to have 3 thresholds
+	- the percentage of memory usage (3 levels - 1, 2, 3). If memory usage becomes more then value for
+	level 1, 2 or 3, the Memory congestion level becomes to 1, 2 or 3.
+	Default values:
+	for memorythreshold_1 is 77 percents
+	for memorythreshold_2 is 87 percents
+	for memorythreshold_3 is 97 percents
+	for backtonormalmemorythreshold_1 is 72 percents
+	for backtonormalmemorythreshold_2 is 82 percents
+	for backtonormalmemorythreshold_3 is 92 percents
+
+PARAMETERS
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	tcap set memorythreshold_1 77
+	tcap set memorythreshold_2 87
+	tcap set memorythreshold_3 97
+	tcap set backtonormalmemorythreshold_1 72
+	tcap set backtonormalmemorythreshold_2 82
+	tcap set backtonormalmemorythreshold_3 92</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_tcap_property_memorythreshold_gui"><a class="anchor" href="#_tcap_property_memorythreshold_gui"></a>Using GUI</h4>
+<div class="paragraph">
+<p>On TCAP management page, click on pencil against the 'Memory congestion Threshold 1' property or other needed property and text box becomes editable.
+Change value and save.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_tcap_property_blockingincomingtcapmessages"><a class="anchor" href="#_tcap_property_blockingincomingtcapmessages"></a>Blocking of incoming messages in congestion case</h3>
+<div class="sect3">
+<h4 id="_tcap_property_blockingincomingtcapmessages_cli"><a class="anchor" href="#_tcap_property_blockingincomingtcapmessages_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'blockingincomingtcapmessages' by issuing the command <code>tcap set blockingincomingtcapmessages</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>tcap get blockingincomingtcapmessages</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	tcap set blockingincomingtcapmessages
+
+SYNOPSIS
+	tcap set blockingincomingtcapmessages &lt;true | false&gt; stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	If sets to true then incoming TCAP messages will be blocked
+	(depending on congestion level, from level 2 - new incoming dialogs are
+	rejected, from level 3 - all incoming messages are rejected.
+	Default value: false
+
+PARAMETERS
+
+	Standard Parameters
+
+	&lt;blockingincomingtcapmessages&gt; - if true messages was rejected in
+					congestion case.
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	tcap set blockingincomingtcapmessages false</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_tcap_property_blockingincomingtcapmessages_gui"><a class="anchor" href="#_tcap_property_blockingincomingtcapmessages_gui"></a>Using GUI</h4>
+<div class="paragraph">
+<p>On TCAP management page, click on pencil against the 'Blocking of incoming messages in congestion case' property and text box becomes editable.
+Change value and save.</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-04 10:53:48 WEST
+Last updated 2016-07-04 16:23:33 WEST
 </div>
 </div>
 <footer>

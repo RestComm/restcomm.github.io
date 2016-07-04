@@ -22791,7 +22791,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <p>Tag "stable". Points to the latest/current GA release (current: <a href="https://github.com/RestComm/Restcomm-Connect/releases/tag/7.6.0.879/">7.6.0.GA</a>) use tag :  restcomm/restcomm:stable</p>
 </li>
 <li>
-<p>Tags "7.6.0" or "7.5.0" etc, are pointing to a specific GA release. For example:  restcomm/restcomm:7.6.0 restcomm/restcomm:7.5.0 etc.</p>
+<p>Tag "7.7.0" pointing to current specific GA release (v770ga).</p>
 </li>
 </ul>
 </div>
@@ -22824,7 +22824,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">docker run  -i -d --name=restcomm-myInstance -v /var/log/restcomm/:/var/log/restcomm/ -e STATIC_ADDRESS="YOUR_ETHERNET_IP" -e ENVCONFURL="https://raw.githubusercontent.com/RestComm/Restcomm-Docker/master/scripts/restcomm_env_locally.sh" -p 80:80 -p 443:443 -p 9990:9990 -p 5060:5060 -p 5061:5061 -p 5062:5062 -p 5063:5063 -p 5060:5060/udp -p 65000-65050:65000-65050/udp restcomm/restcomm:latest</code></pre>
+<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">docker run  -i -d --name=restcomm-myInstance -v /var/log/restcomm/:/var/log/restcomm/ -e STATIC_ADDRESS="YOUR_ETHERNET_IP" -e ENVCONFURL="https://raw.githubusercontent.com/RestComm/Restcomm-Docker/master/env_files/restcomm_env_locally.sh" -p 80:80 -p 443:443 -p 9990:9990 -p 5060:5060 -p 5061:5061 -p 5062:5062 -p 5063:5063 -p 5060:5060/udp -p 65000-65050:65000-65050/udp restcomm/restcomm:latest</code></pre>
 </div>
 </div>
 </div>
@@ -22836,7 +22836,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <p>The above command comes with a community version of VoiceRSS key. This version has limited features. You may get a free VoiceRSS API key from <a href="http://www.voicerss.org/from" class="bare">http://www.voicerss.org/from</a></p>
 </li>
 <li>
-<p>See the documentation about adding your own VoiceRSS API Key <a href="https://docs.telestax.com/restcomm-docker-advanced-configuration/" class="bare">https://docs.telestax.com/restcomm-docker-advanced-configuration/</a></p>
+<p>See the documentation about adding your own VoiceRSS API Key <a href="http://documentation.telestax.com/connect/configuration/docker/Restcomm%20-%20Docker%20Environment%20Variables.html">RestComm-Docker Documentation</a>.</p>
 </li>
 </ul>
 </div>
@@ -22868,7 +22868,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <p>You should hear the "Welcome to RestComm, a Telestax Sponsored project" announcement</p>
 </li>
 <li>
-<p>You can also make a calll to the "<strong>+123</strong>5" to test your Text-to-Speech configuration</p>
+<p>You can also make a calll to the "<strong>+1235</strong>" to test your Text-to-Speech configuration</p>
 </li>
 </ol>
 </div>
@@ -22878,8 +22878,8 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div class="sect3">
 <h4 id="accessing-the-admin-ui"><a class="anchor" href="#accessing-the-admin-ui"></a>Accessing the Admin UI</h4>
-<div class="ulist">
-<ul>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
 <p>Go to <a href="https://DOCKER_IP_ADDRESS" class="bare">https://DOCKER_IP_ADDRESS</a></p>
 </li>
@@ -22892,7 +22892,20 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li>
 <p>Change the default password</p>
 </li>
-</ul>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Using the flag "INIT_PASSWORD" you can set administrator password when running RestComm for first time.
+    More info <a href="http://documentation.telestax.com/connect/configuration/docker/Restcomm%20-%20Docker%20Environment%20Variables.html">RestComm-Docker Documentation</a>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
@@ -22936,13 +22949,17 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <pre class="highlight"><code class="language-lang:default" data-lang="lang:default">docker run --name=restcomm-myInstance --entrypoint=/bin/bash -it -p 80:80 -p 5060:5060 -p 5082:5082 -p 5060:5060/udp -p 65000-65050:65000-65050/udp restcomm/restcomm:latest</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Get a bash console for a running RestComm container:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">docker exec -it RESTCOMM_Container_ID bash</code></pre>
+</div>
+</div>
 <hr>
-<div class="ulist">
-<ul>
-<li>
-<p>Excessive demand on memory when exposing a big range of ports *</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><strong>Excessive demand on memory when exposing a big range of ports.</strong></p>
 </div>
 <div class="paragraph">
 <p>Due to a known <a href="https://github.com/docker/docker/issues/11185">issue</a> on Docker, exposing a big range of ports produce a big need in RAM. On RestComm the issue arises when a big range of RTP ports is exposed. For a system with 4Gb of RAM a range of 50 ports is a good approach (e.g -p 65000-65050:65000-65050/udp). *We are expecting that this issue will be solved soon from Docker team.</p>
@@ -22993,7 +23010,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-04 10:37:27 WEST
+Last updated 2016-07-04 16:08:54 WEST
 </div>
 </div>
 <footer>

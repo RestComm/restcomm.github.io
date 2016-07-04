@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>User Guide to Restcomm jSS7 7.0.0-SNAPSHOT</title>
+<title>User Guide to Restcomm jSS7 8.0.0-SNAPSHOT</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22741,7 +22741,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </head>
 <body class="book">
 <div id="header">
-<h1>User Guide to Restcomm jSS7 7.0.0-SNAPSHOT</h1>
+<h1>User Guide to Restcomm jSS7 8.0.0-SNAPSHOT</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -22769,7 +22769,13 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#functional-blocks">2.3. Functional Blocks</a></li>
 </ul>
 </li>
-<li><a href="#_design_multitenancy">3. Multi tenancy support</a></li>
+<li><a href="#_technical_notes">3. Technical notes</a>
+<ul class="sectlevel2">
+<li><a href="#_design_multitenancy">3.1. Multi tenancy support</a></li>
+<li><a href="#_design_out_cong_control">3.2. Congestion control for outgoing messageflow</a></li>
+<li><a href="#_design_in_cong_control">3.3. Congestion control for incoming messageflow</a></li>
+</ul>
+</li>
 <li><a href="#_running_jss7">4. Running</a>
 <ul class="sectlevel2">
 <li><a href="#_running_ss7_service">4.1. Running Restcomm  SS7 Service</a></li>
@@ -23720,8 +23726,10 @@ Depending on your testing goals, you can configure each of these layers separate
 </div>
 </div>
 <div class="sect1">
-<h2 id="_design_multitenancy"><a class="anchor" href="#_design_multitenancy"></a>3. Multi tenancy support</h2>
+<h2 id="_technical_notes"><a class="anchor" href="#_technical_notes"></a>3. Technical notes</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_design_multitenancy"><a class="anchor" href="#_design_multitenancy"></a>3.1. Multi tenancy support</h3>
 <div class="paragraph">
 <p>Multi tenancy allows same instance of Restcomm jSS7 to connect to different operators, each having its own  links and point-codes.</p>
 </div>
@@ -23748,7 +23756,7 @@ Each logical network has a corresponded key "networkId". It is digital one and d
 <div class="ulist">
 <ul>
 <li>
-<p>SccpMessage (assigned by Service Acess Point - SAP for SS7 originated messages, assigned by TCAP Dialog for TCAP originated messages)</p>
+<p>SccpMessage (assigned by Service Access Point (SAP) for SS7 originated messages, assigned by TCAP Dialog for TCAP originated messages)</p>
 </li>
 <li>
 <p>TCAP Dialog (assigned by SccpMessage for SCCP originated messages, assigned by upper Dialog for user messages)</p>
@@ -23760,6 +23768,141 @@ Each logical network has a corresponded key "networkId". It is digital one and d
 <p>SCCP rule is taken into account only when SCCP rule networkId == SccpMessage networkId</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>When an SCCP message comes to SCCP stack the a networkId is assigned to the SCCP message depending on DPC and OPC values of the message.
+In order to SCCP stack can properly assign a networkId value, then at least either DPC or DPC of messages for different networkId subnetworks must be different  and SAPs / Destinations for SAPs were configured for unintersected intervals.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_design_out_cong_control"><a class="anchor" href="#_design_out_cong_control"></a>3.2. Congestion control for outgoing messageflow</h3>
+<div class="paragraph">
+<p>The target of outgoing congestion control is to report to upper stacks that SS7 links are congested (or down) so upper stacks / SS7 users can reduce traffic load or stop of message sending. Overload / disconnection cases are calculated per a networkID area.</p>
+</div>
+<div class="paragraph">
+<p>For outgoing messageflow (when we are sending messages to SS7 network) low level counters are implemented at SCTP library (MTP2 level for the sigtran stack). SCTP library measures delays between message delivering from MTP3 level for delivering and a real sending to the IP network.
+There are 3 levels of congestion (1, 2 or 3) depending on the delay length.
+Then m3ua checks this data and issues MTP-STATUS indications to upper layers (ISUP or SCCP). If we use MTP3 stacks from Dialogic or Dahdi legacy cards, we use MTP-STATUS indications that are issued by MTP3 levels of these cards.
+SCCP level has a congestion control from SS7 specification, where SCCP by timers TIMER_A and TIMER_D processes a congestion measurement logic.
+At the SCCP level the blocking of outgoing SCCP messages is also implemented (it is disabled (and not used) by default but can be activated).</p>
+</div>
+<div class="paragraph">
+<p>SCCP and M3UA levels use the outgoing congestion control results for sharing of the outgoing SS7 traffic between primary / backup links.
+When primary (for dominant scenario) or some link (for loadsharing scenario) is congested up to at least level 2 SCCP stack routes the traffic to a backup / another link.
+M3UA stack when loadsharing between ASP destinations when some link for loadshare traffic-mode is congested up to at least level 2 also tries to route the traffic to another link.
+(For loadsharing between AS destinations the congestion levels are not taken into account).</p>
+</div>
+<div class="paragraph">
+<p>TCAP level (and upper stack levels) provides methods for the congestion control monitoring for SS7 stack users:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">    /**
+     * The collection of netwokIds that are marked as prohibited or congested.
+     *
+     * @return The collection of pairs: netwokId value - NetworkIdState (prohibited / congested state)
+     */
+    FastMap&lt;Integer, NetworkIdState&gt; getNetworkIdStateList();
+
+    /**
+     * Returns the state of availability / congestion for a networkId subnetwork.
+     * Returns null if there is no info (we need to
+     * treat it as available)
+     *
+     * @param networkId
+     * @return
+     */
+    NetworkIdState getNetworkIdState(int networkId);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By these methods the TCAP stack provides the congestion and availability status for a SS7 subnetwork for a networkId.
+NetworkIdState has two parameters:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">    boolean isAvailavle();
+    int getCongLevel();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and helps us to understand if the networkId is not available (connected) / not available (down) or congested / not.
+Then TCAP / CAP / MAP user can check it and reduce / temporary block the outgoing traffic.</p>
+</div>
+<div class="paragraph">
+<p>At the SCTP and SCCP levels we have several congestion control parameters that should be tuned depending on connection type (legacy / sigtran) and capacity for the best productivity.
+See chapter <a href="#_sctp_property_cc_delaythreshold">Thresholds for outgoing congestion control</a> for configuring of congestion control settings for SCTP level and chapters <a href="#_sccp_property_cc_timer_a">Timer A value for the congestion control</a>, <a href="#_sccp_property_cc_timer_d">Timer D value for the congestion control</a>, <a href="#_sccp_property_cc_algo">Algorithm of the congestion control at SCCP level</a> and <a href="#_sccp_property_cc_blockingoutgoungsccpmessages">Blocking of outgoing messages in case of the congestion</a> for configuring of congestion control settings for SCCP level.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_design_in_cong_control"><a class="anchor" href="#_design_in_cong_control"></a>3.3. Congestion control for incoming messageflow</h3>
+<div class="paragraph">
+<p>The target of incoming congestion control is to measure of server load and prevent of accepting new incoming from a peer new dialogs / messages. This load info can also be used by SS7 stack users for reduce of generating of traffic load.</p>
+</div>
+<div class="paragraph">
+<p>There are following sources of load measuring:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>ExecutorCongestionMonitor - measuring of how much time events wait at a Executor queue before processing start. This CongestionMonitors are added at the MTP stack levels and reports results to TCAP level.</p>
+</li>
+<li>
+<p>MemoryCongestionMonitor - measuring a percentage of usege of memory.</p>
+</li>
+<li>
+<p>UserPartCongestionMonitor - TCAP users can provide to TCAP level extra info of congestion to some external for SS7 stack resourse.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Then TCAP level calculate a cumulative congestion level (the maximul level is taken). There are 4 levels of congestion (0-3). 0 level means no congestion, 3 level means max congetion. When <a href="#_tcap_property_blockingincomingtcapmessages">Blocking of incoming messages in congestion case</a> option is turned on (disabled by default) the in case of 2 congestion level all incoming new dialogs are rejected and in case of 3 congestion level - all incoming TCAP messages are rejected.</p>
+</div>
+<div class="paragraph">
+<p>By a following method of TCAPProvider interface upper levels can provide a congestion level of a TCAP user part:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">    /**
+     * Setting of a congestion level for a TCAP user "congObject"
+     *
+     * @param congObject a String with the name of an object
+     * @param level a congestion level for this object
+     */
+    void setUserPartCongestionLevel(String congObject, int level);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By a following methods of TCAPProvider interface upper levels can get info of a congestion level:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">    /**
+     * Returns a congestion level of a Memory congestion monitor
+     *
+     * @return
+     */
+    int getMemoryCongestionLevel();
+
+    /**
+     * Returns a congestion level of thread Executors for processing of incoming messages
+     *
+     * @return
+     */
+    int getExecutorCongestionLevel();
+
+    /**
+     * Returns a max congestion level for UserPartCongestion, MemoryCongestion and ExecutorCongestionLevel
+     *
+     * @return
+     */
+    int getCumulativeCongestionLevel();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See configuring parameters of Executors congestion control in <a href="#_tcap_property_executordelaythreshold">Thresholds for Executors congestion control</a> chapter and configuring parameters of Memory congestion control in
+<a href="#_tcap_property_memorythreshold">Thresholds for Memory congestion control</a> chapter.</p>
+</div>
 </div>
 </div>
 </div>
@@ -23818,8 +23961,8 @@ To start the JBoss Server you must execute the <em class="path">run.sh</em> (Uni
 </div>
 </li>
 <li>
-<p>If you are starting Restcomm-jSS7-7.0.0-SNAPSHOT for the first time, SS7 is not configured.
-You need to use the Shell Client to connect to Restcomm-jSS7-7.0.0-SNAPSHOT .
+<p>If you are starting Restcomm-jSS7-8.0.0-SNAPSHOT for the first time, SS7 is not configured.
+You need to use the Shell Client to connect to Restcomm-jSS7-8.0.0-SNAPSHOT .
 Using CLI you can configure how service interacts with SS7 network, that is you configure either installed SS7 card and its native library , or <code>M3UA</code> layer.
 You can also use the GUI to achieve the same.
 Once configured, the state and configuration of SS7 is persisted which stands server re-start.</p>
@@ -25540,7 +25683,7 @@ The second constructor argument is <code class="class">TcapStack</code>. CAP use
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">    &lt;bean name="SCTPManagement" class="org.mobicents.protocols.sctp.ManagementImpl"&gt;
+<pre class="highlight"><code class="language-xml" data-lang="xml">    &lt;bean name="SCTPManagement" class="org.mobicents.protocols.sctp.netty.NettySctpManagementImpl"&gt;
         &lt;constructor&gt;
             &lt;parameter&gt;SCTPManagement&lt;/parameter&gt;
         &lt;/constructor&gt;
@@ -25760,7 +25903,7 @@ The shell commands are exchanged over TCP/IP.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>    org.mobicents.protocols.api.Management sctpManagement = null;
-    sctpManagement = new org.mobicents.protocols.sctp.ManagementImpl("Client");
+    sctpManagement = new org.mobicents.protocols.sctp.netty.NettySctpManagementImpl("Client");
     sctpManagement.setPersistDir("&lt;your directory path&gt;");
 
     sctpManagement.start();
@@ -26676,125 +26819,77 @@ Change value and save.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_sctp_property_singlethread"><a class="anchor" href="#_sctp_property_singlethread"></a>7.2.3.2. Single Thread</h5>
-<div class="paragraph">
-<p>You can modify the settings for the parameter 'singlethread' only when the SCTP Stack is not running.
-In addition, this parameter cannot be modified through the CLI or GUI.
-You will have to invoke the setter function directly from the source code.</p>
-</div>
-<div class="paragraph">
-<p>If you are using the JBoss Application Server, then you can set this parameter by adding a property (as shown below) to the XML descriptor file <em class="path">jboss-beans.xml</em>, which is located at <em class="path">$JBOSS_HOME/server/profile_name/deploy/mobicents-ss7-service/META-INF</em>, where <code class="app">profile_name</code> is the server profile name.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>/*Add property for the parameter 'singleThread' to jboss-beans.xml file and specify settings to true or false*/
-&lt;property name="singleThread"&gt;true&lt;/property&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The current settings of the parameter can be viewed in the GUI or by invoking the appropriate CLI command as described below.</p>
-</div>
+<h5 id="_sctp_property_cc_delaythreshold"><a class="anchor" href="#_sctp_property_cc_delaythreshold"></a>7.2.3.2. Thresholds for outgoing congestion control</h5>
 <div class="sect5">
-<h6 id="_sctp_property_singlethread_cli"><a class="anchor" href="#_sctp_property_singlethread_cli"></a>7.2.3.2.1. Using CLI</h6>
+<h6 id="_sctp_property_cc_delaythreshold_cli"><a class="anchor" href="#_sctp_property_cc_delaythreshold_cli"></a>7.2.3.2.1. Using CLI</h6>
 <div class="paragraph">
-<p>You can retrieve the current settings of the parameter 'singlethread' by issuing the command <code>sctp get singlethread</code>.
-However as explained above, you cannot modify the settings through the CLI.</p>
+<p>SCTP library measures delays between the time when an outgoing message had been delivered from SS7 stack for sending and and the time when the message was sent to SCTP/TCP channel.
+The more time this delay the more we have a congestion level.</p>
+</div>
+<div class="paragraph">
+<p>The delay thresholds when the congestion level is increased to level 1, 2 and 3 is configured by parameters cc_delaythreshold_1, cc_delaythreshold_2 and cc_delaythreshold_3 (in seconds).</p>
+</div>
+<div class="paragraph">
+<p>The delay thresholds when the congestion level is decreased to level 0, 1, and 2 is configured by parameters cc_backtonormal_delaythreshold_1, cc_backtonormal_delaythreshold_2 and cc_backtonormal_delaythreshold_3 (in seconds).</p>
+</div>
+<div class="paragraph">
+<p>You can set the thresholds (in milliseconds) by issuing the commands <code>sctp set cc_delaythreshold_1</code>, <code>sctp set cc_delaythreshold_2</code>, <code>sctp set cc_delaythreshold_3</code>, <code>sctp set cc_backtonormal_delaythreshold_1</code>, <code>sctp set cc_backtonormal_delaythreshold_2</code> or <code>sctp set cc_backtonormal_delaythreshold_3</code> with appropriate parameters as described below.
+You can verify this by issuing the commands <code>sctp get cc_delaythreshold_1</code>, <code>sctp get cc_delaythreshold_2</code>, <code>sctp get cc_delaythreshold_3</code>, <code>sctp get cc_backtonormal_delaythreshold_1</code>, <code>sctp get cc_backtonormal_delaythreshold_2</code> or <code>sctp get cc_backtonormal_delaythreshold_3</code>  which will display the value set for this property.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	sctp get singlethread
+	sctp set cc_delaythreshold_1
+	sctp set cc_delaythreshold_2
+	sctp set cc_delaythreshold_3
+	sctp set cc_backtonormal_delaythreshold_1
+	sctp set cc_backtonormal_delaythreshold_2
+	sctp set cc_backtonormal_delaythreshold_3
 
 SYNOPSIS
-	sctp get singlethread
+	sctp set cc_delaythreshold_1 &lt;threshold&gt; stackname &lt;stack-name&gt;
+	sctp set cc_delaythreshold_2 &lt;threshold&gt; stackname &lt;stack-name&gt;
+	sctp set cc_delaythreshold_3 &lt;threshold&gt; stackname &lt;stack-name&gt;
+	sctp set cc_backtonormal_delaythreshold_1 &lt;threshold&gt; stackname &lt;stack-name&gt;
+	sctp set cc_backtonormal_delaythreshold_2 &lt;threshold&gt; stackname &lt;stack-name&gt;
+	sctp set cc_backtonormal_delaythreshold_3 &lt;threshold&gt; stackname &lt;stack-name&gt;
 
 DESCRIPTION
-	This command is used to retrieve the current settings of the parameter
-	'singlethread'. The 'singlethread' parameter is used to specify if there
-	can be more than one worker threads dedicated to call the applications
-	above SCTP.
+	For outgoing messages congestion control stack needs to have 3 thresholds
+	- delays of outgoing messages before it will be sent to IP channel (3
+	levels - 1, 2, 3). If a delay time in seconds becomes more then value for
+	level 1, 2 or 3, the Association's congestion level becomes to 1, 2 or 3.
+	Default values:
+	for cc_delaythreshold_1 is 2.5 seconds.
+	for cc_delaythreshold_2 is 8   seconds.
+	for cc_delaythreshold_3 is 14 seconds.
+	for cc_backtonormal_delaythreshold_1 is 1.5 seconds.
+	for cc_backtonormal_delaythreshold_2 is 5.5 seconds.
+	for cc_backtonormal_delaythreshold_3 is 10  seconds.
 
-	The default settings will dedicate only one thread for calling applications
-	above SCTP. If you wish to assign multiple worker threads, then the value of
-	the paramter 'singlethread' must be set to false before you can change the
-	number of worker threads to more than one.
+PARAMETERS
 
-	The settings can be modified only when the SCTP Stack is not running.
-	To modify this parameter you must invoke the setter function
-	directly from the code or if you are using the JBoss AS, you can add a
-	property to the XML descriptor file jboss-beans.xml. You cannot change the
-	settings through the CLI.</pre>
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	sctp set cc_delaythreshold_1 2.5
+	sctp set cc_delaythreshold_2 8
+	sctp set cc_delaythreshold_3 14
+	sctp set cc_backtonormal_delaythreshold_1 1.5
+	sctp set cc_backtonormal_delaythreshold_2 5.5
+	sctp set cc_backtonormal_delaythreshold_3 10</pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sctp_property_singlethread_gui"><a class="anchor" href="#_sctp_property_singlethread_gui"></a>7.2.3.2.2. Using GUI</h6>
+<h6 id="_sctp_property_cc_delaythreshold_gui"><a class="anchor" href="#_sctp_property_cc_delaythreshold_gui"></a>7.2.3.2.2. Using GUI</h6>
 <div class="paragraph">
-<p>In the SCTP management page, you can view the current settings of the 'Single Thread' property.
-But as explained above, you cannot change the settings in the GUI.
-But as explained above, you cannot change the settings in the GUI.
-For more details about this parameter, refer to the detailed description about the parameter in the above section for CLI.</p>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_sctp_property_workerthreads"><a class="anchor" href="#_sctp_property_workerthreads"></a>7.2.3.3. Worker Threads</h5>
-<div class="paragraph">
-<p>You can modify the settings for the parameter 'workerthreads' only when the SCTP Stack is not running.
-In addition, this parameter cannot be modified through the CLI or GUI.
-You will have to invoke the setter function directly from the source code.</p>
-</div>
-<div class="paragraph">
-<p>If you are using the JBoss Application Server, then you can set this parameter by adding a property (as shown below) to the XML descriptor file <em class="path">jboss-beans.xml</em>, which is located at <em class="path">$JBOSS_HOME/server/profile_name/deploy/mobicents-ss7-service/META-INF</em>, where <code class="app">profile_name</code> is the server profile name.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>/*Add property for the parameter 'workerthreads' to jboss-beans.xml file and specify the value*/
-&lt;property name="workerThreads"&gt;4&lt;/property&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The current settings of the parameter can be viewed in the GUI or by invoking the appropriate CLI command as described below.</p>
-</div>
-<div class="sect5">
-<h6 id="_sctp_property_workerthreads_cli"><a class="anchor" href="#_sctp_property_workerthreads_cli"></a>7.2.3.3.1. Using CLI</h6>
-<div class="paragraph">
-<p>You can retrieve the current settings of the parameter 'workerthreads' by issuing the command <code>sctp get workerthreads</code>.
-However as explained above, you cannot modify the settings through the CLI.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>Name
-	sctp get workerthreads
-
-SYNOPSIS
-	sctp get workerthreads
-
-DESCRIPTION
-	This command is used to retrieve the current settings of the parameter
-	'workerthreads'. The 'workerthreads' parameter is used to specify the number
-	of worker threads dedicated to call the applications above SCTP.
-
-	The default settings will dedicate only one thread for I/O and one thread
-	for calling applications above SCTP. If you wish to assign multiple
-	worker threads, then the value of the paramter 'singlethread' must be
-	set to false and the number of worker threads must be set using this parameter
-	'workerthreads'.
-
-	The settings can be modified only when the SCTP Stack is not running.
-	To modify this parameter you must invoke the setter function
-	directly from the code or if you are using the JBoss AS, you can add a
-	property to the XML descriptor file jboss-beans.xml. You cannot change the
-	settings through the CLI.</pre>
-</div>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_sctp_property_workerthreads_gui"><a class="anchor" href="#_sctp_property_workerthreads_gui"></a>7.2.3.3.2. Using GUI</h6>
-<div class="paragraph">
-<p>In the SCTP management page, you can view the current settings of the 'Worker Threads' property.
-But as explained above, you cannot change the settings in the GUI.
-For more details about this parameter, refer to the detailed description about the parameter in the above section for CLI.</p>
+<p>On SCTP management page, click on pencil against the 'SCTP congestion Threshold 1' or other needed property and text box becomes editable.
+Change value and save.</p>
 </div>
 </div>
 </div>
@@ -27461,7 +27556,7 @@ You will have to invoke the setter function directly from the source code.</p>
 <div class="sect5">
 <h6 id="_m3ua_property_maxsequencenumber_cli"><a class="anchor" href="#_m3ua_property_maxsequencenumber_cli"></a>7.3.3.1.1. Using CLI</h6>
 <div class="paragraph">
-<p>You can retrieve the current settings of the parameter 'maxsequencenumber' by issuing the command <code>sctp get maxsequencenumber</code>.
+<p>You can retrieve the current settings of the parameter 'maxsequencenumber' by issuing the command <code>m3ua get maxsequencenumber</code>.
 However as explained above, you cannot modify the settings through the CLI.</p>
 </div>
 <div class="listingblock">
@@ -27470,7 +27565,7 @@ However as explained above, you cannot modify the settings through the CLI.</p>
 	m3ua get maxsequencenumber
 
 SYNOPSIS
-	m3ua get maxsequencenumber
+	m3ua get maxsequencenumber stackname &lt;stack-name&gt;
 
 DESCRIPTION
 	This command is used to retrieve the current settings of the parameter
@@ -27507,7 +27602,7 @@ In addition, this parameter cannot be modified through the CLI or GUI.
 You will have to invoke the setter function directly from the source code.</p>
 </div>
 <div class="paragraph">
-<p>If you are using the JBoss Application Server, then you can set this parameter by adding a property (as shown below) to the XML descriptor file <em class="path">jboss-beans.xml</em>, which is located at <em class="path">$JBOSS_HOME/server/profile_name/deploy/mobicents-ss7-service/META-INF</em>, where <code class="app">profile_name</code> is the server profile name.</p>
+<p>If you are using the JBoss Application Server, then you can set this parameter by adding a property (as shown below) to the XML descriptor file <em class="path">jboss-beans.xml</em>, which is located at <em class="path">$JBOSS_HOME/server/profile_name/deploy/restcomm-ss7-service/META-INF</em>, where <code class="app">profile_name</code> is the server profile name.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -27521,7 +27616,7 @@ You will have to invoke the setter function directly from the source code.</p>
 <div class="sect5">
 <h6 id="_m3ua_property_maxasforroute_cli"><a class="anchor" href="#_m3ua_property_maxasforroute_cli"></a>7.3.3.2.1. Using CLI</h6>
 <div class="paragraph">
-<p>You can retrieve the current settings of the parameter 'maxasforroute' by issuing the command <code>sctp get maxasforroute</code>.
+<p>You can retrieve the current settings of the parameter 'maxasforroute' by issuing the command <code>m3ua get maxasforroute</code>.
 However as explained above, you cannot modify the settings through the CLI.</p>
 </div>
 <div class="listingblock">
@@ -27530,7 +27625,7 @@ However as explained above, you cannot modify the settings through the CLI.</p>
 	m3ua get maxasforroute
 
 SYNOPSIS
-	m3ua get maxasforroute
+	m3ua get maxasforroute stackname &lt;stack-name&gt;
 
 DESCRIPTION
 	This command is used to retrieve the current settings of the parameter
@@ -27606,6 +27701,163 @@ EXAMPLES
 </div>
 <div class="sect5">
 <h6 id="_m3ua_property_heartbeattime_gui"><a class="anchor" href="#_m3ua_property_heartbeattime_gui"></a>7.3.3.3.2. Using GUI</h6>
+<div class="paragraph">
+<p>On M3UA management page, click on pencil against the 'Worker Threads' property and text box becomes editable.
+Change value and save.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_m3ua_property_deliverymessagethreadcount"><a class="anchor" href="#_m3ua_property_deliverymessagethreadcount"></a>7.3.3.4. Threads count for processing of incoming messages</h5>
+<div class="paragraph">
+<p>You can modify the settings for the parameter 'deliverymessagethreadcount' only when the M3UA Stack is not running.
+In addition, this parameter cannot be modified through the CLI or GUI.
+You will have to invoke the setter function directly from the source code.</p>
+</div>
+<div class="paragraph">
+<p>If you are using the JBoss Application Server, then you can set this parameter by adding a property (as shown below) to the XML descriptor file <em class="path">jboss-beans.xml</em>, which is located at <em class="path">$JBOSS_HOME/server/profile_name/deploy/restcomm-ss7-service/META-INF</em>, where <code class="app">profile_name</code> is the server profile name.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>/*Add property for the parameter 'deliverymessagethreadcount' to jboss-beans.xml file and specify the value*/
+&lt;property name="deliveryTransferMessageThreadCount"&gt;4&lt;/property&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The current settings of the parameter can be viewed in the GUI or by invoking the appropriate CLI command as described below.</p>
+</div>
+<div class="sect5">
+<h6 id="_m3ua_property_deliverymessagethreadcount_cli"><a class="anchor" href="#_m3ua_property_deliverymessagethreadcount_cli"></a>7.3.3.4.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can retrieve the current settings of the parameter 'deliverymessagethreadcount' by issuing the command <code>m3ua get deliverymessagethreadcount</code>.
+However as explained above, you cannot modify the settings through the CLI.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	m3ua get deliverymessagethreadcount
+
+SYNOPSIS
+	m3ua get deliverymessagethreadcount
+
+DESCRIPTION
+	Returns the count of threads that will be used for message delivering
+	to Mtp3UserPartListener's. Messages from SS7 peers (incoming messages)
+	are processed by these threads. Messages to SS7 peers (outgoing messages)
+	are processed by threads from user applications (not these threads).
+
+	For single thread model this value should be equal 1.</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_m3ua_property_deliverymessagethreadcount_gui"><a class="anchor" href="#_m3ua_property_deliverymessagethreadcount_gui"></a>7.3.3.4.2. Using GUI</h6>
+<div class="paragraph">
+<p>In the M3UA management page, you can view the current settings of the 'Max As for Route' property.
+But as explained above, you cannot change the settings in the GUI.
+For more details about this parameter, refer to the detailed description about the parameter in the above section for CLI.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_m3ua_property_routinglabelformat"><a class="anchor" href="#_m3ua_property_routinglabelformat"></a>7.3.3.5. MTP3 RoutingLabel Format</h5>
+<div class="paragraph">
+<p>You can modify the settings for the parameter 'routinglabelformat' only when the M3UA Stack is not running.
+In addition, this parameter cannot be modified through the CLI or GUI.
+You will have to invoke the setter function directly from the source code.</p>
+</div>
+<div class="paragraph">
+<p>If you are using the JBoss Application Server, then you can set this parameter by adding a property (as shown below) to the XML descriptor file <em class="path">jboss-beans.xml</em>, which is located at <em class="path">$JBOSS_HOME/server/profile_name/deploy/restcomm-ss7-service/META-INF</em>, where <code class="app">profile_name</code>		 and also an extra separate bean - RoutingLabelFormat (to which we refer from ). is the server profile name.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>/*Extra bean for RoutingLabelFormat Enum*/
+	&lt;bean name="RoutingLabelFormat" class="org.mobicents.protocols.ss7.mtp.RoutingLabelFormat"&gt;
+		&lt;constructor factoryClass="org.mobicents.protocols.ss7.mtp.RoutingLabelFormat"
+			factoryMethod="getInstance"&gt;
+			&lt;parameter&gt;ITU&lt;/parameter&gt;
+		&lt;/constructor&gt;
+	&lt;/bean&gt;
+
+/*Add property for the parameter 'routinglabelformat' to jboss-beans.xml file and specify the value into M3UAManagementImpl mbean*/
+		&lt;property name="routingLabelFormat"&gt;
+			&lt;inject bean="RoutingLabelFormat" /&gt;
+		&lt;/property&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The current settings of the parameter can be viewed in the GUI or by invoking the appropriate CLI command as described below.</p>
+</div>
+<div class="sect5">
+<h6 id="_m3ua_property_routinglabelformat_cli"><a class="anchor" href="#_m3ua_property_routinglabelformat_cli"></a>7.3.3.5.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can retrieve the current settings of the parameter 'routinglabelformat' by issuing the command <code>m3ua get routinglabelformat</code>.
+However as explained above, you cannot modify the settings through the CLI.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	m3ua get routinglabelformat
+
+SYNOPSIS
+	m3ua get routinglabelformat stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	Returns RoutingLabelFormat option. Possible values are: ITU, ANSI_Sls8Bit,
+	ANSI_Sls5Bit, Japan_TTC_DDI, Japan_NTT, China.</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_m3ua_property_routinglabelformat_gui"><a class="anchor" href="#_m3ua_property_routinglabelformat_gui"></a>7.3.3.5.2. Using GUI</h6>
+<div class="paragraph">
+<p>In the M3UA management page, you can view the current settings of the 'MTP3 RoutingLabel Format' property.
+But as explained above, you cannot change the settings in the GUI.
+For more details about this parameter, refer to the detailed description about the parameter in the above section for CLI.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_m3ua_property_uselsbforlinksetselection"><a class="anchor" href="#_m3ua_property_uselsbforlinksetselection"></a>7.3.3.6. Bit of SLS for loadbalancing between Linksets</h5>
+<div class="sect5">
+<h6 id="_m3ua_property_uselsbforlinksetselection_cli"><a class="anchor" href="#_m3ua_property_uselsbforlinksetselection_cli"></a>7.3.3.6.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'uselsbforlinksetselection' by issuing the command <code>m3ua set uselsbforlinksetselection</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>m3ua get uselsbforlinksetselection</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	m3ua set uselsbforlinksetselection
+
+SYNOPSIS
+	m3ua set uselsbforlinksetselection &lt;true | false&gt; stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	Possible values are false or true. Sets which bit of SLS will be used
+	for loadbalancing between Linkset.
+
+PARAMETERS
+
+	Standard Parameters
+
+	&lt;true | false&gt;	-	True value means lowest bit of SLS is used for
+						loadbalancing between Linkset, false value means
+						highest bit of SLS is used. Default value is false.
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	m3ua set uselsbforlinksetselection false</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_m3ua_property_uselsbforlinksetselection_gui"><a class="anchor" href="#_m3ua_property_uselsbforlinksetselection_gui"></a>7.3.3.6.2. Using GUI</h6>
 <div class="paragraph">
 <p>On M3UA management page, click on pencil against the 'Worker Threads' property and text box becomes editable.
 Change value and save.</p>
@@ -28236,17 +28488,17 @@ EXAMPLES
 <div class="title">Procedure: Assign an ASP to an AS using GUI</div>
 <ol class="arabic">
 <li>
-<p>Navigate to the 'ApplicationServers' tab in the M3UA Management Unit window, locate the row corresponding to the AS you wish to assign an ASP and click on the name of the AS.</p>
-</li>
-<li>
-<p>This will launch the AS details page where all the properties of the AS will be displayed.
+<p>Navigate to the 'ApplicationServers' tab in the M3UA Management Unit window, locate the row corresponding to the AS you wish to assign an ASP and click on the name of the AS.
+This will launch the AS details page where all the properties of the AS will be displayed.
 Switch to the second tab in this view called "Application Server Processes". As shown in the figure below, you will find a list of all currently assigned ASPs to this selected AS.</p>
-<div class="imageblock">
-<div class="content">
-<img src="./images/GUI_M3UA_Management_ASP_Assign.png" alt="GUI M3UA Management ASP Assign">
+</li>
+</ol>
 </div>
-<div class="title">Figure 23. GUI - M3UA Management - Assign ASP to an AS</div>
-</div>
+<div class="olist arabic">
+<div class="title">GUI - M3UA Management - Assign ASP to an AS</div>
+<ol class="arabic">
+<li>
+<p>image::images/GUI_M3UA_Management_ASP_Assign.png[]</p>
 </li>
 <li>
 <p>Click on the 'Add ASP' button at the bottom.
@@ -28368,7 +28620,7 @@ The icon adjacent to the name will be lit 'green' if the Route is currently acti
 <div class="content">
 <img src="./images/GUI_M3UA_Management_Route.png" alt="GUI M3UA Management Route">
 </div>
-<div class="title">Figure 24. GUI - M3UA Management - Route</div>
+<div class="title">Figure 23. GUI - M3UA Management - Route</div>
 </div>
 </div>
 </div>
@@ -28560,7 +28812,7 @@ The GUI will then display the modified values.</p>
 <div class="content">
 <img src="./images/GUI_SCCP_Management.png" alt="GUI SCCP Management">
 </div>
-<div class="title">Figure 25. GUI - SCCP Management</div>
+<div class="title">Figure 24. GUI - SCCP Management</div>
 </div>
 <div class="paragraph">
 <p>The other seven tabs will allow you to manage all SCCP configurations within this SCCP Management unit.</p>
@@ -28760,15 +29012,20 @@ You can verify this by issuing the command <code>sccp get removespc</code> which
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	sccp get removespc
+	sccp set removespc
 
 SYNOPSIS
-	sccp get removespc stackname &lt;stack-name&gt;
+	sccp set removespc &lt;false | true&gt; stackname &lt;stack-name&gt;
 
 DESCRIPTION
-	Gets the value for removespc property.
+	If set, the signaling point code from SCCP called/calling address will
+	be removed if corresponding routing is based on GT
 
 PARAMETERS
+
+	Standard Parameters
+
+	&lt;removespc&gt;	-	true or false value.
 
 	Optional Parameters
 
@@ -28777,7 +29034,7 @@ PARAMETERS
 					will be used.
 
 EXAMPLES
-	sccp get removespc</pre>
+	sccp set removespc true</pre>
 </div>
 </div>
 </div>
@@ -28800,15 +29057,24 @@ You can verify this by issuing the command <code>sccp get ssttimerduration_incre
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	sccp get ssttimerduration_increasefactor
+	sccp set ssttimerduration_increasefactor
 
 SYNOPSIS
-	sccp get ssttimerduration_increasefactor stackname &lt;stack-name&gt;
+	sccp set ssttimerduration_increasefactor &lt;ssttimerduration_increasefactor&gt;
+	stackname &lt;stack-name&gt;
 
 DESCRIPTION
-	Gets the value for ssttimerduration_increasefactor property.
+	Set multiplicator of SST sending interval (next interval will be greater then
+	the current by sstTimerDuration_IncreaseFactor). Range is 1 to 4. If passed
+	value is less than 1, it sets to 1 and if passed value is greater than 4,
+	it sets to 4
 
 PARAMETERS
+
+	Standard Parameters
+
+	&lt;ssttimerduration_increasefactor&gt;	-	values from 1 to 4 for SST duration increase
+										factor.
 
 	Optional Parameters
 
@@ -28817,7 +29083,7 @@ PARAMETERS
 					will be used.
 
 EXAMPLES
-	sccp get ssttimerduration_increasefactor</pre>
+	sccp set ssttimerduration_increasefactor 1</pre>
 </div>
 </div>
 </div>
@@ -28840,15 +29106,21 @@ You can verify this by issuing the command <code>sccp get ssttimerduration_max</
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	sccp get ssttimerduration_max
+	sccp set ssttimerduration_max
 
 SYNOPSIS
-	sccp get ssttimerduration_max stackname &lt;stack-name&gt;
+	sccp set ssttimerduration_max &lt;ssttimerduration_max&gt; stackname &lt;stack-name&gt;
 
 DESCRIPTION
-	Gets the value for ssttimerduration_max property.
+	Sets Max (after increasing) SST sending interval (in 600000 - 1200000 milliseconds).
+	Value can be from 600000 to 1200000. If value passed is less than 600000, it sets to
+	600000 and if value passed is greater than 1200000, it sets to 1200000
 
 PARAMETERS
+
+	Standard Parameters
+
+	&lt;ssttimerduration_max&gt;	-	values from 600000 - 1200000 milliseconds.
 
 	Optional Parameters
 
@@ -28857,7 +29129,7 @@ PARAMETERS
 					will be used.
 
 EXAMPLES
-	sccp get ssttimerduration_max</pre>
+	sccp set ssttimerduration_max 600000</pre>
 </div>
 </div>
 </div>
@@ -28880,15 +29152,21 @@ You can verify this by issuing the command <code>sccp get ssttimerduration_min</
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	sccp get ssttimerduration_min
+	sccp set ssttimerduration_min
 
 SYNOPSIS
-	sccp get ssttimerduration_min stackname &lt;stack-name&gt;
+	sccp set ssttimerduration_min &lt;ssttimerduration_min&gt; stackname &lt;stack-name&gt;
 
 DESCRIPTION
-	Gets the value for ssttimerduration_min property.
+	Set's min (starting) SST sending interval (in milliseconds). Value can be
+	from 5000 to 10000.If value passed is less than 5000, it sets to 5000 and
+	if value passed is greater than 10000, its set to 10000
 
 PARAMETERS
+
+	Standard Parameters
+
+	&lt;ssttimerduration_min&gt;	-	values from 5000 to 10000.
 
 	Optional Parameters
 
@@ -28897,7 +29175,7 @@ PARAMETERS
 					will be used.
 
 EXAMPLES
-	sccp get ssttimerduration_min</pre>
+	sccp set ssttimerduration_min 10000</pre>
 </div>
 </div>
 </div>
@@ -28920,13 +29198,65 @@ You can verify this by issuing the command <code>sccp get zmarginxudtmessage</co
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	sccp get ssttimerduration_min
+	sccp set ssttimerduration_min
 
 SYNOPSIS
-	sccp get ssttimerduration_min stackname &lt;stack-name&gt;
+	sccp set zmarginxudtmessage &lt;zmarginxudtmessage&gt; stackname &lt;stack-name&gt;
 
 DESCRIPTION
-	Gets the value for ssttimerduration_min property.
+	Sets segmentation length. If the XUDT message data length greater this value,
+    segmentation is processed. Otherwise no segmentation.
+    Range is 160 to 255. If passed value is less than 160, it sets to 160 and
+    if passed value is greater than 255, it sets to 255.
+
+PARAMETERS
+
+	Standard Parameters
+
+	&lt;zmarginxudtmessage&gt;	-	values from 160 to 255.
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	sccp set zmarginxudtmessage 255</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sccp_property_zmarginxudtmessage_min_gui"><a class="anchor" href="#_sccp_property_zmarginxudtmessage_min_gui"></a>7.4.3.9.2. Using GUI</h6>
+<div class="paragraph">
+<p>On SCCP management page, click on pencil against the 'ZMarginXudtMessage' property and text box becomes editable.
+Change value and save.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_sccp_property_cc_timer_a"><a class="anchor" href="#_sccp_property_cc_timer_a"></a>7.4.3.10. Timer A value for the congestion control</h5>
+<div class="sect5">
+<h6 id="_sccp_property_cc_timer_a_cli"><a class="anchor" href="#_sccp_property_cc_timer_a_cli"></a>7.4.3.10.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'cc_timer_a' by issuing the command <code>sccp set cc_timer_a</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>sccp get cc_timer_a</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	sccp get cc_timer_a
+
+SYNOPSIS
+	sccp get cc_timer_a stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	Sets the Timer A value in milliseconds.
+	This timer starts at next MTP-STATUS(cong) primitive coming.
+	During this timer no more MTP-STATUS(cong) are accepted.
+
+	Default value is 400.
+	Possible values are between 60 and 1000.
 
 PARAMETERS
 
@@ -28937,14 +29267,163 @@ PARAMETERS
 					will be used.
 
 EXAMPLES
-	sccp get ssttimerduration_min</pre>
+	sccp set cc_timer_a 400</pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sccp_property_zmarginxudtmessage_min_gui"><a class="anchor" href="#_sccp_property_zmarginxudtmessage_min_gui"></a>7.4.3.9.2. Using GUI</h6>
+<h6 id="_sccp_property_cc_timer_a_gui"><a class="anchor" href="#_sccp_property_cc_timer_a_gui"></a>7.4.3.10.2. Using GUI</h6>
 <div class="paragraph">
-<p>On SCCP management page, click on pencil against the 'ZMarginXudtMessage' property and text box becomes editable.
+<p>On SCCP management page, click on pencil against the 'Congestion control: Timer A' property and text box becomes editable.
+Change value and save.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_sccp_property_cc_timer_d"><a class="anchor" href="#_sccp_property_cc_timer_d"></a>7.4.3.11. Timer D value for the congestion control</h5>
+<div class="sect5">
+<h6 id="_sccp_property_cc_timer_d_cli"><a class="anchor" href="#_sccp_property_cc_timer_d_cli"></a>7.4.3.11.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'cc_timer_d' by issuing the command <code>sccp set cc_timer_d</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>sccp get cc_timer_d</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	sccp get cc_timer_d
+
+SYNOPSIS
+	sccp get cc_timer_d stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	Sets the Timer D value in milliseconds.
+	This timer starts after last MTP-STATUS(cong) primitive coming.
+	After end of this timer (without new coming MTP-STATUS(cong))
+	RSLM (the congestion level) will be reduced.
+
+	Default value is 2000.
+	Possible values are between 500 and 10000.
+
+PARAMETERS
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	sccp set cc_timer_d 2000</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sccp_property_cc_timer_d_min_gui"><a class="anchor" href="#_sccp_property_cc_timer_d_min_gui"></a>7.4.3.11.2. Using GUI</h6>
+<div class="paragraph">
+<p>On SCCP management page, click on pencil against the 'Congestion control: Timer A' property and text box becomes editable.
+Change value and save.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_sccp_property_cc_algo"><a class="anchor" href="#_sccp_property_cc_algo"></a>7.4.3.12. Algorithm of the congestion control at SCCP level</h5>
+<div class="sect5">
+<h6 id="_sccp_property_cc_algo_cli"><a class="anchor" href="#_sccp_property_cc_algo_cli"></a>7.4.3.12.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'cc_algo' by issuing the command <code>sccp set cc_algo</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>sccp get cc_algo</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	sccp set cc_algo
+
+SYNOPSIS
+	sccp set cc_algo &lt;international | levelDepended&gt; stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	Sets the algorithm of the congestion control at SCCP level for outgoing
+	messages.
+	Possible values are international or levelDepended.
+	international algorithm - only one level is provided by MTP3 level
+	(in MTP-STATUS primitive). Each MTP-STATUS increases N / M levels.
+	international algorithm - MTP3 level (MTP-STATUS primitive) provides
+	3 levels of a congestion (1-3) and SCCP congestion will increase to
+	the next level after MTP-STATUS next level increase (MTP-STATUS 1
+	to N up to 3, MTP-STATUS 2 to N up to 5, MTP-STATUS 3 to N up to 7).
+
+	Default value is international.
+
+PARAMETERS
+
+	Standard Parameters
+
+	&lt;cc_algo&gt;	-	international | levelDepended.
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	sccp set cc_algo international</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sccp_property_cc_algo_gui"><a class="anchor" href="#_sccp_property_cc_algo_gui"></a>7.4.3.12.2. Using GUI</h6>
+<div class="paragraph">
+<p>On SCCP management page, click on pencil against the 'Congestion control: algorithm' property and text box becomes editable.
+Change value and save.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_sccp_property_cc_blockingoutgoungsccpmessages"><a class="anchor" href="#_sccp_property_cc_blockingoutgoungsccpmessages"></a>7.4.3.13. Blocking of outgoing messages in case of the congestion</h5>
+<div class="sect5">
+<h6 id="_sccp_property_blockingoutgoungsccpmessages_cli"><a class="anchor" href="#_sccp_property_blockingoutgoungsccpmessages_cli"></a>7.4.3.13.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'cc_blockingoutgoungsccpmessages' by issuing the command <code>sccp set cc_blockingoutgoungsccpmessages</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>sccp get cc_blockingoutgoungsccpmessages</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	sccp set cc_blockingoutgoungsccpmessages
+
+SYNOPSIS
+	sccp set cc_blockingoutgoungsccpmessages &lt;false | true&gt; stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	Sets the value of if outgoing SCCP messages will be blocked in congestion.
+	(depending on message type, UDP messages from level N=6).
+	true means that message will be blocken in the congestion case,
+	false means not.
+
+	Default value is false.
+
+PARAMETERS
+
+	Standard Parameters
+
+	&lt;cc_blockingoutgoungsccpmessages&gt;	-	false or true.
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	sccp set cc_blockingoutgoungsccpmessages false</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sccp_property_blockingoutgoungsccpmessages_gui"><a class="anchor" href="#_sccp_property_blockingoutgoungsccpmessages_gui"></a>7.4.3.13.2. Using GUI</h6>
+<div class="paragraph">
+<p>On SCCP management page, click on pencil against the 'Congestion control: blocking of outgoing messages' property and text box becomes editable.
 Change value and save.</p>
 </div>
 </div>
@@ -29994,7 +30473,7 @@ Between two Rules with GT digits, both having no wildcards, the one with the sho
 For example, Digit1 "123456" will be above Digit2 "1234567890" and this will be above Digit3 "999/*</p>
 </li>
 <li>
-<p>Rules with GT digits having the wildcard "?" are always above digits having the wildcard "*". For example, Digit1 "800/????/9" will be above Digit2 "999/*</p>
+<p>Rules with GT digits having the wildcard "?" are always above digits having the wildcard "<strong>". For example, Digit1 "800/????/9" will be above Digit2 "999/</strong></p>
 </li>
 <li>
 <p>Between Rules with two GT digits both having wildcard "?", the one with the least number of wildcard "?" is at the top of the list.
@@ -30002,12 +30481,9 @@ For example, Digit1 "800/????/9" will be above Digit2 "800/?????/9"</p>
 </li>
 <li>
 <p>Between Rules with two GT digits both having an equal number of wildcard "?", the digit whose first appearance of "?" is after other, is at the top of the list.
-For example between Digit1 "80/??/0/???/9" and Digit 2 "800/?????/9", Digit2 is above Digit1.</p>
+For example between Digit1 "80/??/0/???/9" and Digit 2 "800/?????/9", Digit2 is above Digit1.				When a Rule is compared during Translation, comparison always starts from the top of the list.</p>
 </li>
 </ol>
-</div>
-<div class="paragraph">
-<p>When a Rule is compared during Translation, comparison always starts from the top of the list.</p>
 </div>
 </div>
 <div class="sect4">
@@ -31742,7 +32218,7 @@ The GUI will look similar to the figure below.</p>
 <div class="content">
 <img src="./images/GUI_TCAP_Management.png" alt="GUI TCAP Management">
 </div>
-<div class="title">Figure 26. GUI - TCAP Management</div>
+<div class="title">Figure 25. GUI - TCAP Management</div>
 </div>
 <div class="paragraph">
 <p>The first tab will display the properties of the TCAP Management unit.
@@ -32160,6 +32636,200 @@ Change value and save.</p>
 </div>
 </div>
 </div>
+<div class="sect4">
+<h5 id="_tcap_property_executordelaythreshold"><a class="anchor" href="#_tcap_property_executordelaythreshold"></a>7.5.3.9. Thresholds for Executors congestion control</h5>
+<div class="sect5">
+<h6 id="_tcap_property_executordelaythreshold_cli"><a class="anchor" href="#_tcap_property_executordelaythreshold_cli"></a>7.5.3.9.1. Using CLI</h6>
+<div class="paragraph">
+<p>TCAP stack and lower level stacks measure delays between the time when an incoming message has come from a peer for processing and scheduled for execution and the time when the execution of the message starts. The more time this delay the more we have a congestion level at Thread executors side.</p>
+</div>
+<div class="paragraph">
+<p>The delay thresholds when the congestion level is increased to level 1, 2 and 3 is configured by parameters executordelaythreshold_1, executordelaythreshold_2 and executordelaythreshold_3 (in seconds).</p>
+</div>
+<div class="paragraph">
+<p>The delay thresholds when the congestion level is decreased to level 0, 1, and 2 is configured by parameters executorbacktonormaldelaythreshold_1, executorbacktonormaldelaythreshold_2 and executorbacktonormaldelaythreshold_3 (in seconds).</p>
+</div>
+<div class="paragraph">
+<p>You can set the thresholds (in seconds) by issuing the commands <code>tcap set executordelaythreshold_1</code>, <code>tcap set executordelaythreshold_2</code>, <code>tcap set executordelaythreshold_3</code>, <code>tcap set executorbacktonormaldelaythreshold_1</code>, <code>tcap set executorbacktonormaldelaythreshold_2</code> or <code>tcap set executorbacktonormaldelaythreshold_3</code> with appropriate parameters as described below. You can verify this by issuing the commands <code>tcap get executordelaythreshold_1</code>, <code>tcap get executordelaythreshold_2</code>, <code>tcap get executordelaythreshold_3</code>, <code>tcap get executorbacktonormaldelaythreshold_1</code>, <code>tcap get executorbacktonormaldelaythreshold_2</code> or <code>tcap get executorbacktonormaldelaythreshold_3</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	tcap set executordelaythreshold_1
+	tcap set executordelaythreshold_2
+	tcap set executordelaythreshold_3
+	tcap set executorbacktonormaldelaythreshold_1
+	tcap set executorbacktonormaldelaythreshold_2
+	tcap set executorbacktonormaldelaythreshold_3
+
+SYNOPSIS
+	tcap set executordelaythreshold_1 &lt;executordelaythreshold_1&gt; stackname &lt;stack-name&gt;
+	tcap set executordelaythreshold_2 &lt;executordelaythreshold_2&gt; stackname &lt;stack-name&gt;
+	tcap set executordelaythreshold_3 &lt;executordelaythreshold_3&gt; stackname &lt;stack-name&gt;
+	tcap set executorbacktonormaldelaythreshold_1 &lt;executorbacktonormaldelaythreshold_1&gt; stackname &lt;stack-name&gt;
+	tcap set executorbacktonormaldelaythreshold_2 &lt;executorbacktonormaldelaythreshold_2&gt; stackname &lt;stack-name&gt;
+	tcap set executorbacktonormaldelaythreshold_3 &lt;executorbacktonormaldelaythreshold_3&gt; stackname &lt;stack-name&gt;
+
+DESCRIPTION
+    For Thresholds Executors congestion control stack needs to have 3 thresholds
+	- delays in seconds between the time when an incoming message has come from a peer
+	and scheduled for execution and the time when the execution of the message starts
+	(3 levels - 1, 2, 3). If a delay time in seconds becomes more then value for
+	level 1, 2 or 3, the Executors' congestion level becomes to 1, 2 or 3.
+	Default values:
+	for executordelaythreshold_1 is 1 second
+	for executordelaythreshold_2 is 6 seconds
+	for executordelaythreshold_3 is 12 seconds
+	for executorbacktonormaldelaythreshold_1 is 0.5 seconds
+	for executorbacktonormaldelaythreshold_2 is 3 seconds
+	for executorbacktonormaldelaythreshold_3 is 8 seconds
+
+PARAMETERS
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	tcap set executordelaythreshold_1 1
+	tcap set executordelaythreshold_2 6
+	tcap set executordelaythreshold_3 12
+	tcap set executorbacktonormaldelaythreshold_1 0.5
+	tcap set executorbacktonormaldelaythreshold_2 3
+	tcap set executorbacktonormaldelaythreshold_3 8</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_tcap_property_executordelaythreshold_gui"><a class="anchor" href="#_tcap_property_executordelaythreshold_gui"></a>7.5.3.9.2. Using GUI</h6>
+<div class="paragraph">
+<p>On TCAP management page, click on pencil against the 'Executor congestion Threshold 1' property or other needed property and text box becomes editable.
+Change value and save.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_tcap_property_memorythreshold"><a class="anchor" href="#_tcap_property_memorythreshold"></a>7.5.3.10. Thresholds for Memory congestion control</h5>
+<div class="sect5">
+<h6 id="_tcap_property_memorythreshold_cli"><a class="anchor" href="#_tcap_property_memorythreshold_cli"></a>7.5.3.10.1. Using CLI</h6>
+<div class="paragraph">
+<p>TCAP stack and lower level stacks measure the percentage of message usage. The more memory we use the more we have a congestion level at memory resourse consuming.</p>
+</div>
+<div class="paragraph">
+<p>The memory thresholds when the congestion level is increased to level 1, 2 and 3 is configured by parameters memorythreshold_1, memorythreshold_2 and memorythreshold_3 (in percents).</p>
+</div>
+<div class="paragraph">
+<p>The memory thresholds when the congestion level is decreased to level 0, 1, and 2 is configured by parameters backtonormalmemorythreshold_1, backtonormalmemorythreshold_2 and backtonormalmemorythreshold_3 (in percents).</p>
+</div>
+<div class="paragraph">
+<p>You can set the thresholds (in percents) by issuing the commands <code>tcap set memorythreshold_1</code>, <code>tcap set memorythreshold_2</code>, <code>tcap set memorythreshold_3</code>, <code>tcap set backtonormalmemorythreshold_1</code>, <code>tcap set backtonormalmemorythreshold_2</code> or <code>tcap set backtonormalmemorythreshold_3</code> with appropriate parameters as described below. You can verify this by issuing the commands <code>tcap get memorythreshold_1</code>, <code>tcap get memorythreshold_2</code>, <code>tcap get memorythreshold_3</code>, <code>tcap get backtonormalmemorythreshold_1</code>, <code>tcap get backtonormalmemorythreshold_2</code> or <code>tcap get backtonormalmemorythreshold_3</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	tcap set memorythreshold_1
+	tcap set memorythreshold_2
+	tcap set memorythreshold_3
+	tcap set backtonormalmemorythreshold_1
+	tcap set backtonormalmemorythreshold_2
+	tcap set backtonormalmemorythreshold_3
+
+SYNOPSIS
+	tcap set memorythreshold_1 &lt;memorythreshold_1&gt; stackname &lt;stack-name&gt;
+	tcap set memorythreshold_2 &lt;memorythreshold_2&gt; stackname &lt;stack-name&gt;
+	tcap set memorythreshold_3 &lt;memorythreshold_3&gt; stackname &lt;stack-name&gt;
+	tcap set backtonormalmemorythreshold_1 &lt;backtonormalmemorythreshold_1&gt; stackname &lt;stack-name&gt;
+	tcap set backtonormalmemorythreshold_2 &lt;backtonormalmemorythreshold_2&gt; stackname &lt;stack-name&gt;
+	tcap set backtonormalmemorythreshold_3 &lt;backtonormalmemorythreshold_3&gt; stackname &lt;stack-name&gt;
+
+DESCRIPTION
+    For Memory congestion control stack needs to have 3 thresholds
+	- the percentage of memory usage (3 levels - 1, 2, 3). If memory usage becomes more then value for
+	level 1, 2 or 3, the Memory congestion level becomes to 1, 2 or 3.
+	Default values:
+	for memorythreshold_1 is 77 percents
+	for memorythreshold_2 is 87 percents
+	for memorythreshold_3 is 97 percents
+	for backtonormalmemorythreshold_1 is 72 percents
+	for backtonormalmemorythreshold_2 is 82 percents
+	for backtonormalmemorythreshold_3 is 92 percents
+
+PARAMETERS
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	tcap set memorythreshold_1 77
+	tcap set memorythreshold_2 87
+	tcap set memorythreshold_3 97
+	tcap set backtonormalmemorythreshold_1 72
+	tcap set backtonormalmemorythreshold_2 82
+	tcap set backtonormalmemorythreshold_3 92</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_tcap_property_memorythreshold_gui"><a class="anchor" href="#_tcap_property_memorythreshold_gui"></a>7.5.3.10.2. Using GUI</h6>
+<div class="paragraph">
+<p>On TCAP management page, click on pencil against the 'Memory congestion Threshold 1' property or other needed property and text box becomes editable.
+Change value and save.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_tcap_property_blockingincomingtcapmessages"><a class="anchor" href="#_tcap_property_blockingincomingtcapmessages"></a>7.5.3.11. Blocking of incoming messages in congestion case</h5>
+<div class="sect5">
+<h6 id="_tcap_property_blockingincomingtcapmessages_cli"><a class="anchor" href="#_tcap_property_blockingincomingtcapmessages_cli"></a>7.5.3.11.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'blockingincomingtcapmessages' by issuing the command <code>tcap set blockingincomingtcapmessages</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>tcap get blockingincomingtcapmessages</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	tcap set blockingincomingtcapmessages
+
+SYNOPSIS
+	tcap set blockingincomingtcapmessages &lt;true | false&gt; stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	If sets to true then incoming TCAP messages will be blocked
+	(depending on congestion level, from level 2 - new incoming dialogs are
+	rejected, from level 3 - all incoming messages are rejected.
+	Default value: false
+
+PARAMETERS
+
+	Standard Parameters
+
+	&lt;blockingincomingtcapmessages&gt; - if true messages was rejected in
+					congestion case.
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	tcap set blockingincomingtcapmessages false</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_tcap_property_blockingincomingtcapmessages_gui"><a class="anchor" href="#_tcap_property_blockingincomingtcapmessages_gui"></a>7.5.3.11.2. Using GUI</h6>
+<div class="paragraph">
+<p>On TCAP management page, click on pencil against the 'Blocking of incoming messages in congestion case' property and text box becomes editable.
+Change value and save.</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -32179,7 +32849,7 @@ The GUI will look similar to the figure below.</p>
 <div class="content">
 <img src="./images/GUI_Campaign_Management.png" alt="GUI Campaign Management">
 </div>
-<div class="title">Figure 27. GUI - Campaigns</div>
+<div class="title">Figure 26. GUI - Campaigns</div>
 </div>
 <div class="paragraph">
 <p>Click on 'Create Statistics Campaign' button to create new campaign.
@@ -32216,7 +32886,7 @@ Last tab also displays the 'Start Time' and 'End Time' representing time duratio
 <div class="content">
 <img src="./images/GUI_Campaign_Management_View.png" alt="GUI Campaign Management View">
 </div>
-<div class="title">Figure 28. GUI - Campaigns View</div>
+<div class="title">Figure 27. GUI - Campaigns View</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -32532,7 +33202,7 @@ In below example only Single Exchange of messages are considered for handshake m
 <div class="content">
 <img src="./images/M3UAStateASPSE.jpg" alt="M3UAStateASPSE">
 </div>
-<div class="title">Figure 29. Restcomm M3UA Stack ASP state machine</div>
+<div class="title">Figure 28. Restcomm M3UA Stack ASP state machine</div>
 </div>
 <div class="paragraph">
 <p>Figure below shows the various state of AS at AS and SGW side.
@@ -32542,7 +33212,7 @@ In below example only Single Exchange of messages are considered for handshake m
 <div class="content">
 <img src="./images/M3UAStateASSE.jpg" alt="M3UAStateASSE">
 </div>
-<div class="title">Figure 30. Restcomm M3UA Stack AS state machine for AS - SGW</div>
+<div class="title">Figure 29. Restcomm M3UA Stack AS state machine for AS - SGW</div>
 </div>
 <div class="paragraph">
 <p>For IPSP, the ASP state machine remains same as AS-SGW, however for AS the state machine changes a bit as there is no exchange of Notify (NTFY) messages.
@@ -32553,7 +33223,7 @@ In below example only Single Exchange of messages are considered for handshake m
 <div class="content">
 <img src="./images/M3UAStateIPSPASPSE.jpg" alt="M3UAStateIPSPASPSE">
 </div>
-<div class="title">Figure 31. Restcomm M3UA Stack AS state machine for IPSP Client - Server</div>
+<div class="title">Figure 30. Restcomm M3UA Stack AS state machine for IPSP Client - Server</div>
 </div>
 <div class="paragraph">
 <p>In Double Exhcnage handshake mechanism both Local and Peer FSM exist in ASP and AS at each side.
@@ -32920,7 +33590,7 @@ The address-indicator  of translated address is always from primary/backup addre
 <div class="content">
 <img src="./images/GTT-Example1.jpg" alt="GTT Example1">
 </div>
-<div class="title">Figure 32. GTT - Example 1</div>
+<div class="title">Figure 31. GTT - Example 1</div>
 </div>
 </li>
 <li>
@@ -32930,7 +33600,7 @@ Match a eight digit number starting "800", followed by any four digits, then "9"
 <div class="content">
 <img src="./images/GTT-Example2.jpg" alt="GTT Example2">
 </div>
-<div class="title">Figure 33. GTT - Example 2</div>
+<div class="title">Figure 32. GTT - Example 2</div>
 </div>
 </li>
 <li>
@@ -32940,7 +33610,7 @@ Match "800800", followed by any digits Remove the first six digits. Keep any fol
 <div class="content">
 <img src="./images/GTT-Example3.jpg" alt="GTT Example3">
 </div>
-<div class="title">Figure 34. GTT - Example 3</div>
+<div class="title">Figure 33. GTT - Example 3</div>
 </div>
 </li>
 <li>
@@ -32950,7 +33620,7 @@ Match any digits keep the digits in the and add a PC(123) and SSN (8). If the tr
 <div class="content">
 <img src="./images/GTT-Example4.jpg" alt="GTT Example4">
 </div>
-<div class="title">Figure 35. GTT - Example 4</div>
+<div class="title">Figure 34. GTT - Example 4</div>
 </div>
 </li>
 </ol>
@@ -33122,7 +33792,7 @@ Components are a means of invoking an operation at a remote node.</p>
 <div class="content">
 <img src="./images/TCAPClassDiagram.png" alt="TCAPClassDiagram">
 </div>
-<div class="title">Figure 36. Restcomm jSS7 Stack TCAP Class Diagram</div>
+<div class="title">Figure 35. Restcomm jSS7 Stack TCAP Class Diagram</div>
 </div>
 <div class="paragraph">
 <p>The <code class="class">org.mobicents.protocols.ss7.tcap.TCAPStackImpl</code> is a concrete implementation of <code class="class">TCAPStack</code>.
@@ -35864,7 +36534,7 @@ When "Route on DPC and SSN" mode is used, these are  ROUTING_BASED_ON_DPC_AND_SS
 <div class="content">
 <img src="./images/Simulator-Example9.png" alt="Simulator Example9">
 </div>
-<div class="title">Figure 37. SCCP Settings Form</div>
+<div class="title">Figure 36. SCCP Settings Form</div>
 </div>
 </div>
 </div>
@@ -35895,7 +36565,7 @@ Ussd Client must initiate a dialog using ProcessUnstructuredSs request.</p>
 <div class="content">
 <img src="./images/Simulator-Example8.png" alt="Simulator Example8">
 </div>
-<div class="title">Figure 38. Ussd Server settings form</div>
+<div class="title">Figure 37. Ussd Server settings form</div>
 </div>
 </div>
 <div class="sect3">
@@ -35933,7 +36603,7 @@ You can not send a new ProcessUnstructiredSs request till the response for previ
 <div class="content">
 <img src="./images/Simulator-Example7.png" alt="Simulator Example7">
 </div>
-<div class="title">Figure 39. Ussd Client settings form</div>
+<div class="title">Figure 38. Ussd Client settings form</div>
 </div>
 </div>
 <div class="sect3">
@@ -35998,7 +36668,7 @@ if you want to use SMS Server and SMS Client for sending SMS to each other: set 
 <div class="content">
 <img src="./images/Simulator-Example11.png" alt="Simulator Example11">
 </div>
-<div class="title">Figure 40. SMS client settings form</div>
+<div class="title">Figure 39. SMS client settings form</div>
 </div>
 <div class="paragraph">
 <p>After starting SMS server you can:</p>
@@ -36087,7 +36757,7 @@ if you want to use SMS Server and SMS Client for sending SMS to each other: set 
 <div class="content">
 <img src="./images/Simulator-Example10_04.png" alt="Simulator Example10 04">
 </div>
-<div class="title">Figure 41. SMS client settings form</div>
+<div class="title">Figure 40. SMS client settings form</div>
 </div>
 <div class="paragraph">
 <p>After starting SMS client you can:</p>
@@ -36150,7 +36820,7 @@ if you want to use SMS Server and SMS Client for sending SMS to each other: set 
 <div class="content">
 <img src="./images/Simulator-Example12.png" alt="Simulator Example12">
 </div>
-<div class="title">Figure 42. CAMEL SCF settings form</div>
+<div class="title">Figure 41. CAMEL SCF settings form</div>
 </div>
 <div class="paragraph">
 <p>After CAMEL SCF server starting you can:</p>
@@ -36207,7 +36877,7 @@ if you want to use SMS Server and SMS Client for sending SMS to each other: set 
 <div class="content">
 <img src="./images/Simulator-Example13.png" alt="Simulator Example13">
 </div>
-<div class="title">Figure 43. CAMEL SSF settings form</div>
+<div class="title">Figure 42. CAMEL SSF settings form</div>
 </div>
 <div class="paragraph">
 <p>After CAMEL SSF server starting you can:</p>
@@ -36282,7 +36952,7 @@ SS7 Simulator will auto respond with ARI response with hardcoded parameters.</p>
 <div class="content">
 <img src="./images/Simulator-Example14.png" alt="Simulator Example14">
 </div>
-<div class="title">Figure 44. ATI Client settings form</div>
+<div class="title">Figure 43. ATI Client settings form</div>
 </div>
 </div>
 </div>
@@ -36333,7 +37003,7 @@ You can install and run the module on any machine.</p>
 <div class="content">
 <img src="./images/Traceparser-Example1.png" alt="Traceparser Example1">
 </div>
-<div class="title">Figure 45. Running Trace Parser</div>
+<div class="title">Figure 44. Running Trace Parser</div>
 </div>
 </li>
 </ol>
@@ -36426,7 +37096,7 @@ If there are several dialogs with the same path they will be present only once i
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-04 10:53:48 WEST
+Last updated 2016-07-04 16:23:33 WEST
 </div>
 </div>
 <footer>

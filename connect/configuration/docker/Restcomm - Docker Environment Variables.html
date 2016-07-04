@@ -22757,13 +22757,13 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div class="ulist">
 <ul>
 <li>
-<p><strong>ENVCONFURL</strong> Set the URL for environment variables configuration file location/repository.</p>
+<p><strong>ENVCONFURL</strong> Set the URL for environment variables configuration file location/repository. (You can find examples of RestComm environment configuration files <a href="https://github.com/RestComm/Restcomm-Docker/tree/master/env_files">HERE</a>)</p>
 </li>
 <li>
 <p><strong>REPOUSR</strong> Set Username for environment variables configuration file Authentication if needed.</p>
 </li>
 <li>
-<p><strong>REPOPWRD</strong> Set Password for environment variables configuration file Authenitcation if needed.</p>
+<p><strong>REPOPWRD</strong> Set Password for environment variables configuration file Authentication if needed.</p>
 </li>
 </ul>
 </div>
@@ -22777,6 +22777,15 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </li>
 <li>
 <p><strong>NET_INTERFACE</strong> Set specific interface for RestComm to use (default eth0 )</p>
+</li>
+<li>
+<p><strong>RESTCOMM_HOSTNAME</strong> Set the hostname for this machine for RestComm to recognize it and use it for relative URL requests</p>
+</li>
+<li>
+<p><strong>RC_JAVA_OPTS</strong> Used to add extra JAVA options for RestComm (e.g RC_JAVA_OPTS="-Xms2048m -Xmx2048m").</p>
+</li>
+<li>
+<p><strong>PLAY_WAIT_MUSIC</strong> Enable wait on music, for conference calls when only one participant is connected (By default is enabled).</p>
 </li>
 <li>
 <p><strong>USE_STANDARD_HTTP_PORTS</strong> Use standard HTTS(S) ports such as 80, 443</p>
@@ -22836,46 +22845,22 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <p><strong>ACAPELA_PASSWORD</strong> Set the Acapela Text-To-Speech password</p>
 </li>
 <li>
-<p><strong>SMPP_TYPE</strong> Set the SMPP Type ie the unique name for the SMPP Connection and sets the SMPP to be enabled for the SMS API and RVD Tag</p>
-</li>
-<li>
-<p><strong>S3_BUCKET_NAME</strong> Set the S3 Bucket Name so that Restcomm stores the Recording in Amazon Web Services S3 Service</p>
-</li>
-<li>
-<p><strong>S3_ACCESS_KEY</strong> Set the S3 Access Key so that Restcomm stores the Recording in Amazon Web Services S3 Service</p>
-</li>
-<li>
-<p><strong>S3_SECURITY_KEY</strong> Set the S3 Security Key so that Restcomm stores the Recording in Amazon Web Services S3 Service</p>
-</li>
-<li>
 <p><strong>HSQL_PERSIST</strong> Path to use for persist date using HSQL.</p>
 </li>
 <li>
-<p><strong>SMTP_USER</strong> Set the SMTP User so that Restcomm configures the SMTP Service for the Email API and RVD Tag</p>
+<p><strong>INIT_PASSWORD</strong> Set password for “<a href="mailto:administrator@company.com">administrator@company.com</a>” when running RestComm-docker</p>
 </li>
 <li>
-<p><strong>SMTP_PASSWORD</strong> Set the SMTP Password so that Restcomm configures the SMTP Service for the Email API and RVD Tag</p>
+<p><strong>ADDITIONAL_CONNECTOR_</strong>* Specify additional custom port connectors use -e ADDITIONAL_CONNECTOR_1=second-sip-udp:5090  -e ADDITIONAL_CONNECTOR_2=second-sip-tcpp:5090 etc.More info <a href="http://documentation.telestax.com/core/sip_servlets/SIP_Servlets_Server_User_Guide.html">HERE</a></p>
 </li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="restcomm-logs-configuration"><a class="anchor" href="#restcomm-logs-configuration"></a>RestComm Logs Configuration</h5>
+<div class="ulist">
+<ul>
 <li>
-<p><strong>SMTP_HOST</strong> Set the SMTP Host so that Restcomm configures the SMTP Service for the Email API and RVD Tag</p>
-</li>
-<li>
-<p><strong>MYSQL_USER</strong> Set the MySQL User so that Restcomm configures RestComm to use a MySQL DB instead of In memory DB</p>
-</li>
-<li>
-<p><strong>MYSQL_PASSWORD</strong> Set the MySQL Password so that Restcomm configures RestComm to use a MySQL DB instead of In memory DB</p>
-</li>
-<li>
-<p><strong>MYSQL_HOST</strong> Set the MySQL Host so that Restcomm configures RestComm to use a MySQL DB instead of In memory DB</p>
-</li>
-<li>
-<p><strong>MYSQL_SNDHOST</strong> Set the MySQL Failover Host, a secondary MySQL DB with Master-Slave topology (will use same DB name and password as primary DB)</p>
-</li>
-<li>
-<p><strong>MYSQL_SCHEMA</strong> Set the MySQL Schema so that Restcomm configures RestComm to use a MySQL DB instead of In memory DB</p>
-</li>
-<li>
-<p><strong>SSL_MODE</strong> Set the SSL Mode for Restcomm and RVD to query External Service over HTTPS. Values : allowall, strict</p>
+<p><strong>RESTCOMM_LOGS</strong> Base path where all RestComm related logs will be placed.</p>
 </li>
 <li>
 <p><strong>RVD_LOCATION</strong> Set the Location for Restcomm Visual Designer to store the workspaces in a shared filesystem</p>
@@ -22887,25 +22872,25 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <p><strong>LOG_LEVEL</strong> Set the Log Level for Restcomm and MMS</p>
 </li>
 <li>
+<p><strong>AKKA_LOG_LEVEL</strong> Set the Log level for the AKKA actor system.</p>
+</li>
+<li>
+<p><strong>LOG_LEVEL_COMPONENT_GOVNIST</strong> Set the Log level for the "gov.nist" module.</p>
+</li>
+<li>
+<p><strong>LOG_LEVEL_COMPONENT_SIPSERVLET</strong> Set the Log level for the sip-servlets.</p>
+</li>
+<li>
 <p><strong>CORE_LOGS_LOCATION</strong> Set the location were to store Restcomm logs</p>
 </li>
 <li>
 <p><strong>RESTCOMM_TRACE_LOG</strong> Set the location were to store network trace logs (pcap files)</p>
 </li>
-<li>
-<p><strong>RESTCOMMHOST</strong> Set the hostname for this machine for RestComm to recognize it and use it for relative URL requests</p>
-</li>
-<li>
-<p><strong>INIT_PASSWORD</strong> Set password for “<a href="mailto:administrator@company.com">administrator@company.com</a>” when running RestComm-docker</p>
-</li>
-<li>
-<p><strong>RC_JAVA_OPTS_EXTRA</strong> Used to add extra JAVA options for RestComm (e.g RC_JAVA_OPTS_EXTRA="-Xms2048m -Xmx2048m").</p>
-</li>
 </ul>
 </div>
-<div class="paragraph">
-<p><strong>Media server</strong></p>
 </div>
+<div class="sect4">
+<h5 id="media-server"><a class="anchor" href="#media-server"></a>Media server</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -22930,7 +22915,20 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <p><strong>RECORDINGS_PATH</strong> Directory where recordings are saved (Mainly set when external Media server is used).</p>
 </li>
 <li>
-<p><strong>MS_JAVA_EXTRA_OPTS</strong> Add extra JAVA options on Medias Server (e.g MS_JAVA_EXTRA_OPTS="-Xms2048m -Xmx2048m").</p>
+<p><strong>RMS_JAVA_OPTS</strong> Add extra JAVA options on Medias Server (e.g RMS_JAVA_OPTS="-Xms2048m -Xmx2048m").</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Medias server MGCP ports</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>LOCALMGCP</strong> Local MGCP port (Default 2727).</p>
+</li>
+<li>
+<p><strong>REMOTEMGCP</strong> Remote MGCP port (Default 2427).</p>
 </li>
 </ul>
 </div>
@@ -22954,8 +22952,24 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </ul>
 </div>
 <div class="paragraph">
-<p><strong>SMS outbound proxy configuration</strong></p>
+<p><strong>RMS pool size (Should calculated from number of concurrent calls expected).</strong></p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>RESOURCE_IVR</strong>  ivr = max conc calls * 2</p>
+</li>
+<li>
+<p><strong>RESOURCE_CNF</strong>  cnf = max concurrent calls</p>
+</li>
+<li>
+<p><strong>RESOURCE_Bridge</strong> bridge = max concurrent calls</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="sms-outbound-proxy-configuration"><a class="anchor" href="#sms-outbound-proxy-configuration"></a>SMS outbound proxy configuration</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -22963,9 +22977,9 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p><strong>HTTPS related configuration</strong></p>
 </div>
+<div class="sect4">
+<h5 id="https-related-configuration"><a class="anchor" href="#https-related-configuration"></a>HTTPS related configuration</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -22976,6 +22990,9 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </li>
 <li>
 <p><strong>TRUSTSTORE_ALIAS</strong> Set the Alias to use for RestComm to configure the certificate for HTTPS and SIP TLS</p>
+</li>
+<li>
+<p><strong>SSL_MODE</strong> Set the SSL Mode for Restcomm and RVD to query External Service over HTTPS. Values : allowall, strict</p>
 </li>
 </ul>
 </div>
@@ -22993,50 +23010,202 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li>
 <p><strong>CERTREPOPWRD</strong> Password for authentications if needed</p>
 </li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="smpp-related-configuration"><a class="anchor" href="#smpp-related-configuration"></a>SMPP related configuration</h5>
+<div class="ulist">
+<ul>
 <li>
-<p><strong>DERCONFURL</strong> DER file URL location</p>
+<p><strong>SMPP_ACTIVATE</strong> Activate SMPP</p>
 </li>
 <li>
-<p><strong>DERREPOUSR</strong> Username for authentication if needed</p>
+<p><strong>SMPP_TYPE</strong> The SMPP type</p>
 </li>
 <li>
-<p><strong>DERREPOPWRD</strong> Password for authentication if needed</p>
+<p><strong>SMPP_ID</strong> The SMPP id</p>
+</li>
+<li>
+<p><strong>SMPP_PASSWORD</strong> The SMPP password</p>
+</li>
+<li>
+<p><strong>SMPP_PEER_IP</strong> The SMPP peer IP Address</p>
+</li>
+<li>
+<p><strong>SMPP_PEER_PORT</strong> The SMPP peer port</p>
+</li>
+<li>
+<p><strong>SMPP_SOURCE_MAP</strong> The SMPP source map</p>
+</li>
+<li>
+<p><strong>SMPP_DEST_MAP</strong> The SMPP destination map</p>
 </li>
 </ul>
 </div>
+</div>
+<div class="sect4">
+<h5 id="mysql-server-configuration-default-false-if-not-configured-hsql-will-be-used"><a class="anchor" href="#mysql-server-configuration-default-false-if-not-configured-hsql-will-be-used"></a>Mysql Server configuration. Default: false. If not configured HSQL will be used.</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>ENABLE_MYSQL</strong> Enable MYSQL db usage. If not configured HSQL will be used (Default value FALSE).</p>
+</li>
+<li>
+<p><strong>MYSQL_USER</strong> Set the MySQL User so that Restcomm configures RestComm to use a MySQL DB instead of In memory DB</p>
+</li>
+<li>
+<p><strong>MYSQL_PASSWORD</strong> Set the MySQL Password so that Restcomm configures RestComm to use a MySQL DB instead of In memory DB</p>
+</li>
+<li>
+<p><strong>MYSQL_HOST</strong> Set the MySQL Host so that Restcomm configures RestComm to use a MySQL DB instead of In memory DB</p>
+</li>
+<li>
+<p><strong>MYSQL_SNDHOST</strong> Set the MySQL Failover Host, a secondary MySQL DB with Master-Slave topology (will use same DB name and password as primary DB)</p>
+</li>
+<li>
+<p><strong>MYSQL_SCHEMA</strong> Set the MySQL Schema so that Restcomm configures RestComm to use a MySQL DB instead of In memory DB</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="amazon-s3-bucket-conficuration-used-to-store-recordings-default-false-if-not-configured-internal-recordings-directory-will-be-used"><a class="anchor" href="#amazon-s3-bucket-conficuration-used-to-store-recordings-default-false-if-not-configured-internal-recordings-directory-will-be-used"></a>Amazon S3 Bucket conficuration. Used to store Recordings. Default: false. If not configured internal recordings directory will be used.</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>ACTIVATE_S3_BUCKET</strong> Activate Amazon S3 Bucket for recordings. Default: false.</p>
+</li>
+<li>
+<p><strong>S3_BUCKET_NAME</strong> Set the S3 Bucket Name so that Restcomm stores the Recording in Amazon Web Services S3 Service</p>
+</li>
+<li>
+<p><strong>S3_ACCESS_KEY</strong> Set the S3 Access Key so that Restcomm stores the Recording in Amazon Web Services S3 Service</p>
+</li>
+<li>
+<p><strong>S3_SECURITY_KEY</strong> Set the S3 Security Key so that Restcomm stores the Recording in Amazon Web Services S3 Service</p>
+</li>
+<li>
+<p><strong>S3_BUCKET_REGION</strong> Set S3 bucket region to be used. If not set, "us-east-1" will be used.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="restcomm-monitoring"><a class="anchor" href="#restcomm-monitoring"></a>RestComm Monitoring</h5>
 <div class="paragraph">
-<p><strong>SMPP related configuration</strong></p>
+<p><strong>Jboss Management interface. Used for RestComm statistics consultation (Graylog). More info <a href="https://docs.jboss.org/author/display/AS7/Management+resources">HERE</a></strong></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>GENERIC_SMPP_TYPE</strong> The SMPP type</p>
+<p><strong>MGMT_PASS</strong> Management Interface User configuration.</p>
 </li>
 <li>
-<p><strong>GENERIC_SMPP_ID</strong> The SMPP id</p>
-</li>
-<li>
-<p><strong>GENERIC_SMPP_PASSWORD</strong> The SMPP password</p>
-</li>
-<li>
-<p><strong>GENERIC_SMPP_PEER_IP</strong> The SMPP peer IP Address</p>
-</li>
-<li>
-<p><strong>GENERIC_SMPP_PEER_PORT</strong> The SMPP peer port</p>
-</li>
-<li>
-<p><strong>GENERIC_SMPP_SOURCE_MAP</strong> The SMPP source map</p>
-</li>
-<li>
-<p><strong>GENERIC_SMPP_DEST_MAP</strong> The SMPP destination map</p>
+<p><strong>MGMT_USER</strong> Management Interface Password configuration.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p><strong>Graylog Open source monitoring system configuration. More info <a href="https://www.graylog.org/">HERE</a></strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>GRAYLOG_SERVER</strong> IP of the Graylog server to send data. To disable please use empty string (By default is disabled).</p>
+</li>
+<li>
+<p><strong>SERVERLABEL</strong> RestComm server Label, used to recognise server at Graylog server.</p>
+</li>
+<li>
+<p><strong>HD_MONITOR</strong> Enable HD usage monitoring.</p>
+</li>
+<li>
+<p><strong>RCJVM_MONITOR</strong> Enable JVM (Memory, CPU) usage monitoring for RC.</p>
+</li>
+<li>
+<p><strong>RMSJVM_MONITOR</strong> Enable JVM (Memory, RAM, CPU) usage monitoring for RMS.</p>
+</li>
+<li>
+<p><strong>RAM_MONITOR</strong> Enable overall RAM system monitoring.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Enabling monitoring configuration means that there is Graylog server running somewhere as well.
+You can use Telestax open source Graylog-docker project from <a href="https://github.com/RestComm/restcomm-graylog-docker">HERE</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="telestax-loadbalancer-configuration-multi-transport-algorithm-used"><a class="anchor" href="#telestax-loadbalancer-configuration-multi-transport-algorithm-used"></a>Telestax LoadBalancer configuration. Multi transport algorithm used</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>ACTIVATE_LB</strong> Activate LB. Use LB for the current setup.</p>
+</li>
+<li>
+<p><strong>LB_PUBLIC_IP</strong> The "external" IP of the LB. Is used for the incoming traffic.</p>
+</li>
+<li>
+<p><strong>LB_INTERNAL_IP</strong> The "internal" IP of the LB. Is used for RC to connect to the LB.</p>
+</li>
+<li>
+<p><strong>LB_SIP_PORT_UDP</strong> The port used from the LB for UDP transport (Default 5060).</p>
+</li>
+<li>
+<p><strong>LB_SIP_PORT_TCP</strong> The port used from the LB for TCP transport (Default 5060).</p>
+</li>
+<li>
+<p><strong>LB_SIP_PORT_TLS</strong> The port used from the LB for TLS transport (Default 5061).</p>
+</li>
+<li>
+<p><strong>LB_SIP_PORT_WS</strong> The port used from the Web Socket (WebRTC - Default 5062).</p>
+</li>
+<li>
+<p><strong>LB_SIP_PORT_WSS</strong> The port used from the Secure Web Socket (WebRTC - Default 5063).</p>
+</li>
+<li>
+<p><strong>LB_RMI_PORT</strong> The port used from RMI connection between RC and LB (Default 2000).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>*More Info on LB <a href="http://documentation.telestax.com/core/lb/Load_Balancer_User_Guide.html">HERE</a></p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="smtp-configuration-used-for-restcomm-email-service-email-verb-as-well-used-for-system-email-notifications-when-system-errors-occur"><a class="anchor" href="#smtp-configuration-used-for-restcomm-email-service-email-verb-as-well-used-for-system-email-notifications-when-system-errors-occur"></a>SMTP Configuration. Used for Restcomm email service (Email Verb).As well used for system email notifications (When system errors occur).</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>SMTP_USER</strong> Set the SMTP User so that Restcomm configures the SMTP Service for the Email API and RVD Tag</p>
+</li>
+<li>
+<p><strong>SMTP_PASSWORD</strong> Set the SMTP Password so that Restcomm configures the SMTP Service for the Email API and RVD Tag</p>
+</li>
+<li>
+<p><strong>SMTP_HOST</strong> Set the SMTP Host so that Restcomm configures the SMTP Service for the Email API and RVD Tag</p>
+</li>
+<li>
+<p><strong>SMTP_PORT</strong> If not set default Port will be used. Port 25.</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-04 10:37:27 WEST
+Last updated 2016-07-04 16:08:54 WEST
 </div>
 </div>
 <footer>

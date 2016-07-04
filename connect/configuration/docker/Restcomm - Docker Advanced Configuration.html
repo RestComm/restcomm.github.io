@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Automatically restart the container in case of a failure or host restart</title>
+<title>Run bigger range of RTP ports</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22744,14 +22744,56 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel4">
+<li><a href="#use_host_interface_for_bigger_range">Run bigger range of RTP ports</a></li>
+<li><a href="#get-basic-environment-configuration-file-from-restcomm-docker-repository">Get environment configuration file from remote repository/source</a></li>
 <li><a href="#automatically-restart-the-container-in-case-of-a-failure-or-host-restart">Automatically restart the container in case of a failure or host restart</a></li>
-<li><a href="#get-basic-environment-configuration-file-from-restcomm-docker-repository">Get basic environment configuration file from RestComm-Docker repository</a></li>
-<li><a href="#to-run-on-standard-ports-ie-80-for-http-443-for-https-5060-for-sip">To run on standard ports ie 80 for HTTP, 443 for HTTPs, 5060 for SIP</a></li>
-<li><a href="#provide-your-voicerss-key-for-text-to-speech-and-outbound-proxy">Provide your VoiceRSS key for Text-To-Speech and Outbound proxy</a></li>
+<li><a href="#to-run-a-specific-logger-Docker-Driver">Use specific Docker logs Driver</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
+<div class="sect4">
+<h5 id="use_host_interface_for_bigger_range"><a class="anchor" href="#use_host_interface_for_bigger_range"></a>Run bigger range of RTP ports</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Use the flag : <strong>- -net host</strong></p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">docker run  --net  host -i -d --name=restcomm-myInstance -v /var/log/restcomm/:/var/log/restcomm/ -e STATIC_ADDRESS="YOUR_ETHERNET_IP" -e ENVCONFURL="https://raw.githubusercontent.com/RestComm/Restcomm-Docker/master/scripts/restcomm_env_locally.sh" restcomm/restcomm:latest</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="get-basic-environment-configuration-file-from-restcomm-docker-repository"><a class="anchor" href="#get-basic-environment-configuration-file-from-restcomm-docker-repository"></a>Get environment configuration file from remote repository/source</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Use the flag : <strong>ENVCONFURL</strong> to load a remote file exposed by web server.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">docker run -i -d  --net host --name=restcomm -e ENVCONFURL="https://raw.githubusercontent.com/RestComm/Restcomm-Docker/master/scripts/restcomm_env_basic.sh"  restcomm/restcomm:latest</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Use the flag : <strong>- -env-file</strong> to load a locaL RestComm environment configuration file.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">docker run -i -d  --net host --name=restcomm ---env-file="local_path/restcomm_env_basic.sh"  restcomm/restcomm:latest</code></pre>
+</div>
+</div>
+</div>
 <div class="sect4">
 <h5 id="automatically-restart-the-container-in-case-of-a-failure-or-host-restart"><a class="anchor" href="#automatically-restart-the-container-in-case-of-a-failure-or-host-restart"></a>Automatically restart the container in case of a failure or host restart</h5>
 <div class="ulist">
@@ -22763,59 +22805,39 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">docker run -e USE_STANDARD_PORTS="true" -e VOICERSS_KEY="YOUR_VOICESS_KEY_HERE" --name=restcomm --restart=always -d -p 80:80 -p 443:443 -p 9990:9990 -p 5060:5060 -p 5061:5061 -p 5062:5062 -p 5063:5063 -p 5060:5060/udp -p 65000-65050:65000-65050/udp restcomm/restcomm:latest</code></pre>
+<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">docker run  -i -d- --net host --name=restcomm --restart=always  -e STATIC_ADDRESS="YOUR_ETHERNET_IP" -e ENVCONFURL="https://raw.githubusercontent.com/RestComm/Restcomm-Docker/master/scripts/restcomm_env_locally.sh" restcomm/restcomm:latest</code></pre>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="get-basic-environment-configuration-file-from-restcomm-docker-repository"><a class="anchor" href="#get-basic-environment-configuration-file-from-restcomm-docker-repository"></a>Get basic environment configuration file from RestComm-Docker repository</h5>
+<h5 id="to-run-a-specific-logger-Docker-Driver"><a class="anchor" href="#to-run-a-specific-logger-Docker-Driver"></a>Use specific Docker logs Driver</h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Use the flag : <strong>ENVCONFURL</strong></p>
+<p>You have to use the <strong>- -log-driver=json-file</strong>. (To disable any Docker logs for the container use <strong>- -log-driver=none</strong>)</p>
+</li>
+<li>
+<p>Enable Docker logs rotation <strong>- -log-opt max-size=20m</strong>   <strong>- -log-opt max-file=3</strong>.  (Rotate using 3 files 20m each file)</p>
 </li>
 </ul>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">docker run -i -d  --name=restcomm -e ENVCONFURL="https://raw.githubusercontent.com/RestComm/Restcomm-Docker/master/scripts/restcomm_env_basic.sh"  -p 80:80 -p 443:443 -p 9990:9990 -p 5060:5060 -p 5061:5061 -p 5062:5062 -p 5063:5063 -p 5060:5060/udp -p 65000-65050:65000-65050/udp restcomm/restcomm:latest</code></pre>
+<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">docker run -i -d --net host --log-driver=json-file --log-opt max-size=20m --name=restcomm restcomm/restcomm:latest</code></pre>
 </div>
 </div>
-</div>
-<div class="sect4">
-<h5 id="to-run-on-standard-ports-ie-80-for-http-443-for-https-5060-for-sip"><a class="anchor" href="#to-run-on-standard-ports-ie-80-for-http-443-for-https-5060-for-sip"></a>To run on standard ports ie 80 for HTTP, 443 for HTTPs, 5060 for SIP</h5>
 <div class="ulist">
 <ul>
 <li>
-<p>You have to use the <strong>USE_STANDARD_PORTS</strong></p>
+<p>More info <a href="https://docs.docker.com/engine/admin/logging/overview/">HERE</a></p>
 </li>
 </ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">docker run -e USE_STANDARD_PORTS="true" -e VOICERSS_KEY="YOUR_VOICESS_KEY_HERE" --name=restcomm -d -p 80:80 -p 443:443 -p 9990:9990 -p 5060:5060 -p 5061:5061 -p 5062:5062 -p 5063:5063 -p 5060:5060/udp -p 65000-65050:65000-65050/udp restcomm/restcomm:latest</code></pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="provide-your-voicerss-key-for-text-to-speech-and-outbound-proxy"><a class="anchor" href="#provide-your-voicerss-key-for-text-to-speech-and-outbound-proxy"></a>Provide your VoiceRSS key for Text-To-Speech and Outbound proxy</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>set env variable <strong>VOICERSS_KEY</strong> and <strong>OUTBOUND_PROXY</strong></p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">docker run -e USE_STANDARD_PORTS="true" -e VOICERSS_KEY="YOUR_VOICESS_KEY_HERE" -e OUTBOUND_PROXY="YOUR_OUTBOUND_PROXY_HERE" --name=restcomm -d -p 80:80 -p 443:443 -p 9990:9990 -p 5060:5060 -p 5061:5061 -p 5062:5062 -p 5063:5063 -p 5060:5060/udp -p 65000-65050:65000-65050/udp restcomm/restcomm:latest</code></pre>
-</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-04 10:37:27 WEST
+Last updated 2016-07-04 16:08:54 WEST
 </div>
 </div>
 <footer>

@@ -437,6 +437,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_sccp_property_ssttimerduration_max">SST Timer Duration Max</a></li>
 <li><a href="#_sccp_property_ssttimerduration_min">SST Timer Duration Min</a></li>
 <li><a href="#_sccp_property_zmarginxudtmessage">ZMargin XUDT Message</a></li>
+<li><a href="#_sccp_property_cc_timer_a">Timer A value for the congestion control</a></li>
+<li><a href="#_sccp_property_cc_timer_d">Timer D value for the congestion control</a></li>
+<li><a href="#_sccp_property_cc_algo">Algorithm of the congestion control at SCCP level</a></li>
+<li><a href="#_sccp_property_cc_blockingoutgoungsccpmessages">Blocking of outgoing messages in case of the congestion</a></li>
 </ul>
 </li>
 <li><a href="#_managing_sccp_sap_show">View all Service Access Points (SAP)</a>
@@ -889,15 +893,20 @@ You can verify this by issuing the command <code>sccp get removespc</code> which
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	sccp get removespc
+	sccp set removespc
 
 SYNOPSIS
-	sccp get removespc stackname &lt;stack-name&gt;
+	sccp set removespc &lt;false | true&gt; stackname &lt;stack-name&gt;
 
 DESCRIPTION
-	Gets the value for removespc property.
+	If set, the signaling point code from SCCP called/calling address will
+	be removed if corresponding routing is based on GT
 
 PARAMETERS
+
+	Standard Parameters
+
+	&lt;removespc&gt;	-	true or false value.
 
 	Optional Parameters
 
@@ -906,7 +915,7 @@ PARAMETERS
 					will be used.
 
 EXAMPLES
-	sccp get removespc</pre>
+	sccp set removespc true</pre>
 </div>
 </div>
 </div>
@@ -929,15 +938,24 @@ You can verify this by issuing the command <code>sccp get ssttimerduration_incre
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	sccp get ssttimerduration_increasefactor
+	sccp set ssttimerduration_increasefactor
 
 SYNOPSIS
-	sccp get ssttimerduration_increasefactor stackname &lt;stack-name&gt;
+	sccp set ssttimerduration_increasefactor &lt;ssttimerduration_increasefactor&gt;
+	stackname &lt;stack-name&gt;
 
 DESCRIPTION
-	Gets the value for ssttimerduration_increasefactor property.
+	Set multiplicator of SST sending interval (next interval will be greater then
+	the current by sstTimerDuration_IncreaseFactor). Range is 1 to 4. If passed
+	value is less than 1, it sets to 1 and if passed value is greater than 4,
+	it sets to 4
 
 PARAMETERS
+
+	Standard Parameters
+
+	&lt;ssttimerduration_increasefactor&gt;	-	values from 1 to 4 for SST duration increase
+										factor.
 
 	Optional Parameters
 
@@ -946,7 +964,7 @@ PARAMETERS
 					will be used.
 
 EXAMPLES
-	sccp get ssttimerduration_increasefactor</pre>
+	sccp set ssttimerduration_increasefactor 1</pre>
 </div>
 </div>
 </div>
@@ -969,15 +987,21 @@ You can verify this by issuing the command <code>sccp get ssttimerduration_max</
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	sccp get ssttimerduration_max
+	sccp set ssttimerduration_max
 
 SYNOPSIS
-	sccp get ssttimerduration_max stackname &lt;stack-name&gt;
+	sccp set ssttimerduration_max &lt;ssttimerduration_max&gt; stackname &lt;stack-name&gt;
 
 DESCRIPTION
-	Gets the value for ssttimerduration_max property.
+	Sets Max (after increasing) SST sending interval (in 600000 - 1200000 milliseconds).
+	Value can be from 600000 to 1200000. If value passed is less than 600000, it sets to
+	600000 and if value passed is greater than 1200000, it sets to 1200000
 
 PARAMETERS
+
+	Standard Parameters
+
+	&lt;ssttimerduration_max&gt;	-	values from 600000 - 1200000 milliseconds.
 
 	Optional Parameters
 
@@ -986,7 +1010,7 @@ PARAMETERS
 					will be used.
 
 EXAMPLES
-	sccp get ssttimerduration_max</pre>
+	sccp set ssttimerduration_max 600000</pre>
 </div>
 </div>
 </div>
@@ -1009,15 +1033,21 @@ You can verify this by issuing the command <code>sccp get ssttimerduration_min</
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	sccp get ssttimerduration_min
+	sccp set ssttimerduration_min
 
 SYNOPSIS
-	sccp get ssttimerduration_min stackname &lt;stack-name&gt;
+	sccp set ssttimerduration_min &lt;ssttimerduration_min&gt; stackname &lt;stack-name&gt;
 
 DESCRIPTION
-	Gets the value for ssttimerduration_min property.
+	Set's min (starting) SST sending interval (in milliseconds). Value can be
+	from 5000 to 10000.If value passed is less than 5000, it sets to 5000 and
+	if value passed is greater than 10000, its set to 10000
 
 PARAMETERS
+
+	Standard Parameters
+
+	&lt;ssttimerduration_min&gt;	-	values from 5000 to 10000.
 
 	Optional Parameters
 
@@ -1026,7 +1056,7 @@ PARAMETERS
 					will be used.
 
 EXAMPLES
-	sccp get ssttimerduration_min</pre>
+	sccp set ssttimerduration_min 10000</pre>
 </div>
 </div>
 </div>
@@ -1049,13 +1079,65 @@ You can verify this by issuing the command <code>sccp get zmarginxudtmessage</co
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	sccp get ssttimerduration_min
+	sccp set ssttimerduration_min
 
 SYNOPSIS
-	sccp get ssttimerduration_min stackname &lt;stack-name&gt;
+	sccp set zmarginxudtmessage &lt;zmarginxudtmessage&gt; stackname &lt;stack-name&gt;
 
 DESCRIPTION
-	Gets the value for ssttimerduration_min property.
+	Sets segmentation length. If the XUDT message data length greater this value,
+    segmentation is processed. Otherwise no segmentation.
+    Range is 160 to 255. If passed value is less than 160, it sets to 160 and
+    if passed value is greater than 255, it sets to 255.
+
+PARAMETERS
+
+	Standard Parameters
+
+	&lt;zmarginxudtmessage&gt;	-	values from 160 to 255.
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	sccp set zmarginxudtmessage 255</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_sccp_property_zmarginxudtmessage_min_gui"><a class="anchor" href="#_sccp_property_zmarginxudtmessage_min_gui"></a>Using GUI</h4>
+<div class="paragraph">
+<p>On SCCP management page, click on pencil against the 'ZMarginXudtMessage' property and text box becomes editable.
+Change value and save.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sccp_property_cc_timer_a"><a class="anchor" href="#_sccp_property_cc_timer_a"></a>Timer A value for the congestion control</h3>
+<div class="sect3">
+<h4 id="_sccp_property_cc_timer_a_cli"><a class="anchor" href="#_sccp_property_cc_timer_a_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'cc_timer_a' by issuing the command <code>sccp set cc_timer_a</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>sccp get cc_timer_a</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	sccp get cc_timer_a
+
+SYNOPSIS
+	sccp get cc_timer_a stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	Sets the Timer A value in milliseconds.
+	This timer starts at next MTP-STATUS(cong) primitive coming.
+	During this timer no more MTP-STATUS(cong) are accepted.
+
+	Default value is 400.
+	Possible values are between 60 and 1000.
 
 PARAMETERS
 
@@ -1066,14 +1148,163 @@ PARAMETERS
 					will be used.
 
 EXAMPLES
-	sccp get ssttimerduration_min</pre>
+	sccp set cc_timer_a 400</pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_sccp_property_zmarginxudtmessage_min_gui"><a class="anchor" href="#_sccp_property_zmarginxudtmessage_min_gui"></a>Using GUI</h4>
+<h4 id="_sccp_property_cc_timer_a_gui"><a class="anchor" href="#_sccp_property_cc_timer_a_gui"></a>Using GUI</h4>
 <div class="paragraph">
-<p>On SCCP management page, click on pencil against the 'ZMarginXudtMessage' property and text box becomes editable.
+<p>On SCCP management page, click on pencil against the 'Congestion control: Timer A' property and text box becomes editable.
+Change value and save.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sccp_property_cc_timer_d"><a class="anchor" href="#_sccp_property_cc_timer_d"></a>Timer D value for the congestion control</h3>
+<div class="sect3">
+<h4 id="_sccp_property_cc_timer_d_cli"><a class="anchor" href="#_sccp_property_cc_timer_d_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'cc_timer_d' by issuing the command <code>sccp set cc_timer_d</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>sccp get cc_timer_d</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	sccp get cc_timer_d
+
+SYNOPSIS
+	sccp get cc_timer_d stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	Sets the Timer D value in milliseconds.
+	This timer starts after last MTP-STATUS(cong) primitive coming.
+	After end of this timer (without new coming MTP-STATUS(cong))
+	RSLM (the congestion level) will be reduced.
+
+	Default value is 2000.
+	Possible values are between 500 and 10000.
+
+PARAMETERS
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	sccp set cc_timer_d 2000</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_sccp_property_cc_timer_d_min_gui"><a class="anchor" href="#_sccp_property_cc_timer_d_min_gui"></a>Using GUI</h4>
+<div class="paragraph">
+<p>On SCCP management page, click on pencil against the 'Congestion control: Timer A' property and text box becomes editable.
+Change value and save.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sccp_property_cc_algo"><a class="anchor" href="#_sccp_property_cc_algo"></a>Algorithm of the congestion control at SCCP level</h3>
+<div class="sect3">
+<h4 id="_sccp_property_cc_algo_cli"><a class="anchor" href="#_sccp_property_cc_algo_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'cc_algo' by issuing the command <code>sccp set cc_algo</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>sccp get cc_algo</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	sccp set cc_algo
+
+SYNOPSIS
+	sccp set cc_algo &lt;international | levelDepended&gt; stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	Sets the algorithm of the congestion control at SCCP level for outgoing
+	messages.
+	Possible values are international or levelDepended.
+	international algorithm - only one level is provided by MTP3 level
+	(in MTP-STATUS primitive). Each MTP-STATUS increases N / M levels.
+	international algorithm - MTP3 level (MTP-STATUS primitive) provides
+	3 levels of a congestion (1-3) and SCCP congestion will increase to
+	the next level after MTP-STATUS next level increase (MTP-STATUS 1
+	to N up to 3, MTP-STATUS 2 to N up to 5, MTP-STATUS 3 to N up to 7).
+
+	Default value is international.
+
+PARAMETERS
+
+	Standard Parameters
+
+	&lt;cc_algo&gt;	-	international | levelDepended.
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	sccp set cc_algo international</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_sccp_property_cc_algo_gui"><a class="anchor" href="#_sccp_property_cc_algo_gui"></a>Using GUI</h4>
+<div class="paragraph">
+<p>On SCCP management page, click on pencil against the 'Congestion control: algorithm' property and text box becomes editable.
+Change value and save.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sccp_property_cc_blockingoutgoungsccpmessages"><a class="anchor" href="#_sccp_property_cc_blockingoutgoungsccpmessages"></a>Blocking of outgoing messages in case of the congestion</h3>
+<div class="sect3">
+<h4 id="_sccp_property_blockingoutgoungsccpmessages_cli"><a class="anchor" href="#_sccp_property_blockingoutgoungsccpmessages_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'cc_blockingoutgoungsccpmessages' by issuing the command <code>sccp set cc_blockingoutgoungsccpmessages</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>sccp get cc_blockingoutgoungsccpmessages</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	sccp set cc_blockingoutgoungsccpmessages
+
+SYNOPSIS
+	sccp set cc_blockingoutgoungsccpmessages &lt;false | true&gt; stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	Sets the value of if outgoing SCCP messages will be blocked in congestion.
+	(depending on message type, UDP messages from level N=6).
+	true means that message will be blocken in the congestion case,
+	false means not.
+
+	Default value is false.
+
+PARAMETERS
+
+	Standard Parameters
+
+	&lt;cc_blockingoutgoungsccpmessages&gt;	-	false or true.
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	sccp set cc_blockingoutgoungsccpmessages false</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_sccp_property_blockingoutgoungsccpmessages_gui"><a class="anchor" href="#_sccp_property_blockingoutgoungsccpmessages_gui"></a>Using GUI</h4>
+<div class="paragraph">
+<p>On SCCP management page, click on pencil against the 'Congestion control: blocking of outgoing messages' property and text box becomes editable.
 Change value and save.</p>
 </div>
 </div>
@@ -2151,7 +2382,7 @@ Between two Rules with GT digits, both having no wildcards, the one with the sho
 For example, Digit1 "123456" will be above Digit2 "1234567890" and this will be above Digit3 "999/*</p>
 </li>
 <li>
-<p>Rules with GT digits having the wildcard "?" are always above digits having the wildcard "*". For example, Digit1 "800/????/9" will be above Digit2 "999/*</p>
+<p>Rules with GT digits having the wildcard "?" are always above digits having the wildcard "<strong>". For example, Digit1 "800/????/9" will be above Digit2 "999/</strong></p>
 </li>
 <li>
 <p>Between Rules with two GT digits both having wildcard "?", the one with the least number of wildcard "?" is at the top of the list.
@@ -2159,12 +2390,9 @@ For example, Digit1 "800/????/9" will be above Digit2 "800/?????/9"</p>
 </li>
 <li>
 <p>Between Rules with two GT digits both having an equal number of wildcard "?", the digit whose first appearance of "?" is after other, is at the top of the list.
-For example between Digit1 "80/??/0/???/9" and Digit 2 "800/?????/9", Digit2 is above Digit1.</p>
+For example between Digit1 "80/??/0/???/9" and Digit 2 "800/?????/9", Digit2 is above Digit1.				When a Rule is compared during Translation, comparison always starts from the top of the list.</p>
 </li>
 </ol>
-</div>
-<div class="paragraph">
-<p>When a Rule is compared during Translation, comparison always starts from the top of the list.</p>
 </div>
 </div>
 <div class="sect2">
@@ -3913,7 +4141,7 @@ EXAMPLES
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-04 10:53:48 WEST
+Last updated 2016-07-04 16:23:33 WEST
 </div>
 </div>
 </body>

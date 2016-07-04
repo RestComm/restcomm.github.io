@@ -22760,6 +22760,9 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <p><strong>http</strong>: 8080</p>
 </li>
 <li>
+<p><strong>https</strong>: 8443</p>
+</li>
+<li>
 <p><strong>sip/udp</strong>: 5080</p>
 </li>
 <li>
@@ -22780,12 +22783,15 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </ul>
 </div>
 <div class="paragraph">
-<p>If you use -e USE_STANDARD_PORTS, RestComm will binds to the ip address of the host and following ports:</p>
+<p>If you use -e USE_STANDARD_SIP_PORTS -e USE_STANDARD_HTTP_PORTS, RestComm will binds to the ip address of the host and following ports:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
 <p><strong>http</strong>: 80</p>
+</li>
+<li>
+<p><strong>https</strong>: 443</p>
 </li>
 <li>
 <p><strong>sip/udp</strong>: 5060</p>
@@ -22807,11 +22813,14 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p><strong>To specify additional custom port connectors use -e ADDITIONAL_CONNECTOR_1=second-sip-udp:5090  -e ADDITIONAL_CONNECTOR_2=second-sip-tcpp:5090 etc.More info <a href="http://documentation.telestax.com/core/sip_servlets/SIP_Servlets_Server_User_Guide.html">HERE</a></strong></p>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-04 10:37:27 WEST
+Last updated 2016-07-04 16:08:54 WEST
 </div>
 </div>
 <footer>
