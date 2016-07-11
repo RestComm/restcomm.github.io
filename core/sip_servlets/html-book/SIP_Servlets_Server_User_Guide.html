@@ -437,6 +437,63 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_bsssc_binary_sip_servlets_server_configuring">2.3. Sip Connectors</a></li>
 </ul>
 </li>
+<li><a href="#_sssicar_sip_servlets_server_application_router">3. Application Router</a>
+<ul class="sectlevel2">
+<li><a href="#_tsdar_default_application_router">3.1. Default Application Router</a></li>
+<li><a href="#_tsear_echarts_application_router">3.2. DFC Application Router</a></li>
+</ul>
+</li>
+<li><a href="#_ssea_sip_servlet_example_applications">4. SIP Servlet Example Applications</a>
+<ul class="sectlevel2">
+<li><a href="#_sfss_services_for_sip_servlets">4.1. Operating the Example Applications</a></li>
+</ul>
+</li>
+<li><a href="#_ssfjcs_ss_for_jboss_clustering_support">5. Understanding Restcomm  High Availabilty</a>
+<ul class="sectlevel2">
+<li><a href="#_sslb_mss_load_balancer">5.1. Load Balancer</a></li>
+<li><a href="#_ssfjfs_ss_gracefulshutdown">5.2. Restcomm Graceful Shutdown</a></li>
+</ul>
+</li>
+<li><a href="#_emom_enterprise_monitoring_operations_management">6. Enterprise Monitoring and Management</a>
+<ul class="sectlevel2">
+<li><a href="#jmx-monitoring">6.1. JMX Monitoring</a></li>
+</ul>
+</li>
+<li><a href="#_ssecurity_sip_servlet_security">7. Security</a>
+<ul class="sectlevel2">
+<li><a href="#_sss_sip_servlet_security">7.1. SIP Servlets Application Security</a></li>
+<li><a href="#_sss_tls">7.2. TLS</a></li>
+</ul>
+</li>
+<li><a href="#_afotsss_advanced_features_of_the_sip_servlets_server">8. Advanced Features of the SIP Servlets Server</a>
+<ul class="sectlevel2">
+<li><a href="#_mipbx_media_support">8.1. Media Support</a></li>
+<li><a href="#_sscacc_mss_concurrency_and_congestion_control">8.2. Concurrency and Congestion Control</a></li>
+<li><a href="#_mssstun_mss_stun">8.3. STUN Support</a></li>
+<li><a href="#_sscacc_mss_jsr289_extensions">8.4. Restcomm vendor-specific Extensions to JSR 289</a></li>
+<li><a href="#_stf_cdi_telco_framework">8.5. CDI Telco Framework</a></li>
+<li><a href="#_ssds_diameter_support">8.6. Diameter Support</a></li>
+<li><a href="#_saimse_sip_and_ims_extensions">8.7. SIP and IMS Extensions</a></li>
+<li><a href="#_ss_jslee_interop">8.8. SIP Servlets - JAIN SLEE Interoperability</a></li>
+<li><a href="#eclipse-ide-tools">8.9. Eclipse IDE Tools</a></li>
+</ul>
+</li>
+<li><a href="#_bp_best_practices">9. Best Practices</a>
+<ul class="sectlevel2">
+<li><a href="#_bp_best_practices_perf_tips">9.1. Restcomm SIP Servlets Performance Tips</a></li>
+<li><a href="#_bp_best_practices_nat">9.2. NAT Traversal</a></li>
+</ul>
+</li>
+<li><a href="#_appendix">10. Apendix</a>
+<ul class="sectlevel2">
+<li><a href="#_install_configure_jdk">10.1. Java Development Kit (): Installing, Configuring and Running</a></li>
+</ul>
+</li>
+<li><a href="#_bp_jsr289_errata">11. JSR 289 Errata</a>
+<ul class="sectlevel2">
+<li><a href="#_errata_deviations">11.1. Restcomm SIP Servlets Deviations from JSR 289</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -1354,9 +1411,13 @@ Below is an extract :</p>
 A naming convention should be followed for the name attribute of the new socket-binding.
 The convention is &lt;name&gt;-sip-&lt;protocol&gt;. By example,</p>
 </div>
+<div class="exampleblock">
+<div class="content">
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-xml" data-lang="xml">	&lt;socket-binding name="second-sip-udp" port="5080"/&gt;</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="dlist">
@@ -1570,7 +1631,7 @@ For example, the application router cannot modify a request or send a response.<
 <p>See the example chapters for more information about the Application Router Configuration for SIP Restcomm SIP Servlets for JBoss AS7</p>
 </div>
 <div class="paragraph">
-<p><a href="#_sfss_services_for_sip_servlets">[_sfss_services_for_sip_servlets]</a></p>
+<p><a href="#_sfss_services_for_sip_servlets">Operating the Example Applications</a></p>
 </div>
 </td>
 </tr>
@@ -1720,98 +1781,149 @@ The purge may prevent excessive memory usage for apps that cancel most of the ti
 </dd>
 </dl>
 </div>
-</div>
-<div class="sect3">
-<h4 id="_bsssc_binary_sip_servlets_server_configuring_logging"><a class="anchor" href="#_bsssc_binary_sip_servlets_server_configuring_logging"></a>2.3.3. SIP Servlets Server Logging</h4>
-<div class="paragraph">
-<p>Logging is an important part of working with Restcomm SIP Servlets.
-There are a few files that you need to be familiar with in order to successfully troubleshoot and adapt Restcomm SIP Servlets server monitoring and logging to your environment.</p>
-</div>
-<div class="paragraph">
-<div class="title">Logging Files for Restcomm SIP Servlets for JBoss AS7</div>
-<p>$JBOSS/standalone/configuration/logging.properties</p>
-</div>
-<div class="paragraph">
-<p>$JBOSS/standalone/configuration/mss-sip-stack.properties</p>
-</div>
-<div class="paragraph">
-<p>$JBOSS/standalone/configuration/standalone-sip.xml</p>
-</div>
-<div class="exampleblock">
-<div class="title">Example 5. Setting the log file name in $JBOSS/standalone/configuration/standalone-sip.xml</div>
+<div id="_bsssc_binary_sip_servlets_server_configuring_logging" class="literalblock">
 <div class="content">
-<div class="listingblock">
+<pre>== SIP Servlets Server Logging</pre>
+</div>
+</div>
+<div class="literalblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml"> &lt;/formatter&gt;
+<pre>Logging is an important part of working with Restcomm SIP Servlets.
+There are a few files that you need to be familiar with in order to successfully troubleshoot and adapt Restcomm SIP Servlets server monitoring and logging to your environment.</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>.Logging Files for Restcomm SIP Servlets for JBoss AS7
+$JBOSS/standalone/configuration/logging.properties</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$JBOSS/standalone/configuration/mss-sip-stack.properties</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$JBOSS/standalone/configuration/standalone-sip.xml</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>.Setting the log file name in $JBOSS/standalone/configuration/standalone-sip.xml
+====
+[source,xml]
+----</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre> &lt;/formatter&gt;
 &lt;file relative-to="jboss.server.log.dir" path="server.log"/&gt;
 &lt;suffix value=".yyyy-MM-dd"/&gt;
-&lt;append value="true"/&gt;</code></pre>
+&lt;append value="true"/&gt;
+----
+====</pre>
 </div>
 </div>
+<div class="literalblock">
+<div class="content">
+<pre>The configuration above produces SIP logs that can be found in the  $JBOSS_HOME/standalone/log directory.
+Below is an extract of the log files.</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>The configuration above produces SIP logs that can be found in the  $JBOSS_HOME/standalone/log directory.
-Below is an extract of the log files.</p>
+<div class="literalblock">
+<div class="content">
+<pre>----</pre>
 </div>
-<div class="listingblock">
+</div>
+<div class="literalblock">
 <div class="content">
 <pre>                       server.log.2012-08-14  server.log.2012-08-24
 server.log             server.log.2012-08-16  server.log.2012-08-25
 server.log.2012-08-07  server.log.2012-08-21  server.log.2012-08-26
-server.log.2012-08-13  server.log.2012-08-22</pre>
+server.log.2012-08-13  server.log.2012-08-22
+----</pre>
 </div>
 </div>
-<div class="paragraph">
-<div class="title">Logging Files for Restcomm SIP Servlets for Tomcat</div>
-<p>If you are working with Tomcat, the log configuration files are located in the $CATALINA_HOME/conf/ directory.
-The log4j configuration file is located in $CATALINA_HOME/lib/ directory</p>
-</div>
-<div class="paragraph">
-<p>$CATALINA_HOME/conf/logging.properties</p>
-</div>
-<div class="paragraph">
-<p>$CATALINA_HOME/conf/mss-sip-stack.properties</p>
-</div>
-<div class="paragraph">
-<p>$CATALINA_HOME/conf/server.xml</p>
-</div>
-<div class="paragraph">
-<p>$CATALINA_HOME/lib/log4j.xml</p>
-</div>
-<div class="exampleblock">
-<div class="title">Example 6. Setting the log file name $CATALINA_HOME/conf/server.xml</div>
+<div class="literalblock">
 <div class="content">
-<div class="listingblock">
+<pre>.Logging Files for Restcomm SIP Servlets for Tomcat
+If you are working with Tomcat, the log configuration files are located in the $CATALINA_HOME/conf/ directory.
+The log4j configuration file is located in $CATALINA_HOME/lib/ directory</pre>
+</div>
+</div>
+<div class="literalblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
+<pre>$CATALINA_HOME/conf/logging.properties</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$CATALINA_HOME/conf/mss-sip-stack.properties</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$CATALINA_HOME/conf/server.xml</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$CATALINA_HOME/lib/log4j.xml</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>.Truncated Sample Configuration from Server.xml
+.Setting the log file name $CATALINA_HOME/conf/server.xml
+====
+[source,xml]
+----</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
                prefix="localhost_access_log." suffix=".txt"
-               pattern="%h %l %u %t &amp;quot;%r&amp;quot; %s %b" resolveHosts="false"/&gt;</code></pre>
+               pattern="%h %l %u %t &amp;quot;%r&amp;quot; %s %b" resolveHosts="false"/&gt;
+----
+====</pre>
 </div>
 </div>
-</div>
-</div>
-<div class="exampleblock">
-<div class="title">Example 7. Configuring the log file name $CATALINA_HOME/lib/log4j.xml</div>
+<div class="literalblock">
 <div class="content">
-<div class="listingblock">
+<pre>.Truncated Sample Configuration from log4j.xml
+.Configuring the log file name $CATALINA_HOME/lib/log4j.xml
+====
+[source,xml]
+----</pre>
+</div>
+</div>
+<div class="literalblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"&gt;
+<pre>&lt;log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"&gt;
   &lt;appender name="rolling-file" class="org.apache.log4j.RollingFileAppender"&gt;
     &lt;param name="file" value="${catalina.home}/logs/sip-server.log"/&gt;
-    &lt;param name="MaxFileSize" value="1000KB"/&gt;</code></pre>
+    &lt;param name="MaxFileSize" value="1000KB"/&gt;
+----
+====</pre>
 </div>
 </div>
+<div class="literalblock">
+<div class="content">
+<pre>The result of the extracted configuration above that is taken from the log4j.xml file  and can be found in the $CATALINA_HOME/logs directory.</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>The result of the extracted configuration above that is taken from the log4j.xml file  and can be found in the $CATALINA_HOME/logs directory.</p>
+<div class="literalblock">
+<div class="content">
+<pre>JAIN-SIP Stack Logging</pre>
 </div>
-<div class="paragraph">
-<p>JAIN-SIP Stack Logging</p>
 </div>
-<div class="paragraph">
-<p>There are two separate levels of logging:</p>
+<div class="literalblock">
+<div class="content">
+<pre>There are two separate levels of logging:</pre>
+</div>
 </div>
 <div class="ulist">
 <ul>
@@ -1820,73 +1932,96 @@ The log4j configuration file is located in $CATALINA_HOME/lib/ directory</p>
 </li>
 <li>
 <p>Logging of the JAIN SIP stack, which is configured through the container logging and the SIP stack properties themselves</p>
+<div class="literalblock">
+<div class="content">
+<pre>You can setup the logging so that the JAIN SIP Stack will log into the container logs.</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>To use LOG4J in JAIN SIP Stack in Tomcat, you need to define a category in [path]_CATALINE_HOME/lib/jboss-log4j.xml_ and set it to `DEBUG`.</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>.Configuring the JAIN SIP Stack to log into the Tomcat Container's logs
+====
+[source,xml]
+----</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>                        &lt;category name="gov.nist"&gt;
+                        &lt;priority value="DEBUG"/&gt;
+                        &lt;/category&gt;
+----
+====</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>To use LOG4J in JAIN SIP Stack in JBoss, you need to define a logger in [path]_JBOSS_HOME/standalone/configuration/standalone-sip.xml_ and set it to `DEBUG`.</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>.Configuring the JAIN SIP Stack to log into the JBoss Container's logs
+====
+[source,xml]
+----</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>                        &lt;logger category="gov.nist"&gt;
+                		&lt;level name="DEBUG"/&gt;
+            		&lt;/logger&gt;
+----
+====</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>For this category to be used in Restcomm SIP Servlets, you need to specify it in [path]_JBOSS_HOME/standalone/configuration/mss-sip-stack.properties_ or [path]_CATALINE_HOME/conf/mss-sip-stack.properties_, add the `gov.nist.javax.sip.LOG4J_LOGGER_NAME=gov.nist` property, and set the `gov.nist.javax.sip.TRACE_LEVEL=LOG4J` property.</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>====
+**NOTE**
+When using ``loadbalanceraddress`` algorithm for LB it is necessary to add the following at ``mss-sip-stack.properties`` file for the keepalive mechanism:</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>----
+org.mobicents.ha.javax.sip.LoadBalancerHeartBeatingServiceClassName=org.mobicents.ha.javax.sip.MultiNetworkLoadBalancerHeartBeatingServiceImpl
+----</pre>
+</div>
+</div>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>You can setup the logging so that the JAIN SIP Stack will log into the container logs.</p>
-</div>
-<div class="paragraph">
-<p>To use LOG4J in JAIN SIP Stack in Tomcat, you need to define a category in <em class="path">CATALINE_HOME/lib/jboss-log4j.xml</em> and set it to <code>DEBUG</code>.</p>
-</div>
-<div class="exampleblock">
-<div class="title">Example 8. Configuring the JAIN SIP Stack to log into the Tomcat Container&#8217;s logs</div>
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">                        &lt;category name="gov.nist"&gt;
-                        &lt;priority value="DEBUG"/&gt;
-                        &lt;/category&gt;</code></pre>
 </div>
 </div>
 </div>
 </div>
-<div class="paragraph">
-<p>To use LOG4J in JAIN SIP Stack in JBoss, you need to define a logger in <em class="path">JBOSS_HOME/standalone/configuration/standalone-sip.xml</em> and set it to <code>DEBUG</code>.</p>
-</div>
-<div class="exampleblock">
-<div class="title">Example 9. Configuring the JAIN SIP Stack to log into the JBoss Container&#8217;s logs</div>
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">                        &lt;logger category="gov.nist"&gt;
-                		&lt;level name="DEBUG"/&gt;
-            		&lt;/logger&gt;</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>For this category to be used in Restcomm SIP Servlets, you need to specify it in <em class="path">JBOSS_HOME/standalone/configuration/mss-sip-stack.properties</em> or <em class="path">CATALINE_HOME/conf/mss-sip-stack.properties</em>, add the <code>gov.nist.javax.sip.LOG4J_LOGGER_NAME=gov.nist</code> property, and set the <code>gov.nist.javax.sip.TRACE_LEVEL=LOG4J</code> property.</p>
-</div>
-<div class="exampleblock">
-<div class="content">
-<div class="paragraph">
-<p><strong>NOTE</strong>
-When using <code>loadbalanceraddress</code> algorithm for LB it is necessary to add the following at <code>mss-sip-stack.properties</code> file for the keepalive mechanism:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>org.mobicents.ha.javax.sip.LoadBalancerHeartBeatingServiceClassName=org.mobicents.ha.javax.sip.MultiNetworkLoadBalancerHeartBeatingServiceImpl</pre>
-</div>
-</div>
-<div id="_sssicar_sip_servlets_server_application_router" class="paragraph">
-<p>= Application Router</p>
-</div>
+<div class="sect1">
+<h2 id="_sssicar_sip_servlets_server_application_router"><a class="anchor" href="#_sssicar_sip_servlets_server_application_router"></a>3. Application Router</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Application Routing is performed within the Restcomm Sip Servlets container by the Default Application Router.
 The following sections describe the Default Application Router, and how other JSR 289 compliant Application Router implementations can be installed.</p>
 </div>
-<div id="_tsdar_default_application_router" class="paragraph">
-<p>= Default Application Router</p>
-</div>
+<div class="sect2">
+<h3 id="_tsdar_default_application_router"><a class="anchor" href="#_tsdar_default_application_router"></a>3.1. Default Application Router</h3>
 <div class="paragraph">
 <p>The Application Router is called by the container to select a SIP Servlet application to service an initial request.
 It embodies the logic used to choose which applications to invoke.</p>
 </div>
-<div id="_tsdar_application_router_role" class="paragraph">
-<p>== Role of the Application Router</p>
-</div>
+<div class="sect3">
+<h4 id="_tsdar_application_router_role"><a class="anchor" href="#_tsdar_application_router_role"></a>3.1.1. Role of the Application Router</h4>
 <div class="paragraph">
 <p>An Application Router is required for a container to function, but it is a separate logical entity from the container.
 The Application Router is responsible for application selection and does not implement application logic.
@@ -1908,15 +2043,14 @@ Giving the deployer control over application composition is desirable because th
 <p>Furthermore, the SIP Servlets specification intentionally allows the Application Router implementation to consult arbitrary information or data stores.
 This is because the deployer maintains subscriber information and this information is often private and valuable.</p>
 </div>
-<div id="_tsdar_mobicents_default_application_router" class="paragraph">
-<p>== Restcomm Default Application Router</p>
 </div>
+<div class="sect3">
+<h4 id="_tsdar_mobicents_default_application_router"><a class="anchor" href="#_tsdar_mobicents_default_application_router"></a>3.1.2. Restcomm Default Application Router</h4>
 <div class="paragraph">
 <p>Restcomm SIP Servlets provides an implementation of the Default Application Router (DAR) as defined in the SIP Servlets 1.1 specification, Appendix C.</p>
 </div>
-<div id="_tsdar_dar_configuration_file" class="paragraph">
-<p>=== The DAR Configuration File</p>
-</div>
+<div class="sect4">
+<h5 id="_tsdar_dar_configuration_file"><a class="anchor" href="#_tsdar_dar_configuration_file"></a>The DAR Configuration File</h5>
 <div class="paragraph">
 <p>The Default Application Router (DAR) obtains its operational parameters from a  configuration text file that is modeled as a Java properties file. The configuration file  contains the information needed by the Application Router to select which SIP Servlet application will handle an incoming initial request.</p>
 </div>
@@ -2052,8 +2186,9 @@ If it does not, it is skipped.</p>
 <div class="paragraph">
 <p>only incoming initial requests with a From Header with a SIP URI that belongs to the sip-servlets.com domain will be passed to the SimpleApplication.</p>
 </div>
-</div>
-</div>
+<div class="exampleblock">
+<div class="title">Example 5. DIRECTION Example</div>
+<div class="content">
 <div class="paragraph">
 <p>In this example, two applications are declared for the <code>INVITE</code>   request.
 The <code>LocationServiceApplication</code> is called for requests coming from outside the container, but it will not be called for the requests initiated by the UAC application <code>Click2DialApplication</code>.</p>
@@ -2069,11 +2204,11 @@ The <code>LocationServiceApplication</code> is called for requests coming from o
 <div class="paragraph">
 <p>This type of configuration is useful in cases where different application must be responsible for both requests initiated by the container,  and external requests received by the container.</p>
 </div>
+</div>
+</div>
 <div class="exampleblock">
+<div class="title">Example 6. ORIGINATING/TERMINATING DAR Example</div>
 <div class="content">
-
-</div>
-</div>
 <div class="paragraph">
 <p>In this example, the DAR is configured to invoke two applications on receipt of an INVITE request; one each in the originating and the terminating halves.
 The applications are identified by their application deployment descriptor names.</p>
@@ -2087,14 +2222,13 @@ The applications are identified by their application deployment descriptor names
 <p>For this example, the returned subscriber identity is the URI from each application&#8217;s  <code>From</code> and <code>To</code> headers respectively.
 The DAR does not return any route to the container, and maintains the invocation state in the <code>stateInfo</code> as the index of the last application in the list.</p>
 </div>
-<div class="exampleblock">
-<div class="content">
-<div class="paragraph">
-<p>=== Routing of SIP Messages to Applications</p>
 </div>
-<div class="paragraph">
-<p>==== Initial Requests and Application Selection Process</p>
 </div>
+</div>
+<div class="sect4">
+<h5 id="routing-of-sip-messages-to-applications"><a class="anchor" href="#routing-of-sip-messages-to-applications"></a>Routing of SIP Messages to Applications</h5>
+<div class="sect5">
+<h6 id="initial-requests-and-application-selection-process"><a class="anchor" href="#initial-requests-and-application-selection-process"></a>Initial Requests and Application Selection Process</h6>
 <div class="paragraph">
 <p>Initial Requests are those that can essentially be dialog creating (such as, <code>INVITE</code>, <code>SUBSCRIBE</code> and  <code>NOTIFY</code>),  and not part of an already existing dialog.</p>
 </div>
@@ -2114,8 +2248,9 @@ Refer to Appendix B, Definition of an Initial Request in the SIP Servlets 1.1 sp
 </tr>
 </table>
 </div>
-</div>
-</div>
+<div class="exampleblock">
+<div class="title">Example 7. INVITE Routing</div>
+<div class="content">
 <div class="paragraph">
 <p>The following example describes how the DAR routes an INVITE to two applications  deployed in a container.
 The applications in this example are a Location Service and a Call Blocking application.</p>
@@ -2187,11 +2322,11 @@ The application rejects the call with a "Forbidden" response.</p>
 <p>The path  the <code>INVITE</code> has taken (that is, LocationService to  CallBlocking) is called the application path.
 The routing of the responses will now occur as explained in the next section.</p>
 </div>
-<div class="exampleblock">
-<div class="content">
-<div class="paragraph">
-<p>==== Response Routing</p>
 </div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="response-routing"><a class="anchor" href="#response-routing"></a>Response Routing</h6>
 <div class="paragraph">
 <p>Responses always follow the reverse of the path taken by the corresponding request.
 In our case, the Forbidden response will first go back to the LocationService, and then back to the caller.
@@ -2214,9 +2349,9 @@ The Call Blocking application cannot just do nothing with the request and expect
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>==== Subsequent Requests</p>
 </div>
+<div class="sect5">
+<h6 id="subsequent-requests"><a class="anchor" href="#subsequent-requests"></a>Subsequent Requests</h6>
 <div class="paragraph">
 <p>Subsequent requests are all requests that are not Initial.</p>
 </div>
@@ -2227,9 +2362,11 @@ Now, according to the SIP specification (RFC 3261), it sends an ACK.
 The ACK arrives at the container, and is not a dialog creating request and is already part of an ongoing dialog (early dialog) so the request is detected as a Subsequent request and will follow the application path created by the initial request.
 The ACK will go through Location Service, Call Blocking, and finally to the callee.</p>
 </div>
-<div id="_tsdar_limitations" class="paragraph">
-<p>== Limitations of the Default Application Router</p>
 </div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_tsdar_limitations"><a class="anchor" href="#_tsdar_limitations"></a>3.1.3. Limitations of the Default Application Router</h4>
 <div class="paragraph">
 <p>The DAR  is a minimalist Application Router implementation that is part of the reference implementation.
 While it could be used instead of a production Application Router, it offers no processing logic except for  the declaration of the application order.</p>
@@ -2238,18 +2375,18 @@ While it could be used instead of a production Application Router, it offers no 
 <p>In real world deployments, the Application Router plays an extremely important role in application orchestration and composition.
 It is likely that the Application Router would  make use of complex rules and diverse data repositories in future implementations.</p>
 </div>
-<div id="_tsear_echarts_application_router" class="paragraph">
-<p>= DFC Application Router</p>
 </div>
-<div class="paragraph">
-<p>== Description of DFC Application Router</p>
 </div>
+<div class="sect2">
+<h3 id="_tsear_echarts_application_router"><a class="anchor" href="#_tsear_echarts_application_router"></a>3.2. DFC Application Router</h3>
+<div class="sect3">
+<h4 id="description-of-dfc-application-router"><a class="anchor" href="#description-of-dfc-application-router"></a>3.2.1. Description of DFC Application Router</h4>
 <div class="paragraph">
 <p>Instead of using the Restcomm Default Application Router, any SIP Servlets 1.1 compliant Application Router can be used, including the eCharts <a href="http://echarts.org/EChartsSipServletManual/sip-echartsse4.html#x6-140004.1">DFC Application Router</a>.</p>
 </div>
-<div class="paragraph">
-<p>== Installing the DFC Application Router</p>
 </div>
+<div class="sect3">
+<h4 id="installing-the-dfc-application-router"><a class="anchor" href="#installing-the-dfc-application-router"></a>3.2.2. Installing the DFC Application Router</h4>
 <div class="paragraph">
 <p>Detailed instructions are available from <a href="http://echarts.org/Blog/Running-E4SS-apps-on-Mobicents-SIP-Servlets.html">the eCharts website</a>.
 The following procedure describe how to install the eCharts DFC Application Router (DFCAR) on a variety of SIP Servlet Server platforms.</p>
@@ -2329,9 +2466,13 @@ The following procedure describe how to install the eCharts DFC Application Rout
 </li>
 </ol>
 </div>
-<div id="_ssea_sip_servlet_example_applications" class="paragraph">
-<p>= SIP Servlet Example Applications</p>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ssea_sip_servlet_example_applications"><a class="anchor" href="#_ssea_sip_servlet_example_applications"></a>4. SIP Servlet Example Applications</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The SIP Servlet Server has a selection of examples that demonstrate particular capabilities of the server. <a href="#_tab_ssea_sip_servlet_example_applications">Available Examples</a> lists the available examples, their location, and a brief description about the functionality each example demonstrates.
 The examples can also provide a useful starting point for developing SIP Applications, therefore it is encouraged to experiment and adapt the base examples.
@@ -2416,11 +2557,16 @@ Each example is available in both binary and source formats.</p>
 </tr>
 </tbody>
 </table>
-<div id="_sfss_services_for_sip_servlets" class="paragraph">
-<p>= Operating the Example Applications</p>
-</div>
-</div>
-</div>
+<div class="sect2">
+<h3 id="_sfss_services_for_sip_servlets"><a class="anchor" href="#_sfss_services_for_sip_servlets"></a>4.1. Operating the Example Applications</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Important Information</div>
 <div class="paragraph">
 <p>Before trying out the examples in this section, you must have installed, configured and have Restcomm for JBoss or Restcomm for Tomcat AS7 running on your system.</p>
 </div>
@@ -2433,23 +2579,32 @@ Each example is available in both binary and source formats.</p>
 <div class="paragraph">
 <p><a href="#_getting_started_with_mss_tomcat_as7">Getting Started with Restcomm SIP Servlets for Tomcat 7</a></p>
 </div>
-<div class="exampleblock">
-<div class="content">
-<div id="_sfss_the_location_service" class="paragraph">
-<p>== The Location Service</p>
+</td>
+</tr>
+</table>
 </div>
+<div class="sect3">
+<h4 id="_sfss_the_location_service"><a class="anchor" href="#_sfss_the_location_service"></a>4.1.1. The Location Service</h4>
 <div class="paragraph">
 <p>The Restcomm Location Service contains a list of mappings of request URIs to destination addresses.
 When the Location Service receives a request, it performs a lookup on that mapping and proxies the request simultaneously to the destination address (or addresses) associated with that URI.</p>
 </div>
-</div>
-</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">The Location Service Mappings Cannot Currently Be Configured</div>
 <div class="paragraph">
 <p>The Location Service currently performs a lookup on a hard-coded list of addresses.
 This model is evolving toward the eventual use of a database.</p>
 </div>
-<div class="exampleblock">
-<div class="content">
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Regardless of whether you are using the JBoss Application Server or the Tomcat Servlet Container as the Servlets Server, the application, container and Location Service perform the following steps:</p>
 </div>
@@ -2489,7 +2644,7 @@ status code; the second proxy is then canceled.</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
+<div id="_sfss_binary_location_service__installing_configuring_and_running" class="paragraph">
 <div class="title">Downloading</div>
 <p>The Location Service is comprised of two archive files, a Web Archive (WAR) and a Default Application Router (DAR) configuration file, which you need to add to your installed SIP Servlets Server.
 For more information about WAR files, refer to the <a href="http://www.jboss.org/file-access/default/members/jbossas/freezone/docs/Server_Configuration_Guide/beta422/html/index.html">JBoss Application Server Administration and Development Guide</a>.
@@ -2526,6 +2681,7 @@ directory.</p>
 </dl>
 </div>
 <div class="dlist">
+<div class="title">Configuration</div>
 <dl>
 <dt class="hdlist1">Restcomm  for JBoss</dt>
 <dd>
@@ -2533,8 +2689,9 @@ directory.</p>
 </dd>
 </dl>
 </div>
-</div>
-</div>
+<div class="exampleblock">
+<div class="title">Example 8. Editing MSS for JBoss&#8217;s standalone-sip.xml for the Location Service</div>
+<div class="content">
 <div class="paragraph">
 <p>In the $JBOSS_HOME/standalone/configuration/standalone-sip.xml file search for the line</p>
 </div>
@@ -2553,8 +2710,8 @@ application-router="dars/mobicents-dar.properties"</pre>
 application-router="dars/locationservice-dar.properties"</pre>
 </div>
 </div>
-<div class="exampleblock">
-<div class="content">
+</div>
+</div>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Restcomm  for Tomcat</dt>
@@ -2566,8 +2723,9 @@ Add an attribute to it called <code>darConfigurationFileLocation</code>, and set
 </dd>
 </dl>
 </div>
-</div>
-</div>
+<div class="exampleblock">
+<div class="title">Example 9. Editing MSS for Tomcat&#8217;s server.xml for the Location Service</div>
+<div class="content">
 <div class="paragraph">
 <p>In the $JBOSS_HOME/standalone/configuration/standalone-sip.xml file search for the line</p>
 </div>
@@ -2586,8 +2744,8 @@ application-router="dars/mobicents-dar.properties"</pre>
 application-router="dars/locationservice-dar.properties"</pre>
 </div>
 </div>
-<div class="exampleblock">
-<div class="content">
+</div>
+</div>
 <div class="paragraph">
 <div class="title">Running</div>
 <p>Once the WAR and DAR files have been placed in the right directories, and the JBoss Application Server or Tomcat Servlet Container knows where to find them (which you specified in the <em class="path">standalone-sip.xml</em> and <em class="path">server.xml</em> file), then you should go ahead and run the SIP Servlets Server.</p>
@@ -2611,9 +2769,9 @@ If the Location Service has been set up correctly and is running, the first phon
 </li>
 </ol>
 </div>
-<div id="_sfss_the_diameter_event_changing_service" class="paragraph">
-<p>== The Diameter Event-Changing Service</p>
 </div>
+<div class="sect3">
+<h4 id="_sfss_the_diameter_event_changing_service"><a class="anchor" href="#_sfss_the_diameter_event_changing_service"></a>4.1.2. The Diameter Event-Changing Service</h4>
 <div class="paragraph">
 <p>The Diameter Event-Changing Service is based on the Location Service, which performs call-charging at a fixed rate.
 Upon the initiation of a call, a debit of €10.00 occurs.
@@ -2651,9 +2809,8 @@ The callee may be registered at two locations identified by two SIP URIs: <code>
 </li>
 </ol>
 </div>
-<div id="_sfss_binary_diameter_event_changing_service__installing_configuring_and_running" class="paragraph">
-<p>=== Diameter Event-Changing Service: Installing, Configuring and Running</p>
-</div>
+<div class="sect4">
+<h5 id="_sfss_binary_diameter_event_changing_service__installing_configuring_and_running"><a class="anchor" href="#_sfss_binary_diameter_event_changing_service__installing_configuring_and_running"></a>Diameter Event-Changing Service: Installing, Configuring and Running</h5>
 <div class="paragraph">
 <p>Preparing your Restcomm for JBoss server to run the Diameter Event-Changing example requires downloading a WAR archive, a DAR archive, the Ericsson Charging Emulator, setting an attribute in JBoss&#8217;s <em class="path">standalone-sip.xml</em> configuration file, and then running JBoss AS.
 Detailed instructions in the section below.</p>
@@ -2723,6 +2880,7 @@ command to do the dirty work:</p>
 </ol>
 </div>
 <div class="dlist">
+<div class="title">Configuration</div>
 <dl>
 <dt class="hdlist1">Restcomm  for JBoss</dt>
 <dd>
@@ -2730,8 +2888,9 @@ command to do the dirty work:</p>
 </dd>
 </dl>
 </div>
-</div>
-</div>
+<div class="exampleblock">
+<div class="title">Example 10. Editing the standalone-sip.xml for the Diameter Event-Changer Service</div>
+<div class="content">
 <div class="paragraph">
 <p>In the $JBOSS_HOME/standalone/configuration/standalone-sip.xml file search for the line</p>
 </div>
@@ -2750,8 +2909,8 @@ application-router="dars/mobicents-dar.properties"</pre>
 application-router="dars/diametereventcharging-dar.properties"</pre>
 </div>
 </div>
-<div class="exampleblock">
-<div class="content">
+</div>
+</div>
 <div class="paragraph">
 <div class="title">Running</div>
 <p>The following procedure describes how to run the Diameter Event-Changing Service.</p>
@@ -2775,13 +2934,21 @@ Open a terminal, change the working directory to the location of the unzipped Ch
 <p>Using the Event-Changing service means, firstly, inserting some parameters into the Charging Emulator, and then, by using two SIP (soft)phones, calling one with the other.
 The following sequential instructions show you how.</p>
 </div>
-</div>
-</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">SIP (Soft)Phone? Which?</div>
 <div class="paragraph">
 <p>The Restcomm team recommends one of the following SIP phones, and has found that they work well: the 3CX Phone, the SJ Phone or the WengoPhone.</p>
 </div>
-<div class="exampleblock">
-<div class="content">
+</td>
+</tr>
+</table>
+</div>
 <div class="olist arabic">
 <div class="title">Procedure: Using the Diameter Event-Changing Service</div>
 <ol class="arabic">
@@ -2844,21 +3011,30 @@ Charging can, of course, be configured so that it is time-based.</p>
 </li>
 </ol>
 </div>
-<div id="_sfss_the_call_blocking_service" class="paragraph">
-<p>== The Call-Blocking Service</p>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_sfss_the_call_blocking_service"><a class="anchor" href="#_sfss_the_call_blocking_service"></a>4.1.3. The Call-Blocking Service</h4>
 <div class="paragraph">
 <p>The Restcomm Call-Blocking Service, upon receiving an <code>INVITE</code> request, checks to see whether the sender&#8217;s address is a blocked contact.
 If so, it returns a <code>FORBIDDEN</code> reply; otherwise, call setup proceeds as normal.</p>
 </div>
-</div>
-</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Blocked Contacts Cannot Currently Be Configured</div>
 <div class="paragraph">
 <p>Blocked contacts are currently hard-coded addresses.
 This model is evolving towards the eventual use of a database.</p>
 </div>
-<div class="exampleblock">
-<div class="content">
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Here is the current hard-coded list of blocked contacts:</p>
 </div>
@@ -2872,9 +3048,8 @@ This model is evolving towards the eventual use of a database.</p>
 </li>
 </ul>
 </div>
-<div id="_sfss_binary_call_blocking_service__installing_configuring_and_running" class="paragraph">
-<p>=== The Call-Blocking Service: Installing, Configuring and Running</p>
-</div>
+<div class="sect4">
+<h5 id="_sfss_binary_call_blocking_service__installing_configuring_and_running"><a class="anchor" href="#_sfss_binary_call_blocking_service__installing_configuring_and_running"></a>The Call-Blocking Service: Installing, Configuring and Running</h5>
 <div class="literalblock">
 <div class="content">
 <pre> </pre>
@@ -2923,6 +3098,7 @@ directory.</p>
 </dl>
 </div>
 <div class="dlist">
+<div class="title">Configuring</div>
 <dl>
 <dt class="hdlist1">Restcomm  for JBoss</dt>
 <dd>
@@ -2930,8 +3106,9 @@ directory.</p>
 </dd>
 </dl>
 </div>
-</div>
-</div>
+<div class="exampleblock">
+<div class="title">Example 11. Editing MSS for JBoss&#8217;s standalone-sip.xml for the Location Service</div>
+<div class="content">
 <div class="paragraph">
 <p>In the $JBOSS_HOME/standalone/configuration/standalone-sip.xml file search for the line</p>
 </div>
@@ -2950,8 +3127,8 @@ application-router="dars/mobicents-dar.properties"</pre>
 application-router="dars/call-blocking-servlet-dar.properties"</pre>
 </div>
 </div>
-<div class="exampleblock">
-<div class="content">
+</div>
+</div>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Restcomm  for Tomcat</dt>
@@ -2963,8 +3140,9 @@ Add an attribute to it called <code>darConfigurationFileLocation</code>, and set
 </dd>
 </dl>
 </div>
-</div>
-</div>
+<div class="exampleblock">
+<div class="title">Example 12. Editing MSS for Tomcat&#8217;s server.xml for the Location Service</div>
+<div class="content">
 <div class="paragraph">
 <p>In the $JBOSS_HOME/standalone/configuration/standalone-sip.xml file search for the line</p>
 </div>
@@ -2983,8 +3161,8 @@ application-router="dars/mobicents-dar.properties"</pre>
 application-router="dars/call-blocking-servlet-dar.properties"</pre>
 </div>
 </div>
-<div class="exampleblock">
-<div class="content">
+</div>
+</div>
 <div class="paragraph">
 <div class="title">Running</div>
 <p>Once the WAR and DAR files have been placed in the right directories, and the JBoss Application Server or Tomcat Servlet Container knows where to find them (which you specified in a <em class="path">server.xml</em> and the <em class="path">standalone-sip.xml</em>  files), then you should go ahead and run the SIP Servlets Server.</p>
@@ -3007,9 +3185,10 @@ The SIP softphone does not need to be registered.</p>
 </li>
 </ol>
 </div>
-<div id="_sfss_the_call_forwarding_service" class="paragraph">
-<p>== The Call-Forwarding Service</p>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_sfss_the_call_forwarding_service"><a class="anchor" href="#_sfss_the_call_forwarding_service"></a>4.1.4. The Call-Forwarding Service</h4>
 <div class="paragraph">
 <p>The Restcomm Call-Forwarding Service, upon receiving an <code>INVITE</code> request, checks to see whether the sender&#8217;s address is among those in a list of addresses which need to be forwarded.
 If so, then the Call-Forwarding Service acts as a Back-to-Back User Agent (B2BUA), and creates a new call leg to the destination.
@@ -3017,14 +3196,22 @@ When the response is received from the new call leg, it sends it an acknowledgme
 If, on the other hand, the server does not receive an <code>ACK</code>, then it tears down the new call leg with a <code>BYE</code>.
 Once the <code>BYE</code> is received, then it answers <code>OK</code> directly and sends the <code>BYE</code> to the new call leg.</p>
 </div>
-</div>
-</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Contacts to Forward Cannot Currently Be Configured</div>
 <div class="paragraph">
 <p>Contacts to forward are currently hard-coded addresses.
 This model is evolving toward the eventual use of a database.</p>
 </div>
-<div class="exampleblock">
-<div class="content">
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Here is the current hard-coded list of contacts to forward:</p>
 </div>
@@ -3038,9 +3225,8 @@ This model is evolving toward the eventual use of a database.</p>
 </li>
 </ul>
 </div>
-<div id="_sfss_binary_call_forwarding_service__installing_configuring_and_running" class="paragraph">
-<p>=== The Call-Forwarding Service: Installing, Configuring and Running</p>
-</div>
+<div class="sect4">
+<h5 id="_sfss_binary_call_forwarding_service__installing_configuring_and_running"><a class="anchor" href="#_sfss_binary_call_forwarding_service__installing_configuring_and_running"></a>The Call-Forwarding Service: Installing, Configuring and Running</h5>
 <div class="literalblock">
 <div class="content">
 <pre> </pre>
@@ -3084,6 +3270,7 @@ directory.</p>
 </dl>
 </div>
 <div class="dlist">
+<div class="title">Configuring</div>
 <dl>
 <dt class="hdlist1">Restcomm  for JBoss</dt>
 <dd>
@@ -3091,8 +3278,9 @@ directory.</p>
 </dd>
 </dl>
 </div>
-</div>
-</div>
+<div class="exampleblock">
+<div class="title">Example 13. Editing MSS for JBoss&#8217;s standalone-sip.xml for the Location Service</div>
+<div class="content">
 <div class="paragraph">
 <p>In the $JBOSS_HOME/standalone/configuration/standalone-sip.xml file search for the line</p>
 </div>
@@ -3111,8 +3299,8 @@ application-router="dars/mobicents-dar.properties"</pre>
 application-router="dars/call-forwarding-b2bua-servlet.properties"</pre>
 </div>
 </div>
-<div class="exampleblock">
-<div class="content">
+</div>
+</div>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Restcomm  for Tomcat</dt>
@@ -3124,8 +3312,9 @@ Add an attribute to it called <code>darConfigurationFileLocation</code>, and set
 </dd>
 </dl>
 </div>
-</div>
-</div>
+<div class="exampleblock">
+<div class="title">Example 14. Editing MSS for Tomcat&#8217;s server.xml for the Location Service</div>
+<div class="content">
 <div class="paragraph">
 <p>In the $JBOSS_HOME/standalone/configuration/standalone-sip.xml file search for the line</p>
 </div>
@@ -3144,8 +3333,8 @@ application-router="dars/mobicents-dar.properties"</pre>
 application-router="dars/call-forwarding-b2bua-servlet-dar.properties"</pre>
 </div>
 </div>
-<div class="exampleblock">
-<div class="content">
+</div>
+</div>
 <div class="paragraph">
 <div class="title">Running</div>
 <p>Once the WAR and DAR files have been placed in the right directories, and the JBoss Application Server or Tomcat Servlet Container knows where to find them (which you specified in a <em class="path">standalone-sip.xml</em> and <em class="path">server.xml</em>  files), then you should go ahead and run the SIP Servlets Server.</p>
@@ -3183,9 +3372,10 @@ The first phone, "forward-receiver", should now be ringing.</p>
 </li>
 </ol>
 </div>
-<div id="_sfss_the_call_controller_service" class="paragraph">
-<p>== The Call-Controller Service</p>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_sfss_the_call_controller_service"><a class="anchor" href="#_sfss_the_call_controller_service"></a>4.1.5. The Call-Controller Service</h4>
 <div class="paragraph">
 <p>The Call-Controller service is a composition of two other services: Call-Blocking and Call-Forwarding.
 Essentially, it performs the services of both call-forwarding and call-blocking.</p>
@@ -3193,24 +3383,31 @@ Essentially, it performs the services of both call-forwarding and call-blocking.
 <div class="ulist">
 <ul>
 <li>
-<p>To learn about how the Call-Blocking service works, refer to <a href="#_sfss_the_call_blocking_service">[_sfss_the_call_blocking_service]</a>.</p>
+<p>To learn about how the Call-Blocking service works, refer to <a href="#_sfss_the_call_blocking_service">The Call-Blocking Service</a>.</p>
 </li>
 <li>
-<p>To learn about how the Call-Forwarding service works, refer to <a href="#_sfss_the_call_forwarding_service">[_sfss_the_call_forwarding_service]</a>.</p>
+<p>To learn about how the Call-Forwarding service works, refer to <a href="#_sfss_the_call_forwarding_service">The Call-Forwarding Service</a>.</p>
 </li>
 </ul>
 </div>
-</div>
-</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Blocked Contacts and Contacts to Forward Cannot Currently Be Configured</div>
 <div class="paragraph">
 <p>Both the list of blocked contacts and the list of contacts to forward are currently both hard-coded.
 However, both of those models are evolving toward the eventual use of databases.</p>
 </div>
-<div class="exampleblock">
-<div class="content">
-<div id="_sfss_binary_call_controller_service__installing_configuring_and_running" class="paragraph">
-<p>=== The Call-Controller Service: Installing, Configuring and Running</p>
+</td>
+</tr>
+</table>
 </div>
+<div class="sect4">
+<h5 id="_sfss_binary_call_controller_service__installing_configuring_and_running"><a class="anchor" href="#_sfss_binary_call_controller_service__installing_configuring_and_running"></a>The Call-Controller Service: Installing, Configuring and Running</h5>
 <div class="paragraph">
 <p>The Call-Controller service requires the two WAR files for the Call-Blocking and Call-Forwarding services to be placed in the correct directory inside your Restcomm SIP Servlets Server binary installation.
 However, the Call-Controller service does <em>not</em>
@@ -3260,6 +3457,7 @@ directory.</p>
 </dl>
 </div>
 <div class="dlist">
+<div class="title">Configuring</div>
 <dl>
 <dt class="hdlist1">RRestcomm  for JBoss</dt>
 <dd>
@@ -3267,8 +3465,9 @@ directory.</p>
 </dd>
 </dl>
 </div>
-</div>
-</div>
+<div class="exampleblock">
+<div class="title">Example 15. Editing MSS for JBoss&#8217;s standalone-sip.xml for the Location Service</div>
+<div class="content">
 <div class="paragraph">
 <p>In the $JBOSS_HOME/standalone/configuration/standalone-sip.xml file search for the line</p>
 </div>
@@ -3287,8 +3486,8 @@ application-router="dars/mobicents-dar.properties"</pre>
 application-router="dars/call-forwarding-b2bua-servlet.properties"</pre>
 </div>
 </div>
-<div class="exampleblock">
-<div class="content">
+</div>
+</div>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Restcomm  for Tomcat</dt>
@@ -3300,8 +3499,9 @@ Add an attribute to it called <code>darConfigurationFileLocation</code>, and set
 </dd>
 </dl>
 </div>
-</div>
-</div>
+<div class="exampleblock">
+<div class="title">Example 16. Editing MSS for Tomcat&#8217;s server.xml for the Location Service</div>
+<div class="content">
 <div class="paragraph">
 <p>In the $JBOSS_HOME/standalone/configuration/standalone-sip.xml file search for the line</p>
 </div>
@@ -3320,8 +3520,8 @@ application-router="dars/mobicents-dar.properties"</pre>
 application-router="dars/call-controller-servlet-dar.properties"</pre>
 </div>
 </div>
-<div class="exampleblock">
-<div class="content">
+</div>
+</div>
 <div class="paragraph">
 <div class="title">Running</div>
 <p>Once the WAR and DAR files have been placed in the right directories, and the JBoss Application Server or Tomcat Servlet Container knows where to find them (which you specified in a <em class="path">server.xml</em> file), then you should go ahead and run the SIP Servlets Server.</p>
@@ -3402,7 +3602,7 @@ The first phone, <code>forward-receiver</code>, should now be ringing.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<a href="#_ssea_sip_servlet_example_applications">[_ssea_sip_servlet_example_applications]</a>
+<a href="#_ssea_sip_servlet_example_applications">SIP Servlet Example Applications</a>
 provides more information about other service examples available.
 </td>
 </tr>
@@ -3411,17 +3611,30 @@ provides more information about other service examples available.
 <div class="paragraph">
 <p><a href="concept-chapter-SS_click2call.adoc">Click To Call</a></p>
 </div>
-<div id="_ssfjcs_ss_for_jboss_clustering_support" class="paragraph">
-<p>= Understanding Restcomm  High Availabilty</p>
 </div>
 </div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ssfjcs_ss_for_jboss_clustering_support"><a class="anchor" href="#_ssfjcs_ss_for_jboss_clustering_support"></a>5. Understanding Restcomm  High Availabilty</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">High Availability in Restcomm for JBoss AS7</div>
 <div class="paragraph">
 <p>Clustering and Failover features as described below are not yet implemented in Restcomm for JBoss AS7.
 This guide will be updated when the feature becomes available.</p>
 </div>
-<div class="exampleblock">
-<div class="content">
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>High Availability</p>
 </div>
@@ -3464,9 +3677,8 @@ The same can be said of load balancing.
 The idea behind all the above mentioned techniques is to provide high availability to connecting clients connecting to applications running on Restcomm .
 In a nutshell, high availability englobes all the above mentioned techniques.</p>
 </div>
-<div id="_sslb_mss_load_balancer" class="paragraph">
-<p>= Load Balancer</p>
-</div>
+<div class="sect2">
+<h3 id="_sslb_mss_load_balancer"><a class="anchor" href="#_sslb_mss_load_balancer"></a>5.1. Load Balancer</h3>
 <div class="imageblock">
 <div class="content">
 <img src="./images/mss-MSSSIPLoadBalancer-dia-StarNetworkTopology.jpg" alt="mss MSSSIPLoadBalancer dia StarNetworkTopology">
@@ -3480,12 +3692,10 @@ Both Restcomm for JBoss and Restcomm for Tomcat servers can be used in conjuncti
 <div class="paragraph">
 <p>In terms of functionality, the SIP Load Balancer is a simple stateless proxy server that intelligently forwards SIP session requests and responses between User Agents (UAs) on a Wide Area Network (WAN), and SIP Servlets Server nodes, which are almost always located on a Local Area Network (LAN). All SIP requests and responses pass through the SIP Load Balancer.</p>
 </div>
-<div id="_sslb_binary_sip_load_balancer_installing_configuring_and_running" class="paragraph">
-<p>== SIP Load Balancer: Installing, Configuring and Running</p>
-</div>
-<div id="_sslb_binary_sip_load_balancer_preinstall_requirements_and_prerequisites" class="paragraph">
-<p>=== Pre-Install Requirements and Prerequisites</p>
-</div>
+<div class="sect3">
+<h4 id="_sslb_binary_sip_load_balancer_installing_configuring_and_running"><a class="anchor" href="#_sslb_binary_sip_load_balancer_installing_configuring_and_running"></a>5.1.1. SIP Load Balancer: Installing, Configuring and Running</h4>
+<div class="sect4">
+<h5 id="_sslb_binary_sip_load_balancer_preinstall_requirements_and_prerequisites"><a class="anchor" href="#_sslb_binary_sip_load_balancer_preinstall_requirements_and_prerequisites"></a>Pre-Install Requirements and Prerequisites</h5>
 <div class="dlist">
 <div class="title">Software Prerequisites</div>
 <dl>
@@ -3497,9 +3707,9 @@ The Restcomm SIP load balancer will work with a SIP Servlets-enabled JBoss Appli
 </dd>
 </dl>
 </div>
-<div id="_sslb_binary_sip_load_balancer_downloading" class="paragraph">
-<p>=== Downloading</p>
 </div>
+<div class="sect4">
+<h5 id="_sslb_binary_sip_load_balancer_downloading"><a class="anchor" href="#_sslb_binary_sip_load_balancer_downloading"></a>Downloading</h5>
 <div class="paragraph">
 <p>The load balancer is located in the <em class="path">sip-balancer</em> top-level directory of the Restcomm  distribution.
 You will find the following files in the directory:</p>
@@ -3516,16 +3726,16 @@ You will find the following files in the directory:</p>
 </dd>
 </dl>
 </div>
-<div id="_sslb_binary_sip_load_balancer_installing" class="paragraph">
-<p>=== Installing</p>
 </div>
+<div class="sect4">
+<h5 id="_sslb_binary_sip_load_balancer_installing"><a class="anchor" href="#_sslb_binary_sip_load_balancer_installing"></a>Installing</h5>
 <div class="paragraph">
 <p>The SIP load balancer executable JAR file can be extracted anywhere in the file system.
 It is recommended that the file is placed in the directory containing other JAR executables, so it can be easily located in the future.</p>
 </div>
-<div id="_sslb_binary_sip_load_balancer_configuring" class="paragraph">
-<p>=== Configuring</p>
 </div>
+<div class="sect4">
+<h5 id="_sslb_binary_sip_load_balancer_configuring"><a class="anchor" href="#_sslb_binary_sip_load_balancer_configuring"></a>Configuring</h5>
 <div class="paragraph">
 <p>Configuring the SIP load balancer and the two SIP Servlets-enabled Server nodes is described in <a href="#_sslb_configuring_the_sip_load_balancer_and_servlet_server_nodes">Procedure: Configuring the Restcomm  SIP Load Balancer and SIP Server Nodes</a>.</p>
 </div>
@@ -3535,14 +3745,12 @@ It is recommended that the file is placed in the directory containing other JAR 
 <li>
 <p>Configure lb.properties Configuration Properties File</p>
 <div class="paragraph">
-<p>Configure the SIP Load Balancer&#8217;s Configuration Properties file by substituting valid values for your personal setup. <a href="#_sslb_complete_sample_lb.properties_file">[_sslb_complete_sample_lb.properties_file]</a>  shows a sample <em class="path">lb.properties</em> file, with key element descriptions provided after the example.
+<p>Configure the SIP Load Balancer&#8217;s Configuration Properties file by substituting valid values for your personal setup. <a href="#_sslb_complete_sample_lb.properties_file">Complete Sample lb.properties File</a>  shows a sample <em class="path">lb.properties</em> file, with key element descriptions provided after the example.
 The lines beginning with the pound sign are comments.</p>
 </div>
-</li>
-</ol>
-</div>
-</div>
-</div>
+<div id="_sslb_complete_sample_lb.properties_file" class="exampleblock">
+<div class="title">Example 17. Complete Sample lb.properties File</div>
+<div class="content">
 <div class="listingblock">
 <div class="content">
 <pre>#  Load Balancer Settings
@@ -3665,10 +3873,7 @@ gov.nist.javax.sip.THREAD_POOL_SIZE = 64
 gov.nist.javax.sip.REENTRANT_LISTENER = true</pre>
 </div>
 </div>
-<div class="exampleblock">
-<div class="content">
-<div class="paragraph">
-<p>+</p>
+</div>
 </div>
 <div class="dlist">
 <dl>
@@ -3763,8 +3968,10 @@ For a comprehensive list of properties associated with the SIP Stack implementat
 </tr>
 </table>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
+</dd>
+</dl>
+</div>
+</li>
 <li>
 <p>Configure logging</p>
 <div class="paragraph">
@@ -3815,19 +4022,24 @@ Currently only one elector implementation is available, <code>org.mobicents.ha.j
 </li>
 </ol>
 </div>
-</dd>
-</dl>
-</div>
-</div>
-</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Configuration File Locations</div>
 <div class="paragraph">
 <p>On Restcomm for Tomcat server installations, <em class="path">server.xml</em> is located in <em class="path">&lt;install_directory&gt;/conf</em>.</p>
 </div>
 <div class="paragraph">
 <p>On Restcomm for JBoss server installations, the default <em class="path">standalone-sip.xml</em> configuration file is located in <em class="path">standalone/configuration</em> or the default <em class="path">domain-sip.xml</em> configuration file located in <em class="path">domain/configuration</em> for cluster configurations</p>
 </div>
-<div class="exampleblock">
-<div class="content">
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <div class="title">Easy Node Configuration with JMX</div>
 <p>Both SIP Servlet-enabled JBoss and Tomcat have  (Java Management Extensions) interfaces that allow for easy server configuration.
@@ -3848,12 +4060,10 @@ The JMX Console is available once the server has been started by navigating to <
 </dd>
 </dl>
 </div>
-<div class="paragraph">
-<p>==== Converged Load Balancing</p>
-</div>
-<div class="paragraph">
-<p>===== Apache HTTP Load Balancer</p>
-</div>
+<div class="sect5">
+<h6 id="converged-load-balancing"><a class="anchor" href="#converged-load-balancing"></a>Converged Load Balancing</h6>
+<div class="sect6">
+<h7 id="apache-http-load-balancer"><a class="anchor" href="#apache-http-load-balancer"></a>Apache HTTP Load Balancer</h7>
 <div class="paragraph">
 <p>The Restcomm SIP Load Balancer can work in concert with HTTP load balancers such as <code>mod_jk</code>.
 Whenever an HTTP session is bound to a particular node, an instruction is sent to the SIP Load Balancer to direct the SIP calls from the same application session to the same node.</p>
@@ -3866,9 +4076,8 @@ You can read more about configuring <code>mod_jk</code> with JBoss in your JBoss
 <p>Alternatively you may disable this behaviour and make the HTTP load balancer follow the decisions made by the SIP load balancer with the httpFollowsSip flag.
 This is  achieved by changing the jvmRoute part of the session ID cookie used internally by <code>mod_jk</code>.</p>
 </div>
-<div class="paragraph">
-<p>====== The httpFollowsSip flag</p>
-</div>
+<div class="sect7">
+<h8 id="the-httpfollowssip-flag"><a class="anchor" href="#the-httpfollowssip-flag"></a>The httpFollowsSip flag</h8>
 <div class="paragraph">
 <p>The <code>httpFollowsSip</code> flag in the service configuration makes the application server aware of how different mod_jk and SIP load balancers have assigned  request affinity for each application session.
 The application servers assign exactly one node to each Sip Servlets application session and this node is the node where the last SIP request associated with the application session has landed (decised by the SIP load balancer). Then the application server will actively update the session ID cookie (the jvmRoute part) of any HTTP request that arrives at  the wrong node.
@@ -3892,9 +4101,10 @@ It is disabled by default.</p>
      httpFollowsSip="true" /&gt;</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>===== Integrated HTTP Load Balancer</p>
 </div>
+</div>
+<div class="sect6">
+<h7 id="integrated-http-load-balancer"><a class="anchor" href="#integrated-http-load-balancer"></a>Integrated HTTP Load Balancer</h7>
 <div class="paragraph">
 <p>To use the integrated HTTP Load Balancer, no extra configuration is needed.
 If a unique <code>jvmRoute</code> is specified and enabled in each application server, it will behave exactly as the apache balancer.
@@ -3914,9 +4124,11 @@ If the desired behaviour group these requests, we can just make sure the affinit
 </div>
 <div class="title">Figure 15. Ensuring SIP and HTTP requests are being grouped by common affinity value.</div>
 </div>
-<div id="_sslb_binary_sip_load_balancer_running" class="paragraph">
-<p>=== Running</p>
 </div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_sslb_binary_sip_load_balancer_running"><a class="anchor" href="#_sslb_binary_sip_load_balancer_running"></a>Running</h5>
 <div class="olist arabic">
 <div class="title">Procedure: Running the SIP Load Balancer and SIP Server Nodes</div>
 <ol class="arabic">
@@ -3971,9 +4183,9 @@ Because there is more then one client node specified, unique listener ports must
 </li>
 </ol>
 </div>
-<div id="_sslb_binary_sip_load_balancer_testing" class="paragraph">
-<p>=== Testing</p>
 </div>
+<div class="sect4">
+<h5 id="_sslb_binary_sip_load_balancer_testing"><a class="anchor" href="#_sslb_binary_sip_load_balancer_testing"></a>Testing</h5>
 <div class="paragraph">
 <p>To test load balancing, the same application must be deployed manually on each node, and two SIP Softphones must be installed.</p>
 </div>
@@ -4015,9 +4227,9 @@ Notice that the call is handled by the second node.</p>
 </li>
 </ol>
 </div>
-<div id="_sslb_binary_sip_load_balancer_stopping" class="paragraph">
-<p>=== Stopping</p>
 </div>
+<div class="sect4">
+<h5 id="_sslb_binary_sip_load_balancer_stopping"><a class="anchor" href="#_sslb_binary_sip_load_balancer_stopping"></a>Stopping</h5>
 <div class="paragraph">
 <p>Assuming that you started the JBoss Application Server as a foreground process in the Linux terminal, the easiest way to stop it is by pressing the  key combination in the same terminal in which you started it.</p>
 </div>
@@ -4030,18 +4242,18 @@ Notice that the call is handled by the second node.</p>
 INFO: Stopping the sip forwarder</pre>
 </div>
 </div>
-<div id="_sslb_binary_sip_load_balancer_uninstalling" class="paragraph">
-<p>=== Uninstalling</p>
 </div>
+<div class="sect4">
+<h5 id="_sslb_binary_sip_load_balancer_uninstalling"><a class="anchor" href="#_sslb_binary_sip_load_balancer_uninstalling"></a>Uninstalling</h5>
 <div class="paragraph">
 <p>To uninstall the SIP load balancer, delete the JAR file you installed.</p>
 </div>
-<div class="paragraph">
-<p>== IP Load Balancing</p>
 </div>
-<div class="paragraph">
-<p>=== IP Load Balancers</p>
 </div>
+<div class="sect3">
+<h4 id="ip-load-balancing"><a class="anchor" href="#ip-load-balancing"></a>5.1.2. IP Load Balancing</h4>
+<div class="sect4">
+<h5 id="ip-load-balancers"><a class="anchor" href="#ip-load-balancers"></a>IP Load Balancers</h5>
 <div class="paragraph">
 <p>An IP load-balancer is a network appliance that distributes traffic to an application server (or actual servers) using a  load-balancing algorithm.
 IP load-balancing is often used when the other load-balancers' capacity is exceeded and can not scale further without hardware upgrades.</p>
@@ -4053,9 +4265,9 @@ This type of load balancer only examines low-level TCP, UDP or ethernet packet s
 <div class="paragraph">
 <p>An IP  load balancer never reads the payload of the TCP/IP packets and therefore never parses SIP or HTTP (or any protocol above OSI Layer 4).  Because an IP load balancing device is not SIP or HTTP aware in any way, it is much more performant than <code>mod_jk</code> or the Restcomm  SIP load-balancer.</p>
 </div>
-<div class="paragraph">
-<p>=== Technical overview</p>
 </div>
+<div class="sect4">
+<h5 id="technical-overview"><a class="anchor" href="#technical-overview"></a>Technical overview</h5>
 <div class="paragraph">
 <p>In its simplest form, the IP load-balancer usually "owns" the public-facing IP address (known as a VIP). The traffic is routed to actual servers in it&#8217;s private network similar to NAT.
 It is also possible to not change the IP address and just work on the MAC address by assuming that all actual  servers are configured to accept packets for the VIP address.
@@ -4068,9 +4280,9 @@ There are many hardware vendors as well.</p>
 <div class="paragraph">
 <p>One main drawback relating to  IP load balancers is that they can not make routing decisions based on SIP messages and (with some exceptions) they can not work cooperatively with HTTP or other load balancers.</p>
 </div>
-<div class="paragraph">
-<p>=== Configuring Restcomm  Cluster for pure IP Load Balancing</p>
 </div>
+<div class="sect4">
+<h5 id="configuring-restcomm-cluster-for-pure-ip-load-balancing"><a class="anchor" href="#configuring-restcomm-cluster-for-pure-ip-load-balancing"></a>Configuring Restcomm  Cluster for pure IP Load Balancing</h5>
 <div class="admonitionblock warning">
 <table>
 <tr>
@@ -4126,9 +4338,10 @@ Depending on your reliability requirements you can omit the configuration descri
 </tr>
 </table>
 </div>
-<div id="_sslb_sip_load_balancing_basics" class="paragraph">
-<p>== SIP Load Balancing Basics</p>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_sslb_sip_load_balancing_basics"><a class="anchor" href="#_sslb_sip_load_balancing_basics"></a>5.1.3. SIP Load Balancing Basics</h4>
 <div class="paragraph">
 <p>All User Agents send SIP messages, such as <code>INVITE</code> and <code>MESSAGE</code>, to the same SIP URI (the IP address and port number of the SIP Load Balancer on the WAN). The Load Balancer then parses, alters, and forwards those messages to an available node in the cluster.
 If the message was sent as a part of an existing SIP session, it will be forwarded to the cluster node which processed that User Agent&#8217;s original transaction request.</p>
@@ -4147,9 +4360,9 @@ In the case of a Restcomm server with <code>&lt;/distributed&gt;</code> capabili
 The Load Balancer increases throughput and reliability by dynamically provisioning SIP service requests and responses across responsive nodes in a cluster.
 This enables SIP applications to meet the real-time demand for SIP services.</p>
 </div>
-<div class="paragraph">
-<p>== HTTP Load Balancing Basics</p>
 </div>
+<div class="sect3">
+<h4 id="http-load-balancing-basics"><a class="anchor" href="#http-load-balancing-basics"></a>5.1.4. HTTP Load Balancing Basics</h4>
 <div class="paragraph">
 <p>In addition to the SIP load balancing, there are several options for coordinated or cooperative load balancing with other protocols such as HTTP.</p>
 </div>
@@ -4177,9 +4390,9 @@ The integrated HTTP load balancer is much easier to configure and generally requ
 <p>Unlike the native apache, the integrated HTTP Load Balancer is written completely in Java, thus a performance penalty should be expected when using it.
 However, the integrated HTTP Balancer has an advantage when related SIP and HTTP requests must stick to the same node.</p>
 </div>
-<div class="paragraph">
-<p>== Pluggable balancer algorithms</p>
 </div>
+<div class="sect3">
+<h4 id="pluggable-balancer-algorithms"><a class="anchor" href="#pluggable-balancer-algorithms"></a>5.1.5. Pluggable balancer algorithms</h4>
 <div class="paragraph">
 <p>The SIP/HTTP Load Balancer exposes an interface to allow users to customize the routing decision making for special purposes.
 By default there are three built-in algorithms.
@@ -4240,9 +4453,9 @@ The groups are enclosed in parentheses and the IP addresses are separate by comm
 <pre class="highlight"><code>  subclusterMap=( 192.168.1.1, 192.168.1.2 ) ( 10.10.10.10,  20.20.20.20,  30.30.30.30)</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>== Distributed load balancing</p>
 </div>
+<div class="sect3">
+<h4 id="distributed-load-balancing"><a class="anchor" href="#distributed-load-balancing"></a>5.1.6. Distributed load balancing</h4>
 <div class="paragraph">
 <p>When the capacity of a single load balancer is exceeded, multiple load balancers can be used.
 With the help of an IP load balancer the traffic can be distributed between all SIP/HTTP load balancers based on some IP rules or round-robin.
@@ -4255,9 +4468,9 @@ With consistent hash algorithms there is no state to be preserved in the SIP/HTT
 </div>
 <div class="title">Figure 16. Example deployment: IP load balancers serving both directions for incoming/outgoing requests in a cluster</div>
 </div>
-<div id="_sslb_sip_load_balancer_implementation" class="paragraph">
-<p>== Implementation of the Restcomm  Load Balancer</p>
 </div>
+<div class="sect3">
+<h4 id="_sslb_sip_load_balancer_implementation"><a class="anchor" href="#_sslb_sip_load_balancer_implementation"></a>5.1.7. Implementation of the Restcomm  Load Balancer</h4>
 <div class="paragraph">
 <p>Each individual Restcomm SIP Server in the cluster is responsible for contacting the SIP load balancer and relaying its health status and regular "heartbeats".</p>
 </div>
@@ -4274,9 +4487,9 @@ In addition, mid-session and mid-call messages are failed over to a healthy node
 The SIP Load Balancer, using a round-robin algorithm, then selects a node to which it forwards the SIP requests.
 The Load Balancer forwards all same-session requests to the first node selected to initiate the session, providing that the node is healthy and available.</p>
 </div>
-<div class="paragraph">
-<p>== SIP Message Flow</p>
 </div>
+<div class="sect3">
+<h4 id="sip-message-flow"><a class="anchor" href="#sip-message-flow"></a>5.1.8. SIP Message Flow</h4>
 <div class="paragraph">
 <p>The SIP Load Balancer appends itself to the <code>Via</code> header of each request, so that returned responses are sent to the SIP Balancer before they are sent to the originating endpoint.</p>
 </div>
@@ -4299,9 +4512,10 @@ In the diagram, the SIP Load balancer is the server with the IP address of <code
 </div>
 <div class="title">Figure 17. Basic IP and Port Cluster Configuration</div>
 </div>
-<div id="_ssfjfs_ss_gracefulshutdown" class="paragraph">
-<p>= Restcomm Graceful Shutdown</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_ssfjfs_ss_gracefulshutdown"><a class="anchor" href="#_ssfjfs_ss_gracefulshutdown"></a>5.2. Restcomm Graceful Shutdown</h3>
 <div class="paragraph">
 <p>Graceful shutdown of a server or SIP/Web Applications is when existing request/connections/sessions are allowed to gracefully complete while no new requests and/or connections and/or sessions are accepted.
 SIP Servlets Container or Applications can be gracefully shutdown through the Management Console, JMX or CLI as described below</p>
@@ -4311,18 +4525,17 @@ SIP Servlets Container or Applications can be gracefully shutdown through the Ma
 It will inform also load balancers that the server is no longer part of the cluster if the command is given on the container and not an individual application.
 The Applications are closed so that they do not accept any more requests, but the requests currently inside the container will drain out and the Server instance will shutdown after the grace period expires.</p>
 </div>
-<div id="_ssfjfs_ss_mssconsole_gracefulshutdown" class="paragraph">
-<p>== Graceful Shutdown through Restcomm  SIP Servlets Management Console</p>
-</div>
+<div class="sect3">
+<h4 id="_ssfjfs_ss_mssconsole_gracefulshutdown"><a class="anchor" href="#_ssfjfs_ss_mssconsole_gracefulshutdown"></a>5.2.1. Graceful Shutdown through Restcomm  SIP Servlets Management Console</h4>
 <div class="imageblock">
 <div class="content">
 <img src="./images/mss-MSSSManagementConsole-ss-ServerControl.png" alt="mss MSSSManagementConsole ss ServerControl">
 </div>
 <div class="title">Figure 18. Graceful Shutdown of Container through Restcomm  SIP Servlets Management Console</div>
 </div>
-<div id="_ssfjfs_ss_wildfly_eap_cli_gracefulshutdown" class="paragraph">
-<p>== Graceful Shutdown of Container or Applications through Restcomm  JBoss AS/EAP Command Line Interface</p>
 </div>
+<div class="sect3">
+<h4 id="_ssfjfs_ss_wildfly_eap_cli_gracefulshutdown"><a class="anchor" href="#_ssfjfs_ss_wildfly_eap_cli_gracefulshutdown"></a>5.2.2. Graceful Shutdown of Container or Applications through Restcomm  JBoss AS/EAP Command Line Interface</h4>
 <div class="paragraph">
 <p>`To Gracefully shutdown an Application through the CLI `, use the following command</p>
 </div>
@@ -4339,18 +4552,22 @@ The Applications are closed so that they do not accept any more requests, but th
 <pre>sh bin/jboss-cli.sh --connect  /subsystem=sip:gracefulShutdown\(timeToWait=30000\)</pre>
 </div>
 </div>
-<div id="_ssfjfs_ss_jmxconsole_gracefulshutdown" class="paragraph">
-<p>== Graceful Shutdown of Container or Applications through Restcomm  SIP Servlets JMX Console</p>
 </div>
+<div class="sect3">
+<h4 id="_ssfjfs_ss_jmxconsole_gracefulshutdown"><a class="anchor" href="#_ssfjfs_ss_jmxconsole_gracefulshutdown"></a>5.2.3. Graceful Shutdown of Container or Applications through Restcomm  SIP Servlets JMX Console</h4>
 <div class="paragraph">
 <p>`To Gracefully shutdown an Application through the JMX Console, Find the 'SipManager' MBean corresponding to your application and go to the 'stopGracefully' operation, Fill out the 'Time To Wait' Field and click 'Invoke' Button `</p>
 </div>
 <div class="paragraph">
 <p>`To Gracefully shutdown the Container through the JMX Console, Find the 'jboss.web:type=SipApplicationDispatcher' MBean and go to the 'stopGracefully' operation, Fill out the 'Time To Wait' Field and click 'Invoke' Button `</p>
 </div>
-<div id="_emom_enterprise_monitoring_operations_management" class="paragraph">
-<p>= Enterprise Monitoring and Management</p>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_emom_enterprise_monitoring_operations_management"><a class="anchor" href="#_emom_enterprise_monitoring_operations_management"></a>6. Enterprise Monitoring and Management</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>There is two ways of monitoring Restcomm Sip Servlets :</p>
 </div>
@@ -4367,9 +4584,8 @@ The Applications are closed so that they do not accept any more requests, but th
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>== JMX Monitoring</p>
-</div>
+<div class="sect2">
+<h3 id="jmx-monitoring"><a class="anchor" href="#jmx-monitoring"></a>6.1. JMX Monitoring</h3>
 <div class="paragraph">
 <p>The default mechanism for monitoring Restcomm Sip Servlets is using the Java Management Extensions (JMX) technology.
 The Oracle website includes the list of options and how to configure JMX Remote on Java 7  <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/management/agent.html" class="bare">http://docs.oracle.com/javase/7/docs/technotes/guides/management/agent.html</a></p>
@@ -4377,9 +4593,8 @@ The Oracle website includes the list of options and how to configure JMX Remote 
 <div class="paragraph">
 <p>Please find below, the list of SIP Specific metrics that can be monitored through JMX</p>
 </div>
-<div class="paragraph">
-<p>=== SIP Stack Monitoring Metrics</p>
-</div>
+<div class="sect3">
+<h4 id="sip-stack-monitoring-metrics"><a class="anchor" href="#sip-stack-monitoring-metrics"></a>6.1.1. SIP Stack Monitoring Metrics</h4>
 <div class="paragraph">
 <p>JMX Name <code>Domain=org.mobicents.jain.sip,name=Mobicents-SIP-Servlets,type=sip-stack</code> provides the following metrics :</p>
 </div>
@@ -4399,9 +4614,9 @@ The Oracle website includes the list of options and how to configure JMX Remote 
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>=== Container SIP Core Router (SipApplicationDispatcher) Monitoring Metrics</p>
 </div>
+<div class="sect3">
+<h4 id="container-sip-core-router-sipapplicationdispatcher-monitoring-metrics"><a class="anchor" href="#container-sip-core-router-sipapplicationdispatcher-monitoring-metrics"></a>6.1.2. Container SIP Core Router (SipApplicationDispatcher) Monitoring Metrics</h4>
 <div class="paragraph">
 <p>JMX Name <code>Domain=&lt;server_name&gt;,type=SipApplicationDispatcher</code> provides the following metrics :</p>
 </div>
@@ -4421,9 +4636,9 @@ The Oracle website includes the list of options and how to configure JMX Remote 
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>=== Application Level Monitoring Metrics</p>
 </div>
+<div class="sect3">
+<h4 id="application-level-monitoring-metrics"><a class="anchor" href="#application-level-monitoring-metrics"></a>6.1.3. Application Level Monitoring Metrics</h4>
 <div class="paragraph">
 <p>JMX Name <code>Domain=&lt;server_name&gt;,path=&lt;application_context_name&gt;,type=SipManager,host=&lt;host_name&gt;</code> provides the following metrics :</p>
 </div>
@@ -4467,14 +4682,20 @@ The Oracle website includes the list of options and how to configure JMX Remote 
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>=== JMX Monitoring for Restcomm  for JBoss AS7/EAP6</p>
 </div>
+<div class="sect3">
+<h4 id="jmx-monitoring-for-restcomm-for-jboss-as7-eap6"><a class="anchor" href="#jmx-monitoring-for-restcomm-for-jboss-as7-eap6"></a>6.1.4. JMX Monitoring for Restcomm  for JBoss AS7/EAP6</h4>
 <div class="paragraph">
 <p>Follow the link <a href="https://community.jboss.org/wiki/UsingJconsoleToConnectToJMXOnAS7">To Connect JConsole to JMX on AS7/EAP6</a>.</p>
 </div>
-</div>
-</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">SNMP Monitoring for Restcomm  for JBoss AS7</div>
 <div class="paragraph">
 <p>The SNMP feature is not yet implemented in Restcomm for JBoss AS7.
 This guide will be updated when SNMP monitoring feature become available.
@@ -4483,25 +4704,39 @@ In the meantime, see the chapter below for information about the CLI.</p>
 <div class="paragraph">
 <p><a href="concept-chapter-AS7-mss.adoc#_getting_started_with_mss_jboss_as7_cli">Getting Started with Restcomm SIP Servlets for AS7 CLI</a></p>
 </div>
-<div class="exampleblock">
-<div class="content">
-<div class="paragraph">
-<p>=== JMX Monitoring for Restcomm  for Tomcat 7</p>
+</td>
+</tr>
+</table>
 </div>
+</div>
+<div class="sect3">
+<h4 id="jmx-monitoring-for-restcomm-for-tomcat-7"><a class="anchor" href="#jmx-monitoring-for-restcomm-for-tomcat-7"></a>6.1.5. JMX Monitoring for Restcomm  for Tomcat 7</h4>
 <div class="paragraph">
 <p>Follow the link <a href="http://tomcat.apache.org/tomcat-7.0-doc/monitoring.html">To Connect JConsole to JMX on Tomcat 7</a>.</p>
 </div>
-</div>
-</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">SNMP Monitoring for Restcomm  for Tomcat 7</div>
 <div class="paragraph">
 <p>The SNMP feature is not yet implemented in Restcomm for Tomcat 7.
 This guide will be updated when SNMP monitoring feature become available.</p>
 </div>
-<div class="exampleblock">
-<div class="content">
-<div id="_ssecurity_sip_servlet_security" class="paragraph">
-<p>= Security</p>
+</td>
+</tr>
+</table>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ssecurity_sip_servlet_security"><a class="anchor" href="#_ssecurity_sip_servlet_security"></a>7. Security</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The information present in SIP requests often contains sensitive user information.
 To protect user information, SIP Security can be enabled on the server, and within the SIP application to mitigate the risk of unauthorised access to the information.</p>
@@ -4509,9 +4744,8 @@ To protect user information, SIP Security can be enabled on the server, and with
 <div class="paragraph">
 <p>There are essentially two levels of security that can be enabled on the server, the communication between the server and other SIP entities and securing the application and its content.</p>
 </div>
-<div id="_sss_sip_servlet_security" class="paragraph">
-<p>= SIP Servlets Application Security</p>
-</div>
+<div class="sect2">
+<h3 id="_sss_sip_servlet_security"><a class="anchor" href="#_sss_sip_servlet_security"></a>7.1. SIP Servlets Application Security</h3>
 <div class="paragraph">
 <p>Application security varies depending on the server type used.
 The following procedures describe how to configure the JBoss AS7 and Tomcat servers to enable Security.</p>
@@ -4739,21 +4973,21 @@ admin=caller,role1,role2,..</code></pre>
 </li>
 </ol>
 </div>
-<div id="_sss_tls" class="paragraph">
-<p>= TLS</p>
 </div>
+<div class="sect2">
+<h3 id="_sss_tls"><a class="anchor" href="#_sss_tls"></a>7.2. TLS</h3>
 <div class="paragraph">
 <p>In order to configure TLS you will have to obtain a public/private key, a X.509 certificate, add those to the Java keystore and optionally add certificates from a known CA (certicate authority). The entire process can be confusing but in order to get a basic setup for testing purposes up and running with minimal effort, this section starts off with a simple quick start.
 However, for production environment you need to obtain an officially signed certificate from a known CA and that process is outlined in section <a href="#_sss_tls_production_setup">Production Setup</a>.</p>
 </div>
-<div class="paragraph">
-<p>== Quick Start</p>
-</div>
+<div class="sect3">
+<h4 id="quick-start"><a class="anchor" href="#quick-start"></a>7.2.1. Quick Start</h4>
 <div class="paragraph">
 <p>This section shows how to create a self signed certificate, how to add that to the Java keystore and how to configure the SIP Servlet Container to make use of this configuration.
 Note, this section should only be used in a development environment and the main reason for this quickstart section is to get you going right away as well as get you comfortable with generating keys and certificates and adding them to the Java keystore.</p>
 </div>
 <div class="paragraph">
+<div class="title">Procedure: Server Side Authentication</div>
 <p>At a high-level, we will execute the following three steps:</p>
 </div>
 <div class="olist arabic">
@@ -4829,8 +5063,18 @@ The various configuration options are described in the javadoc of the <a href="h
 </li>
 <li>
 <p><code>gov.nist.javax.sip.TLS_CLIENT_AUTH_TYPE</code> – which type of authentication we will require of the client (for now, the client authentication type will be set to Disabled).</p>
+</li>
+<li>
+<p><code>gov.nist.javax.sip.gov.nist.javax.sip.ENABLED_CIPHER_SUITES</code> – Comma-separated list of suites to use when creating outgoing TLS connections.
+This parameter is optional with default value "TLS_RSA_WITH_AES_128_CBC_SHA,SSL_RSA_WITH_3DES_EDE_CBC_SHA,TLS_DH_anon_WITH_AES_128_CBC_SHA,SSL_DH_anon_WITH_3DES_EDE_CBC_SHA"</p>
+</li>
+</ul>
+</div>
 <div class="paragraph">
 <p>The configuration options are JVM parameters and you will have to add these to the command line when you start the server:</p>
+</div>
+<div class="paragraph">
+<p>+</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4840,22 +5084,25 @@ The various configuration options are described in the javadoc of the <a href="h
 <div class="paragraph">
 <p>Once the server is up, we are ready to verify that we can get a TLS connection using the certificate we previously added in the first step.</p>
 </div>
-</li>
-</ul>
+<div class="paragraph">
+<p>+</p>
 </div>
-</li>
-</ol>
-</div>
-</div>
-</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="paragraph">
 <p>for this first part of the quickstart we will not require a certificate from the client since this involves more configuration.
 This is controlled by the <code>gov.nist.javax.sip.TLS_CLIENT_AUTH_TYPE parameter</code>.</p>
 </div>
-<div class="exampleblock">
-<div class="content">
-<div class="olist arabic">
-<ol class="arabic">
+</td>
+</tr>
+</table>
+</div>
+</li>
 <li>
 <p>Test!</p>
 <div class="paragraph">
@@ -4897,6 +5144,7 @@ Most SIP clients out there are capable of establishing a TLS connection but you 
 </ol>
 </div>
 <div class="paragraph">
+<div class="title">Procedure: Server Side Authentication</div>
 <p>In the first part of this quickstart we generated a public and private key along with a self-signed certificate and added them all into the Java keystore.
 The server was then configured to use this information and when a client connected, our certificate was served up to the client.
 However, normally, the client and the server would like to verify each others certificate to make sure they both trust each other and if not, either of them will terminate the connection.
@@ -5035,9 +5283,9 @@ Luckily, it is not a lot of code:</p>
 </li>
 </ol>
 </div>
-<div id="_sss_tls_production_setup" class="paragraph">
-<p>== Production Setup</p>
 </div>
+<div class="sect3">
+<h4 id="_sss_tls_production_setup"><a class="anchor" href="#_sss_tls_production_setup"></a>7.2.2. Production Setup</h4>
 <div class="paragraph">
 <p>In a production environment it is important that you run with an officially signed certificate from a known CA.
 It is this certificate that you will load into your keystore and the process is very similar to the one outlined in the quick start.</p>
@@ -5090,9 +5338,9 @@ Once the server has been re-started you can use openssl to verify the setup.</p>
 </li>
 </ol>
 </div>
-<div id="_sss_secure_sip_over_websockets" class="paragraph">
-<p>== Production Setup</p>
 </div>
+<div class="sect3">
+<h4 id="_sss_secure_sip_over_websockets"><a class="anchor" href="#_sss_secure_sip_over_websockets"></a>7.2.3. Production Setup</h4>
 <div class="paragraph">
 <p>In addition to securing your SIP TLS, you may want to secure your HTTPS and SIP Over WebSockets Connectors too.</p>
 </div>
@@ -5147,24 +5395,26 @@ You will need to configure your <code>$JBOSS_HOME/standalone/configuration/stan
 </li>
 </ol>
 </div>
-<div id="_afotsss_advanced_features_of_the_sip_servlets_server" class="paragraph">
-<p>= Advanced Features of the SIP Servlets Server</p>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_afotsss_advanced_features_of_the_sip_servlets_server"><a class="anchor" href="#_afotsss_advanced_features_of_the_sip_servlets_server"></a>8. Advanced Features of the SIP Servlets Server</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The advanced features of SIP Servlets include Concurrency and  Congestion Control, load balancing and clustering support with the Restcomm Load Balancer.</p>
 </div>
-<div id="_mipbx_media_support" class="paragraph">
-<p>= Media Support</p>
-</div>
+<div class="sect2">
+<h3 id="_mipbx_media_support"><a class="anchor" href="#_mipbx_media_support"></a>8.1. Media Support</h3>
 <div class="paragraph">
 <p>Restcomm SIP Servlets provides support for applications to set up calls through SIP by implementing the SIP Servlets 1.1 Specification.</p>
 </div>
 <div class="paragraph">
 <p>As most Telco services have the need for managing and controlling media (for example, to play announcements, mix calls and recognize DTMF), Restcomm SIP Servlets allows applications to control media through JSR 309.</p>
 </div>
-<div class="paragraph">
-<p>== JSR 309: Media Server Control API</p>
-</div>
+<div class="sect3">
+<h4 id="jsr-309-media-server-control-api"><a class="anchor" href="#jsr-309-media-server-control-api"></a>8.1.1. JSR 309: Media Server Control API</h4>
 <div class="paragraph">
 <p>This specification is a protocol agnostic API for Media Server Control.
 It provides a portable interface to create media rich applications with IVR, Conferencing, Speech Recognition, and similar features.</p>
@@ -5188,9 +5438,10 @@ It provides a portable interface to create media rich applications with IVR, Con
 </li>
 </ul>
 </div>
-<div id="_sscacc_mss_concurrency_and_congestion_control" class="paragraph">
-<p>= Concurrency and Congestion Control</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_sscacc_mss_concurrency_and_congestion_control"><a class="anchor" href="#_sscacc_mss_concurrency_and_congestion_control"></a>8.2. Concurrency and Congestion Control</h3>
 <div class="paragraph">
 <p>Concurrency and Congestion control refer to settings that define the way in which messages are processed under heavy load.
 The way Restcomm SIP Servlets Server processes messages in a production environment is crucial to ensure quality of service for customers.</p>
@@ -5254,14 +5505,22 @@ Of all the available methods, this mode is the best choice for guaranteed  threa
 <div class="title">Congestion Control</div>
 <p>Restcomm Sip Servlets currently provides the following  congestion control mechanisms:</p>
 </div>
-</div>
-</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Changing Congestion Control Settings</div>
 <div class="paragraph">
 <p>All the settings and congifurations starting with gov.nist.javax.sip are located in the $JBOSS-HOME/standalone/configuration/mss-sip-stack.properties file.
 The section below will provide further details.</p>
 </div>
-<div class="exampleblock">
-<div class="content">
+</td>
+</tr>
+</table>
+</div>
 <div class="ulist">
 <ul>
 <li>
@@ -5386,6 +5645,7 @@ Instructions follow, grouped by the SIP Servlets Server you are running:</p>
 </dl>
 </div>
 <div class="olist arabic">
+<div class="title">Procedure: Tuning RestComm SIP Servlets for JBoss Server Settings for Concurrency and Congestion Control</div>
 <ol class="arabic">
 <li>
 <p>Open standalone-sip.xml File</p>
@@ -5474,9 +5734,9 @@ Instructions follow, grouped by the SIP Servlets Server you are running:</p>
 </li>
 </ol>
 </div>
-<div id="_mssstun_mss_stun" class="paragraph">
-<p>= STUN Support</p>
 </div>
+<div class="sect2">
+<h3 id="_mssstun_mss_stun"><a class="anchor" href="#_mssstun_mss_stun"></a>8.3. STUN Support</h3>
 <div class="paragraph">
 <p>The Session Traversal Utilities for NAT (STUN) prococol is used in Network Address Translation (NAT) traversal for real-time voice, video, messaging, and related interactive IP application communications.
 This light-weight, client-server protocol allows applications passing through a NAT to obtain the public IP address for the UDP connections the application uses to connect to remote hosts.</p>
@@ -5605,18 +5865,18 @@ For more information about NAT traversal best practices, refer to <a href="conce
 </tr>
 </table>
 </div>
-<div id="_sscacc_mss_jsr289_extensions" class="paragraph">
-<p>= Restcomm vendor-specific Extensions to JSR 289</p>
 </div>
+<div class="sect2">
+<h3 id="_sscacc_mss_jsr289_extensions"><a class="anchor" href="#_sscacc_mss_jsr289_extensions"></a>8.4. Restcomm vendor-specific Extensions to JSR 289</h3>
 <div class="paragraph">
 <p>Restcomm provide Extensions for applications or external systems to interact with the Restcomm SIP Servlets container as well as Extensions not defined in the specification in the JSR 289 specification that can prove useful and might be proposed for inclusion in a next release of the SIP Servlets specification</p>
 </div>
 <div class="paragraph">
 <p><a href="https://mobicents.ci.cloudbees.com/job/RestcommSipServlets-Release/lastSuccessfulBuild/artifact/documentation/jsr289-extensions-apidocs/index.html">Javadoc for JSR 289 Extensions</a></p>
 </div>
-<div id="_stf_cdi_telco_framework" class="paragraph">
-<p>= CDI Telco Framework</p>
 </div>
+<div class="sect2">
+<h3 id="_stf_cdi_telco_framework"><a class="anchor" href="#_stf_cdi_telco_framework"></a>8.5. CDI Telco Framework</h3>
 <div class="paragraph">
 <p>CDI is the Java standard for dependency injection and contextual lifecycle management, led by Gavin King for Red Hat, Inc.
 and is a Java Community Process(JCP) specification that integrates cleanly with the Java EE platform.
@@ -5638,9 +5898,9 @@ This new framework is intended to become a replacement for our previous Seam Tel
 <div class="paragraph">
 <p>More information about the CTF can be found on the <a href="http://docs.jboss.org/mobicents/frameworks/ctf/1.0.0.ALPHA1/user_guide/en-US/html_single/">CDI Telco Framework Documentation</a>.</p>
 </div>
-<div id="_ssds_diameter_support" class="paragraph">
-<p>= Diameter Support</p>
 </div>
+<div class="sect2">
+<h3 id="_ssds_diameter_support"><a class="anchor" href="#_ssds_diameter_support"></a>8.6. Diameter Support</h3>
 <div class="paragraph">
 <p>The Diameter Protocol (<a href="http://www.ietf.org/rfc/rfc3588.txt">RFC 3588</a>) is a computer networking protocol for Authentication, Authorization, and Accounting (AAA). The Diameter version included in Restcomm  SIP Servlets currently support Base, Sh, Ro and Rf.</p>
 </div>
@@ -5648,9 +5908,9 @@ This new framework is intended to become a replacement for our previous Seam Tel
 <p>For more information regarding Diameter support, refer to the <a href="https://github.com/Restcomm/jdiameter/">Diameter Home Page</a>.
 For a list of Diameter examples, refer to <a href="concept-chapter-SS_Examples.adoc#_ssea_sip_servlet_example_applications">SIP Servlet Example Applications</a>.</p>
 </div>
-<div id="_saimse_sip_and_ims_extensions" class="paragraph">
-<p>= SIP and IMS Extensions</p>
 </div>
+<div class="sect2">
+<h3 id="_saimse_sip_and_ims_extensions"><a class="anchor" href="#_saimse_sip_and_ims_extensions"></a>8.7. SIP and IMS Extensions</h3>
 <div class="paragraph">
 <p>SIP Extensions in the SIP Servlets Server are based on the Internet Engineering Task Force&#8217;s (IETF) Request for Comments (RFC) protocol recommendations. <a href="#_tab_sse_supported_sip_extensions">Supported SIP Extensions</a> lists the supported RFCs for the SIP Servlets Server.</p>
 </div>
@@ -5854,9 +6114,9 @@ P-Header extensions are primarily used to store information about the networks a
 </tr>
 </tbody>
 </table>
-<div id="_ss_jslee_interop" class="paragraph">
-<p>= SIP Servlets - JAIN SLEE Interoperability</p>
 </div>
+<div class="sect2">
+<h3 id="_ss_jslee_interop"><a class="anchor" href="#_ss_jslee_interop"></a>8.8. SIP Servlets - JAIN SLEE Interoperability</h3>
 <div class="paragraph">
 <p>JAIN SLEE is a more complex specification than SIP Servlets, and it has been know as heavyweight and with a steep learning curve.
 However JAIN SLEE has standardized a high performing event driven application server, an execution environment with a good concurrency model and powerful protocol agnostic capabilities thus covering a variety of Telco protocols.</p>
@@ -5972,9 +6232,9 @@ We built an application that could leverage standards all the way without resort
 <div class="paragraph">
 <p>You can also use our <a href="https://code.google.com/p/sipservlets/source/browse/#git%2Fsip-servlets-examples%2Fjslee-sips-interop">JSLEE/SIP Servlets interoperability example</a>, showcasing our approach.</p>
 </div>
-<div class="paragraph">
-<p>== Eclipse IDE Tools</p>
 </div>
+<div class="sect2">
+<h3 id="eclipse-ide-tools"><a class="anchor" href="#eclipse-ide-tools"></a>8.9. Eclipse IDE Tools</h3>
 <div class="paragraph">
 <p>The SIP Servlets Eclipse tools assist developers in creating JSR-289 applications with Restcomm.
 You can use the Dynamic Web Project wizard for converged applications to get started with an empty project, and then test your application with a real SIP Phone right from the IDE.</p>
@@ -5985,24 +6245,23 @@ You can use the Dynamic Web Project wizard for converged applications to get sta
 </div>
 <div class="title">Figure 21. SIP Servlets Eclipse IDE Tools</div>
 </div>
-<div class="paragraph">
-<p>=== Pre-Install requirements</p>
-</div>
+<div class="sect3">
+<h4 id="pre-install-requirements"><a class="anchor" href="#pre-install-requirements"></a>8.9.1. Pre-Install requirements</h4>
 <div class="paragraph">
 <p>Eclipse 3.4 is required.</p>
 </div>
-<div class="paragraph">
-<p>=== Installation</p>
 </div>
+<div class="sect3">
+<h4 id="installation"><a class="anchor" href="#installation"></a>8.9.2. Installation</h4>
 <div class="paragraph">
 <p>The standard Eclipse update site installation mechanism is leveraged.
 The Restcomm Update Site is at the following location: <a href="http://mobicents.googlecode.com/svn/downloads/sip-servlets-eclipse-update-site" class="bare">http://mobicents.googlecode.com/svn/downloads/sip-servlets-eclipse-update-site</a>.
 After adding this update site to Eclipse you can proceed with the regular Eclipse Plug-in Installation.
 If you need help, the process is demonstrated in <a href="http://www.youtube.com/watch?v=LZOmLEC2IeQ">this video</a>.</p>
 </div>
-<div class="paragraph">
-<p>=== SIP Servlets Core Plug-in</p>
 </div>
+<div class="sect3">
+<h4 id="sip-servlets-core-plug-in"><a class="anchor" href="#sip-servlets-core-plug-in"></a>8.9.3. SIP Servlets Core Plug-in</h4>
 <div class="paragraph">
 <p>This plug-in allows you to create Dynamic Web Projects with the SIP Facet.
 There are a number of new Dynamic Web Project configurations for Converged applications.
@@ -6010,32 +6269,34 @@ It is best to use the ones marked as "recommended". After you complete the wizar
 Working with this type of project is similar to working with normal Web projects.
 You can see a demo <a href="http://people.redhat.com/vralev/mss-eclipse-plugin-demo/mss-eclipse.htm">here</a>.</p>
 </div>
-<div class="paragraph">
-<p>=== SIP Phone Plug-in</p>
 </div>
+<div class="sect3">
+<h4 id="sip-phone-plug-in"><a class="anchor" href="#sip-phone-plug-in"></a>8.9.4. SIP Phone Plug-in</h4>
 <div class="paragraph">
 <p>The SIP Phone plug-in integrates a SIP phone inside your Eclipse IDE.
 You can use the phone to test your SIP or Media applications.
 The phone uses the microphone and speakers on your computer and allows you to simulate real-world scenarios.</p>
 </div>
-<div id="_bp_best_practices" class="paragraph">
-<p>= Best Practices</p>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_bp_best_practices"><a class="anchor" href="#_bp_best_practices"></a>9. Best Practices</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>This chapter discusses Best Practices related to Restcomm SIP Servlets usage in real world deployments.</p>
 </div>
-<div id="_bp_best_practices_perf_tips" class="paragraph">
-<p>== Restcomm SIP Servlets Performance Tips</p>
-</div>
+<div class="sect2">
+<h3 id="_bp_best_practices_perf_tips"><a class="anchor" href="#_bp_best_practices_perf_tips"></a>9.1. Restcomm SIP Servlets Performance Tips</h3>
 <div class="paragraph">
 <p>Because the default profile of Restcomm SIP Servlets is targeted at a development environment, some tuning is required to make the server performance suitable for a production environment.</p>
 </div>
 <div class="paragraph">
 <p>A useful presentation from OKI Japan</p>
 </div>
-<div class="paragraph">
-<p>=== Tuning JBoss</p>
-</div>
+<div class="sect3">
+<h4 id="tuning-jboss"><a class="anchor" href="#tuning-jboss"></a>9.1.1. Tuning JBoss</h4>
 <div class="paragraph">
 <p>To ensure the server is finely tuned for a production envirionment, certain configuration must be changed.
 Visit the <a href="http://wiki.jboss.org/wiki/Wiki.jsp?page=JBossASTuningSliming">JBoss Application Server Tuning</a> wiki page to learn about optimization techniques.</p>
@@ -6050,9 +6311,9 @@ In summary, the most important optimization technique is to remove logs, leaving
 <div class="paragraph">
 <p><a href="task-section-SIP_Servlets_Server-Configuring.adoc#_bsssc_binary_sip_servlets_server_configuring_logging">SIP Servlets Server Logging</a></p>
 </div>
-<div class="paragraph">
-<p>=== Tuning Restcomm SIP Servlets</p>
 </div>
+<div class="sect3">
+<h4 id="tuning-restcomm-sip-servlets"><a class="anchor" href="#tuning-restcomm-sip-servlets"></a>9.1.2. Tuning Restcomm SIP Servlets</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -6063,9 +6324,9 @@ In summary, the most important optimization technique is to remove logs, leaving
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>=== Tuning The JAIN SIP Stack</p>
 </div>
+<div class="sect3">
+<h4 id="tuning-the-jain-sip-stack"><a class="anchor" href="#tuning-the-jain-sip-stack"></a>9.1.3. Tuning The JAIN SIP Stack</h4>
 <div class="paragraph">
 <p>The stack can be fine-tuned by altering the SIP stack properties, defined in the external properties file specified by the <em>sipStackPropertiesFile</em> attribute as described in <a href="task-section-SIP_Servlets_Server-Configuring.adoc##_bsssc_binary_sip_servlets_server_adding_sip_connectors">Configuring SIP Connectors and Bindings</a>.</p>
 </div>
@@ -6183,22 +6444,29 @@ Eventually the connection will be closed.</p>
 <div class="paragraph">
 <p>The full list of JAIN SIP stack properties is available from <a href="https://mobicents.ci.cloudbees.com/job/JAIN-SIP/lastSuccessfulBuild/artifact/javadoc/javax/sip/SipStack.html">the SIP Stack Properties Home Page</a>      and the full list of implementation specific properties are available from the <a href="https://mobicents.ci.cloudbees.com/job/JAIN-SIP/lastSuccessfulBuild/artifact/javadoc/gov/nist/javax/sip/SipStackImpl.html">SIP Stack Implementation Home Page</a>.</p>
 </div>
-<div class="paragraph">
-<p>=== Tuning The JVM</p>
 </div>
+<div class="sect3">
+<h4 id="tuning-the-jvm"><a class="anchor" href="#tuning-the-jvm"></a>9.1.4. Tuning The JVM</h4>
 <div class="paragraph">
 <p>The following tuning information applies to Sun JDK 1.6, however the information should also apply to Sun JDK 1.5.</p>
 </div>
-</div>
-</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="paragraph">
 <p>For more information on tuning Restcomm SIP Servlets performance, refer to the <a href="http://www.slideshare.net/jean.deruelle/tuning-and-development-with-sip-servlets-on-mobicents">OKI Japan Presentation</a>.</p>
 </div>
 <div class="paragraph">
 <p>For more information on performance, refer to the <a href="http://java.sun.com/performance/reference/whitepapers/6_performance.html">Performance White Paper</a>.</p>
 </div>
-<div class="exampleblock">
-<div class="content">
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>To pass arguments to the JVM, change <em class="path">$JBOSS_HOME/bin/standalone.conf</em> (Linux) or <em class="path">$JBOSS_HOME/bin/standalone.bat</em> (Windows).</p>
 </div>
@@ -6229,9 +6497,9 @@ Having an unnecessarily large heap can stop the JVM for seconds, to perform garb
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>=== Tuning The Operating System</p>
 </div>
+<div class="sect3">
+<h4 id="tuning-the-operating-system"><a class="anchor" href="#tuning-the-operating-system"></a>9.1.5. Tuning The Operating System</h4>
 <div class="paragraph">
 <p>The following tuning information is provided for Red Hat Enterprise Linux (RHEL) servers that are running high-load configurations.
 The tuning information should also apply to other Linux distributions.</p>
@@ -6292,16 +6560,16 @@ With SIP, the performance improvement can be as high as 20%.</p>
 </li>
 </ul>
 </div>
-<div id="_bp_best_practices_nat" class="paragraph">
-<p>== NAT Traversal</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_bp_best_practices_nat"><a class="anchor" href="#_bp_best_practices_nat"></a>9.2. NAT Traversal</h3>
 <div class="paragraph">
 <p>In a production environment, it is common to see SIP and Media data passing through different kinds of Network Address Translation (NAT) to reach the required endpoints.
 Because NAT Traversal is a complex topic, refer to the following information to help determine the most effective method to handle NAT issues.</p>
 </div>
-<div class="paragraph">
-<p>=== STUN</p>
-</div>
+<div class="sect3">
+<h4 id="stun"><a class="anchor" href="#stun"></a>9.2.1. STUN</h4>
 <div class="paragraph">
 <p>STUN (Session Traversal Utilities for NAT) is not generally considered a viable solution for enterprises because STUN cannot be used with symmetric NATs.</p>
 </div>
@@ -6312,9 +6580,9 @@ Because NAT Traversal is a complex topic, refer to the following information to 
 <p>Most of the proxy and media gateways installed by VoIP providers  recognize the public IP address the packets have originated from.
 When both SIP end points are behind a NAT, they can act as gateways to clients behind NAT.</p>
 </div>
-<div class="paragraph">
-<p>=== TURN</p>
 </div>
+<div class="sect3">
+<h4 id="turn"><a class="anchor" href="#turn"></a>9.2.2. TURN</h4>
 <div class="paragraph">
 <p>TURN (Traversal Using Relay NAT) is an IETF standard, which implements media relays for SIP end-points.
 The standard overcomes the problems of clients behind symmetric NATs which cannot rely on STUN to solve NAT traversal.</p>
@@ -6331,9 +6599,9 @@ It assumes the clients have a trust relationship with a TURN server, and a reque
 <p>This can result in scalability issues, and requires changes in the SIP clients.
 It is also impossible to determine when a direct, or TURN, connection is appropriate.</p>
 </div>
-<div class="paragraph">
-<p>=== ICE</p>
 </div>
+<div class="sect3">
+<h4 id="ice"><a class="anchor" href="#ice"></a>9.2.3. ICE</h4>
 <div class="paragraph">
 <p>ICE (Interactive Connection Establishment) leverages both STUN and TURN to solve the NAT traversal issues.</p>
 </div>
@@ -6353,9 +6621,9 @@ If ICE support is present in both devices, it is quite possible that the devices
 <div class="paragraph">
 <p>If the initiating ICE client attempts to call a non-ICE client, then the call setup-process will revert to a conventional SIP call requiring NAT traversal to be solved by other means.</p>
 </div>
-<div class="paragraph">
-<p>=== Other Approaches</p>
 </div>
+<div class="sect3">
+<h4 id="other-approaches"><a class="anchor" href="#other-approaches"></a>9.2.4. Other Approaches</h4>
 <div class="paragraph">
 <p>While the above is a good solution to circumvent NAT issues.
 There might be cases where it is not possible to use those solutions at all.</p>
@@ -6366,19 +6634,21 @@ There might be cases where it is not possible to use those solutions at all.</p>
 <div class="paragraph">
 <p>Here is more information on <a href="http://groups.google.com/group/mobicents-public/browse_thread/thread/5f1d6cbda9e8c302">Session Border Controllers</a> and how they can resolve NAT issues when above solutions  are not possible</p>
 </div>
-<div id="_appendix" class="paragraph">
-<p>= Apendix</p>
 </div>
-<div id="_install_configure_jdk" class="paragraph">
-<p>== Java Development Kit (): Installing, Configuring and Running</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_appendix"><a class="anchor" href="#_appendix"></a>10. Apendix</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_install_configure_jdk"><a class="anchor" href="#_install_configure_jdk"></a>10.1. Java Development Kit (): Installing, Configuring and Running</h3>
 <div class="paragraph">
 <p>The [app]` Platform` is written in Java; therefore, before running any <code class="app"> server, you must have a working Java Runtime Environment () or Java Development Kit () installed on your system.
 In addition, the JRE or JDK you are using to run [app]</code> must be version 5 or higher<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup>.</p>
 </div>
-<div id="_jre_or_jdk_32bit_or_64bit" class="paragraph">
-<p>===  JRE versus JDK - 32-Bit versus 64-Bit</p>
-</div>
+<div class="sect3">
+<h4 id="_jre_or_jdk_32bit_or_64bit"><a class="anchor" href="#_jre_or_jdk_32bit_or_64bit"></a>10.1.1. JRE versus JDK - 32-Bit versus 64-Bit</h4>
 <div class="paragraph">
 <div class="title">Should I Install the JRE or JDK?</div>
 <p>Although you can run <code class="app"> servers using the Java Runtime Environment, we assume that most users are developers interested in developing Java-based, [app]</code>-driven solutions.
@@ -6410,9 +6680,9 @@ Barring memory issues, 64-bit hardware with the same relative clock speed and ar
 <div class="paragraph">
 <p>Note that the following instructions detail how to download and install the 32-bit JDK, although the steps are nearly identical for installing the 64-bit version.</p>
 </div>
-<div class="paragraph">
-<p>=== Downloading JDK</p>
 </div>
+<div class="sect3">
+<h4 id="downloading-jdk"><a class="anchor" href="#downloading-jdk"></a>10.1.2. Downloading JDK</h4>
 <div class="paragraph">
 <p>You can download the Sun JDK 5.0 (Java 2 Development Kit) from Sun&#8217;s website: <a href="http://java.sun.com/javase/downloads/index_jdk5.jsp" class="bare">http://java.sun.com/javase/downloads/index_jdk5.jsp</a>.
 Click on the <span class="label">Download</span> link next to "JDK 5.0 Update <code class="replaceable">&lt;x&gt;`" (where [replaceable]</code>&lt;x&gt;` is the latest minor version release number). On the next page, select your language and platform (both architecture&#8212;&#8203;whether 32- or 64-bit&#8212;&#8203;and operating system), read and agree to the <code>Java Development Kit 5.0 License Agreement</code>, and proceed to the download page.</p>
@@ -6439,15 +6709,23 @@ We also suggest installing the self-extracting RPM file if you will be running [
 </li>
 </ol>
 </div>
-</div>
-</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Moving from Non-RPM Installer to SysV Service Scripts</div>
 <div class="paragraph">
 <p>If you download the non-RPM self-extracting file (and installed it), and you are running on an RPM-based system, you can still set up the SysV service scripts by downloading and installing one of the <code>-compat</code> packages from the JPackage project.
 Remember to download the <code>-compat</code> package which corresponds correctly to the minor release number of the JDK you installed.
 The compat packages are available from link:ftp://jpackage.hmdc.harvard.edu/JPackage/1.7/generic/RPMS.non-free/.</p>
 </div>
-<div class="exampleblock">
-<div class="content">
+</td>
+</tr>
+</table>
+</div>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -6460,9 +6738,9 @@ You do not need to install a <code>-compat</code> package in addition to the JDK
 </tr>
 </table>
 </div>
-<div id="_install_jdk_on_windows" class="paragraph">
-<p>=== Installing JDK on Windows</p>
 </div>
+<div class="sect3">
+<h4 id="_install_jdk_on_windows"><a class="anchor" href="#_install_jdk_on_windows"></a>10.1.3. Installing JDK on Windows</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -6475,9 +6753,9 @@ You do not need to install a <code>-compat</code> package in addition to the JDK
 <p>Configuring your system for the JDK consists in two tasks: setting the <code class="var">JAVA_HOME</code> environment variable, and ensuring that the system is using the proper JDK (or JRE) using the <code>alternatives</code> command.
 Setting <code class="var">JAVA_HOME</code> usually overrides the values for <code>java</code>, <code>javac</code> and <code>java_sdk_1.5.0</code> in <code>alternatives</code>, but we will set them all just to be safe and consistent.</p>
 </div>
-<div id="_setting_env_linux" class="paragraph">
-<p>=== Setting Linux JAVA_HOME Environment Variables</p>
 </div>
+<div class="sect3">
+<h4 id="_setting_env_linux"><a class="anchor" href="#_setting_env_linux"></a>10.1.4. Setting Linux JAVA_HOME Environment Variables</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Setting the <code class="var">JAVA_HOME</code> Environment Variable on Generic Linux</dt>
@@ -6486,9 +6764,9 @@ Setting <code class="var">JAVA_HOME</code> usually overrides the values for <cod
 </dd>
 </dl>
 </div>
-<div id="_setting_correct_java_version" class="paragraph">
-<p>=== Setting the Correct Java Version</p>
 </div>
+<div class="sect3">
+<h4 id="_setting_correct_java_version"><a class="anchor" href="#_setting_correct_java_version"></a>10.1.5. Setting the Correct Java Version</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Setting <code class="var">java</code>, <code class="var">javac</code> and <code class="var">java_sdk_1.5.0</code> Using the <code>alternatives</code> command </dt>
@@ -6497,9 +6775,9 @@ Setting <code class="var">JAVA_HOME</code> usually overrides the values for <cod
 </dd>
 </dl>
 </div>
-<div id="_setting_env_windows" class="paragraph">
-<p>=== Setting JAVA_HOME Environment Variables on Windows</p>
 </div>
+<div class="sect3">
+<h4 id="_setting_env_windows"><a class="anchor" href="#_setting_env_windows"></a>10.1.6. Setting JAVA_HOME Environment Variables on Windows</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Setting the <code class="var">JAVA_HOME</code> Environment Variable on Windows</dt>
@@ -6508,9 +6786,9 @@ Setting <code class="var">JAVA_HOME</code> usually overrides the values for <cod
 </dd>
 </dl>
 </div>
-<div id="_install_jdk_linux_windows" class="paragraph">
-<p>===  Uninstalling JDK on Linux and Windows</p>
 </div>
+<div class="sect3">
+<h4 id="_install_jdk_linux_windows"><a class="anchor" href="#_install_jdk_linux_windows"></a>10.1.7. Uninstalling JDK on Linux and Windows</h4>
 <div class="paragraph">
 <div class="title">Uninstalling</div>
 <p>There is usually no reason (other than space concerns) to remove a particular JDK from your system, given that you can switch between JDKs and JREs easily using <code>alternatives</code>, and/or by setting <code class="var">JAVA_HOME</code>.</p>
@@ -6524,9 +6802,9 @@ Setting <code class="var">JAVA_HOME</code> usually overrides the values for <cod
 <div class="title">Uninstalling the JDK on Windows</div>
 <p>On Windows systems, check the JDK entry in the <code>Start</code> menu for an uninstall command, or use <code>Add/Remove Programs</code>.</p>
 </div>
-<div id="_setting_jboss_env_variable_windows_unix" class="paragraph">
-<p>=== Setting the JBOSS_HOME Environment Variable</p>
 </div>
+<div class="sect3">
+<h4 id="_setting_jboss_env_variable_windows_unix"><a class="anchor" href="#_setting_jboss_env_variable_windows_unix"></a>10.1.8. Setting the JBOSS_HOME Environment Variable</h4>
 <div class="paragraph">
 <p>The [app]` Platform` (<code class="app">`) is built on top of the [app]`JBoss Application Server</code> (<code class="app">JBoss AS</code>). You do not need to set the <code class="var">JBOSS_HOME</code> environment variable to run any of the [app]` Platform` servers <em>unless</em> <code class="var">JBOSS_HOME</code> is <em>already</em> set.</p>
 </div>
@@ -6662,9 +6940,9 @@ As another hint, this topmost directory contains a <em class="path">bin</em> sub
 <div class="paragraph">
 <p>For information on how to set environment variables in recent versions of Windows, refer to <a href="http://support.microsoft.com/kb/931715" class="bare">http://support.microsoft.com/kb/931715</a>.</p>
 </div>
-<div id="_setting_catalina_home_env_linux_windows" class="paragraph">
-<p>=== Setting CATALINA_HOME on Linux and Windows</p>
 </div>
+<div class="sect3">
+<h4 id="_setting_catalina_home_env_linux_windows"><a class="anchor" href="#_setting_catalina_home_env_linux_windows"></a>10.1.9. Setting CATALINA_HOME on Linux and Windows</h4>
 <div class="olist arabic">
 <div class="title">Procedure: Setting the <code class="var">CATALINA_HOME</code> Environment Variable on Linux</div>
 <ol class="arabic">
@@ -6730,15 +7008,18 @@ the directory in which you unzipped the zip file to install the server, and unde
 </li>
 </ol>
 </div>
-<div id="_bp_jsr289_errata" class="paragraph">
-<p>= JSR 289 Errata</p>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_bp_jsr289_errata"><a class="anchor" href="#_bp_jsr289_errata"></a>11. JSR 289 Errata</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>This chapter discusses deviations from the JSR 289 specification by Restcomm SIP Servlets after feedback on usage in real world deployments and from the community.</p>
 </div>
-<div id="_errata_deviations" class="paragraph">
-<p>== Restcomm SIP Servlets Deviations from JSR 289</p>
-</div>
+<div class="sect2">
+<h3 id="_errata_deviations"><a class="anchor" href="#_errata_deviations"></a>11.1. Restcomm SIP Servlets Deviations from JSR 289</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -6748,9 +7029,6 @@ the directory in which you unzipped the zip file to install the server, and unde
 <p><em>SipServletResponse typo</em> : _ SipServletResponse.SC_TEMPORARLY_UNAVAILABLE_  should be replaced by SC_TEMPORARILY_UNAVAILABLE.</p>
 </li>
 </ul>
-</div>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -6767,7 +7045,7 @@ the directory in which you unzipped the zip file to install the server, and unde
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-11 10:41:03 WEST
+Last updated 2016-07-11 14:21:28 WEST
 </div>
 </div>
 </body>

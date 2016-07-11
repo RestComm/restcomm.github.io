@@ -523,8 +523,18 @@ The various configuration options are described in the javadoc of the <a href="h
 </li>
 <li>
 <p><code>gov.nist.javax.sip.TLS_CLIENT_AUTH_TYPE</code> – which type of authentication we will require of the client (for now, the client authentication type will be set to Disabled).</p>
+</li>
+<li>
+<p><code>gov.nist.javax.sip.gov.nist.javax.sip.ENABLED_CIPHER_SUITES</code> – Comma-separated list of suites to use when creating outgoing TLS connections.
+This parameter is optional with default value "TLS_RSA_WITH_AES_128_CBC_SHA,SSL_RSA_WITH_3DES_EDE_CBC_SHA,TLS_DH_anon_WITH_AES_128_CBC_SHA,SSL_DH_anon_WITH_3DES_EDE_CBC_SHA"</p>
+</li>
+</ul>
+</div>
 <div class="paragraph">
 <p>The configuration options are JVM parameters and you will have to add these to the command line when you start the server:</p>
+</div>
+<div class="paragraph">
+<p>+</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -533,6 +543,9 @@ The various configuration options are described in the javadoc of the <a href="h
 </div>
 <div class="paragraph">
 <p>Once the server is up, we are ready to verify that we can get a TLS connection using the certificate we previously added in the first step.</p>
+</div>
+<div class="paragraph">
+<p>+</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -548,9 +561,6 @@ This is controlled by the <code>gov.nist.javax.sip.TLS_CLIENT_AUTH_TYPE paramete
 </td>
 </tr>
 </table>
-</div>
-</li>
-</ul>
 </div>
 </li>
 <li>
@@ -854,7 +864,7 @@ You will need to configure your <code>$JBOSS_HOME/standalone/configuration/stan
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-11 10:41:03 WEST
+Last updated 2016-07-11 14:21:28 WEST
 </div>
 </div>
 </body>
