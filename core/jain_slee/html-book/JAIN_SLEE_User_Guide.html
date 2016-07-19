@@ -495,6 +495,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_slee_1_1_extensions_profilecontext">10.4. ProfileContext Extension</a></li>
 <li><a href="#_slee_1_1_extensions_aci">10.5. ActivityContextInterface Extension</a></li>
 <li><a href="#_slee_1_1_extensions_library_references">10.6. Library References Extension</a></li>
+<li><a href="#_slee_1_1_extensions_preferred_packages">10.7. Preferred Packages Extension</a></li>
 </ul>
 </li>
 <li><a href="#advanced-topics">11. Advanced Topics</a>
@@ -3378,6 +3379,31 @@ Note how the DOCTYPE element is set to the extended DTD instead of the standard 
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_slee_1_1_extensions_preferred_packages"><a class="anchor" href="#_slee_1_1_extensions_preferred_packages"></a>10.7. Preferred Packages Extension</h3>
+<div class="paragraph">
+<p>This extension to JAIN SLEE 1.1 introduces the ability to override server provided classes from SBB/Lib components.</p>
+</div>
+<div class="paragraph">
+<p>The SBB developer may define the list of packages to be overriden, by using an special environment entry in SBB descriptor.
+If SBB declares SLEE library dependencies, the list of preferred packages will be applied to the library as well.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;env-entry&gt;
+	&lt;env-entry-name&gt;org.restcomm.slee.preferred-package-list&lt;/env-entry-name&gt;
+	&lt;env-entry-type&gt;java.lang.String&lt;/env-entry-type&gt;
+	&lt;env-entry-value&gt;org.hibernate,dom4j,javax.transaction,org.jboss.logging,javax.persistence,net.sf.ehcache&lt;/env-entry-value&gt;
+&lt;/env-entry&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The "org.restcomm.slee.preferred-package-list" entry  contains  a comma
+separated list of base packages that will be used during class loading.
+Any class under those packages, will have the classloading order inverted, so
+local class definition to SBB will be taken before server classes.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -4066,7 +4092,7 @@ Had another  than the SipRA been used, a similar kind of clustering would have b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-18 10:44:54 WEST
+Last updated 2016-07-19 10:43:47 WEST
 </div>
 </div>
 </body>
