@@ -22766,7 +22766,7 @@ These tables need to be dropped periodically else the tables may end up occupyin
 </div>
 <div class="paragraph">
 <p>You can choose to drop these tables manually or configure the Gateway to drop the tables periodically.
-To configure these settings, you can make use of the parameters <code>removinglivetablesdays</code> and <code>removingarchivetabledays</code>.</p>
+To configure these settings, you can make use of the parameters <code>removinglivetablesdays</code> and <code>removingarchivetablesdays</code>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -22787,8 +22787,8 @@ To overcome this, you must update the <em class="path">cassandra.yaml</em> confi
 <div class="sect3">
 <h4 id="_auto_delete_cli"><a class="anchor" href="#_auto_delete_cli"></a>Using CLI</h4>
 <div class="paragraph">
-<p>You can configure the auto-drop settings by issuing the command <code>smsc set removinglivetablesdays</code> for LIVE tables and the command <code>smsc set removingarchivetabledays</code>, with appropriate parameters as described below.
-You can verify this by issuing the command <code>smsc get removinglivetablesdays</code> and <code>smsc get removingarchivetabledays</code> which will display the values set for these properties.</p>
+<p>You can configure the auto-drop settings by issuing the command <code>smsc set removinglivetablesdays</code> for LIVE tables and the command <code>smsc set removingarchivetablesdays</code>, with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get removinglivetablesdays</code> and <code>smsc get removingarchivetablesdays</code> which will display the values set for these properties.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -22826,10 +22826,10 @@ PARAMETERS
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	smsc set removingarchivetabledays
+	smsc set removingarchivetablesdays
 
 SYNOPSIS
-	smsc set removingarchivetabledays &lt;value&gt;
+	smsc set removingarchivetablesdays &lt;value&gt;
 
 DESCRIPTION
 	This command is used to configure the SMSC to automatically drop ARCHIVE tables
@@ -22837,7 +22837,7 @@ DESCRIPTION
 	midnight and after every SMSC restart.
 
 PARAMETERS
-	removingarchivetabledays	- This parameter is used to specify the number
+	removingarchivetablesdays	- This parameter is used to specify the number
 					  of days the ARCHIVE tables should be kept before
 					  attempting to drop them automatically.
 
@@ -22861,7 +22861,7 @@ PARAMETERS
 <div class="sect2">
 <h3 id="_manual_delete"><a class="anchor" href="#_manual_delete"></a>Manually drop tables</h3>
 <div class="paragraph">
-<p>If you do not want the SMSC Gateway to automatically drop tables you must set the value of the parameters <code>removinglivetablesdays</code> and <code>removingarchivetabledays</code> to zero and disable this feature as explained in the preceding section.</p>
+<p>If you do not want the SMSC Gateway to automatically drop tables you must set the value of the parameters <code>removinglivetablesdays</code> and <code>removingarchivetablesdays</code> to zero and disable this feature as explained in the preceding section.</p>
 </div>
 <div class="paragraph">
 <p>You must decide on how much data you would like to retain in the Database and accordingly delete the tables.
@@ -22884,7 +22884,7 @@ DROP TABLE MESSAGES_2014_01_05;</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-08-03 11:10:34 WEST
+Last updated 2016-08-04 11:05:43 WEST
 </div>
 </div>
 <footer>

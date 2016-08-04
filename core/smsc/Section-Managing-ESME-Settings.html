@@ -23659,7 +23659,7 @@ This action will modify a new ESME with parameters as defined by you.</p>
 <div class="sect2">
 <h3 id="_esme_settings_view_view_cli"><a class="anchor" href="#_esme_settings_view_view_cli"></a>Using CLI</h3>
 <div class="paragraph">
-<p>You can view the details of all configured ESMEs by issuing the command <code>smpp esme show</code> as described below.</p>
+<p>You can view the details of all or concrete configured ESMEs by issuing the command <code>smpp esme show</code> as described below.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23667,7 +23667,12 @@ This action will modify a new ESME with parameters as defined by you.</p>
 	smpp esme show
 
 SYNOPSIS
-	smpp esme show
+	smpp esme show &lt;esmeName&gt;
+
+PARAMETERS
+	esmeName		- Name of the ESME to show.
+	This parameter is optional. All ESMEs will be displayed in case of
+	no esmeName is specified.
 
 DESCRIPTION
 	This command is used to list all configured ESMEs.</pre>
@@ -23858,7 +23863,7 @@ All relevant details of the ESME will be displayed in an expanded format.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-08-03 11:10:34 WEST
+Last updated 2016-08-04 11:05:43 WEST
 </div>
 </div>
 <footer>

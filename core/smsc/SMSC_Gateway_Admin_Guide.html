@@ -24744,10 +24744,10 @@ Messages will be routed between subnetworks (networkIds) by mproc rules and insi
 <li>
 <p>set mproc rules:</p>
 <div class="paragraph">
-<p>smsc mproc add mproc 1 networkIdMask=1 newNetworkId=0</p>
+<p>smsc mproc add mproc 1 networkidmask=1 newnetworkid=0</p>
 </div>
 <div class="paragraph">
-<p>smsc mproc add mproc 2 networkIdMask=0 newNetworkId=1</p>
+<p>smsc mproc add mproc 2 networkidmask=0 newnetworkid=1</p>
 </div>
 </li>
 </ul>
@@ -24767,13 +24767,13 @@ Messages will be routed between subnetworks (networkIds) by mproc rules and insi
 <p>create a set of mproc rules that move ESME originated messages into SS7 network.
 CLI commabd can be like:</p>
 <div class="paragraph">
-<p>smsc mproc add mproc 1 networkIdMask=1 newNetworkId=0</p>
+<p>smsc mproc add mproc 1 networkidmask=1 newnetworkid=0</p>
 </div>
 <div class="paragraph">
-<p>smsc mproc add mproc 2 networkIdMask=2 newNetworkId=0</p>
+<p>smsc mproc add mproc 2 networkidmask=2 newnetworkid=0</p>
 </div>
 <div class="paragraph">
-<p>smsc mproc add mproc 3 networkIdMask=3 newNetworkId=0</p>
+<p>smsc mproc add mproc 3 networkidmask=3 newnetworkid=0</p>
 </div>
 </li>
 <li>
@@ -26300,7 +26300,8 @@ If there is an error in setting the value, then you will find the details of the
 <h6 id="_esmedefaultcluster_cli"><a class="anchor" href="#_esmedefaultcluster_cli"></a>6.1.1.5.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'Cluster Name' value by issuing the command <code>smsc set esmedefaultcluster</code> with appropriate parameters as described below.
-You can verify this by issuing the command <code>smsc get esmedefaultcluster</code> which will display the value set for this property.</p>
+You can verify this by issuing the command <code>smsc get esmedefaultcluster</code> which will display the value set for this property.
+This parameter affects only for DatabaseSmsRoutingRule - see <a href="#_db_routing_rule_settings">Database Routing Rules</a>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -26313,7 +26314,9 @@ SYNOPSIS
 DESCRIPTION
 	This command is used to set a value for ESME default cluster. If the
 	destination-address does not match to any ESME (any Cluster Name) the message will
-	be routed to the cluster with the name specified here for esme-default-cluster.</pre>
+	be routed to the cluster with the name specified here for esme-default-cluster.
+	This parameter affects only for DatabaseSmsRoutingRule (not used for default
+	routing).</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -26329,7 +26332,9 @@ SYNOPSIS
 
 DESCRIPTION
 	This command is used to remove the value configured for ESME default cluster. If
-	this value is removed, all unrouted messages will be routed into the GSM network.</pre>
+	this value is removed, all unrouted messages will be routed into the GSM network.
+	This parameter affects only for DatabaseSmsRoutingRule (not used for default
+	routing).</pre>
 </div>
 </div>
 </div>
@@ -27605,8 +27610,8 @@ If there is an error in setting the value, then you will find the details of the
 <div class="sect5">
 <h6 id="_db_removinglivetablesdays_cli"><a class="anchor" href="#_db_removinglivetablesdays_cli"></a>6.1.3.5.1. Using CLI</h6>
 <div class="paragraph">
-<p>You can set the 'Removing Live Tables Days' value by issuing the command <code>smsc set removinglivetabledays</code> with appropriate parameters as described below.
-You can verify this by issuing the command <code>smsc get removinglivetabledays</code> which will display the value set for this property.</p>
+<p>You can set the 'Removing Live Tables Days' value by issuing the command <code>smsc set removinglivetablesdays</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get removinglivetablesdays</code> which will display the value set for this property.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -27666,20 +27671,20 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_db_removingarchivetabledays"><a class="anchor" href="#_db_removingarchivetabledays"></a>6.1.3.6. Cassandra Configuration - Removing Live Tables Days</h5>
+<h5 id="_db_removingarchivetablesdays"><a class="anchor" href="#_db_removingarchivetablesdays"></a>6.1.3.6. Cassandra Configuration - Removing Live Tables Days</h5>
 <div class="sect5">
-<h6 id="_db_removingarchivetabledays_cli"><a class="anchor" href="#_db_removingarchivetabledays_cli"></a>6.1.3.6.1. Using CLI</h6>
+<h6 id="_db_removingarchivetablesdays_cli"><a class="anchor" href="#_db_removingarchivetablesdays_cli"></a>6.1.3.6.1. Using CLI</h6>
 <div class="paragraph">
-<p>You can set the 'Removing Live Tables Days' value by issuing the command <code>smsc set removingarchivetabledays</code> with appropriate parameters as described below.
-You can verify this by issuing the command <code>smsc get removingarchivetabledays</code> which will display the value set for this property.</p>
+<p>You can set the 'Removing Live Tables Days' value by issuing the command <code>smsc set removingarchivetablesdays</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get removingarchivetablesdays</code> which will display the value set for this property.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	smsc set removingarchivetabledays
+	smsc set removingarchivetablesdays
 
 SYNOPSIS
-	smsc set removingarchivetabledays &lt;value&gt;
+	smsc set removingarchivetablesdays &lt;value&gt;
 
 DESCRIPTION
 	This command is used to configure the SMSC to automatically drop ARCHIVE tables
@@ -27687,7 +27692,7 @@ DESCRIPTION
 	midnight and after every SMSC restart.
 
 PARAMETERS
-	removingarchivetabledays	- This parameter is used to specify the number
+	removingarchivetablesdays	- This parameter is used to specify the number
 					  of days the ARCHIVE tables should be kept before
 					  attempting to drop them automatically.
 
@@ -27708,7 +27713,7 @@ PARAMETERS
 </div>
 </div>
 <div class="sect5">
-<h6 id="_db_removingarchivetabledays_gui"><a class="anchor" href="#_db_removingarchivetabledays_gui"></a>6.1.3.6.2. Using GUI</h6>
+<h6 id="_db_removingarchivetablesdays_gui"><a class="anchor" href="#_db_removingarchivetablesdays_gui"></a>6.1.3.6.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set Cassandra Configuration - Removing Archive Tables Days</div>
 <ol class="arabic">
@@ -28313,26 +28318,26 @@ You can verify this by issuing the command <code>smsc get txsmppcharging</code> 
 	smsc set txsmppcharging
 
 SYNOPSIS
-	smsc set txsmppcharging &lt;none|selected|all&gt;
+	smsc set txsmppcharging &lt;None|Selected|All&gt;
 
 DESCRIPTION
-	This command is used to set the value of the parameter 'txsmppcharging' to none,
-	selected or all.
+	This command is used to set the value of the parameter 'txsmppcharging' to None,
+	Selected or All.
 
-	If this is set to 'all', all ESME Originated messages will be charged by OCS via
+	If this is set to 'Aall', all ESME Originated messages will be charged by OCS via
 	Diameter, prior to being sent.
 
-	If this is set to 'selected', only those messages originating from ESMEs marked
+	If this is set to 'Selected', only those messages originating from ESMEs marked
 	with the parameter 'charging-enabled'=true at the time of ESME creation  will be
 	charged by OCS via Diameter, prior to being sent.
 
-	If this is set to 'none', none of the ESME Originated messages will be charged by
+	If this is set to 'None', none of the ESME Originated messages will be charged by
 	OCS via Diameter, prior to being sent.
 
-	The parameter 'txsmppcharging' is set to 'none' by default.
+	The parameter 'txsmppcharging' is set to 'None' by default.
 
 EXAMPLES
-	smsc set txsmppcharging selected</pre>
+	smsc set txsmppcharging Selected</pre>
 </div>
 </div>
 </div>
@@ -28374,26 +28379,21 @@ You can verify this by issuing the command <code>smsc get txsipcharging</code> w
     smsc set txsipcharging
 
 SYNOPSIS
-    smsc set txsipcharging &lt;none|selected|all&gt;
+    smsc set txsipcharging &lt;None|Selected|All&gt;
 
 DESCRIPTION
-    This command is used to set the value of the parameter 'txsipcharging' to none,
-    selected or all.
+	This command is used to set the value of the parameter 'txsipcharging'
 
-    If this is set to 'all', all SIP Originated messages will be charged by OCS via
-    Diameter, prior to being sent.
+	If this is set to 'All', all SIP Originated messages will be charged by OCS via
+	Diameter, prior to being sent.
 
-    If this is set to 'selected', only those messages originating from SIPs marked
-    with the parameter 'charging-enabled'=true at the time of SIP creation  will be
-    charged by OCS via Diameter, prior to being sent.
+	If this is set to 'None' or 'Selected', none of the SIP Originated messages will
+	be charged by OCS via Diameter, prior to being sent.
 
-    If this is set to 'none', none of the SIP Originated messages will be charged by
-    OCS via Diameter, prior to being sent.
-
-    The parameter 'txsipcharging' is set to 'none' by default.
+    The parameter 'txsipcharging' is set to 'None' by default.
 
 EXAMPLES
-    smsc set txsipcharging selected</pre>
+    smsc set txsipcharging Selected</pre>
 </div>
 </div>
 </div>
@@ -29265,10 +29265,10 @@ If there is an error in setting the value, then you will find the details of the
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	smppserver set port
+	smpp smppserver set port
 
 SYNOPSIS
-	smppserver set port &lt;port&gt;
+	smpp smppserver set port &lt;port&gt;
 
 DESCRIPTION
 	This command is used to set the port that the SMSC server is listening to for
@@ -29282,10 +29282,10 @@ DESCRIPTION
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	smppserver set bindtimeout
+	smpp smppserver set bindtimeout
 
 SYNOPSIS
-	smppserver set bindtimeout &lt;bind-timeout&gt;
+	smpp smppserver set bindtimeout &lt;bind-timeout&gt;
 
 DESCRIPTION
 	This command is used to set a value for bind-timeout in milli-seconds.
@@ -29301,10 +29301,10 @@ DESCRIPTION
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	smppserver set systemid
+	smpp smppserver set systemid
 
 SYNOPSIS
-	smppserver set systemid &lt;system-id&gt;
+	smpp smppserver set systemid &lt;system-id&gt;
 
 DESCRIPTION
 	This command is used to set the value for system-id. This is the 'system-id'
@@ -29316,10 +29316,10 @@ DESCRIPTION
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	smppserver set autonegotiateversion
+	smpp smppserver set autonegotiateversion
 
 SYNOPSIS
-	smppserver set autonegotiateversion &lt;true/false&gt;
+	smpp smppserver set autonegotiateversion &lt;true/false&gt;
 
 DESCRIPTION
 	This command is used to specify if auto-negotiate-version is enabled or not.
@@ -29335,10 +29335,10 @@ DESCRIPTION
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	smppserver set interfaceversion
+	smpp smppserver set interfaceversion
 
 SYNOPSIS
-	smppserver set interfaceversion &lt;interface-version&gt;
+	smpp smppserver set interfaceversion &lt;interface-version&gt;
 
 DESCRIPTION
 	This command is used to specify the SMPP version that the Server supports.
@@ -29349,10 +29349,10 @@ DESCRIPTION
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	smppserver set maxconnectionsize
+	smpp smppserver set maxconnectionsize
 
 SYNOPSIS
-	smppserver set maxconnectionsize &lt;max-connection-size&gt;
+	smpp smppserver set maxconnectionsize &lt;max-connection-size&gt;
 
 DESCRIPTION
 	This command is used to specify the maximum number of connections/sessions this
@@ -29364,10 +29364,10 @@ DESCRIPTION
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	smppserver set defaultwindowsize
+	smpp smppserver set defaultwindowsize
 
 SYNOPSIS
-	smppserver set defaultwindowsize &lt;defaultwindowsize&gt;
+	smpp smppserver set defaultwindowsize &lt;defaultwindowsize&gt;
 
 DESCRIPTION
 	This command is used to specify the default window size for this Server.
@@ -29383,10 +29383,10 @@ DESCRIPTION
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	smppserver set defaultwindowwaittimeout
+	smpp smppserver set defaultwindowwaittimeout
 
 SYNOPSIS
-	smppserver set defaultwindowwaittimeout &lt;default-window-wait-timeout&gt;
+	smpp smppserver set defaultwindowwaittimeout &lt;default-window-wait-timeout&gt;
 
 DESCRIPTION
 	This command is used to specify the default-window-wait-timeout for this Server
@@ -29402,10 +29402,10 @@ DESCRIPTION
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	smppserver set defaultrequestexpirytimeout
+	smpp smppserver set defaultrequestexpirytimeout
 
 SYNOPSIS
-	smppserver set defaultrequestexpirytimeout &lt;default-request-expiry-timeout&gt;
+	smpp smppserver set defaultrequestexpirytimeout &lt;default-request-expiry-timeout&gt;
 
 DESCRIPTION
 	This command is used to specify the default-request-expiry-timeout for the Server
@@ -29420,10 +29420,10 @@ DESCRIPTION
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	smppserver set defaultwindowmonitorinterval
+	smpp smppserver set defaultwindowmonitorinterval
 
 SYNOPSIS
-	smppserver set defaultwindowmonitorinterval &lt;default-window-monitor-interval&gt;
+	smpp smppserver set defaultwindowmonitorinterval &lt;default-window-monitor-interval&gt;
 
 DESCRIPTION
 	This command is used to specify the default-window-monitor-interval for the Server
@@ -29441,10 +29441,10 @@ DESCRIPTION
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	smppserver set defaultsessioncountersenabled
+	smpp smppserver set defaultsessioncountersenabled
 
 SYNOPSIS
-	smppserver set defaultsessioncountersenabled &lt;true/false&gt;
+	smpp smppserver set defaultsessioncountersenabled &lt;true/false&gt;
 
 DESCRIPTION
 	This command is used to set the parameter 'defaultsessioncountersenabled' value
@@ -30441,7 +30441,7 @@ This action will modify a new ESME with parameters as defined by you.</p>
 <div class="sect4">
 <h5 id="_esme_settings_view_view_cli"><a class="anchor" href="#_esme_settings_view_view_cli"></a>6.3.3.1. Using CLI</h5>
 <div class="paragraph">
-<p>You can view the details of all configured ESMEs by issuing the command <code>smpp esme show</code> as described below.</p>
+<p>You can view the details of all or concrete configured ESMEs by issuing the command <code>smpp esme show</code> as described below.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -30449,7 +30449,12 @@ This action will modify a new ESME with parameters as defined by you.</p>
 	smpp esme show
 
 SYNOPSIS
-	smpp esme show
+	smpp esme show &lt;esmeName&gt;
+
+PARAMETERS
+	esmeName		- Name of the ESME to show.
+	This parameter is optional. All ESMEs will be displayed in case of
+	no esmeName is specified.
 
 DESCRIPTION
 	This command is used to list all configured ESMEs.</pre>
@@ -31379,7 +31384,7 @@ These tables need to be dropped periodically else the tables may end up occupyin
 </div>
 <div class="paragraph">
 <p>You can choose to drop these tables manually or configure the Gateway to drop the tables periodically.
-To configure these settings, you can make use of the parameters <code>removinglivetablesdays</code> and <code>removingarchivetabledays</code>.</p>
+To configure these settings, you can make use of the parameters <code>removinglivetablesdays</code> and <code>removingarchivetablesdays</code>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -31400,8 +31405,8 @@ To overcome this, you must update the <em class="path">cassandra.yaml</em> confi
 <div class="sect4">
 <h5 id="_auto_delete_cli"><a class="anchor" href="#_auto_delete_cli"></a>7.1.1.1. Using CLI</h5>
 <div class="paragraph">
-<p>You can configure the auto-drop settings by issuing the command <code>smsc set removinglivetablesdays</code> for LIVE tables and the command <code>smsc set removingarchivetabledays</code>, with appropriate parameters as described below.
-You can verify this by issuing the command <code>smsc get removinglivetablesdays</code> and <code>smsc get removingarchivetabledays</code> which will display the values set for these properties.</p>
+<p>You can configure the auto-drop settings by issuing the command <code>smsc set removinglivetablesdays</code> for LIVE tables and the command <code>smsc set removingarchivetablesdays</code>, with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get removinglivetablesdays</code> and <code>smsc get removingarchivetablesdays</code> which will display the values set for these properties.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -31439,10 +31444,10 @@ PARAMETERS
 <div class="listingblock">
 <div class="content">
 <pre>Name
-	smsc set removingarchivetabledays
+	smsc set removingarchivetablesdays
 
 SYNOPSIS
-	smsc set removingarchivetabledays &lt;value&gt;
+	smsc set removingarchivetablesdays &lt;value&gt;
 
 DESCRIPTION
 	This command is used to configure the SMSC to automatically drop ARCHIVE tables
@@ -31450,7 +31455,7 @@ DESCRIPTION
 	midnight and after every SMSC restart.
 
 PARAMETERS
-	removingarchivetabledays	- This parameter is used to specify the number
+	removingarchivetablesdays	- This parameter is used to specify the number
 					  of days the ARCHIVE tables should be kept before
 					  attempting to drop them automatically.
 
@@ -31474,7 +31479,7 @@ PARAMETERS
 <div class="sect3">
 <h4 id="_manual_delete"><a class="anchor" href="#_manual_delete"></a>7.1.2. Manually drop tables</h4>
 <div class="paragraph">
-<p>If you do not want the SMSC Gateway to automatically drop tables you must set the value of the parameters <code>removinglivetablesdays</code> and <code>removingarchivetabledays</code> to zero and disable this feature as explained in the preceding section.</p>
+<p>If you do not want the SMSC Gateway to automatically drop tables you must set the value of the parameters <code>removinglivetablesdays</code> and <code>removingarchivetablesdays</code> to zero and disable this feature as explained in the preceding section.</p>
 </div>
 <div class="paragraph">
 <p>You must decide on how much data you would like to retain in the Database and accordingly delete the tables.
@@ -32523,7 +32528,7 @@ Some error codes are reserved for future use and will be put to use in future ve
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-08-03 11:10:34 WEST
+Last updated 2016-08-04 11:05:43 WEST
 </div>
 </div>
 <footer>
