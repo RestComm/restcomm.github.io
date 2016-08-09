@@ -552,15 +552,19 @@ The Load Balancer forwards all same-session requests to the first node selected 
 </div>
 <div class="paragraph">
 <p>Typically, a JBoss Application Server will use apache HTTP server with mod_jk, mod_proxy, mod_cluster or similar extension installed as an HTTP load balancer.
-This apache-based load balancer will parse incoming HTTP requests and will look for the session ID of those requests in order to ensure all requests from the same session arrive at the same application server.</p>
+This apache-based load balancer will parse incoming HTTP requests and will look for the session ID of those requests in order to ensure all requests from the
+same session arrive at the same application server.</p>
 </div>
 <div class="paragraph">
 <p>By default, this is done by examining the <code>jsessionid</code> HTTP cookie or GET parameter and looking for the <code>jvmRoute</code> assigned to the session.
-The typical <code>jsessionid</code> value is of the form <code>&lt;sessionId&gt;.&lt;jvmRoute&gt;</code> . The very first request for each new HTTP session does not have a session ID assigned; the apache routes the request to a random application server node.</p>
+The typical <code>jsessionid</code> value is of the form <code>&lt;sessionId&gt;.&lt;jvmRoute&gt;</code> . The very first request for each new HTTP session does not have a session ID assigned;
+the apache routes the request to a random application server node.</p>
 </div>
 <div class="paragraph">
 <p>When the node responds it assigns a session ID and <code>jvmRoute</code> to the response of the request in a HTTP cookie.
-This response goes back to the client through apache, which keeps track of which node owns each <code>jvmRoute</code> . Once the very first request is served this way, the subsequent requests from this session will carry the assigned cookie, and the apache load balancer will always route the requests to the node, which advertised itself as the <code>jvmRoute</code> owner.</p>
+This response goes back to the client through apache, which keeps track of which node owns each <code>jvmRoute</code> . Once the very first request is served this way,
+the subsequent requests from this session will carry the assigned cookie, and the apache load balancer will always route the requests to the node, which advertised
+itself as the <code>jvmRoute</code> owner.</p>
 </div>
 <div class="paragraph">
 <p>Instead of using apache, an integrated HTTP Load Balancer is also available.
@@ -571,6 +575,11 @@ The integrated HTTP load balancer is much easier to configure and generally requ
 <div class="paragraph">
 <p>Unlike the native apache, the integrated HTTP Load Balancer is written completely in Java, thus a performance penalty should be expected when using it.
 However, the integrated HTTP Balancer has an advantage when related SIP and HTTP requests must stick to the same node.</p>
+</div>
+<div class="paragraph">
+<p>Also HTTP load balancer can choose the next node by 'instanceId' which is got from the Restcomm connector info. First the Load balancer
+checks whether http request contains 'CallSID' parameter. If it does, the Load balancer checks whether 'instanceId' from http request corresponds to 'instanceId'
+of each node connected to the Load balancer. If the Load balancer finds the correspondence, it sends http request to this node.</p>
 </div>
 </div>
 </div>
@@ -2143,7 +2152,7 @@ Fill in form: Load Balancer&#8217;s ip adress (externalHost) 172.21.0.104 and po
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-08-08 11:10:23 WEST
+Last updated 2016-08-09 11:06:50 WEST
 </div>
 </div>
 </body>
