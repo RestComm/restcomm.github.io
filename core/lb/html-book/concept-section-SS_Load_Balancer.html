@@ -428,6 +428,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#_sslb_load_balancer_node_discovery">Node Discovery of the Restcomm Load Balancer</a></li>
 <li><a href="#_sslb_load_balancer_keepalive">Keepalives to the Restcomm Load Balancer</a></li>
+<li><a href="#restcomm-load-balancer-supports-sip-over-websockets">Restcomm Load Balancer supports SIP Over Websockets</a></li>
 </ul>
 </li>
 <li><a href="#http-load-balancing-basics">HTTP Load Balancing Basics</a></li>
@@ -540,6 +541,21 @@ The Load Balancer forwards all same-session requests to the first node selected 
 </div>
 <div class="paragraph">
 <p>If the Load Balancer doesn&#8217;t receive the keepalive information from a node after a certain configurable amount of time, it discards the node. The time is reset for each message that the Load Balancer receives from the node as well be it a keepalive or a regular SIP or HTTP message.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="restcomm-load-balancer-supports-sip-over-websockets"><a class="anchor" href="#restcomm-load-balancer-supports-sip-over-websockets"></a>Restcomm Load Balancer supports SIP Over Websockets</h3>
+<div class="paragraph">
+<p>The websocket client (e.g. TelScale Olympus) can connect to Load balancer
+on port which should be set in lb-configuration.properties externalWsPort and
+internalWsPort if needed. To work with secure websocket it is necessary to set
+externalWssPort and internalWssPort. When websocket client connects to the
+Restcomm Load balancer, then the LB opens connection to a node from the
+list of nodes which is based on keepalives got from the server. During the further
+connections of the client, each time LB opens the new connection to the node
+from the list of connected nodes according to chosen algorithm. If the
+connection has already been established to this node, then LB reuses this
+connection. The same goes for other connection-oriented transport protocols.</p>
 </div>
 </div>
 </div>
@@ -2152,7 +2168,7 @@ Fill in form: Load Balancer&#8217;s ip adress (externalHost) 172.21.0.104 and po
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-08-10 11:01:54 WEST
+Last updated 2016-08-11 11:06:47 WEST
 </div>
 </div>
 </body>
