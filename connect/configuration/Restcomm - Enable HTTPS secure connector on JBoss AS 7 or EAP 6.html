@@ -22747,35 +22747,51 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel2">
 <li><a href="#enable-https-secure-connector">Enable HTTPs Secure Connector</a></li>
-<li><a href="#enable-secure-sip-over-websockets-for-webrtc-and-olympus">Enable Secure SIP Over WebSockets for WebRTC and Olympus</a></li>
+<li><a href="#step-1">Step 1 - Keystore by Certificate Authority (CA)</a></li>
+<li><a href="#step-2">Step 2 - Self-signed Certificate Keystore</a></li>
+<li><a href="#step-3">Step 3 - Configure Restcomm Configuration Files</a></li>
+<li><a href="#exception-download-rcml">Error - Exception while trying to download RCML</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="paragraph">
-<p>To make Restcomm fully Secure, you need to configure both the Web Part (HTTP Connector) and the SIP Part (SIP Over WebSockets Secure Connector) :</p>
+<p>The configuration guide will show you how to create a keystore and activate SSL for HTTPS connection.</p>
 </div>
 <div class="sect2">
 <h3 id="enable-https-secure-connector"><a class="anchor" href="#enable-https-secure-connector"></a>Enable HTTPs Secure Connector</h3>
 <div class="paragraph">
-<p>By default Restcomm uses HTTP connector at port 8080. Follow the instructions bellow to enable the secure HTTPS connector for JBoss AS 7 or EAP 6.</p>
+<p>By default, Restcomm uses port 8080 for HTTP connector. The following instruction will guide you through the steps required to configure SSL and enable HTTPS.</p>
 </div>
 <div class="paragraph">
 <p>Make sure you are testing using the latest Restcomm.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="step-1"><a class="anchor" href="#step-1"></a>Step 1 - Keystore by Certificate Authority (CA)</h3>
 <div class="paragraph">
-<p>First you will need a certificate keystore that will store your certificate for the SSL connector. You have two options here, either create a certificate keystore using a self-signed certificate or use existing certificate signed by an official Certificate Authoriry. For this tutorial we will work with self-signed certificates. You can check the JBoss How-To <a href="https://docs.jboss.org/jbossweb/7.0.x/ssl-howto.html" class="bare">https://docs.jboss.org/jbossweb/7.0.x/ssl-howto.html</a> for detailed instructions in the case you have an existing certificate.</p>
+<p>If you will be using a self-signed certificate, you may skip the step and go to Step 2</p>
 </div>
 <div class="paragraph">
-<p>To create a certificate keystore with a self-signed certificate you need to run:</p>
+<p>If you are using a Certificate Authority (CA), create the keystore as instructed by the CA provider and copy the keystore to $RESTCOMM_HOME/standalone/configuration/ directory.
+Next, go to step 3.</p>
+</div>
+<div class="paragraph">
+<p>Here is a link for a free Certificate Authority (CA). <a href="https://letsencrypt.org/" class="bare">https://letsencrypt.org/</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="step-2"><a class="anchor" href="#step-2"></a>Step 2 - Self-signed Certificate Keystore</h3>
+<div class="paragraph">
+<p>To create a self-signed certificate keystore, perform the following steps:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">$JAVA_HOME/bin/keytool -genkey -alias restcomm -keyalg RSA -keystore $RESTCOMM_HOME/standalone/configuration/restcomm.keystore</code></pre>
+<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">$JAVA_HOME/bin/keytool -genkey -alias restcomm -keyalg RSA -keystore  restcomm.jks</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Running the above command will ask you for a password that you will need later in the HTTPS configuration. For the tutorial I will use password "changeit".</p>
+<p>For this example, we shall use the password, "changeit".</p>
 </div>
 <div class="paragraph">
 <p>Also make sure that for first and last name (CN) you provide the hostname of the machine running Restcomm. Running the command should look like this:</p>
@@ -22806,148 +22822,84 @@ Enter key password for &lt;restcomm&gt;
 <div class="ulist">
 <ul>
 <li>
-<p>HOSTNAME : Must be same as "/etc/hostname or /etc/hosts" file.</p>
+<p>HOSTNAME : Must match content of the  "/etc/hostname or /etc/hosts" file.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>The certificate keystore file is now located at</p>
+<p>Copy the generated self-signed keystore restcomm.jks to the configuration directory as shown below</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">$RESTCOMM_HOME/standalone/configuration/restcomm.keystore</code></pre>
+<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">$RESTCOMM_HOME/standalone/configuration/restcomm.jks</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Now instead of messing with each configuration file, you can edit</p>
 </div>
+<div class="sect2">
+<h3 id="step-3"><a class="anchor" href="#step-3"></a>Step 3 - Configure Restcomm Configuration Files</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-lang:default" data-lang="lang:default">$RESTCOMM_HOME/bin/restcomm/restcomm.conf</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>And provide the following details:</p>
-</div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">#HTTPS Settings
+<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">#Allowed values FALSE, SELF, AUTH.
+#If SELF set self-signed certificate will be created.
+#If AUTH, Authorized certificate will be used.Need to place the certificate at "$RESTCOMM_HOME/standalone/configuration/"
+#To Disable use 'FALSE'
+SECURESSL=SELF
+
+#HTTPS Settings
 DISABLE_HTTP='false' #Control whether or not HTTP connector will be disabled. Values, true=HTTP connector will be disable, false=HTTP Connector will not be disabled
-TRUSTSTORE_FILE='' #File should be located at $RESTCOMM_HOME/standalone/configuration folder. Provide just the name of the trustore file. Leave it blank to disable HTTPS
-TRUSTSTORE_PASSWORD='' #Password for the trustore file
-TRUSTSTORE_ALIAS='' #The certificate alias
-SSL_MODE='strict' #Control whether or not Restcomm will accept self-signed certificates. Values allowall=allow self-signed certificates, strict=don't allow self signed certificates</code></pre>
+TRUSTSTORE_FILE='restcomm.jks' #File should be located at $RESTCOMM_HOME/standalone/configuration folder. Provide just the name of the trustore file. Leave it blank to disable HTTPS
+TRUSTSTORE_PASSWORD='changeit' #Password for the trustore file
+TRUSTSTORE_ALIAS='restcomm' #The certificate alias</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Lets iterate over the options:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>"DISABLE_HTTP". Set this to <strong>true</strong> to disable the HTTP Connector</p>
-</li>
-<li>
-<p>"TRUSTSTORE_FILE". The finename of the truststore. The file must be located at $RESTCOMM_HOME/standalone/configuration/ folder. Leave it empty to disable HTTPS connector</p>
-</li>
-<li>
-<p>"TRUSTSTORE_PASSWORD". The password of the truststore.</p>
-</li>
-<li>
-<p>"TRUSTSTORE_ALIAS". The alias of the certificate</p>
-</li>
-<li>
-<p>"SSL_MODE". Wherether or not Restcomm will accept self-signed certificates. "allowall" means to accept all certificates.</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>For the tutorial we have to provide the following:</p>
+<p>If you are using a self-signed certificate, change the SSL_MODE value to SSL_MODE='allowall'</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">#HTTPS Settings
-DISABLE_HTTP='true'
-TRUSTSTORE_FILE='restcomm.keystore'
-TRUSTSTORE_PASSWORD='changeit'
-TRUSTSTORE_ALIAS='restcomm'
-SSL_MODE='allowall'</code></pre>
+<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">SSL_MODE='allowall' #Control whether or not Restcomm will accept self-signed certificates. Values allowall=allow self-signed certificates, strict=don't allow self signed certificates</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Additionally at configuration file $RESTCOMM_HOME/standalone/configuration/standalone-sip.xml you can change the HTTP and HTTPS ports as you need:</p>
+<p>Go to the Restcomm Admin UI at the following URL</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">    &lt;socket-binding-group name="standard-sockets" default-interface="public" port-offset="${jboss.socket.binding.port-offset:0}"&gt;
-        &lt;socket-binding name="management-native" interface="management" port="${jboss.management.native.port:9999}"/&gt;
-        &lt;socket-binding name="management-http" interface="management" port="${jboss.management.http.port:9990}"/&gt;
-        &lt;socket-binding name="management-https" interface="management" port="${jboss.management.https.port:9443}"/&gt;
-        &lt;socket-binding name="ajp" port="8009"/&gt;
-        &lt;socket-binding name="http" port="8080"/&gt;
-        &lt;socket-binding name="https" port="8443"/&gt;</code></pre>
+<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">https://RESTCOMM_IP_ADDRESS:8443/</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now everything is set and you can check that Admin UI or RVD work on</p>
+<p>If you want to access HTTPS using the default port 443 instead of Restcomm' default 8443, change the following options in the $RESTCOMM_HOME/bin/restcomm/restcomm.conf file.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">http://RESTCOMM_IP_ADDRESS:8443/</code></pre>
+<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">#RestComm PORT configuration
+HTTP_PORT='8080' #Port used for HTTP. Default 8080
+HTTPS_PORT='8443' #Port used for HTTPS. Default 8443</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Restcomm will now be accessible using the following URL : <a href="https://RESTCOMM_IP_ADDRESS/" class="bare">https://RESTCOMM_IP_ADDRESS/</a></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="enable-secure-sip-over-websockets-for-webrtc-and-olympus"><a class="anchor" href="#enable-secure-sip-over-websockets-for-webrtc-and-olympus"></a>Enable Secure SIP Over WebSockets for WebRTC and Olympus</h3>
+<h3 id="exception-download-rcml"><a class="anchor" href="#exception-download-rcml"></a>Error - Exception while trying to download RCML</h3>
 <div class="paragraph">
-<p>RestComm uses SIP Over WebSockets for the signalling from the WebRTC SDK or Olympus Application to Restcomm.</p>
-</div>
-<div class="paragraph">
-<p>You need to make sure the underlying Application Server used by RestComm has the WSS (WebSockets Secure) Connector enabled to handle the secure signalling which is mandatory to make calls on Google Chrome.</p>
-</div>
-<div class="paragraph">
-<p>At configuration file $RESTCOMM_HOME/standalone/configuration/standalone-sip.xml you need to add the WSS Connector if not present (you can also change the WS and WSS ports as you need) :</p>
+<p>If you get the above message in the Restcomm server logs when making a call with HTTPS activated, you need to modify the restcomm.conf file by updating the following parameter:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">        &lt;connector name="sip-udp" protocol="SIP/2.0" scheme="sip" socket-binding="sip-udp" use-static-address="true" static-server-address="SERVER_IP" static-server-port="5080"/&gt;
-        &lt;connector name="sip-tcp" protocol="SIP/2.0" scheme="sip" socket-binding="sip-tcp" use-static-address="true" static-server-address="SERVER_IP" static-server-port="5080"/&gt;
-        &lt;connector name="sip-tls" protocol="SIP/2.0" scheme="sip" socket-binding="sip-tls" use-static-address="true" static-server-address="SERVER_IP" static-server-port="5081"/&gt;
-        &lt;connector name="sip-ws" protocol="SIP/2.0" scheme="sip" socket-binding="sip-ws" use-static-address="true" static-server-address="SERVER_IP" static-server-port="5082"/&gt;
-        &lt;connector name="sip-wss" protocol="SIP/2.0" scheme="sip" socket-binding="sip-wss" use-static-address="true" static-server-address="SERVER_IP" static-server-port="5083"/&gt;</code></pre>
+<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">#hostname of the server to be used at restcomm.xml. If not set the STATIC_ADDRESS will be used.
+RESTCOMM_HOSTNAME='YOUR_HOST_NAME'</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>and</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">         &lt;socket-binding-group name="standard-sockets" default-interface="public" port-offset="${jboss.socket.binding.port-offset:0}"&gt;
-        &lt;socket-binding name="management-native" interface="management" port="${jboss.management.native.port:9999}"/&gt;
-        &lt;socket-binding name="management-http" interface="management" port="${jboss.management.http.port:9990}"/&gt;
-        &lt;socket-binding name="management-https" interface="management" port="${jboss.management.https.port:9443}"/&gt;
-        &lt;socket-binding name="ajp" port="8009"/&gt;
-        &lt;socket-binding name="http" port="8080"/&gt;
-        &lt;socket-binding name="https" port="8443"/&gt;
-        &lt;socket-binding name="sip-udp" port="5080"/&gt;
-        &lt;socket-binding name="sip-tcp" port="5080"/&gt;
-        &lt;socket-binding name="sip-tls" port="5081"/&gt;
-        &lt;socket-binding name="sip-ws" port="5082"/&gt;
-        &lt;socket-binding name="sip-wss" port="5083"/&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You also need to configure the underlying SIP Stack so that the SIP Over WebSockets secure signalling uses the right certificates. At configuration file $RESTCOMM_HOME/standalone/configuration/mss-sip-stack.properties you need to add the following :</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">      gov.nist.javax.sip.TLS_CLIENT_AUTH_TYPE=Disabled
-      javax.net.ssl.keyStore=/path/to/TRUSTSTORE_FILE
-      javax.net.ssl.keyStorePassword=REPLACE_WITH_YOUR_TRUSTSTORE_PASSWORD
-      javax.net.ssl.trustStorePassword=REPLACE_WITH_YOUR_TRUSTSTORE_PASSWORD
-      javax.net.ssl.trustStore=/path/to/TRUSTSTORE_FILE
-      javax.net.ssl.keyStoreType=JKS</code></pre>
-</div>
+<p>The above hostname must match the one in the /etc/hosts file and must also be the same hostname in your SSL certificate.</p>
 </div>
 <div class="paragraph">
 <p>For any questions or suggestions, please use the following channels:</p>
@@ -22969,7 +22921,7 @@ SSL_MODE='allowall'</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-08-17 10:38:09 WEST
+Last updated 2016-08-18 10:38:10 WEST
 </div>
 </div>
 <footer>
