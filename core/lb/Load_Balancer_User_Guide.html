@@ -23154,8 +23154,8 @@ However, the integrated HTTP Balancer has an advantage when related SIP and HTTP
 </div>
 <div class="paragraph">
 <p>Also HTTP load balancer can choose the next node by 'instanceId' which is got from the Restcomm connector info. First the Load balancer
-checks whether http request contains 'CallSID' parameter. If it does, the Load balancer checks whether 'instanceId' from http request corresponds to 'instanceId'
-of each node connected to the Load balancer. If the Load balancer finds the correspondence, it sends http request to this node.</p>
+checks whether http request contains 'CallSID' parameter. If it does, the Load balancer gets 'instanceId' from it and checks whether 'instanceId' corresponds to 'instanceId'
+of nodes connected to the Load balancer. If the Load balancer finds the correspondence, it sends http request to this node.</p>
 </div>
 </div>
 <div class="sect2">
@@ -24717,7 +24717,7 @@ Fill in form: Load Balancer&#8217;s ip adress (externalHost) 172.21.0.104 and po
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-08-18 11:02:15 WEST
+Last updated 2016-08-19 11:05:27 WEST
 </div>
 </div>
 <footer>
