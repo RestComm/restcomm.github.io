@@ -22760,7 +22760,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <ul class="sectlevel2">
 <li><a href="#_sslb_sip_load_balancing_basics">1.1. SIP Load Balancing Basics</a></li>
 <li><a href="#http-load-balancing-basics">1.2. HTTP Load Balancing Basics</a></li>
-<li><a href="#smpp-load-balancing-basics">1.3. SMPP Load Balancing Basics</a></li>
+<li><a href="#smpp-multiplexing-basics">1.3. SMPP multiplexing basics</a></li>
 <li><a href="#pluggable-balancer-algorithms">1.4. Pluggable balancer algorithms</a></li>
 <li><a href="#distributed-load-balancing">1.5. Distributed load balancing</a></li>
 <li><a href="#_sslb_binary_sip_load_balancer_installing_configuring_and_running">1.6. Restcomm Load Balancer: Installing, Configuring andRunning</a></li>
@@ -22769,6 +22769,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#enabling-tls-wss-for-load-balancers">1.9. Enabling TLS/WSS for Load Balancers</a></li>
 <li><a href="#getting-statistic">1.10. Getting statistic</a></li>
 <li><a href="#configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine">1.11. Configuring Load-balancer and two Restcomm servers on the one local machine</a></li>
+<li><a href="#integration-load-balancer-smpp-with-restcomm-and-nexmo">1.12. Integration Load Balancer SMPP with Restcomm and Nexmo</a></li>
 </ul>
 </li>
 <li><a href="#revision-history">Appendix A: Revision History</a></li>
@@ -23159,15 +23160,18 @@ of nodes connected to the Load balancer. If the Load balancer finds the correspo
 </div>
 </div>
 <div class="sect2">
-<h3 id="smpp-load-balancing-basics"><a class="anchor" href="#smpp-load-balancing-basics"></a>1.3. SMPP Load Balancing Basics</h3>
+<h3 id="smpp-multiplexing-basics"><a class="anchor" href="#smpp-multiplexing-basics"></a>1.3. SMPP multiplexing basics</h3>
 <div class="paragraph">
-<p>SMPP load balancer is used for balancing load from SMPP clients (ESME) to SMPP servers (SMSC) based on round-robin algorithm.
-Because of SMPP protocol based on an application layer TCP/IP connection between the ESME and SMSC and is initiated by the ESME, we should use connection handling.
-SMPP load balancer includes three main parts: server part, client part and dispatcher.
-When new clients connect to SMPP load balancer, application creates instances of ClientConnectionImpl (client part) and ServerConnectionImpl (server part) classes that bind by session ID.
-They are used to establish a connection between client (ESME) and server (SMSC). When connection established it can be used in both directions: ESME and SMSC can initiate new messages or send back messages through the SMPP load balancer.
-Dispatcher is used for logical connection of client and server parts of SMPP load balancer.
-Each packet that is received by the client part, the dispatcher throws to server part (unless error is detected) and vice versa.</p>
+<p>SMPP providers (e.g.NEXMO) offer limited numbers of connections to their services
+but sometimes we need more than one client connections to it. So you can use our
+load balancer as SMPP multiplexer for multiplexing connections from several clients
+(Restcomm) to one SMPP provider using one connection.</p>
+</div>
+<div class="paragraph">
+<p>When very first client connect to SMPP load balancer, Load balancer creates connection
+to server and next clients reuse it. When connection to server established it can
+be used in both directions (transceiver mode): ESME and SMSC can send messages
+through the load balancer.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -23176,12 +23180,15 @@ Each packet that is received by the client part, the dispatcher throws to server
 <div class="title">Figure 2. SMPP load balancer diagram</div>
 </div>
 <div class="paragraph">
-<p>Main goal of application is to reduce the load on servers (SMSC) and simply transfer packets between client (ESME) and server(SMSC). But also it can inspect the received packets for correct command ID and will not send incorrect packets forward instead turn them back.</p>
+<p>Main goal is to reuse connection to the servers (SMSC) and simply transfer packets
+between client (ESME) and server(SMSC). But also it can inspect the received packets
+for correct command ID and will not send incorrect packets forward instead turn them back.</p>
 </div>
 <div class="paragraph">
-<p>When connection to server drops, SMPP load balancer can reconnect (rebind) to the next working server.
-During this process (reconnect) it turns back all received packets until the new connection is established.
-If there are no established connections with the servers, the client connection is closed and vice versa.</p>
+<p>When connection to server drops, SMPP load balancer can reconnect (rebind) to the
+server. During this process (reconnect) it turns back all received packets until
+the new connection is established. If there are no established connection with
+the server, all connections will be closed.</p>
 </div>
 <div class="sect3">
 <h4 id="_sslb_smpp_load_balancer_implementation"><a class="anchor" href="#_sslb_smpp_load_balancer_implementation"></a>1.3.1. Implementation of the SMPP Load Balancer</h4>
@@ -23541,6 +23548,8 @@ smppHost = 127.0.0.1
 smppPort = 2776
 # The port of the load balancer for SSL protocol
 smppSslPort = 2876
+# The IP address:port of SMPP server
+remoteServers=174.37.245.38:8000
 # it is recommended that at any time there were no more than
 #10 (ten) SMPP messages are outstanding
 maxConnectionSize = 10
@@ -23678,17 +23687,25 @@ The hearbeat interval must be much smaller than the interval specified in the JA
 <dd>
 <p>Port on which the SMPP load balancer will listen for incoming requests from clients.</p>
 </dd>
+<dt class="hdlist1">remoteServers</dt>
+<dd>
+<p>The IP address:port of SMPP server</p>
+</dd>
 <dt class="hdlist1">maxConnectionSize</dt>
 <dd>
-<p>It is recommended that at any time there were no more than ten SMPP messages are outstanding.</p>
+<p>max number of connections/sessions this server will expect to handle
+this number corrosponds to the number of worker threads handling reading
+data from sockets and the thread things will be processed under
+it is recommended that at any time there were no more than 10 (ten) SMPP messages are
+outstanding (10 is default)</p>
 </dd>
 <dt class="hdlist1">nonBlockingSocketsEnabled</dt>
 <dd>
-<p>Turn off/on blocking.</p>
+<p>Is NIO enabled (default true).</p>
 </dd>
 <dt class="hdlist1">defaultSessionCountersEnabled</dt>
 <dd>
-<p>Turn off/on server counters.</p>
+<p>Is default session counters enabled(used for testing)</p>
 </dd>
 <dt class="hdlist1">timeoutResponse</dt>
 <dd>
@@ -23698,14 +23715,12 @@ Max time allowable between request and response, after which operation assumed t
 <dt class="hdlist1">timeoutConnection</dt>
 <dd>
 <p>In milliseconds.
-Max time allowable between connection to SMPP load balancer by client and bind request from client, after which client will disconnect.</p>
+Session initialization timer(if client connect but doesn’t send bind request then LB disconnects it)</p>
 </dd>
 <dt class="hdlist1">timeoutEnquire</dt>
 <dd>
 <p>In milliseconds.
-Time interval <code>after which
-                balancer check connection to server and
-                client.</code></p>
+Enquire Link Timer (after each this period LB checks connection to client and server, sends enquire_link)</p>
 </dd>
 <dt class="hdlist1">reconnectPeriod</dt>
 <dd>
@@ -23720,7 +23735,7 @@ After sending enquire link to client for checking connection, balancer wait this
 <dt class="hdlist1">timeoutConnectionCheckServerSide</dt>
 <dd>
 <p>In milliseconds.
-After sending enquire link to server for checking connection, balancer wait this time and if not receive response close connection.</p>
+Connection check server side timer(time which LB wait for enquire_link_resp and if doesn’t receive, tries to rebind to server).</p>
 </dd>
 <dt class="hdlist1">javax.net.ssl.keyStore</dt>
 <dd>
@@ -23841,13 +23856,13 @@ If the desired behaviour group these requests, we can just make sure the affinit
 <div class="sect3">
 <h4 id="_sslb_binary_sip_load_balancer_running"><a class="anchor" href="#_sslb_binary_sip_load_balancer_running"></a>1.6.5. Running</h4>
 <div class="olist arabic">
-<div class="title">Procedure: Running the SIP/SMPP Load Balancer and SIP Server Nodes</div>
+<div class="title">Procedure: Running the Load Balancer and SIP Server Nodes</div>
 <ol class="arabic">
 <li>
-<p>Start the SIP/SMPP Load Balancer</p>
+<p>Start the Load Balancer</p>
 <div class="paragraph">
-<p>Start the SIP/SMPP load balancer, ensuring the Configuration Properties file ( <em class="path">lb.properties</em> in this example) is specified.
-In the Linux terminal, or using the Windows Command Prompt, the SIP and SMPP Load Balancers are started by issuing a command similar to this one:</p>
+<p>Start the load balancer, ensuring the Configuration Properties file ( <em class="path">lb.properties</em> in this example) is specified.
+In the Linux terminal, or using the Windows Command Prompt, the Load Balancers are started by issuing a command similar to this one:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23885,15 +23900,15 @@ In the Linux terminal, or using the Windows Command Prompt, the SIP and SMPP Loa
 </div>
 </li>
 <li>
-<p>Configure SIP/SMPP Server Nodes</p>
+<p>Configure Server Nodes</p>
 <div class="paragraph">
-<p>The information about configuring your SIP Server, SMPP Server, SIP Servlets or JAIN SLEE, is in the respective server User Guide.</p>
+<p>The information about configuring your SIP Server, SIP Servlets or JAIN SLEE, is in the respective server User Guide.</p>
 </div>
 </li>
 <li>
 <p>Start Load Balancer Client Nodes</p>
 <div class="paragraph">
-<p>Start all SIP and SMPP load balancer client nodes.</p>
+<p>Start all SIP load balancer client nodes.</p>
 </div>
 </li>
 </ol>
@@ -24706,6 +24721,85 @@ Fill in form: Load Balancer&#8217;s ip adress (externalHost) 172.21.0.104 and po
 Fill in form: Load Balancer&#8217;s ip adress (externalHost) 172.21.0.104 and port (externalWssPort) 5091</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="integration-load-balancer-smpp-with-restcomm-and-nexmo"><a class="anchor" href="#integration-load-balancer-smpp-with-restcomm-and-nexmo"></a>1.12. Integration Load Balancer SMPP with Restcomm and Nexmo</h3>
+<div class="paragraph">
+<div class="title">Configure Restcomm to Use SMPP</div>
+<p>First you need to configure the IP address and other features required
+to start Restcomm as explained <a href="http://documentation.telestax.com/connect/configuration/Starting%20Restcomm-Connect.html#start-restcomm-connect">Starting Restcomm-Connect.</a>
+Edit the file  $RESTCOMM_HOME/bin/restcomm/restcomm.conf You must set the SMPP_ACTIVATE variable to true for SMPP to be activated</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>#Connection details for SMPP Restcomm integration
+SMPP_ACTIVATE='true' #Set to true to activate SMPP
+SMPP_SYSTEM_ID='xxxxx'  #your NEXMO “key”
+SMPP_PASSWORD='xxxxxx' #your NEXMO “secret”
+SMPP_SYSTEM_TYPE='xxxxxx'  #This is required when working with Nexmo for inbound SMS
+SMPP_PEER_IP='xxxxxx'  #smppHost of Load Balancer
+SMPP_PEER_PORT='xxxxx'  #smppPort of Load Balancer</pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Configure Load Balancer to Use SMPP</div>
+<p>Edit the file lb-configuration.properies</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># SMPP Load Balancer Settings
+smppName=SMPP Load Balancer
+# The address of the load balancer
+smppHost=xxxxxx
+# The port of the load balancer on which Restcomm connects
+smppPort=xxxx
+# The port of the load balancer for SSL protocol on which Restcomm connects
+#smppSslPort=xxxx
+# The IP address:port of Nexmo server
+remoteServers=174.37.245.38:8000
+# max number of connections/sessions this server will expect to handle
+# this number corrosponds to the number of worker threads handling reading
+# data from sockets and the thread things will be processed under
+# it is recommended that at any time there were no more than 10 (ten) SMPP
+# messages are outstanding (10 is default)
+#maxConnectionSize=10
+# Is NIO enabled (default true)
+#nonBlockingSocketsEnabled=true
+# Is default session counters enabled(used for testing)
+#defaultSessionCountersEnabled=true
+# Response timeout for load balancer in milliseconds (max time which LB wait
+# for response, after timeout packet сonsidered lost and send error response)
+timeoutResponse=10000
+# Session initialization timer(if client connect but doesn’t send bind
+# request then LB disconnects it)
+timeoutConnection=1000
+# Enquire Link Timer (after each this period LB checks connection to
+# client and server(sends enquire_link))
+timeoutEnquire=50000
+# Time between reconnection(time which LB wait for reconnection if connection
+# was lost)
+reconnectPeriod=1000
+# Connection check timer in load balancer (time which LB wait for
+# enquire_link_resp and if doesn’t receive, close connection to client)
+timeoutConnectionCheckClientSide=1000
+# Connection check server side timer(time which LB wait for
+# enquire_link_resp and if doesn’t receive, tries to rebind to server )
+timeoutConnectionCheckServerSide=1000</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Start the Load balancer and Restcomm, in a few seconds connection should established
+and you can see next line:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>INFO [MClientConnectionImpl] Connection to server : 127.0.0.1 : 10021 established. Server session ID : 0</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now you can send outbound and inbound messages. How to send messages you can find
+<a href="http://documentation.telestax.com/connect/configuration/Restcomm%20-%20Connecting%20SMPP%20Endpoint%20through%20Nexmo.html">here</a></p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -24717,7 +24811,7 @@ Fill in form: Load Balancer&#8217;s ip adress (externalHost) 172.21.0.104 and po
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-08-23 11:06:41 WEST
+Last updated 2016-08-25 15:40:39 WEST
 </div>
 </div>
 <footer>
