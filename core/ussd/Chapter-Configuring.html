@@ -22786,8 +22786,8 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>You must fine-tune Memory and Database settings for better performance before using Restcomm USSD GATEWAY in production.
-Once you complete setting up the Gateway you must configure the SS7 Stack, USSD routing rules and USSD paramters. Restcomm USSD GATEWAY comes with a convenient user-friendly Graphical User Interface (GUI) and a Command Line Interface (CLI) that will allow you to configure, monitor and manage the Gateway.
+<p>You must fine-tune Memory and Database settings for better performance before using Restcomm USSD GateWay in production.
+Once you complete setting up the Gateway you must configure the SS7 Stack, USSD routing rules and USSD paramters. Restcomm USSD GateWay comes with a convenient user-friendly Graphical User Interface (GUI) and a Command Line Interface (CLI) that will allow you to configure, monitor and manage the Gateway.
 While the CLI tool allows complete configuration and control of the Gateway, the GUI-based management enhances the usability of the Gateway and gives you the ability to configure and manage the USSD Gateway dynamically.
 This chapter will explain how to manage the Gateway effectively using both the GUI and the CLI.</p>
 </div>
@@ -22798,7 +22798,7 @@ This chapter will explain how to manage the Gateway effectively using both the G
 <div class="sectionbody">
 <div class="paragraph">
 <p>You should fine tune the JVM memory settings based on your needs but we recommend you allocate a minimum of 3 GB for initial and maximum heap size.
-These settings are specified in the file[path]<em>mobicents-ussdgateway-/jboss-5.1.0.GA/bin/run.conf</em>.</p>
+These settings are specified in the file[path]<em>restcomm-ussdgateway-/jboss-5.1.0.GA/bin/run.conf</em>.</p>
 </div>
 <div class="dlist">
 <dl>
@@ -22818,14 +22818,14 @@ These settings are specified in the file[path]<em>mobicents-ussdgateway-/jboss-5
 <h2 id="cdr-logging-settings"><a class="anchor" href="#cdr-logging-settings"></a>2. CDR Logging Settings</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Every transaction in the Restcomm USSD GATEWAY is logged either in a Textfile or a Database as per the configuration.
+<p>Every transaction in the Restcomm USSD GateWay is logged either in a Textfile or a Database as per the configuration.
 By default, transactions are logged in a plain text file.
 Alternatively, you can choose to have CDR logged in a Database instead of a plain text file.
 You will find instructions for both in the sections below.</p>
 </div>
 <div class="paragraph">
 <p>If you change the configuration to log CDR in a Database, then you must be aware that transactions are logged into the default Database HSQLDB that comes bundled with JBoss AS and leverages the JBoss AS DataSource.
-However this is only made available to allow the platform to run "out of the box". You must configure a production ready Database prior to using the Gateway in a production environment. Restcomm USSD GATEWAY has been tested with PostgreSQL and MySQL.</p>
+However this is only made available to allow the platform to run "out of the box". You must configure a production ready Database prior to using the Gateway in a production environment. Restcomm USSD GateWay has been tested with PostgreSQL and MySQL.</p>
 </div>
 <div class="paragraph">
 <p>To switch between Database and plain text file, you can make use of the CLI command <code>ussd set cdrloggingto &lt;Database|Textfile&gt;</code> or configure this in the GUI.
@@ -22847,21 +22847,21 @@ You must ensure that you delete this datasource and configure a production-frien
 <div class="sect2">
 <h3 id="_configure_datasource"><a class="anchor" href="#_configure_datasource"></a>2.1. Configuring an Alternate DataSource</h3>
 <div class="paragraph">
-<p>The example HSQLDB DataSource is bound to the JNDI name java:/DefaultDS and its descriptor is available in the file <em class="path">mobicents-ussdgateway-/jboss-5.1.0.GA/server/&lt;profile&gt;/deploy/hsqldb-ds.xml</em>.
+<p>The example HSQLDB DataSource is bound to the JNDI name java:/DefaultDS and its descriptor is available in the file <em class="path">restcomm-ussdgateway/jboss-5.1.0.GA/server/&lt;profile&gt;/deploy/hsqldb-ds.xml</em>.
 You must delete this datasource and configure the Platform to use your choice of Database.
 For instructions on configuring an alternate DataSource with an example, please refer to <a href="#_configuring_mysql">[_configuring_mysql]</a>.
 For detailed instructions and explanation please refer to the JBoss AS Getting Started Guide available <a href="https://community.jboss.org/wiki/JBossAS5InstallationAndGettingStartedGuide">here</a>.
-You will also find a lot of examples in the folder <em class="path">mobicents-ussdgateway-/jboss-5.1.0.GA/docs/examples/jca/</em>.</p>
+You will also find a lot of examples in the folder <em class="path">restcomm-ussdgateway/jboss-5.1.0.GA/docs/examples/jca/</em>.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_configure_jslee_jdbc_ra"><a class="anchor" href="#_configure_jslee_jdbc_ra"></a>2.2. Configuring JSLEE JDBC RA</h3>
 <div class="paragraph">
-<p>Restcomm USSD GATEWAY leverages JSLEE JDBC RA for persistence.
-Detailed JSLEE JDBC RA documentation is available in <em class="path">mobicents-ussdgateway-/docs/slee/Mobicents_SLEE_RA_JDBC_User_Guide.pdf</em> that explains how to point to the new DataSource.
+<p>Restcomm USSD GateWay leverages JSLEE JDBC RA for persistence.
+Detailed JSLEE JDBC RA documentation is available in <em class="path">restcomm-ussdgateway/docs/slee/Mobicents_SLEE_RA_JDBC_User_Guide.pdf</em> that explains how to point to the new DataSource.
 An example configuration is explained in this admin guide in the section <a href="#_configuring_mysql">[_configuring_mysql]</a>.
 When you have completed configuring an alternate DataSource in JBoss AS, you can proceed to modify JSLEE configurations accordingly.
-You must change the Dialect in the file <em class="path">mobicents-ussdgateway-/jboss-5.1.0.GA/server/&lt;profile&gt;/deploy/mobicents-slee/META-INF/jboss-beans.xml</em> to reflect your alternate DataSource.</p>
+You must change the Dialect in the file <em class="path">restcomm-ussdgateway/jboss-5.1.0.GA/server/&lt;profile&gt;/deploy/restcomm-slee/META-INF/jboss-beans.xml</em> to reflect your alternate DataSource.</p>
 </div>
 </div>
 <div class="sect2">
@@ -23077,9 +23077,9 @@ Usually this will also create some ERROR traces in server.log</p>
 <h2 id="_http_client_ra"><a class="anchor" href="#_http_client_ra"></a>3. Configuring JSLEE http-client RA</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Restcomm USSD GATEWAY acts as a HTTP Client to achieve USSD pull by sending a HTTP POST request to third party applications (HTTP Server) for every dialled short code.
+<p>Restcomm USSD GateWay acts as a HTTP Client to achieve USSD pull by sending a HTTP POST request to third party applications (HTTP Server) for every dialled short code.
 You must configure the HTTP Client JSLEE Resource Adaptor&#8217;s properties to suit your requirements.
-Please refer to the SLEE RA HTTP Client User Guide available in <em class="path">mobicents-ussdgateway-/docs/slee/Mobicents_SLEE_RA_HTTP_Client_User_Guide.pdf</em>.</p>
+Please refer to the SLEE RA HTTP Client User Guide available in <em class="path">restcomm-ussdgateway/docs/slee/Mobicents_SLEE_RA_HTTP_Client_User_Guide.pdf</em>.</p>
 </div>
 <div class="paragraph">
 <p>For every Short Code Routing rule added in the USSD Gateway, you must ensure that there is a corresponding <code>MAX_CONNECTIONS_FOR_ROUTES</code> property appropriately configured in the HTTP Client JSLEE RA.</p>
@@ -23103,11 +23103,11 @@ You must modify the <code>MAX_CONNECTIONS_FOR_ROUTES</code> property to meet you
 <h2 id="_logging"><a class="anchor" href="#_logging"></a>4. Configuring log4j Logging Service</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Restcomm USSD GATEWAY uses <code>Apache log4j</code> for logging.
+<p>Restcomm USSD GateWay uses <code>Apache log4j</code> for logging.
 If you are not familiar with the <code>log4j</code> package, you can read more about it at the Jakarta <a href="http://jakarta.apache.org/log4j/">website</a>.</p>
 </div>
 <div class="paragraph">
-<p>Logging is controlled from a central configuration file located at <em class="path">mobicents-ussdgateway-/jboss-5.1.0.GA/server/&lt;profile&gt;/conf/jboss-log4j.xml</em>, one for each JBoss AS configuration profile.
+<p>Logging is controlled from a central configuration file located at <em class="path">restcomm-ussdgateway/jboss-5.1.0.GA/server/&lt;profile&gt;/conf/jboss-log4j.xml</em>, one for each JBoss AS configuration profile.
 This file defines a set of appenders specifying the log files, what categories of messages should go there, the message format and the level of filtering.
 For more details, please refer to Section 9.6.3, "Logging Service" in the JBoss AS Getting Started Guide available <a href="https://community.jboss.org/wiki/JBossAS5InstallationAndGettingStartedGuide">here</a>.</p>
 </div>
@@ -23122,8 +23122,8 @@ We recommend that you set logging threshold to <code>WARN</code> and let the CDR
 <div class="sectionbody">
 <div class="paragraph">
 <p>You must configure the SS7 Stack prior to configuring USSD.
-For details on configuring the SS7 Stack please refer to the Mobicents SS7 Stack User Guide.
-The Mobicents SS7 Stack User Guide lists all available Shell commands and GUI operations to configure SS7.
+For details on configuring the SS7 Stack please refer to the Restcomm SS7 Stack User Guide.
+The Restcomm SS7 Stack User Guide lists all available Shell commands and GUI operations to configure SS7.
 In addition, help files are also available for every Shell command providing all details relevant to the command.</p>
 </div>
 </div>
@@ -23136,7 +23136,7 @@ In addition, help files are also available for every Shell command providing all
 In order to use the CLI you must follow the instructions specified in <a href="#_running_shell">[_running_shell]</a> to run the shell and connect to the managed instance.
 Alternatively you can use the GUI to configure the USSD Gateway through simple GUI operations.
 The GUI will allow you to manage your USSD Gateway efficiently using an user-friendly interface.
-Open a Web Browser, navigate to <a href="http://localhost:8080/mobicents-management/" class="bare">http://localhost:8080/mobicents-management/</a> and switch to the 'USSD GW' tab.</p>
+Open a Web Browser, navigate to <a href="http://localhost:8080/restcomm-management/" class="bare">http://localhost:8080/restcomm-management/</a> and switch to the 'USSD GW' tab.</p>
 </div>
 <div class="paragraph">
 <p>You must first set appropriate values for the below USSD parameters and then configure USSD Routing Rules for short codes.
@@ -23674,7 +23674,7 @@ EXAMPLES
 Switch to the 'SS7 Settings' tab in the GUI.</p>
 </li>
 <li>
-<p>In the text field 'USSD Gateway subsystem number', you can set a value for USSD Sub System Number (SSN). Issuing this command in CLI will set the SSN value but you must ensure that the SSN value is properly configured in the TCAP Stack in the xml descriptor file <em class="path">mobicents-ussdgateway-version/jboss-5.1.0.GA/server/&lt;profile&gt;/deploy/mobicents-ussd-gateway/META-INF/jboss-beans.xml</em>.
+<p>In the text field 'USSD Gateway subsystem number', you can set a value for USSD Sub System Number (SSN). Issuing this command in CLI will set the SSN value but you must ensure that the SSN value is properly configured in the TCAP Stack in the xml descriptor file <em class="path">restcomm-ussdgateway-version/jboss-5.1.0.GA/server/&lt;profile&gt;/deploy/restcomm-ussd-gateway/META-INF/jboss-beans.xml</em>.
 For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
 </li>
 <li>
@@ -24194,9 +24194,9 @@ If there is an error in deleting the Rule, then you will find the details of the
 <h2 id="_configuring_ussd_simulator_profile"><a class="anchor" href="#_configuring_ussd_simulator_profile"></a>7. Simulator Profile</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Restcomm USSD GATEWAY offers you an option to run the Gateway with a "simulator" profile for testing purpose.
+<p>The Restcomm USSD GateWay offers you an option to run the Gateway with a "simulator" profile for testing purpose.
 The "simulator" profile is a pre-configured profile to work with the jss7-simulator.
-The USSD GATEWAY in a Simulator profile is pre-configured as if you have configured it using the following CLI commands:</p>
+The USSD GateWay in a Simulator profile is pre-configured as if you have configured it using the following CLI commands:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -24235,7 +24235,7 @@ ussd scrule create *518# http://127.0.0.1:5080 true SIP</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-08-27 10:53:55 WEST
+Last updated 2016-08-28 11:32:30 WEST
 </div>
 </div>
 <footer>

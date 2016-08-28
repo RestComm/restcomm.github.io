@@ -441,7 +441,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Restcomm USSD GATEWAY supports implementation of HTTP 1.1 standards and acts as a HTTP Client invoking the HTTP Application deployed on the third-party Application Server.
+<p>Restcomm USSD GateWay supports implementation of HTTP 1.1 standards and acts as a HTTP Client invoking the HTTP Application deployed on the third-party Application Server.
 The <code>HTTP Request/Response</code> carries XML payload with USSD specific information.</p>
 </div>
 <div class="paragraph">
@@ -462,7 +462,7 @@ The third-party Application could be one of the following technologies on any Op
 </ul>
 </div>
 <div class="paragraph">
-<p>HTTP errors are supported and recognized by the USSD GATEWAY</p>
+<p>HTTP errors are supported and recognized by the USSD GateWay</p>
 </div>
 </div>
 </div>
@@ -470,7 +470,7 @@ The third-party Application could be one of the following technologies on any Op
 <h2 id="http_messages_ussd_pull"><a class="anchor" href="#http_messages_ussd_pull"></a>1. HTTP Message Structure - USSD Pull</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The diagram below depicts an example message sequence for interacting with the Restcomm USSD GATEWAY HTTP API.</p>
+<p>The diagram below depicts an example message sequence for interacting with the Restcomm USSD GateWay HTTP API.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -483,28 +483,28 @@ The third-party Application could be one of the following technologies on any Op
 <p>When the subscriber initiates a USSD Request, the HLR sends a <code>MAP_PROCESS_UNSTRUCTURED_SS_REQUEST</code> to the USSD Gateway.</p>
 </li>
 <li>
-<p>Upon receipt of the <code>MAP_PROCESS_UNSTRUCTURED_SS_REQUEST</code> of type <code>Begin</code>, USSD GATEWAY  invokes the third-party Application through a <code>HTTP POST Request</code>, carrying an XML Payload with USSD specific information.
+<p>Upon receipt of the <code>MAP_PROCESS_UNSTRUCTURED_SS_REQUEST</code> of type <code>Begin</code>, USSD GateWay  invokes the third-party Application through a <code>HTTP POST Request</code>, carrying an XML Payload with USSD specific information.
 The XML Structure of this payload is explained in the sections below.</p>
 </li>
 <li>
 <p>The third-party Application will now get a new Session and maintain it till the last response.
-The Application will send a <code>HTTP Response</code>, carrying an XML Payload, to the USSD GATEWAY .</p>
+The Application will send a <code>HTTP Response</code>, carrying an XML Payload, to the USSD GateWay .</p>
 </li>
 <li>
-<p>The USSD GATEWAY will send a <code>MAP_UNSTRUCTURED_SS_REQUEST</code> of type <code>Continue</code> to the HLR.</p>
+<p>The USSD GateWay will send a <code>MAP_UNSTRUCTURED_SS_REQUEST</code> of type <code>Continue</code> to the HLR.</p>
 </li>
 <li>
 <p>The Subscriber will receive a menu to choose from and reply.
-When the subscriber replies, the HLR will send a <code>MAP_UNSTRUCTURED_SS_RESPONSE</code> of type <code>Continue</code> to the USSD GATEWAY .</p>
+When the subscriber replies, the HLR will send a <code>MAP_UNSTRUCTURED_SS_RESPONSE</code> of type <code>Continue</code> to the USSD GateWay .</p>
 </li>
 <li>
-<p>The USSD GATEWAY will send a <code>HTTP POST Request</code>, carrying an XML Payload, to the third-party Application in the same session.</p>
+<p>The USSD GateWay will send a <code>HTTP POST Request</code>, carrying an XML Payload, to the third-party Application in the same session.</p>
 </li>
 <li>
 <p>Based on the input from the subscriber, the third-party Application will send a final response (<code>HTTP Response</code>, carrying an XML Payload) and invalidate the session.</p>
 </li>
 <li>
-<p>The USSD GATEWAY will send a <code>MAP_PROCESS_UNSTRUCTURED_SS_RESPONSE</code> of type <code>End</code> to the HLR.
+<p>The USSD GateWay will send a <code>MAP_PROCESS_UNSTRUCTURED_SS_RESPONSE</code> of type <code>End</code> to the HLR.
 Consequently, the subscriber will receive a final response.</p>
 </li>
 </ol>
@@ -515,9 +515,9 @@ Consequently, the subscriber will receive a final response.</p>
 <h2 id="_http_messages_ussd_push"><a class="anchor" href="#_http_messages_ussd_push"></a>2. HTTP Message Structure - USSD Push</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>For USSD PUSH, the third party application should send a HTTP POST request to the Restcomm USSD GATEWAY .
+<p>For USSD PUSH, the third party application should send a HTTP POST request to the Restcomm USSD GateWay .
 The URL for sending this is <a href="http://&lt;bind" class="bare">http://&lt;bind</a> address of JBoss&gt;:8080/mobicents.
-The diagram below depicts an example message sequence (USSD Push) for interacting with the Restcomm USSD GATEWAY HTTP API.</p>
+The diagram below depicts an example message sequence (USSD Push) for interacting with the Restcomm USSD GateWay HTTP API.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -560,7 +560,7 @@ The list of mandatory attributes that a USSD application must supply will be des
 <dt class="hdlist1">type</dt>
 <dd>
 <p>Represents the state of the Dialog.
-This parameter is for information only and is not used by the USSD GATEWAY to take any decision on the fate of the underlying MAP Dialog.
+This parameter is for information only and is not used by the USSD GateWay to take any decision on the fate of the underlying MAP Dialog.
 The possible values for 'type' are: <code>Unidirectional, Begin, End, Continue, Abort, Unknown.</code>				You do not need to supply this parameter in payload from HTTP App.</p>
 </dd>
 <dt class="hdlist1">appCntx</dt>
@@ -1180,7 +1180,7 @@ First http response contains a session cookie like "Set-Cookie: JSESSIONID=1379B
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-08-27 10:53:55 WEST
+Last updated 2016-08-28 11:32:30 WEST
 </div>
 </div>
 </body>

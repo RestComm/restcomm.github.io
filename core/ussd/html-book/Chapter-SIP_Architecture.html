@@ -435,15 +435,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Restcomm USSD GATEWAY supports implementation of Session Initiation Protocol (SIP) for using Unstructured Supplementary Service Data (USSD) operations for mobile initiated MMI mode over IP Multimedia Core Network Subsystem (IMS). 3GPP Specification 24.390 "Unstructured Supplementary Service Data (USSD) using IP  Multimedia (IM) Core Network (CN) subsystem IMS" further explains flow of USSD over IMS leveraging SIP.</p>
+<p>Restcomm USSD GateWay supports implementation of Session Initiation Protocol (SIP) for using Unstructured Supplementary Service Data (USSD) operations for mobile initiated MMI mode over IP Multimedia Core Network Subsystem (IMS). 3GPP Specification 24.390 "Unstructured Supplementary Service Data (USSD) using IP  Multimedia (IM) Core Network (CN) subsystem IMS" further explains flow of USSD over IMS leveraging SIP.</p>
 </div>
 <div class="paragraph">
-<p>Restcomm USSD GATEWAY can easily be integarted with Restcomm RestComm via SIP to enable developers to rapidly build voice, video, WebRTC, USSD, SMS, fax and rich messaging applications.
-More details about RestComm can be obtained from <a href="http://www.telestax.com/restcomm/">here</a></p>
+<p>Restcomm USSD GateWay can easily be integarted with RestComm Connect server via SIP to enable developers to rapidly build voice, video, WebRTC, USSD, SMS, fax and rich messaging applications.
+More details about RestComm Connect server can be obtained from <a href="http://www.telestax.com/restcomm/">here</a></p>
 </div>
 <div class="paragraph">
-<p>Following sections shows SIP flow and integration with RestComm.
-Instead of RestComm, user can easily integrate SIP phone that supports USSD.</p>
+<p>Following sections shows SIP flow and integration with RestComm Connect server.
+Instead of RestComm Connect server, user can easily integrate SIP phone that supports USSD.</p>
 </div>
 </div>
 </div>
@@ -451,7 +451,7 @@ Instead of RestComm, user can easily integrate SIP phone that supports USSD.</p>
 <h2 id="_sip_messages_ussd_pull"><a class="anchor" href="#_sip_messages_ussd_pull"></a>1. SIP Message Structure - USSD Pull</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The diagram below depicts an example message sequence for interacting with the Restcomm USSD GATEWAY SIP API.
+<p>The diagram below depicts an example message sequence for interacting with the Restcomm USSD GateWay SIP API.
 Belowflow assumes that third-party application sends back tree based menu.</p>
 </div>
 <div class="imageblock">
@@ -465,7 +465,7 @@ Belowflow assumes that third-party application sends back tree based menu.</p>
 <p>When the subscriber initiates a USSD Request, the HLR sends a <code>MAP_PROCESS_UNSTRUCTURED_SS_REQUEST</code> to the USSD Gateway.</p>
 </li>
 <li>
-<p>Upon receipt of the <code>MAP_PROCESS_UNSTRUCTURED_SS_REQUEST</code> of type <code>Begin</code>, USSD GATEWAY  invokes the third-party Application through a <code>SIP INVITE Request</code>, carrying an XML Payload with USSD specific information.
+<p>Upon receipt of the <code>MAP_PROCESS_UNSTRUCTURED_SS_REQUEST</code> of type <code>Begin</code>, USSD GateWay  invokes the third-party Application through a <code>SIP INVITE Request</code>, carrying an XML Payload with USSD specific information.
 The XML Structure of this payload is explained in the sections below.</p>
 <div class="listingblock">
 <div class="content">
@@ -501,14 +501,14 @@ The XML Structure of this payload is explained in the sections below.</p>
 </div>
 </li>
 <li>
-<p>The USSD GATEWAY will send a <code>MAP_UNSTRUCTURED_SS_REQUEST</code> of type <code>Continue</code> to the HLR.</p>
+<p>The USSD GateWay will send a <code>MAP_UNSTRUCTURED_SS_REQUEST</code> of type <code>Continue</code> to the HLR.</p>
 </li>
 <li>
 <p>The Subscriber will receive a menu to choose from and reply.
-When the subscriber replies, the HLR will send a <code>MAP_UNSTRUCTURED_SS_RESPONSE</code> of type <code>Continue</code> to the USSD GATEWAY .</p>
+When the subscriber replies, the HLR will send a <code>MAP_UNSTRUCTURED_SS_RESPONSE</code> of type <code>Continue</code> to the USSD GateWay .</p>
 </li>
 <li>
-<p>The USSD GATEWAY will send a <code>SIP INFO Request</code>, carrying an XML Payload, to the third-party Application in the same session.
+<p>The USSD GateWay will send a <code>SIP INFO Request</code>, carrying an XML Payload, to the third-party Application in the same session.
 The XML Structure of this payload is explained in the sections below.</p>
 <div class="listingblock">
 <div class="content">
@@ -537,7 +537,7 @@ The XML Structure of this payload is explained in the sections below.</p>
 </div>
 </li>
 <li>
-<p>The USSD GATEWAY will send a <code>MAP_PROCESS_UNSTRUCTURED_SS_RESPONSE</code> of type <code>End</code> to the HLR.
+<p>The USSD GateWay will send a <code>MAP_PROCESS_UNSTRUCTURED_SS_RESPONSE</code> of type <code>End</code> to the HLR.
 Consequently, the subscriber will receive a final response.</p>
 </li>
 </ol>
@@ -548,7 +548,7 @@ Consequently, the subscriber will receive a final response.</p>
 <h2 id="_sip_messages_ussd_pull_notree"><a class="anchor" href="#_sip_messages_ussd_pull_notree"></a>2. SIP Message Structure - USSD Pull - Without Tree Menu</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The diagram below depicts an example message sequence (USSD PULL) without tree based menu for interacting with the Restcomm USSD GATEWAY SIP API.</p>
+<p>The diagram below depicts an example message sequence (USSD PULL) without tree based menu for interacting with the Restcomm USSD GateWay SIP API.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -561,7 +561,7 @@ Consequently, the subscriber will receive a final response.</p>
 <h2 id="_sip_messages_ussd_push_case3"><a class="anchor" href="#_sip_messages_ussd_push_case3"></a>3. SIP Message Structure - USSD Push - With Tree Menu</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The diagram below depicts an example message sequence (USSD Push) for interacting with the Restcomm USSD GATEWAY SIP API.
+<p>The diagram below depicts an example message sequence (USSD Push) for interacting with the Restcomm USSD GateWay SIP API.
 Below example initiate USSD Tree based menu.</p>
 </div>
 <div class="imageblock">
@@ -578,7 +578,7 @@ Below example initiate USSD Tree based menu.</p>
 <h2 id="_sip_messages_ussd_push_case4"><a class="anchor" href="#_sip_messages_ussd_push_case4"></a>4. SIP Message Structure - USSD Push - Without Tree Menu</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The diagram below depicts an example message sequence (USSD Push) for interacting with the Restcomm USSD GATEWAY SIP API for USSD Notify.</p>
+<p>The diagram below depicts an example message sequence (USSD Push) for interacting with the Restcomm USSD GateWay SIP API for USSD Notify.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -590,7 +590,7 @@ Below example initiate USSD Tree based menu.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-08-27 10:53:55 WEST
+Last updated 2016-08-28 11:32:30 WEST
 </div>
 </div>
 </body>

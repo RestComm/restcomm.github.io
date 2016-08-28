@@ -428,7 +428,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 However this is only made available to allow the platform to run "out of the box". You must configure a production ready Database prior to using the Gateway in a production environment.</p>
 </div>
 <div class="paragraph">
-<p>Restcomm USSD GATEWAY has been tested with PostgreSQL and MySQL.
+<p>Restcomm USSD GateWay has been tested with PostgreSQL and MySQL.
 In this section, you will find instructions for configuring MySQL database for CDR logging.</p>
 </div>
 <div class="olist arabic">
@@ -439,14 +439,14 @@ In this section, you will find instructions for configuring MySQL database for C
 In this example, a database named "test" is assumed to have been created.</p>
 </li>
 <li>
-<p>Copy the MySQL connector library (<em class="path">mysql-connector-java-5.1.27-bin.jar</em>) from "Connector/J" in the MySQL library into library folder of the JBoss Server (<em class="path">mobicents-ussdgateway-/jboss-5.1.0.GA/server/&lt;profile&gt;/lib</em>).</p>
+<p>Copy the MySQL connector library (<em class="path">mysql-connector-java-5.1.27-bin.jar</em>) from "Connector/J" in the MySQL library into library folder of the JBoss Server (<em class="path">restcomm-ussdgateway-/jboss-5.1.0.GA/server/&lt;profile&gt;/lib</em>).</p>
 </li>
 <li>
 <p>The example HSQLDB DataSource is bound to the JNDI name java:/DefaultDS and its descriptor is available in the file <em class="path">mobicents-ussdgateway-/jboss-5.1.0.GA/server/&lt;profile&gt;/deploy/hsqldb-ds.xml</em>.
 You must delete this datasource by removing this descriptor file.</p>
 </li>
 <li>
-<p>Copy the descriptor file for MySQL, <em class="path">mysql-ds.xml</em>, from <em class="path">mobicents-ussdgateway-/jboss-5.1.0.GA/docs/examples/jca/</em> into  <em class="path">mobicents-ussdgateway-/jboss-5.1.0.GA/server/&lt;profile&gt;/deploy/</em>.</p>
+<p>Copy the descriptor file for MySQL, <em class="path">mysql-ds.xml</em>, from <em class="path">restcomm-ussdgateway-/jboss-5.1.0.GA/docs/examples/jca/</em> into  <em class="path">restcomm-ussdgateway-/jboss-5.1.0.GA/server/&lt;profile&gt;/deploy/</em>.</p>
 </li>
 <li>
 <p>Update the MySQL descriptor file, <em class="path">mysql-ds.xml</em>, as required to suit your configuration.
@@ -487,10 +487,10 @@ http://www.mysql.com/downloads/api-jdbc-stable.html
 </div>
 </li>
 <li>
-<p>Delete the HSQLDB file for messaging persistence <em class="path">mobicents-ussdgateway-/jboss-5.1.0.GA/server/&lt;profile&gt;/deploy/messaging/hsqldb-persistence-service.xml</em>.</p>
+<p>Delete the HSQLDB file for messaging persistence <em class="path">restcomm-ussdgateway/jboss-5.1.0.GA/server/&lt;profile&gt;/deploy/messaging/hsqldb-persistence-service.xml</em>.</p>
 </li>
 <li>
-<p>Copy the MySQL file for messaging persistence, <em class="path">mysql-persistence-service.xml</em>, from <em class="path">mobicents-ussdgateway-/jboss-5.1.0.GA/docs/examples/jms/</em> into  <em class="path">mobicents-ussdgateway-/jboss-5.1.0.GA/server/&lt;profile&gt;/deploy/messaging</em>.</p>
+<p>Copy the MySQL file for messaging persistence, <em class="path">mysql-persistence-service.xml</em>, from <em class="path">restcomm-ussdgateway/jboss-5.1.0.GA/docs/examples/jms/</em> into  <em class="path">restcomm-ussdgateway/jboss-5.1.0.GA/server/&lt;profile&gt;/deploy/messaging</em>.</p>
 </li>
 <li>
 <p>Update the below files to replace all "DefaultDS" values with "MySqlDS" in all occurrences in all these files.</p>
@@ -519,7 +519,7 @@ http://www.mysql.com/downloads/api-jdbc-stable.html
 Save all changes.</p>
 </li>
 <li>
-<p>Open the file <em class="path">mobicents-ussdgateway-/jboss-5.1.0.GA/server/&lt;profile&gt;/deploy/mobicents-slee/META-INF/jboss-beans.xml</em> and locate the following bean:</p>
+<p>Open the file <em class="path">restcomm-ussdgateway/jboss-5.1.0.GA/server/&lt;profile&gt;/deploy/restcomm-slee/META-INF/jboss-beans.xml</em> and locate the following bean:</p>
 <div class="listingblock">
 <div class="content">
 <pre>&lt;bean name="Mobicents.JAINSLEE.Profiles.JPA.PostgreSQLConfig" class="org.mobicents.slee.container.deployment.profile.jpa.Configuration"&gt;
@@ -569,7 +569,7 @@ Save all changes.</p>
 </li>
 <li>
 <p>You must note that <code>mobicents-slee-ra-jdbc-DU-6.1.1.GA-Mobicents.jar</code> also refers to DataSource name.
-You must change the value of <code>DATASOURCE_JNDI_NAME</code> (which is hardcoded in the library) in the file <em class="path">mobicents-ussdgateway-/jboss-5.1.0.GA/server/&lt;profile&gt;/deploy/mobicents-slee-ra-jdbc-DU-6.1.1.GA-Mobicents.jar/jars/mobicents-slee-ra-jdbc-ra-6.1.1.GA-Mobicents.jar/META-INF/resource-adaptor-jar.xml</em> to <code>java:MySqlDS</code>.</p>
+You must change the value of <code>DATASOURCE_JNDI_NAME</code> (which is hardcoded in the library) in the file <em class="path">restcomm-ussdgateway-/jboss-5.1.0.GA/server/&lt;profile&gt;/deploy/mobicents-slee-ra-jdbc-DU-6.1.1.GA-Mobicents.jar/jars/mobicents-slee-ra-jdbc-ra-6.1.1.GA-Mobicents.jar/META-INF/resource-adaptor-jar.xml</em> to <code>java:MySqlDS</code>.</p>
 </li>
 <li>
 <p>Delete all tables from the MySql database you wish to use.</p>
@@ -582,7 +582,7 @@ You must change the value of <code>DATASOURCE_JNDI_NAME</code> (which is hardcod
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-08-27 10:53:55 WEST
+Last updated 2016-08-28 11:32:30 WEST
 </div>
 </div>
 </body>

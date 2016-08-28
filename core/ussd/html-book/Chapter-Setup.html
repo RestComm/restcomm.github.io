@@ -430,13 +430,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#software-prerequisites">1.2. Software Prerequisites</a></li>
 </ul>
 </li>
-<li><a href="#_source_code">2. Restcomm  JAIN SLEE USSD GATEWAY  Source Code</a>
+<li><a href="#_source_code">2. Restcomm  JAIN SLEE USSD GateWay  Source Code</a>
 <ul class="sectlevel2">
 <li><a href="#_release_source_building">2.1. Release Source Code Building</a></li>
 <li><a href="#_trunk_source_building">2.2. Development Trunk Source Building</a></li>
 </ul>
 </li>
-<li><a href="#_strucure">3. Folder structure of Restcomm  JAIN SLEE USSD GATEWAY</a></li>
+<li><a href="#_strucure">3. Folder structure of Restcomm  JAIN SLEE USSD GateWay</a></li>
 <li><a href="#_setup_rule">4. Rule engine configuration</a></li>
 <li><a href="#_setup_rule_local">5. Local file configuration</a></li>
 <li><a href="#_setup_rule_guvnor">6. Guvnor configuration</a>
@@ -509,7 +509,7 @@ Note  Resource Adaptor - has some specific software requirements! Please refer t
 </div>
 </div>
 <div class="sect1">
-<h2 id="_source_code"><a class="anchor" href="#_source_code"></a>2. Restcomm  JAIN SLEE USSD GATEWAY  Source Code</h2>
+<h2 id="_source_code"><a class="anchor" href="#_source_code"></a>2. Restcomm  JAIN SLEE USSD GateWay  Source Code</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_release_source_building"><a class="anchor" href="#_release_source_building"></a>2.1. Release Source Code Building</h3>
@@ -566,7 +566,7 @@ Instructions for using Maven2, including install, can be found at <a href="http:
 </div>
 </div>
 <div class="paragraph">
-<p>Once the process finishes you should have the <code>-/core/bootstrap/target/mobicents-ussd-gateway</code> directory,  if Restcomm  JAIN SLEE is installed and environment variable JBOSS_HOME is pointing to its underlying &amp;JEE.PLATFORM; directory, then the  <code>mobicents-ussd-gateway</code> will also be  deployed in the container.</p>
+<p>Once the process finishes you should have the <code>-/core/bootstrap/target/restcomm-ussd-gateway</code> directory,  if Restcomm  JAIN SLEE is installed and environment variable JBOSS_HOME is pointing to its underlying &amp;JEE.PLATFORM; directory, then the  <code>restcomm-ussd-gateway</code> will also be  deployed in the container.</p>
 </div>
 </li>
 </ol>
@@ -581,10 +581,10 @@ Instructions for using Maven2, including install, can be found at <a href="http:
 </div>
 </div>
 <div class="sect1">
-<h2 id="_strucure"><a class="anchor" href="#_strucure"></a>3. Folder structure of Restcomm  JAIN SLEE USSD GATEWAY</h2>
+<h2 id="_strucure"><a class="anchor" href="#_strucure"></a>3. Folder structure of Restcomm  JAIN SLEE USSD GateWay</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Installing Mobicents USSD Gateway creates a mobicents-ussd-gateway directory that contains gateway configuration,  libraries required for boot and running, example rules definition file (.drl) etc.
+<p>Installing Restcomm USSD Gateway creates a restcomm-ussd-gateway directory that contains gateway configuration,  libraries required for boot and running, example rules definition file (.drl) etc.
 You need to know your way around  the distribution layout to locate the drools file&#8217;s to add new rules.
 The figure "view of Mobicens USSD Gateway"  illustrates the installation directory of the Gateway.</p>
 </div>
@@ -605,16 +605,16 @@ The figure "view of Mobicens USSD Gateway"  illustrates the installation directo
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-USSD GATEWAY uses <code>Drools</code> as rule engine to perform decisions, it is important to understand &amp;THIS.JBOSS.DROOLS.DOCUMENTATION;link:[JBoss Drools]
+USSD GateWay uses <code>Drools</code> as rule engine to perform decisions, it is important to understand &amp;THIS.JBOSS.DROOLS.DOCUMENTATION;link:[JBoss Drools]
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Engine is fed with <code>DRL</code> files having reference to fact. <code>DRL</code> file contains set of rules which perform operations on facts passed into engine. USSD GATEWAY  <code>DRL</code> file defines rules to match initial  string to set of values identifying protocol and address of peer to which messages should be forwarded.</p>
+<p>Engine is fed with <code>DRL</code> files having reference to fact. <code>DRL</code> file contains set of rules which perform operations on facts passed into engine. USSD GateWay  <code>DRL</code> file defines rules to match initial  string to set of values identifying protocol and address of peer to which messages should be forwarded.</p>
 </div>
 <div class="paragraph">
-<p>Fact is simple POJO class. USSD GATEWAY fact looks like</p>
+<p>Fact is simple POJO class. USSD GateWay fact looks like</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -747,13 +747,13 @@ end</code></pre>
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-USSD GATEWAY Application uses <code>Gunvor</code>				to manage system wide rule set in consistent way, it is important to understand &amp;THIS.JBOSS.GUVNOR.DOCUMENTATION;link:[Guvnor]
+USSD GateWay Application uses <code>Gunvor</code>				to manage system wide rule set in consistent way, it is important to understand &amp;THIS.JBOSS.GUVNOR.DOCUMENTATION;link:[Guvnor]
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p><code>Guvnor</code>			is deployed along with USSD GATEWAY 			Application.
+<p><code>Guvnor</code>			is deployed along with USSD GateWay 			Application.
 To access it simply go to <code><a href="http://&lt;your" class="bare">http://&lt;your</a> server&gt;/drools-guvnor/</code>			. This will bring initial info screen or login screen - depends on configuration.</p>
 </div>
 <div class="paragraph">
@@ -819,7 +819,7 @@ Go to menu:Knowledge Base &gt; Create New &gt; Upload POJO Model Jar
 </div>
 </div>
 <div class="paragraph">
-<p>Browse in newly open window and point to [path]_${JBOSS.HOME}/server/default/deploy/mobicents-ussd-gateway/lib/ussdgateway-domain-x.y.z.jar
+<p>Browse in newly open window and point to [path]_${JBOSS.HOME}/server/default/deploy/restcomm-ussd-gateway/lib/ussdgateway-domain-x.y.z.jar
 						_						.</p>
 </div>
 </li>
@@ -895,7 +895,7 @@ Once done with rule editing, you can check in the changes (save) by clicking on 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-08-27 10:53:55 WEST
+Last updated 2016-08-28 11:32:30 WEST
 </div>
 </div>
 </body>
