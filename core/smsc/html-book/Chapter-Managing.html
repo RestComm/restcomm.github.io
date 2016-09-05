@@ -4058,7 +4058,7 @@ SYNOPSIS
 	connect-timeout &lt;connectTimeout&gt; request-expiry-timeout &lt;requestExpiryTimeout&gt;
 	client-bind-timeout &lt;clientBindTimeout&gt; window-monitor-interval &lt;windowMonitorInterval&gt;
 	window-wait-timeout &lt;windowWaitTimeout&gt; counters-enabled &lt;true | false&gt;
-	enquire-link-delay &lt;30000&gt; enquire-link-delay-server &lt;0&gt; charging-enabled &lt;true | false&gt;
+	enquire-link-delay &lt;30000&gt; enquire-link-delay-server &lt;0&gt; link-drop-server &lt;0&gt; charging-enabled &lt;true | false&gt;
 	source-ton &lt;source address ton&gt; source-npi &lt;source address npi&gt;
 	source-range &lt;source address range&gt; routing-ton &lt;routing address ton&gt;
 	routing-npi &lt;routing address npi&gt; routing-range &lt;routing address range&gt;
@@ -4100,7 +4100,7 @@ PARAMETERS
 				  When you define multiple ESMEs with the same systemId,if
 				  host-ip and port values are -1 (for SMPP type Server),
 				  the SMSC will accept multiple incoming BIND requests
-			          from any IP:port as long as the systemId and password
+					  from any IP:port as long as the systemId and password
 				  match.
 
 				  When you define multiple ESMEs with the same systemId,if
@@ -4127,11 +4127,11 @@ PARAMETERS
 				  ESME’s to provide a password when binding to the SMSC.
 
 	networkId       - indicates virtual subnetwork that this ESME belongs. SMS
-	                flows within same netwrokId, unless changed using mproc
-	                (this is for multi-tenancy support). If this parameter is
-                    skipped - networkId will be set to "0" when ESME creation.
-                    If you do not use multi-tenancy support - set this value
-                    to 0 or skip.
+					flows within same netwrokId, unless changed using mproc
+					(this is for multi-tenancy support). If this parameter is
+					skipped - networkId will be set to "0" when ESME creation.
+					If you do not use multi-tenancy support - set this value
+					to 0 or skip.
 
 	system-type 		- Default value is null.
 				  This is used to categorize the type of ESME that is
@@ -4240,6 +4240,14 @@ PARAMETERS
 				  sends an 'ENQUIRE_LINK' after every configured
 				  enquire-link-delay-server.
 
+	link-drop-server - Default value is 0 milli seconds.
+					  When SMSC connects to a remote server as SERVER, if it
+					  isn't received any data after configured link-drop-server,
+					  it will drop the esme session.
+
+					  If enquire-link-delay-server is enabled then link-drop-server
+					  always disabled.
+
 	charging-enabled	- Flag to enable or disable charging for every SMS
 				  arriving from SIP.
 
@@ -4327,12 +4335,12 @@ PARAMETERS
 				  3) SmppBindType is TRANSMITTER and
 				  SmppSession.Type is CLIENT
 
-    ratelimit_second    - This parameter is used to specify a maximum limit
-    				of messages that the SMSC will accept from this ESME
-    				during any one second.
+	ratelimit_second    - This parameter is used to specify a maximum limit
+					of messages that the SMSC will accept from this ESME
+					during any one second.
 
-    				If the ESME sends more messages (per second)
-    				than the maximum limit specified by 'ratelimit_second',
+					If the ESME sends more messages (per second)
+					than the maximum limit specified by 'ratelimit_second',
 					these additional messages will be rejected by the
 					SMSC GW along with an error code - "throttled".
 
@@ -4341,11 +4349,11 @@ PARAMETERS
 					specified it implies "no restrictions".
 
 	ratelimit_minute    - This parameter is used to specify a maximum limit
-    				of messages that the SMSC will accept from this ESME
-    				during any one minute.
+					of messages that the SMSC will accept from this ESME
+					during any one minute.
 
-    				If the ESME sends more messages (per minute)
-    				than the maximum limit specified by 'ratelimit_minute',
+					If the ESME sends more messages (per minute)
+					than the maximum limit specified by 'ratelimit_minute',
 					these additional messages will be rejected by the
 					SMSC GW along with an error code - "throttled".
 
@@ -4354,11 +4362,11 @@ PARAMETERS
 					specified it implies "no restrictions".
 
 	ratelimit_hour    - This parameter is used to specify a maximum limit
-    				of messages that the SMSC will accept from this ESME
-    				during any one hour.
+					of messages that the SMSC will accept from this ESME
+					during any one hour.
 
-    				If the ESME sends more messages (per hour)
-    				than the maximum limit specified by 'ratelimit_hour',
+					If the ESME sends more messages (per hour)
+					than the maximum limit specified by 'ratelimit_hour',
 					these additional messages will be rejected by the
 					SMSC GW along with an error code - "throttled".
 
@@ -4367,11 +4375,11 @@ PARAMETERS
 					specified it implies "no restrictions".
 
 	ratelimit_day    - This parameter is used to specify a maximum limit
-    				of messages that the SMSC will accept from this ESME
-    				during any one day.
+					of messages that the SMSC will accept from this ESME
+					during any one day.
 
-    				If the ESME sends more messages (per day)
-    				than the maximum limit specified by 'ratelimit_day',
+					If the ESME sends more messages (per day)
+					than the maximum limit specified by 'ratelimit_day',
 					these additional messages will be rejected by the
 					SMSC GW along with an error code - "throttled".
 
@@ -4477,7 +4485,7 @@ SYNOPSIS
 	connect-timeout &lt;connectTimeout&gt; request-expiry-timeout &lt;requestExpiryTimeout&gt;
 	client-bind-timeout &lt;clientBindTimeout&gt; window-monitor-interval &lt;windowMonitorInterval&gt;
 	window-wait-timeout &lt;windowWaitTimeout&gt; counters-enabled &lt;true | false&gt;
-	enquire-link-delay &lt;30000&gt; enquire-link-delay-server &lt;0&gt; charging-enabled &lt;true | false&gt;
+	enquire-link-delay &lt;30000&gt; enquire-link-delay-server &lt;0&gt; link-drop-server &lt;0&gt; charging-enabled &lt;true | false&gt;
 	source-ton &lt;source address ton&gt; source-npi &lt;source address npi&gt;
 	source-range &lt;source address range&gt; routing-ton &lt;routing address ton&gt;
 	routing-npi &lt;routing address npi&gt; routing-range &lt;routing address range&gt;
@@ -4507,11 +4515,11 @@ PARAMETERS
 				  The new value takes effect when SMPP is restarted.
 
 	networkId       - indicates virtual subnetwork that this ESME belongs. SMS
-	                flows within same netwrokId, unless changed using mproc
-	                (this is for multi-tenancy support). If this parameter is
-                    skipped - networkId will be set to "0" when ESME creation.
-                    If you do not use multi-tenancy support - set this value
-                    to 0 or skip.
+					flows within same netwrokId, unless changed using mproc
+					(this is for multi-tenancy support). If this parameter is
+					skipped - networkId will be set to "0" when ESME creation.
+					If you do not use multi-tenancy support - set this value
+					to 0 or skip.
 
 	esme-ton 		- Specify new ESME TON.
 				  If the SMPP Session Type is CLIENT,
@@ -4636,6 +4644,16 @@ PARAMETERS
 
 				  The new value takes effect immediately.
 
+	link-drop-server - Default value is 0 milli seconds.
+					  When SMSC connects to a remote server as SERVER, if it
+					  isn't received any data after configured link-drop-server,
+					  it will drop the esme session.
+
+					  If enquire-link-delay-server is enabled then link-drop-server
+					  always disabled.
+
+					  The new value takes effect immediately.
+
 	charging-enabled	- Flag to enable or disable charging for every SMS
 				  arriving from SIP.
 
@@ -4737,12 +4755,12 @@ PARAMETERS
 
 				  The new value takes effect immediately.
 
-    ratelimit_second    - This parameter is used to specify a maximum limit
-    				of messages that the SMSC will accept from this ESME
-    				during any one second.
+	ratelimit_second    - This parameter is used to specify a maximum limit
+					of messages that the SMSC will accept from this ESME
+					during any one second.
 
-    				If the ESME sends more messages (per second)
-    				than the maximum limit specified by 'ratelimit_second',
+					If the ESME sends more messages (per second)
+					than the maximum limit specified by 'ratelimit_second',
 					these additional messages will be rejected by the
 					SMSC GW along with an error code - "throttled".
 
@@ -4751,11 +4769,11 @@ PARAMETERS
 					specified it implies "no restrictions".
 
 	ratelimit_minute    - This parameter is used to specify a maximum limit
-    				of messages that the SMSC will accept from this ESME
-    				during any one minute.
+					of messages that the SMSC will accept from this ESME
+					during any one minute.
 
-    				If the ESME sends more messages (per minute)
-    				than the maximum limit specified by 'ratelimit_minute',
+					If the ESME sends more messages (per minute)
+					than the maximum limit specified by 'ratelimit_minute',
 					these additional messages will be rejected by the
 					SMSC GW along with an error code - "throttled".
 
@@ -4764,11 +4782,11 @@ PARAMETERS
 					specified it implies "no restrictions".
 
 	ratelimit_hour    - This parameter is used to specify a maximum limit
-    				of messages that the SMSC will accept from this ESME
-    				during any one hour.
+					of messages that the SMSC will accept from this ESME
+					during any one hour.
 
-    				If the ESME sends more messages (per hour)
-    				than the maximum limit specified by 'ratelimit_hour',
+					If the ESME sends more messages (per hour)
+					than the maximum limit specified by 'ratelimit_hour',
 					these additional messages will be rejected by the
 					SMSC GW along with an error code - "throttled".
 
@@ -4777,11 +4795,11 @@ PARAMETERS
 					specified it implies "no restrictions".
 
 	ratelimit_day    - This parameter is used to specify a maximum limit
-    				of messages that the SMSC will accept from this ESME
-    				during any one day.
+					of messages that the SMSC will accept from this ESME
+					during any one day.
 
-    				If the ESME sends more messages (per day)
-    				than the maximum limit specified by 'ratelimit_day',
+					If the ESME sends more messages (per day)
+					than the maximum limit specified by 'ratelimit_day',
 					these additional messages will be rejected by the
 					SMSC GW along with an error code - "throttled".
 
@@ -4811,10 +4829,10 @@ PARAMETERS
 					implies "no limitations". Any other negative value
 					also implies "no limitations".
 
-    enquire-server-enabled    - This parameter is used to enable or
-                    disable SMPP server sending enquire message.
+	enquire-server-enabled    - This parameter is used to enable or
+					disable SMPP server sending enquire message.
 
-                    The default value for this parameter is "false".
+					The default value for this parameter is "false".
 
 
 SEE ALSO
@@ -5817,7 +5835,7 @@ Hence graph will show historic data from the point the page was loaded.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-04 10:56:38 WEST
+Last updated 2016-09-05 10:55:40 WEST
 </div>
 </div>
 </body>
