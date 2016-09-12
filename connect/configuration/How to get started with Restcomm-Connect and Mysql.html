@@ -22750,7 +22750,13 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <ul class="sectlevel1">
 <li><a href="#requirements">Requirements</a></li>
 <li><a href="#configuring-the-mybatis-xml-file-to-use-mysql">Configuring the mybatis.xml file to use Mysql</a></li>
-<li><a href="#start-mysql-and-create-the-restcomm-database">Start Mysql and Create the Restcomm database</a></li>
+<li><a href="#run-mysql-and-create-the-restcomm-database">Run Mysql and Create the Restcomm database</a>
+<ul class="sectlevel2">
+<li><a href="#run-mysql-using-docker">Run MySQL using Docker</a></li>
+<li><a href="#run-mysql-using-binary">Run MySQL using binary</a></li>
+<li><a href="#create-the-restcomm-database">Create the Restcomm database</a></li>
+</ul>
+</li>
 <li><a href="#edit-the-restcomm-xml-file-to-point-the-dao-to-mysql">Edit the restcomm.xml file to point the DAO to MySQL</a></li>
 <li><a href="#download-mysql-java-client-driver">Download Mysql Java Client Driver</a></li>
 <li><a href="#verify-the-setup-was-successful">Verify the setup was successful</a></li>
@@ -22791,7 +22797,7 @@ the following tutorial will show how to get started with Restcomm and Mysql.</em
 <ul>
 <li>
 <p>Go to the <strong>$RESTCOMM_HOME/standalone/deployments/restcomm.war/WEB-INF/conf/</strong> directory.
-Open the <strong>mybatis.xml</strong>. $RESTCOMM_HOME is conventional name for unzipped <strong>Restcomm-JBoss-AS7-7.6.0.869</strong> directory.</p>
+Open the <strong>mybatis.xml</strong>. $RESTCOMM_HOME is conventional name for unzipped <strong>Restcomm-JBoss-AS7-7.X.X.XXX</strong> directory.</p>
 </li>
 <li>
 <p>Change the</p>
@@ -22843,8 +22849,38 @@ and IP of the computer where the database is located (it is 172.21.0.107 in the 
 </div>
 </div>
 <div class="sect1">
-<h2 id="start-mysql-and-create-the-restcomm-database"><a class="anchor" href="#start-mysql-and-create-the-restcomm-database"></a>Start Mysql and Create the Restcomm database</h2>
+<h2 id="run-mysql-and-create-the-restcomm-database"><a class="anchor" href="#run-mysql-and-create-the-restcomm-database"></a>Run Mysql and Create the Restcomm database</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>To use MySQL you can either install the MySQL binary for your platform or run it using Docker.</p>
+</div>
+<div class="sect2">
+<h3 id="run-mysql-using-docker"><a class="anchor" href="#run-mysql-using-docker"></a>Run MySQL using Docker</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Install Docker for your platform, follow instructions from <a href="http://www.docker.com/" class="bare">http://www.docker.com/</a></p>
+</li>
+<li>
+<p>Run MySQL docker image using:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>docker run --name mysql_restcomm -e MYSQL_ROOT_PASSWORD=my-secret-pw -p 3306:3306 -d mysql:5.6</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above command will download MySQL Docker image, will create a new container from this image with name "mysql_restcomm", will set root
+password to "my-secret-pw", and finally will run MySQL and listen to 3306 port of your host ip address.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="run-mysql-using-binary"><a class="anchor" href="#run-mysql-using-binary"></a>Run MySQL using binary</h3>
+<div class="paragraph">
+<p>Visit <a href="https://www.mysql.com/" class="bare">https://www.mysql.com/</a> and download the appropriate MySQL for your platform. Follow the instruction for how to install.</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
@@ -22860,6 +22896,9 @@ and IP of the computer where the database is located (it is 172.21.0.107 in the 
 <div class="paragraph">
 <p>Or use <a href="http://dev.mysql.com/doc/refman/5.7/en/windows-start-command-line.html">MySQL guide</a>.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="create-the-restcomm-database"><a class="anchor" href="#create-the-restcomm-database"></a>Create the Restcomm database</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -22902,6 +22941,7 @@ and IP of the computer where the database is located (it is 172.21.0.107 in the 
 <div class="imageblock">
 <div class="content">
 <img src="./images/14.png" alt="14">
+</div>
 </div>
 </div>
 </div>
@@ -22984,7 +23024,7 @@ If you have changed the default password before, you should insert your own pass
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-12 10:37:22 WEST
+Last updated 2016-09-12 15:31:57 WEST
 </div>
 </div>
 <footer>
