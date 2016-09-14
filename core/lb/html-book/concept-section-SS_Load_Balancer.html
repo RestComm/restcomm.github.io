@@ -914,6 +914,13 @@ httpsPort=2081
 #internalIpLoadBalancerWsPort=119
 #internalIpLoadBalancerWssPort=120
 
+#enabled send back 5xx in case of exception while sending to destination
+#isSend5xxResponse=true
+#reason of error
+#isSend5xxResponseReasonHeader=Destination not available
+#code of error
+#isSend5xxResponseSatusCode=503
+
 # Designate extra IP addresses as serer nodes
 #extraServerNodes=222.221.21.12:21,45.6.6.7:9003,33.5.6.7,33.9.9.2
 
@@ -1096,6 +1103,20 @@ This address may be used by the Restcomm Load Balancer to be put in SIP headers 
 <dd>
 <p>The port of the internal IP load balancer.
 Any messages arriving at this port should be distributed across the internal SIP ports of a set of Restcomm Load Balancers.</p>
+</dd>
+<dt class="hdlist1">isSend5xxResponse</dt>
+<dd>
+<p>Enables send back 5xx in case of exception while sending to destination.
+By default false.</p>
+</dd>
+<dt class="hdlist1">isSend5xxResponseReasonHeader</dt>
+<dd>
+<p>Reason of error. If not defined the Load Balancer won&#8217;t add ReasonHeader to
+response message</p>
+</dd>
+<dt class="hdlist1">isSend5xxResponseSatusCode</dt>
+<dd>
+<p>Code of error. You can manage it.</p>
 </dd>
 <dt class="hdlist1">extraServerNodes</dt>
 <dd>
@@ -2264,7 +2285,7 @@ and you can see next line:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-13 11:00:49 WEST
+Last updated 2016-09-14 10:59:30 WEST
 </div>
 </div>
 </body>
