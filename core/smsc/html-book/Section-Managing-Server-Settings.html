@@ -511,6 +511,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#smsc-pausing">SMSC pausing</a></li>
 <li><a href="#_receiptsdisabling">Disabling of Reciepts generating</a></li>
 <li><a href="#_enableintermediatereceipts">Allowing of generating of intermediate receipts</a></li>
+<li><a href="#_incomereceiptsprocessing">Income receipts processing</a></li>
 <li><a href="#_smsc_gateway_server_routing_dlv">Routing of delivery receipts</a></li>
 </ul>
 </li>
@@ -3598,8 +3599,35 @@ DESCRIPTION
 </div>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_incomereceiptsprocessing"><a class="anchor" href="#_incomereceiptsprocessing"></a>Income receipts processing</h3>
 <div class="sect3">
-<h4 id="_enableintermediatereceipts_gui"><a class="anchor" href="#_enableintermediatereceipts_gui"></a>Using GUI</h4>
+<h4 id="_incomereceiptsprocessing_cli"><a class="anchor" href="#_incomereceiptsprocessing_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>SMCS can processing of incoming delivery receipts from remote SMSC GW (replacing of messageId in the receipt by a local messageId). You can set the 'incomereceiptsprocessing' value to true/false by issuing the command <code>smsc set incomereceiptsprocessing</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get incomereceiptsprocessing</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+    smsc set incomereceiptsprocessing
+
+SYNOPSIS
+    smsc set incomereceiptsprocessing &lt;true | false&gt;
+
+DESCRIPTION
+	Enabling of processing of incoming delivery receipts from remote SMSC GW.
+	When a delivery receipt comes from a remote SMSC GW, then
+	SMSC GW will replace messageId in the receipt by a local messageId.
+	This action is needed for a possibility of delivery receipts processing
+	in mproc rules staff and delivery receipts transit to message originators.
+	Default value: false (no remote delivery receipts processing).</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_incomereceiptsprocessing_gui"><a class="anchor" href="#_incomereceiptsprocessing_gui"></a>Using GUI</h4>
 <div class="olist arabic">
 <div class="title">Procedure: Allowing of generating of intermediate receipts using the GUI</div>
 <ol class="arabic">
@@ -3611,7 +3639,7 @@ DESCRIPTION
 Switch to the 'Processing' tab in the GUI.</p>
 </li>
 <li>
-<p>You can specify if the SMSC should disable of receipt generating by setting the value for the field 'Enable intermediate receipts' to true or false accordingly.
+<p>You can specify of processing of incoming delivery receipts by setting the value for the field 'Income receipts processing' to true or false accordingly.
 For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
 </li>
 <li>
@@ -3680,7 +3708,7 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-18 11:08:20 WEST
+Last updated 2016-09-19 14:29:39 WEST
 </div>
 </div>
 </body>

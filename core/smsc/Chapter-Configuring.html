@@ -22674,8 +22674,14 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </li>
 	<li id="nav-menu-item-17480" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/diameter/Diameter_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>JDIAMETER</span><span class="plus"></span></a></li>
 	<li id="nav-menu-item-17481" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/lb/Load_Balancer_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>LOAD-BALANCER</span><span class="plus"></span></a></li>
-	<li id="nav-menu-item-17482" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/tutorials/index.html" class=""><i class="menu_icon blank fa"></i><span>TUTORIALS</span><span class="plus"></span></a></li>
-	<li id="nav-menu-item-17483" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/jasn/ASN_Stack_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>JASN</span><span class="plus"></span></a>
+	<li id="nav-menu-item-17482" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/jasn/ASN_Stack_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>JASN</span><span class="plus"></span></a></li>
+	<li id="nav-menu-item-17483" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/imscf/IM_SCF.html" class=""><i class="menu_icon blank fa"></i><span>IM-SCF</span><span class="plus"></span></a>
+		<ul>
+			<li id="nav-menu-item-18484" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/imscf/IM_SCF_OAM.html" class=""><i class="menu_icon blank fa"></i><span>OAM</span><span class="plus"></span></a>
+			</li>
+		</ul>
+	</li>
+	<li id="nav-menu-item-17484" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/tutorials/index.html" class=""><i class="menu_icon blank fa"></i><span>TUTORIALS</span><span class="plus"></span></a></li>
 	<!--li id="nav-menu-item-17482" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/sip/SIP_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>SIP</span><span class="plus"></span></a></li>
 	<li id="nav-menu-item-17483" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/charging_server/SIP_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>Charging Server</span><span class="plus"></span></a></li-->
 </ul></div></div>
@@ -23146,6 +23152,18 @@ If a message fits to all conditions then the rule will be applied to the message
 </thead>
 <tbody>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">networkidmask</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;networkId value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if a message is processing now in a networkId area that is equal to networkidmask (messages&#8217;s networkId value is networkidmask).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages in any network area will match.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">originnetworkidmask</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;networkId value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if a message has come to SMSC GW via networkId area with this rule&#8217;s originnetworkidmask.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages from any network area will match.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">desttonmask</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&lt;destination type of number&gt;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if message destination Type of Number is equal to this value "desttonmask"</p></td>
@@ -23160,36 +23178,50 @@ If a message fits to all conditions then the rule will be applied to the message
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">destdigmask</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&lt;java regular expression - destination number digits mask&gt;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if message destination address digits match&#8217;s with "destdigmask" java regular expression.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if message destination address digits matches with "destdigmask" java regular expression.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages with any destination number will match.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">imsidigitsmask</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;java regular expression - IMSI mask&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if IMSI value was obtained after SRI request (during MT or HR procedure) and it matches with this rule&#8217;s imsidigitsmask. imsidigitsmask is java regular expression.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages with any IMSI value or with no IMSI value obtained will match.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nnndigitsmask</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;java regular expression - NetworkNodeNumber of VLR to where a subscriber is registered mask&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if NNN (NetworkNodeNumber of VLR to where a subscriber is registered) value was obtained after SRI request (during MT or HR procedure) and it matches with this rule&#8217;s nnndigitsmask. nnndigitsmask is java regular expression.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages with any IMSI value or with no IMSI value obtained will match.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">originatingmask</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;SS7_MO | SS7_HR | SMPP | SIP&gt;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if message arrived in SMSC GW via a defined "originatingmask" connector.
-</p><p class="tableblock">. SS7_MO: SMS Originated from Mobile - SS7 connection
-. SS7_HR: SMS Originated from Home Routing configuartion - SS7 connection
-. SMPP: SMS Originated from SMPP connector and SIP connector.
-. SIP: SMS Originated from SIP connector.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;SS7_MO | SS7_HR | SMPP | SIP | HTTP&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if message arrived in SMSC GW via a defined "originatingmask" connector.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages originated from any channel will match.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">originatorsccpaddress- mask</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;java regular expression - originator CallingPartyAddress digits mask&gt;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if CallingPartyAddress digits match&#8217;s with "originatorsccpaddress mask" java regular expression.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages with any CallingPartyAddress digits or without it will match.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">networkidmask</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;networkId value&gt;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if message has come to SMSC GW via a subnetwork with networkId which is equal to this value "networkidmask".</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages from any network will match.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">origesmenamemask</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&lt;java regualar expression - origination ESME name mask&gt;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if message has come to SMSC GW from SMPP connector from ESME with a name that fits "origesmenamemask".</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence any message will match (never mind if it came from SS7 or SIP).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">originatorsccpaddressmask</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;java regular expression - originator CallingPartyAddress digits mask&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if CallingPartyAddress digits match&#8217;s with "originatorsccpaddress mask" java regular expression.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages with any CallingPartyAddress digits or without it will match.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">processingtype</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;SMPP | SS7_SRI | SS7_MT | SIP&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if a Delivery step match&#8217;s with this rule&#8217;s processingtype value.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages with any delivery step will match.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">errorcode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;digital value of SMSC GW&#8217;s internal error code&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if an internal SMSC GW&#8217;s delivery error code value matches with this rule&#8217;s errorcode. Value 0 means a successful delivery, non 0 value means some delivery error. You can specify several values via comma (example: "6,7,8"). Error code values list can be found in org.mobicents.smsc.library.ErrorCode enum.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages with any delivery result will match.</p></td>
 </tr>
 </tbody>
 </table>
@@ -24346,7 +24378,7 @@ The details of the format and the possible values for the fields recorded in the
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-18 11:08:20 WEST
+Last updated 2016-09-19 14:29:39 WEST
 </div>
 </div>
 <footer>
