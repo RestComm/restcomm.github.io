@@ -24971,7 +24971,7 @@ If a message fits to all conditions then the rule will be applied to the message
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Parameter name</th>
-<th class="tableblock halign-left valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Trigger / Value</th>
 <th class="tableblock halign-left valign-top">Description</th>
 <th class="tableblock halign-left valign-top">Default value</th>
 </tr>
@@ -24979,39 +24979,69 @@ If a message fits to all conditions then the rule will be applied to the message
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">newnetworkid</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;new networkId value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arrival trigger / &lt;new networkId value&gt;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">networkId of the message will be changed to "newnetworkid" value. This means that the message will be delivered via connectors that belong to the new networId.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that networkId of the message will not be changed.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">newdestton</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;new destination type of number&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arrival trigger / &lt;new destination type of number&gt;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">a message destination Type of Number will be changed to "newdestton" value.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that destination Type of Number of the message will not be changed.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">newdestnpi</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;new destination numbering plan indicator&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arrival trigger / &lt;new destination numbering plan indicator&gt;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">a message destination Numbering Plan Indicator will be changed to "newdestnpi" value.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that destination Numbering Plan Indicator of the message will not be changed.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">adddestdigprefix</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;prefix&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arrival trigger / &lt;prefix&gt;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">adddestdigprefix will be added into a begin of a message destination address digits. For example if adddestdigprefix is "22" and destination address digits are "3333333", then the new value of destination address digits will be "223333333".</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that destination address digits of the message will not be changed.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">makecopy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;false | true&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arrival trigger / &lt;false | true&gt;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">If the makecopy action is present then SMSC GW makes a copy of a message and then post the copy for further message processing in addition to the original message. All other actions in the rule will be applied only to the copy. For example user wants to make copies of messages and send them to another destinations (by sending of copies into another networkId), then for this you can create a rule and set for the rule "makecopy true" and "newnetworkid &lt;new networkId value&gt;" parameters. This makes a copy of a message and set for the copy a new networkId value.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hrbypass</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HrSri trigger / &lt;false | true&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This action may be applied inside Home Routing procedure after SMSC GW receives a response from a local HLR. Then SMSC GW will bypass HR procedure by sending back to an original SMSC GW origin original IMSI and NNN. SMSC GW will not get MT message then.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dropaftersri</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;false | true&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ImsiRequest trigger / &lt;false | true&gt;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">This is an action at the step when a successful SRI response has been received from HLR for an SS7 destination message. If a SRI success response has received then the message will be dropped without delivery attempt. A delivery response in this case will contain extra fields (IMSI and NetworkNodeNumber values).</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">newnetworkidaftersri</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HrSri trigger / &lt;networkId value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This is an action at the step when a successful SRI response has been received from HLR for an SS7 destination message. If a SRI success response has received then the message will rerouted for delivery to another networkId.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that networkId of the message will not be changed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">newnetworkidafterpermfail</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delivery trigger / &lt;networkId value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This action at the step when a message delivery has failed permanently. Message will be rerouted for delivery to another networkId.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that networkId of the message will not be changed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dropaftertempfail</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DeliveryTempFailure trigger / &lt;false | true&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This action at the step when a message delivery has failed temporary. Message will be dropped without further delivery attempts.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">newnetworkidaftertempfail</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DeliveryTempFailure trigger / &lt;networkId value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This action at the step when a message delivery has failed temporary. Message will be rerouted for delivery to another networkId.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that networkId of the message will not be changed.</p></td>
 </tr>
 </tbody>
 </table>
@@ -32649,7 +32679,7 @@ Some error codes are reserved for future use and will be put to use in future ve
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-19 14:29:39 WEST
+Last updated 2016-09-20 11:06:29 WEST
 </div>
 </div>
 <footer>
