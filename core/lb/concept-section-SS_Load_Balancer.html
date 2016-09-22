@@ -22945,6 +22945,13 @@ to server and next clients reuse it. When connection to server established it ca
 be used in both directions (transceiver mode): ESME and SMSC can send messages
 through the load balancer.</p>
 </div>
+<div class="paragraph">
+<p>If we have more than one server then Load balancer uses round robin algorithm for
+sending the requests from clients to the servers. You can specify in which way
+Load balancer will send requests from the server to clients by using
+isUseRrSendSmppRequestToClient property. If true, Load balancer uses
+round robin algorithm; if false, LB sends each request to all clients.</p>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="./images/SMPP-lb-diagram.png" alt="SMPP lb diagram">
@@ -23085,6 +23092,12 @@ It selects nodes randomly to serve a give To header extracted from the requests 
 It keeps a map with <code>To &#8594;
             nodeId</code> associations and this map is not shared with other load balancers which will cause them to make different decisions.
 For HTTP it behaves like apache.</p>
+</dd>
+<dt class="hdlist1">org.Restcomm.tools.sip.balancer.ActiveStandbyAlgorithm</dt>
+<dd>
+<p>This algorithm allows to send all requests to the active node. If the active node
+will disconnected in some way then the Load balancer will send requests to the
+passive node. This algorithm works for all protocols(SIP,HTTP,SMPP).</p>
 </dd>
 <dt class="hdlist1">org.Restcomm.tools.sip.balancer.HeaderConsistentHashBalancerAlgorithm</dt>
 <dd>
@@ -23334,7 +23347,7 @@ smppPort = 2776
 # The port of the load balancer for SSL protocol
 smppSslPort = 2876
 # The IP address:port of SMPP server
-remoteServers=174.37.245.38:8000
+remoteServers=174.37.245.38:8000,174.37.245.40:8000
 # it is recommended that at any time there were no more than
 #10 (ten) SMPP messages are outstanding
 maxConnectionSize = 10
@@ -23354,6 +23367,9 @@ reconnectPeriod = 1000
 timeoutConnectionCheckClientSide = 1000
 # Connection check server side timer
 timeoutConnectionCheckServerSide = 1000
+#if true use round robin algorithm for sending SMPP requests from server to clients
+#if false send each request from server to all clients
+#isUseRrSendSmppRequestToClient=false
 
 # SSL configuration
 #points to the keystore file we generated before
@@ -23537,6 +23553,11 @@ After sending enquire link to client for checking connection, balancer wait this
 <dd>
 <p>In milliseconds.
 Connection check server side timer(time which LB wait for enquire_link_resp and if doesn’t receive, tries to rebind to server).</p>
+</dd>
+<dt class="hdlist1">isUseRrSendSmppRequestToClient</dt>
+<dd>
+<p>If true use round robin algorithm for sending SMPP requests from server to client
+if false send each request from server to all clients. Default is false.</p>
 </dd>
 <dt class="hdlist1">javax.net.ssl.keyStore</dt>
 <dd>
@@ -24621,7 +24642,7 @@ and you can see next line:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-20 11:15:07 WEST
+Last updated 2016-09-22 11:20:09 WEST
 </div>
 </div>
 <footer>
