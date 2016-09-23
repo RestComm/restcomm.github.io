@@ -22891,9 +22891,23 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div class="paragraph">
 <p><strong>Change default account password(AuthToken).</strong></p>
 </div>
+<div class="paragraph">
+<p>To update an account you need to provide the SID of the account or the email address of the account (make sure you url escape the @ sign of the email address)</p>
+</div>
+<div class="paragraph">
+<p>For example, update password using account sid:</p>
+</div>
 <div class="literalblock">
 <div class="content">
 <pre>curl -X PUT http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf -d "Password=NewPassword"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And update password using email address of the account:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -X PUT http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/administrator%40company.com -d "Password=NewPassword"</pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -22903,7 +22917,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The above command uses the Account SID and the one below uses the Email Account. Note the administrator%40company.com is used instead of <a href="mailto:administrator@company.com">administrator@company.com</a> . This is because using curl on the bash terminal doesn&#8217;t parse the @ correctlyl. If you were to running on a browser, you can safely use the @ as the web browser will correctly handle it.
+The above command uses the Account SID of the requestor, and the one below uses the Email Account. Note the administrator%40company.com is used instead of <a href="mailto:administrator@company.com">administrator@company.com</a> . This is because using curl on the bash terminal doesn&#8217;t parse the @ correctlyl. If you were to running on a browser, you can safely use the @ as the web browser will correctly handle it.
 </td>
 </tr>
 </table>
@@ -23093,7 +23107,7 @@ the <strong>SID</strong>, Email and the <strong>AuthToken</strong> (see output b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-22 10:39:52 WEST
+Last updated 2016-09-23 10:41:31 WEST
 </div>
 </div>
 <footer>
