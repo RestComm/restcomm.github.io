@@ -934,6 +934,11 @@ httpsPort=2081
 #code of error
 #isSend5xxResponseSatusCode=503
 
+#if LB gets response from the node with this status code and reason more than three times,
+#it removes this node from the node's map until the node will be restarted
+#responseStatusCodeNodeRemoval=503
+#responseReasonNodeRemoval=Unable to setup media services
+
 # Designate extra IP addresses as serer nodes
 #extraServerNodes=222.221.21.12:21,45.6.6.7:9003,33.5.6.7,33.9.9.2
 
@@ -1135,6 +1140,12 @@ response message</p>
 <dt class="hdlist1">isSend5xxResponseSatusCode</dt>
 <dd>
 <p>Code of error. You can manage it.</p>
+</dd>
+<dt class="hdlist1">responseStatusCodeNodeRemoval</dt>
+<dt class="hdlist1">responseReasonNodeRemoval</dt>
+<dd>
+<p>if LB gets response from the node with this status code and reason more than three times,
+it removes this node from the node&#8217;s map until the node will be restarted</p>
 </dd>
 <dt class="hdlist1">extraServerNodes</dt>
 <dd>
@@ -2312,7 +2323,7 @@ and you can see next line:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-26 11:05:08 WEST
+Last updated 2016-09-26 16:21:08 WEST
 </div>
 </div>
 </body>
