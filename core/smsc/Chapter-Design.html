@@ -22757,11 +22757,13 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#database-table-structure">Database Table Structure</a>
 <ul class="sectlevel2">
 <li><a href="#current_slot_table">CURRENT_SLOT_TABLE</a></li>
-<li><a href="#_sms_routing_rule">SMPP_SMS_ROUTING_RULE</a></li>
-<li><a href="#sip_sms_routing_rule">SIP_SMS_ROUTING_RULE</a></li>
+<li><a href="#_sms_routing_rule">SMPP_SMS_ROUTING_RULE_2</a></li>
+<li><a href="#sip_sms_routing_rule_2">SIP_SMS_ROUTING_RULE_2</a></li>
 <li><a href="#dst_slot_table_yyyy_mm_dd">DST_SLOT_TABLE_yyyy_mm_dd</a></li>
 <li><a href="#slot_messages_table_yyyy_mm_dd">SLOT_MESSAGES_TABLE_yyyy_mm_dd</a></li>
 <li><a href="#messages_yyyy_mm_dd">MESSAGES_yyyy_mm_dd</a></li>
+<li><a href="#mes_id_yyyy_mm_dd">MES_ID_YYYY_MM_DD</a></li>
+<li><a href="#dlv_mes_id_yyyy_mm_dd">DLV_MES_ID_YYYY_MM_DD</a></li>
 <li><a href="#_db_reporting">Reporting</a></li>
 </ul>
 </li>
@@ -22792,8 +22794,8 @@ It provides implementation for Level 2 and above in the SS7 protocol Stack. Rest
 </div>
 </div>
 <div class="paragraph">
-<p>Restcomm SMSC provides six basic services of an SMSC as shown in the figure above.
-Each of these six services are implemented in the Gateway as a module that can be activated or deactivated based on the needs of an operator.
+<p>Restcomm SMSC provides 8 basic services of an SMSC as shown in the figure above.
+Each of these 8 services are implemented in the Gateway as a module that can be activated or deactivated based on the needs of an operator.
 All these services interact with the Cassandra database for storing data (messages not yet sent and an archive for sent/failed to send messages) and retreiving data for messages that are pending to be sent.</p>
 </div>
 <div class="paragraph">
@@ -22804,27 +22806,35 @@ All these services interact with the Cassandra database for storing data (messag
 <dl>
 <dt class="hdlist1">Mo (Mobile originated) module</dt>
 <dd>
-<p>Handles mobile originated SMS.</p>
+<p>Receives mobile originated SMS via MO procedure for further delivering.</p>
 </dd>
-<dt class="hdlist1">Mt (Mobile terminated)</dt>
+<dt class="hdlist1">Hr (Home routing) module</dt>
 <dd>
-<p>Delivers SMS to mobile.</p>
-</dd>
-<dt class="hdlist1">Rx SMPP module</dt>
-<dd>
-<p>Listens for incoming SMS from ESME/third party SMSC and routes them to Mt module (GSM), other ESME/third party SMSC or SIP Client depending on the routing rule.</p>
+<p>Receives mobile originated SMS via HR (Home routing) procedure for further delivering.</p>
 </dd>
 <dt class="hdlist1">Tx SMPP module</dt>
 <dd>
-<p>Delivers SMS to external ESME/third party SMSC received from Mo Module (GSM), ESME/third Party SMSC or SIP Client.</p>
-</dd>
-<dt class="hdlist1">Rx SIP module</dt>
-<dd>
-<p>Listens for incoming SMS from SIP Client and routes them to Mt module (GSM), other ESME/third party SMSC or SIP Client depending on the routing rule.</p>
+<p>Receives incoming SMS from ESME/third party via SMPP protocol for further delivering.</p>
 </dd>
 <dt class="hdlist1">Tx SIP module</dt>
 <dd>
-<p>Delivers SMS to SIP Client received from Mo Module (GSM), ESME/third Party SMSC or other SIP Client. |  |</p>
+<p>Receives incoming SMS from SIP Client and routes them for further delivering.</p>
+</dd>
+<dt class="hdlist1">Tx HTTP module</dt>
+<dd>
+<p>Receives incoming SMS from HTTP connector and routes them for further delivering.</p>
+</dd>
+<dt class="hdlist1">Mt (Mobile terminated)</dt>
+<dd>
+<p>Delivers SMS to mobile via MT procedure.</p>
+</dd>
+<dt class="hdlist1">Rx SMPP module</dt>
+<dd>
+<p>Delivers SMS to external ESME/third party SMSC.</p>
+</dd>
+<dt class="hdlist1">Rx SIP module</dt>
+<dd>
+<p>Delivers SMS to SIP Client received.</p>
 </dd>
 </dl>
 </div>
@@ -22851,15 +22861,30 @@ All these services interact with the Cassandra database for storing data (messag
 <h2 id="database-table-structure"><a class="anchor" href="#database-table-structure"></a>Database Table Structure</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Restcomm SMSC stores messages using Cassandra database.
-The database is used for storing unsent messages, messages successfully sent and messages that failed to be sent.</p>
+<p>Restcomm SMSC stores messages using Cassandra database. The database is used for storing:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>unsent messages, messages successfully sent and messages that failed to be sent</p>
+</li>
+<li>
+<p>referenses to sent messages depending on local and remote SMSC messageId</p>
+</li>
+<li>
+<p>some service info needed for SMSC GW functionality</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>The Restcomm SMSC creates three tables for every new day with the date suffixed to the names of the tables as <code>DST_SLOT_TABLE_yyyy_mm_dd</code>, <code>SLOT_MESSAGES_TABLE_yyyy_mm_dd</code> and <code>MESSAGES_yyyy_mm_dd</code> where <code>yyyy_mm_dd</code> is the date in that format.</p>
+<p>The Restcomm SMSC creates all database tables itself. A user have to create only an empty keyspace for them. Default keyspace name is "RestCommSMSC".</p>
 </div>
 <div class="paragraph">
-<p>Apart from the above tables created everyday, the database also comprises of three other tables namely <code>CURRENT_SLOT_TABLE</code>, <code>SMPP_SMS_ROUTING_RULE</code> and <code>SIP_SMS_ROUTING_RULE</code> created when the SMSC is started for the first time.
-The former is used for storing system-wide data and the latter two for storing the routing rules.</p>
+<p>The Restcomm SMSC creates tables for every new day with the date suffixed to the names of the tables as <code>DST_SLOT_TABLE_yyyy_mm_dd</code>, <code>SLOT_MESSAGES_TABLE_yyyy_mm_dd</code>, <code>MESSAGES_yyyy_mm_dd</code>, <code>MES_ID_YYYY_MM_DD</code> and <code>DLV_MES_ID_YYYY_MM_DD</code> where <code>yyyy_mm_dd</code> is the date in that format.</p>
+</div>
+<div class="paragraph">
+<p>Apart from the above tables created everyday, the database also comprises of three other tables namely <code>CURRENT_SLOT_TABLE</code>, <code>SMPP_SMS_ROUTING_RULE_2</code> and <code>SIP_SMS_ROUTING_RULE_2</code> created when the SMSC is started for the first time.
+The firts one is used for storing system-wide data and the latter two for storing the routing rules.</p>
 </div>
 <div class="sect2">
 <h3 id="current_slot_table"><a class="anchor" href="#current_slot_table"></a>CURRENT_SLOT_TABLE</h3>
@@ -22892,9 +22917,9 @@ The former is used for storing system-wide data and the latter two for storing t
 </table>
 </div>
 <div class="sect2">
-<h3 id="_sms_routing_rule"><a class="anchor" href="#_sms_routing_rule"></a>SMPP_SMS_ROUTING_RULE</h3>
+<h3 id="_sms_routing_rule"><a class="anchor" href="#_sms_routing_rule"></a>SMPP_SMS_ROUTING_RULE_2</h3>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 2. <code>SMPP_SMS_ROUTING_RULE</code></caption>
+<caption class="title">Table 2. <code>SMPP_SMS_ROUTING_RULE_2</code></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -22911,7 +22936,12 @@ The former is used for storing system-wide data and the latter two for storing t
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ADDRESS</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Text</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Acts as a primary key and is unique for each entry. Stores the address for which the messages are being routed.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Acts with NETWORK_ID as a primary key and is unique for each entry. Stores the address for which the messages are being routed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NETWORK_ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Acts with ADDRESS as a primary key and is used as networkId to which a rule belongs</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CLUSTER_NAME</p></td>
@@ -22922,9 +22952,9 @@ The former is used for storing system-wide data and the latter two for storing t
 </table>
 </div>
 <div class="sect2">
-<h3 id="sip_sms_routing_rule"><a class="anchor" href="#sip_sms_routing_rule"></a>SIP_SMS_ROUTING_RULE</h3>
+<h3 id="sip_sms_routing_rule_2"><a class="anchor" href="#sip_sms_routing_rule_2"></a>SIP_SMS_ROUTING_RULE_2</h3>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 3. <code>SIP_SMS_ROUTING_RULE</code></caption>
+<caption class="title">Table 3. <code>SIP_SMS_ROUTING_RULE_2</code></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -22941,7 +22971,12 @@ The former is used for storing system-wide data and the latter two for storing t
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ADDRESS</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Text</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Acts as a primary key and is unique for each entry. Stores the address for which the messages are being routed.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Acts with NETWORK_ID as a primary key and is unique for each entry. Stores the address for which the messages are being routed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NETWORK_ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Acts with ADDRESS as a primary key and is used as networkId to which a rule belongs</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CLUSTER_NAME</p></td>
@@ -22974,7 +23009,7 @@ The former is used for storing system-wide data and the latter two for storing t
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TARGET_ID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Acts as a primary key and is made up of ADDR_DST_DIGITS+”<em>”ADDR_DST_TON”</em>”+ADDR_DST_NPI.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Acts as a primary key and is made up of ADDR_DST_DIGITS + '_' + ADDR_DST_TON + '_' + ADDR_DST_NPI + '_' + NETWORK_ID.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">DUE_SLOT</p></td>
@@ -23016,7 +23051,17 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TARGET_ID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Made up of ADDR_DST_DIGITS+”<em>”ADDR_DST_TON”</em>”+ADDR_DST_NPI.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Made up of ADDR_DST_DIGITS + '_' + ADDR_DST_TON + '_' + ADDR_DST_NPI + '_' + NETWORK_ID.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NETWORK_ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NetworkId area via which a message will attemt to deliver.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ORIG_NETWORK_ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NetworkId area via which a message has come to SMSC GW.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">DUE_SLOT</p></td>
@@ -23069,6 +23114,11 @@ The messages are not deleted after delivery.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Duration (in seconds) after which a new delivery attempt will be done. If the SMS has just arrived in the system, this value is 0.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SM_STATUS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Error Code value for the last attempt (0==no attempts yet). For more details on Error Codes please refer to <a href="#_appendix_smsc_errorcodes">[_appendix_smsc_errorcodes]</a></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ALERTING_SUPPORTED</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">BOOLEAN</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The value is 'true' if SMSC was successfully registered at HLR after delivery failure. However this field is currently not being used because this demands extra database access.</p></td>
@@ -23076,7 +23126,7 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_ID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">BIGINT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A unique message ID assigned by SMSC (since the SMSC started).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A unique message ID assigned by SMSC. Max value is 10 000 000 000 (because of limitation of delivery receipts IDs), so this value may repeats in some big time.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MO_MESSAGE_REF</p></td>
@@ -23161,7 +23211,17 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">BLOB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Message text in source style that has been received from EMSE or from MS.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Not used now.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_TEXT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Message text - text part.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_BIN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BLOB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Message text - UDH data part.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">OPTIONAL_PARAMETERS</p></td>
@@ -23186,7 +23246,7 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CORR_ID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This field is used for keeping of correlationId value for home routing mode. This table will keep this value when StoreAndForward mode for time between storing of message and scheduling it for delivering.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This field is used for keeping of correlationId value for home routing procedure. This table will keep this value when StoreAndForward mode for time between storing of message and scheduling it for delivering.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">NNN_DIGITS</p></td>
@@ -23196,27 +23256,62 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">NNN_AN</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AddressNature for NetworkNodeNumber</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">NNN_NP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SM_STATUS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Error Code value for the last attempt (0==no attempts yet). For more details on Error Codes please refer to Appendix A, Error Codes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NumberingPlan for NetworkNodeNumber</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SM_TYPE</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0-ESME terminated, 1-MT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0-ESME terminated, 1-MT terminated, 2-SIP terminated</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">DELIVERY_COUNT</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Delivery attempt count. (this will be==1 if a message was delivered in one go)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ORIGINATOR_SCCP_ADDRESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SCCP CallingPartyAddress address for SS7 originated messages (it usually contains originating MSC or SMSC address).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DELIVERY_ATTEMPT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STATUS_REPORT_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">USER_DATA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA_2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA_3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA_4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
 </tr>
 </tbody>
 </table>
@@ -23252,7 +23347,17 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TARGET_ID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Made up of ADDR_DST_DIGITS+”<em>”ADDR_DST_TON”</em>”+ADDR_DST_NPI.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Made up of ADDR_DST_DIGITS + '_' + ADDR_DST_TON + '_' + ADDR_DST_NPI + '_' + NETWORK_ID.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NETWORK_ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NetworkId area via which a message has delivered (or failed in delivery).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ORIG_NETWORK_ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NetworkId area via which a message has come to SMSC GW.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">DUE_SLOT</p></td>
@@ -23305,6 +23410,11 @@ The messages are not deleted after delivery.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Duration (in seconds) after which a new delivery attempt will be done - value before the last delivery attempt.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SM_STATUS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Error Code value for the last attempt (0==no attempts yet). For more details on Error Codes please refer to <a href="#_appendix_smsc_errorcodes">[_appendix_smsc_errorcodes]</a></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ALERTING_SUPPORTED</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">BOOLEAN</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The value is 'true' if SMSC was successfully registered at HLR after delivery failure. However this field is currently not being used because this demands extra database access.</p></td>
@@ -23312,7 +23422,7 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_ID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">BIGINT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A unique message ID assigned by SMSC (since the SMSC started).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A unique message ID assigned by SMSC. Max value is 10 000 000 000 (because of limitation of delivery receipts IDs), so this value may repeats in some big time.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MO_MESSAGE_REF</p></td>
@@ -23397,7 +23507,17 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">BLOB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Message text in source style that has been received from EMSE or from MS.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Not used now.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_TEXT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Message text - text part.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_BIN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BLOB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Message text - UDH data part.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">OPTIONAL_PARAMETERS</p></td>
@@ -23422,7 +23542,7 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CORR_ID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This field is used for keeping of correlationId value for home routing mode. This table will keep this value for logging purpose.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This field is used for keeping of correlationId value for home routing procedure. This table will keep this value for logging purpose.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">NNN_DIGITS</p></td>
@@ -23432,27 +23552,144 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">NNN_AN</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AddressNature for NetworkNodeNumber</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">NNN_NP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SM_STATUS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Error Code value for the last attempt (0==no attempts yet). For more details on Error Codes please refer to Appendix A, Error Codes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NumberingPlan for NetworkNodeNumber</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SM_TYPE</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0-ESME terminated, 1-MT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0-ESME terminated, 1-MT terminated, 2-SIP terminated</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">DELIVERY_COUNT</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Delivery attempt count. (this will be==1 if a message was delivered in one go)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ORIGINATOR_SCCP_ADDRESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SCCP CallingPartyAddress address for SS7 originated messages (it usually contains originating MSC or SMSC address).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DELIVERY_ATTEMPT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STATUS_REPORT_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">USER_DATA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA_2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA_3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA_4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="mes_id_yyyy_mm_dd"><a class="anchor" href="#mes_id_yyyy_mm_dd"></a>MES_ID_YYYY_MM_DD</h3>
+<div class="paragraph">
+<p>This table contains referenses of local messageIds to a primary keys of MESSAGES_YYYY_MM_DD tables for a possibility of finding of sent / delivery failed messages by thier messageId value.</p>
+</div>
+<div class="paragraph">
+<p>The field "MESSAGE_ID" acts as the primary key.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 7. <code>MES_ID_YYYY_MM_DD</code></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Column Name</th>
+<th class="tableblock halign-left valign-top">Data Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BIGINT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A unique message ID assigned by SMSC. Max value is 10 000 000 000 (because of limitation of delivery receipts IDs), so this value may repeats in some big time.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADDR_DST_DIGITS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Destination address digits.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UUID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Record Identifier.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="dlv_mes_id_yyyy_mm_dd"><a class="anchor" href="#dlv_mes_id_yyyy_mm_dd"></a>DLV_MES_ID_YYYY_MM_DD</h3>
+<div class="paragraph">
+<p>This table contains referenses of remote messageIds (that are assigned by a remote SMSC GW to which a message was sent via SMPP protocol) to a local messageIds for sent to SMPP detination messages to corralate them.</p>
+</div>
+<div class="paragraph">
+<p>The fields "REMOTE_MESSAGE_ID", "DEST_ID" together act as the primary key.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 8. <code>DLV_MES_ID_YYYY_MM_DD</code></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Column Name</th>
+<th class="tableblock halign-left valign-top">Data Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">REMOTE_MESSAGE_ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A unique message ID assigned by a remote SMSC.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DEST_ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cluster name of ESME via which a message has gone.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BIGINT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A unique message ID assigned by local SMSC.</p></td>
 </tr>
 </tbody>
 </table>
@@ -23460,9 +23697,9 @@ The messages are not deleted after delivery.</p>
 <div class="sect2">
 <h3 id="_db_reporting"><a class="anchor" href="#_db_reporting"></a>Reporting</h3>
 <div class="paragraph">
-<p>As of now there is no reporting in &amp;THIS.PLATOFORM;SMSC .
+<p>As of now there is no reporting in Restcomm SMSC .
 However you can leverage any external third party tool to dig Cassandra tables as defined above and create reports.
-The next release of &amp;THIS.PLATOFORM;SMSC will feature a reporting section and also the flexibility to search for a specific SMS based on various search criteria.</p>
+The next release of Restcomm SMSC will feature a reporting section and also the flexibility to search for a specific SMS based on various search criteria.</p>
 </div>
 </div>
 </div>
@@ -23470,7 +23707,7 @@ The next release of &amp;THIS.PLATOFORM;SMSC will feature a reporting section an
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-27 11:00:21 WEST
+Last updated 2016-09-27 18:43:13 WEST
 </div>
 </div>
 <footer>

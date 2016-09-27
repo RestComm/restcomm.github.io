@@ -462,6 +462,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_sip_gui">Using GUI</a></li>
 </ul>
 </li>
+<li><a href="#_smsc_gateway_http_properties">SMSC Gateway HTTP connector Settings</a>
+<ul class="sectlevel3">
+<li><a href="#_httpdefaultsourceton">Default TON value for source addresses</a></li>
+<li><a href="#_httpdefaultsourcenpi">Default NPI value for source addresses</a></li>
+<li><a href="#_httpdefaultdestton">Default TON value for destination addresses</a></li>
+<li><a href="#_httpdefaultdestnpi">Default NPI value for source addresses</a></li>
+<li><a href="#_httpdefaultnetworkid">Default networkId area</a></li>
+<li><a href="#_httpdefaultmessagingmode">Default messaging mode</a></li>
+<li><a href="#_httpdefaultrddeliveryreceipt">Default delivery receipt requests</a></li>
+<li><a href="#_httpdefaultrdintermediatenotification">Default intermediate delivery notification requests</a></li>
+<li><a href="#_httpdefaultdatacoding">Default data coding schema</a></li>
+</ul>
+</li>
 <li><a href="#_mapcache">MAP Version Cache</a>
 <ul class="sectlevel2">
 <li><a href="#_mapcache_cli">Using CLI</a></li>
@@ -2905,6 +2918,62 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_dest_txhttpcharging"><a class="anchor" href="#_dest_txhttpcharging"></a>HTTP Charge Settings</h4>
+<div class="sect4">
+<h5 id="_dest_txhttpcharging_cli"><a class="anchor" href="#_dest_txhttpcharging_cli"></a>Using CLI</h5>
+<div class="paragraph">
+<p>You can set the 'HTTP Originated SMS Charged' value by issuing the command <code>smsc set txhttpcharging</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get txhttpcharging</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set txhttpcharging
+
+SYNOPSIS
+	smsc set txhttpcharging &lt;accept|reject|diameter&gt;
+
+DESCRIPTION
+	This command is used to set the value of the parameter 'txHttpCharging' to
+	needed values (accepting of messages that come from a HTTP connector).
+	This value is set to accept by default.
+
+	If this is set to
+	accept - all incoming messages are accepted without charging
+	reject - all incoming messages will be rejected
+	diameter - all incoming messages are checked by Diameter peer before delivering
+	(this option is not supported now)
+
+EXAMPLES
+	smsc set txhttpcharging accept</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_dest_txhttpcharging_gui"><a class="anchor" href="#_dest_txhttpcharging_gui"></a>Using GUI</h5>
+<div class="olist arabic">
+<div class="title">Procedure: Set HTTP originated Charge using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Diameter' tab in the GUI.</p>
+</li>
+<li>
+<p>You can set 'HTTP originated SMS Charged' value to accept, reject or diameter, in the corresponding list.
+For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_smsc_gateway_server_hr"><a class="anchor" href="#_smsc_gateway_server_hr"></a>Home Routing Settings</h3>
@@ -5211,6 +5280,451 @@ You can view and modify the SIP settings in this panel.</p>
 </div>
 </div>
 <div class="sect1">
+<h2 id="_smsc_gateway_http_properties"><a class="anchor" href="#_smsc_gateway_http_properties"></a>SMSC Gateway HTTP connector Settings</h2>
+<div class="sectionbody">
+<div class="sect3">
+<h4 id="_httpdefaultsourceton"><a class="anchor" href="#_httpdefaultsourceton"></a>Default TON value for source addresses</h4>
+<div class="sect4">
+<h5 id="_httpdefaultsourceton_cli"><a class="anchor" href="#_httpdefaultsourceton_cli"></a>Using CLI</h5>
+<div class="paragraph">
+<p>You can set the 'Default TON value for source addresses' for messages from HTTP connector by issuing the command <code>smsc set httpdefaultsourceton</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get httpdefaultsourceton</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set httpdefaultsourceton
+
+SYNOPSIS
+	smsc set httpdefaultsourceton &lt;ton value&gt;
+
+DESCRIPTION
+	This command is used to set a value for default TON (Type Of Number) for source
+	addresses for messages from an HTTP connector.
+	Default value is 1 (International).
+
+EXAMPLES
+	smsc set httpdefaultsourceton 1</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_httpdefaultsourceton_gui"><a class="anchor" href="#_httpdefaultsourceton_gui"></a>Using GUI</h5>
+<div class="olist arabic">
+<div class="title">Procedure: Set Default TON value for source addresses using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings.</p>
+</li>
+<li>
+<p>You can specify the default TON value for source addresses by entering the value in the text field 'Default source addresses TON'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the bottom of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_httpdefaultsourcenpi"><a class="anchor" href="#_httpdefaultsourcenpi"></a>Default NPI value for source addresses</h4>
+<div class="sect4">
+<h5 id="_httpdefaultsourcenpi_cli"><a class="anchor" href="#_httpdefaultsourcenpi_cli"></a>Using CLI</h5>
+<div class="paragraph">
+<p>You can set the 'Default NPI value for source addresses' for messages from HTTP connector by issuing the command <code>smsc set httpdefaultsourcenpi</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get httpdefaultsourcenpi</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set httpdefaultsourcenpi
+
+SYNOPSIS
+	smsc set httpdefaultsourcenpi &lt;npi value&gt;
+
+DESCRIPTION
+	This command is used to set a value for default NPI (Number Plan Indicator) for
+	source addresses for messages from an HTTP connector.
+	Default value is 1 (ISDN).
+
+EXAMPLES
+	smsc set httpdefaultsourcenpi 1</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_httpdefaultsourcenpi_gui"><a class="anchor" href="#_httpdefaultsourcenpi_gui"></a>Using GUI</h5>
+<div class="olist arabic">
+<div class="title">Procedure: Set Default NPI value for source addresses using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings.</p>
+</li>
+<li>
+<p>You can specify the default NPI value for source addresses by entering the value in the text field 'Default source addresses NPI'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the bottom of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_httpdefaultdestton"><a class="anchor" href="#_httpdefaultdestton"></a>Default TON value for destination addresses</h4>
+<div class="sect4">
+<h5 id="_httpdefaultdestton_cli"><a class="anchor" href="#_httpdefaultdestton_cli"></a>Using CLI</h5>
+<div class="paragraph">
+<p>You can set the 'Default TON value for destination addresses' for messages from HTTP connector by issuing the command <code>smsc set httpdefaultdestton</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get httpdefaultdestton</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set httpdefaultdestton
+
+SYNOPSIS
+	smsc set httpdefaultdestton &lt;ton value&gt;
+
+DESCRIPTION
+	This command is used to set a value for default TON (Type Of Number) for destination
+	addresses for messages from an HTTP connector.
+	Default value is 1 (International).
+
+EXAMPLES
+	smsc set httpdefaultdestton 1</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_httpdefaultdestton_gui"><a class="anchor" href="#_httpdefaultdestton_gui"></a>Using GUI</h5>
+<div class="olist arabic">
+<div class="title">Procedure: Set Default TON value for source destination using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings.</p>
+</li>
+<li>
+<p>You can specify the default TON value for destination addresses by entering the value in the text field 'Default destination addresses TON'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the bottom of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_httpdefaultdestnpi"><a class="anchor" href="#_httpdefaultdestnpi"></a>Default NPI value for source addresses</h4>
+<div class="sect4">
+<h5 id="_httpdefaultdestnpi_cli"><a class="anchor" href="#_httpdefaultdestnpi_cli"></a>Using CLI</h5>
+<div class="paragraph">
+<p>You can set the 'Default NPI value for destination addresses' for messages from HTTP connector by issuing the command <code>smsc set httpdefaultdestnpi</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get httpdefaultdestnpi</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set httpdefaultdestnpi
+
+SYNOPSIS
+	smsc set httpdefaultdestnpi &lt;npi value&gt;
+
+DESCRIPTION
+	This command is used to set a value for default NPI (Number Plan Indicator) for
+	destination addresses for messages from an HTTP connector.
+	Default value is 1 (ISDN).
+
+EXAMPLES
+	smsc set httpdefaultdestnpi 1</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_httpdefaultdestnpi_gui"><a class="anchor" href="#_httpdefaultdestnpi_gui"></a>Using GUI</h5>
+<div class="olist arabic">
+<div class="title">Procedure: Set Default NPI value for destination addresses using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings.</p>
+</li>
+<li>
+<p>You can specify the default NPI value for destination addresses by entering the value in the text field 'Default destination addresses NPI'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the bottom of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_httpdefaultnetworkid"><a class="anchor" href="#_httpdefaultnetworkid"></a>Default networkId area</h4>
+<div class="sect4">
+<h5 id="_httpdefaultnetworkid_cli"><a class="anchor" href="#_httpdefaultnetworkid_cli"></a>Using CLI</h5>
+<div class="paragraph">
+<p>You can set the 'Default networkId area' for messages from HTTP connector by issuing the command <code>smsc set httpdefaultnetworkid</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get httpdefaultnetworkid</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set httpdefaultnetworkid
+
+SYNOPSIS
+	smsc set httpdefaultnetworkid &lt;networkId&gt;
+
+DESCRIPTION
+	This command is used to set a value for default networkId value
+	for messages from an HTTP connector.
+	Default value is 0.
+
+EXAMPLES
+	smsc set httpdefaultnetworkid 0</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_httpdefaultnetworkid_gui"><a class="anchor" href="#_httpdefaultnetworkid_gui"></a>Using GUI</h5>
+<div class="olist arabic">
+<div class="title">Procedure: Set Default networkId area using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings.</p>
+</li>
+<li>
+<p>You can specify the default NPI value for destination addresses by entering the value in the text field 'Default networkId area'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the bottom of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_httpdefaultmessagingmode"><a class="anchor" href="#_httpdefaultmessagingmode"></a>Default messaging mode</h4>
+<div class="sect4">
+<h5 id="_httpdefaultmessagingmode_cli"><a class="anchor" href="#_httpdefaultmessagingmode_cli"></a>Using CLI</h5>
+<div class="paragraph">
+<p>You can set the 'Default messaging mode' for messages from HTTP connector by issuing the command <code>smsc set httpdefaultmessagingmode</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get httpdefaultmessagingmode</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set httpdefaultmessagingmode
+
+SYNOPSIS
+	smsc set httpdefaultmessagingmode &lt;messaging mode value&gt;
+
+DESCRIPTION
+	This command is used to set a value for default messaging mode
+	value for messages from an HTTP connector.
+	Possible values: 0-default SMSC mode, 1-datagram, 2-transaction,
+	3-storeAndForward.
+	(transaction is not supported now for HTTP originated messages).
+
+	Default value is 1.
+
+EXAMPLES
+	smsc set httpdefaultmessagingmode 1</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_httpdefaultmessagingmode_gui"><a class="anchor" href="#_httpdefaultmessagingmode_gui"></a>Using GUI</h5>
+<div class="olist arabic">
+<div class="title">Procedure: Set Default messaging mode using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings.</p>
+</li>
+<li>
+<p>You can specify the default NPI value for destination addresses by entering the value in the text field 'Default messaging mode'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the bottom of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_httpdefaultrddeliveryreceipt"><a class="anchor" href="#_httpdefaultrddeliveryreceipt"></a>Default delivery receipt requests</h4>
+<div class="sect4">
+<h5 id="_httpdefaultrddeliveryreceipt_cli"><a class="anchor" href="#_httpdefaultrddeliveryreceipt_cli"></a>Using CLI</h5>
+<div class="paragraph">
+<p>You can set the 'Default delivery receipt requests' for messages from HTTP connector by issuing the command <code>smsc set httpdefaultrddeliveryreceipt</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get httpdefaultrddeliveryreceipt</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set httpdefaultrddeliveryreceipt
+
+SYNOPSIS
+	smsc set httpdefaultrddeliveryreceipt &lt;delivery receipt request value&gt;
+
+DESCRIPTION
+	This command is used to set a value for default delivery
+	receipt request value for messages from an HTTP connector.
+	Possible values: 0-no, 1-on success or failure,
+	2-on failure only, 3-on success only
+	Default value is 0.
+
+EXAMPLES
+	smsc set httpdefaultrddeliveryreceipt 0</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_httpdefaultrddeliveryreceipt_gui"><a class="anchor" href="#_httpdefaultrddeliveryreceipt_gui"></a>Using GUI</h5>
+<div class="olist arabic">
+<div class="title">Procedure: Set Default delivery receipt requests using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings.</p>
+</li>
+<li>
+<p>You can specify the default NPI value for destination addresses by entering the value in the text field 'Default delivery receipt requests'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the bottom of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_httpdefaultrdintermediatenotification"><a class="anchor" href="#_httpdefaultrdintermediatenotification"></a>Default intermediate delivery notification requests</h4>
+<div class="sect4">
+<h5 id="_httpdefaultrdintermediatenotification_cli"><a class="anchor" href="#_httpdefaultrdintermediatenotification_cli"></a>Using CLI</h5>
+<div class="paragraph">
+<p>You can set the 'Default intermediate delivery notification requests' for messages from HTTP connector by issuing the command <code>smsc set httpdefaultrdintermediatenotification</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get httpdefaultrdintermediatenotification</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set httpdefaultrdintermediatenotification
+
+SYNOPSIS
+	smsc set httpdefaultrdintermediatenotification &lt;intermediate notification request value&gt;
+
+DESCRIPTION
+	This command is used to set a value for default intermediate
+	notification request value for messages from an HTTP connector.
+	Possible values: 0-no, 1-yes
+	Default value is 0.
+
+EXAMPLES
+	smsc set httpdefaultrdintermediatenotification 0</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_httpdefaultrdintermediatenotification_gui"><a class="anchor" href="#_httpdefaultrdintermediatenotification_gui"></a>Using GUI</h5>
+<div class="olist arabic">
+<div class="title">Procedure: Default intermediate delivery notification requests using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings.</p>
+</li>
+<li>
+<p>You can specify the default NPI value for destination addresses by entering the value in the text field 'Default intermediate delivery notification requests'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the bottom of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_httpdefaultdatacoding"><a class="anchor" href="#_httpdefaultdatacoding"></a>Default data coding schema</h4>
+<div class="sect4">
+<h5 id="_httpdefaultdatacoding_cli"><a class="anchor" href="#_httpdefaultdatacoding_cli"></a>Using CLI</h5>
+<div class="paragraph">
+<p>You can set the 'Default data coding schema' that will be used in delivery for messages from HTTP connector by issuing the command <code>smsc set httpdefaultdatacoding</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get httpdefaultdatacoding</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set httpdefaultdatacoding
+
+SYNOPSIS
+	smsc set httpdefaultdatacoding &lt;delivery receipt request value&gt;
+
+DESCRIPTION
+	This command is used to set a value for default
+	data coding schema value for messages from an HTTP connector.
+	Most common values: 0:GSM7, 8:UCS-2
+	Default value is 0.
+
+EXAMPLES
+	smsc set httpdefaultdatacoding 0</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_httpdefaultdatacoding_gui"><a class="anchor" href="#_httpdefaultdatacoding_gui"></a>Using GUI</h5>
+<div class="olist arabic">
+<div class="title">Procedure: Default data coding schema using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings.</p>
+</li>
+<li>
+<p>You can specify the default NPI value for destination addresses by entering the value in the text field 'Default data coding schema'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the bottom of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_mapcache"><a class="anchor" href="#_mapcache"></a>MAP Version Cache</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -5904,7 +6418,7 @@ Hence graph will show historic data from the point the page was loaded.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-27 11:00:21 WEST
+Last updated 2016-09-27 18:43:13 WEST
 </div>
 </div>
 </body>

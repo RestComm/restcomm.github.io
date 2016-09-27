@@ -22791,8 +22791,9 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#_routing_fundamentals">5.3. SMSC GW routing fundamentals</a></li>
 <li><a href="#_mproc_rules_fundamentals">5.4. Message processing rules (mproc rules)</a></li>
 <li><a href="#sms-home-routing">5.5. SMS Home Routing</a></li>
-<li><a href="#_diameter_ocs_server">5.6. Interworking with Diameter OCS server</a></li>
-<li><a href="#cdr-logging-settings">5.7. CDR Logging Settings</a></li>
+<li><a href="#_http_interface_description">5.6. HTTP interface description</a></li>
+<li><a href="#_diameter_ocs_server">5.7. Interworking with Diameter OCS server</a></li>
+<li><a href="#cdr-logging-settings">5.8. CDR Logging Settings</a></li>
 </ul>
 </li>
 <li><a href="#managing">6. Managing</a>
@@ -22801,10 +22802,11 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#smpp-server-settings">6.2. SMPP Server Settings</a></li>
 <li><a href="#_esme_settings">6.3. External Short Messaging Entities (ESMEs)</a></li>
 <li><a href="#_sip">6.4. SIP Settings</a></li>
-<li><a href="#_mapcache">6.5. MAP Version Cache</a></li>
-<li><a href="#_db_routing_rule_settings">6.6. Database Routing Rules</a></li>
-<li><a href="#_mproc_rule_settings">6.7. Message processing rules (mproc rules)</a></li>
-<li><a href="#_managing_statistics">6.8. Statistics</a></li>
+<li><a href="#_smsc_gateway_http_properties">6.5. SMSC Gateway HTTP connector Settings</a></li>
+<li><a href="#_mapcache">6.6. MAP Version Cache</a></li>
+<li><a href="#_db_routing_rule_settings">6.7. Database Routing Rules</a></li>
+<li><a href="#_mproc_rule_settings">6.8. Message processing rules (mproc rules)</a></li>
+<li><a href="#_managing_statistics">6.9. Statistics</a></li>
 </ul>
 </li>
 <li><a href="#maintenance">7. Maintenance</a>
@@ -23182,11 +23184,14 @@ Restcomm SMSC easily integrates with <a href="http://telestax.wpengine.netdna-cd
 <div class="ulist">
 <ul>
 <li>
-<p>Restcomm SMSC can handle mobile originated SMS and deliver them to the intended recipient (mobile, ESME or SIP). It also provides a flexible routing mechanism to route messages to/from ESME over SMPP protocol. Restcomm SMSC supports normal style (Server side) SMPP connection.
+<p>Restcomm SMSC can handle mobile originated SMS and deliver them to the intended recipient (mobile, ESME or SIP), it also accepts message uploading from a HTTP connector. It also provides a flexible routing mechanism to route messages to/from ESME over SMPP protocol. Restcomm SMSC supports normal style (Server side) SMPP connection.
 It can also act as ESME initiating connection to third party SMSC (Client side). Submit_Sm, Data_Sm, Submit_Multi and Deliver_Sm messages are supported.</p>
 </li>
 <li>
 <p>Restcomm SMSC supports SIP connection through JSLEE SIP RA.</p>
+</li>
+<li>
+<p>Restcomm SMSC supports HTTP connection through GET and POST requests (only message uploading).</p>
 </li>
 <li>
 <p>For incoming from SMPP ESME messages, Restcomm SMSC supports StoreAndForward, Datagramm and Transactional modes and a special ForwardAndStore mode for reducing the database load.</p>
@@ -23217,7 +23222,7 @@ If this first delivery attempt fails, the message will be stored in a database f
 </div>
 </li>
 <li>
-<p>Messages that come from SS7 or SIP are processed the same way as "StoreAndForward" messages that come from SMPP ESME.</p>
+<p>Messages that come from SS7 or SIP are processed the same way as "StoreAndForward" messages that come from SMPP ESME. It is possible to configure a default way of message processing ("Datagramm" or "StoreAndForward") for messages that come from HTTP connector.</p>
 </li>
 <li>
 <p>Restcomm SMSC supports Non Transparent Home Routing as explained in 3GPP Specification version 23.840 5.2.3.</p>
@@ -23247,11 +23252,11 @@ Each ESME can be configured for rate limit per a second, a minute, a hour or a d
 <p>Restcomm SMSC supports GSM7, GSM8 and UCS2 message encoding.</p>
 </li>
 <li>
-<p>Restcomm SMSC itself splits ESME and SIP originated long length messages before delivering to mobile phones, if a message does not contain User Data headers (UDH).</p>
+<p>Restcomm SMSC itself splits ESME, SIP or HTTP originated long length messages before delivering to mobile phones, if a message does not contain User Data headers (UDH).</p>
 </li>
 <li>
 <p>Multi-tenancy support: Restcomm SMSC supports a model of message network as a splitted to several logical subnetworks and SMSC messages will be logically processed only in one of this logical subnetwork.
-SMPP ESMEs, SCCP SAPs (Service Access Points) and SIP connector will belong to one of such subnetworks (A subnetwork is identified by a digital value - networkId). Any message that has come to SMSC GW from some port (ESME, SS7, SIP) will belong to networkId (subnetwork) from networkId of the port the message has come to SMSC.
+SMPP ESMEs, SCCP SAPs (Service Access Points) and SIP connector will belong to one of such subnetworks (A subnetwork is identified by a digital value - networkId). Any message that has come to SMSC GW from some port (ESME, SS7, SIP, HTTP) will belong to networkId (subnetwork) from networkId of the port the message has come to SMSC.
 Then the message will be routed into the port (ESME, SS7, SIP) which belongs to the same networkId (subnetwork).</p>
 </li>
 <li>
@@ -23315,8 +23320,8 @@ It provides implementation for Level 2 and above in the SS7 protocol Stack. Rest
 </div>
 </div>
 <div class="paragraph">
-<p>Restcomm SMSC provides six basic services of an SMSC as shown in the figure above.
-Each of these six services are implemented in the Gateway as a module that can be activated or deactivated based on the needs of an operator.
+<p>Restcomm SMSC provides 8 basic services of an SMSC as shown in the figure above.
+Each of these 8 services are implemented in the Gateway as a module that can be activated or deactivated based on the needs of an operator.
 All these services interact with the Cassandra database for storing data (messages not yet sent and an archive for sent/failed to send messages) and retreiving data for messages that are pending to be sent.</p>
 </div>
 <div class="paragraph">
@@ -23327,27 +23332,35 @@ All these services interact with the Cassandra database for storing data (messag
 <dl>
 <dt class="hdlist1">Mo (Mobile originated) module</dt>
 <dd>
-<p>Handles mobile originated SMS.</p>
+<p>Receives mobile originated SMS via MO procedure for further delivering.</p>
 </dd>
-<dt class="hdlist1">Mt (Mobile terminated)</dt>
+<dt class="hdlist1">Hr (Home routing) module</dt>
 <dd>
-<p>Delivers SMS to mobile.</p>
-</dd>
-<dt class="hdlist1">Rx SMPP module</dt>
-<dd>
-<p>Listens for incoming SMS from ESME/third party SMSC and routes them to Mt module (GSM), other ESME/third party SMSC or SIP Client depending on the routing rule.</p>
+<p>Receives mobile originated SMS via HR (Home routing) procedure for further delivering.</p>
 </dd>
 <dt class="hdlist1">Tx SMPP module</dt>
 <dd>
-<p>Delivers SMS to external ESME/third party SMSC received from Mo Module (GSM), ESME/third Party SMSC or SIP Client.</p>
-</dd>
-<dt class="hdlist1">Rx SIP module</dt>
-<dd>
-<p>Listens for incoming SMS from SIP Client and routes them to Mt module (GSM), other ESME/third party SMSC or SIP Client depending on the routing rule.</p>
+<p>Receives incoming SMS from ESME/third party via SMPP protocol for further delivering.</p>
 </dd>
 <dt class="hdlist1">Tx SIP module</dt>
 <dd>
-<p>Delivers SMS to SIP Client received from Mo Module (GSM), ESME/third Party SMSC or other SIP Client. |  |</p>
+<p>Receives incoming SMS from SIP Client and routes them for further delivering.</p>
+</dd>
+<dt class="hdlist1">Tx HTTP module</dt>
+<dd>
+<p>Receives incoming SMS from HTTP connector and routes them for further delivering.</p>
+</dd>
+<dt class="hdlist1">Mt (Mobile terminated)</dt>
+<dd>
+<p>Delivers SMS to mobile via MT procedure.</p>
+</dd>
+<dt class="hdlist1">Rx SMPP module</dt>
+<dd>
+<p>Delivers SMS to external ESME/third party SMSC.</p>
+</dd>
+<dt class="hdlist1">Rx SIP module</dt>
+<dd>
+<p>Delivers SMS to SIP Client received.</p>
 </dd>
 </dl>
 </div>
@@ -23371,15 +23384,30 @@ All these services interact with the Cassandra database for storing data (messag
 <div class="sect2">
 <h3 id="database-table-structure"><a class="anchor" href="#database-table-structure"></a>3.1. Database Table Structure</h3>
 <div class="paragraph">
-<p>Restcomm SMSC stores messages using Cassandra database.
-The database is used for storing unsent messages, messages successfully sent and messages that failed to be sent.</p>
+<p>Restcomm SMSC stores messages using Cassandra database. The database is used for storing:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>unsent messages, messages successfully sent and messages that failed to be sent</p>
+</li>
+<li>
+<p>referenses to sent messages depending on local and remote SMSC messageId</p>
+</li>
+<li>
+<p>some service info needed for SMSC GW functionality</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>The Restcomm SMSC creates three tables for every new day with the date suffixed to the names of the tables as <code>DST_SLOT_TABLE_yyyy_mm_dd</code>, <code>SLOT_MESSAGES_TABLE_yyyy_mm_dd</code> and <code>MESSAGES_yyyy_mm_dd</code> where <code>yyyy_mm_dd</code> is the date in that format.</p>
+<p>The Restcomm SMSC creates all database tables itself. A user have to create only an empty keyspace for them. Default keyspace name is "RestCommSMSC".</p>
 </div>
 <div class="paragraph">
-<p>Apart from the above tables created everyday, the database also comprises of three other tables namely <code>CURRENT_SLOT_TABLE</code>, <code>SMPP_SMS_ROUTING_RULE</code> and <code>SIP_SMS_ROUTING_RULE</code> created when the SMSC is started for the first time.
-The former is used for storing system-wide data and the latter two for storing the routing rules.</p>
+<p>The Restcomm SMSC creates tables for every new day with the date suffixed to the names of the tables as <code>DST_SLOT_TABLE_yyyy_mm_dd</code>, <code>SLOT_MESSAGES_TABLE_yyyy_mm_dd</code>, <code>MESSAGES_yyyy_mm_dd</code>, <code>MES_ID_YYYY_MM_DD</code> and <code>DLV_MES_ID_YYYY_MM_DD</code> where <code>yyyy_mm_dd</code> is the date in that format.</p>
+</div>
+<div class="paragraph">
+<p>Apart from the above tables created everyday, the database also comprises of three other tables namely <code>CURRENT_SLOT_TABLE</code>, <code>SMPP_SMS_ROUTING_RULE_2</code> and <code>SIP_SMS_ROUTING_RULE_2</code> created when the SMSC is started for the first time.
+The firts one is used for storing system-wide data and the latter two for storing the routing rules.</p>
 </div>
 <div class="sect3">
 <h4 id="current_slot_table"><a class="anchor" href="#current_slot_table"></a>3.1.1. CURRENT_SLOT_TABLE</h4>
@@ -23412,9 +23440,9 @@ The former is used for storing system-wide data and the latter two for storing t
 </table>
 </div>
 <div class="sect3">
-<h4 id="_sms_routing_rule"><a class="anchor" href="#_sms_routing_rule"></a>3.1.2. SMPP_SMS_ROUTING_RULE</h4>
+<h4 id="_sms_routing_rule"><a class="anchor" href="#_sms_routing_rule"></a>3.1.2. SMPP_SMS_ROUTING_RULE_2</h4>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 2. <code>SMPP_SMS_ROUTING_RULE</code></caption>
+<caption class="title">Table 2. <code>SMPP_SMS_ROUTING_RULE_2</code></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -23431,7 +23459,12 @@ The former is used for storing system-wide data and the latter two for storing t
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ADDRESS</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Text</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Acts as a primary key and is unique for each entry. Stores the address for which the messages are being routed.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Acts with NETWORK_ID as a primary key and is unique for each entry. Stores the address for which the messages are being routed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NETWORK_ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Acts with ADDRESS as a primary key and is used as networkId to which a rule belongs</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CLUSTER_NAME</p></td>
@@ -23442,9 +23475,9 @@ The former is used for storing system-wide data and the latter two for storing t
 </table>
 </div>
 <div class="sect3">
-<h4 id="sip_sms_routing_rule"><a class="anchor" href="#sip_sms_routing_rule"></a>3.1.3. SIP_SMS_ROUTING_RULE</h4>
+<h4 id="sip_sms_routing_rule_2"><a class="anchor" href="#sip_sms_routing_rule_2"></a>3.1.3. SIP_SMS_ROUTING_RULE_2</h4>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 3. <code>SIP_SMS_ROUTING_RULE</code></caption>
+<caption class="title">Table 3. <code>SIP_SMS_ROUTING_RULE_2</code></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -23461,7 +23494,12 @@ The former is used for storing system-wide data and the latter two for storing t
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ADDRESS</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Text</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Acts as a primary key and is unique for each entry. Stores the address for which the messages are being routed.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Acts with NETWORK_ID as a primary key and is unique for each entry. Stores the address for which the messages are being routed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NETWORK_ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Acts with ADDRESS as a primary key and is used as networkId to which a rule belongs</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CLUSTER_NAME</p></td>
@@ -23494,7 +23532,7 @@ The former is used for storing system-wide data and the latter two for storing t
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TARGET_ID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Acts as a primary key and is made up of ADDR_DST_DIGITS+”<em>”ADDR_DST_TON”</em>”+ADDR_DST_NPI.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Acts as a primary key and is made up of ADDR_DST_DIGITS + '_' + ADDR_DST_TON + '_' + ADDR_DST_NPI + '_' + NETWORK_ID.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">DUE_SLOT</p></td>
@@ -23536,7 +23574,17 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TARGET_ID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Made up of ADDR_DST_DIGITS+”<em>”ADDR_DST_TON”</em>”+ADDR_DST_NPI.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Made up of ADDR_DST_DIGITS + '_' + ADDR_DST_TON + '_' + ADDR_DST_NPI + '_' + NETWORK_ID.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NETWORK_ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NetworkId area via which a message will attemt to deliver.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ORIG_NETWORK_ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NetworkId area via which a message has come to SMSC GW.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">DUE_SLOT</p></td>
@@ -23589,6 +23637,11 @@ The messages are not deleted after delivery.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Duration (in seconds) after which a new delivery attempt will be done. If the SMS has just arrived in the system, this value is 0.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SM_STATUS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Error Code value for the last attempt (0==no attempts yet). For more details on Error Codes please refer to <a href="#_appendix_smsc_errorcodes">Error Codes</a></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ALERTING_SUPPORTED</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">BOOLEAN</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The value is 'true' if SMSC was successfully registered at HLR after delivery failure. However this field is currently not being used because this demands extra database access.</p></td>
@@ -23596,7 +23649,7 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_ID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">BIGINT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A unique message ID assigned by SMSC (since the SMSC started).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A unique message ID assigned by SMSC. Max value is 10 000 000 000 (because of limitation of delivery receipts IDs), so this value may repeats in some big time.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MO_MESSAGE_REF</p></td>
@@ -23681,7 +23734,17 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">BLOB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Message text in source style that has been received from EMSE or from MS.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Not used now.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_TEXT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Message text - text part.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_BIN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BLOB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Message text - UDH data part.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">OPTIONAL_PARAMETERS</p></td>
@@ -23706,7 +23769,7 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CORR_ID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This field is used for keeping of correlationId value for home routing mode. This table will keep this value when StoreAndForward mode for time between storing of message and scheduling it for delivering.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This field is used for keeping of correlationId value for home routing procedure. This table will keep this value when StoreAndForward mode for time between storing of message and scheduling it for delivering.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">NNN_DIGITS</p></td>
@@ -23716,27 +23779,62 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">NNN_AN</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AddressNature for NetworkNodeNumber</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">NNN_NP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SM_STATUS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Error Code value for the last attempt (0==no attempts yet). For more details on Error Codes please refer to Appendix A, Error Codes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NumberingPlan for NetworkNodeNumber</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SM_TYPE</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0-ESME terminated, 1-MT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0-ESME terminated, 1-MT terminated, 2-SIP terminated</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">DELIVERY_COUNT</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Delivery attempt count. (this will be==1 if a message was delivered in one go)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ORIGINATOR_SCCP_ADDRESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SCCP CallingPartyAddress address for SS7 originated messages (it usually contains originating MSC or SMSC address).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DELIVERY_ATTEMPT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STATUS_REPORT_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">USER_DATA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA_2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA_3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA_4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
 </tr>
 </tbody>
 </table>
@@ -23772,7 +23870,17 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TARGET_ID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Made up of ADDR_DST_DIGITS+”<em>”ADDR_DST_TON”</em>”+ADDR_DST_NPI.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Made up of ADDR_DST_DIGITS + '_' + ADDR_DST_TON + '_' + ADDR_DST_NPI + '_' + NETWORK_ID.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NETWORK_ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NetworkId area via which a message has delivered (or failed in delivery).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ORIG_NETWORK_ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NetworkId area via which a message has come to SMSC GW.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">DUE_SLOT</p></td>
@@ -23825,6 +23933,11 @@ The messages are not deleted after delivery.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Duration (in seconds) after which a new delivery attempt will be done - value before the last delivery attempt.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SM_STATUS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Error Code value for the last attempt (0==no attempts yet). For more details on Error Codes please refer to <a href="#_appendix_smsc_errorcodes">Error Codes</a></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ALERTING_SUPPORTED</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">BOOLEAN</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The value is 'true' if SMSC was successfully registered at HLR after delivery failure. However this field is currently not being used because this demands extra database access.</p></td>
@@ -23832,7 +23945,7 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_ID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">BIGINT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A unique message ID assigned by SMSC (since the SMSC started).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A unique message ID assigned by SMSC. Max value is 10 000 000 000 (because of limitation of delivery receipts IDs), so this value may repeats in some big time.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MO_MESSAGE_REF</p></td>
@@ -23917,7 +24030,17 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">BLOB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Message text in source style that has been received from EMSE or from MS.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Not used now.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_TEXT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Message text - text part.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_BIN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BLOB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Message text - UDH data part.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">OPTIONAL_PARAMETERS</p></td>
@@ -23942,7 +24065,7 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CORR_ID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This field is used for keeping of correlationId value for home routing mode. This table will keep this value for logging purpose.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This field is used for keeping of correlationId value for home routing procedure. This table will keep this value for logging purpose.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">NNN_DIGITS</p></td>
@@ -23952,37 +24075,154 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">NNN_AN</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AddressNature for NetworkNodeNumber</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">NNN_NP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SM_STATUS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Error Code value for the last attempt (0==no attempts yet). For more details on Error Codes please refer to Appendix A, Error Codes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NumberingPlan for NetworkNodeNumber</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SM_TYPE</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0-ESME terminated, 1-MT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0-ESME terminated, 1-MT terminated, 2-SIP terminated</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">DELIVERY_COUNT</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Delivery attempt count. (this will be==1 if a message was delivered in one go)</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ORIGINATOR_SCCP_ADDRESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SCCP CallingPartyAddress address for SS7 originated messages (it usually contains originating MSC or SMSC address).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DELIVERY_ATTEMPT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STATUS_REPORT_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">USER_DATA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA_2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA_3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA_4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_db_reporting"><a class="anchor" href="#_db_reporting"></a>3.1.7. Reporting</h4>
+<h4 id="mes_id_yyyy_mm_dd"><a class="anchor" href="#mes_id_yyyy_mm_dd"></a>3.1.7. MES_ID_YYYY_MM_DD</h4>
 <div class="paragraph">
-<p>As of now there is no reporting in &amp;THIS.PLATOFORM;SMSC .
+<p>This table contains referenses of local messageIds to a primary keys of MESSAGES_YYYY_MM_DD tables for a possibility of finding of sent / delivery failed messages by thier messageId value.</p>
+</div>
+<div class="paragraph">
+<p>The field "MESSAGE_ID" acts as the primary key.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 7. <code>MES_ID_YYYY_MM_DD</code></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Column Name</th>
+<th class="tableblock halign-left valign-top">Data Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BIGINT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A unique message ID assigned by SMSC. Max value is 10 000 000 000 (because of limitation of delivery receipts IDs), so this value may repeats in some big time.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADDR_DST_DIGITS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Destination address digits.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UUID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Record Identifier.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="dlv_mes_id_yyyy_mm_dd"><a class="anchor" href="#dlv_mes_id_yyyy_mm_dd"></a>3.1.8. DLV_MES_ID_YYYY_MM_DD</h4>
+<div class="paragraph">
+<p>This table contains referenses of remote messageIds (that are assigned by a remote SMSC GW to which a message was sent via SMPP protocol) to a local messageIds for sent to SMPP detination messages to corralate them.</p>
+</div>
+<div class="paragraph">
+<p>The fields "REMOTE_MESSAGE_ID", "DEST_ID" together act as the primary key.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 8. <code>DLV_MES_ID_YYYY_MM_DD</code></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Column Name</th>
+<th class="tableblock halign-left valign-top">Data Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">REMOTE_MESSAGE_ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A unique message ID assigned by a remote SMSC.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DEST_ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cluster name of ESME via which a message has gone.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BIGINT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A unique message ID assigned by local SMSC.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_db_reporting"><a class="anchor" href="#_db_reporting"></a>3.1.9. Reporting</h4>
+<div class="paragraph">
+<p>As of now there is no reporting in Restcomm SMSC .
 However you can leverage any external third party tool to dig Cassandra tables as defined above and create reports.
-The next release of &amp;THIS.PLATOFORM;SMSC will feature a reporting section and also the flexibility to search for a specific SMS based on various search criteria.</p>
+The next release of Restcomm SMSC will feature a reporting section and also the flexibility to search for a specific SMS based on various search criteria.</p>
 </div>
 </div>
 </div>
@@ -24567,7 +24807,7 @@ We recommend that you set logging threshold to <code>WARN</code> and let the CDR
 <div class="sect2">
 <h3 id="_routing_fundamentals"><a class="anchor" href="#_routing_fundamentals"></a>5.3. SMSC GW routing fundamentals</h3>
 <div class="paragraph">
-<p>SMSC GW needs clear info to where it must route messages that have come to SMSC GW from SMPP / SS7 / SIP connectors or created inside SMSC GW receipts.
+<p>SMSC GW needs clear info to where it must route messages that have come to SMSC GW from SMPP / SS7 / SIP / HTTP connectors or created inside SMSC GW receipts.
 Routing procedures gives the answer to this questions, that a user must configure before SMSC GW can properly work.</p>
 </div>
 <div class="paragraph">
@@ -24586,16 +24826,16 @@ Routing procedures gives the answer to this questions, that a user must configur
 <div class="sect3">
 <h4 id="_routing_fundamentals_1"><a class="anchor" href="#_routing_fundamentals_1"></a>5.3.1. The procedure based on dividing of separated routing area into several areas ("subnetworks").</h4>
 <div class="paragraph">
-<p>Each area has its unique digital "netwokId" value.
-Each SMPP connection (ESME), SS7 SCCP service access point (SAP), SIP connector and a database routing rule (if you use them instead of default ESME routing rules) belongs to one of network (to each of the a networkId value is assigned). Default netwokId value is "0". If a user does not specify a netwokId value when ESME, SAP, SIP or a database routing rule creation, networkId=0 will be assigned.</p>
+<p>Each area has its unique digital "networkId" value.
+Each SMPP connection (ESME), SS7 SCCP service access point (SAP), SIP connector and a database routing rule (if you use them instead of default ESME routing rules) belongs to one of network (to each of the a networkId value is assigned). For messages that come via HTTP connector a networkId is assigned depending on a value in HTTP payload or with a default configured value. Default networkId value is "0". If a user does not specify a networkId value when ESME, SAP, SIP or a database routing rule creation, networkId=0 will be assigned.</p>
 </div>
 <div class="paragraph">
-<p>When a message has come to SMSC GW a networkId value from ESME, SAP or SIP is assigned for the message.
+<p>When a message has come to SMSC GW a networkId value from ESME, SAP, SIP or HTTP is assigned for the message.
 The message can be routed only inside the area with the same networkId to what the message belongs.
 So this means that by default a message can not leave a "networkId" area via which it has come to SMSC GW.</p>
 </div>
 <div class="paragraph">
-<p>If a user needs that a message will be delivered to another "networkId" area, he can configure "message processing" rules ("mproc" rules). There we can configure that a message from a specified networkId1 and which fits some other conditions (like destination address fit to some mask) must be moved to networkId2 (newNetworkId option of a mproc rule). And the message will be delivered via ESME, SAP or SIP that belongs to networkId2.</p>
+<p>If a user needs that a message will be delivered to another "networkId" area, he can configure "message processing" rules ("mproc" rules). There we can configure that a message from a specified networkId1 and which fits some other conditions (like destination address fit to some mask) must be routed to networkId2 (newNetworkId action of a mproc rule). And the message will be delivered via ESME, SAP or SIP that belongs to networkId2. newNetworkId action in a mproc rule is applied at the step when a message has just come to SMSC GW for processing. There are also other options. A messages can be rerouted to another networkId (or dropped) just before a delivery attempt, after a successfull SRI request to HLR, after temporary or permanent failure.</p>
 </div>
 <div class="paragraph">
 <p>Multi-tenancy support is also based on this routing procedure.
@@ -24697,7 +24937,7 @@ For configuring of database routing rules see the chapter <a href="#_mproc_rule_
 <p>for every ESME / SIP specify for "Routing Type of number (TON)"=-1, "Routing Number plan indicator (NPI)"=-1, "Routing Range"="^[0-9a-zA-Z]*" (that fits to any message destination address).</p>
 </li>
 <li>
-<p>configure a set of mproc rules that will manage of routing of messages from one subnetwork (networkId) to another.| |</p>
+<p>configure a set of mproc rules that will manage of routing of messages from one subnetwork (networkId) to another.</p>
 </li>
 </ul>
 </div>
@@ -24713,7 +24953,7 @@ For configuring of database routing rules see the chapter <a href="#_mproc_rule_
 <p>for every ESME / SIP specify proper values for "Routing Type of number (TON)", "Routing Number plan indicator (NPI)" and "Routing Range" or configure database routing rules</p>
 </li>
 <li>
-<p>you do not need to configure mproc rules for routing| |</p>
+<p>you do not need to configure mproc rules for routing</p>
 </li>
 </ul>
 </div>
@@ -24794,46 +25034,95 @@ CLI commabd can be like:</p>
 <h3 id="_mproc_rules_fundamentals"><a class="anchor" href="#_mproc_rules_fundamentals"></a>5.4. Message processing rules (mproc rules)</h3>
 <div class="paragraph">
 <p>Message processing rules (mproc rules) is a tool for processing messages and changing properties of message, for example source/destination TON, NPI, NetworkId etc.
-MProc rules are only applied if pre configured criterian match&#8217;s.</p>
+MProc rules are only applied if they match pre configured criterian.</p>
 </div>
 <div class="paragraph">
-<p>Following are the states at which mproc rules can be applied to messages:</p>
+<p>MProc can be applied at several different message processing steps (triggers). Following are the triggers at which mproc rules can be applied to messages:</p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>onPostArrival</code> : When a message arrives in SMSC GW and has been already processed (accepted) by Diameter server (if Diameter server is configured). <code>onPostArrival</code> following actions are possible:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>message can be dropped (a success response will be returned to a message originator)</p>
+<p><code>HrSri trigger</code> : triggers inside HomeRouting procedure when a successfull SRI response from a local HLR has received. At this trigger HomeRouting procedure can be bypassed (this means that an original IMSI / NetworkNodeNumber will be returned to a remote SMSC GW and no MT messages will be delivered to a local SMSC GW).</p>
 </li>
 <li>
-<p>message can be rejected (a reject response will be returned to a message originator)</p>
+<p><code>Arrival trigger</code> : triggers when a message arrives in SMSC GW and has been already processed (accepted) by Diameter server (if Diameter server is configured). Following actions are possible:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>a message can be dropped (a success response will be returned to a message originator)</p>
 </li>
 <li>
-<p>most of a message parameters can be updated (for example destination address, networkId  (this is needed for routing such messages to another subnetwork area (networkId)  (see chapter <a href="#_routing_fundamentals">SMSC GW routing fundamentals</a>)) or even a message content)</p>
+<p>a message can be rejected (a reject response will be returned to a message originator)</p>
 </li>
 <li>
-<p>a new message(es) can be posted for delivering. To post new messages at this step no Diameter server request and  no mproc rules will be applied</p>
+<p>most of a message parameters can be updated (for example destination address or even a message content).</p>
+</li>
+<li>
+<p>changing of networkId will lead of message routing to another networkId area (see chapter <a href="#_routing_fundamentals">SMSC GW routing fundamentals</a>). It this trigger routing is preformed based on message delivery address or other message attributes.</p>
+</li>
+<li>
+<p>a new message(es) can be posted for delivering. To post new messages at this step no Diameter server request and  no mproc rules will be applied. In case of a message is a delivery receipt it is possible to parse and get receipt content and obtain an original message (that can be resent if needed).</p>
 </li>
 </ul>
 </div>
 </li>
-</ol>
-</div>
-<div class="paragraph">
-<p>Only after actions applying messages will be stored into a database or/and delivered to a destination.</p>
-</div>
+<li>
+<p><code>PreDelivery trigger</code> : triggers when a message is going to be delivered as a first or next delivery attempt. This trigger for a message can be in some time after an Arrival trigger and in this trigger we can perform more accurate checking of actual delivery situation of SMSC GW. Following actions are possible:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>onPostImsiRequest</code> : When a successful SRI response has been received from HLR for an SS7 destination message.
-At this step a message can be dropped (to prevent further delivery). This can be very useful feature to prevent SMS being delivered to off-net or roaming subscribers.</p>
+<p>a message can be dropped without a delivery attempt</p>
 </li>
 <li>
-<p><code>onPostDelivery</code> : When a message delivery was succeeded or failed.
-At this step a new message(es) can be posted  for delivering (it can be for example some delivery report). | |</p>
+<p>a message can be rerouted to another networkId area for delivering</p>
+</li>
+<li>
+<p>a new message(es) can be posted for delivering</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>Imsi trigger</code> : triggers inside MT procedure after when a successful SRI response has been received from remore HLR for an SS7 destination message.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>a message can be dropped without a delivery attempt (with reporing by delivery receipts and CDRs)</p>
+</li>
+<li>
+<p>a message can be rerouted to another networkId area for delivering</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>DeliveryTempFailure trigger</code> : triggers after a message delivery attempts with a temporary failure result. Following actions are possible:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>a message can be dropped without further delivery attempts</p>
+</li>
+<li>
+<p>a message can be rerouted to another networkId area for new delivering attempt right now</p>
+</li>
+<li>
+<p>a new message(es) can be posted for delivering</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>Delivery trigger</code> : triggers after a message delivery was succeeded or permanently failed. Following actions are possible:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>a message can be rerouted to another networkId area for new delivering attempt right now (this is possible only in delivery failure case)</p>
+</li>
+<li>
+<p>a new message(es) can be posted for delivering (for example a custom delivery receipt)</p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
@@ -24867,7 +25156,7 @@ This chapter covers a description of conditions and actions that are present in 
 If a message fits to all conditions then the rule will be applied to the message.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 7. The list of possible conditions</caption>
+<caption class="title">Table 9. The list of possible conditions</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -24952,7 +25241,7 @@ If a message fits to all conditions then the rule will be applied to the message
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">errorcode</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&lt;digital value of SMSC GW&#8217;s internal error code&gt;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if an internal SMSC GW&#8217;s delivery error code value matches with this rule&#8217;s errorcode. Value 0 means a successful delivery, non 0 value means some delivery error. You can specify several values via comma (example: "6,7,8"). Error code values list can be found in org.mobicents.smsc.library.ErrorCode enum.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if an internal SMSC GW&#8217;s delivery error code value matches with this rule&#8217;s errorcode. Value 0 means a successful delivery, non 0 value means some delivery error. You can specify several values via comma (example: "6,7,8"). Error code values list can be found in chapter <a href="#_appendix_smsc_errorcodes">Error Codes</a>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages with any delivery result will match.</p></td>
 </tr>
 </tbody>
@@ -24961,7 +25250,7 @@ If a message fits to all conditions then the rule will be applied to the message
 <p>b) Actions, which will be applied to messages.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 8. The list of possible actions</caption>
+<caption class="title">Table 10. The list of possible actions</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -25049,7 +25338,7 @@ If a message fits to all conditions then the rule will be applied to the message
 <div class="sect3">
 <h4 id="_mproc_rules_customized"><a class="anchor" href="#_mproc_rules_customized"></a>5.4.2. Customized message processing rules</h4>
 <div class="paragraph">
-<p>Default mproc rules allows to change the properties of a message in pre defined way, however if user wants to achieve more, SMSC allows users to implement their own  custom logic.
+<p>Default mproc rules allows to change the properties of a message in pre defined way, however if a user wants to achieve more, SMSC allows users to implement their own  custom logic.
 Below steps describes how to implement custom mproc rules.</p>
 </div>
 <div class="olist arabic">
@@ -25057,7 +25346,7 @@ Below steps describes how to implement custom mproc rules.</p>
 <ol class="arabic">
 <li>
 <p>User should implement the business logic as java code.
-There are couple of interfaces exposed by SMSC, <code class="class">MProcRuleFactory</code> and <code class="class">MProcRule</code> that must be implemented and add the custom business logic.
+There is a couple of interfaces exposed by SMSC, <code class="class">MProcRuleFactory</code> and <code class="class">MProcRule</code> that must be implemented and add the custom business logic.
 User needs to cover two parts of rules usage - a rule configuring part and a rule applying part.</p>
 <div class="admonitionblock important">
 <table>
@@ -25169,21 +25458,48 @@ public interface MProcRule extends MProcRuleMBean {
 
     void setId(int val);
 
+    // rule matchers - they specifies if this rule processes a trigger
+
+    /**
+     * @return true if the mproc rule fits to a message for the phase SMSC GW receives SRI
+     * response from a local HLR in HR procedure
+     */
+    boolean matchesPostHrSri(MProcMessage message);
+
     /**
      * @return true if the mproc rule fits to a message when a message has just come to SMSC
      */
     boolean matchesPostArrival(MProcMessage message);
 
     /**
-     * @return true if the mproc rule fits to a message when IMSI / NNN has been received from HLR
+     * @return true if the mproc rule fits to a message before a message delivery will start
+     */
+    boolean matchesPostPreDelivery(MProcMessage message);
+
+    /**
+     * @return true if the mproc rule fits to a message when IMSI / NNN has been received
+     * from HLR (succeeded SRI response)
      */
     boolean matchesPostImsiRequest(MProcMessage message);
 
     /**
-     * @return true if the mproc rule fits to a message when a message has just been delivered
-     * (or delivery failure)
+     * @return true if the mproc rule fits to a message when a message delivery was
+     * ended (success or permanent delivery failure)
      */
     boolean matchesPostDelivery(MProcMessage message);
+
+    /**
+     * @return true if the mproc rule fits to a message when a message has temporary
+     * delivery failure
+     */
+    boolean matchesPostDeliveryTempFailure(MProcMessage message);
+
+    // rule processors - we will put code for processing there
+
+    /**
+     * the event occurs when SMSC GW receives SRI response from a local HLR in HR procedure
+     */
+    void onPostHrSri(PostHrSriProcessor factory, MProcMessage message) throws Exception;
 
     /**
      * the event occurs when a message has just come to SMSC
@@ -25191,24 +25507,37 @@ public interface MProcRule extends MProcRuleMBean {
     void onPostArrival(PostArrivalProcessor factory, MProcMessage message) throws Exception;
 
     /**
-     * the event occurs when IMSI / NNN has been received from HLR
+     * the event occurs before a message delivery will start
+     */
+    void onPostPreDelivery(PostPreDeliveryProcessor factory, MProcMessage message) throws Exception;
+
+    /**
+     * the event occurs when IMSI / NNN has been received from HLR (succeeded SRI response)
      */
     void onPostImsiRequest(PostImsiProcessor factory, MProcMessage message) throws Exception;
 
     /**
-     * the event occurs when a message has just been delivered (or delivery failure)
+     * the event occurs when a message delivery was ended (success or permanent delivery
+     * failure)
      */
     void onPostDelivery(PostDeliveryProcessor factory, MProcMessage message) throws Exception;
 
     /**
-     * this method must implement setting of rule parameters as for provided CLI string at
-     * the step of rule creation
+     * the event occurs when a message has temporary delivery failure
+     */
+    void onPostDeliveryTempFailure(PostDeliveryTempFailureProcessor factory, MProcMessage message) throws Exception;
+
+    // applying of rule parameters from CLI / GUI interfaces
+
+    /**
+     * this method must implement setting of rule parameters as for provided CLI string
+     * at the step of rule creation
      */
     void setInitialRuleParameters(String parametersString) throws Exception;
 
     /**
-     * this method must implement setting of rule parameters as for provided CLI string at
-     * the step of rules modifying
+     * this method must implement setting of rule parameters as for provided CLI string
+     * at the step of rules modifying
      */
     void updateRuleParameters(String parametersString) throws Exception;
 
@@ -25230,26 +25559,46 @@ public interface MProcRuleMBean {
     int getId();
 
     /**
-     * @return Rule class of the mproc rule ("default" or other when a customer implementation)
+     * @return Rule class of the mproc rule ("default" or other when a customer
+     * implementation)
      */
     String getRuleClassName();
 
     /**
-     * @return true if the mproc rule is used for the phase when a message has just come to SMSC
+     * @return true if the mproc rule is used for the phase when a message has just come
+     * to SMSC
      */
     boolean isForPostArrivalState();
 
     /**
-     * @return true if the mproc rule is used for the phase when IMSI / NNN has been received
-     * from HLR
+     * @return true if the mproc rule is used for the phase SMSC GW receives SRI response
+     * from a local HLR in HR procedure
+     */
+    boolean isForPostHrSriState();
+
+    /**
+     * @return true if the mproc rule is used for the phase before a message delivery
+     * will start
+     */
+    boolean isForPostPreDeliveryState();
+
+    /**
+     * @return true if the mproc rule is used for the phase when IMSI / NNN has been
+     * received from HLR (succeeded SRI response)
      */
     boolean isForPostImsiRequestState();
 
     /**
-     * @return true if the mproc rule is used for the phase when a message has just been
-     * delivered (or delivery failure)
+     * @return true if the mproc rule is used for the phase when a message delivery was ended
+     * (success or permanent delivery failure)
      */
     boolean isForPostDeliveryState();
+
+    /**
+     * @return true if the mproc rule is used for the phase when a message has temporary
+     * delivery failure
+     */
+    boolean isForPostDeliveryTempFailureState();
 
     /**
      * @return rule parameters as CLI return string
@@ -25260,7 +25609,7 @@ public interface MProcRuleMBean {
 </div>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 9. <code class="class">MProcRule</code> and <code class="class">MProcRuleMBean</code> interfaces methods description</caption>
+<caption class="title">Table 11. <code class="class">MProcRule</code> and <code class="class">MProcRuleMBean</code> interfaces methods description</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -25285,15 +25634,15 @@ public interface MProcRuleMBean {
 <td class="tableblock halign-left valign-top"><p class="tableblock">Getter and setters of configured parameters for a rule instance. Parameters are formed as a plain text string, that can be provided by CLI interface. In this example we need to configure two parameters par1 and par2. Let&#8217;s specify the parameters strinf as "par1" and "par2" (two values after a space, for example "11 34").</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">isForPostArrivalState(), isForPostImsiRequestState(), isForPostDeliveryState()</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Returns true if this rule affects to a message processing step (for onPostArrival, onPostDelivery and onPostImsi requests) and false if not. You have to check configured parameters of a rule and return a proper value</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">isForPostHrSriState(), isForPostArrivalState(), isForPostPreDeliveryState(), isForPostImsiRequestState(), isForPostDeliveryState(), isForPostDeliveryTempFailureState()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns true if this rule affects to a message processing trigger (for HrSri, Arrival, PreDelivery, Imsi, Delivery and DeliveryTempFailure triggers) and false if not. You have to check configured parameters of a rule and return a proper value</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">matchesPostArrival(MProcMessage message), matchesPostImsiRequest(MProcMessage message), matchesPostDelivery(MProcMessage message)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">These methods must return true if rule should be applied false if not (for onPostArrival, onPostImsi and onPostDelivery requests).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">matchesPostHrSri(MProcMessage message), matchesPostArrival(MProcMessage message), matchesPostPreDelivery(MProcMessage message), matchesPostImsiRequest(MProcMessage message), matchesPostDelivery(MProcMessage message), matchesPostDeliveryTempFailure(MProcMessage message)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">These methods must return true if rule should be applied or false if not (for HrSri, Arrival, PreDelivery, Imsi, Delivery and DeliveryTempFailure triggers).</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">onPostArrival(), onPostImsiRequest(), onPostDelivery()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">onPostHrSri(), onPostArrival(), onPostPreDelivery(), onPostImsiRequest(), onPostDelivery(), onPostDeliveryTempFailure()</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">These methods are needed for implementing of rule applying actions.</p></td>
 </tr>
 </tbody>
@@ -25304,7 +25653,7 @@ public interface MProcRuleMBean {
 </li>
 <li>
 <p>Reusing of base <code class="class">MProcRuleBaseImpl</code> class.
-It is recommended for your custom <code class="class">MProcRuleTestImpl</code> to extend  <code class="class">MProcRuleBaseImpl</code> provided by SMSC. <code class="class">MProcRuleBaseImpl</code> class contains some useful methods that cover getter and setter  and code for persisting of this parameter into xml config file (read() and write() methods), default stubs for <code>matches()</code> and <code>onPost*()</code> methods and a service method for splitting of a parameters plain text string into subparameters (splitParametersString()).</p>
+It is recommended for your custom <code class="class">MProcRuleTestImpl</code> to extend  <code class="class">MProcRuleBaseImpl</code> provided by SMSC. <code class="class">MProcRuleBaseImpl</code> class contains some useful methods that cover code for persisting of its parameters into xml config file (read() and write() methods), default stubs for <code>matches()</code> and <code>onPost*()</code> methods and a service method for splitting of a parameters plain text string into subparameters (splitParametersString()).</p>
 <div class="paragraph">
 <p>Here is the new template of <code class="class">MProcRuleTestImpl</code> class implementation that reuses the base class <code class="class">MProcRuleBaseImpl</code>:</p>
 </div>
@@ -25332,7 +25681,7 @@ Below is an example:</p>
 </div>
 </li>
 <li>
-<p>Implementing of methods that cover getter / setters for message custom parameters and storing them into xml config file.</p>
+<p>Implementing of methods that cover getters / setters for message custom parameters and storing them into xml config file.</p>
 <div class="paragraph">
 <p>In the example setInitialRuleParameters() and updateRuleParameters() methods are implemented in the same way.
 You can implement them in different ways so that updateRuleParameters() method can accept not the whole set of parameters but only that ones that a user wants to change.</p>
@@ -25494,6 +25843,51 @@ public interface MProcMessage {
 
     String getOriginatorSccpAddress();
 
+    String getImsiDigits();
+
+    String getNnnDigits();
+
+    /**
+     * @return Procedure that has given an error / success
+     */
+    ProcessingType getProcessingType();
+
+    /**
+     * @return 0 in case of delivery success or error code from ErrorCode in case
+     * of delivery failure
+     */
+    int getErrorCode();
+
+    // delivery receipt staff
+
+    /**
+     * @return true if a message is a SMPP delivery receipt received from remote SMSC GW
+     */
+    boolean isDeliveryReceipt();
+
+    /**
+     * @return if a message is a SMPP delivery receipt received from remote SMSC GW then
+     * this method will parse the delivery receipt and return the parsed content
+     */
+    DeliveryReceiptData getDeliveryReceiptData();
+
+    /**
+     * @return if a message is a SMPP delivery receipt received from remote SMSC GW then
+     * this method will return a local message
+     * id for the original message (for which we have the receipt)
+     */
+    Long getReceiptLocalMessageId();
+
+    /**
+     * Returns a copy of previousely sent to a peer message by there messageId.
+     * This messageId is usually obtained from a
+     * delivery receipt from the peer.
+     *
+     * @param messageId
+     * @return
+     */
+    MProcMessage getOriginMessageForDeliveryReceipt(long messageId);
+
 }</code></pre>
 </div>
 </div>
@@ -25511,10 +25905,38 @@ These methods will be invoked for all messages that match rule&#8217;s condition
 </div>
 </div>
 <div class="paragraph">
-<p>In <code>onPostArrival()</code>, <code>onPostImsiRequest()</code> and <code>onPostDelivery()</code> methods user can use provided interfaces  <code class="class">PostArrivalProcessor</code>, <code class="class">PostImsiProcessor</code> and <code class="class">PostDeliveryProcessor</code> that provide methods for message processing / adding / dropping / rejecting.</p>
+<p>In  <code>onPostHrSri()</code>, <code>onPostArrival()</code>, <code>onPostPreDelivery()</code>, <code>onPostImsiRequest()</code> and <code>onPostDelivery()</code>, <code>onPostDeliveryTempFailure()</code> methods user can use provided interfaces  <code class="class">PostHrSriProcessor</code>, <code class="class">PostArrivalProcessor</code>, <code class="class">PostPreDeliveryProcessor</code>, <code class="class">PostImsiProcessor</code> and <code class="class">PostDeliveryProcessor</code>, <code class="class">onPostDeliveryTempFailure</code> that provide methods for message processing / adding / dropping / rejecting.</p>
 </div>
 <div class="ulist">
 <ul>
+<li>
+<p><code class="class">PostHrSriProcessor</code> interface content:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.smsc.mproc;
+
+import org.apache.log4j.Logger;
+
+public interface PostHrSriProcessor {
+
+    // access to environmental parameters
+    /**
+     * @return the logger that an application can use for logging info into server.log
+     */
+    Logger getLogger();
+
+    // actions
+    /**
+     * HR procedure will be bypassed (original IMSI and NNN will be sent as SRI response).
+     *
+     * @param newNetworkId
+     */
+    void byPassHr() throws MProcRuleException;
+
+}</code></pre>
+</div>
+</div>
+</li>
 <li>
 <p><code class="class">PostArrivalProcessor</code> interface content:</p>
 <div class="listingblock">
@@ -25538,19 +25960,18 @@ public interface PostArrivalProcessor {
      * Drop the message. Success response (that a message is accepted) will be return to
      * a message originator.
      */
-    void dropMessage();
+    void dropMessage() throws MProcRuleException;
 
     /**
      * Drop the message. A reject will be sent to a message originator.
      */
-    void rejectMessage();
+    void rejectMessage() throws MProcRuleException;
 
     // updating of a message section
     void updateMessageNetworkId(MProcMessage message, int newNetworkId);
 
     /**
-     * Updating of destination address message TON. In case of bad value (&lt;0 or &gt;6)
-     * MProcRuleException will be thrown
+     * Updating of destination address message TON. In case of bad value (&lt;0 or &gt;6) MProcRuleException will be thrown
      *
      * @param message
      * @param newDestTon
@@ -25570,8 +25991,9 @@ public interface PostArrivalProcessor {
     void updateMessageDestAddrNpi(MProcMessage message, int newDestNpi) throws MProcRuleException;
 
     /**
-     * Updating of destination address message digits. Value can not be null and must have length
-     * 1-21 characters. In case of bad value MProcRuleException will be thrown
+     * Updating of destination address message digits. Value can not be null and must have
+     * length 1-21 characters. In case of
+     * bad value MProcRuleException will be thrown
      *
      * @param message
      * @param newDigits
@@ -25580,8 +26002,7 @@ public interface PostArrivalProcessor {
     void updateMessageDestAddr(MProcMessage message, String newDigits) throws MProcRuleException;
 
     /**
-     * Updating of source address message TON. In case of bad value (&lt;0 or &gt;6)
-     * MProcRuleException will be thrown
+     * Updating of source address message TON. In case of bad value (&lt;0 or &gt;6) MProcRuleException will be thrown
      *
      * @param message
      * @param newDestTon
@@ -25600,8 +26021,8 @@ public interface PostArrivalProcessor {
     void updateMessageSourceAddrNpi(MProcMessage message, int newDestNpi) throws MProcRuleException;
 
     /**
-     * Updating of source address message digits. Value can not be null and must have length
-     * 1-21 characters. In case of bad value MProcRuleException will be thrown
+     * Updating of source address message digits. Value can not be null and must have length 1-21 characters. In case of
+     * bad value MProcRuleException will be thrown
      *
      * @param message
      * @param newDigits
@@ -25610,8 +26031,9 @@ public interface PostArrivalProcessor {
     void updateMessageSourceAddr(MProcMessage message, String newDigits) throws MProcRuleException;
 
     /**
-     * Updating of message text. Value must not be null and must have length 0-4300. In case
-     * of bad value MProcRuleException will be thrown
+     * Updating of message text. Value must not be null and must have length 0-4300.
+     * In case of bad value MProcRuleException
+     * will be thrown
      *
      * @param message
      * @param newShortMessageText
@@ -25621,7 +26043,8 @@ public interface PostArrivalProcessor {
 
     /**
      * Updating of UDH binary content. Value can be null or must have length &gt; 0. In case
-     * of bad value MProcRuleException will be thrown
+     * of bad value MProcRuleException will
+     * be thrown
      *
      * @param message
      * @param newShortMessageText
@@ -25631,12 +26054,14 @@ public interface PostArrivalProcessor {
 
     /**
      * Updating of ScheduleDeliveryTime - the time before which a message will not be
-     * delivered. This value can be null, this means that the message will be tried to
-     * delivery immediately. This value must be at least 3 hours before a delivery
+     * delivered. This value can be null, this
+     * means that the message will be tried to delivery immediately. This value must be at
+     * least 3 hours before a delivery
      * period end. If you pass the value that is later then 3 hours before a delivery
-     * period end, then 3 hours before a delivery period end will be set. If you
-     * change both ValidityPeriod and ScheduleDeliveryTime values, then you have to
-     * setup ValidityPeriod value firstly.
+     * period end, then 3 hours before a delivery
+     * period end will be set. If you change both ValidityPeriod and ScheduleDeliveryTime
+     * values, then you have to setup
+     * ValidityPeriod value firstly.
      *
      * @param message
      * @param newScheduleDeliveryTime
@@ -25644,12 +26069,13 @@ public interface PostArrivalProcessor {
     void updateScheduleDeliveryTime(MProcMessage message, Date newScheduleDeliveryTime);
 
     /**
-     * Updating delivery period end time. This value can be null, this means that
-     * delivery period will be set to a default delivery period value of SMSC GW.
-     * If the value is more than max validity period that is configured for SMSC GW,
-     * then max validity period will be used instead of a provided value. If you change
-     * both ValidityPeriod and ScheduleDeliveryTime values, then you have to setup
-     * ValidityPeriod value firstly.
+     * Updating delivery period end time. This value can be null, this means that delivery
+     * period will be set to a default
+     * delivery period value of SMSC GW. If the value is more than max validity period that
+     * is configured for SMSC GW, then max
+     * validity period will be used instead of a provided value. If you change both
+     * ValidityPeriod and ScheduleDeliveryTime
+     * values, then you have to setup ValidityPeriod value firstly.
      *
      * @param message
      * @param newValidityPeriod
@@ -25664,11 +26090,9 @@ public interface PostArrivalProcessor {
 
     void updateDataCodingUcs2(MProcMessage message);
 
-    void updateNationalLanguageSingleShift(MProcMessage message,
-        int newNationalLanguageSingleShift);
+    void updateNationalLanguageSingleShift(MProcMessage message, int newNationalLanguageSingleShift);
 
-    void updateNationalLanguageLockingShift(MProcMessage message,
-        int newNationalLanguageLockingShift);
+    void updateNationalLanguageLockingShift(MProcMessage message, int newNationalLanguageLockingShift);
 
     void updateEsmClass(MProcMessage message, int newEsmClass);
 
@@ -25710,11 +26134,62 @@ public interface PostArrivalProcessor {
 
     /**
      * Posting a new message. To post a new message you need: create a message template
-     * by invoking of createNewMessage(), fill it and post it be invoking of
-     * postNewMessage(). For this new message no mproc rule and diameter request will
-     * be applied.
+     * by invoking of createNewMessage(), fill
+     * it and post it be invoking of postNewMessage(). For this new message no mproc rule
+     * and diameter request will be applied.
      */
-    void postNewMessage(MProcNewMessage message);
+    void postNewMessage(MProcNewMessage message) throws MProcRuleException;
+
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><code class="class">PostPreDeliveryProcessor</code> interface content:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.smsc.mproc;
+
+import org.apache.log4j.Logger;
+
+public interface PostPreDeliveryProcessor {
+
+    // access to environmental parameters
+    /**
+     * @return the logger that an application can use for logging info into server.log
+     */
+    Logger getLogger();
+
+    // actions
+    /**
+     * Stopping of message delivery as delivery failure (generating of delivery receipts
+     * and CDRs)
+     */
+    void dropMessage() throws MProcRuleException;
+
+    /**
+     * Stopping of message delivery in this networkID and reschedule of message delivery to
+     * another networkID area
+     * @param newNetworkId
+     */
+    void rerouteMessage(int newNetworkId) throws MProcRuleException;
+
+    /**
+     * Creating a new message template for filling and sending by postNewMessage() method
+     */
+    MProcNewMessage createNewEmptyMessage(OrigType originationType);
+
+    MProcNewMessage createNewCopyMessage(MProcMessage message);
+
+    MProcNewMessage createNewResponseMessage(MProcMessage message);
+
+    /**
+     * Posting a new message. To post a new message you need: create a message template
+     * by invoking of createNewMessage(), fill
+     * it and post it be invoking of postNewMessage(). For this new message no mproc rule
+     * and diameter request will be applied.
+     */
+    void postNewMessage(MProcNewMessage message) throws MProcRuleException;
 }</code></pre>
 </div>
 </div>
@@ -25736,7 +26211,19 @@ public interface PostImsiProcessor {
     Logger getLogger();
 
     // actions
-    void dropMessages();
+    /**
+     * Stopping of message delivery as delivery failure (generating of delivery
+     * receipts and CDRs)
+     */
+    void dropMessage() throws MProcRuleException;
+
+    /**
+     * Stopping of message delivery in this networkID and reschedule of message delivery to
+     * another networkID area
+     * @param newNetworkId
+     */
+    void rerouteMessage(int newNetworkId) throws MProcRuleException;
+
 }</code></pre>
 </div>
 </div>
@@ -25761,6 +26248,16 @@ public interface PostDeliveryProcessor {
 
     // actions
     /**
+     * Stopping of message delivery in this networkID and reschedule of
+     * message delivery
+     * to another networkID area. Applyable
+     * only for a permanent failure case (will give Exception in Success case)
+     *
+     * @param newNetworkId
+     */
+    void rerouteMessage(int newNetworkId) throws MProcRuleException;
+
+    /**
      * Creating a new message template for filling and sending by postNewMessage() method
      */
     MProcNewMessage createNewEmptyMessage(OrigType originationType);
@@ -25771,11 +26268,61 @@ public interface PostDeliveryProcessor {
 
     /**
      * Posting a new message. To post a new message you need: create a message template
-     * by invoking of createNewMessage(), fill it and post it be invoking of
-     * postNewMessage(). For this new message no mproc rule and diameter request will
-     * be applied.
+     * by invoking of createNewMessage(), fill
+     * it and post it be invoking of postNewMessage(). For this new message no mproc rule
+     * and diameter request will be applied.
      */
-    void postNewMessage(MProcNewMessage message);
+    void postNewMessage(MProcNewMessage message) throws MProcRuleException;
+
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><code class="class">PostDeliveryTempFailureProcessor</code> interface content:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.smsc.mproc;
+
+import org.apache.log4j.Logger;
+
+public interface PostDeliveryTempFailureProcessor {
+
+    // access to environmental parameters
+    /**
+     * @return the logger that an application can use for logging info into server.log
+     */
+    Logger getLogger();
+
+    // actions
+    /**
+     * Stopping of message delivery as delivery failure (generating of delivery receipts and CDRs)
+     */
+    void dropMessage() throws MProcRuleException;
+
+    /**
+     * Stopping of message delivery in this networkID and reschedule of message delivery
+     * to another networkID area
+     * @param newNetworkId
+     */
+    void rerouteMessage(int newNetworkId) throws MProcRuleException;
+
+    /**
+     * Creating a new message template for filling and sending by postNewMessage() method
+     */
+    MProcNewMessage createNewEmptyMessage(OrigType originationType);
+
+    MProcNewMessage createNewCopyMessage(MProcMessage message);
+
+    MProcNewMessage createNewResponseMessage(MProcMessage message);
+
+    /**
+     * Posting a new message. To post a new message you need: create a message template
+     * by invoking of createNewMessage(), fill
+     * it and post it be invoking of postNewMessage(). For this new message no mproc rule
+     * and diameter request will be applied.
+     */
+    void postNewMessage(MProcNewMessage message) throws MProcRuleException;
 
 }</code></pre>
 </div>
@@ -25867,9 +26414,180 @@ For more details refer to <a href="#_smsc_gateway_server_hr">Home Routing Settin
 </div>
 </div>
 <div class="sect2">
-<h3 id="_diameter_ocs_server"><a class="anchor" href="#_diameter_ocs_server"></a>5.6. Interworking with Diameter OCS server</h3>
+<h3 id="_http_interface_description"><a class="anchor" href="#_http_interface_description"></a>5.6. HTTP interface description</h3>
 <div class="sect3">
-<h4 id="_diameter_ocs_server_general"><a class="anchor" href="#_diameter_ocs_server_general"></a>5.6.1. General information</h4>
+<h4 id="_http_interface_description_send_sms"><a class="anchor" href="#_http_interface_description_send_sms"></a>5.6.1. Send SMS</h4>
+<div class="paragraph">
+<p>Send message API is responsible for sending SMS messages. To send message we should
+create and send HTTP request in proper format. Supported HTTP methods
+are GET and POST. Request URL must have “sendSms” context and contain all of mandatory parameters.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 12. Mandatory parameters:</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter name</th>
+<th class="tableblock halign-left valign-top">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">userid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Your register email in our platform (not used now)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">password</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Your account password (not used now)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">msg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Message body (message text)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sender</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Message source address digits</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Message destination address digits. We can use multiple comma separated destinations. Maximum number of destinations is 50 000 for POST method, in GET it is limited to maximum length of URL. Destinations in international format are without "+" or "00" in beginning, e.g. 962788002265.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 13. Optional parameters:</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter name</th>
+<th class="tableblock halign-left valign-top">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">format</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Values can be "String" or "json", default is "String"</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">encoding</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Values can be "GSM7" (usually used for english letters and digits) or "UCS2" (used for arabic, cyrillic, etc letters), default is "GSM7".</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Format parameter controls the response format to the request. Response contains the status of request, it can be “Success” or “Error”. In case of error it contains an error code and error message. In case of success response contains a list of pairs: “request ID / destination
+ID:destination”.</p>
+</div>
+<div class="paragraph">
+<p>Request examples:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>http://127.0.0.1:8080/restcomm/sendSms?userid=user1&password=password&msg=exampleMessage_01&sender=1234&to=1111,2222,3333,4444,6666
+
+http://127.0.0.1:8080/restcomm/sendSms?userid=user1&password=password&msg=exampleMessage_02&format=String&encoding=GSM7&sender=1234&to=1111
+
+http://127.0.0.1:8080/restcomm/sendSms?userid=user1&password=password&msg=exampleMessage_03&format=json&encoding=UCS2&sender=4321&to=6666,6667</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Response examples:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>{"Success","444":"2016","222":"2014","111":"2013","333":"2015"}
+
+error:6,request not accepted</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_http_interface_description_get_message_status"><a class="anchor" href="#_http_interface_description_get_message_status"></a>5.6.2. Get message status</h4>
+<div class="paragraph">
+<p>Get message status API is responsible for checking sent messages status. To check message
+status we should create and send HTTP request in proper format. Supported HTTP methods are GET and POST. Request URL must have "msgQuery" context and contain all of mandatory parameters.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 14. Mandatory parameters:</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter name</th>
+<th class="tableblock halign-left valign-top">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">userid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Your register email in our platform (not used now)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">password</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Your account password (not used now)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">msgid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ID of message which will be returned. Only one ID in a parameter is allowed</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 15. Optional parameters:</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter name</th>
+<th class="tableblock halign-left valign-top">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">format</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Values can be "String" or "json", default is "String"</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Response contains the status of request, it can be "Success" or "Error". It contains also a status message.</p>
+</div>
+<div class="paragraph">
+<p>Request examples:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>http://127.0.0.1:8080/restcomm/msgQuery?userid=100&password=pass&msgid=2005
+
+http://127.0.0.1:8080/restcomm/msgQuery?userid=100&password=pass&msgid=534&format=json</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Response examples:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>{"Success","msg sent"}
+
+error:4,message ID not exists</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_diameter_ocs_server"><a class="anchor" href="#_diameter_ocs_server"></a>5.7. Interworking with Diameter OCS server</h3>
+<div class="sect3">
+<h4 id="_diameter_ocs_server_general"><a class="anchor" href="#_diameter_ocs_server_general"></a>5.7.1. General information</h4>
 <div class="paragraph">
 <p>SMSC GW can interoperate with an OCS server via Diameter protocol connection.</p>
 </div>
@@ -25888,7 +26606,7 @@ So MO and SMPP part will be informed if the message is rejected.
 <p>For interconnecting with OCS Server SMSC GW uses diameter CCR (Credit-Control Request) with following filled AVPs (all of them are located in AVP Service-Information (873)):</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 10. The AVP list</caption>
+<caption class="title">Table 16. The AVP list</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 20%;">
@@ -26018,7 +26736,7 @@ So MO and SMPP part will be informed if the message is rejected.
 </div>
 </div>
 <div class="sect3">
-<h4 id="_diameter_ocs_server_conig"><a class="anchor" href="#_diameter_ocs_server_conig"></a>5.6.2. Configuring</h4>
+<h4 id="_diameter_ocs_server_conig"><a class="anchor" href="#_diameter_ocs_server_conig"></a>5.7.2. Configuring</h4>
 <div class="paragraph">
 <p>You can use Telestax OCS server or any third party OCS server as you wish.
 SMSC GW party configuring is the same for both.
@@ -26116,7 +26834,7 @@ You can assign for User Name any value (for example "telestax").</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="cdr-logging-settings"><a class="anchor" href="#cdr-logging-settings"></a>5.7. CDR Logging Settings</h3>
+<h3 id="cdr-logging-settings"><a class="anchor" href="#cdr-logging-settings"></a>5.8. CDR Logging Settings</h3>
 <div class="paragraph">
 <p>Restcomm SMSC is configured to generate CDR in a plain text file located at <em class="path">restcomm-smscgateway-&lt;version&gt;/jboss-5.1.0.GA/server/&lt;profile&gt;/log/cdr.log</em> and also detailed CDR in Cassandra table <code>MESSAGES_yyyy_mm_dd</code>.</p>
 </div>
@@ -28541,6 +29259,62 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 </div>
+<div class="sect4">
+<h5 id="_dest_txhttpcharging"><a class="anchor" href="#_dest_txhttpcharging"></a>6.1.5.9. HTTP Charge Settings</h5>
+<div class="sect5">
+<h6 id="_dest_txhttpcharging_cli"><a class="anchor" href="#_dest_txhttpcharging_cli"></a>6.1.5.9.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'HTTP Originated SMS Charged' value by issuing the command <code>smsc set txhttpcharging</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get txhttpcharging</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set txhttpcharging
+
+SYNOPSIS
+	smsc set txhttpcharging &lt;accept|reject|diameter&gt;
+
+DESCRIPTION
+	This command is used to set the value of the parameter 'txHttpCharging' to
+	needed values (accepting of messages that come from a HTTP connector).
+	This value is set to accept by default.
+
+	If this is set to
+	accept - all incoming messages are accepted without charging
+	reject - all incoming messages will be rejected
+	diameter - all incoming messages are checked by Diameter peer before delivering
+	(this option is not supported now)
+
+EXAMPLES
+	smsc set txhttpcharging accept</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_dest_txhttpcharging_gui"><a class="anchor" href="#_dest_txhttpcharging_gui"></a>6.1.5.9.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set HTTP originated Charge using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Diameter' tab in the GUI.</p>
+</li>
+<li>
+<p>You can set 'HTTP originated SMS Charged' value to accept, reject or diameter, in the corresponding list.
+For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_smsc_gateway_server_hr"><a class="anchor" href="#_smsc_gateway_server_hr"></a>6.1.6. Home Routing Settings</h4>
@@ -30840,7 +31614,450 @@ You can view and modify the SIP settings in this panel.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_mapcache"><a class="anchor" href="#_mapcache"></a>6.5. MAP Version Cache</h3>
+<h3 id="_smsc_gateway_http_properties"><a class="anchor" href="#_smsc_gateway_http_properties"></a>6.5. SMSC Gateway HTTP connector Settings</h3>
+<div class="sect4">
+<h5 id="_httpdefaultsourceton"><a class="anchor" href="#_httpdefaultsourceton"></a>6.5.1. Default TON value for source addresses</h5>
+<div class="sect5">
+<h6 id="_httpdefaultsourceton_cli"><a class="anchor" href="#_httpdefaultsourceton_cli"></a>6.5.1.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'Default TON value for source addresses' for messages from HTTP connector by issuing the command <code>smsc set httpdefaultsourceton</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get httpdefaultsourceton</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set httpdefaultsourceton
+
+SYNOPSIS
+	smsc set httpdefaultsourceton &lt;ton value&gt;
+
+DESCRIPTION
+	This command is used to set a value for default TON (Type Of Number) for source
+	addresses for messages from an HTTP connector.
+	Default value is 1 (International).
+
+EXAMPLES
+	smsc set httpdefaultsourceton 1</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_httpdefaultsourceton_gui"><a class="anchor" href="#_httpdefaultsourceton_gui"></a>6.5.1.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set Default TON value for source addresses using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings.</p>
+</li>
+<li>
+<p>You can specify the default TON value for source addresses by entering the value in the text field 'Default source addresses TON'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the bottom of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_httpdefaultsourcenpi"><a class="anchor" href="#_httpdefaultsourcenpi"></a>6.5.2. Default NPI value for source addresses</h5>
+<div class="sect5">
+<h6 id="_httpdefaultsourcenpi_cli"><a class="anchor" href="#_httpdefaultsourcenpi_cli"></a>6.5.2.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'Default NPI value for source addresses' for messages from HTTP connector by issuing the command <code>smsc set httpdefaultsourcenpi</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get httpdefaultsourcenpi</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set httpdefaultsourcenpi
+
+SYNOPSIS
+	smsc set httpdefaultsourcenpi &lt;npi value&gt;
+
+DESCRIPTION
+	This command is used to set a value for default NPI (Number Plan Indicator) for
+	source addresses for messages from an HTTP connector.
+	Default value is 1 (ISDN).
+
+EXAMPLES
+	smsc set httpdefaultsourcenpi 1</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_httpdefaultsourcenpi_gui"><a class="anchor" href="#_httpdefaultsourcenpi_gui"></a>6.5.2.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set Default NPI value for source addresses using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings.</p>
+</li>
+<li>
+<p>You can specify the default NPI value for source addresses by entering the value in the text field 'Default source addresses NPI'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the bottom of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_httpdefaultdestton"><a class="anchor" href="#_httpdefaultdestton"></a>6.5.3. Default TON value for destination addresses</h5>
+<div class="sect5">
+<h6 id="_httpdefaultdestton_cli"><a class="anchor" href="#_httpdefaultdestton_cli"></a>6.5.3.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'Default TON value for destination addresses' for messages from HTTP connector by issuing the command <code>smsc set httpdefaultdestton</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get httpdefaultdestton</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set httpdefaultdestton
+
+SYNOPSIS
+	smsc set httpdefaultdestton &lt;ton value&gt;
+
+DESCRIPTION
+	This command is used to set a value for default TON (Type Of Number) for destination
+	addresses for messages from an HTTP connector.
+	Default value is 1 (International).
+
+EXAMPLES
+	smsc set httpdefaultdestton 1</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_httpdefaultdestton_gui"><a class="anchor" href="#_httpdefaultdestton_gui"></a>6.5.3.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set Default TON value for source destination using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings.</p>
+</li>
+<li>
+<p>You can specify the default TON value for destination addresses by entering the value in the text field 'Default destination addresses TON'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the bottom of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_httpdefaultdestnpi"><a class="anchor" href="#_httpdefaultdestnpi"></a>6.5.4. Default NPI value for source addresses</h5>
+<div class="sect5">
+<h6 id="_httpdefaultdestnpi_cli"><a class="anchor" href="#_httpdefaultdestnpi_cli"></a>6.5.4.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'Default NPI value for destination addresses' for messages from HTTP connector by issuing the command <code>smsc set httpdefaultdestnpi</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get httpdefaultdestnpi</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set httpdefaultdestnpi
+
+SYNOPSIS
+	smsc set httpdefaultdestnpi &lt;npi value&gt;
+
+DESCRIPTION
+	This command is used to set a value for default NPI (Number Plan Indicator) for
+	destination addresses for messages from an HTTP connector.
+	Default value is 1 (ISDN).
+
+EXAMPLES
+	smsc set httpdefaultdestnpi 1</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_httpdefaultdestnpi_gui"><a class="anchor" href="#_httpdefaultdestnpi_gui"></a>6.5.4.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set Default NPI value for destination addresses using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings.</p>
+</li>
+<li>
+<p>You can specify the default NPI value for destination addresses by entering the value in the text field 'Default destination addresses NPI'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the bottom of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_httpdefaultnetworkid"><a class="anchor" href="#_httpdefaultnetworkid"></a>6.5.5. Default networkId area</h5>
+<div class="sect5">
+<h6 id="_httpdefaultnetworkid_cli"><a class="anchor" href="#_httpdefaultnetworkid_cli"></a>6.5.5.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'Default networkId area' for messages from HTTP connector by issuing the command <code>smsc set httpdefaultnetworkid</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get httpdefaultnetworkid</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set httpdefaultnetworkid
+
+SYNOPSIS
+	smsc set httpdefaultnetworkid &lt;networkId&gt;
+
+DESCRIPTION
+	This command is used to set a value for default networkId value
+	for messages from an HTTP connector.
+	Default value is 0.
+
+EXAMPLES
+	smsc set httpdefaultnetworkid 0</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_httpdefaultnetworkid_gui"><a class="anchor" href="#_httpdefaultnetworkid_gui"></a>6.5.5.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set Default networkId area using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings.</p>
+</li>
+<li>
+<p>You can specify the default NPI value for destination addresses by entering the value in the text field 'Default networkId area'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the bottom of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_httpdefaultmessagingmode"><a class="anchor" href="#_httpdefaultmessagingmode"></a>6.5.6. Default messaging mode</h5>
+<div class="sect5">
+<h6 id="_httpdefaultmessagingmode_cli"><a class="anchor" href="#_httpdefaultmessagingmode_cli"></a>6.5.6.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'Default messaging mode' for messages from HTTP connector by issuing the command <code>smsc set httpdefaultmessagingmode</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get httpdefaultmessagingmode</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set httpdefaultmessagingmode
+
+SYNOPSIS
+	smsc set httpdefaultmessagingmode &lt;messaging mode value&gt;
+
+DESCRIPTION
+	This command is used to set a value for default messaging mode
+	value for messages from an HTTP connector.
+	Possible values: 0-default SMSC mode, 1-datagram, 2-transaction,
+	3-storeAndForward.
+	(transaction is not supported now for HTTP originated messages).
+
+	Default value is 1.
+
+EXAMPLES
+	smsc set httpdefaultmessagingmode 1</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_httpdefaultmessagingmode_gui"><a class="anchor" href="#_httpdefaultmessagingmode_gui"></a>6.5.6.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set Default messaging mode using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings.</p>
+</li>
+<li>
+<p>You can specify the default NPI value for destination addresses by entering the value in the text field 'Default messaging mode'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the bottom of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_httpdefaultrddeliveryreceipt"><a class="anchor" href="#_httpdefaultrddeliveryreceipt"></a>6.5.7. Default delivery receipt requests</h5>
+<div class="sect5">
+<h6 id="_httpdefaultrddeliveryreceipt_cli"><a class="anchor" href="#_httpdefaultrddeliveryreceipt_cli"></a>6.5.7.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'Default delivery receipt requests' for messages from HTTP connector by issuing the command <code>smsc set httpdefaultrddeliveryreceipt</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get httpdefaultrddeliveryreceipt</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set httpdefaultrddeliveryreceipt
+
+SYNOPSIS
+	smsc set httpdefaultrddeliveryreceipt &lt;delivery receipt request value&gt;
+
+DESCRIPTION
+	This command is used to set a value for default delivery
+	receipt request value for messages from an HTTP connector.
+	Possible values: 0-no, 1-on success or failure,
+	2-on failure only, 3-on success only
+	Default value is 0.
+
+EXAMPLES
+	smsc set httpdefaultrddeliveryreceipt 0</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_httpdefaultrddeliveryreceipt_gui"><a class="anchor" href="#_httpdefaultrddeliveryreceipt_gui"></a>6.5.7.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set Default delivery receipt requests using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings.</p>
+</li>
+<li>
+<p>You can specify the default NPI value for destination addresses by entering the value in the text field 'Default delivery receipt requests'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the bottom of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_httpdefaultrdintermediatenotification"><a class="anchor" href="#_httpdefaultrdintermediatenotification"></a>6.5.8. Default intermediate delivery notification requests</h5>
+<div class="sect5">
+<h6 id="_httpdefaultrdintermediatenotification_cli"><a class="anchor" href="#_httpdefaultrdintermediatenotification_cli"></a>6.5.8.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'Default intermediate delivery notification requests' for messages from HTTP connector by issuing the command <code>smsc set httpdefaultrdintermediatenotification</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get httpdefaultrdintermediatenotification</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set httpdefaultrdintermediatenotification
+
+SYNOPSIS
+	smsc set httpdefaultrdintermediatenotification &lt;intermediate notification request value&gt;
+
+DESCRIPTION
+	This command is used to set a value for default intermediate
+	notification request value for messages from an HTTP connector.
+	Possible values: 0-no, 1-yes
+	Default value is 0.
+
+EXAMPLES
+	smsc set httpdefaultrdintermediatenotification 0</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_httpdefaultrdintermediatenotification_gui"><a class="anchor" href="#_httpdefaultrdintermediatenotification_gui"></a>6.5.8.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Default intermediate delivery notification requests using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings.</p>
+</li>
+<li>
+<p>You can specify the default NPI value for destination addresses by entering the value in the text field 'Default intermediate delivery notification requests'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the bottom of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_httpdefaultdatacoding"><a class="anchor" href="#_httpdefaultdatacoding"></a>6.5.9. Default data coding schema</h5>
+<div class="sect5">
+<h6 id="_httpdefaultdatacoding_cli"><a class="anchor" href="#_httpdefaultdatacoding_cli"></a>6.5.9.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'Default data coding schema' that will be used in delivery for messages from HTTP connector by issuing the command <code>smsc set httpdefaultdatacoding</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get httpdefaultdatacoding</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set httpdefaultdatacoding
+
+SYNOPSIS
+	smsc set httpdefaultdatacoding &lt;delivery receipt request value&gt;
+
+DESCRIPTION
+	This command is used to set a value for default
+	data coding schema value for messages from an HTTP connector.
+	Most common values: 0:GSM7, 8:UCS-2
+	Default value is 0.
+
+EXAMPLES
+	smsc set httpdefaultdatacoding 0</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_httpdefaultdatacoding_gui"><a class="anchor" href="#_httpdefaultdatacoding_gui"></a>6.5.9.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Default data coding schema using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings.</p>
+</li>
+<li>
+<p>You can specify the default NPI value for destination addresses by entering the value in the text field 'Default data coding schema'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the bottom of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mapcache"><a class="anchor" href="#_mapcache"></a>6.6. MAP Version Cache</h3>
 <div class="paragraph">
 <p>Restcomm SMSC caches the negotiated MAP Version for each network node.
 Cache stores the Global Title of SCCP address of the network node.
@@ -30848,7 +32065,7 @@ Every MT SMS sent to this node will use the cached Version.
 This will help in reducing the MAP Version negotiation duration everytime and hence improve the performance.</p>
 </div>
 <div class="sect3">
-<h4 id="_mapcache_cli"><a class="anchor" href="#_mapcache_cli"></a>6.5.1. Using CLI</h4>
+<h4 id="_mapcache_cli"><a class="anchor" href="#_mapcache_cli"></a>6.6.1. Using CLI</h4>
 <div class="paragraph">
 <p>You can set the 'MAP Version Cache' value by issuing the command <code>smsc mapcache set</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc mapcache get</code> which will display all the cached values.
@@ -30871,7 +32088,7 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect3">
-<h4 id="_mapcache_gui"><a class="anchor" href="#_mapcache_gui"></a>6.5.2. Using GUI</h4>
+<h4 id="_mapcache_gui"><a class="anchor" href="#_mapcache_gui"></a>6.6.2. Using GUI</h4>
 <div class="olist arabic">
 <div class="title">Procedure: Managing MAP Version Cache value using the GUI</div>
 <ol class="arabic">
@@ -30897,7 +32114,7 @@ The cached value will be displayed in the log.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_db_routing_rule_settings"><a class="anchor" href="#_db_routing_rule_settings"></a>6.6. Database Routing Rules</h3>
+<h3 id="_db_routing_rule_settings"><a class="anchor" href="#_db_routing_rule_settings"></a>6.7. Database Routing Rules</h3>
 <div class="paragraph">
 <p>Restcomm SMSC can now act as a SMPP Server accepting incoming SMPP connections or can also act as a SMPP client initiating a connection to a remote SMSC server.
 Therefore you can now set an intelligent database routing rule to route SMS between SMPP connections or between SMPP, SIP and GSM.</p>
@@ -30930,9 +32147,9 @@ You must change the value of the property <code>smsRoutingRuleClass</code> in th
 You can populate this table with address and corresponding cluster name as explained in the sections below.</p>
 </div>
 <div class="sect3">
-<h4 id="_update_db_rule"><a class="anchor" href="#_update_db_rule"></a>6.6.1. Create/Update Database Routing Rule</h4>
+<h4 id="_update_db_rule"><a class="anchor" href="#_update_db_rule"></a>6.7.1. Create/Update Database Routing Rule</h4>
 <div class="sect4">
-<h5 id="_update_db_rule_cli"><a class="anchor" href="#_update_db_rule_cli"></a>6.6.1.1. Using CLI</h5>
+<h5 id="_update_db_rule_cli"><a class="anchor" href="#_update_db_rule_cli"></a>6.7.1.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can create or update a Database Routing Rule using the command <code>smsc databaserule update</code> with appropriate parameters as described below:</p>
 </div>
@@ -30971,7 +32188,7 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect4">
-<h5 id="_update_db_rule_gui"><a class="anchor" href="#_update_db_rule_gui"></a>6.6.1.2. Using GUI</h5>
+<h5 id="_update_db_rule_gui"><a class="anchor" href="#_update_db_rule_gui"></a>6.7.1.2. Using GUI</h5>
 <div class="olist arabic">
 <div class="title">Procedure: Create/Update Database Routing Rule using the GUI</div>
 <ol class="arabic">
@@ -30989,9 +32206,9 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect3">
-<h4 id="_delete_db_rule"><a class="anchor" href="#_delete_db_rule"></a>6.6.2. Delete Database Routing Rule</h4>
+<h4 id="_delete_db_rule"><a class="anchor" href="#_delete_db_rule"></a>6.7.2. Delete Database Routing Rule</h4>
 <div class="sect4">
-<h5 id="_delete_db_rule_cli"><a class="anchor" href="#_delete_db_rule_cli"></a>6.6.2.1. Using CLI</h5>
+<h5 id="_delete_db_rule_cli"><a class="anchor" href="#_delete_db_rule_cli"></a>6.7.2.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can delete a Database Routing Rule using the command <code>smsc databaserule delete</code> with appropriate parameters as described below:</p>
 </div>
@@ -31018,7 +32235,7 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect4">
-<h5 id="_delete_db_rule_gui"><a class="anchor" href="#_delete_db_rule_gui"></a>6.6.2.2. Using GUI</h5>
+<h5 id="_delete_db_rule_gui"><a class="anchor" href="#_delete_db_rule_gui"></a>6.7.2.2. Using GUI</h5>
 <div class="olist arabic">
 <div class="title">Procedure: Delete Database Routing Rule using the GUI</div>
 <ol class="arabic">
@@ -31036,9 +32253,9 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect3">
-<h4 id="_get_db_rule"><a class="anchor" href="#_get_db_rule"></a>6.6.3. View Database Routing Rule Information</h4>
+<h4 id="_get_db_rule"><a class="anchor" href="#_get_db_rule"></a>6.7.3. View Database Routing Rule Information</h4>
 <div class="sect4">
-<h5 id="_get_db_rule_cli"><a class="anchor" href="#_get_db_rule_cli"></a>6.6.3.1. Using CLI</h5>
+<h5 id="_get_db_rule_cli"><a class="anchor" href="#_get_db_rule_cli"></a>6.7.3.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can view a Database Routing Rule using the command <code>smsc databaserule get</code> with appropriate parameters as described below:</p>
 </div>
@@ -31066,7 +32283,7 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect4">
-<h5 id="_get_db_rule_gui"><a class="anchor" href="#_get_db_rule_gui"></a>6.6.3.2. Using GUI</h5>
+<h5 id="_get_db_rule_gui"><a class="anchor" href="#_get_db_rule_gui"></a>6.7.3.2. Using GUI</h5>
 <div class="olist arabic">
 <div class="title">Procedure: View Database Routing Rule using the GUI</div>
 <ol class="arabic">
@@ -31084,9 +32301,9 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect3">
-<h4 id="_getrange_db_rule"><a class="anchor" href="#_getrange_db_rule"></a>6.6.4. Retrieve a range of Database Routing Rules</h4>
+<h4 id="_getrange_db_rule"><a class="anchor" href="#_getrange_db_rule"></a>6.7.4. Retrieve a range of Database Routing Rules</h4>
 <div class="sect4">
-<h5 id="_getrange_db_rule_cli"><a class="anchor" href="#_getrange_db_rule_cli"></a>6.6.4.1. Using CLI</h5>
+<h5 id="_getrange_db_rule_cli"><a class="anchor" href="#_getrange_db_rule_cli"></a>6.7.4.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can retrieve a range of Database Routing Rules using the command <code>smsc databaserule getrange</code> with appropriate parameters as described below:</p>
 </div>
@@ -31119,15 +32336,15 @@ PARAMETERS
 </div>
 </div>
 <div class="sect2">
-<h3 id="_mproc_rule_settings"><a class="anchor" href="#_mproc_rule_settings"></a>6.7. Message processing rules (mproc rules)</h3>
+<h3 id="_mproc_rule_settings"><a class="anchor" href="#_mproc_rule_settings"></a>6.8. Message processing rules (mproc rules)</h3>
 <div class="paragraph">
 <p>The fundamentals of mproc rules you can in the chapter <a href="#_mproc_rules_fundamentals">Message processing rules (mproc rules)</a>.
 Here we will describe how to manage mproc rules.</p>
 </div>
 <div class="sect3">
-<h4 id="_mproc_rule_settings_create"><a class="anchor" href="#_mproc_rule_settings_create"></a>6.7.1. Create a mproc rule.</h4>
+<h4 id="_mproc_rule_settings_create"><a class="anchor" href="#_mproc_rule_settings_create"></a>6.8.1. Create a mproc rule.</h4>
 <div class="sect4">
-<h5 id="_mproc_rule_settings_create_cli"><a class="anchor" href="#_mproc_rule_settings_create_cli"></a>6.7.1.1. Using CLI</h5>
+<h5 id="_mproc_rule_settings_create_cli"><a class="anchor" href="#_mproc_rule_settings_create_cli"></a>6.8.1.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can configure a new mproc rule by issuing the command smsc mproc add with appropriate parameters as described below.</p>
 </div>
@@ -31200,7 +32417,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="_mproc_rule_settings_create_gui"><a class="anchor" href="#_mproc_rule_settings_create_gui"></a>6.7.1.2. Using GUI</h5>
+<h5 id="_mproc_rule_settings_create_gui"><a class="anchor" href="#_mproc_rule_settings_create_gui"></a>6.8.1.2. Using GUI</h5>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -31226,9 +32443,9 @@ This action will create a new mproc rule with parameters as defined by you.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_mproc_rule_settings_modify"><a class="anchor" href="#_mproc_rule_settings_modify"></a>6.7.2. Modify a mproc rule.</h4>
+<h4 id="_mproc_rule_settings_modify"><a class="anchor" href="#_mproc_rule_settings_modify"></a>6.8.2. Modify a mproc rule.</h4>
 <div class="sect4">
-<h5 id="_mproc_rule_settings_modify_cli"><a class="anchor" href="#_mproc_rule_settings_modify_cli"></a>6.7.2.1. Using CLI</h5>
+<h5 id="_mproc_rule_settings_modify_cli"><a class="anchor" href="#_mproc_rule_settings_modify_cli"></a>6.8.2.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can modify an existent mproc rule by issuing the command smsc mproc modify with appropriate parameters as described below.</p>
 </div>
@@ -31296,7 +32513,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="_mproc_rule_settings_modify_gui"><a class="anchor" href="#_mproc_rule_settings_modify_gui"></a>6.7.2.2. Using GUI</h5>
+<h5 id="_mproc_rule_settings_modify_gui"><a class="anchor" href="#_mproc_rule_settings_modify_gui"></a>6.8.2.2. Using GUI</h5>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -31324,9 +32541,9 @@ This action will modify a mproc rule with parameters as defined by you.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_mproc_rule_settings_view"><a class="anchor" href="#_mproc_rule_settings_view"></a>6.7.3. View a mproc rule details.</h4>
+<h4 id="_mproc_rule_settings_view"><a class="anchor" href="#_mproc_rule_settings_view"></a>6.8.3. View a mproc rule details.</h4>
 <div class="sect4">
-<h5 id="_mproc_rule_settings_view_cli"><a class="anchor" href="#_mproc_rule_settings_view_cli"></a>6.7.3.1. Using CLI</h5>
+<h5 id="_mproc_rule_settings_view_cli"><a class="anchor" href="#_mproc_rule_settings_view_cli"></a>6.8.3.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can view the details of all configured mproc rules or a specified mproc rule by issuing the command smsc mproc show as described below.</p>
 </div>
@@ -31357,7 +32574,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="_mproc_rule_settings_view_gui"><a class="anchor" href="#_mproc_rule_settings_view_gui"></a>6.7.3.2. Using GUI</h5>
+<h5 id="_mproc_rule_settings_view_gui"><a class="anchor" href="#_mproc_rule_settings_view_gui"></a>6.8.3.2. Using GUI</h5>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -31376,9 +32593,9 @@ All relevant details of the mproc rule will be displayed in an expanded format.<
 </div>
 </div>
 <div class="sect3">
-<h4 id="_mproc_rule_settings_remove"><a class="anchor" href="#_mproc_rule_settings_remove"></a>6.7.4. Remove an existing mproc rule.</h4>
+<h4 id="_mproc_rule_settings_remove"><a class="anchor" href="#_mproc_rule_settings_remove"></a>6.8.4. Remove an existing mproc rule.</h4>
 <div class="sect4">
-<h5 id="_mproc_rule_settings_remove_cli"><a class="anchor" href="#_mproc_rule_settings_remove_cli"></a>6.7.4.1. Using CLI</h5>
+<h5 id="_mproc_rule_settings_remove_cli"><a class="anchor" href="#_mproc_rule_settings_remove_cli"></a>6.8.4.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can remove an existent mproc rule by issuing the command smsc mproc remove with appropriate parameters as described below.</p>
 </div>
@@ -31405,7 +32622,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="_mproc_rule_settings_remove_gui"><a class="anchor" href="#_mproc_rule_settings_remove_gui"></a>6.7.4.2. Using GUI</h5>
+<h5 id="_mproc_rule_settings_remove_gui"><a class="anchor" href="#_mproc_rule_settings_remove_gui"></a>6.8.4.2. Using GUI</h5>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -31424,15 +32641,15 @@ Below this you will find the button 'Create Message Processing Rule'.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_managing_statistics"><a class="anchor" href="#_managing_statistics"></a>6.8. Statistics</h3>
+<h3 id="_managing_statistics"><a class="anchor" href="#_managing_statistics"></a>6.9. Statistics</h3>
 <div class="paragraph">
 <p>The GUI will allow you to create campaigns of fixed duration for gathering statistics data.
 Campaign allows to select time period over which these statistics have been gathered (in hours, minutes and seconds). Once Campaign is defined, the statistics can be observed by clicking on the newly created campaign name or you can also navigate to Metrics (click Metrics on left panel) to get graph of statistics.</p>
 </div>
 <div class="sect3">
-<h4 id="_managing_statistics_create"><a class="anchor" href="#_managing_statistics_create"></a>6.8.1. Create new Campaign</h4>
+<h4 id="_managing_statistics_create"><a class="anchor" href="#_managing_statistics_create"></a>6.9.1. Create new Campaign</h4>
 <div class="sect4">
-<h5 id="_managing_statistics_create_gui"><a class="anchor" href="#_managing_statistics_create_gui"></a>6.8.1.1. Using GUI</h5>
+<h5 id="_managing_statistics_create_gui"><a class="anchor" href="#_managing_statistics_create_gui"></a>6.9.1.1. Using GUI</h5>
 <div class="olist arabic">
 <div class="title">Procedure: Create new Campaign using GUI</div>
 <ol class="arabic">
@@ -31473,9 +32690,9 @@ For SMSC, select 'SMSC GW-SMSC-Main'.
 </div>
 </div>
 <div class="sect3">
-<h4 id="_managing_statistics_view"><a class="anchor" href="#_managing_statistics_view"></a>6.8.2. View Campaigns</h4>
+<h4 id="_managing_statistics_view"><a class="anchor" href="#_managing_statistics_view"></a>6.9.2. View Campaigns</h4>
 <div class="sect4">
-<h5 id="_managing_statistics_view_gui"><a class="anchor" href="#_managing_statistics_view_gui"></a>6.8.2.1. Using GUI</h5>
+<h5 id="_managing_statistics_view_gui"><a class="anchor" href="#_managing_statistics_view_gui"></a>6.9.2.1. Using GUI</h5>
 <div class="paragraph">
 <p>You can view all existing campaigns in the GUI.
 On the main panel, click on the Campaign name.
@@ -32320,7 +33537,11 @@ Some error codes are reserved for future use and will be put to use in future ve
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>    SUCCESS(0),
+<pre>package org.mobicents.smsc.library;
+
+public enum ErrorCode {
+
+    SUCCESS(0),
 
     UNKNOWN_SUBSCRIBER(1),
     UNDEFINED_SUBSCRIBER(2),
@@ -32346,6 +33567,7 @@ Some error codes are reserved for future use and will be put to use in future ve
     UNKNOWN_SMC(21),
     ILLEGAL_EQUIPMENT(22),
     USER_BUSY(23),
+    // TODO XXX: table is weird
     //Power off (24вЂ“47: CDMA network reserved). 24-27
     //Reserved.   25-29
     //
@@ -32392,7 +33614,8 @@ Some error codes are reserved for future use and will be put to use in future ve
     MSC_REFUSES_SM(51),
     HLR_REFUSES_SM(52),
     GIW_REFUSES_SM(53),
-    //No response from the SGSN,
+    //TODO: XXX table is weird here again
+    //No response from the SGSN (54вЂ“63),
     NO_RESPONSE_FROM_SGSN(54),
 
     SGSN_REGUSES_SM(55),
@@ -32432,7 +33655,7 @@ Some error codes are reserved for future use and will be put to use in future ve
     /**
      * Exceeding maximum of messages in L2CacheDaemon specified by license(70),
      */
-    EXCEEDED_L2CacheDaemon_MAX_MESSAGE(70),
+    EXCEEDED_L2CacheDaemon_MAX_MESSAGE(70), // TODO:XXX ???
     /**
      * Deletion of SMs to be imported to the database because of disconnection between the SMSC and L2CacheDaemon(71),
      */
@@ -32440,7 +33663,7 @@ Some error codes are reserved for future use and will be put to use in future ve
     /**
      * Exceeding the maximum L2CacheDaemon capacity specified by license(72),
      */
-    EXCEEDED_L2CacheDaemon_CAPACITY(72),
+    EXCEEDED_L2CacheDaemon_CAPACITY(72), // TODO:XXX ??? //TODO: XXX: again ?
     /**
      * Some messages in L2CacheDaemon are the same as the messages in memory(73),
      */
@@ -32535,7 +33758,7 @@ Some error codes are reserved for future use and will be put to use in future ve
     RESERVED_142(142),
     UNSPECIFIED_TP_PID_ERROR(143),
     DCS_NOT_SUPPORTED(144),
-    SM_TYPE_NOT_SUPPORTED(145),
+    SM_TYPE_NOT_SUPPORTED(145), //TODO: XXX :again? there is SM_TYPE_0_NOT_SUPPORTED /&gt;
     //Reserved(146вЂ“158),
     RESERVED_146(146),
     RESERVED_147(147),
@@ -32588,7 +33811,7 @@ Some error codes are reserved for future use and will be put to use in future ve
     SC_BUSY(192),
     NO_SC_SPECIFIED(193),
     SC_SYSTEM_ERROR(194),
-    INVALID_SME_ADDRESS_2(195),
+    INVALID_SME_ADDRESS_2(195), //TODO: XXX: duplicate!
     DESTINATION_SME_PROHIBITED(196),
     //Reserved(197-207),
     RESERVED_197(197),
@@ -32607,7 +33830,7 @@ Some error codes are reserved for future use and will be put to use in future ve
      * No SMS storage capability in SIM(209),
      */
     SIM_HAS_NO_SMS_STORAGE(209),
-    ERROR_IN_MS_2(210),
+    ERROR_IN_MS_2(210),  //TODO: XXX: duplicate!
     ESME_MEMORY_OVERFLOW(211),
     /**
      * Reserved(212-223),
@@ -32631,8 +33854,8 @@ Some error codes are reserved for future use and will be put to use in future ve
     OCS_ACCESS_NOT_GRANTED(224),
     MPROC_ACCESS_NOT_GRANTED(225),
     MPROC_SRI_REQUEST_DROP(226),
-    APP_SPECIFIC_227(227),
-    APP_SPECIFIC_228(228),
+    MPROC_PRE_DELIVERY_DROP(227),
+    VALIDITY_PERIOD_EXPIRED(228),
     APP_SPECIFIC_229(229),
     APP_SPECIFIC_230(230),
     APP_SPECIFIC_231(231),
@@ -32659,7 +33882,8 @@ Some error codes are reserved for future use and will be put to use in future ve
     APP_SPECIFIC_252(252),
     APP_SPECIFIC_253(253),
     APP_SPECIFIC_254(254),
-    UNSPECIFIED_ERROR_CAUSE(255);</pre>
+    UNSPECIFIED_ERROR_CAUSE(255);
+}</pre>
 </div>
 </div>
 </div>
@@ -32679,7 +33903,7 @@ Some error codes are reserved for future use and will be put to use in future ve
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-27 11:00:21 WEST
+Last updated 2016-09-27 18:43:13 WEST
 </div>
 </div>
 <footer>
