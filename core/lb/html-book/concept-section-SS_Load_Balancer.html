@@ -1484,7 +1484,22 @@ Notice that the call is handled by the second node.</p>
 <div class="sect2">
 <h3 id="_sslb_binary_sip_load_balancer_stopping"><a class="anchor" href="#_sslb_binary_sip_load_balancer_stopping"></a>Stopping</h3>
 <div class="paragraph">
-<p>Assuming that you started the JBoss Application Server as a foreground process in the Linux terminal, the easiest way to stop it is by pressing the  key combination in the same terminal in which you started it.</p>
+<p>Assuming that you started the JBoss Application Server as a foreground process
+in the Linux terminal, the easiest way to stop it is by pressing the  key combination
+in the same terminal in which you started it.</p>
+</div>
+<div class="paragraph">
+<p>If you use
+<a href="http://www.keepalived.org/">keepalived</a> for maintaining active and standby
+Load balancers as it was described
+<a href="http://documentation.telestax.com/core/tutorials/high-availability/Load-Balancer_failover-keepalived.html">here</a>
+then you can gracefully shutdown active Load balancer by using http request
+<a href="http://host:statisticPort/lbstop" class="bare">http://host:statisticPort/lbstop</a> for upgrades without loosing calls
+and redirect new calls to another active LB. The request will turn off the
+statistic port. The keepalived utility checks the statistic port and then
+switches traffic to the standby Load balancer if the statistic port is turned off.
+After two seconds the Load balancer finally  stops.
+.</p>
 </div>
 <div class="paragraph">
 <p>This should produce similar output to the following:</p>
@@ -2323,7 +2338,7 @@ and you can see next line:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-28 10:59:13 WEST
+Last updated 2016-09-28 18:52:10 WEST
 </div>
 </div>
 </body>
