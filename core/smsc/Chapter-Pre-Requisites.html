@@ -22789,13 +22789,13 @@ The following table details the Hardware, Operating System and Software requirem
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Java</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">You must have a working Java Runtime Environment (JRE) or Java Development Kit (JDK) installed on your system and it must be version 7 or higher. M3UA uses Java SCTP which is available only from JDK 7 onwards. Connectivity to MSC/HLR is via SIGTRAN links (M3UA).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">You must have a working Java Runtime Environment (JRE) or Java Development Kit (JDK) installed on your system and it must be version 7. JDK from Oracle is preferred.</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Database</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">You must have Cassandra database (version 1.2 or 2.0) installed (Version 2.1 or later is not supported now). We strongly recommend that you use the latest version of 2.0 release because the support for version 1.2 will not be soon available, the most probably in the next release. Restcomm SMSC Gateway uses Cassandra Native Driver and therefore you should enable support for native drivers by setting the value of start_native_transport to true in the file apache-cassandra-&lt;version&gt;/conf/cassandra.yaml. Failure to do this may result in the Gateway not starting correctly.</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">You must have Cassandra database (version 2.0 last release or later). Version 1.2 is not supported more. Restcomm SMSC Gateway uses Cassandra Native Driver and therefore you should enable support for native drivers by setting the value of start_native_transport to true in the file apache-cassandra-&lt;version&gt;/conf/cassandra.yaml. Failure to do this may result in the Gateway not starting correctly.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cassandra version 3.* may demand JAVA 8 (JAVA 8 is not supported now by SMSC GW). If you want to use cassandra 3.* and SMSC GW at the same host than you need to play with JAVA_HOME environment variable in cassndra and SMSC GW cmd files to specify proper JAVA version.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Firewall Access</p></td>
@@ -22825,7 +22825,7 @@ For more details on setting this variable, please refer to the appendix section.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-10-05 13:30:16 WEST
+Last updated 2016-10-05 18:42:08 WEST
 </div>
 </div>
 <footer>
