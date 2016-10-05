@@ -23237,6 +23237,24 @@ If a message fits to all conditions then the rule will be applied to the message
 <td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages with any destination number will match.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sourcetonmask</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;source type of number&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if message source Type of Number is equal to this value "sourcetonmask"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages with any TON will match.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sourcenpimask</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;source numbering plan indicator&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if message source Numbering Plan Indicator is equal to this value "sourcenpimask".</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages with any NPI will match.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sourcedigmask</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;java regular expression - source number digits mask&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if message source address digits matches with "sourcedigmask" java regular expression.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages with any source number will match.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">imsidigitsmask</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&lt;java regular expression - IMSI mask&gt;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if IMSI value was obtained after SRI request (during MT or HR procedure) and it matches with this rule&#8217;s imsidigitsmask. imsidigitsmask is java regular expression.</p></td>
@@ -24513,8 +24531,12 @@ are GET and POST. Request URL must have “sendSms” context and contain all of
 <td class="tableblock halign-left valign-top"><p class="tableblock">Values can be "String" or "json", default is "String"</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">encoding</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Values can be "GSM7" (usually used for english letters and digits) or "UCS2" (used for arabic, cyrillic, etc letters), default is "GSM7".</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">smscEncoding</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Values can be "GSM7" (usually used for english letters and digits) or "UCS2" (used for arabic, cyrillic, etc letters), default is "GSM7". This parameter affects Data Coding Schema parameter.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">messageBodyEncoding</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Values can be "UTF8" or "UTF16". If parameter is not provided then value depends on "smscEncoding" parameter and it is taken from SMSC properties . Default value is "UTF8". This parameter affects data encoding of a message body at HTTP interface.</p></td>
 </tr>
 </tbody>
 </table>
@@ -24529,9 +24551,9 @@ ID:destination”.</p>
 <div class="content">
 <pre>http://127.0.0.1:8080/restcomm/sendSms?userid=user1&password=password&msg=exampleMessage_01&sender=1234&to=1111,2222,3333,4444,6666
 
-http://127.0.0.1:8080/restcomm/sendSms?userid=user1&password=password&msg=exampleMessage_02&format=String&encoding=GSM7&sender=1234&to=1111
+http://127.0.0.1:8080/restcomm/sendSms?userid=user1&password=password&msg=exampleMessage_02&format=String&smscEncoding=GSM7&messageBodyEncoding=UTF8&sender=1234&to=1111
 
-http://127.0.0.1:8080/restcomm/sendSms?userid=user1&password=password&msg=exampleMessage_03&format=json&encoding=UCS2&sender=4321&to=6666,6667</pre>
+http://127.0.0.1:8080/restcomm/sendSms?userid=user1&password=password&msg=exampleMessage_03&format=json&smscEncoding=UCS2&messageBodyEncoding=UTF16&sender=4321&to=6666,6667</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -24894,7 +24916,7 @@ The details of the format and the possible values for the fields recorded in the
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-10-04 18:58:37 WEST
+Last updated 2016-10-05 13:30:16 WEST
 </div>
 </div>
 <footer>

@@ -2873,6 +2873,24 @@ If a message fits to all conditions then the rule will be applied to the message
 <td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages with any destination number will match.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sourcetonmask</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;source type of number&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if message source Type of Number is equal to this value "sourcetonmask"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages with any TON will match.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sourcenpimask</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;source numbering plan indicator&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if message source Numbering Plan Indicator is equal to this value "sourcenpimask".</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages with any NPI will match.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sourcedigmask</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;java regular expression - source number digits mask&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if message source address digits matches with "sourcedigmask" java regular expression.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages with any source number will match.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">imsidigitsmask</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&lt;java regular expression - IMSI mask&gt;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if IMSI value was obtained after SRI request (during MT or HR procedure) and it matches with this rule&#8217;s imsidigitsmask. imsidigitsmask is java regular expression.</p></td>
@@ -4145,8 +4163,12 @@ are GET and POST. Request URL must have “sendSms” context and contain all of
 <td class="tableblock halign-left valign-top"><p class="tableblock">Values can be "String" or "json", default is "String"</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">encoding</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Values can be "GSM7" (usually used for english letters and digits) or "UCS2" (used for arabic, cyrillic, etc letters), default is "GSM7".</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">smscEncoding</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Values can be "GSM7" (usually used for english letters and digits) or "UCS2" (used for arabic, cyrillic, etc letters), default is "GSM7". This parameter affects Data Coding Schema parameter.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">messageBodyEncoding</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Values can be "UTF8" or "UTF16". If parameter is not provided then value depends on "smscEncoding" parameter and it is taken from SMSC properties . Default value is "UTF8". This parameter affects data encoding of a message body at HTTP interface.</p></td>
 </tr>
 </tbody>
 </table>
@@ -4161,9 +4183,9 @@ ID:destination”.</p>
 <div class="content">
 <pre>http://127.0.0.1:8080/restcomm/sendSms?userid=user1&password=password&msg=exampleMessage_01&sender=1234&to=1111,2222,3333,4444,6666
 
-http://127.0.0.1:8080/restcomm/sendSms?userid=user1&password=password&msg=exampleMessage_02&format=String&encoding=GSM7&sender=1234&to=1111
+http://127.0.0.1:8080/restcomm/sendSms?userid=user1&password=password&msg=exampleMessage_02&format=String&smscEncoding=GSM7&messageBodyEncoding=UTF8&sender=1234&to=1111
 
-http://127.0.0.1:8080/restcomm/sendSms?userid=user1&password=password&msg=exampleMessage_03&format=json&encoding=UCS2&sender=4321&to=6666,6667</pre>
+http://127.0.0.1:8080/restcomm/sendSms?userid=user1&password=password&msg=exampleMessage_03&format=json&smscEncoding=UCS2&messageBodyEncoding=UTF16&sender=4321&to=6666,6667</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9725,6 +9747,66 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 </div>
+<div class="sect4">
+<h5 id="_http_encoding_for_ucs2"><a class="anchor" href="#_http_encoding_for_ucs2"></a>6.5.10. HTTP Encoding for GSM7/UCS2</h5>
+<div class="sect5">
+<h6 id="_http_encoding_for_ucs2_cli"><a class="anchor" href="#_http_encoding_for_ucs2_cli"></a>6.5.10.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'HTTP Encoding for GSM7 (DCS=0)' and 'HTTP Encoding for UCS2 (DCS=8)' value by issuing the commands <code>smsc set httpencodingforgsm7</code> / <code>smsc set httpencodingforucs2</code> with appropriate parameters as described below.
+You can verify this by issuing the commands <code>smsc get httpencodingforgsm7</code> / <code>smsc get httpencodingforucs2</code> which will display the value set for these property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+    smsc set httpencodingforgsm7
+    smsc set httpencodingforucs2
+
+SYNOPSIS
+    smsc set httpencodingforgsm7 &lt;Utf8|Unicode&gt;
+	smsc set httpencodingforucs2 &lt;Utf8|Unicode&gt;
+
+DESCRIPTION
+    These commands are used to set the Encoding Scheme at HTTP side for
+    different GSM data coding schemas (DCS).
+
+    For GSM7 encoding (DCS = 0) you must use the command
+    smsc set smppencodingforgsm7, in order to set text encoding style.
+
+    For UCS2 encoding (DCS = 8), you must use the command
+    smsc set smppencodingforucs2, in order to set text encoding style.
+
+    At the HTTP side, messages accept 2 different encoding schemes namely UTF8,
+    UNICODE, for receiving messages. This value may be overridden by a
+    parameter in HTTP request.
+
+EXAMPLES
+	smsc set httpencodingforgsm7 utf8
+	or
+	smsc set httpencodingforucs2 unicode</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_http_encoding_for_ucs2_gui"><a class="anchor" href="#_http_encoding_for_ucs2_gui"></a>6.5.10.2. Using GUI</h6>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings.</p>
+</li>
+<li>
+<p>You can specify the encoding scheme by choosing from the values (Utf8 | Unicode) in the list for 'HTTP Encoding for GSM7' (DCS=0) or 'HTTP Encoding for UCS2' (DCS=8). For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_mapcache"><a class="anchor" href="#_mapcache"></a>6.6. MAP Version Cache</h3>
@@ -10030,7 +10112,9 @@ SYNOPSIS
 	- Default mproc rules implementation (&lt;class name&gt; is "mproc"):
 	smsc mproc add mproc &lt;id&gt; networkidmask &lt;networkId value&gt; originnetworkidmask &lt;networkId
 	value&gt; desttonmask &lt;destination type of number&gt; destnpimask &lt;destination numbering plan
-	indicator&gt; destdigmask &lt;regular expression - destination number digits mask&gt;
+	indicator&gt; destdigmask &lt;regular expression - destination number digits mask&gt; sourcetonmask
+	&lt;source type of number&gt; sourcenpimask &lt;source numbering plan indicator&gt;
+	sourcedigmask &lt;regular expression - source number digits mask&gt;
 	imsidigitsmask &lt;regular expression - imsi digits mask&gt; nnndigitsmask &lt;regular expression
 	- NetworkNodeNumber digits mask&gt; originatingmask &lt;SS7_MO | SS7_HR | SMPP | SIP | HTTP |
 	-1&gt; origesmenamemask &lt;regualar expression - origination ESME name mask&gt;
@@ -10058,6 +10142,9 @@ PARAMETERS
 	desttonmask - an optional parameter.
 	destnpimask - an optional parameter.
 	destdigmask - an optional parameter.
+	sourcetonmask - an optional parameter.
+	sourcenpimask - an optional parameter.
+	sourcedigmask - an optional parameter.
 	imsidigitsmask - an optional parameter.
 	nnndigitsmask - an optional parameter.
 	originatingmask - an optional parameter.
@@ -10131,7 +10218,9 @@ SYNOPSIS
 	- Default mproc rules implementation:
 	smsc mproc modify &lt;id&gt; networkidmask &lt;networkId value&gt; originnetworkidmask &lt;networkId
 	value&gt; desttonmask &lt;destination type of number&gt; destnpimask &lt;destination numbering plan
-	indicator&gt; destdigmask &lt;regular expression - destination number digits mask&gt;
+	indicator&gt; destdigmask &lt;regular expression - destination number digits mask&gt; sourcetonmask
+	&lt;source type of number&gt; sourcenpimask &lt;source numbering plan indicator&gt;
+	sourcedigmask &lt;regular expression - source number digits mask&gt;
 	imsidigitsmask &lt;regular expression - imsi digits mask&gt; nnndigitsmask &lt;regular expression
 	- NetworkNodeNumber digits mask&gt; originatingmask &lt;SS7_MO | SS7_HR | SMPP | SIP | HTTP |
 	-1&gt; origesmenamemask &lt;regualar expression - origination ESME name mask&gt;
@@ -10157,6 +10246,9 @@ PARAMETERS
 	desttonmask - an optional parameter.
 	destnpimask - an optional parameter.
 	destdigmask - an optional parameter.
+	sourcetonmask - an optional parameter.
+	sourcenpimask - an optional parameter.
+	sourcedigmask - an optional parameter.
 	imsidigitsmask - an optional parameter.
 	nnndigitsmask - an optional parameter.
 	originatingmask - an optional parameter.
@@ -11573,7 +11665,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-10-04 18:58:37 WEST
+Last updated 2016-10-05 13:30:16 WEST
 </div>
 </div>
 </body>
