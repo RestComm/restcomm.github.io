@@ -22754,7 +22754,14 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
+<li><a href="#_fine_tuning">Memory Settings and fine tuning</a>
+<ul class="sectlevel2">
 <li><a href="#memory-settings">Memory Settings</a></li>
+<li><a href="#message-flow-types">Message flow types</a></li>
+<li><a href="#smsc-configuration-parameters-which-influence-the-traffic-throughput">SMSC configuration parameters which influence the traffic throughput</a></li>
+</ul>
+</li>
+<li><a href="#_starting_background">Starting of the SMSC GW process</a></li>
 <li><a href="#_logging">Configuring log4j Logging Service</a></li>
 <li><a href="#_routing_fundamentals">SMSC GW routing fundamentals</a>
 <ul class="sectlevel2">
@@ -22797,10 +22804,12 @@ Once you complete setting up the Gateway you must configure the SS7 Stack the SM
 </div>
 </div>
 <div class="sect1">
-<h2 id="memory-settings"><a class="anchor" href="#memory-settings"></a>Memory Settings</h2>
+<h2 id="_fine_tuning"><a class="anchor" href="#_fine_tuning"></a>Memory Settings and fine tuning</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="memory-settings"><a class="anchor" href="#memory-settings"></a>Memory Settings</h3>
 <div class="paragraph">
-<p>You should fine tune the JVM memory settings based on your needs but we recommend you allocate a minimum of 3 GB for initial and maximum heap size.
+<p>You should fine tune the JVM memory settings based on your needs but we recommend you allocate a minimum of 3 GB for initial and maximum heap size. 4 GB is recommended.
 These settings are specified in the file <em class="path">restcomm-smscgateway-version&gt;/jboss-5.1.0.GA/bin/run.conf</em>.</p>
 </div>
 <div class="dlist">
@@ -22814,6 +22823,88 @@ These settings are specified in the file <em class="path">restcomm-smscgateway-v
 <p>Maximum heap size, set in megabytes</p>
 </dd>
 </dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="message-flow-types"><a class="anchor" href="#message-flow-types"></a>Message flow types</h3>
+<div class="paragraph">
+<p>We have two possible message flow type.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>When a message is firstly stored into a cassandra database - StoreAndForward mode (StoreAndForward messages when <a href="#_storeandforwardmode">[_storeandforwardmode]</a> is set to "normal")</p>
+</li>
+<li>
+<p>When a first delivery retry is done without storing a message into a cassandra database - datagramm, Transactional, ForwardAndStore (StoreAndForward messages when <a href="#_storeandforwardmode">[_storeandforwardmode]</a> is set to "fast").</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>If you have some high traffic load you can try scenario "1". In this case when a message highload peaks cassandra will store messages before delivering and all incoming messages will be accepted (but this may lead some delay before the first delivery attempt). In scenario "2" if there are many messages in processing then some incoming messages will rejected by SMSC GW with "STATUS_THROTTLED" cause (for SMPP case). And SMPP application must be ready to resend such rejected messages later. If SMPP applications can not do so, then it is better to use "1" scenario.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="smsc-configuration-parameters-which-influence-the-traffic-throughput"><a class="anchor" href="#smsc-configuration-parameters-which-influence-the-traffic-throughput"></a>SMSC configuration parameters which influence the traffic throughput</h3>
+<div class="paragraph">
+<p>Firstly we need to check <a href="#_fetch_period">[_fetch_period]</a>, <a href="#_max_rows">[_max_rows]</a> and <a href="#_max_activity_count">[_max_activity_count]</a> chapters. "Max Activity Count" parameter specifies how many messages will be processed at the same time. If you have high productivity server then you can try to increase it. But be carefull - if you increase it too high then it leads the productivity reducing because of SMSC GW will not be able to process all together.</p>
+</div>
+<div class="paragraph">
+<p>For monitoring you can use <a href="#_smsc_stat_get">[_smsc_stat_get]</a> chapter. DueSlotProcessingLag output said if SMSC GW is overloaded (you will see that this parameter be encrased permanemtly in this case).</p>
+</div>
+<div class="paragraph">
+<p>In the configuration of SCTP layer leave the parameter "SingleThread" as "true". The count of threads that will process incoming SS7 messages is specified by a parameter "deliveryMessageThreadCount". We need to do it if we have some bottleneck in SS7 part.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>open file jboss/server/default/deploy/telscale-smsc-server/META-INF/jboss-beans.xml in the text editor</p>
+</li>
+<li>
+<p>find "bean name="Mtp3UserPart"" mbean definition</p>
+</li>
+<li>
+<p>update parameter "deliveryMessageThreadCount" to some value like "processor count * 2"</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>SMPP side also has important parameters "DefaultWindowSize" and "MaxConnectionSize" for SMPP Server, you can increase it if you see that you have bottleneck at SMPP side but SMSC GW generally is not overloaded. See <a href="#_smpp_server_settings">[_smpp_server_settings]</a>.</p>
+</div>
+<div class="paragraph">
+<p>We need to add info of cassandra database parameters update for high loaded systems (in the file cassandra.yaml):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>tombstone_warn_threshold: 1000 &#8594; 5000 (in case of warning like "Read 386 live and 1496 tombstoned cells in system.schema_columns (see tombstone_warn_threshold).")</p>
+</li>
+<li>
+<p>read_request_timeout_in_ms 5000 &#8594; 25000 (or twice more to prevent timeouts in case when we have very many paending message to one destination)</p>
+</li>
+<li>
+<p>range_request_timeout_in_ms 10000 &#8594; 50000 (same)</p>
+</li>
+<li>
+<p>request_timeout_in_ms 10000 &#8594; 50000 (same)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_starting_background"><a class="anchor" href="#_starting_background"></a>Starting of the SMSC GW process</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We can use "screen" linux command to run jboss processes at background.</p>
+</div>
+<div class="paragraph">
+<p>As a command how to check if SMSC GW instanse is run we can use:
+ps -ef | grep jboss</p>
+</div>
+<div class="paragraph">
+<p>If we run several instanses of the same server (by mistake) the second instanse will have records in the logs like "BindException: Address already in use". We need to terminate all such servers and run only one instanse again.</p>
 </div>
 </div>
 </div>
@@ -24916,7 +25007,7 @@ The details of the format and the possible values for the fields recorded in the
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-10-07 18:49:34 WEST
+Last updated 2016-10-09 15:01:08 WEST
 </div>
 </div>
 <footer>

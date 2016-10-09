@@ -22786,20 +22786,21 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </li>
 <li><a href="#configuring">5. Configuring</a>
 <ul class="sectlevel2">
-<li><a href="#memory-settings">5.1. Memory Settings</a></li>
-<li><a href="#_logging">5.2. Configuring log4j Logging Service</a></li>
-<li><a href="#_routing_fundamentals">5.3. SMSC GW routing fundamentals</a></li>
-<li><a href="#_mproc_rules_fundamentals">5.4. Message processing rules (mproc rules)</a></li>
-<li><a href="#sms-home-routing">5.5. SMS Home Routing</a></li>
-<li><a href="#_http_interface_description">5.6. HTTP interface description</a></li>
-<li><a href="#_diameter_ocs_server">5.7. Interworking with Diameter OCS server</a></li>
-<li><a href="#cdr-logging-settings">5.8. CDR Logging Settings</a></li>
+<li><a href="#_fine_tuning">5.1. Memory Settings and fine tuning</a></li>
+<li><a href="#_starting_background">5.2. Starting of the SMSC GW process</a></li>
+<li><a href="#_logging">5.3. Configuring log4j Logging Service</a></li>
+<li><a href="#_routing_fundamentals">5.4. SMSC GW routing fundamentals</a></li>
+<li><a href="#_mproc_rules_fundamentals">5.5. Message processing rules (mproc rules)</a></li>
+<li><a href="#sms-home-routing">5.6. SMS Home Routing</a></li>
+<li><a href="#_http_interface_description">5.7. HTTP interface description</a></li>
+<li><a href="#_diameter_ocs_server">5.8. Interworking with Diameter OCS server</a></li>
+<li><a href="#cdr-logging-settings">5.9. CDR Logging Settings</a></li>
 </ul>
 </li>
 <li><a href="#managing">6. Managing</a>
 <ul class="sectlevel2">
 <li><a href="#smsc-gateway-server-settings">6.1. SMSC Gateway Server Settings</a></li>
-<li><a href="#smpp-server-settings">6.2. SMPP Server Settings</a></li>
+<li><a href="#_smpp_server_settings">6.2. SMPP Server Settings</a></li>
 <li><a href="#_esme_settings">6.3. External Short Messaging Entities (ESMEs)</a></li>
 <li><a href="#_sip">6.4. SIP Settings</a></li>
 <li><a href="#_smsc_gateway_http_properties">6.5. SMSC Gateway HTTP connector Settings</a></li>
@@ -24770,9 +24771,11 @@ You can change the user-id and password in files <em class="path">jmx-console-ro
 Once you complete setting up the Gateway you must configure the SS7 Stack the SMSC Gateway following the instructions specified in this guide.</p>
 </div>
 <div class="sect2">
-<h3 id="memory-settings"><a class="anchor" href="#memory-settings"></a>5.1. Memory Settings</h3>
+<h3 id="_fine_tuning"><a class="anchor" href="#_fine_tuning"></a>5.1. Memory Settings and fine tuning</h3>
+<div class="sect3">
+<h4 id="memory-settings"><a class="anchor" href="#memory-settings"></a>5.1.1. Memory Settings</h4>
 <div class="paragraph">
-<p>You should fine tune the JVM memory settings based on your needs but we recommend you allocate a minimum of 3 GB for initial and maximum heap size.
+<p>You should fine tune the JVM memory settings based on your needs but we recommend you allocate a minimum of 3 GB for initial and maximum heap size. 4 GB is recommended.
 These settings are specified in the file <em class="path">restcomm-smscgateway-version&gt;/jboss-5.1.0.GA/bin/run.conf</em>.</p>
 </div>
 <div class="dlist">
@@ -24788,8 +24791,88 @@ These settings are specified in the file <em class="path">restcomm-smscgateway-v
 </dl>
 </div>
 </div>
+<div class="sect3">
+<h4 id="message-flow-types"><a class="anchor" href="#message-flow-types"></a>5.1.2. Message flow types</h4>
+<div class="paragraph">
+<p>We have two possible message flow type.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>When a message is firstly stored into a cassandra database - StoreAndForward mode (StoreAndForward messages when <a href="#_storeandforwardmode">Store And Forward Mode</a> is set to "normal")</p>
+</li>
+<li>
+<p>When a first delivery retry is done without storing a message into a cassandra database - datagramm, Transactional, ForwardAndStore (StoreAndForward messages when <a href="#_storeandforwardmode">Store And Forward Mode</a> is set to "fast").</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>If you have some high traffic load you can try scenario "1". In this case when a message highload peaks cassandra will store messages before delivering and all incoming messages will be accepted (but this may lead some delay before the first delivery attempt). In scenario "2" if there are many messages in processing then some incoming messages will rejected by SMSC GW with "STATUS_THROTTLED" cause (for SMPP case). And SMPP application must be ready to resend such rejected messages later. If SMPP applications can not do so, then it is better to use "1" scenario.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="smsc-configuration-parameters-which-influence-the-traffic-throughput"><a class="anchor" href="#smsc-configuration-parameters-which-influence-the-traffic-throughput"></a>5.1.3. SMSC configuration parameters which influence the traffic throughput</h4>
+<div class="paragraph">
+<p>Firstly we need to check <a href="#_fetch_period">Fetch Period (in ms)</a>, <a href="#_max_rows">Max Rows</a> and <a href="#_max_activity_count">Max Activity Count</a> chapters. "Max Activity Count" parameter specifies how many messages will be processed at the same time. If you have high productivity server then you can try to increase it. But be carefull - if you increase it too high then it leads the productivity reducing because of SMSC GW will not be able to process all together.</p>
+</div>
+<div class="paragraph">
+<p>For monitoring you can use <a href="#_smsc_stat_get">View SMSC Statistics</a> chapter. DueSlotProcessingLag output said if SMSC GW is overloaded (you will see that this parameter be encrased permanemtly in this case).</p>
+</div>
+<div class="paragraph">
+<p>In the configuration of SCTP layer leave the parameter "SingleThread" as "true". The count of threads that will process incoming SS7 messages is specified by a parameter "deliveryMessageThreadCount". We need to do it if we have some bottleneck in SS7 part.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>open file jboss/server/default/deploy/telscale-smsc-server/META-INF/jboss-beans.xml in the text editor</p>
+</li>
+<li>
+<p>find "bean name="Mtp3UserPart"" mbean definition</p>
+</li>
+<li>
+<p>update parameter "deliveryMessageThreadCount" to some value like "processor count * 2"</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>SMPP side also has important parameters "DefaultWindowSize" and "MaxConnectionSize" for SMPP Server, you can increase it if you see that you have bottleneck at SMPP side but SMSC GW generally is not overloaded. See <a href="#_smpp_server_settings">SMPP Server Settings</a>.</p>
+</div>
+<div class="paragraph">
+<p>We need to add info of cassandra database parameters update for high loaded systems (in the file cassandra.yaml):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>tombstone_warn_threshold: 1000 &#8594; 5000 (in case of warning like "Read 386 live and 1496 tombstoned cells in system.schema_columns (see tombstone_warn_threshold).")</p>
+</li>
+<li>
+<p>read_request_timeout_in_ms 5000 &#8594; 25000 (or twice more to prevent timeouts in case when we have very many paending message to one destination)</p>
+</li>
+<li>
+<p>range_request_timeout_in_ms 10000 &#8594; 50000 (same)</p>
+</li>
+<li>
+<p>request_timeout_in_ms 10000 &#8594; 50000 (same)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 <div class="sect2">
-<h3 id="_logging"><a class="anchor" href="#_logging"></a>5.2. Configuring log4j Logging Service</h3>
+<h3 id="_starting_background"><a class="anchor" href="#_starting_background"></a>5.2. Starting of the SMSC GW process</h3>
+<div class="paragraph">
+<p>We can use "screen" linux command to run jboss processes at background.</p>
+</div>
+<div class="paragraph">
+<p>As a command how to check if SMSC GW instanse is run we can use:
+ps -ef | grep jboss</p>
+</div>
+<div class="paragraph">
+<p>If we run several instanses of the same server (by mistake) the second instanse will have records in the logs like "BindException: Address already in use". We need to terminate all such servers and run only one instanse again.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_logging"><a class="anchor" href="#_logging"></a>5.3. Configuring log4j Logging Service</h3>
 <div class="paragraph">
 <p>Restcomm SMSC uses <code>Apache log4j</code> for logging.
 If you are not familiar with the <code>log4j</code> package, you can read more about it at the Jakarta <a href="http://jakarta.apache.org/log4j/">website</a>.</p>
@@ -24805,7 +24888,7 @@ We recommend that you set logging threshold to <code>WARN</code> and let the CDR
 </div>
 </div>
 <div class="sect2">
-<h3 id="_routing_fundamentals"><a class="anchor" href="#_routing_fundamentals"></a>5.3. SMSC GW routing fundamentals</h3>
+<h3 id="_routing_fundamentals"><a class="anchor" href="#_routing_fundamentals"></a>5.4. SMSC GW routing fundamentals</h3>
 <div class="paragraph">
 <p>SMSC GW needs clear info to where it must route messages that have come to SMSC GW from SMPP / SS7 / SIP / HTTP connectors or created inside SMSC GW receipts.
 Routing procedures gives the answer to this questions, that a user must configure before SMSC GW can properly work.</p>
@@ -24824,7 +24907,7 @@ Routing procedures gives the answer to this questions, that a user must configur
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_routing_fundamentals_1"><a class="anchor" href="#_routing_fundamentals_1"></a>5.3.1. The procedure based on dividing of separated routing area into several areas ("subnetworks").</h4>
+<h4 id="_routing_fundamentals_1"><a class="anchor" href="#_routing_fundamentals_1"></a>5.4.1. The procedure based on dividing of separated routing area into several areas ("subnetworks").</h4>
 <div class="paragraph">
 <p>Each area has its unique digital "networkId" value.
 Each SMPP connection (ESME), SS7 SCCP service access point (SAP), SIP connector and a database routing rule (if you use them instead of default ESME routing rules) belongs to one of network (to each of the a networkId value is assigned). For messages that come via HTTP connector a networkId is assigned depending on a value in HTTP payload or with a default configured value. Default networkId value is "0". If a user does not specify a networkId value when ESME, SAP, SIP or a database routing rule creation, networkId=0 will be assigned.</p>
@@ -24887,7 +24970,7 @@ Create a new SCCP Rule" chapters of "JSS7 stack User Guide".</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_routing_fundamentals_2"><a class="anchor" href="#_routing_fundamentals_2"></a>5.3.2. The procedure of routing messages to destinations inside subnetworks.</h4>
+<h4 id="_routing_fundamentals_2"><a class="anchor" href="#_routing_fundamentals_2"></a>5.4.2. The procedure of routing messages to destinations inside subnetworks.</h4>
 <div class="paragraph">
 <p>Inside each subnetwork there may be several ESME, SAP or SIP configured.
 If we use default routing rules, then for routing SMSC GW makes following steps:</p>
@@ -24921,7 +25004,7 @@ For configuring of database routing rules see the chapter <a href="#_mproc_rule_
 </div>
 </div>
 <div class="sect3">
-<h4 id="_routing_fundamentals_3"><a class="anchor" href="#_routing_fundamentals_3"></a>5.3.3. Using of different routing procedures.</h4>
+<h4 id="_routing_fundamentals_3"><a class="anchor" href="#_routing_fundamentals_3"></a>5.4.3. Using of different routing procedures.</h4>
 <div class="paragraph">
 <p>You can use only the procedure based on subnetworks (networkId) areas, only the procedure of routing messages inside subnetworks or both.</p>
 </div>
@@ -24963,7 +25046,7 @@ Messages will be routed between subnetworks (networkIds) by mproc rules and insi
 </div>
 </div>
 <div class="sect3">
-<h4 id="_routing_fundamentals_4"><a class="anchor" href="#_routing_fundamentals_4"></a>5.3.4. Routing model examples.</h4>
+<h4 id="_routing_fundamentals_4"><a class="anchor" href="#_routing_fundamentals_4"></a>5.4.4. Routing model examples.</h4>
 <div class="paragraph">
 <p>If you have one ESME and JSS7 connector, and the only traffic is ESME &#8594; JSS7</p>
 </div>
@@ -25031,7 +25114,7 @@ CLI commabd can be like:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_mproc_rules_fundamentals"><a class="anchor" href="#_mproc_rules_fundamentals"></a>5.4. Message processing rules (mproc rules)</h3>
+<h3 id="_mproc_rules_fundamentals"><a class="anchor" href="#_mproc_rules_fundamentals"></a>5.5. Message processing rules (mproc rules)</h3>
 <div class="paragraph">
 <p>Message processing rules (mproc rules) is a tool for processing messages and changing properties of message, for example source/destination TON, NPI, NetworkId etc.
 MProc rules are only applied if they match pre configured criterian.</p>
@@ -25142,7 +25225,7 @@ SMSC appliec mproc rules to a message in ascending order,  that is mproc rule wi
 For example if a message destination address has been changed by rule 1, then rule 2 will check if this updated destination address matches to rules 2 or not.</p>
 </div>
 <div class="sect3">
-<h4 id="_mproc_rules_default"><a class="anchor" href="#_mproc_rules_default"></a>5.4.1. Default message processing rules implementation</h4>
+<h4 id="_mproc_rules_default"><a class="anchor" href="#_mproc_rules_default"></a>5.5.1. Default message processing rules implementation</h4>
 <div class="paragraph">
 <p>SMSC GW contains a default implementation of mproc rules that cover some requirenments.
 Information how to manage rules can be found in chapter <a href="#_mproc_rule_settings">Message processing rules (mproc rules)</a>.
@@ -25354,7 +25437,7 @@ If a message fits to all conditions then the rule will be applied to the message
 </table>
 </div>
 <div class="sect3">
-<h4 id="_mproc_rules_customized"><a class="anchor" href="#_mproc_rules_customized"></a>5.4.2. Customized message processing rules</h4>
+<h4 id="_mproc_rules_customized"><a class="anchor" href="#_mproc_rules_customized"></a>5.5.2. Customized message processing rules</h4>
 <div class="paragraph">
 <p>Default mproc rules allows to change the properties of a message in pre defined way, however if a user wants to achieve more, SMSC allows users to implement their own  custom logic.
 Below steps describes how to implement custom mproc rules.</p>
@@ -26409,7 +26492,7 @@ Let&#8217;s create a rule with id=1 that will be applied for messages which dest
 </div>
 </div>
 <div class="sect2">
-<h3 id="sms-home-routing"><a class="anchor" href="#sms-home-routing"></a>5.5. SMS Home Routing</h3>
+<h3 id="sms-home-routing"><a class="anchor" href="#sms-home-routing"></a>5.6. SMS Home Routing</h3>
 <div class="paragraph">
 <p>According to traditional GSM specifications, all outbound messages pass through an SMSC in the sending network.
 This allows the SMSC to convert the Mobile Originated (MO) messages into Mobile Terminated (MT) messages and deliver them directly to the destination devices, regardless of what network they are on.
@@ -26432,9 +26515,9 @@ For more details refer to <a href="#_smsc_gateway_server_hr">Home Routing Settin
 </div>
 </div>
 <div class="sect2">
-<h3 id="_http_interface_description"><a class="anchor" href="#_http_interface_description"></a>5.6. HTTP interface description</h3>
+<h3 id="_http_interface_description"><a class="anchor" href="#_http_interface_description"></a>5.7. HTTP interface description</h3>
 <div class="sect3">
-<h4 id="_http_interface_description_send_sms"><a class="anchor" href="#_http_interface_description_send_sms"></a>5.6.1. Send SMS</h4>
+<h4 id="_http_interface_description_send_sms"><a class="anchor" href="#_http_interface_description_send_sms"></a>5.7.1. Send SMS</h4>
 <div class="paragraph">
 <p>Send message API is responsible for sending SMS messages. To send message we should
 create and send HTTP request in proper format. Supported HTTP methods
@@ -26530,7 +26613,7 @@ error:6,request not accepted</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_http_interface_description_get_message_status"><a class="anchor" href="#_http_interface_description_get_message_status"></a>5.6.2. Get message status</h4>
+<h4 id="_http_interface_description_get_message_status"><a class="anchor" href="#_http_interface_description_get_message_status"></a>5.7.2. Get message status</h4>
 <div class="paragraph">
 <p>Get message status API is responsible for checking sent messages status. To check message
 status we should create and send HTTP request in proper format. Supported HTTP methods are GET and POST. Request URL must have "msgQuery" context and contain all of mandatory parameters.</p>
@@ -26607,9 +26690,9 @@ error:4,message ID not exists</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_diameter_ocs_server"><a class="anchor" href="#_diameter_ocs_server"></a>5.7. Interworking with Diameter OCS server</h3>
+<h3 id="_diameter_ocs_server"><a class="anchor" href="#_diameter_ocs_server"></a>5.8. Interworking with Diameter OCS server</h3>
 <div class="sect3">
-<h4 id="_diameter_ocs_server_general"><a class="anchor" href="#_diameter_ocs_server_general"></a>5.7.1. General information</h4>
+<h4 id="_diameter_ocs_server_general"><a class="anchor" href="#_diameter_ocs_server_general"></a>5.8.1. General information</h4>
 <div class="paragraph">
 <p>SMSC GW can interoperate with an OCS server via Diameter protocol connection.</p>
 </div>
@@ -26758,7 +26841,7 @@ So MO and SMPP part will be informed if the message is rejected.
 </div>
 </div>
 <div class="sect3">
-<h4 id="_diameter_ocs_server_conig"><a class="anchor" href="#_diameter_ocs_server_conig"></a>5.7.2. Configuring</h4>
+<h4 id="_diameter_ocs_server_conig"><a class="anchor" href="#_diameter_ocs_server_conig"></a>5.8.2. Configuring</h4>
 <div class="paragraph">
 <p>You can use Telestax OCS server or any third party OCS server as you wish.
 SMSC GW party configuring is the same for both.
@@ -26856,7 +26939,7 @@ You can assign for User Name any value (for example "telestax").</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="cdr-logging-settings"><a class="anchor" href="#cdr-logging-settings"></a>5.8. CDR Logging Settings</h3>
+<h3 id="cdr-logging-settings"><a class="anchor" href="#cdr-logging-settings"></a>5.9. CDR Logging Settings</h3>
 <div class="paragraph">
 <p>Restcomm SMSC is configured to generate CDR in a plain text file located at <em class="path">restcomm-smscgateway-&lt;version&gt;/jboss-5.1.0.GA/server/&lt;profile&gt;/log/cdr.log</em> and also detailed CDR in Cassandra table <code>MESSAGES_yyyy_mm_dd</code>.</p>
 </div>
@@ -28598,7 +28681,7 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="max-rows"><a class="anchor" href="#max-rows"></a>6.1.4.2. Max Rows</h5>
+<h5 id="_max_rows"><a class="anchor" href="#_max_rows"></a>6.1.4.2. Max Rows</h5>
 <div class="sect5">
 <h6 id="_max_rows_cli"><a class="anchor" href="#_max_rows_cli"></a>6.1.4.2.1. Using CLI</h6>
 <div class="paragraph">
@@ -28647,7 +28730,7 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="max-activity-count"><a class="anchor" href="#max-activity-count"></a>6.1.4.3. Max Activity Count</h5>
+<h5 id="_max_activity_count"><a class="anchor" href="#_max_activity_count"></a>6.1.4.3. Max Activity Count</h5>
 <div class="sect5">
 <h6 id="_max_activity_count_cli"><a class="anchor" href="#_max_activity_count_cli"></a>6.1.4.3.1. Using CLI</h6>
 <div class="paragraph">
@@ -30121,7 +30204,7 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect2">
-<h3 id="smpp-server-settings"><a class="anchor" href="#smpp-server-settings"></a>6.2. SMPP Server Settings</h3>
+<h3 id="_smpp_server_settings"><a class="anchor" href="#_smpp_server_settings"></a>6.2. SMPP Server Settings</h3>
 <div class="sect3">
 <h4 id="_smpp_server_settings_view"><a class="anchor" href="#_smpp_server_settings_view"></a>6.2.1. View SMPP Server Details</h4>
 <div class="sect4">
@@ -33995,7 +34078,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-10-07 18:49:34 WEST
+Last updated 2016-10-09 15:01:08 WEST
 </div>
 </div>
 <footer>
