@@ -24835,7 +24835,7 @@ These settings are specified in the file <em class="path">restcomm-smscgateway-v
 </ul>
 </div>
 <div class="paragraph">
-<p>SMPP side also has important parameters "DefaultWindowSize" and "MaxConnectionSize" for SMPP Server, you can increase it if you see that you have bottleneck at SMPP side but SMSC GW generally is not overloaded. See <a href="#_smpp_server_settings">SMPP Server Settings</a>.</p>
+<p>SMPP side also has important parameters "DefaultWindowSize" and "WindowSize" for SMPP Server and ESMEs, you can increase it if you see that you have bottleneck at SMPP side but SMSC GW generally is not overloaded. See <a href="#_smpp_server_settings">SMPP Server Settings</a>.</p>
 </div>
 <div class="paragraph">
 <p>We need to add info of cassandra database parameters update for high loaded systems (in the file cassandra.yaml):</p>
@@ -28884,9 +28884,62 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_smsc_gateway_server_skip_diue_slot"><a class="anchor" href="#_smsc_gateway_server_skip_diue_slot"></a>6.1.4.6. Skipping of scheduled for the past and not yet sent messages ("In process" due_slot shifting).</h5>
+<h5 id="_deliverytimeout"><a class="anchor" href="#_deliverytimeout"></a>6.1.4.6. Delivery timeout</h5>
 <div class="sect5">
-<h6 id="_smsc_gateway_server_skip_diue_slot_cli"><a class="anchor" href="#_smsc_gateway_server_skip_diue_slot_cli"></a>6.1.4.6.1. Using CLI</h6>
+<h6 id="_deliverytimeout_cli"><a class="anchor" href="#_deliverytimeout_cli"></a>6.1.4.6.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'Delivery timeout' value by issuing the command <code>smsc set deliverytimeout</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get deliverytimeout</code> which will display the value set for this property.
+If unspecified, the default value for this parameter is 600 seconds.
+Generally, you may not have to modify this value.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set deliverytimeout
+
+SYNOPSIS
+	smsc set deliverytimeout &lt;delivery-timeout&gt;
+
+DESCRIPTION
+	This command is used to set a length of delivery process timeout
+	in seconds. Timeout occurs if no actions for delivering (delivery confirmation
+	or a new item delivery) for long time). If the timeout occurs SMSC GW will
+	terminate delivery process.
+	Default value: 120 seconds.
+
+EXAMPLES
+	smsc set deliverytimeout 120</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_deliverytimeout_gui"><a class="anchor" href="#_deliverytimeout_gui"></a>6.1.4.6.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set Delivery timeout using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Scheduler' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify the Delivery timeout in seconds by entering the value in the text field 'Delivery timeout (sec)'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_smsc_gateway_server_skip_diue_slot"><a class="anchor" href="#_smsc_gateway_server_skip_diue_slot"></a>6.1.4.7. Skipping of scheduled for the past and not yet sent messages ("In process" due_slot shifting).</h5>
+<div class="sect5">
+<h6 id="_smsc_gateway_server_skip_diue_slot_cli"><a class="anchor" href="#_smsc_gateway_server_skip_diue_slot_cli"></a>6.1.4.7.1. Using CLI</h6>
 <div class="paragraph">
 <p>This command will skip of processing / fetching of messages that was scheduled for delivering for the time in the past but have not yet delivered by SMSC GW because of SMSC GW was turned off or overloaded.
 &lt;time in seconds&gt; means the point of the time (actual current time - &lt;time in seconds&gt;) to which the point of processing / fetching of messages will be shifted.
@@ -28915,7 +28968,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_smsc_gateway_server_skip_diue_slot_gui"><a class="anchor" href="#_smsc_gateway_server_skip_diue_slot_gui"></a>6.1.4.6.2. Using GUI</h6>
+<h6 id="_smsc_gateway_server_skip_diue_slot_gui"><a class="anchor" href="#_smsc_gateway_server_skip_diue_slot_gui"></a>6.1.4.7.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Skipping of scheduled for the past and not yet sent messages ("In process" due_slot shifting) by the GUI</div>
 <ol class="arabic">
@@ -34078,7 +34131,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-10-10 10:55:26 WEST
+Last updated 2016-10-13 13:59:46 WEST
 </div>
 </div>
 <footer>
