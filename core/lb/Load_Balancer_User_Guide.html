@@ -22774,9 +22774,8 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#sip-message-flow">1.7. SIP Message Flow</a></li>
 <li><a href="#using-the-load-balancer-with-third-party-sip-servers">1.8. Using the Load Balancer with Third-Party SIP Servers</a></li>
 <li><a href="#enabling-tls-wss-for-load-balancers">1.9. Enabling TLS/WSS for Load Balancers</a></li>
-<li><a href="#getting-statistic">1.10. Getting statistic</a></li>
-<li><a href="#configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine">1.11. Configuring Load-balancer and two Restcomm servers on the one local machine</a></li>
-<li><a href="#integration-load-balancer-smpp-with-restcomm-and-nexmo">1.12. Integration Load Balancer SMPP with Restcomm and Nexmo</a></li>
+<li><a href="#configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine">1.10. Configuring Load-balancer and two Restcomm servers on the one local machine</a></li>
+<li><a href="#integration-load-balancer-smpp-with-restcomm-and-nexmo">1.11. Integration Load Balancer SMPP with Restcomm and Nexmo</a></li>
 </ul>
 </li>
 <li><a href="#revision-history">Appendix A: Revision History</a></li>
@@ -23426,211 +23425,191 @@ It is recommended that the file is placed in the directory containing other JAR 
 <div class="title">Procedure: Configuring the Restcomm  Restcomm Load Balancer and SIPServer Nodes</div>
 <ol class="arabic">
 <li>
-<p>Configure lb.properties Configuration Properties File</p>
+<p>Configure lb-configuration.xml Configuration Properties File</p>
 <div class="paragraph">
-<p>Configure the Restcomm Load Balancer&#8217;s Configuration Properties file by substituting valid values for your personal setup. <a href="#_sslb_complete_sample_lb.properties_file">Complete Sample lb.properties File</a>          shows a sample <em class="path">lb.properties</em> file, with key element descriptions provided after the example.
+<p>Configure the Restcomm Load Balancer&#8217;s Configuration Properties file by substituting valid values for your personal setup. <a href="#_sslb_complete_sample_lb.properties_file">Complete Sample lb-configuration.xml File</a>          shows a sample <em class="path">lb-configuration.xml</em> file, with key element descriptions provided after the example.
 The lines beginning with the pound sign are comments.</p>
 </div>
 <div id="_sslb_complete_sample_lb.properties_file" class="exampleblock">
-<div class="title">Example 1. Complete Sample lb.properties File</div>
+<div class="title">Example 1. Complete Sample lb-configuration.xml File</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code># Restcomm Load Balancer Settings
-# For an overview of the Restcomm Load Balancer visit http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm
+<pre class="highlight"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!- Restcomm Load Balancer Settings
+For an overview of the Restcomm Load Balancer visit
+http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
 
-# The binding address of the load balancer
-host=127.0.0.1
-
-# The RMI port used for heartbeat signals
-rmiRegistryPort=2000
-# The port to be used used for the Remote Object
-rmiRemoteObjectPort=2001
-
-# The SIP port used where client should connect
-externalUdpPort=5060
-#externalTcpPort=5061
-#externalTlsPort=5062
-#externalWsPort=5063
-#externalWssPort=5064
-
-# The SIP port from where servers will receive messages
-# delete if you want to use only one port for both inbound and outbound)
-internalUdpPort=5065
-#internalTcpPort=5066
-#internalTlsPort=5067
-#internalWsPort=5068
-#internalWssPort=5069
-
-# The HTTP port for HTTP forwarding
-httpPort=2080
-# The HTTPS port for HTTPS forwarding
-httpsPort=2081
-#If no nodes are active the LB can redirect the traffic to the unavailableHost specified in this property,
-#otherwise, it will return 503 Service Unavailable
-#unavailableHost=google.com
-
-# If you are using IP load balancer, put the IP address and port here
-#externalIpLoadBalancerAddress=127.0.0.1
-#externalIpLoadBalancerUdpPort=111
-#externalIpLoadBalancerTcpPort=112
-#externalIpLoadBalancerTlsPort=113
-#externalIpLoadBalancerWsPort=114
-#externalIpLoadBalancerWssPort=115
-
-# Requests initited from the App Servers can route to this address (if you are using 2 IP load balancers for bidirectional SIP LB)
-#internalIpLoadBalancerAddress=127.0.0.1
-#internalIpLoadBalancerUdpPort=116
-#internalIpLoadBalancerTcpPort=117
-#internalIpLoadBalancerTlsPort=118
-#internalIpLoadBalancerWsPort=119
-#internalIpLoadBalancerWssPort=120
-
-#enabled send back 5xx in case of exception while sending to destination
-#isSend5xxResponse=true
-#reason of error
-#isSend5xxResponseReasonHeader=Destination not available
-#code of error
-#isSend5xxResponseSatusCode=503
-
-#if LB gets response from the node with this status code and reason more than three times,
-#it removes this node from the node's map until the node will be restarted
-#responseStatusCodeNodeRemoval=503
-#responseReasonNodeRemoval=Unable to setup media services
-
-# Designate extra IP addresses as serer nodes
-#extraServerNodes=222.221.21.12:21,45.6.6.7:9003,33.5.6.7,33.9.9.2
-
-# Call-ID affinity algortihm settings. This algorithm is the default. No need to uncomment it.
-#algorithmClass=org.Restcomm.tools.sip.balancer.CallIDAffinityBalancerAlgorithm
-# This property specifies how much time to keep an association before being evitcted.
-# It is needed to avoid memory leaks on dead calls. The time is in seconds.
-#callIdAffinityMaxTimeInCache=500
-
-# Uncomment to enable the consistent hash based on Call-ID algorithm.
-#algorithmClass=org.Restcomm.tools.sip.balancer.HeaderConsistentHashBalancerAlgorithm
-# This property is not required, it defaults to Call-ID if not set, can be "From" or "To" when you want the SIP URI username
-#sipHeaderAffinityKey=Call-ID
-#specify the GET HTTP parameter to be used as hash key
-#httpAffinityKey=appsession
-
-# Uncomment to enable the persistent consistent hash based on Call-ID algorithm.
-#algorithmClass=org.Restcomm.tools.sip.balancer.PersistentConsistentHashBalancerAlgorithm
-# This property is not required, it defaults to Call-ID if not set
-#sipHeaderAffinityKey=Call-ID
-#specify the GET HTTP parameter to be used as hash key
-#httpAffinityKey=appsession
-
-#This is the JBoss Cache 3.1 configuration file (with jgroups), if not specified it will use default
-#persistentConsistentHashCacheConfiguration=/home/config.xml
-
-# Call-ID affinity algortihm settings. This algorithm is the default. No need to uncomment it.
-#algorithmClass=org.Restcomm.tools.sip.balancer.CallIDAffinityBalancerAlgorithm
-# This property specifies how much time to keep an association before being evitcted.
-# It is needed to avoid memory leaks on dead calls. The time is in seconds.
-#callIdAffinityMaxTimeInCache=500
-
-# Uncomment to enable the consistent hash based on Call-ID algorithm.
-#algorithmClass=org.Restcomm.tools.sip.balancer.HeaderConsistentHashBalancerAlgorithm
-# This property is not required, it defaults to Call-ID if not set, can be "From" or "To" when you want the SIP URI username
-#sipHeaderAffinityKey=Call-ID
-#specify the GET HTTP parameter to be used as hash key
-#httpAffinityKey=appsession
-
-# Uncomment to enable the persistent consistent hash based on Call-ID algorithm.
-#algorithmClass=org.Restcomm.tools.sip.balancer.PersistentConsistentHashBalancerAlgorithm
-# This property is not required, it defaults to Call-ID if not set
-#sipHeaderAffinityKey=Call-ID
-#specify the GET HTTP parameter to be used as hash key
-#httpAffinityKey=appsession
-
-#This is the JBoss Cache 3.1 configuration file (with jgroups), if not specified it will use default
-#persistentConsistentHashCacheConfiguration=/home/config.xml
-
-#JSIP stack configuration.....
-javax.sip.STACK_NAME = SipBalancerForwarder
-javax.sip.AUTOMATIC_DIALOG_SUPPORT = off
-# You need 16 for logging traces. 32 for debug + traces.
-# Your code will limp at 32 but it is best for debugging.
-# LOG4J means the level will be configurable from the JOG4J config file
-gov.nist.javax.sip.TRACE_LEVEL = LOG4J
-
-#Specify if message contents should be logged.
-gov.nist.javax.sip.LOG_MESSAGE_CONTENT=false
-
-gov.nist.javax.sip.DEBUG_LOG = logs/sipbalancerforwarderdebug.txt
-gov.nist.javax.sip.SERVER_LOG = logs/sipbalancerforwarder.xml
-gov.nist.javax.sip.THREAD_POOL_SIZE = 64
-gov.nist.javax.sip.REENTRANT_LISTENER = true
-gov.nist.javax.sip.AGGRESSIVE_CLEANUP=true
-#this property we set statically "gov.nist.javax.sip.stack.LoadBalancerNioMessageProcessorFactory"
-#for statistic correct working
-#gov.nist.javax.sip.MESSAGE_PROCESSOR_FACTORY=gov.nist.javax.sip.stack.NioMessageProcessorFactory
-
-#If a node doesnt check in within that time (in ms), it is considered dead.
-nodeTimeout=8400
-#The consistency of the above condition is checked every heartbeatInterval milliseconds
-heartbeatInterval=150
-
-#SMPP Load Balancer Settings
-smppName = SMPP Load Balancer
-# The address of the load balancer
-smppHost = 127.0.0.1
-# The port of the load balancer
-smppPort = 2776
-# The port of the load balancer for SSL protocol
-smppSslPort = 2876
-# The IP address:port of SMPP server
-remoteServers=174.37.245.38:8000,174.37.245.40:8000
-# it is recommended that at any time there were no more than
-#10 (ten) SMPP messages are outstanding
-maxConnectionSize = 10
-# Is NIO enabled
-nonBlockingSocketsEnabled = true
-# Is default session counters enabled
-defaultSessionCountersEnabled = true
-# Response timeout for load balancer in milliseconds
-timeoutResponse = 10000
-# Session initialization timer
-timeoutConnection = 1000
-# Enquire Link Timer
-timeoutEnquire = 50000
-# Time between reconnection
-reconnectPeriod = 1000
-# Connection check timer in load balancer
-timeoutConnectionCheckClientSide = 1000
-# Connection check server side timer
-timeoutConnectionCheckServerSide = 1000
-#if true use round robin algorithm for sending SMPP requests from server to clients
-#if false send each request from server to all clients
-#isUseRrSendSmppRequestToClient=false
-
-# SSL configuration
-#points to the keystore file we generated before
-javax.net.ssl.keyStore=/home/konstantinnosach/tmp/keystore
-#provides the password we used when we generated the keystore
-javax.net.ssl.keyStorePassword=123456
-#points to the truststore file we generated before
-javax.net.ssl.trustStore=/home/konstantinnosach/tmp/keystore
-#provides the password we used when we generated the truststore
-javax.net.ssl.trustStorePassword=123456
-#sets secure protocols
-gov.nist.javax.sip.TLS_CLIENT_PROTOCOLS=TLSv1,TLSv1.1,TLSv1.2
-#sets cipher suits
-#gov.nist.javax.sip.ENABLED_CIPHER_SUITES=TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
-#can be : Enabled, Disabled, DisabledAll, Want
-#if Enabled, used to request and require client certificate authentication: the connection will terminate if no suitable client certificate is presented
-#if Want, used to request client certificate authentication, but keep the connection if no authentication is provided
-#if Disabled or DisabledAll does not use authentication
-gov.nist.javax.sip.TLS_CLIENT_AUTH_TYPE=Disabled
-#ssl will provide some extra debugging information for the SSL if uncomment it
-#javax.net.debug=ssl
-#Terminate all secure traffic coming from the outside world HTTPs, SIP TLS, WSS will be terminated at LB side
-terminateTLSTraffic = true
-
-#Statistic
-#port for statistic
-statisticPort=2006</code></pre>
+&lt;load-balancer-properties&gt;
+&lt;common&gt;
+  &lt;host&gt;172.21.0.105&lt;/host&gt;
+  &lt;rmiRegistryPort&gt;2000&lt;/rmiRegistryPort&gt;
+  &lt;rmiRemoteObjectPort&gt;2001&lt;/rmiRemoteObjectPort&gt;
+  &lt;nodeTimeout&gt;8400&lt;/nodeTimeout&gt;
+  &lt;heartbeatInterval&gt;150&lt;/heartbeatInterval&gt;
+  &lt;statisticPort&gt;2006&lt;/statisticPort&gt;
+  &lt;jmxHtmlAdapterPort&gt;8000&lt;/jmxHtmlAdapterPort&gt;
+&lt;/common&gt;
+&lt;sip&gt;
+  &lt;publicIp&gt;&lt;/publicIp&gt;
+  &lt;isSendTrying&gt;false&lt;/isSendTrying&gt;
+  &lt;useIpLoadBalancerAddressInViaHeaders&gt;false&lt;/useIpLoadBalancerAddressInViaHeaders&gt;
+  &lt;performanceTestingMode&gt;false&lt;/performanceTestingMode&gt;
+  &lt;extraServerNodes&gt;&lt;/extraServerNodes&gt;
+  &lt;isSend5xxResponse&gt;true&lt;/isSend5xxResponse&gt;
+  &lt;isSend5xxResponseReasonHeader&gt;Destination not available&lt;/isSend5xxResponseReasonHeader&gt;
+  &lt;isSend5xxResponseSatusCode&gt;503&lt;/isSend5xxResponseSatusCode&gt;
+  &lt;responseStatusCodeNodeRemoval&gt;503&lt;/responseStatusCodeNodeRemoval&gt;
+  &lt;responseReasonNodeRemoval&gt;Unable to setup media services&lt;/responseReasonNodeRemoval&gt;
+  &lt;matchingHostnameForRoute&gt;restcomm.com&lt;/matchingHostnameForRoute&gt;
+  &lt;isFilterSubdomain&gt;true&lt;/isFilterSubdomain&gt;
+  &lt;algorithm&gt;
+    &lt;algorithmClass&gt;&lt;/algorithmClass&gt;
+    &lt;sipHeaderAffinityKey&gt;&lt;/sipHeaderAffinityKey&gt;
+    &lt;callIdAffinityGroupFailover&gt;false&lt;/callIdAffinityGroupFailover&gt;
+    &lt;callIdAffinityMaxTimeInCache&gt;0&lt;/callIdAffinityMaxTimeInCache&gt;
+    &lt;httpAffinityKey&gt;&lt;/httpAffinityKey&gt;
+    &lt;persistentConsistentHashCacheConfiguration&gt;&lt;/persistentConsistentHashCacheConfiguration&gt;
+    &lt;earlyDialogWorstCase&gt;false&lt;/earlyDialogWorstCase&gt;
+  &lt;/algorithm&gt;
+  &lt;external&gt;
+    &lt;host&gt;&lt;/host&gt;
+    &lt;ipLoadBalancerAddress&gt;50.17.127.170&lt;/ipLoadBalancerAddress&gt;
+    &lt;udpPort&gt;5060&lt;/udpPort&gt;
+    &lt;tcpPort&gt;5060&lt;/tcpPort&gt;
+    &lt;tlsPort&gt;5061&lt;/tlsPort&gt;
+    &lt;wsPort&gt;5062&lt;/wsPort&gt;
+    &lt;wssPort&gt;5063&lt;/wssPort&gt;
+    &lt;ipLoadBalancerUdpPort&gt;5060&lt;/ipLoadBalancerUdpPort&gt;
+    &lt;ipLoadBalancerTcpPort&gt;5060&lt;/ipLoadBalancerTcpPort&gt;
+    &lt;ipLoadBalancerTlsPort&gt;5061&lt;/ipLoadBalancerTlsPort&gt;
+    &lt;ipLoadBalancerWsPort&gt;5062&lt;/ipLoadBalancerWsPort&gt;
+    &lt;ipLoadBalancerWssPort&gt;5063&lt;/ipLoadBalancerWssPort&gt;
+  &lt;/external&gt;
+  &lt;internal&gt;
+    &lt;host&gt;&lt;/host&gt;
+    &lt;ipLoadBalancerAddress&gt;172.21.0.105&lt;/ipLoadBalancerAddress&gt;
+    &lt;udpPort&gt;5080&lt;/udpPort&gt;
+    &lt;tcpPort&gt;5080&lt;/tcpPort&gt;
+    &lt;tlsPort&gt;5081&lt;/tlsPort&gt;
+    &lt;wsPort&gt;5082&lt;/wsPort&gt;
+    &lt;wssPort&gt;5083&lt;/wssPort&gt;
+    &lt;ipLoadBalancerUdpPort&gt;5080&lt;/ipLoadBalancerUdpPort&gt;
+    &lt;ipLoadBalancerTcpPort&gt;5080&lt;/ipLoadBalancerTcpPort&gt;
+    &lt;ipLoadBalancerTlsPort&gt;5081&lt;/ipLoadBalancerTlsPort&gt;
+    &lt;ipLoadBalancerWsPort&gt;5082&lt;/ipLoadBalancerWsPort&gt;
+    &lt;ipLoadBalancerWssPort&gt;5083&lt;/ipLoadBalancerWssPort&gt;
+  &lt;/internal&gt;
+&lt;/sip&gt;
+&lt;http&gt;
+  &lt;httpPort&gt;2080&lt;/httpPort&gt;
+  &lt;httpsPort&gt;2081&lt;/httpsPort&gt;
+  &lt;maxContentLength&gt;2097152&lt;/maxContentLength&gt;
+  &lt;unavailableHost&gt;&lt;/unavailableHost&gt;
+&lt;/http&gt;
+&lt;smpp&gt;
+  &lt;smppHost&gt;172.21.0.105&lt;/smppHost&gt;
+  &lt;smppPort&gt;2776&lt;/smppPort&gt;
+  &lt;remoteServers&gt;174.37.245.38:8000&lt;/remoteServers&gt;
+  &lt;maxConnectionSize&gt;10&lt;/maxConnectionSize&gt;
+  &lt;nonBlockingSocketsEnabled&gt;true&lt;/nonBlockingSocketsEnabled&gt;
+  &lt;defaultSessionCountersEnabled&gt;true&lt;/defaultSessionCountersEnabled&gt;
+  &lt;timeoutResponse&gt;10000&lt;/timeoutResponse&gt;
+  &lt;timeoutConnection&gt;1000&lt;/timeoutConnection&gt;
+  &lt;timeoutEnquire&gt;50000&lt;/timeoutEnquire&gt;
+  &lt;reconnectPeriod&gt;1000&lt;/reconnectPeriod&gt;
+  &lt;timeoutConnectionCheckClientSide&gt;1000&lt;/timeoutConnectionCheckClientSide&gt;
+  &lt;timeoutConnectionCheckServerSide&gt;1000&lt;/timeoutConnectionCheckServerSide&gt;
+  &lt;isUseRrSendSmppRequestToClient&gt;false&lt;/isUseRrSendSmppRequestToClient&gt;
+&lt;/smpp&gt;
+&lt;ssl&gt;
+  &lt;terminateTLSTraffic&gt;true&lt;/terminateTLSTraffic&gt;
+  &lt;keyStore&gt;/opt/loadbalancer/config/keystore&lt;/keyStore&gt;
+  &lt;keyStorePassword&gt;123456&lt;/keyStorePassword&gt;
+  &lt;trustStore&gt;/opt/loadbalancer/config/keystore&lt;/trustStore&gt;
+  &lt;trustStorePassword&gt;123456&lt;/trustStorePassword&gt;
+  &lt;tlsClientProtocols&gt;TLSv1,TLSv1.1,TLSv1.2&lt;/tlsClientProtocols&gt;
+  &lt;enabledCipherSuites&gt;TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA,TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA&lt;/enabledCipherSuites&gt;
+&lt;/ssl&gt;
+&lt;sipStack&gt;
+	&lt;property&gt;
+    	&lt;key&gt;javax.sip.STACK_NAME&lt;/key&gt;
+		&lt;value&gt;SipBalancerForwarder&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;property&gt;
+    	&lt;key&gt;javax.sip.AUTOMATIC_DIALOG_SUPPORT&lt;/key&gt;
+		&lt;value&gt;off&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;property&gt;
+    	&lt;key&gt;gov.nist.javax.sip.TRACE_LEVEL&lt;/key&gt;
+		&lt;value&gt;LOG4J&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;property&gt;
+    	&lt;key&gt;gov.nist.javax.sip.LOG_MESSAGE_CONTENT&lt;/key&gt;
+		&lt;value&gt;false&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;property&gt;
+    	&lt;key&gt;gov.nist.javax.sip.DEBUG_LOG&lt;/key&gt;
+		&lt;value&gt;logs/sipbalancerforwarderdebug.txt&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;property&gt;
+    	&lt;key&gt;gov.nist.javax.sip.SERVER_LOG&lt;/key&gt;
+		&lt;value&gt;logs/sipbalancerforwarder.xml&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;property&gt;
+    	&lt;key&gt;gov.nist.javax.sip.THREAD_POOL_SIZE&lt;/key&gt;
+		&lt;value&gt;64&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;property&gt;
+    	&lt;key&gt;gov.nist.javax.sip.REENTRANT_LISTENER&lt;/key&gt;
+		&lt;value&gt;true&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;property&gt;
+    	&lt;key&gt;gov.nist.javax.sip.AGGRESSIVE_CLEANUP&lt;/key&gt;
+		&lt;value&gt;true&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;property&gt;
+    	&lt;key&gt;gov.nist.javax.sip.RECEIVE_UDP_BUFFER_SIZE&lt;/key&gt;
+		&lt;value&gt;65536&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;property&gt;
+    	&lt;key&gt;gov.nist.javax.sip.SEND_UDP_BUFFER_SIZE&lt;/key&gt;
+		&lt;value&gt;65536&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;property&gt;
+    	&lt;key&gt;MAX_LISTENER_RESPONSE_TIME&lt;/key&gt;
+		&lt;value&gt;120&lt;/value&gt;
+	&lt;/property&gt;
+		&lt;property&gt;
+    	&lt;key&gt;gov.nist.javax.sip.MAX_MESSAGE_SIZE&lt;/key&gt;
+		&lt;value&gt;10000&lt;/value&gt;
+	&lt;/property&gt;
+		&lt;property&gt;
+    	&lt;key&gt;gov.nist.javax.sip.AGGRESSIVE_CLEANUP&lt;/key&gt;
+		&lt;value&gt;true&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;property&gt;
+    	&lt;key&gt;gov.nist.javax.sip.MAX_FORK_TIME_SECONDS&lt;/key&gt;
+		&lt;value&gt;0&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;property&gt;
+    	&lt;key&gt;gov.nist.javax.sip.AUTOMATIC_DIALOG_ERROR_HANDLING&lt;/key&gt;
+		&lt;value&gt;false&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;property&gt;
+    	&lt;key&gt;org.mobicents.ext.javax.sip.congestion.SIP_SCANNERS&lt;/key&gt;
+		&lt;value&gt;sipvicious,sipcli,friendly-scanner&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;property&gt;
+    	&lt;key&gt;gov.nist.javax.sip.TLS_CLIENT_AUTH_TYPE&lt;/key&gt;
+		&lt;value&gt;Disabled&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;property&gt;
+    	&lt;key&gt;javax.net.debug&lt;/key&gt;
+		&lt;value&gt;ssl&lt;/value&gt;
+	&lt;/property&gt;
+&lt;/sipStack&gt;
+&lt;/load-balancer-properties&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -23706,6 +23685,20 @@ response message</p>
 <p>if LB gets response from the node with this status code and reason more than three times,
 it removes this node from the node&#8217;s map until the node will be restarted</p>
 </dd>
+<dt class="hdlist1">matchingHostnameForRoute</dt>
+<dd>
+<p>if request comes with a matching hostname in the route header it should be removed
+for example restcomm.com</p>
+</dd>
+<dt class="hdlist1">isFilterSubdomain</dt>
+<dd>
+<p>if false LB will remove route with host equal matchingHostnameForRoute (restcomm.com),
+if true LB will remove route ended with .matchingHostnameForRoute(a.restcomm.com, b.restcomm.com)</p>
+</dd>
+<dt class="hdlist1">isSendTrying</dt>
+<dd>
+<p>if true LB will send own Trying to sender after requests (INVITE,SUBSCRIBE,NOTIFY,MESSAGE,REFER,PUBLISH,UPDATE)</p>
+</dd>
 <dt class="hdlist1">extraServerNodes</dt>
 <dd>
 <p>Comma-separated list of hosts that are server nodes.
@@ -23731,10 +23724,6 @@ If a server node doesnt check in within this time (in ms), it is considered dead
 <p>In milliseconds.
 Default value is 150 milliseonds.
 The hearbeat interval must be much smaller than the interval specified in the JAIN SIP property on the server machines - <code>org.Restcomm.ha.javax.sip.HEARTBEAT_INTERVAL</code></p>
-</dd>
-<dt class="hdlist1">smppName</dt>
-<dd>
-<p>Name of SMPP load balancer.</p>
 </dd>
 <dt class="hdlist1">smppHost</dt>
 <dd>
@@ -23927,12 +23916,12 @@ If the desired behaviour group these requests, we can just make sure the affinit
 <li>
 <p>Start the Load Balancer</p>
 <div class="paragraph">
-<p>Start the load balancer, ensuring the Configuration Properties file ( <em class="path">lb.properties</em> in this example) is specified.
+<p>Start the load balancer, ensuring the Configuration Properties file ( <em class="path">lb-configuration.xml</em> in this example) is specified.
 In the Linux terminal, or using the Windows Command Prompt, the Load Balancers are started by issuing a command similar to this one:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>java -DlogConfigFile=./lb-log4j.xml -jar sip-balancer-jar-with-dependencies.jar -Restcomm-balancer-config=lb-configuration.properties</pre>
+<pre>java -DlogConfigFile=./lb-log4j.xml -jar sip-balancer-jar-with-dependencies.jar -mobicents-balancer-config=lb-configuration.xml</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23940,7 +23929,7 @@ In the Linux terminal, or using the Windows Command Prompt, the Load Balancers a
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>home]$ java -DlogConfigFile=./lb-log4j.xml -jar sip-balancer-jar-with-dependencies.jar -Restcomm-balancer-config=lb-configuration.properties
+<pre>home]$ java -DlogConfigFile=./lb-log4j.xml -jar sip-balancer-jar-with-dependencies.jar -Restcomm-balancer-config=lb-configuration.xml
 2016-02-08 15:54:28,036 INFO main - nodeTimeout=8400
 2016-02-08 15:54:28,038 INFO main - heartbeatInterval=150
 2016-02-08 15:54:28,039 INFO main - Node registry starting...
@@ -24205,34 +24194,28 @@ If no response if received within a threshhold time then the third party SIP ser
 <div class="ulist">
 <ul>
 <li>
-<p>javax.net.ssl.keyStore;</p>
+<p>keyStore;</p>
 </li>
 <li>
-<p>javax.net.ssl.keyStorePassword;</p>
+<p>keyStorePassword;</p>
 </li>
 <li>
-<p>javax.net.ssl.trustStore;</p>
+<p>trustStore;</p>
 </li>
 <li>
-<p>javax.net.ssl.trustStorePassword;</p>
+<p>trustStorePassword;</p>
 </li>
 <li>
-<p>gov.nist.javax.sip.TLS_CLIENT_AUTH_TYPE</p>
+<p>enabledCipherSuites;</p>
 </li>
 <li>
-<p>gov.nist.javax.sip.TLS_CLIENT_PROTOCOLS;</p>
+<p>tlsClientProtocols;</p>
 </li>
 <li>
-<p>externalTlsPort or(and) externalWssPort;</p>
+<p>external tlsPort or(and) wssPort exteral (and internal if needed);</p>
 </li>
 <li>
-<p>internalTlsPort or(and) internalWssPort;</p>
-</li>
-<li>
-<p>externalIpLoadBalancerTlsPort or(and) externalIpLoadBalancerWssPort (if you are using IP load balancer);</p>
-</li>
-<li>
-<p>internalIpLoadBalancerTlsPort or(and) internalIpLoadBalancerWssPort (if you are using IP load balancer)</p>
+<p>ipLoadBalancerTlsPort or(and) ipLoadBalancerWssPort (if you are using IP load balancer and internal if needed);</p>
 </li>
 </ul>
 </div>
@@ -24248,16 +24231,22 @@ If no response if received within a threshhold time then the third party SIP ser
 <p>httpsPort;</p>
 </li>
 <li>
-<p>javax.net.ssl.keyStore;</p>
+<p>keyStore;</p>
 </li>
 <li>
-<p>javax.net.ssl.keyStorePassword;</p>
+<p>keyStorePassword;</p>
 </li>
 <li>
-<p>javax.net.ssl.trustStore;</p>
+<p>trustStore;</p>
 </li>
 <li>
-<p>javax.net.ssl.trustStorePassword.</p>
+<p>trustStorePassword;</p>
+</li>
+<li>
+<p>enabledCipherSuites;</p>
+</li>
+<li>
+<p>tlsClientProtocols.</p>
 </li>
 </ul>
 </div>
@@ -24273,23 +24262,26 @@ If no response if received within a threshhold time then the third party SIP ser
 <p>smppSslPort;</p>
 </li>
 <li>
-<p>javax.net.ssl.keyStore;</p>
+<p>keyStore;</p>
 </li>
 <li>
-<p>javax.net.ssl.keyStorePassword;</p>
+<p>keyStorePassword;</p>
 </li>
 <li>
-<p>javax.net.ssl.trustStore;</p>
+<p>trustStore;</p>
 </li>
 <li>
-<p>javax.net.ssl.trustStorePassword.</p>
+<p>trustStorePassword.</p>
+</li>
+<li>
+<p>enabledCipherSuites;</p>
+</li>
+<li>
+<p>tlsClientProtocols;
+== Getting statistic</p>
 </li>
 </ul>
 </div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="getting-statistic"><a class="anchor" href="#getting-statistic"></a>1.10. Getting statistic</h3>
 <div class="paragraph">
 <p>Load balancers provide some statistic by Java Management Extensions and JSON.
 You should use url <a href="http://host:statisticPort/lbstat" class="bare">http://host:statisticPort/lbstat</a> for getting JSON statistic data from load balancer.
@@ -24391,8 +24383,9 @@ You can get next data:</p>
 </ol>
 </div>
 </div>
+</div>
 <div class="sect2">
-<h3 id="configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine"><a class="anchor" href="#configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine"></a>1.11. Configuring Load-balancer and two Restcomm servers on the one local machine</h3>
+<h3 id="configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine"><a class="anchor" href="#configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine"></a>1.10. Configuring Load-balancer and two Restcomm servers on the one local machine</h3>
 <div class="imageblock">
 <div class="content">
 <img src="./images/Restcomm_servers-LB.png" alt="Restcomm servers LB">
@@ -24750,28 +24743,26 @@ You will be prompted to change the default password.</p>
 <div class="title">Step 13: Download and configuring of Load Balancer</div>
 <ol class="arabic">
 <li>
-<p>Download last version of load balancer jar file from <a href="https://Restcomm.ci.cloudbees.com/job/Restcomm-LoadBalancer/lastSuccessfulBuild/artifact/jar/target/sip-balancer-jar-x.x.xx-jar-with-dependencies.jar" class="bare">https://Restcomm.ci.cloudbees.com/job/Restcomm-LoadBalancer/lastSuccessfulBuild/artifact/jar/target/sip-balancer-jar-x.x.xx-jar-with-dependencies.jar</a>.
+<p>Download last version of load balancer jar file (sip-balancer-jar-x.x.xx-zip.zip)
+from <a href="https://mobicents.ci.cloudbees.com/job/Restcomm-LoadBalancer/lastSuccessfulBuild/artifact/jar/target/" class="bare">https://mobicents.ci.cloudbees.com/job/Restcomm-LoadBalancer/lastSuccessfulBuild/artifact/jar/target/</a>
 Where &lt;x.x.xx&gt; is the release version number</p>
 </li>
 <li>
-<p>Download configuration file for load balancer from <a href="https://Restcomm.ci.cloudbees.com/job/Restcomm-LoadBalancer/ws/lb-configuration.properties" class="bare">https://Restcomm.ci.cloudbees.com/job/Restcomm-LoadBalancer/ws/lb-configuration.properties</a></p>
+<p>Unzip file</p>
 </li>
 <li>
-<p>Download log4g file for load balancer from <a href="https://Restcomm.ci.cloudbees.com/job/Restcomm-LoadBalancer/ws/lb-log4j.xml" class="bare">https://Restcomm.ci.cloudbees.com/job/Restcomm-LoadBalancer/ws/lb-log4j.xml</a></p>
+<p>Put files in one folder</p>
 </li>
 <li>
-<p>Put this files in one folder</p>
-</li>
-<li>
-<p>Modify lb-configuration.properties file for correct work. Comment #host= line, and uncomment end set up next lines:</p>
+<p>Modify lb-configuration.xml file for correct work. Set up next properties:</p>
 <div class="literalblock">
 <div class="content">
-<pre>externalHost=172.21.0.104
-externalWsPort=5090
-externalWssPort=5091
-internalHost=127.0.0.4
-internalWsPort=5082
-internalWssPort=5083</pre>
+<pre>external.host 172.21.0.104
+external.wsPort 5090
+external.wssPort 5091
+internal.host 127.0.0.4
+internal.wsPort 5082
+internal.wssPort 5083</pre>
 </div>
 </div>
 </li>
@@ -24803,7 +24794,7 @@ Fill in form: Load Balancer&#8217;s ip adress (externalHost) 172.21.0.104 and po
 </div>
 </div>
 <div class="sect2">
-<h3 id="integration-load-balancer-smpp-with-restcomm-and-nexmo"><a class="anchor" href="#integration-load-balancer-smpp-with-restcomm-and-nexmo"></a>1.12. Integration Load Balancer SMPP with Restcomm and Nexmo</h3>
+<h3 id="integration-load-balancer-smpp-with-restcomm-and-nexmo"><a class="anchor" href="#integration-load-balancer-smpp-with-restcomm-and-nexmo"></a>1.11. Integration Load Balancer SMPP with Restcomm and Nexmo</h3>
 <div class="paragraph">
 <div class="title">Configure Restcomm to Use SMPP</div>
 <p>First you need to configure the IP address and other features required
@@ -24823,48 +24814,45 @@ SMPP_PEER_PORT='xxxxx'  #smppPort of Load Balancer</pre>
 </div>
 <div class="paragraph">
 <div class="title">Configure Load Balancer to Use SMPP</div>
-<p>Edit the file lb-configuration.properies</p>
+<p>Edit the file lb-configuration.xml, set next properties</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre># SMPP Load Balancer Settings
-smppName=SMPP Load Balancer
-# The address of the load balancer
-smppHost=xxxxxx
+<pre># The address of the load balancer
+smppHost xxxxxx
 # The port of the load balancer on which Restcomm connects
-smppPort=xxxx
+smppPort xxxx
 # The port of the load balancer for SSL protocol on which Restcomm connects
-#smppSslPort=xxxx
+#smppSslPort xxxx
 # The IP address:port of Nexmo server
-remoteServers=174.37.245.38:8000
+remoteServers 174.37.245.38:8000
 # max number of connections/sessions this server will expect to handle
 # this number corrosponds to the number of worker threads handling reading
 # data from sockets and the thread things will be processed under
 # it is recommended that at any time there were no more than 10 (ten) SMPP
-# messages are outstanding (10 is default)
-#maxConnectionSize=10
-# Is NIO enabled (default true)
-#nonBlockingSocketsEnabled=true
+maxConnectionSize 10
+# Is NIO enabled
+nonBlockingSocketsEnabled true
 # Is default session counters enabled(used for testing)
-#defaultSessionCountersEnabled=true
+defaultSessionCountersEnabled true
 # Response timeout for load balancer in milliseconds (max time which LB wait
 # for response, after timeout packet сonsidered lost and send error response)
-timeoutResponse=10000
+timeoutResponse 10000
 # Session initialization timer(if client connect but doesn’t send bind
 # request then LB disconnects it)
-timeoutConnection=1000
+timeoutConnection 1000
 # Enquire Link Timer (after each this period LB checks connection to
 # client and server(sends enquire_link))
-timeoutEnquire=50000
+timeoutEnquire 50000
 # Time between reconnection(time which LB wait for reconnection if connection
 # was lost)
-reconnectPeriod=1000
+reconnectPeriod 1000
 # Connection check timer in load balancer (time which LB wait for
 # enquire_link_resp and if doesn’t receive, close connection to client)
-timeoutConnectionCheckClientSide=1000
+timeoutConnectionCheckClientSide 1000
 # Connection check server side timer(time which LB wait for
 # enquire_link_resp and if doesn’t receive, tries to rebind to server )
-timeoutConnectionCheckServerSide=1000</pre>
+timeoutConnectionCheckServerSide 1000</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -24892,7 +24880,7 @@ and you can see next line:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-10-10 11:02:16 WEST
+Last updated 2016-10-13 14:01:47 WEST
 </div>
 </div>
 <footer>
