@@ -22774,6 +22774,13 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </ul>
 </li>
 <li><a href="#resources-configuration">Resources Configuration</a></li>
+<li><a href="#dtls-configuration">DTLS Configuration</a>
+<ul class="sectlevel2">
+<li><a href="#dtls-version">DTLS Version</a></li>
+<li><a href="#cipher-suites">Cipher suites</a></li>
+<li><a href="#certificate">Certificate</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -23256,10 +23263,171 @@ It is up to the user to decide the best trade-off for the setup (greater memory 
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="dtls-configuration"><a class="anchor" href="#dtls-configuration"></a>DTLS Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The DTLS configuration allows to define some properties that are used by WebRTC resources, through the DTLS protocol. Since the nature of this configuration is strongly related with security principles, <strong>some of the default values of this configuration need to be replaced by the user&#8217;s private information, ensuring that no vulnerabilities could be exploited by someone else.</strong> This refers mainly to the <strong>certificate</strong>, that is shipped with mediaserver for demonstration purposes only, and its better explained in the <strong>Certificate</strong> subsection.</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 6. DTLS default configuration</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;dtls&gt;
+	&lt;minVersion&gt;1.0&lt;/minVersion&gt;
+	&lt;maxVersion&gt;1.2&lt;/maxVersion&gt;
+	&lt;cipherSuites&gt;
+		TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
+		TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,
+		TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,
+		TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA
+	&lt;/cipherSuites&gt;
+	&lt;certificate path="../conf/dtls/x509-server-ecdsa.pem" key="../conf/dtls/x509-server-key-ecdsa.pem" algorithm="ecdsa"/&gt;
+&lt;/dtls&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="dtls-version"><a class="anchor" href="#dtls-version"></a>DTLS Version</h3>
+<div class="paragraph">
+<p>The properties <strong>minVersion</strong> and <strong>maxVersion</strong> define the supported minimum and maximum version of the DTLS protocol, respectively. The possible values suported by each property is <strong>1.0</strong> or <strong>1.2</strong>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="cipher-suites"><a class="anchor" href="#cipher-suites"></a>Cipher suites</h3>
+<div class="paragraph">
+<p>The <strong>cipherSuites</strong> property allows to inform one or more cipher suites to be used by DTLS. The names of the suites follows the <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html#ciphersuites">JSSE cipher suite naming standard</a> and must be separated by comma.
+The following examples show how to set the cipher suites can be configured using <strong>RSA</strong> and <strong>ECDSA</strong>.</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 7. Example of configuration for cipher suites using <strong>RSA</strong></div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;cipherSuites&gt;
+	TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
+	TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+	TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,
+	TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,
+	TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
+	TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
+	TLS_DHE_RSA_WITH_AES_256_GCM_SHA384,
+	TLS_DHE_RSA_WITH_AES_128_GCM_SHA256,
+	TLS_DHE_RSA_WITH_AES_256_CBC_SHA256,
+	TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,
+	TLS_DHE_RSA_WITH_AES_256_CBC_SHA,
+	TLS_DHE_RSA_WITH_AES_128_CBC_SHA,
+	TLS_RSA_WITH_AES_256_GCM_SHA384,
+	TLS_RSA_WITH_AES_128_GCM_SHA256,
+	TLS_RSA_WITH_AES_256_CBC_SHA256,
+	TLS_RSA_WITH_AES_128_CBC_SHA256,
+	TLS_RSA_WITH_AES_256_CBC_SHA,
+	TLS_RSA_WITH_AES_128_CBC_SHA
+&lt;/cipherSuites&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="exampleblock">
+<div class="title">Example 8. Example of configuration for cipher suites using <strong>ECDSA</strong></div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;cipherSuites&gt;
+	TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
+	TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,
+	TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,
+	TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA
+&lt;/cipherSuites&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="certificate"><a class="anchor" href="#certificate"></a>Certificate</h3>
+<div class="paragraph">
+<p>This property allows to set the absolute or relative path of the certificate and key files. The path for the certificate file must be informed in the <strong>path</strong> property, and the path for the key file must be informed in the <strong>key</strong> property. The signature algorithm used for the certificates must be informed at the <strong>algorithm</strong> property, which supports the values <strong>rsa</strong> and <strong>ecdsa</strong>. The default certificate files must be replaced by certificates generated by the user, as described by the following warning:</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+The default certificate files that comes with mediaserver are for test purposes only. The use of the default certificates in production environment represent a potential vulnerability. <strong>The default certificate files must be replaced by certificates generated by the user.</strong>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The certificate files <strong>x509-server.pem</strong> and <strong>x509-server-key.pem</strong> correspond to the default <strong>RSA</strong> certificates, while the files <strong>x509-server-ecdsa.pem</strong> and <strong>x509-server-key-ecdsa.pem</strong> correspond to the default <strong>ECDSA</strong> certificates. Those files can be found at the directory <strong>$MS_HOME/conf/dtls</strong> of a mediaserver installation.
+The following examples show how to properly set up mediaserver according to the chosen signature algorithm (<strong>RSA</strong> or <strong>ECDSA</strong>). Note that the <strong>cipher suites</strong>, <strong>certificates</strong> and <strong>algorithm</strong> change from one configuration to another.</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 9. Configuration for <strong>RSA</strong> signature algorithm</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;dtls&gt;
+	&lt;minVersion&gt;1.0&lt;/minVersion&gt;
+	&lt;maxVersion&gt;1.2&lt;/maxVersion&gt;
+	&lt;cipherSuites&gt;
+		TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
+		TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+		TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,
+		TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,
+		TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
+		TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
+		TLS_DHE_RSA_WITH_AES_256_GCM_SHA384,
+		TLS_DHE_RSA_WITH_AES_128_GCM_SHA256,
+		TLS_DHE_RSA_WITH_AES_256_CBC_SHA256,
+		TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,
+		TLS_DHE_RSA_WITH_AES_256_CBC_SHA,
+		TLS_DHE_RSA_WITH_AES_128_CBC_SHA,
+		TLS_RSA_WITH_AES_256_GCM_SHA384,
+		TLS_RSA_WITH_AES_128_GCM_SHA256,
+		TLS_RSA_WITH_AES_256_CBC_SHA256,
+		TLS_RSA_WITH_AES_128_CBC_SHA256,
+		TLS_RSA_WITH_AES_256_CBC_SHA,
+		TLS_RSA_WITH_AES_128_CBC_SHA
+	&lt;/cipherSuites&gt;
+	&lt;certificate path="../conf/dtls/x509-server.pem" key="../conf/dtls/x509-server-key.pem" algorithm="rsa"/&gt;
+&lt;/dtls&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="exampleblock">
+<div class="title">Example 10. Configuration for <strong>ECDSA</strong> signature algorithm</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;dtls&gt;
+	&lt;minVersion&gt;1.0&lt;/minVersion&gt;
+	&lt;maxVersion&gt;1.2&lt;/maxVersion&gt;
+	&lt;cipherSuites&gt;
+		TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
+		TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,
+		TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,
+		TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA
+	&lt;/cipherSuites&gt;
+	&lt;certificate path="../conf/dtls/x509-server-ecdsa.pem" key="../conf/dtls/x509-server-key-ecdsa.pem" algorithm="ecdsa"/&gt;
+&lt;/dtls&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-10-13 15:14:23 WEST
+Last updated 2016-10-14 10:46:49 WEST
 </div>
 </div>
 <footer>
