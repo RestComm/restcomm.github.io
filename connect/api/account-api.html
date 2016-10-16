@@ -22831,7 +22831,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Uri</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The URI for this account, relative to <a href="http://localhost:port/restcomm" class="bare">http://localhost:port/restcomm</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The URI for this account, relative to <a href="https://localhost:port/restcomm" class="bare">https://localhost:port/restcomm</a>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -22885,7 +22885,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X GET  http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf</pre>
+<pre>curl -X GET  https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -22899,7 +22899,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X PUT http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf -d "Password=NewPassword"</pre>
+<pre>curl -X PUT https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf -d "Password=NewPassword"</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -22907,7 +22907,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X PUT http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/administrator%40company.com -d "Password=NewPassword"</pre>
+<pre>curl -X PUT https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/administrator%40company.com -d "Password=NewPassword"</pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -22924,7 +22924,7 @@ The above command uses the Account SID of the requestor, and the one below uses 
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X GET  http://administrator%40company.com:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf</pre>
+<pre>curl -X GET  https://administrator%40company.com:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23026,14 +23026,14 @@ The above command uses the Account SID of the requestor, and the one below uses 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>curl -X GET http://[primarySid]:[primaryAuthToken]@127.0.0.1:8080/restcomm/2012-04-24/Accounts/[secondarySid]/</pre>
+<pre>curl -X GET https://[primarySid]:[primaryAuthToken]@127.0.0.1:8080/restcomm/2012-04-24/Accounts/[secondarySid]/</pre>
 </div>
 </div>
 <div class="sect2">
 <h3 id="get-a-list-of-all-current-accounts"><a class="anchor" href="#get-a-list-of-all-current-accounts"></a>Get a list of all current accounts</h3>
 <div class="listingblock">
 <div class="content">
-<pre>curl -X GET http://[primarySid]:[primaryAuthToken]@127.0.0.1:8080/restcomm/2012-04-24/Accounts/</pre>
+<pre>curl -X GET https://[primarySid]:[primaryAuthToken]@127.0.0.1:8080/restcomm/2012-04-24/Accounts/</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23041,7 +23041,7 @@ The above command uses the Account SID of the requestor, and the one below uses 
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X POST http://administrator%40company.com:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ -d "FriendlyName=MySubAccount" -d "EmailAddress=test@telestax.com" -d "Password=restcomm"</pre>
+<pre>curl -X POST https://administrator%40company.com:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ -d "FriendlyName=MySubAccount" -d "EmailAddress=test@telestax.com" -d "Password=restcomm"</pre>
 </div>
 </div>
 </div>
@@ -23092,13 +23092,13 @@ the <strong>SID</strong>, Email and the <strong>AuthToken</strong> (see output b
 <div class="listingblock">
 <div class="title">XML Account Deletion</div>
 <div class="content">
-<pre>curl -X DELETE http://ACae6e420f425248d6a26948c17a9e2acf:PWD@192.168.1.3:8080/restcomm/2012-04-24/Accounts/&lt;Sub-Account-SID&gt;</pre>
+<pre>curl -X DELETE https://ACae6e420f425248d6a26948c17a9e2acf:PWD@192.168.1.3:8080/restcomm/2012-04-24/Accounts/&lt;Sub-Account-SID&gt;</pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">JSON Account Deletion</div>
 <div class="content">
-<pre>curl -X DELETE http://ACae6e420f425248d6a26948c17a9e2acf:PWD@192.168.1.3:8080/restcomm/2012-04-24/Accounts.json/&lt;Sub-Account-SID&gt;.json</pre>
+<pre>curl -X DELETE https://ACae6e420f425248d6a26948c17a9e2acf:PWD@192.168.1.3:8080/restcomm/2012-04-24/Accounts.json/&lt;Sub-Account-SID&gt;.json</pre>
 </div>
 </div>
 </div>
@@ -23107,7 +23107,7 @@ the <strong>SID</strong>, Email and the <strong>AuthToken</strong> (see output b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-10-15 10:42:22 WEST
+Last updated 2016-10-16 10:39:24 WEST
 </div>
 </div>
 <footer>

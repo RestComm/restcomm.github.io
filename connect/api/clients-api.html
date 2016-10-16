@@ -22884,7 +22884,7 @@ Restcomm has a new implied behavior when VoiceUrl is not provided for a Client a
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Uri</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The URI for this Client, relative to <a href="http://localhost:port/restcomm" class="bare">http://localhost:port/restcomm</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The URI for this Client, relative to <a href="https://localhost:port/restcomm" class="bare">https://localhost:port/restcomm</a>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -23047,7 +23047,7 @@ Restcomm has a new implied behavior when VoiceUrl is not provided for a Client a
 </div>
 <div class="literalblock">
 <div class="content">
-<pre> curl -X POST  http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Clients.json -d "Login=alice" -d "Password=test"</pre>
+<pre> curl -X POST  https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Clients.json -d "Login=alice" -d "Password=test"</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23080,7 +23080,7 @@ Restcomm has a new implied behavior when VoiceUrl is not provided for a Client a
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X DELETE http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Clients/CL4e10e3b56a614414bcc1eeca5d96effe</pre>
+<pre>curl -X DELETE https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Clients/CL4e10e3b56a614414bcc1eeca5d96effe</pre>
 </div>
 </div>
 </div>
@@ -23093,7 +23093,7 @@ Restcomm has a new implied behavior when VoiceUrl is not provided for a Client a
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X PUT http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Clients/CL4e10e3b56a614414bcc1eeca5d96effe -d "Password=NewPassword"</pre>
+<pre>curl -X PUT https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Clients/CL4e10e3b56a614414bcc1eeca5d96effe -d "Password=NewPassword"</pre>
 </div>
 </div>
 </div>
@@ -23106,12 +23106,12 @@ Restcomm has a new implied behavior when VoiceUrl is not provided for a Client a
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X GET http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Clients/</pre>
+<pre>curl -X GET https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Clients/</pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>curl -X GET http://ACae6e420f425248d6a26948c17a9e2acf:R3stC0mm@54.204.90.224:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Clients</pre>
+<pre>curl -X GET https://ACae6e420f425248d6a26948c17a9e2acf:R3stC0mm@127.0.0.1/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Clients</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23155,7 +23155,7 @@ Restcomm has a new implied behavior when VoiceUrl is not provided for a Client a
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>curl -X GET http://ACae6e420f425248d6a26948c17a9e2acf:R3stC0mm@54.204.90.224:8080/restcomm/2012-04-24f425248d6a26948c17a9e2acf/Clients.json</pre>
+<pre>curl -X GET https://ACae6e420f425248d6a26948c17a9e2acf:R3stC0mm@127.0.0.1/restcomm/2012-04-24f425248d6a26948c17a9e2acf/Clients.json</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23200,7 +23200,7 @@ Restcomm has a new implied behavior when VoiceUrl is not provided for a Client a
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-10-15 10:42:22 WEST
+Last updated 2016-10-16 10:39:24 WEST
 </div>
 </div>
 <footer>

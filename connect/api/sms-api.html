@@ -22850,7 +22850,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Uri</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The URI for this account, relative to <a href="http://localhost:port/restcomm" class="bare">http://localhost:port/restcomm</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The URI for this account, relative to <a href="https://localhost:port/restcomm" class="bare">https://localhost:port/restcomm</a>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -22919,7 +22919,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X POST http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages -d "To=%2B13216549878" -d "From=%2B19876543212" -d "Body=This is a test from RestComm"</pre>
+<pre>curl -X POST https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages -d "To=%2B13216549878" -d "From=%2B19876543212" -d "Body=This is a test from RestComm"</pre>
 </div>
 </div>
 </div>
@@ -22935,7 +22935,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X GET http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages</pre>
+<pre>curl -X GET https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages</pre>
 </div>
 </div>
 </div>
@@ -22947,7 +22947,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <h3 id="xml-post-response"><a class="anchor" href="#xml-post-response"></a>XML POST Response</h3>
 <div class="listingblock">
 <div class="content">
-<pre>curl -X POST http://ACae6e420f425248d6a26948c17a9e2acf:myPWD@my_IP:8080/restcomm/2012-04-24/Accounts/ACae6e0f425248d6a26948c17a9e2acf/SMS/Messages -d "To=%2B1321654879" -d "From=%2B1654123987" -d "Body=This is a test from RestComm"</pre>
+<pre>curl -X POST https://ACae6e420f425248d6a26948c17a9e2acf:myPWD@my_IP/restcomm/2012-04-24/Accounts/ACae6e0f425248d6a26948c17a9e2acf/SMS/Messages -d "To=%2B1321654879" -d "From=%2B1654123987" -d "Body=This is a test from RestComm"</pre>
 </div>
 </div>
 <div class="listingblock">
@@ -22976,7 +22976,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <h3 id="json-post-response"><a class="anchor" href="#json-post-response"></a>JSON POST Response</h3>
 <div class="listingblock">
 <div class="content">
-<pre>curl -X POST http://ACae6e420f425248d6a26948c17a9e2acf:myPWD@my_IP:8080/restcomm/2012-04-20f425248d6a26948c17a9e2acf/SMS/Messages.json -d "To=%2B1321654879" -d "From=%2B1654123987" -d "Body=This is a test from RestComm"</pre>
+<pre>curl -X POST https://ACae6e420f425248d6a26948c17a9e2acf:myPWD@my_IP/restcomm/2012-04-20f425248d6a26948c17a9e2acf/SMS/Messages.json -d "To=%2B1321654879" -d "From=%2B1654123987" -d "Body=This is a test from RestComm"</pre>
 </div>
 </div>
 <div class="listingblock">
@@ -23007,7 +23007,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <h3 id="json-get-response"><a class="anchor" href="#json-get-response"></a>JSON GET Response</h3>
 <div class="listingblock">
 <div class="content">
-<pre>curl -X GET http://ACae6e420f425248d6a26948c17a9e2acf:my_PWD@my_IP:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages.json</pre>
+<pre>curl -X GET https://ACae6e420f425248d6a26948c17a9e2acf:my_PWD@my_IP/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages.json</pre>
 </div>
 </div>
 <div class="listingblock">
@@ -23056,7 +23056,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre>curl -X GET http://ACae6e420f425248d6a26948c17a9e2acf:my_PWD@my_IP:8080/restcomm/2012-04-24/Accounts/ACae6e42f425248d6a26948c17a9e2acf/SMS/Messages/SM55ce5cf07b9649c283cbacab4dae56a9.json</pre>
+<pre>curl -X GET https://ACae6e420f425248d6a26948c17a9e2acf:my_PWD@my_IP/restcomm/2012-04-24/Accounts/ACae6e42f425248d6a26948c17a9e2acf/SMS/Messages/SM55ce5cf07b9649c283cbacab4dae56a9.json</pre>
 </div>
 </div>
 <div class="listingblock">
@@ -23084,7 +23084,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-10-15 10:42:22 WEST
+Last updated 2016-10-16 10:39:24 WEST
 </div>
 </div>
 <footer>
