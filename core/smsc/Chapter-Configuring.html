@@ -23018,8 +23018,8 @@ If we use default routing rules, then for routing SMSC GW makes following steps:
 <div class="ulist">
 <ul>
 <li>
-<p>it checks all ESMEs that belongs to the networkId.
-It checks if TON, NPI and AddressRange of an ESME Routing Address fit to a message destination TON, NPI and address digits the the message will be routed to this ESME.
+<p>it checks all ESMEs / ESME clustes that belong to the networkId.
+It checks if TON, NPI and AddressRange of an ESME / cluster Routing Address fit to a message destination TON, NPI and address digits the the message will be routed to this ESME. Several ESMEs inside a single networkId area can be grouped in a cluster. In this case the load is shared in a round robin fashion between ESME nodes in the cluster.
 There is one exception of this rule.
 A message will not be routed in any case to the ESME from which it has come.</p>
 </li>
@@ -23087,6 +23087,8 @@ Messages will be routed between subnetworks (networkIds) by mproc rules and insi
 </div>
 <div class="sect2">
 <h3 id="_routing_fundamentals_4"><a class="anchor" href="#_routing_fundamentals_4"></a>Routing model examples.</h3>
+<div class="sect3">
+<h4 id="routing-all-messages-from-one-esme-to-ss7"><a class="anchor" href="#routing-all-messages-from-one-esme-to-ss7"></a>Routing all messages from one ESME to SS7</h4>
 <div class="paragraph">
 <p>If you have one ESME and JSS7 connector, and the only traffic is ESME &#8594; JSS7</p>
 </div>
@@ -23100,6 +23102,9 @@ Messages will be routed between subnetworks (networkIds) by mproc rules and insi
 </li>
 </ul>
 </div>
+</div>
+<div class="sect3">
+<h4 id="all-jss7-originated-messages-must-be-routed-to-esme-and-all-esme-originated-messages-must-be-routed-to-jss7"><a class="anchor" href="#all-jss7-originated-messages-must-be-routed-to-esme-and-all-esme-originated-messages-must-be-routed-to-jss7"></a>All JSS7 originated messages must be routed to ESME and all ESME originated messages must be routed to JSS7</h4>
 <div class="paragraph">
 <p>If you use the model "all JSS7 originated messages must be routed to ESME and all ESME originated messages must be routed to JSS7", you can:</p>
 </div>
@@ -23122,6 +23127,9 @@ Messages will be routed between subnetworks (networkIds) by mproc rules and insi
 </li>
 </ul>
 </div>
+</div>
+<div class="sect3">
+<h4 id="several-esmes-send-message-to-one-ss7-connection-and-delivery-receipts-come-back-to-an-originator-esme"><a class="anchor" href="#several-esmes-send-message-to-one-ss7-connection-and-delivery-receipts-come-back-to-an-originator-esme"></a>Several ESMEs send message to one SS7 connection and delivery receipts come back to an originator ESME</h4>
 <div class="paragraph">
 <p>If you have several ESMEs that send message to one SS7 connection and you need that delivery receipts come back to an originator ESME (and no more traffic), you can:</p>
 </div>
@@ -23150,6 +23158,65 @@ CLI commabd can be like:</p>
 <p>set the option "Delivery receipts will be routed to the origination networkId" is set to true</p>
 </li>
 </ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="routing-desision-based-on-sri-request-results"><a class="anchor" href="#routing-desision-based-on-sri-request-results"></a>Routing desision based on SRI request results</h4>
+<div class="paragraph">
+<p>Sometimes we need to decide where to route messages depending on SendRoutingRequest (SRI) to HLR results. To achieve it we may use two approaches</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>dropaftersri - performing of "SRI request only" functionality, get SRI response data and then resend a message again to a proper destination (or avoid of sending if for exammple a subscriber is in roaming).</p>
+</li>
+<li>
+<p>newnetworkidaftersri - rerouting of a message after SRI response (to another networkID area)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">dropaftersri procedure</div>
+<p>One of a solution is to use a separate ESME(s) that will send messages only for SRI requests only. We can configure an mproc rule like this:</p>
+</div>
+<div class="paragraph">
+<p><code>smsc mproc add 1 origesmenamemask XXX dropaftersri true</code></p>
+</div>
+<div class="paragraph">
+<p>In this case all messages that fit to the mproc rules conditions (in this example == all messages that have come from ESME with name "XXX") will be dropped after a SRI request without futher message sending ("dropaftersri true" says for it). A condition can be any of possible (not exactly "origesmenamemask XXX"), this condition is good if you want to send all messages for SRI request only via a dedicated for this purpose ESME.</p>
+</div>
+<div class="paragraph">
+<p>We can then get SRI response results by one of the following ways (pay attention that it may be also a MAP error response from HLR):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>CDR will contain extra fields for IMSI / VLR (if the response is successfull)</p>
+</li>
+<li>
+<p>you can request a delivery receipt that will be routed back to your ESME and this receipt will contain also extra fields (IMSI / VLR).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If SRI returns MAP error message (or some other error response) then MProcRule.onPostImsiRequest() and "dropaftersri" action will not be invoked and the behavior is the same for other messages that delivery failed. It may be also several attempts to send SRI requests in case of temporary errors (for StoreAndForward mode only of cause).</p>
+</div>
+<div class="paragraph">
+<p>Delivery response for such dropped after SRI requests messages will contain in the message text (at the end) extra fields with varaible length: imsi, nnn_digits, nnn_an (address nature), nnn_np (numbering plan) with filled values from a SRI response. The example of this string is: <code>imsi:00000000000000 nnn_digits:0000000000 nnn_an: nnn_np:11</code>. SMPP error code for such cases is: 226.</p>
+</div>
+<div class="paragraph">
+<p>CDR records will contain "failed_imsi" operation result cause and also conatins IMSI and NNN values.</p>
+</div>
+<div class="paragraph">
+<div class="title">newnetworkidaftersri procedure</div>
+<p>We can add mproc rules like</p>
+</div>
+<div class="paragraph">
+<p><code>smsc mproc add 1 imsidigitsmask &lt;regular expression&gt; newnetworkidaftersri 22</code></p>
+</div>
+<div class="paragraph">
+<p>This rule will reroute a message to networkId==22 area for further delivering if IMSI from a SRI response matches the mask. You can use also other conditions here for proper filtering (networkidmask, destdigmask, nnndigitsmask, etc). If in the new networkId area a message will be delivered again to SS7 network then a new SRI will be performed.</p>
+</div>
 </div>
 </div>
 </div>
@@ -24922,6 +24989,13 @@ Before using of OCS server copy from SMSC GW the file &lt;smsc gw root folder&gt
 </ul>
 </div>
 </li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This file is already copied to SMSC GW into Simulator profile.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
 <p>Those configs suppose that you use Telestax OCS server and it is on the same host.
 If not you need to make extra configuring.
@@ -25007,7 +25081,7 @@ The details of the format and the possible values for the fields recorded in the
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-10-19 10:51:50 WEST
+Last updated 2016-10-20 10:53:25 WEST
 </div>
 </div>
 <footer>

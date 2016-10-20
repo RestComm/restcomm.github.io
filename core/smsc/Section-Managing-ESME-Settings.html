@@ -22802,13 +22802,49 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>&amp;THIS.PLATFORM;&amp;THIS.APPLICATION;can now act as ESME (initiate bind to remote SMSC) or can also act as SMSC (accept bind from remote ESME). While defining an ESME (SMPP connection), you can optionally pass the Cluster name.
+<p>Restcomm SMSC can now act as ESME (initiate bind to remote SMSC - Client type ESME) or can also act as SMSC (accept bind from remote ESME - Server type ESME). While defining an ESME (SMPP connection), you can optionally pass the Cluster name.
 If it is not passed, cluster name is same as ESME name.
 As the name suggests, its now possible to group different ESMEs in the same cluster.
-This is useful only when SMS is suppose to be routed out of &amp;THIS.PLATFORM;&amp;THIS.APPLICATION;to ESME.
-If there are multiple ESME&#8217;s in a cluster, the load is shared in a round robin fashion to send out SMS.
-In case if one of the ESME is in <code>UNBOUND</code> state, the next <code>BOUND</code> smpp connection (within same cluster) will be used.
-Below diagram explains the load-balancing between SMPP connections</p>
+This is useful only when SMS is suppose to be routed out of Restcomm SMSC to ESME. If there are multiple ESME&#8217;s in a cluster, the load is shared in a round robin fashion to send out SMS. In case if one of the ESME is in <code>UNBOUND</code> state, the next <code>BOUND</code> smpp connection (within same cluster) will be used.</p>
+</div>
+<div class="paragraph">
+<p>The current algo for routing is the following. We have two steps:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1 step - selecting ESME cluster for delivering. Each cluster can contain one or more ESME. The idea of cluster usage is to have load sharing between nodes (ESMEs) inside a cluster and/or if some cluster node is unbound then SMSC GW will send messages to another cluster. SMSC GW selects the first cluster that ESME(s) fits to the conditions:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>bindType==transiever or receiver (for SERVER type) or transmitter (for CLIENT type)</p>
+</li>
+<li>
+<p>the ESME is not the ESME from which the message has come to SMSC GW</p>
+</li>
+<li>
+<p>networkID of a message == networkID of an ESME</p>
+</li>
+<li>
+<p>dest address, ton and npi of a message fit to routing address, ton and npi of ESME. The fact if this ESME is bound or not is not taken into account at this step</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>2 step - selecting of ESME in the cluster:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>selecting of ESME in the cluster that is bound (and not stopped) now. If all ESMEs are not bound in the cluster then the message will be dropped (temporary delivery failure)</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Below diagram explains the load-balancing between SMPP connections</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -22820,7 +22856,7 @@ Below diagram explains the load-balancing between SMPP connections</p>
 <p>You can define multiple ESMEs, each with a unique name but the same <code>systemId</code> and declare their <code>host-ip</code> and <code>port</code> values as -1 (only for SMPP type Server). The SMSC will now accept multiple incoming BIND requests from any <code>IP</code> and any <code>port</code> as far as the <code>systemId</code> and <code>Password</code> matches.</p>
 </div>
 <div class="paragraph">
-<p>Alternatively, if you declare a real value for <code>host-ip</code>(say for example 10.199.7.23) and <code>port</code> as -1, the SMSC will accept as many BINDS as ESMEs defined from the specified IP but any port as far as the <code>systemId</code> and <code>Password</code> matches.</p>
+<p>Alternatively, if you declare a real value for <code>host-ip</code> (say for example 10.199.7.23) and <code>port</code> as -1, the SMSC will accept as many BINDS as ESMEs defined from the specified IP but any port as far as the <code>systemId</code> and <code>Password</code> matches.</p>
 </div>
 </div>
 </div>
@@ -23888,7 +23924,7 @@ All relevant details of the ESME will be displayed in an expanded format.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-10-19 10:51:50 WEST
+Last updated 2016-10-20 10:53:25 WEST
 </div>
 </div>
 <footer>
