@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>SMSC RestComm-Connect Integration</title>
+<title>HTTP connector user accounts</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22748,159 +22748,244 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 
 </header>
 </head>
-<body id="_smsc_restcomm" class="article">
+<body id="_httpuser_settings" class="article">
 <div id="header">
-<h1>SMSC RestComm-Connect Integration</h1>
+<h1>HTTP connector user accounts</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#restcomm-smsc-integration-with-restcomm-connect-architecture">Restcomm SMSC Integration with RestComm-Connect Architecture</a>
+<li><a href="#_httpuser_settings_add">Create a new HTTP user account</a>
 <ul class="sectlevel2">
-<li><a href="#incoming-ss7-message">Incoming SS7 message</a></li>
-<li><a href="#incoming-smpp-message">Incoming SMPP message</a></li>
-<li><a href="#incoming-sip-message">Incoming SIP message</a></li>
-<li><a href="#outgoing-message-from-application-over-restcomm">Outgoing message from Application over RestComm</a></li>
+<li><a href="#_httpuser_settings_add_cli">Using CLI</a></li>
+<li><a href="#_httpuser_settings_add_gui">Using GUI</a></li>
 </ul>
 </li>
-<li><a href="#customized-sip-headers">Customized SIP Headers</a></li>
+<li><a href="#_httpuser_settings_modify">Modify HTTP user account</a>
+<ul class="sectlevel2">
+<li><a href="#_httpuser_settings_modify_cli">Using CLI</a></li>
+<li><a href="#_httpuser_settings_modify_gui">Using GUI</a></li>
+</ul>
+</li>
+<li><a href="#_httpuser_settings_show">View HTTP user account details</a>
+<ul class="sectlevel2">
+<li><a href="#_httpuser_settings_show_cli">Using CLI</a></li>
+<li><a href="#_httpuser_settings_show_gui">Using GUI</a></li>
+</ul>
+</li>
+<li><a href="#_httpuser_settings_remove">Delete an existing HTTP user account</a>
+<ul class="sectlevel2">
+<li><a href="#_httpuser_settings_remove_cli">Using CLI</a></li>
+<li><a href="#_httpuser_settings_remove_gui">Using GUI</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>RestComm-Connect is a next generation cloud communications platform to rapidly build voice, video and realtime  messaging applications, using mainstream development skills.</p>
-</div>
-<div class="paragraph">
-<p>RestComm-Connect is a turnkey Cloud Communications platform based on Open Source building blocks from the team behind Restcomm.
-RestComm offers a clean room implementation of the Twilio.com APIs and much more.</p>
-</div>
-<div class="paragraph">
-<p>RestComm-Connect can be integrated with VoIP and legacy SS7 network providers either in the cloud or via on-premise Resource Adaptors.
-For further details on RestComm please visit <a href="http://restcomm.com">restcomm.com</a></p>
-</div>
-</div>
-</div>
 <div class="sect1">
-<h2 id="restcomm-smsc-integration-with-restcomm-connect-architecture"><a class="anchor" href="#restcomm-smsc-integration-with-restcomm-connect-architecture"></a>Restcomm SMSC Integration with RestComm-Connect Architecture</h2>
+<h2 id="_httpuser_settings_add"><a class="anchor" href="#_httpuser_settings_add"></a>Create a new HTTP user account</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Restcomm SMSC integrates with RestComm-Connect over SIP.
-The below sections describe flow of SMS messages between SMSC, RestComm and Applications over RestComm.</p>
-</div>
 <div class="sect2">
-<h3 id="incoming-ss7-message"><a class="anchor" href="#incoming-ss7-message"></a>Incoming SS7 message</h3>
+<h3 id="_httpuser_settings_add_cli"><a class="anchor" href="#_httpuser_settings_add_cli"></a>Using CLI</h3>
 <div class="paragraph">
-<p>Below diagram shows flow of a message coming from SS7 and getting delivered to Application over RestComm-Connect.</p>
+<p>You can configure a new HTTP user account by issuing the command <code>smsc httpuser add</code> with appropriate parameters as described below.</p>
 </div>
-<div class="imageblock">
+<div class="listingblock">
 <div class="content">
-<img src="./images/SMSC-RestComm-Incoming-SS7.png" alt="SMSC RestComm Incoming SS7">
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="incoming-smpp-message"><a class="anchor" href="#incoming-smpp-message"></a>Incoming SMPP message</h3>
-<div class="paragraph">
-<p>Below diagram shows flow of a message coming from SMPP and getting delivered to Application over RestComm-Connect.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="./images/SMSC-RestComm-Incoming-SMPP.png" alt="SMSC RestComm Incoming SMPP">
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="incoming-sip-message"><a class="anchor" href="#incoming-sip-message"></a>Incoming SIP message</h3>
-<div class="paragraph">
-<p>Below diagram shows flow of a message coming from SIP and getting delivered to Application over RestComm-Connect.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="./images/SMSC-RestComm-Incoming-SIP.png" alt="SMSC RestComm Incoming SIP">
+<pre>Name
+	smsc httpuser add
+
+SYNOPSIS
+	smsc httpuser add &lt;userName&gt; password &lt;password&gt;
+
+DESCRIPTION
+	This command is used to configure a new HTTP User account
+	to access the HTTP connector for submitting messages to SMSC GW.
+
+PARAMETERS
+
+	userName      - A unique user name that identifies  an account.
+
+	Optional Parameters
+
+	password      - Password for accestting of HTTP connector.</pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="outgoing-message-from-application-over-restcomm"><a class="anchor" href="#outgoing-message-from-application-over-restcomm"></a>Outgoing message from Application over RestComm</h3>
-<div class="paragraph">
-<p>Below diagram shows flow of a message from application over RestComm-Connect and getting delivered to Restcomm SMSC .</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="./images/SMSC-RestComm-Outgoing.png" alt="SMSC RestComm Outgoing">
-</div>
+<h3 id="_httpuser_settings_add_gui"><a class="anchor" href="#_httpuser_settings_add_gui"></a>Using GUI</h3>
+<div class="olist arabic">
+<div class="title">Procedure: Create new HTTP user account using GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP user accounts' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing HTTP user accounts (if any), one each in a row with corresponding actions (remove, update) for each row.
+Below this you will find the button 'Create HTTP user account'.</p>
+</li>
+<li>
+<p>You can create a new HTTP user account by launching the 'Create HTTP user account' window by clicking on the blue coloured 'Create HTTP user account' button.
+The 'Create HTTP user account' window will display all HTTP user account paramters that must be defined by you.
+For more details of these parameters please refer to the descriptions of the CLI commands for the same in the preceding section.</p>
+</li>
+<li>
+<p>Enter appropriate values for all the parameters and then click on the 'Create' button at the bottom of this 'HTTP user account' window.
+This action will create a new HTTP user account with parameters as defined by you.</p>
+</li>
+<li>
+<p>If there is an error in defining the HTTP user account, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="customized-sip-headers"><a class="anchor" href="#customized-sip-headers"></a>Customized SIP Headers</h2>
+<h2 id="_httpuser_settings_modify"><a class="anchor" href="#_httpuser_settings_modify"></a>Modify HTTP user account</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_httpuser_settings_modify_cli"><a class="anchor" href="#_httpuser_settings_modify_cli"></a>Using CLI</h3>
 <div class="paragraph">
-<p>SMS messages can be of UTF-8 or Unicode Characters, or there can be special messages with user data headers (UDH), binary messages, SMS that indicates delivery receipt etc.
-There is no one-to-one mapping for this information in SIP, hence Restcomm RestComm has introduced additional customized SIP Headers to convey this useful information as described below.</p>
+<p>You can modify an existing HTTP user account by issuing the command <code>smsc httpuser modify</code> with appropriate parameters as described below.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>To understand each of the below optional parameters please read SMPP Specifictaion.</pre>
+<pre>Name
+	smsc httpuser modify
+
+SYNOPSIS
+	smsc httpuser modify &lt;userName&gt; password &lt;password&gt;
+
+DESCRIPTION
+	This command is used to modify parameters of a HTTP User account.
+
+PARAMETERS
+
+	userName      - A user name that identifies an account.
+
+	Optional Parameters
+
+	password      - Password for accessing of HTTP connector.</pre>
 </div>
 </div>
-</td>
-</tr>
-</table>
 </div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">X-SMS-UDH</dt>
-<dd>
-<p>This parameter carries the hex string of User Data Header.
-For example, X-SMS-UDH=06050413011301.
-RestComm can include this header for outgoing SIP MESSAGE and SMSC will include it in actual SMS.
-If incoming SMS has UDH, then the SIP MESSAGE from SMSC will include this optional header.</p>
-</dd>
-<dt class="hdlist1">X-SMS-CODING</dt>
-<dd>
-<p>This is the parameter for message coding.
-When unset, defaults to 0 (7 bits) if Content-Type is text/plain , text/html or text/vnd.wap.wml; for application/octet-stream, defaults to 8 bits (1); 2 is UCS2.
-RestComm can include this header for outgoing SIP MESSAGE and SMSC will include it in actual SMS.
-For incoming SMS, the SIP MESSAGE from SMSC will include this optional header.</p>
-</dd>
-<dt class="hdlist1">X-SMS-VALIDITY</dt>
-<dd>
-<p>This parameter holds the SMS validity period in case of re-try.
-Validity Period is in the format yyyyy-mm-dd hh:mm:ss.
-RestComm can include this header for outgoing SIP MESSAGE and SMSC will respect the validity period for failed delivery (re-try). For incoming SMS, the SIP MESSAGE from SMSC will include this optional header.</p>
-</dd>
-<dt class="hdlist1">X-M-CLASS</dt>
-<dd>
-<p>This parameter holds the message class bits of DCS; 0 (directly to display, flash), 1 (to mobile), 2 (to SIM) or 3 (to SIM toolkit). This is not yet supported in the current version of SMSC.</p>
-</dd>
-<dt class="hdlist1">X-REG-DELIVERY</dt>
-<dd>
-<p>This is registered_delivery parameter and is used to request a SMSC delivery receipt and/or SME originated acknowledgements.
-This is set to 1 to get delivery receipt for success or failure.</p>
-</dd>
-<dt class="hdlist1">X-SMSC-ID</dt>
-<dd>
-<p>This parameter holds the smsc-id of the connection that received the message.
-If the incoming SMS was from ESME, smsc-id will be the name of the ESME.
-In case of messages coming in from SIP or SS7, this value will be null.</p>
-</dd>
-<dt class="hdlist1">X-DELIVERY_TIME</dt>
-<dd>
-<p>This is time the message was received by SMSC.
-Format will be "yyyyy-mm-dd hh:mm:ss".</p>
-</dd>
-</dl>
+<div class="sect2">
+<h3 id="_httpuser_settings_modify_gui"><a class="anchor" href="#_httpuser_settings_modify_gui"></a>Using GUI</h3>
+<div class="olist arabic">
+<div class="title">Procedure: Modify an existing HTTP user account using GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP user accounts' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing HTTP user accounts (if any), one each in a row with corresponding actions (remove, update) for each row.</p>
+</li>
+<li>
+<p>You can update an existing by launching the 'HTTP user account &lt;name&gt; properties' window by clicking on the blue coloured 'Update HTTP user account' button.
+The 'HTTP user account &lt;name&gt; properties' window will display all HTTP user account paramters that can be updated by you.
+For more details of these parameters please refer to the descriptions of the CLI commands  for the same in the preceding section.</p>
+</li>
+<li>
+<p>Update appropriate values for all the parameters and then click on the 'Close' button.
+This action will modify a new HTTP user account with parameters as defined by you.</p>
+</li>
+<li>
+<p>If there is an error in defining the HTTP user account, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_httpuser_settings_show"><a class="anchor" href="#_httpuser_settings_show"></a>View HTTP user account details</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_httpuser_settings_show_cli"><a class="anchor" href="#_httpuser_settings_show_cli"></a>Using CLI</h3>
+<div class="paragraph">
+<p>You can view the details of all or concrete configured HTTP user accounts by issuing the command <code>smsc httpuser show</code> as described below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc httpuser show
+
+SYNOPSIS
+	smsc httpuser show &lt;userName&gt; password &lt;password&gt;
+
+DESCRIPTION
+	This command is used to show HTTP User account(s) details.
+
+PARAMETERS
+
+	userName      - A unique user name that identifies a user.
+	                This parameter is option. If it is omitted all
+	                accounts will be displayed.</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_httpuser_settings_show_gui"><a class="anchor" href="#_httpuser_settings_show_gui"></a>Using GUI</h3>
+<div class="olist arabic">
+<div class="title">Procedure: View HTTP user account using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP user accounts' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing HTTP user accounts (if any), one each in a row with corresponding actions (remove, update) for each row.</p>
+</li>
+<li>
+<p>You can view the details of an HTTP user account by clicking on the row corresponding to the HTTP user account.
+All relevant details of the HTTP user account will be displayed in an expanded format.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_httpuser_settings_remove"><a class="anchor" href="#_httpuser_settings_remove"></a>Delete an existing HTTP user account</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_httpuser_settings_remove_cli"><a class="anchor" href="#_httpuser_settings_remove_cli"></a>Using CLI</h3>
+<div class="paragraph">
+<p>You can delete any HTTP user account by issuing the command <code>smsc httpuser remove</code> with appropriate parameters as described below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc httpuser remove
+
+SYNOPSIS
+	smsc httpuser remove &lt;userName&gt;
+
+DESCRIPTION
+	This command is used to remove of a HTTP User account.
+
+PARAMETERS
+
+	userName      - A unique user name that identifies  an account.</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_httpuser_settings_remove_gui"><a class="anchor" href="#_httpuser_settings_remove_gui"></a>Using GUI</h3>
+<div class="olist arabic">
+<div class="title">Procedure: Delete HTTP user account using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP user accounts' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing HTTP user accounts (if any), one each in a row with corresponding actions (remove, update) for each row.</p>
+</li>
+<li>
+<p>To delete an existing HTTP user account click on the delete icon marked 'x' in red, for the row corresponding to the HTTP user account.</p>
+</li>
+</ol>
+</div>
 </div>
 </div>
 </div>

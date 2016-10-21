@@ -22804,10 +22804,11 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#_esme_settings">6.3. External Short Messaging Entities (ESMEs)</a></li>
 <li><a href="#_sip">6.4. SIP Settings</a></li>
 <li><a href="#_smsc_gateway_http_properties">6.5. SMSC Gateway HTTP connector Settings</a></li>
-<li><a href="#_mapcache">6.6. MAP Version Cache</a></li>
-<li><a href="#_db_routing_rule_settings">6.7. Database Routing Rules</a></li>
-<li><a href="#_mproc_rule_settings">6.8. Message processing rules (mproc rules)</a></li>
-<li><a href="#_managing_statistics">6.9. Statistics</a></li>
+<li><a href="#_httpuser_settings">6.6. HTTP connector user accounts</a></li>
+<li><a href="#_mapcache">6.7. MAP Version Cache</a></li>
+<li><a href="#_db_routing_rule_settings">6.8. Database Routing Rules</a></li>
+<li><a href="#_mproc_rule_settings">6.9. Message processing rules (mproc rules)</a></li>
+<li><a href="#_managing_statistics">6.10. Statistics</a></li>
 </ul>
 </li>
 <li><a href="#maintenance">7. Maintenance</a>
@@ -26650,6 +26651,14 @@ are GET and POST. Request URL must have “sendSms” context and contain all of
 <td class="tableblock halign-left valign-top"><p class="tableblock">messageBodyEncoding</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Values can be "UTF8" or "UTF16". If parameter is not provided then value depends on "smscEncoding" parameter and it is taken from SMSC properties . Default value is "UTF8". This parameter affects data encoding of a message body at HTTP interface.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">senderTon</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TON value for a source address (if missed then <a href="#_httpdefaultsourceton">Default TON value for source addresses</a> value will be used)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">senderNpi</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NPI value for a source address (if missed then <a href="#_httpdefaultsourcenpi">Default NPI value for source addresses</a> value will be used)</p></td>
+</tr>
 </tbody>
 </table>
 <div class="paragraph">
@@ -26665,7 +26674,7 @@ ID:destination”.</p>
 
 http://127.0.0.1:8080/restcomm/sendSms?userid=user1&password=password&msg=exampleMessage_02&format=String&smscEncoding=GSM7&messageBodyEncoding=UTF8&sender=1234&to=1111
 
-http://127.0.0.1:8080/restcomm/sendSms?userid=user1&password=password&msg=exampleMessage_03&format=json&smscEncoding=UCS2&messageBodyEncoding=UTF16&sender=4321&to=6666,6667</pre>
+http://127.0.0.1:8080/restcomm/sendSms?userid=user1&password=password&msg=exampleMessage_03&format=json&smscEncoding=UCS2&messageBodyEncoding=UTF16&sender=4321&to=6666,6667&senderTon=5&senderNpi=0</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -31902,10 +31911,15 @@ SYNOPSIS
 DESCRIPTION
 	This command is used to set a value for default TON (Type Of Number) for source
 	addresses for messages from an HTTP connector.
-	Default value is 1 (International).
+	-1: international (a string contains only digits with "+" at the begin) /
+	    national (a string contains only digits without "+" at the begin) /
+	    alphanumerical (a string does not contain only digits)
+	-2: international (a string contains only digits) /
+	    alphanumerical (a string does not contain only digits)
+	Default value is -2.
 
 EXAMPLES
-	smsc set httpdefaultsourceton 1</pre>
+	smsc set httpdefaultsourceton -1</pre>
 </div>
 </div>
 </div>
@@ -31950,10 +31964,15 @@ SYNOPSIS
 DESCRIPTION
 	This command is used to set a value for default NPI (Number Plan Indicator) for
 	source addresses for messages from an HTTP connector.
-	Default value is 1 (ISDN).
+	-1: international (a string contains only digits with "+" at the begin) /
+	    national (a string contains only digits without "+" at the begin) /
+	    alphanumerical (a string does not contain only digits)
+	-2: international (a string contains only digits) /
+	    alphanumerical (a string does not contain only digits)
+	Default value is -2.
 
 EXAMPLES
-	smsc set httpdefaultsourcenpi 1</pre>
+	smsc set httpdefaultsourcenpi -1</pre>
 </div>
 </div>
 </div>
@@ -32385,7 +32404,209 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_mapcache"><a class="anchor" href="#_mapcache"></a>6.6. MAP Version Cache</h3>
+<h3 id="_httpuser_settings"><a class="anchor" href="#_httpuser_settings"></a>6.6. HTTP connector user accounts</h3>
+<div class="sect3">
+<h4 id="_httpuser_settings_add"><a class="anchor" href="#_httpuser_settings_add"></a>6.6.1. Create a new HTTP user account</h4>
+<div class="sect4">
+<h5 id="_httpuser_settings_add_cli"><a class="anchor" href="#_httpuser_settings_add_cli"></a>6.6.1.1. Using CLI</h5>
+<div class="paragraph">
+<p>You can configure a new HTTP user account by issuing the command <code>smsc httpuser add</code> with appropriate parameters as described below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc httpuser add
+
+SYNOPSIS
+	smsc httpuser add &lt;userName&gt; password &lt;password&gt;
+
+DESCRIPTION
+	This command is used to configure a new HTTP User account
+	to access the HTTP connector for submitting messages to SMSC GW.
+
+PARAMETERS
+
+	userName      - A unique user name that identifies  an account.
+
+	Optional Parameters
+
+	password      - Password for accestting of HTTP connector.</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_httpuser_settings_add_gui"><a class="anchor" href="#_httpuser_settings_add_gui"></a>6.6.1.2. Using GUI</h5>
+<div class="olist arabic">
+<div class="title">Procedure: Create new HTTP user account using GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP user accounts' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing HTTP user accounts (if any), one each in a row with corresponding actions (remove, update) for each row.
+Below this you will find the button 'Create HTTP user account'.</p>
+</li>
+<li>
+<p>You can create a new HTTP user account by launching the 'Create HTTP user account' window by clicking on the blue coloured 'Create HTTP user account' button.
+The 'Create HTTP user account' window will display all HTTP user account paramters that must be defined by you.
+For more details of these parameters please refer to the descriptions of the CLI commands for the same in the preceding section.</p>
+</li>
+<li>
+<p>Enter appropriate values for all the parameters and then click on the 'Create' button at the bottom of this 'HTTP user account' window.
+This action will create a new HTTP user account with parameters as defined by you.</p>
+</li>
+<li>
+<p>If there is an error in defining the HTTP user account, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_httpuser_settings_modify"><a class="anchor" href="#_httpuser_settings_modify"></a>6.6.2. Modify HTTP user account</h4>
+<div class="sect4">
+<h5 id="_httpuser_settings_modify_cli"><a class="anchor" href="#_httpuser_settings_modify_cli"></a>6.6.2.1. Using CLI</h5>
+<div class="paragraph">
+<p>You can modify an existing HTTP user account by issuing the command <code>smsc httpuser modify</code> with appropriate parameters as described below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc httpuser modify
+
+SYNOPSIS
+	smsc httpuser modify &lt;userName&gt; password &lt;password&gt;
+
+DESCRIPTION
+	This command is used to modify parameters of a HTTP User account.
+
+PARAMETERS
+
+	userName      - A user name that identifies an account.
+
+	Optional Parameters
+
+	password      - Password for accessing of HTTP connector.</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_httpuser_settings_modify_gui"><a class="anchor" href="#_httpuser_settings_modify_gui"></a>6.6.2.2. Using GUI</h5>
+<div class="olist arabic">
+<div class="title">Procedure: Modify an existing HTTP user account using GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP user accounts' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing HTTP user accounts (if any), one each in a row with corresponding actions (remove, update) for each row.</p>
+</li>
+<li>
+<p>You can update an existing by launching the 'HTTP user account &lt;name&gt; properties' window by clicking on the blue coloured 'Update HTTP user account' button.
+The 'HTTP user account &lt;name&gt; properties' window will display all HTTP user account paramters that can be updated by you.
+For more details of these parameters please refer to the descriptions of the CLI commands  for the same in the preceding section.</p>
+</li>
+<li>
+<p>Update appropriate values for all the parameters and then click on the 'Close' button.
+This action will modify a new HTTP user account with parameters as defined by you.</p>
+</li>
+<li>
+<p>If there is an error in defining the HTTP user account, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_httpuser_settings_show"><a class="anchor" href="#_httpuser_settings_show"></a>6.6.3. View HTTP user account details</h4>
+<div class="sect4">
+<h5 id="_httpuser_settings_show_cli"><a class="anchor" href="#_httpuser_settings_show_cli"></a>6.6.3.1. Using CLI</h5>
+<div class="paragraph">
+<p>You can view the details of all or concrete configured HTTP user accounts by issuing the command <code>smsc httpuser show</code> as described below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc httpuser show
+
+SYNOPSIS
+	smsc httpuser show &lt;userName&gt; password &lt;password&gt;
+
+DESCRIPTION
+	This command is used to show HTTP User account(s) details.
+
+PARAMETERS
+
+	userName      - A unique user name that identifies a user.
+	                This parameter is option. If it is omitted all
+	                accounts will be displayed.</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_httpuser_settings_show_gui"><a class="anchor" href="#_httpuser_settings_show_gui"></a>6.6.3.2. Using GUI</h5>
+<div class="olist arabic">
+<div class="title">Procedure: View HTTP user account using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP user accounts' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing HTTP user accounts (if any), one each in a row with corresponding actions (remove, update) for each row.</p>
+</li>
+<li>
+<p>You can view the details of an HTTP user account by clicking on the row corresponding to the HTTP user account.
+All relevant details of the HTTP user account will be displayed in an expanded format.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_httpuser_settings_remove"><a class="anchor" href="#_httpuser_settings_remove"></a>6.6.4. Delete an existing HTTP user account</h4>
+<div class="sect4">
+<h5 id="_httpuser_settings_remove_cli"><a class="anchor" href="#_httpuser_settings_remove_cli"></a>6.6.4.1. Using CLI</h5>
+<div class="paragraph">
+<p>You can delete any HTTP user account by issuing the command <code>smsc httpuser remove</code> with appropriate parameters as described below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc httpuser remove
+
+SYNOPSIS
+	smsc httpuser remove &lt;userName&gt;
+
+DESCRIPTION
+	This command is used to remove of a HTTP User account.
+
+PARAMETERS
+
+	userName      - A unique user name that identifies  an account.</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_httpuser_settings_remove_gui"><a class="anchor" href="#_httpuser_settings_remove_gui"></a>6.6.4.2. Using GUI</h5>
+<div class="olist arabic">
+<div class="title">Procedure: Delete HTTP user account using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'HTTP user accounts' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing HTTP user accounts (if any), one each in a row with corresponding actions (remove, update) for each row.</p>
+</li>
+<li>
+<p>To delete an existing HTTP user account click on the delete icon marked 'x' in red, for the row corresponding to the HTTP user account.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mapcache"><a class="anchor" href="#_mapcache"></a>6.7. MAP Version Cache</h3>
 <div class="paragraph">
 <p>Restcomm SMSC caches the negotiated MAP Version for each network node.
 Cache stores the Global Title of SCCP address of the network node.
@@ -32393,7 +32614,7 @@ Every MT SMS sent to this node will use the cached Version.
 This will help in reducing the MAP Version negotiation duration everytime and hence improve the performance.</p>
 </div>
 <div class="sect3">
-<h4 id="_mapcache_cli"><a class="anchor" href="#_mapcache_cli"></a>6.6.1. Using CLI</h4>
+<h4 id="_mapcache_cli"><a class="anchor" href="#_mapcache_cli"></a>6.7.1. Using CLI</h4>
 <div class="paragraph">
 <p>You can set the 'MAP Version Cache' value by issuing the command <code>smsc mapcache set</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc mapcache get</code> which will display all the cached values.
@@ -32416,7 +32637,7 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect3">
-<h4 id="_mapcache_gui"><a class="anchor" href="#_mapcache_gui"></a>6.6.2. Using GUI</h4>
+<h4 id="_mapcache_gui"><a class="anchor" href="#_mapcache_gui"></a>6.7.2. Using GUI</h4>
 <div class="olist arabic">
 <div class="title">Procedure: Managing MAP Version Cache value using the GUI</div>
 <ol class="arabic">
@@ -32442,7 +32663,7 @@ The cached value will be displayed in the log.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_db_routing_rule_settings"><a class="anchor" href="#_db_routing_rule_settings"></a>6.7. Database Routing Rules</h3>
+<h3 id="_db_routing_rule_settings"><a class="anchor" href="#_db_routing_rule_settings"></a>6.8. Database Routing Rules</h3>
 <div class="paragraph">
 <p>Restcomm SMSC can now act as a SMPP Server accepting incoming SMPP connections or can also act as a SMPP client initiating a connection to a remote SMSC server.
 Therefore you can now set an intelligent database routing rule to route SMS between SMPP connections or between SMPP, SIP and GSM.</p>
@@ -32475,9 +32696,9 @@ You must change the value of the property <code>smsRoutingRuleClass</code> in th
 You can populate this table with address and corresponding cluster name as explained in the sections below.</p>
 </div>
 <div class="sect3">
-<h4 id="_update_db_rule"><a class="anchor" href="#_update_db_rule"></a>6.7.1. Create/Update Database Routing Rule</h4>
+<h4 id="_update_db_rule"><a class="anchor" href="#_update_db_rule"></a>6.8.1. Create/Update Database Routing Rule</h4>
 <div class="sect4">
-<h5 id="_update_db_rule_cli"><a class="anchor" href="#_update_db_rule_cli"></a>6.7.1.1. Using CLI</h5>
+<h5 id="_update_db_rule_cli"><a class="anchor" href="#_update_db_rule_cli"></a>6.8.1.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can create or update a Database Routing Rule using the command <code>smsc databaserule update</code> with appropriate parameters as described below:</p>
 </div>
@@ -32516,7 +32737,7 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect4">
-<h5 id="_update_db_rule_gui"><a class="anchor" href="#_update_db_rule_gui"></a>6.7.1.2. Using GUI</h5>
+<h5 id="_update_db_rule_gui"><a class="anchor" href="#_update_db_rule_gui"></a>6.8.1.2. Using GUI</h5>
 <div class="olist arabic">
 <div class="title">Procedure: Create/Update Database Routing Rule using the GUI</div>
 <ol class="arabic">
@@ -32534,9 +32755,9 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect3">
-<h4 id="_delete_db_rule"><a class="anchor" href="#_delete_db_rule"></a>6.7.2. Delete Database Routing Rule</h4>
+<h4 id="_delete_db_rule"><a class="anchor" href="#_delete_db_rule"></a>6.8.2. Delete Database Routing Rule</h4>
 <div class="sect4">
-<h5 id="_delete_db_rule_cli"><a class="anchor" href="#_delete_db_rule_cli"></a>6.7.2.1. Using CLI</h5>
+<h5 id="_delete_db_rule_cli"><a class="anchor" href="#_delete_db_rule_cli"></a>6.8.2.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can delete a Database Routing Rule using the command <code>smsc databaserule delete</code> with appropriate parameters as described below:</p>
 </div>
@@ -32563,7 +32784,7 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect4">
-<h5 id="_delete_db_rule_gui"><a class="anchor" href="#_delete_db_rule_gui"></a>6.7.2.2. Using GUI</h5>
+<h5 id="_delete_db_rule_gui"><a class="anchor" href="#_delete_db_rule_gui"></a>6.8.2.2. Using GUI</h5>
 <div class="olist arabic">
 <div class="title">Procedure: Delete Database Routing Rule using the GUI</div>
 <ol class="arabic">
@@ -32581,9 +32802,9 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect3">
-<h4 id="_get_db_rule"><a class="anchor" href="#_get_db_rule"></a>6.7.3. View Database Routing Rule Information</h4>
+<h4 id="_get_db_rule"><a class="anchor" href="#_get_db_rule"></a>6.8.3. View Database Routing Rule Information</h4>
 <div class="sect4">
-<h5 id="_get_db_rule_cli"><a class="anchor" href="#_get_db_rule_cli"></a>6.7.3.1. Using CLI</h5>
+<h5 id="_get_db_rule_cli"><a class="anchor" href="#_get_db_rule_cli"></a>6.8.3.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can view a Database Routing Rule using the command <code>smsc databaserule get</code> with appropriate parameters as described below:</p>
 </div>
@@ -32611,7 +32832,7 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect4">
-<h5 id="_get_db_rule_gui"><a class="anchor" href="#_get_db_rule_gui"></a>6.7.3.2. Using GUI</h5>
+<h5 id="_get_db_rule_gui"><a class="anchor" href="#_get_db_rule_gui"></a>6.8.3.2. Using GUI</h5>
 <div class="olist arabic">
 <div class="title">Procedure: View Database Routing Rule using the GUI</div>
 <ol class="arabic">
@@ -32629,9 +32850,9 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect3">
-<h4 id="_getrange_db_rule"><a class="anchor" href="#_getrange_db_rule"></a>6.7.4. Retrieve a range of Database Routing Rules</h4>
+<h4 id="_getrange_db_rule"><a class="anchor" href="#_getrange_db_rule"></a>6.8.4. Retrieve a range of Database Routing Rules</h4>
 <div class="sect4">
-<h5 id="_getrange_db_rule_cli"><a class="anchor" href="#_getrange_db_rule_cli"></a>6.7.4.1. Using CLI</h5>
+<h5 id="_getrange_db_rule_cli"><a class="anchor" href="#_getrange_db_rule_cli"></a>6.8.4.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can retrieve a range of Database Routing Rules using the command <code>smsc databaserule getrange</code> with appropriate parameters as described below:</p>
 </div>
@@ -32664,15 +32885,15 @@ PARAMETERS
 </div>
 </div>
 <div class="sect2">
-<h3 id="_mproc_rule_settings"><a class="anchor" href="#_mproc_rule_settings"></a>6.8. Message processing rules (mproc rules)</h3>
+<h3 id="_mproc_rule_settings"><a class="anchor" href="#_mproc_rule_settings"></a>6.9. Message processing rules (mproc rules)</h3>
 <div class="paragraph">
 <p>The fundamentals of mproc rules you can in the chapter <a href="#_mproc_rules_fundamentals">Message processing rules (mproc rules)</a>.
 Here we will describe how to manage mproc rules.</p>
 </div>
 <div class="sect3">
-<h4 id="_mproc_rule_settings_create"><a class="anchor" href="#_mproc_rule_settings_create"></a>6.8.1. Create a mproc rule.</h4>
+<h4 id="_mproc_rule_settings_create"><a class="anchor" href="#_mproc_rule_settings_create"></a>6.9.1. Create a mproc rule.</h4>
 <div class="sect4">
-<h5 id="_mproc_rule_settings_create_cli"><a class="anchor" href="#_mproc_rule_settings_create_cli"></a>6.8.1.1. Using CLI</h5>
+<h5 id="_mproc_rule_settings_create_cli"><a class="anchor" href="#_mproc_rule_settings_create_cli"></a>6.9.1.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can configure a new mproc rule by issuing the command smsc mproc add with appropriate parameters as described below.</p>
 </div>
@@ -32750,7 +32971,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="_mproc_rule_settings_create_gui"><a class="anchor" href="#_mproc_rule_settings_create_gui"></a>6.8.1.2. Using GUI</h5>
+<h5 id="_mproc_rule_settings_create_gui"><a class="anchor" href="#_mproc_rule_settings_create_gui"></a>6.9.1.2. Using GUI</h5>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -32776,9 +32997,9 @@ This action will create a new mproc rule with parameters as defined by you.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_mproc_rule_settings_modify"><a class="anchor" href="#_mproc_rule_settings_modify"></a>6.8.2. Modify a mproc rule.</h4>
+<h4 id="_mproc_rule_settings_modify"><a class="anchor" href="#_mproc_rule_settings_modify"></a>6.9.2. Modify a mproc rule.</h4>
 <div class="sect4">
-<h5 id="_mproc_rule_settings_modify_cli"><a class="anchor" href="#_mproc_rule_settings_modify_cli"></a>6.8.2.1. Using CLI</h5>
+<h5 id="_mproc_rule_settings_modify_cli"><a class="anchor" href="#_mproc_rule_settings_modify_cli"></a>6.9.2.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can modify an existent mproc rule by issuing the command smsc mproc modify with appropriate parameters as described below.</p>
 </div>
@@ -32851,7 +33072,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="_mproc_rule_settings_modify_gui"><a class="anchor" href="#_mproc_rule_settings_modify_gui"></a>6.8.2.2. Using GUI</h5>
+<h5 id="_mproc_rule_settings_modify_gui"><a class="anchor" href="#_mproc_rule_settings_modify_gui"></a>6.9.2.2. Using GUI</h5>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -32879,9 +33100,9 @@ This action will modify a mproc rule with parameters as defined by you.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_mproc_rule_settings_view"><a class="anchor" href="#_mproc_rule_settings_view"></a>6.8.3. View a mproc rule details.</h4>
+<h4 id="_mproc_rule_settings_view"><a class="anchor" href="#_mproc_rule_settings_view"></a>6.9.3. View a mproc rule details.</h4>
 <div class="sect4">
-<h5 id="_mproc_rule_settings_view_cli"><a class="anchor" href="#_mproc_rule_settings_view_cli"></a>6.8.3.1. Using CLI</h5>
+<h5 id="_mproc_rule_settings_view_cli"><a class="anchor" href="#_mproc_rule_settings_view_cli"></a>6.9.3.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can view the details of all configured mproc rules or a specified mproc rule by issuing the command smsc mproc show as described below.</p>
 </div>
@@ -32912,7 +33133,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="_mproc_rule_settings_view_gui"><a class="anchor" href="#_mproc_rule_settings_view_gui"></a>6.8.3.2. Using GUI</h5>
+<h5 id="_mproc_rule_settings_view_gui"><a class="anchor" href="#_mproc_rule_settings_view_gui"></a>6.9.3.2. Using GUI</h5>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -32931,9 +33152,9 @@ All relevant details of the mproc rule will be displayed in an expanded format.<
 </div>
 </div>
 <div class="sect3">
-<h4 id="_mproc_rule_settings_remove"><a class="anchor" href="#_mproc_rule_settings_remove"></a>6.8.4. Remove an existing mproc rule.</h4>
+<h4 id="_mproc_rule_settings_remove"><a class="anchor" href="#_mproc_rule_settings_remove"></a>6.9.4. Remove an existing mproc rule.</h4>
 <div class="sect4">
-<h5 id="_mproc_rule_settings_remove_cli"><a class="anchor" href="#_mproc_rule_settings_remove_cli"></a>6.8.4.1. Using CLI</h5>
+<h5 id="_mproc_rule_settings_remove_cli"><a class="anchor" href="#_mproc_rule_settings_remove_cli"></a>6.9.4.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can remove an existent mproc rule by issuing the command smsc mproc remove with appropriate parameters as described below.</p>
 </div>
@@ -32960,7 +33181,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="_mproc_rule_settings_remove_gui"><a class="anchor" href="#_mproc_rule_settings_remove_gui"></a>6.8.4.2. Using GUI</h5>
+<h5 id="_mproc_rule_settings_remove_gui"><a class="anchor" href="#_mproc_rule_settings_remove_gui"></a>6.9.4.2. Using GUI</h5>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -32979,15 +33200,15 @@ Below this you will find the button 'Create Message Processing Rule'.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_managing_statistics"><a class="anchor" href="#_managing_statistics"></a>6.9. Statistics</h3>
+<h3 id="_managing_statistics"><a class="anchor" href="#_managing_statistics"></a>6.10. Statistics</h3>
 <div class="paragraph">
 <p>The GUI will allow you to create campaigns of fixed duration for gathering statistics data.
 Campaign allows to select time period over which these statistics have been gathered (in hours, minutes and seconds). Once Campaign is defined, the statistics can be observed by clicking on the newly created campaign name or you can also navigate to Metrics (click Metrics on left panel) to get graph of statistics.</p>
 </div>
 <div class="sect3">
-<h4 id="_managing_statistics_create"><a class="anchor" href="#_managing_statistics_create"></a>6.9.1. Create new Campaign</h4>
+<h4 id="_managing_statistics_create"><a class="anchor" href="#_managing_statistics_create"></a>6.10.1. Create new Campaign</h4>
 <div class="sect4">
-<h5 id="_managing_statistics_create_gui"><a class="anchor" href="#_managing_statistics_create_gui"></a>6.9.1.1. Using GUI</h5>
+<h5 id="_managing_statistics_create_gui"><a class="anchor" href="#_managing_statistics_create_gui"></a>6.10.1.1. Using GUI</h5>
 <div class="olist arabic">
 <div class="title">Procedure: Create new Campaign using GUI</div>
 <ol class="arabic">
@@ -33028,9 +33249,9 @@ For SMSC, select 'SMSC GW-SMSC-Main'.
 </div>
 </div>
 <div class="sect3">
-<h4 id="_managing_statistics_view"><a class="anchor" href="#_managing_statistics_view"></a>6.9.2. View Campaigns</h4>
+<h4 id="_managing_statistics_view"><a class="anchor" href="#_managing_statistics_view"></a>6.10.2. View Campaigns</h4>
 <div class="sect4">
-<h5 id="_managing_statistics_view_gui"><a class="anchor" href="#_managing_statistics_view_gui"></a>6.9.2.1. Using GUI</h5>
+<h5 id="_managing_statistics_view_gui"><a class="anchor" href="#_managing_statistics_view_gui"></a>6.10.2.1. Using GUI</h5>
 <div class="paragraph">
 <p>You can view all existing campaigns in the GUI.
 On the main panel, click on the Campaign name.
@@ -34241,7 +34462,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-10-20 10:53:25 WEST
+Last updated 2016-10-21 10:54:14 WEST
 </div>
 </div>
 <footer>
