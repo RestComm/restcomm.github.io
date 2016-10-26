@@ -23113,7 +23113,7 @@ ReturnError: 34 : MAPErrorMessageSystemFailure [networkResource=hlr]</pre>
        			&lt;msid type="MSISDN"&gt;59899077937&lt;/msid&gt;
      		&lt;/msids&gt;
      		&lt;loc_type type=""CURRENT_OR_LAST" /&gt;
-     &lt;/slir&gt;
+    &lt;/slir&gt;
 &lt;/svc_init&gt;</pre>
 </div>
 </div>
@@ -23122,7 +23122,8 @@ ReturnError: 34 : MAPErrorMessageSystemFailure [networkResource=hlr]</pre>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;!DOCTYPE svc_result SYSTEM "MLP_SVC_RESULT_310.DTD"&gt;
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE svc_result SYSTEM "MLP_SVC_RESULT_310.DTD"&gt;
 &lt;svc_result xmlns="MLP_SVC_RESULT_310.dtd" ver="3.1.0"&gt;
     &lt;slia ver="3.1.0"&gt;
         &lt;pos&gt;
@@ -23157,7 +23158,8 @@ ReturnError: 34 : MAPErrorMessageSystemFailure [networkResource=hlr]</pre>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;!DOCTYPE svc_result SYSTEM "MLP_SVC_RESULT_310.DTD"&gt;
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE svc_result SYSTEM "MLP_SVC_RESULT_310.DTD"&gt;
 &lt;svc_result xmlns="MLP_SVC_RESULT_310.dtd" ver="3.1.0"&gt;
     &lt;slia ver="3.1.0"&gt;
         &lt;result resid="4"&gt;UNKNOWN SUBSCRIBER&lt;/result&gt;
@@ -23171,7 +23173,8 @@ ReturnError: 34 : MAPErrorMessageSystemFailure [networkResource=hlr]</pre>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;!DOCTYPE svc_result SYSTEM "MLP_SVC_RESULT_310.DTD"&gt;
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE svc_result SYSTEM "MLP_SVC_RESULT_310.DTD"&gt;
 &lt;svc_result xmlns="MLP_SVC_RESULT_310.dtd" ver="3.1.0"&gt;
     &lt;slia ver="3.1.0"&gt;
         &lt;result resid="1"&gt;SYSTEM FAILURE&lt;/result&gt;
@@ -23210,7 +23213,10 @@ ReturnError: 34 : MAPErrorMessageSystemFailure [networkResource=hlr]</pre>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt; &lt;!DOCTYPE svc_init SYSTEM "MLP_SVC_INIT_310.DTD"&gt; &lt;svc_init xmlns="MLP_SVC_INIT_310.dtd"&gt; 	    &lt;hdr&gt;
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE svc_init SYSTEM "MLP_SVC_INIT_310.DTD"&gt;
+&lt;svc_init xmlns="MLP_SVC_INIT_310.dtd"&gt;
+    &lt;hdr&gt;
         &lt;client&gt;
             &lt;id&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/id&gt;
             &lt;pwd&gt;f8bc1274677b173d1a1cf3b9924eaa7e&lt;/pwd&gt;
@@ -23233,7 +23239,7 @@ ReturnError: 34 : MAPErrorMessageSystemFailure [networkResource=hlr]</pre>
 		&lt;/geo_info&gt;
 		&lt;change_area&gt;
 			&lt;target_area&gt;
-				&lt;name_area&gt;area51&lt;/name_area&gt;
+				&lt;name_area&gt;a51&lt;/name_area&gt;
 			&lt;/target_area&gt;
 			&lt;type&gt;MS_WITHIN_AREA&lt;/type&gt;
 			&lt;loc_estimates&gt;FALSE&lt;/loc_estimates&gt;
@@ -23253,35 +23259,49 @@ is shown next (only AVPs shown for simplicity):</p>
 <div class="content">
 <pre>[PLR] Sending Request: 8388620 [E2E:1263534084 -- HBH:1693441831 -- AppID:16777255]
 [PLR] Request AVPs:
-[PLR] &lt;avp name="Session-Id" code="263" vendor="0" value="127.0.0.1;343; 3840918879;SLg-PLA34277987203" /&gt;
+[PLR] &lt;avp name="Session-Id" code="263" vendor="0" value="51.0.0.1;343; 3840918879;SLg-PLA34277987203" /&gt;
 [PLR] &lt;avp name="Vendor-Specific-Application-Id" code="260" vendor="0"&gt;
 [PLR]   &lt;avp name="Vendor-Id" code="266" vendor="0" value="10415" /&gt;
 [PLR]   &lt;avp name="Auth-Application-Id" code="258" vendor="0" value="16777255" /&gt;
 [PLR] &lt;/avp&gt;
-[PLR] &lt;avp name="Destination-Realm" code="283" vendor="0" value="server.mobicents.org" /&gt;
-[PLR] &lt;avp name="Origin-Realm" code="296" vendor="0" value="client.mobicents.org" /&gt;
+[PLR] &lt;avp name="Destination-Realm" code="283" vendor="0" value="tel1.com" /&gt;
+[PLR] &lt;avp name="Origin-Realm" code="296" vendor="0" value="restcomm.com" /&gt;
 [PLR] &lt;avp name="Auth-Session-State" code="277" vendor="0" value="1" /&gt;
-[PLR] &lt;avp name="Origin-Host" code="264" vendor="0" value="aaa://127.0.0.1:13868" /&gt;
+[PLR] &lt;avp name="Origin-Host" code="264" vendor="0" value="aaa://51.0.0.1:13868" /&gt;
 [PLR] &lt;avp name="SLg-Location-Type" code="2500" vendor="10415" value="0" /&gt;
 [PLR] &lt;avp name="MSISDN" code="701" vendor="10415" value="59899077937" /&gt;
 [PLR] &lt;avp name="LCS-EPS-Client-Name" code="2501" vendor="10415"&gt;
-[PLR]   &lt;avp name="LCS-Name-String" code="1238" vendor="10415" value="Restcomm Geolocation API" /&gt;
+[PLR]   &lt;avp name="LCS-Name-String" code="1238" vendor="10415" value=" ACae6e420f425248d6a26948c17a9e2acf" /&gt;
 [PLR]   &lt;avp name="LCS-Format-Indicator" code="1237" vendor="10415" value="2" /&gt;
 [PLR] &lt;/avp&gt;
 [PLR] &lt;avp name="LCS-Client-Type" code="1241" vendor="10415" value="1" /&gt;
 [PLR] &lt;avp name="LCS-Requestor-Name" code="2502" vendor="10415"&gt;
-[PLR]   &lt;avp name="LCS-Requestor-Id-String" code="1240" vendor="10415" value="restcomm_geolocation_23" /&gt;
-[PLR]   &lt;avp name="LCS-Format-Indicator" code="1237" vendor="10415" value="3" /&gt;
+[PLR]   &lt;avp name="LCS-Requestor-Id-String" code="1240" vendor="10415" value="Restcomm Geolocation API" /&gt;
+[PLR]   &lt;avp name="LCS-Format-Indicator" code="1237" vendor="10415" value="0" /&gt;
 [PLR] &lt;/avp&gt;
-[PLR] &lt;avp name="LCS-Priority" code="2503" vendor="10415" value="0" /&gt;
+[PLR] &lt;avp name="LCS-Priority" code="2503" vendor="10415" value="1" /&gt;
 [PLR] &lt;avp name="LCS-QoS" code="2504" vendor="10415"&gt;
 [PLR]   &lt;avp name="LCS-QoS-Class" code="2523" vendor="10415" value="1" /&gt;
 [PLR]   &lt;avp name="Horizontal-Accuracy" code="2505" vendor="10415" value="120" /&gt;
-[PLR]   &lt;avp name="Vertical-Accuracy" code="2506" vendor="10415" value="3237" /&gt;
+[PLR]   &lt;avp name="Vertical-Accuracy" code="2506" vendor="10415" value="99999" /&gt;
 [PLR]   &lt;avp name="Vertical-Requested" code="2507" vendor="10415" value="0" /&gt;
 [PLR]   &lt;avp name="Response-Time" code="2509" vendor="10415" value="1" /&gt;
 [PLR] &lt;/avp&gt;
-[PLR] &lt;avp name="Velocity-Requested" code="2508" vendor="10415" value="0" /&gt;
+[PLR] &lt;avp name="Deferred-Location-Type" code="2532" vendor="10415" value="4" /&gt;
+[PLR] &lt;avp name="LCS-Reference-Number" code="2531" vendor="10415" value="579" /&gt;
+[PLR] &lt;avp name="Area-Event-Info" code="2533" vendor="10415"&gt;
+[PLR]   &lt;avp name="Occurrence-Info" code="2538" vendor="10415" value="0" /&gt;
+[PLR]   &lt;avp name="Interval-Time" code="2539" vendor="10415" value="3600" /&gt;
+[PLR] &lt;/avp&gt;
+[PLR] &lt;avp name="Area-Definition" code="2534" vendor="10415"&gt;
+[PLR]   &lt;avp name="Area-Type" code="2536" vendor="10415" value="2" /&gt;
+[PLR]   &lt;avp name="Area-Identification" code="2537" vendor="10415" value="a51" /&gt;
+[PLR] &lt;/avp&gt;
+[PLR] &lt;avp name="PLR-Flags" code="2545" vendor="10415" value="4" /&gt;
+[PLR] &lt;avp name="Area-Event-Info" code="2533" vendor="10415"&gt;
+[PLR]   &lt;avp name="Reporting-Amount" code="2541" vendor="10415" value="1" /&gt;
+[PLR]   &lt;avp name="Reporting-Interval" code="2542" vendor="10415" value="3600" /&gt;
+[PLR] &lt;/avp&gt;
 [PLR] &lt;/avp&gt;
 [PLR] &lt;avp name="GMLC-Address" code="2405" vendor="10415" value="52.21.78.91" /&gt;
 [PLR] &lt;avp name="PLR-Flags" code="2545" vendor="10415" value="4" /&gt;
@@ -23295,20 +23315,24 @@ is shown next (only AVPs shown for simplicity):</p>
 <div class="content">
 <pre>[PLA] Received Answer: 8388620 [E2E:1263534084 -- HBH:1693441831 -- AppID:16777255]
 [PLA] Request AVPs:
-[PLA] &lt;avp name="Session-Id" code="263" vendor="0" value="127.0.0.1;343;3840918879;SLg-PLA34277987203" /&gt;
+[PLA] &lt;avp name="Session-Id" code="263" vendor="0" value="51.0.0.1;343; 3840918879;SLg-PLA34277987203" /&gt;
 [PLA] &lt;avp name="Vendor-Specific-Application-Id" code="260" vendor="0"&gt;
 [PLA] &lt;avp name="Vendor-Id" code="266" vendor="0" value="10415" /&gt;
 [PLA] &lt;avp name="Auth-Application-Id" code="258" vendor="0" value="16777255" /&gt;
 [PLA] &lt;/avp&gt;
 [PLA] &lt;avp name="Result-Code" code="268" vendor="0" value="2001" /&gt;
 [PLA] &lt;avp name="Auth-Session-State" code="277" vendor="0" value="1" /&gt;
-[PLA] &lt;avp name="Location-Estimate" code="1242" vendor="10415" value="S35°38'15.37" W109°45'21.77"" /&gt;
+[PLA] &lt;avp name="Location-Estimate" code="1242" vendor="10415" value="S35°38'15.37" W58°45'21.77"" /&gt;
 [PLA] &lt;avp name="Accuracy-Fulfilment-Indicator" code="2513" vendor="10415" value="0" /&gt;
 [PLA] &lt;avp name="Age-Of-Location-Estimate" code="2514" vendor="10415" value="0" /&gt;
+[PLA] &lt;avp name="EUTRAN-Positioning-Data" code="2516" vendor="10415" value="0A73F937" /&gt;
 [PLA] &lt;avp name="ECGI" code="2517" vendor="10415" value="EFB9437" /&gt;
 [PLA] &lt;avp name="Serving-Node" code="2401" vendor="10415"&gt;
+[PLA]   &lt;avp name="SGSN-Number" code="1489" vendor="10415" value="59899004501" /&gt;
+[PLA]	&lt;avp name="SGSN-Name" code="2409" vendor="10415" value="SGSN01" /&gt;
+[PLA]	&lt;avp name="SGSN-Realm" code="2410" vendor="10415" value="sgsn.tel1.com" /&gt;
 [PLA]   &lt;avp name="MME-Name" code="2402" vendor="10415" value="MME710" /&gt;
-[PLA]   &lt;avp name="MME-Realm" code="2408" vendor="10415" value="mme.antel.com" /&gt;
+[PLA]   &lt;avp name="MME-Realm" code="2408" vendor="10415" value="mme.tel1.com" /&gt;
 [PLA]   &lt;avp name="3GPP-AAA-Server-Name" code="318" vendor="10415" value="aaa.restcomm.com" /&gt;
 [PLA]   &lt;avp name="LCS-Capabilities-Sets" code="2404" vendor="10415" value="99900123" /&gt;
  [PLA]   &lt;avp name="GMLC-Address" code="2405" vendor="10415" value="52.21.78.91" /&gt;
@@ -23326,32 +23350,175 @@ Location Immediate Answer) embedded in HTTP POST response is shown next.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;!DOCTYPE svc_result SYSTEM "MLP_SVC_RESULT_310.DTD"&gt; &lt;svc_result xmlns="MLP_SVC_RESULT_310.dtd" ver="3.1.0"&gt;
-&lt;slia ver="3.1.0"&gt; 	&lt;pos&gt;
-        &lt;msid&gt;59899077937&lt;/msid&gt;
-        &lt;pd&gt;
-            &lt;time utc_off="-0300"&gt;20161023235151&lt;/time&gt;
-		    &lt;geo_info&gt;
-			    &lt;CoordinateReferenceSystem&gt;
-				    &lt;Identifier&gt;
-					    &lt;code&gt;4326&lt;/code&gt;
-					    &lt;codeSpace&gt;EPSG&lt;/codeSpace&gt;
-					    &lt;edition&gt;6.1&lt;/edition&gt;
-				    &lt;/Identifier&gt;
-			    &lt;/CoordinateReferenceSystem&gt;
-			    &lt;shape&gt;
-			        &lt;CircularArea&gt;
-			            &lt;coord&gt;
-			                &lt;X&gt;35 38 15.37S&lt;/X&gt;
-			                &lt;Y&gt;109 45 21.77W&lt;/Y&gt;
-			            &lt;/coord&gt;
-			            &lt;radius&gt;-1&lt;/radius&gt;
-			        &lt;/CircularArea&gt;
-			    &lt;/shape&gt;
-		    &lt;/geo_info&gt;
-		&lt;/pd&gt;
-	&lt;/pos&gt;
-&lt;/slia&gt;
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE svc_result SYSTEM "MLP_SVC_RESULT_310.DTD"&gt;
+&lt;svc_result xmlns="MLP_SVC_RESULT_310.dtd" ver="3.1.0"&gt;
+    &lt;slia ver="3.1.0"&gt;
+        &lt;lcs_ref&gt;579&lt;/lcs_ref&gt;
+        &lt;pos&gt;
+            &lt;msid&gt;59899077937&lt;/msid&gt;
+            &lt;pd&gt;
+                &lt;time utc_off="-0300"&gt;20161023235151&lt;/time&gt;
+		        &lt;geo_info&gt;
+			        &lt;CoordinateReferenceSystem&gt;
+				        &lt;Identifier&gt;
+					        &lt;code&gt;4326&lt;/code&gt;
+					        &lt;codeSpace&gt;EPSG&lt;/codeSpace&gt;
+					        &lt;edition&gt;6.1&lt;/edition&gt;
+				        &lt;/Identifier&gt;
+			        &lt;/CoordinateReferenceSystem&gt;
+			        &lt;shape&gt;
+			            &lt;CircularArea&gt;
+			                &lt;coord&gt;
+			                    &lt;X&gt;35 38 15.37S&lt;/X&gt;
+			                    &lt;Y&gt;58 45 21.77W&lt;/Y&gt;
+			                &lt;/coord&gt;
+			                &lt;radius&gt;-1&lt;/radius&gt;
+			            &lt;/CircularArea&gt;
+			        &lt;/shape&gt;
+		        &lt;/geo_info&gt;
+		    &lt;/pd&gt;
+	    &lt;/pos&gt;
+    &lt;/slia&gt;
+&lt;/svc_result&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When the settled event occurs, it triggers a location report back to the GMLC, the ELP LRR/LRA messages are subsequently conveyed back and forth between the MME and GMLC, as displayed next:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[LRR] Sending Request: 8388621 [E2E:1370488836 -- HBH:1693543583 -- AppID:16777255]
+[LRR] Request AVPs:
+[LRR] &lt;avp name="Session-Id" code="263" vendor="0" value="51.0.0.1;343; 3841024432;-SLg-LRR34277987203" /&gt;
+[LRR] &lt;avp name="Vendor-Specific-Application-Id" code="260" vendor="0"&gt;
+[LRR]   &lt;avp name="Vendor-Id" code="266" vendor="0" value="10415" /&gt;
+[LRR]   &lt;avp name="Auth-Application-Id" code="258" vendor="0" value="16777255" /&gt;
+[LRR] &lt;/avp&gt;
+[LRR] &lt;avp name="Destination-Realm" code="283" vendor="0" value="restcomm.com" /&gt;
+[LRR] &lt;avp name="Origin-Realm" code="296" vendor="0" value="tel1.com" /&gt;
+[LRR] &lt;avp name="Auth-Session-State" code="277" vendor="0" value="1" /&gt;
+[LRR] &lt;avp name="Origin-Host" code="264" vendor="0" value="aaa://51.0.0.1:13868" /&gt;
+[LRR] &lt;avp name="Location-Event" code="2518" vendor="10415" value="4" /&gt;
+[LRR] &lt;avp name="LCS-EPS-Client-Name" code="2501" vendor="10415"&gt;
+[LRR]   &lt;avp name="LCS-Name-String" code="1238" vendor="10415" value="ACae6e420f425248d6a26948c17a9e2acf" /&gt;
+[LRR]   &lt;avp name="LCS-Format-Indicator" code="1237" vendor="10415" value="2" /&gt;
+[LRR] &lt;/avp&gt;
+[LRR] &lt;avp name="3GPP-IMSI" code="1" vendor="10415" value="748039876543210" /&gt;
+[LRR] &lt;avp name="MSISDN" code="701" vendor="10415" value="59899077937" /&gt;
+[LRR] &lt;avp name="IMEI" code="1402" vendor="10415" value="011714004661057" /&gt;
+[LRR] &lt;avp name="Location-Estimate" code="1242" vendor="10415" value=" S35°37'10.91" W58°01'33.07"" /&gt;
+[LRR] &lt;avp name="Accuracy-Fulfilment-Indicator" code="2513" vendor="10415" value="0" /&gt;
+[LRR] &lt;avp name="Age-Of-Location-Estimate" code="2514" vendor="10415" value="3" /&gt;
+[LRR] &lt;avp name="Velocity-Estimate" code="2515" vendor="10415" value="0" /&gt;
+[LRR] &lt;avp name="EUTRAN-Positioning-Data" code="2516" vendor="10415" value="0A73F937" /&gt;
+[LRR] &lt;avp name="ECGI" code="2517" vendor="10415" value="E1F0023" /&gt;
+[LRR] &lt;avp name="Service-Area-Identity" code="1607" vendor="10415" value="service-area-umts-3" /&gt;
+[LRR] &lt;avp name="LCS-Service-Type-ID" code="2520" vendor="10415" value="234" /&gt;
+[LRR] &lt;avp name="Pseudonym-Indicator" code="2519" vendor="10415" value="0" /&gt;
+[LRR] &lt;avp name="LCS-QoS-Class" code="2523" vendor="10415" value="1" /&gt;
+[LRR] &lt;avp name="Serving-Node" code="2401" vendor="10415"&gt;
+[LRR]   &lt;avp name="SGSN-Number" code="1489" vendor="10415" value="59899004501" /&gt;
+[LRR]	&lt;avp name="SGSN-Name" code="2409" vendor="10415" value="SGSN01" /&gt;
+[LRR]	&lt;avp name="SGSN-Realm" code="2410" vendor="10415" value="sgsn.tel1.com" /&gt;
+[LRR]   &lt;avp name="MME-Name" code="2402" vendor="10415" value="MME710" /&gt;
+[LRR]   &lt;avp name="MME-Realm" code="2408" vendor="10415" value="mme.tel1.com" /&gt;
+[LRR]   &lt;avp name="3GPP-AAA-Server-Name" code="318" vendor="10415" value="aaa.restcomm.com" /&gt;
+[LRR]   &lt;avp name="LCS-Capabilities-Sets" code="2404" vendor="10415" value="99900123" /&gt;
+ [PLA]   &lt;avp name="GMLC-Address" code="2405" vendor="10415" value="52.21.78.91" /&gt;
+ [LRR] &lt;/avp&gt;
+[LRR] &lt;avp name="LRR-Flags" code="2530" vendor="10415" value="0" /&gt;
+[LRR] &lt;avp name="LCS-Reference-Number" code="2531" vendor="10415" value="579" /&gt;
+[LRR] &lt;avp name="Deferred-MT-LR-Data" code="2547" vendor="10415"&gt;
+[LRR]   &lt;avp name="Deferred-Location-Type" code="2532" vendor="10415" value="4" /&gt;
+[LRR]   &lt;avp name="Termination-Cause" code="2548" vendor="10415" value="7" /&gt;
+[LRR] &lt;/avp&gt;
+[LRR] &lt;avp name="GMLC-Address" code="2405" vendor="10415" value="52.21.78.91" /&gt;
+[LRR] &lt;avp name="Periodic-LDR-Info" code="2540" vendor="10415"&gt;
+[LRR]   &lt;avp name="Reporting-Amount" code="2541" vendor="10415" value="8639910" /&gt;
+[LRR]   &lt;avp name="Reporting-Interval" code="2542" vendor="10415" value="8639998" /&gt;
+[LRR] &lt;/avp&gt;
+[LRR] &lt;avp name="ESMLC-Cell-Info" code="2552" vendor="10415"&gt;
+[LRR]   &lt;avp name="ECGI" code="2517" vendor="10415" value="EFC9452" /&gt;
+[LRR]   &lt;avp name="Cell-Portion-ID" code="2553" vendor="10415" value="12393" /&gt;
+[LRR] &lt;/avp&gt;
+[LRR] &lt;avp name="1xRTT-RCID" code="2554" vendor="10415" value="00000010" /&gt;
+[LRR] &lt;avp name="Civic-Address" code="2556" vendor="10415" value="&lt;civicAddress xml:lang='en-GB' xmlns="urn:ietf:params:xml:ns:pidf:geopriv10:civicAddr" xmlns:cdc="http://devon.canals.example.com/civic"&gt;
+        &lt;country&gt;UY&lt;/country&gt;
+	&lt;A1&gt;MV&lt;/A1&gt;
+	&lt;ap:airport&gt;MVD&lt;/ap:airport&gt;
+	&lt;ap:terminal&gt;Carrasco International&lt;/ap:terminal&gt;
+	&lt;ap:concourse&gt;A&lt;/ap:concourse&gt;
+	&lt;ap:gate&gt;4&lt;/ap:gate&gt;
+      &lt;/civicAddress&gt;" /&gt;
+[LRR] &lt;avp name="Barometric-Pressure" code="2557" vendor="10415" value="101327" /&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[LRA] Received Answer: 8388621 [E2E:1370488836 -- HBH:1693543583 -- AppID:16777255]
+[LRA] Request AVPs:
+[LRA] &lt;avp name="Session-Id" code="263" vendor="0" value="51.0.0.1;343; 3841024432;-SLg-LRR34277987203" /&gt;
+[LRA] &lt;avp name="Vendor-Specific-Application-Id" code="260" vendor="0"&gt;
+[LRA]   &lt;avp name="Vendor-Id" code="266" vendor="0" value="10415" /&gt;
+[LRA]   &lt;avp name="Auth-Application-Id" code="258" vendor="0" value="16777255" /&gt;
+[LRA] &lt;/avp&gt;
+[LRA] &lt;avp name="Result-Code" code="268" vendor="0" value="2001" /&gt;
+[LRA] &lt;avp name="Auth-Session-State" code="277" vendor="0" value="1" /&gt;
+[LRA] &lt;avp name="GMLC-Address" code="2405" vendor="10415" value="52.21.78.91" /&gt;
+[LRA] &lt;avp name="LRA-Flags" code="2549" vendor="10415" value="0" /&gt;
+[LRA] &lt;avp name="Reporting-PLMN-List" code="2543" vendor="10415"&gt;
+[LRA]   &lt;avp name="Visited-PLMN-Id" code="1407" vendor="10415" value="74803, 74801" /&gt;
+[LRA]   &lt;avp name="Periodic-Location-Support-Indicator" code="2550" vendor="10415" value="1" /&gt;
+[LRA]   &lt;avp name="Prioritized-List-Indicator" code="2551" vendor="10415" value="0" /&gt;
+[LRA] &lt;/avp&gt;
+[LRA] &lt;avp name="PLMN-ID-List" code="2544" vendor="10415"&gt;
+[LRA]   &lt;avp name="Visited-PLMN-Id" code="1407" vendor="10415" value="74803, 74801" /&gt;
+[LRA]   &lt;avp name="Periodic-Location-Support-Indicator" code="2550" vendor="10415" value="1" /&gt;
+[LRA] &lt;/avp&gt;
+[LRA] &lt;avp name="LCS-Reference-Number" code="2531" vendor="10415" value="579" /&gt;
+[LRR] &lt;avp name="Origin-Host" code="264" vendor="0" value="51.0.0.1" /&gt;
+[LRR] &lt;avp name="Origin-Realm" code="296" vendor="0" value="restcomm.com" /&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The corresponding answer MLP SLREP (Standard Location Immediate Answer) embedded in HTTP POST response is shown next.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE svc_result SYSTEM "MLP_SVC_RESULT_310.DTD"&gt;
+&lt;svc_result xmlns="MLP_SVC_RESULT_310.dtd" ver="3.1.0"&gt;
+    &lt;slirep ver="3.1.0"&gt;
+        &lt;lcs_ref&gt;579&lt;/lcs_ref&gt;
+	    &lt;pos&gt;
+	        &lt;msid&gt;59899077937&lt;/msid&gt;
+	        &lt;imsi&gt;748039876543210&lt;/imsi&gt;
+ 	        &lt;imei&gt;011714004661057&lt;/imei&gt;
+ 	        &lt;speed&gt;0&lt;/speed&gt;
+            &lt;pd&gt;
+                &lt;time utc_off="-0300"&gt;20161023235901&lt;/time&gt;
+		        &lt;geo_info&gt;
+			        &lt;CoordinateReferenceSystem&gt;
+				        &lt;Identifier&gt;
+					        &lt;code&gt;4326&lt;/code&gt;
+					        &lt;codeSpace&gt;EPSG&lt;/codeSpace&gt;
+					        &lt;edition&gt;6.1&lt;/edition&gt;
+				        &lt;/Identifier&gt;
+			        &lt;/CoordinateReferenceSystem&gt;
+			        &lt;shape&gt;
+			            &lt;CircularArea&gt;
+			                &lt;coord&gt;
+			                    &lt;X&gt;35 37 10.91S&lt;/X&gt;
+			                    &lt;Y&gt;58 01 33.07W&lt;/Y&gt;
+			                &lt;/coord&gt;
+			                &lt;radius&gt;100&lt;/radius&gt;
+			            &lt;/CircularArea&gt;
+			        &lt;/shape&gt;
+		        &lt;/geo_info&gt;
+		    &lt;/pd&gt;
+	    &lt;/pos&gt;
+    &lt;/slirep&gt;
 &lt;/svc_result&gt;</pre>
 </div>
 </div>
@@ -23468,7 +23635,7 @@ The third-party application can be either of the following technologies on any O
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-10-25 10:59:10 WEST
+Last updated 2016-10-26 10:52:11 WEST
 </div>
 </div>
 <footer>
