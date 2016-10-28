@@ -23661,12 +23661,12 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ORIG_ESME_ID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMSC internal name of origination ESME (empty for MO messages).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMSC internal name of origination ESME (empty for MO, HR and HTTP messages).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ORIG_SYSTEM_ID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP name of origination ESME (empty for MO messages).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP systemId of origination ESME for SMPP originated messages, HTTP account name for HTTP messages, empty for MO, HR and SIP messages.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">DEST_CLUSTER_NAME</p></td>
@@ -23957,12 +23957,12 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ORIG_ESME_ID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMSC internal name of origination ESME (empty for MO messages).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMSC internal name of origination ESME (empty for MO, HR, SIP and HTTP messages).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ORIG_SYSTEM_ID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP name of origination ESME (empty for MO messages).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP systemId of origination ESME for SMPP originated messages, HTTP account name for HTTP messages, empty for MO, HR and SIP messages.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">DEST_CLUSTER_NAME</p></td>
@@ -34462,7 +34462,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-10-27 10:52:06 WEST
+Last updated 2016-10-28 11:04:09 WEST
 </div>
 </div>
 <footer>
