@@ -22888,6 +22888,18 @@ ant release -f ./release/build.xml -Drestcomm.release.version=$MAJOR_VERSION_NUM
 <div class="ulist">
 <ul>
 <li>
+<p>Before running the script, give enough system resources for MAVEN as follows:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>export MAVEN_OPTS='-Xmx2048m -XX:MaxPermSize=1024m'</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
 <p>Now, run the build script as follows:</p>
 </li>
 </ul>
@@ -22948,7 +22960,7 @@ You can copy this zip file into a directory on your computer and unzip the conte
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-10-31 10:39:29 WET
+Last updated 2016-11-01 10:39:12 WET
 </div>
 </div>
 <footer>

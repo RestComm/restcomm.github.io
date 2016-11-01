@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Step 1</title>
+<title>RestComm and PowerMedia XMS integration</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22750,285 +22750,395 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </head>
 <body class="article">
 <div id="header">
+<h1>RestComm and PowerMedia XMS integration</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#quick-user-guide">Quick User Guide</a></li>
+<li><a href="#restcomm-installation-and-start">RestComm installation and start</a>
 <ul class="sectlevel3">
-<li><a href="#step-1"><strong>Step 1</strong></a></li>
-<li><a href="#step-2">Step 2</a></li>
-<li><a href="#step-3">Step 3</a></li>
-<li><a href="#step-4">Step 4</a></li>
-<li><a href="#step-5">Step 5</a></li>
-<li><a href="#step-6">Step 6</a></li>
-<li><a href="#step-7">Step 7</a></li>
+<li><a href="#running-in-standalone-mode">Running in standalone mode</a></li>
+</ul>
+</li>
+<li><a href="#powermedia-xms-installation">PowerMedia XMS Installation</a>
+<ul class="sectlevel2">
+<li><a href="#installation-methods">Installation methods</a></li>
+<li><a href="#supported-virtual-machines">Supported Virtual Machines</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>You love traveling abroad? You are tired of losing money because of exchange rate differences?  Be aware of daily exchange rates and change money with minimal loses with Currency Converter app. It is a simple solution provided by Telestax.  Currency Converter app gives you up-to-date exchange rate information using the power of Restcomm and Yahoo! Finance API.</p>
+<p>RestComm is a next generation Cloud Communications Platform.
+It allows web developers to rapidly build voice, video, WebRTC, USSD, SMS, fax and rich messaging applications.</p>
 </div>
-<div class="paragraph">
-<p>The following tutorial will show you how to build a fully functional Restcomm Visual Designer (RVD) powered app that allows users to  convert US dollars to six of the most traded currencies in the world.</p>
 </div>
-<div class="paragraph">
-<p><strong>Main features of the application </strong></p>
 </div>
+<div class="sect1">
+<h2 id="quick-user-guide"><a class="anchor" href="#quick-user-guide"></a>Quick User Guide</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="restcomm-installation-and-start"><a class="anchor" href="#restcomm-installation-and-start"></a>RestComm installation and start</h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p>menu 1 - User will hear to which currencies he can convert USD</p>
+<p>Download the latest Restcomm Connect binary.
+<a href="https://github.com/RestComm/Restcomm-Connect/releases/tag/7.9.0.1006" class="bare">https://github.com/RestComm/Restcomm-Connect/releases/tag/7.9.0.1006</a></p>
 </li>
 <li>
-<p>menu 2 - User is prompt to  enter an amount he want to convert</p>
+<p>Extract the content of Restcomm-JBoss-AS7-XX.XX.zip to a local directory on your computer.
+The directory into which the file is extracted will be referred to as $RESTCOMM_HOME.</p>
 </li>
 <li>
-<p>menu 3 - User will hear the result of the conversion according to the daily rate of the chosen currency</p>
+<p>Open the terminal and run "ifconfig -a" to get the local ip address, broadcast and mask.</p>
+</li>
+<li>
+<p>Go to $RESTCOMM_HOME/bin/restcomm and change the network configuration in restcomm.conf.</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p><span class="image"><img src="./images/content-300x300.jpg" alt="Currency exchange single flat icon." width="224" height="224"></span></p>
+<div class="listingblock">
+<div class="title">Example:</div>
+<div class="content">
+<pre class="highlight"><code>NET_INTERFACE='wlan0'
+PRIVATE_IP=192.168.1.10
+SUBNET_MASK=255.255.255.0
+NETWORK=192.168.1.0
+BROADCAST_ADDRESS=192.168.1.255</code></pre>
 </div>
-<div class="paragraph">
-<p><strong>Technical Requirements:</strong></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Basic knowledge of Restcomm</p>
-</li>
-<li>
-<p>Basic knowledge of PHP, JSON</p>
-</li>
-<li>
-<p>Knowledge of Yahoo Finance API</p>
+<p>Set MS_COMPATIBILITY_MODE and XMS IP address.</p>
 </li>
 </ul>
 </div>
-<div class="sect3">
-<h4 id="step-1"><a class="anchor" href="#step-1"></a><strong>Step 1</strong></h4>
+<div class="listingblock">
+<div class="title">Example:</div>
+<div class="content">
+<pre class="highlight"><code>MS_EXTERNAL=FALSE
+MS_COMPATIBILITY_MODE='xms'
+
+MS_ADDRESS=192.168.1.100
+MS_NETWORK=192.168.1.0
+MS_SUBNET_MASK=255.255.255.0</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>VOICERSS_KEY='xxxxxxxxxxxxxxxxxxxxx'</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+To generate your own voicerss API key, go to voicerss.org and register.
+</td>
+</tr>
+</table>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Go to RVD and create new project. In this example we will name it Currency Converter0</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="./images/1-1024x532.jpg" alt="1" width="575" height="299"></span></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="step-2"><a class="anchor" href="#step-2"></a>Step 2</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Create the following modules:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Welcome</p>
-</li>
-<li>
-<p>getCurrencyAmount</p>
-</li>
-<li>
-<p>getResults</p>
-</li>
-<li>
-<p>ResultAudioMessage</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="./images/CCmodules.jpg" alt="CCmodules" width="530" height="51"></span></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="step-3"><a class="anchor" href="#step-3"></a>Step 3</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Go to Welcome module</p>
-</li>
-<li>
-<p>Insert <strong>Collect, </strong>use <strong>Say </strong>as <strong>Collect Prompt. </strong>Type: "Welcome to Telestax Restcomm Currency Converter. Choose a currency to convert to US dollars. For European Euros press 1. For Japanese Yen press 2. For British Pounds Sterling press 3. For Switzerland Francs press 4. For South African Rands press 5"</p>
-</li>
-<li>
-<p>Choose to collect digits.</p>
-</li>
-<li>
-<p>Assign to getCurrencyNumber. Choose module as a scope.</p>
-</li>
-<li>
-<p>Continue to GetCurrencyAmount</p>
-</li>
-<li>
-<p>Set number of digits to 1</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="./images/ccWelcomeModule.jpg" alt="ccWelcomeModule" width="527" height="366"></span></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="step-4"><a class="anchor" href="#step-4"></a>Step 4</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Go to <strong>getCurrencyAmount</strong></p>
-</li>
-<li>
-<p>Insert Collect. Use Say to set users prompt message. Type the following in the text area: "Enter the amount to convert to US dollars and press star"</p>
-</li>
-<li>
-<p>Choose to Collect digits and assign to <strong>getCurrencyAmount.</strong> Set module as a scope</p>
-</li>
-<li>
-<p>Set <strong>getResults</strong> as Continue to module</p>
-</li>
-<li>
-<p>Set star as finish on key</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="./images/getCurrencyAmount.jpg" alt="getCurrencyAmount" width="527" height="367"></span></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="step-5"><a class="anchor" href="#step-5"></a>Step 5</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Next step is to create the PHP script that is going to work with the application</p>
+<p>Go to $RESTCOMM_HOME/bin/restcomm and run:</p>
 </li>
 </ul>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-lang:php" data-lang="lang:php">&lt;?php
-header('Content-Type: application/json');
-
-//amount of USD that need to be converted
-
-$getCurrencyToConvert = $_GET["currency"];
-$getCurrencyAmount = $_GET["amount"];
-
-$currencySymbols;
-$currencyFullName;
-
-if ($getCurrencyToConvert == 1){
-$currencySymbols = "EUR";
-$currencyFullName="European Euros";
-}elseif($getCurrencyToConvert == 2){
-$currencySymbols = "JPY";
-$currencyFullName = "Japanese Yen";
-}elseif($getCurrencyToConvert == 3){
-$currencySymbols = "GBP";
-$currencyFullName = "British Pounds Sterling" ;
-}elseif($getCurrencyToConvert == 4){
-$currencySymbols = "CHF";
-$currencyFullName = "Switzerland Francs";
-}elseif($getCurrencyToConvert == 5){
-$currencySymbols = "ZAR";
-$currencyFullName = "South African Rands";
-}
-//$from - Currency from which we will convert, $to - currency to which we will convert
-$from = $currencySymbols;
-$to = 'USD';
-
-//Connecting to Yahoo Finance API
-$url = 'http://finance.yahoo.com/d/quotes.csv?f=l1d1t1&amp;s='.$from.$to.'=X';
-
-$handle = fopen($url, 'r');
-
-if ($handle) {
-$result = fgetcsv($handle);
-fclose($handle);
-}
-
-$conversionTotal = $result[0] * $getCurrencyAmount;
-
-$conversionResult = $getCurrencyAmount . " " . $currencyFullName . " converted to US dollars is worth ". $conversionTotal . " dollars as of " . date("F j, Y") . " at ". $result[2];
-
-$result = file_get_contents($url);
-$result = json_decode($result);
-if ($result-&gt;success)
-{
-
-}
-//parse app days as array
-$response = array ('convertedResult' =&gt; $conversionResult);
-
-// Output the response as JSON
-$json_response = json_encode($response);
-
-//echo $c;
-echo $json_response;
-
-?&gt;</code></pre>
-</div>
+<pre>sudo ./start-restcomm.sh</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="step-6"><a class="anchor" href="#step-6"></a>Step 6</h4>
+<h4 id="running-in-standalone-mode"><a class="anchor" href="#running-in-standalone-mode"></a>Running in standalone mode</h4>
 <div class="ulist">
 <ul>
 <li>
-<p>Go to <strong>getResults</strong> module</p>
+<p>Go to $RESTCOMM_HOME/standalone/configuration and edit standalone-sip.xml</p>
 </li>
 <li>
-<p>Add External Service</p>
+<p>Set the enable-welcome-root to false.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;virtual-server name="default-host" enable-welcome-root="false"&gt;
+    &lt;alias name="localhost"/&gt;
+    &lt;alias name="example.com"/&gt;
+&lt;/virtual-server&gt;</code></pre>
+</div>
+</div>
 </li>
 <li>
-<p>Copy and paste the URL to the PHP script that is going to operate with the application</p>
+<p>Go to $RESTCOMM_HOME/standalone/deployments/ restcomm.war/WEB-INF/conf and edit restcomm.xml</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;mscontrol&gt;
+	&lt;compatibility&gt;xms&lt;/compatibility&gt;
+	&lt;media-server name="Dialogic XMS" class="com.dialogic.dlg309"&gt;
+		&lt;address&gt;192.168.1.100&lt;/address&gt;
+		&lt;port&gt;5060&lt;/port&gt;
+		&lt;transport&gt;udp&lt;/transport&gt;
+		&lt;timeout&gt;5&lt;/timeout&gt;
+	&lt;/media-server&gt;
+&lt;/mscontrol&gt;</code></pre>
+</div>
+</div>
 </li>
 <li>
-<p>Add as Url parameters: <strong>getCurrencyAmount</strong> and its value - <strong>$amount</strong> <strong>getCurrencyNumber</strong> and its value - <strong>$currency</strong></p>
+<p>Start the Restcomm in standalone mode and bind to an address</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>sudo bash standalone.sh -b 192.168.1.10</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="powermedia-xms-installation"><a class="anchor" href="#powermedia-xms-installation"></a>PowerMedia XMS Installation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section provides the steps required to successfully install PowerMedia XMS.</p>
+</div>
+<div class="paragraph">
+<p>There are two installation methods available:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>ISO Method</p>
 </li>
 <li>
-<p>Assign to getResult, use module as a scope. Add <strong>convertedResult</strong> as value</p>
-</li>
-<li>
-<p>Continue to <strong>ResultAudioMessage</strong></p>
-</li>
-<li>
-<p>On Remote Error set Welcome module</p>
+<p>RPM Method (used for a CentOS or RHEL installation).</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="./images/geresults.jpg" alt="geresults" width="493" height="356"></span></p>
+<p>The following instructions pertain to the PowerMedia XMS download package, labeled as
+PowerMedia-3.0.xxxx-x86_64.iso and dialogic_xms_3.0.xxxx.tgz where "xxxx" indicates the
+version number.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+32-bit operating systems are not supported.
+</td>
+</tr>
+</table>
 </div>
-<div class="sect3">
-<h4 id="step-7"><a class="anchor" href="#step-7"></a>Step 7</h4>
+<div class="sect2">
+<h3 id="installation-methods"><a class="anchor" href="#installation-methods"></a>Installation methods</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>Go to <strong>ResultAudioMessage</strong> module</p>
+<p>ISO Method Installation:
+Community ENTerprise Operating System (CentOS) 7.x</p>
 </li>
 <li>
-<p>Insert Say. Type the following in the text area: "<strong>$getResult</strong>, Thank you for using the Telestax Restcomm currency converter application"</p>
+<p>RPM Method Installation:
+CentOS 7.x and 6.4 (or later)
+Red Hat Enterprise Linux (RHEL) 7.x and 6.4 (or later)
+Oracle Enterprise Linux (OEL) 6.4</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="./images/resultAudioMessage.jpg" alt="resultAudioMessage" width="559" height="181"></span></p>
+<p>Download the .ISO file, which contains CentOS and PowerMedia XMS packages.
+Go to <a href="http://www.dialogic.com/products/media-server-software/xms" class="bare">http://www.dialogic.com/products/media-server-software/xms</a> for information about downloading the .ISO file.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For detailed documentation refer to <a href="http://www.dialogic.com/webhelp/XMS/3.0/XMS_InstallConfig.pdf" class="bare">http://www.dialogic.com/webhelp/XMS/3.0/XMS_InstallConfig.pdf</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="supported-virtual-machines"><a class="anchor" href="#supported-virtual-machines"></a>Supported Virtual Machines</h3>
+<div class="paragraph">
+<p>The supported virtual machines (VM) are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>VMWare ESXi 5.x</p>
+</li>
+<li>
+<p>Kernel Virtual Machine (KVM)</p>
+</li>
+<li>
+<p>XenServer VM</p>
+</li>
+<li>
+<p>Oracle VM VirtualBox</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="xms-installation-in-oracle-vm"><a class="anchor" href="#xms-installation-in-oracle-vm"></a>XMS installation in Oracle VM</h4>
+<div class="paragraph">
+<p>Create new virtual machine (VM)</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Name: Any suitable name (XMS)</p>
+</li>
+<li>
+<p>Type: Linux</p>
+</li>
+<li>
+<p>Version: Other Linux operating system 64 bit</p>
+</li>
+<li>
+<p>Recommended memory size 1024 MB</p>
+</li>
+<li>
+<p>Create a virtual hard disk</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Now add a phone number to the newly created currency converter app using the Restcomm Management Interface.</p>
+<p>Select the following options while setting the virtual machine:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>VDI (VirtualBox disk image)</p>
+</li>
+<li>
+<p>Dynamically allocated hard disk</p>
+</li>
+<li>
+<p>Recommended size 8GB</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>You can now dial the number you assigned to the app and follow the IVR instruction to convert any of the listed currency.</p>
+<p>Go ahead and press the Create button to finish up this part of the process.</p>
 </div>
 <div class="paragraph">
-<p>For more information about how Yahoo Finance API is working click <a href="https://code.google.com/p/yahoo-finance-managed/wiki/YahooFinanceAPIs">HERE</a>.</p>
+<p>Find and select the newly created virtual machine.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open the Settings for the created VM.
+Under "Storage", press "Add optical drive" and select the PowerMedia .iso file image.</p>
+</li>
+<li>
+<p>In case there is Empty storage attachment in the storage tree, delete first.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Start the VM and choose between DHCP and Static IP installation.
+The Static IP option is preferable when setting up a server.
+Select the second option and press "Tab".</p>
+</div>
+<div class="paragraph">
+<p>Refer to the following example when setting static ip address</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>ip=192.168.1.100::192.168.1.1:255.255.255.0:server.xms30.com::none nameserver=8.8.8.8</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The IP address should match the MS_ADDRESS in the restcomm.conf
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The install process will begin and the next prompt will be to select the installation destination.</p>
+</div>
+<div class="paragraph">
+<p>Select "Automatically configure partitioning" and press "Done".
+For manual configuration select "I will configure partitionig".</p>
+</div>
+<div class="paragraph">
+<p>When the partitioning is done, click "Begin installation".</p>
+</div>
+<div class="paragraph">
+<p>Once installed, open the Settings and change the boot order.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Under System, change the boot order. Select only “Hard Disk”.</p>
+</li>
+<li>
+<p>Change the network configuration under Network. Attach “Adapter 1” to “Bridged Adapter” and select wlan0.</p>
+</li>
+<li>
+<p>Reboot the VM</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Now we should have running XMS instance on CentOS.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="troubleshooting"><a class="anchor" href="#troubleshooting"></a>Troubleshooting</h4>
+<div class="paragraph">
+<p>In case XMS doesn&#8217;t have connection, check the ifcfg-enp0s3 config file.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Login as root.  The "root" user’s default password is "powermedia".</p>
+</li>
+<li>
+<p>Go to /etc/sysconfig/network-scripts/</p>
+</li>
+<li>
+<p>Open and modify ifcfg-enp0s3 config file. "sudo vi ifcfg-enp0s3"</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>BOOTPROTO='static'
+IPADDR=192.168.1.100
+NET_MASK=255.255.255.0
+ONBOOT='yes'</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
