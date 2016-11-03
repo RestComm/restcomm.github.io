@@ -23117,14 +23117,31 @@ The Load Balancer forwards all same-session requests to the first node selected 
 <div class="paragraph">
 <p>The websocket client (e.g. TelScale Olympus) can connect to Load balancer
 on port which should be set in lb-configuration.properties externalWsPort and
-internalWsPort if needed. To work with secure websocket it is necessary to set
-externalWssPort and internalWssPort. When websocket client connects to the
+internal.wsPort if needed. To work with secure websocket it is necessary to set
+external.wssPort and internal.wssPort. When websocket client connects to the
 Restcomm Load balancer, then the LB opens connection to a node from the
 list of nodes which is based on keepalives got from the server. During the further
 connections of the client, each time LB opens the new connection to the node
 from the list of connected nodes according to chosen algorithm. If the
 connection has already been established to this node, then LB reuses this
 connection. The same goes for other connection-oriented transport protocols.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="restcomm-load-balancer-supports-ipv6-protocol"><a class="anchor" href="#restcomm-load-balancer-supports-ipv6-protocol"></a>1.1.4. Restcomm Load Balancer supports IPv6 protocol</h4>
+<div class="paragraph">
+<p>You should set at least next tags in lb-configuration.xml file for enabling IPv6:</p>
+</div>
+<div class="paragraph">
+<p>in common section
+&lt;ipv6Host&gt;::1&lt;/ipv6Host&gt;</p>
+</div>
+<div class="paragraph">
+<p>in external section
+ &lt;ipv6UdpPort&gt;5070&lt;ipv6UdpPort&gt;</p>
+</div>
+<div class="paragraph">
+<p>Other tags you can see in example of lb-configuration.xml below.</p>
 </div>
 </div>
 </div>
@@ -23443,6 +23460,7 @@ http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
 &lt;load-balancer-properties&gt;
 &lt;common&gt;
   &lt;host&gt;172.21.0.105&lt;/host&gt;
+  &lt;ipv6Host&gt;&lt;/ipv6Host&gt;
   &lt;rmiRegistryPort&gt;2000&lt;/rmiRegistryPort&gt;
   &lt;rmiRemoteObjectPort&gt;2001&lt;/rmiRemoteObjectPort&gt;
   &lt;nodeTimeout&gt;8400&lt;/nodeTimeout&gt;
@@ -23452,6 +23470,7 @@ http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
 &lt;/common&gt;
 &lt;sip&gt;
   &lt;publicIp&gt;&lt;/publicIp&gt;
+  &lt;publicIpv6&gt;&lt;/publicIpv6&gt;
   &lt;isSendTrying&gt;false&lt;/isSendTrying&gt;
   &lt;useIpLoadBalancerAddressInViaHeaders&gt;false&lt;/useIpLoadBalancerAddressInViaHeaders&gt;
   &lt;performanceTestingMode&gt;false&lt;/performanceTestingMode&gt;
@@ -23474,31 +23493,55 @@ http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
   &lt;/algorithm&gt;
   &lt;external&gt;
     &lt;host&gt;&lt;/host&gt;
+    &lt;ipv6Host&gt;&lt;/ipv6Host&gt;
     &lt;ipLoadBalancerAddress&gt;50.17.127.170&lt;/ipLoadBalancerAddress&gt;
+    &lt;ipv6LoadBalancerAddress&gt;&lt;/ipv6LoadBalancerAddress&gt;
     &lt;udpPort&gt;5060&lt;/udpPort&gt;
+    &lt;ipv6UdpPort&gt;&lt;/ipv6UdpPort&gt;
     &lt;tcpPort&gt;5060&lt;/tcpPort&gt;
+    &lt;ipv6TcpPort&gt;&lt;/ipv6TcpPort&gt;
     &lt;tlsPort&gt;5061&lt;/tlsPort&gt;
+    &lt;ipv6TlsPort&gt;&lt;/ipv6TlsPort&gt;
     &lt;wsPort&gt;5062&lt;/wsPort&gt;
+    &lt;ipv6WsPort&gt;&lt;/ipv6WsPort&gt;
     &lt;wssPort&gt;5063&lt;/wssPort&gt;
+    &lt;ipv6WssPort&gt;&lt;/ipv6WssPort&gt;
     &lt;ipLoadBalancerUdpPort&gt;5060&lt;/ipLoadBalancerUdpPort&gt;
+    &lt;ipv6LoadBalancerUdpPort&gt;&lt;/ipv6LoadBalancerUdpPort&gt;
     &lt;ipLoadBalancerTcpPort&gt;5060&lt;/ipLoadBalancerTcpPort&gt;
+    &lt;ipv6LoadBalancerTcpPort&gt;&lt;/ipv6LoadBalancerTcpPort&gt;
     &lt;ipLoadBalancerTlsPort&gt;5061&lt;/ipLoadBalancerTlsPort&gt;
+    &lt;ipv6LoadBalancerTlsPort&gt;&lt;/ipv6LoadBalancerTlsPort&gt;
     &lt;ipLoadBalancerWsPort&gt;5062&lt;/ipLoadBalancerWsPort&gt;
+    &lt;ipv6LoadBalancerWsPort&gt;&lt;/ipv6LoadBalancerWsPort&gt;
     &lt;ipLoadBalancerWssPort&gt;5063&lt;/ipLoadBalancerWssPort&gt;
+    &lt;ipv6LoadBalancerWssPort&gt;&lt;/ipv6LoadBalancerWssPort&gt;
   &lt;/external&gt;
   &lt;internal&gt;
     &lt;host&gt;&lt;/host&gt;
+    &lt;ipv6Host&gt;&lt;/ipv6Host&gt;
     &lt;ipLoadBalancerAddress&gt;172.21.0.105&lt;/ipLoadBalancerAddress&gt;
+    &lt;ipv6LoadBalancerAddress&gt;&lt;/ipv6LoadBalancerAddress&gt;
     &lt;udpPort&gt;5080&lt;/udpPort&gt;
+    &lt;ipv6UdpPort&gt;&lt;/ipv6UdpPort&gt;
     &lt;tcpPort&gt;5080&lt;/tcpPort&gt;
+    &lt;ipv6TcpPort&gt;&lt;/ipv6TcpPort&gt;
     &lt;tlsPort&gt;5081&lt;/tlsPort&gt;
+    &lt;ipv6TlsPort&gt;&lt;/ipv6TlsPort&gt;
     &lt;wsPort&gt;5082&lt;/wsPort&gt;
+    &lt;ipv6WsPort&gt;&lt;/ipv6WsPort&gt;
     &lt;wssPort&gt;5083&lt;/wssPort&gt;
+    &lt;ipv6WssPort&gt;&lt;/ipv6WssPort&gt;
     &lt;ipLoadBalancerUdpPort&gt;5080&lt;/ipLoadBalancerUdpPort&gt;
+    &lt;ipv6LoadBalancerUdpPort&gt;&lt;/ipv6LoadBalancerUdpPort&gt;
     &lt;ipLoadBalancerTcpPort&gt;5080&lt;/ipLoadBalancerTcpPort&gt;
+    &lt;ipv6LoadBalancerTcpPort&gt;&lt;/ipv6LoadBalancerTcpPort&gt;
     &lt;ipLoadBalancerTlsPort&gt;5081&lt;/ipLoadBalancerTlsPort&gt;
+    &lt;ipv6LoadBalancerTlsPort&gt;&lt;/ipv6LoadBalancerTlsPort&gt;
     &lt;ipLoadBalancerWsPort&gt;5082&lt;/ipLoadBalancerWsPort&gt;
+    &lt;ipv6LoadBalancerWsPort&gt;&lt;/ipv6LoadBalancerWsPort&gt;
     &lt;ipLoadBalancerWssPort&gt;5083&lt;/ipLoadBalancerWssPort&gt;
+    &lt;ipv6LoadBalancerWssPort&gt;&lt;/ipv6LoadBalancerWssPort&gt;
   &lt;/internal&gt;
 &lt;/sip&gt;
 &lt;http&gt;
@@ -24783,14 +24826,14 @@ internal.wssPort 5083</pre>
 </div>
 <div class="paragraph">
 <p>Login to Restcomm server <a href="http://127.0.0.2:8080/olympus/" class="bare">http://127.0.0.2:8080/olympus/</a>
-Fill in form: Load Balancer&#8217;s ip adress (externalHost) 172.21.0.104 and port(externalWsPort) 5090</p>
+Fill in form: Load Balancer&#8217;s ip adress (external.host) 172.21.0.104 and port(external.wsPort) 5090</p>
 </div>
 <div class="paragraph">
 <p>For WSS:</p>
 </div>
 <div class="paragraph">
 <p>Login to Restcomm server <a href="https://127.0.0.2:8443/olympus/" class="bare">https://127.0.0.2:8443/olympus/</a>
-Fill in form: Load Balancer&#8217;s ip adress (externalHost) 172.21.0.104 and port (externalWssPort) 5091</p>
+Fill in form: Load Balancer&#8217;s ip adress (external.host) 172.21.0.104 and port (external.wssPort) 5091</p>
 </div>
 </div>
 <div class="sect2">
@@ -24880,7 +24923,7 @@ and you can see next line:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-02 10:52:59 WET
+Last updated 2016-11-03 10:55:12 WET
 </div>
 </div>
 <footer>
