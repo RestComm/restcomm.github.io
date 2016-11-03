@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Step 1</title>
+<title>Getting started with Telestax RestComm and PowerMedia XMS</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22750,250 +22750,347 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </head>
 <body class="article">
 <div id="header">
+<h1>Getting started with Telestax RestComm and PowerMedia XMS</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
-<ul class="sectlevel0">
-<li><a href="#step-1">Step 1</a></li>
-<li><a href="#in-the-welcome-tab">In the "Welcome" Tab</a></li>
-<li><a href="#restcomm-managment-user-interface">Restcomm Managment User Interface</a></li>
-<li><a href="#calling-and-testing-your-demo1">Calling and Testing your Demo1</a></li>
+<ul class="sectlevel2">
+<li><a href="#prerequisites">Prerequisites:</a></li>
+<li><a href="#restcomm-install-nfs-mount-xms-config">RestComm Install, NFS mount &amp; XMS config:</a></li>
+<li><a href="#starting-restcomm-container">Starting RestComm container:</a></li>
+<li><a href="#testing-restcomm-installation">Testing RestComm Installation:</a></li>
+<li><a href="#stopping-and-removing-restcomm-container">Stopping and removing RestComm container:</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="paragraph">
-<p>This tutorial will help you create an Interactive Voice Response application using the Restcomm Visual Designer. It is assumed that you are running Restcomm on a local server. Open your web browser and go the following url.  </p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-It is assumed you are running Restcomm on your local installation using the default 127.0.0.1 interface
-</td>
-</tr>
-</table>
-</div>
-<h1 id="step-1" class="sect0"><a class="anchor" href="#step-1"></a>Step 1</h1>
+<div class="sect2">
+<h3 id="prerequisites"><a class="anchor" href="#prerequisites"></a>Prerequisites:</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>go to the link <strong><a href="http://127.0.0.1:8080/restcomm-rvd/" class="bare">http://127.0.0.1:8080/restcomm-rvd/</a></strong></p>
-</li>
+<p>CentOS 7 minimal installed and network configured</p>
+<div class="ulist">
+<ul>
 <li>
-<p>Enter a name for your new project (Demo1 is used in this tutorial) and press the button <strong>"Create"</strong></p>
+<p>Link to download: <a href="http://mirror.stjschools.org/public/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1511.iso" class="bare">http://mirror.stjschools.org/public/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1511.iso</a>)</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>In the main dashboard of the RVD, you will see the default module "Welcome":</p>
-</div>
-<div class="paragraph">
-<p>In the Welcome tab</p>
-</div>
+</li>
+<li>
+<p>PowerMedia XMS server installed and accessible via same network as CentOS (restcomm) server</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Change the default text to the following:</p>
-</li>
-<li>
-<p>Welcome to Telestax,</p>
-</li>
-<li>
-<p>Click the "Collect" verb and drag it onto the module window below the "Say" verb.</p>
-</li>
-<li>
-<p>Click and drag another <strong>"Say"</strong> onto the <strong>"Collect"</strong> verb so that it appears below the <strong>"Prompt"</strong></p>
-</li>
-<li>
-<p>In the text area of the new <strong>"Say"</strong> verb, add the following texts:</p>
-</li>
-<li>
-<p>For Opening hours press 1, for Technical Support press 2, for Sales Support press 3</p>
-</li>
-<li>
-<p>Click on the options button at the bottom of the "Collect" verb window and set <strong>"Number of Digits" to 1</strong></p>
-</li>
-<li>
-<p>The <strong>Number of Digits</strong> tells the media server to process the request after receiving only a single digit.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>See screenshot below:</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="./images/rvd-ivr-tutorial1.png" alt="rvd-ivr-tutorial1" width="549" height="235"></span></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Click on the Save button to update your changes.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>At the top of the page, create a new module by clicking on <strong>"New Module"</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>A new tab called <strong>"Untitled module"</strong> will appear beside the <strong>"Welcome"</strong> tab</p>
-</li>
-<li>
-<p>Click on the title of the new module and change the name to "Opening Hours"</p>
-</li>
-<li>
-<p>Create another module and change the name to "Technical Support"</p>
-</li>
-<li>
-<p>Create a third module and change the name to "Sales Support"</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>You should now have 4 tabs with the following names</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Welcome</p>
-</li>
-<li>
-<p>Opening Hours</p>
-</li>
-<li>
-<p>Technical Support</p>
-</li>
-<li>
-<p>Sales Support</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>See the screenshot below</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="./images/rvd-ivr-tutorial.png" alt="rvd-ivr-tutorial" width="555" height="295"></span></p>
-</div>
-<div class="paragraph">
-<p><strong>Click on the Openining Hours tab</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Click the Say verb and drag it to the module window. Type the following text in the text area.</p>
-</li>
-<li>
-<p>Welcome to Telestax, our openining hours are from 8 AM to 8 PM Mondays to Friday.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><strong>Click on the Technical Support tab</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Click the Say verb and drag it to the module window. Type the following text in the text area.</p>
-</li>
-<li>
-<p>Welcome to Telestax Technical Support, all our engineers are please at the moment please hold the line.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><strong>Click on the Sales Support tab</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Click the Say verb and drag it to the module window. Type the following text in the text area.</p>
-</li>
-<li>
-<p><strong>Welcome to Telestax Sales Support, all our sales engineers are busy counting their huge bonuses, please call back at a better time.</strong></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Click on the <strong>Save</strong> button to update your changes.  </p>
-</div>
-<h1 id="in-the-welcome-tab" class="sect0"><a class="anchor" href="#in-the-welcome-tab"></a>In the "Welcome" Tab</h1>
-<div class="paragraph">
-<p>In the "Collect" verb window, click on the "Add Mapping" three times. In the target option,</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>link digit 1 to target : "Opening Hours"</p>
-</li>
-<li>
-<p>link digit 2 to target : "Technical Support"</p>
-</li>
-<li>
-<p>link digit 3 to target : "Sales Support"</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><strong>Save</strong> your application. In this tutorial, the project is called Demo1.</p>
-</div>
-<h1 id="restcomm-managment-user-interface" class="sect0"><a class="anchor" href="#restcomm-managment-user-interface"></a>Restcomm Managment User Interface</h1>
-<div class="paragraph">
-<p>Next you need to link the Demo1 project to a phone number so that you can test the application. In another internet browser window, open the following <strong>url <a href="http://127.0.0.1:8080/" class="bare">http://127.0.0.1:8080/</a></strong></p>
-</div>
-<div class="paragraph">
-<p>Login and click on the menu "Numbers"</p>
-</div>
-<div class="paragraph">
-<p>Click on the button "+Register Number"</p>
-</div>
-<div class="paragraph">
-<p>In the "Register Number" window click on "Optional Parameters" to reveal the full options</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Fill out the window as follows:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Phone number: <strong>4444</strong></p>
-</li>
-<li>
-<p>Voice Request Url: <strong>Demo1</strong></p>
+<p>Integration testing has been done with XMS 3.1 and later</p>
 </li>
 </ul>
 </div>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>The Demo1 is the name of the project you created using the RVD</p>
 </div>
-<div class="paragraph">
-<p>Leave the rest of the fields as default and press <strong>"Register"</strong></p>
+<div class="sect2">
+<h3 id="restcomm-install-nfs-mount-xms-config"><a class="anchor" href="#restcomm-install-nfs-mount-xms-config"></a>RestComm Install, NFS mount &amp; XMS config:</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>SSH into the server designated for the RestComm install and update yum.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>sudo yum update -y</code></pre>
 </div>
-<div class="paragraph">
-<p>If the register is successful, you will see the new number you have just linked to the Demo1 project in the list of numbers as show in the screenshot below:  </p>
 </div>
-<div class="paragraph">
-<p><span class="image"><img src="./images/rvd-ivr-tutorial3.png" alt="rvd-ivr-tutorial3" width="638" height="404"></span></p>
+</li>
+<li>
+<p>Install the necessary NFS binaries:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>sudo yum install nfs* -y</code></pre>
 </div>
-<h1 id="calling-and-testing-your-demo1" class="sect0"><a class="anchor" href="#calling-and-testing-your-demo1"></a>Calling and Testing your Demo1</h1>
-<div class="paragraph">
-<p>You can now make a SIP call to your application using any SIP phone. In this tutorial, we shall configure Sflphone to connect to Restcomm and make a call to number <strong>4444</strong>.</p>
 </div>
-<div class="paragraph">
-<p>Use the following settings to connect your SIP client Sflphone to Restcomm.  </p>
+</li>
+<li>
+<p>Start the NFS services:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>service rpcbind start
+service nfs start</code></pre>
 </div>
-<div class="paragraph">
-<p><span class="image"><img src="./images/rvd-ivr-tutorial4.png" alt="rvd-ivr-tutorial4" width="480" height="583"></span></p>
 </div>
-<div class="paragraph">
-<p>Make a call to number <strong>4444</strong> and follow the menu instruction. With this tutorial, you can see how easy and quick it is to create an Interactive Voice Response application using Restcomm.</p>
+</li>
+<li>
+<p>Create a directory for recording storage:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>mkdir -p /mnt/nfs/home/recordings</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Open the exports file for editing:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>vi /etc/exports</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Add the following to the exports file:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>/mnt/nfs/home/recordings 192.168.1.105(rw,sync,no_root_squash,no_all_squash)</code></pre>
+</div>
+</div>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Notes:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>192.168.1.105</strong> is the IP address of your XMS server.</p>
+</li>
+<li>
+<p>Use ":wq" to write and quit the vi.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Reload the exports file:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>sudo exportfs -r</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Add the docker repository by copying the entire statement below and pasting the following into the command prompt:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>sudo tee /etc/yum.repos.d/docker.repo &lt;&lt;-'EOF'
+[dockerrepo]
+name=Docker Repository
+baseurl=https://yum.dockerproject.org/repo/main/centos/$releasever/
+enabled=1
+gpgcheck=1
+gpgkey=https://yum.dockerproject.org/gpg
+EOF</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Install docker by running:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>sudo yum install docker-engine -y</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Start the docker service:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>sudo service docker start</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Pull down the latest RestComm docker container:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>docker pull restcomm/restcomm:latest</code></pre>
+</div>
+</div>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Notes:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Download will take ~5-10 mins</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>SSH into the XMS server and create a directory for recording storage:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>mkdir -p /opt/Restcomm-JBoss-AS7/standalone/deployments/restcomm.war/recordings</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Mount that new directory so that the RestComm server can access it:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>sudo  mount -t nfs 192.168.1.50:/mnt/nfs/home/recordings /opt/Restcomm-JBoss-AS7/standalone/deployments/restcomm.war/recordings</code></pre>
+</div>
+</div>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Notes:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Replace <strong>192.168.1.50</strong> with the IP address of your RestComm server</p>
+</li>
+<li>
+<p>If the mount times out, you may need to stop/disable/open the firewall on the restcomm server:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>sudo systemctl stop firewalld</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>You may need to use -vvv for verbose logging OR -o nfsvers=3,vers=3 to see
+the NFS version to get the mount to work</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>sudo mount -l</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Log into the webUI of the PowerMedia XMS server and navigate to the ‘Protocol’ tab on the left hand side.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Change the transport to: <strong>UDP_TCP</strong></p>
+</li>
+<li>
+<p>Save the changes.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="starting-restcomm-container"><a class="anchor" href="#starting-restcomm-container"></a>Starting RestComm container:</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Start the docker container:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>docker run  -i -d --name=restcomm-myInstance -v /var/log/restcomm/:/var/log/restcomm/ -v /mnt/nfs/home/recordings/:/opt/Restcomm-JBoss-AS7/standalone/deployments/restcomm.war/recordings/ -e STATIC_ADDRESS="192.168.1.50" -e ENVCONFURL="https://raw.githubusercontent.com/RestComm/Restcomm-Docker/master/env_files/restcomm_env_locally.sh" -e MS_COMPATIBILITY_MODE="xms" -e MS_ADDRESS="192.168.1.105" -p 80:80 -p 443:443 -p 9990:9990 -p 5060:5060 -p 5061:5061 -p 5062:5062 -p 5063:5063 -p 5060:5060/udp -p 65000-65050:65000-65050/udp restcomm/restcomm:latest</code></pre>
+</div>
+</div>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Notes:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Replace <strong>192.168.1.50</strong> with the IP address of your RestComm server.</p>
+</li>
+<li>
+<p>Replace <strong>192.168.1.105</strong> with the IP address of your XMS server.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="testing-restcomm-installation"><a class="anchor" href="#testing-restcomm-installation"></a>Testing RestComm Installation:</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open Chrome/Firefox and navigate to the following to verify the RestComm webUI dashboard is accessible:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>https://192.168.1.50/#/login</code></pre>
+</div>
+</div>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Notes:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Replace <strong>192.168.1.50</strong> with the IP address of your RestComm server</p>
+</li>
+<li>
+<p>Default <strong>username/password</strong> is: <em>administrator@company.com</em>/<em>RestComm</em></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Make a test webrtc call by opening the Olympus client:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>https://192.168.1.50/olympus/#/</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Replace <strong>192.168.1.50</strong> with the IP address of your RestComm server</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Log in using the pre-configured Alice account. Note the default password for client is: 1234</p>
+</li>
+<li>
+<p>On the left hand side, click "Contacts" and chose any of the stored scripts to test the installation. Upon script selection, the call should be connected and audio heard.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="stopping-and-removing-restcomm-container"><a class="anchor" href="#stopping-and-removing-restcomm-container"></a>Stopping and removing RestComm container:</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Stop the instance:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>docker stop restcomm-myInstance</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Removing the docker instance:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>docker rm restcomm-myInstance</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
 </div>
 </div>
 <div id="footer">
