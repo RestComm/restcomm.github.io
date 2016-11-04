@@ -25460,6 +25460,24 @@ If a message fits to all conditions then the rule will be applied to the message
 <td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that destination address digits of the message will not be changed.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">newsourceton</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arrival trigger / &lt;new source type of number&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a message source Type of Number will be changed to "newsourceton" value.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that source Type of Number of the message will not be changed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">newsourcenpi</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arrival trigger / &lt;new source numbering plan indicator&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a message source Numbering Plan Indicator will be changed to "newsourcenpi" value.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that source Numbering Plan Indicator of the message will not be changed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">newsourceaddr</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arrival trigger / &lt;new source address value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a message source address will be changed to "newsourceaddr" value.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that source address of the message will not be changed.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">makecopy</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Arrival trigger / &lt;false | true&gt;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">If the makecopy action is present then SMSC GW makes a copy of a message and then post the copy for further message processing in addition to the original message. All other actions in the rule will be applied only to the copy. For example user wants to make copies of messages and send them to another destinations (by sending of copies into another networkId), then for this you can create a rule and set for the rule "makecopy true" and "newnetworkid &lt;new networkId value&gt;" parameters. This makes a copy of a message and set for the copy a new networkId value.</p></td>
@@ -26174,20 +26192,20 @@ public interface PostArrivalProcessor {
      * Updating of source address message TON. In case of bad value (&lt;0 or &gt;6) MProcRuleException will be thrown
      *
      * @param message
-     * @param newDestTon
+     * @param newSourceTon
      * @throws MProcRuleException
      */
-    void updateMessageSourceAddrTon(MProcMessage message, int newDestTon) throws MProcRuleException;
+    void updateMessageSourceAddrTon(MProcMessage message, int newSourceTon) throws MProcRuleException;
 
     /**
      * Updating of source address message NPI. In case of bad value (&lt;0 or &gt;6)
      * MProcRuleException will be thrown
      *
      * @param message
-     * @param newDestNpi
+     * @param newSourceNpi
      * @throws MProcRuleException
      */
-    void updateMessageSourceAddrNpi(MProcMessage message, int newDestNpi) throws MProcRuleException;
+    void updateMessageSourceAddrNpi(MProcMessage message, int newSourceNpi) throws MProcRuleException;
 
     /**
      * Updating of source address message digits. Value can not be null and must have length 1-21 characters. In case of
@@ -32919,9 +32937,11 @@ SYNOPSIS
 	&lt;delivery processing type: SS7_SRI | SS7_MT | SMPP | SIP | -1&gt; errorcode &lt;internal SMSC
 	GW delivery error code value&gt; newnetworkid &lt;new networkId value&gt; newdestton &lt;new
 	destination type of number&gt; newdestnpi &lt;new destination numbering plan indicator&gt;
-	adddestdigprefix &lt;prefix value&gt; hrbypass &lt;false | true&gt; dropaftersri &lt;false | true&gt;
-	newnetworkidaftersri &lt;networkId value&gt; newnetworkidafterpermfail &lt;networkId value&gt;
-	dropaftertempfail &lt;false | true&gt; newnetworkidaftertempfail &lt;networkId value&gt;
+	adddestdigprefix &lt;prefix value&gt; newsourceton &lt;new source type of number&gt; newsourcenpi
+	&lt;new source numbering plan indicator&gt; newsourceaddr &lt;new source address value&gt; hrbypass
+	&lt;false | true&gt; dropaftersri &lt;false | true&gt; newnetworkidaftersri &lt;networkId value&gt;
+	newnetworkidafterpermfail &lt;networkId value&gt; dropaftertempfail &lt;false | true&gt;
+	newnetworkidaftertempfail &lt;networkId value&gt;
 
 DESCRIPTION
 
@@ -32954,6 +32974,9 @@ PARAMETERS
 	newdestton - an optional parameter.
 	newdestnpi - an optional parameter.
 	adddestdigprefix - an optional parameter.
+	newsourceton - an optional parameter.
+	newsourcenpi - an optional parameter.
+	newsourceaddr - an optional parameter.
 	makecopy - an optional parameter.
 	hrbypass - an optional parameter.
 	dropaftersri - an optional parameter.
@@ -33025,9 +33048,11 @@ SYNOPSIS
 	&lt;delivery processing type: SS7_SRI | SS7_MT | SMPP | SIP | -1&gt; errorcode &lt;internal SMSC
 	GW delivery error code value&gt; newnetworkid &lt;new networkId value&gt; newdestton &lt;new
 	destination type of number&gt; newdestnpi &lt;new destination numbering plan indicator&gt;
-	adddestdigprefix &lt;prefix value&gt; hrbypass &lt;false | true&gt; dropaftersri &lt;false | true&gt;
-	newnetworkidaftersri &lt;networkId value&gt; newnetworkidafterpermfail &lt;networkId value&gt;
-	dropaftertempfail &lt;false | true&gt; newnetworkidaftertempfail &lt;networkId value&gt;
+	adddestdigprefix &lt;prefix value&gt; newsourceton &lt;new source type of number&gt; newsourcenpi
+	&lt;new source numbering plan indicator&gt; newsourceaddr &lt;new source address value&gt; hrbypass
+	&lt;false | true&gt; dropaftersri &lt;false | true&gt; newnetworkidaftersri &lt;networkId value&gt;
+	newnetworkidafterpermfail &lt;networkId value&gt; dropaftertempfail &lt;false | true&gt;
+	newnetworkidaftertempfail &lt;networkId value&gt;
 
 DESCRIPTION
 
@@ -33058,6 +33083,9 @@ PARAMETERS
 	newdestton - an optional parameter.
 	newdestnpi - an optional parameter.
 	adddestdigprefix - an optional parameter.
+	newsourceton - an optional parameter.
+	newsourcenpi - an optional parameter.
+	newsourceaddr - an optional parameter.
 	makecopy - an optional parameter.
 	hrbypass - an optional parameter.
 	dropaftersri - an optional parameter.
@@ -34462,7 +34490,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-03 10:53:16 WET
+Last updated 2016-11-04 10:51:45 WET
 </div>
 </div>
 <footer>
