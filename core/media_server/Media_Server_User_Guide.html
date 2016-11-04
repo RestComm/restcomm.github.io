@@ -22772,16 +22772,13 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </li>
 <li><a href="#_chapter_installing_the_media_server">2. Installing the Media Server</a>
 <ul class="sectlevel2">
-<li><a href="#_itms_binary_jboss_media_server_installing_configuring_and_running">2.1. JBoss Application Server 5.x.y embedded Media Server Binary Distribution: Installing, Configuring and Running</a></li>
+<li><a href="#_itms-binary-standalone_media_server-installing_configuring_and_running">2.1. Standalone Media Server Binary Distribution</a></li>
 </ul>
 </li>
 <li><a href="#_ctms_configuring_the_media_server">3. Configuring the Media Server</a>
 <ul class="sectlevel2">
-<li><a href="#network-configuration">3.1. Network Configuration</a></li>
-<li><a href="#controller-configuration">3.2. Controller Configuration</a></li>
-<li><a href="#media-configuration">3.3. Media Configuration</a></li>
-<li><a href="#resources-configuration">3.4. Resources Configuration</a></li>
-<li><a href="#dtls-configuration">3.5. DTLS Configuration</a></li>
+<li><a href="#_ctms_configuring_the_media_server_manual">3.1. Manual Configuration</a></li>
+<li><a href="#_ctms_configuring_the_media_server_automatic">3.2. Automatic Configuration</a></li>
 </ul>
 </li>
 <li><a href="#_captms_controlling_and_programming_the_media_server">4. Controlling and Programming the Restcomm Media Server</a>
@@ -23361,71 +23358,64 @@ The Call Agent can be distributed over several computer platforms.</p>
 <h2 id="_chapter_installing_the_media_server"><a class="anchor" href="#_chapter_installing_the_media_server"></a>2. Installing the Media Server</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Restcomm Media Server distribution is available as Standalone</p>
+<p>The Restcomm Media Server is available in both binary and source code distributions.</p>
 </div>
 <div class="paragraph">
-<p>The Media Server is available in both binary and source code distributions.
-The simplest way to get started with the Media Server is to download the ready-to-run binary distribution.
-Alternatively, the source code for the Media Server can be obtained by checking it out from its repository using the Git version control system. You can later run a build using Maven.
-The binary distribution is recommended for most users.
+<p>The simplest way to get started with the Media Server is to download the ready-to-run binary distribution from the <a href="https://github.com/RestComm/mediaserver/releases/latest">releases page</a>.
+Alternatively, the source code for the Media Server can be obtained by checking it out <a href="https://github.com/RestComm/mediaserver">from its repository</a> using the Git version control system. You can later run a build using Maven.</p>
+</div>
+<div class="paragraph">
+<p>The binary distribution is recommended for most users.
 Downloading and building the source code is recommended for those who want access to the latest revisions and Media Server capabilities.</p>
 </div>
 <div class="paragraph">
 <p>Installing the <a href="#_jdk_installing_configuring_and_running">Java Development Kit (): Installing, Configuring and Running</a></p>
 </div>
 <div class="sect2">
-<h3 id="_itms_binary_jboss_media_server_installing_configuring_and_running"><a class="anchor" href="#_itms_binary_jboss_media_server_installing_configuring_and_running"></a>2.1. JBoss Application Server 5.x.y embedded Media Server Binary Distribution: Installing, Configuring and Running</h3>
-<div class="paragraph">
-<p>Restcomm Media Server either comes bundled with the JBoss Application Server or Standalone.
-This section details how to install the Restcomm Media Server that comes bundled with JBoss Application Server 5.
-For installation of Standalone Restcomm Media Server , refer to <a href="#_itms_binary_standalone_media_server_installing_configuring_and_running">[_itms_binary_standalone_media_server_installing_configuring_and_running]</a></p>
-</div>
+<h3 id="_itms-binary-standalone_media_server-installing_configuring_and_running"><a class="anchor" href="#_itms-binary-standalone_media_server-installing_configuring_and_running"></a>2.1. Standalone Media Server Binary Distribution</h3>
 <div class="sect3">
-<h4 id="_itms_binary_jboss_media_server_preinstall_requirements_and_prerequisites"><a class="anchor" href="#_itms_binary_jboss_media_server_preinstall_requirements_and_prerequisites"></a>2.1.1. Pre-Install Requirements and Prerequisites</h4>
+<h4 id="_itms_binary_standalone_media_server_preinstall_requirements_and_prerequisites"><a class="anchor" href="#_itms_binary_standalone_media_server_preinstall_requirements_and_prerequisites"></a>2.1.1. Pre-Install Requirements and Prerequisites</h4>
 <div class="paragraph">
-<p>Ensure that the following requirements have been met before continuing with the installation.</p>
+<p>Ensure that the following requirements have been met before continuing with the installation:</p>
 </div>
 <div class="dlist">
 <div class="title">Hardware Requirements</div>
 <dl>
 <dt class="hdlist1">Sufficient Disk Space</dt>
 <dd>
-<p>Once unzipped, the JBoss AS embedded Media Server binary release requires <em>at least</em>							&amp;MS_EMB_SIZE;							of free disk space.
-Keep in mind that disk space requirements may change in future iterations.</p>
+<p>Once unzipped, the Restcomm Media Server binary release requires <em>at least</em>	36Mb of free disk space. Keep in mind that disk space requirements may change in future iterations.</p>
 </dd>
-<dt class="hdlist1">Anything built for Java</dt>
+<dt class="hdlist1">Anything Java Itself Will Run On</dt>
 <dd>
-<p>The JBoss embedded Media Server and its bundled servers, JBoss, are 100% Java.
-The Media Server will run on the same hardware that the JBoss Application Server runs on.</p>
+<p>The JBoss embedded Media Server and its bundled servers, JBoss, are 100% Java. The Restcomm Media Server will run on the same hardware that the JBoss Application Server runs on.</p>
 </dd>
 </dl>
 </div>
 <div class="dlist">
-<div class="title">Software Prerequisites</div>
+<div class="title">Software Requirements</div>
 <dl>
-<dt class="hdlist1">JDK 5 or Higher</dt>
+<dt class="hdlist1">Java Development Kit</dt>
 <dd>
-<p>A working installation of the Java Development Kit ( 							) version 5 or higher is required in order to run the JBoss embedded Media Server.
-Note that the JBoss Application Server is a runtime dependency of the Media Server and, as mentioned, comes bundled with the binary distribution.</p>
+<p>A working installation of JDK 5 or higher is required for Restcomm Media Server to run.</p>
 </dd>
 </dl>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_itms_binary_jboss_media_server_downloading"><a class="anchor" href="#_itms_binary_jboss_media_server_downloading"></a>2.1.2. Downloading</h4>
+<h4 id="_itms_binary_standalone_media_server_downloading"><a class="anchor" href="#_itms_binary_standalone_media_server_downloading"></a>2.1.2. Downloading</h4>
 <div class="paragraph">
-<p>The latest version of the JBoss embedded Media Server is available from <a href="http://www.mobicents.org/mms-downloads.html" class="bare">http://www.mobicents.org/mms-downloads.html</a>				. The top row of the table holds the latest version.
-Click the <code>Download</code>				link to start the download.</p>
+<p>The latest version of the Restcomm Media Server is available from the project&#8217;s <a href="https://github.com/RestComm/mediaserver/releases/latest">github release page</a>.
+Select the link named <em>restcomm-media-server-&lt;version&gt;.zip</em> to start downloading the latest stable binary release from community.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_itms_binary_jboss_media_server_installing"><a class="anchor" href="#_itms_binary_jboss_media_server_installing"></a>2.1.3. Installing</h4>
+<h4 id="_itms_binary_standalone_media_server_installing"><a class="anchor" href="#_itms_binary_standalone_media_server_installing"></a>2.1.3. Installing</h4>
 <div class="paragraph">
-<p>Once the requirements and prerequisites have been met, the JBoss embedded Media Server can be installed onto the system.
+<p>Once the requirements and prerequisites have been met, the Restcomm Media Server can be installed into the system.
 Follow the instructions below for the operating system on which the server will reside.</p>
 </div>
 <div class="paragraph">
-<div class="title">Procedure: Installing the JBoss embedded Media Server BinaryDistribution on Linux</div>
+<div class="title">Procedure: Installing the Restcomm Media Server Binary Distribution on Linux</div>
 <p>It is assumed that the downloaded archive is saved in the home directory, and that a terminal window is open displaying the home directory.</p>
 </div>
 <div class="olist arabic">
@@ -23434,7 +23424,7 @@ Follow the instructions below for the operating system on which the server will 
 <p>Create a subdirectory into which the files can be extracted. For ease of identification, it is recommended that the version number of the binary is included in this directory name.</p>
 <div class="listingblock">
 <div class="content">
-<pre>~]$ mkdir ms-&lt;version&gt;</pre>
+<pre>~]$ mkdir restcomm-media-server-&lt;version&gt;</pre>
 </div>
 </div>
 </li>
@@ -23442,7 +23432,7 @@ Follow the instructions below for the operating system on which the server will 
 <p>Move the downloaded zip file into the directory:</p>
 <div class="listingblock">
 <div class="content">
-<pre>~]$ mv “mms-3.0.0.FINAL.zip” ms-&lt;version&gt;</pre>
+<pre>~]$ mv restcomm-media-server-&lt;version&gt;.zip restcomm-media-server-&lt;version&gt;</pre>
 </div>
 </div>
 </li>
@@ -23450,100 +23440,23 @@ Follow the instructions below for the operating system on which the server will 
 <p>Move into the directory:</p>
 <div class="listingblock">
 <div class="content">
-<pre>~]$ cd	ms-&lt;version&gt;</pre>
+<pre>~]$ cd	restcomm-media-server-&lt;version&gt;</pre>
 </div>
 </div>
 </li>
 <li>
-<p>Extract the files into the current directory by executing one of the following commands.</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>Java:</p>
+<p>Extract the files into the current directory:</p>
 <div class="listingblock">
 <div class="content">
-<pre>ms-&lt;version&gt;]$ jar -xvf “mms-3.0.0.FINAL.zip”</pre>
+<pre>restcomm-media-server-&lt;version&gt;]$ unzip restcomm-media-server-&lt;version&gt;.zip</pre>
 </div>
-</div>
-</li>
-<li>
-<p>Linux:</p>
-<div class="listingblock">
-<div class="content">
-<pre>ms-&lt;version&gt;]$ unzip “mms-3.0.0.FINAL.zip”</pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Alternatively, use <code>unzip</code> -d &lt;unzip_to_location&gt; to extract the zip file&#8217;s contents to a location other than the current directory.
-</td>
-</tr>
-</table>
-</div>
-</li>
-</ol>
 </div>
 </li>
 <li>
 <p>Consider deleting the archive, if free disk space is an issue.</p>
 <div class="listingblock">
 <div class="content">
-<pre>ms-&lt;version&gt;]$ rm “mms-3.0.0.FINAL.zip”</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure: Installing the JBoss embedded Media Server BinaryDistribution on Windows</div>
-<ol class="arabic">
-<li>
-<p>For this procedure, it is assumed that the downloaded archive is saved in the <em class="path">My Downloads</em>						folder.
-You can also choose any convenient folder of your choice.</p>
-</li>
-<li>
-<p>Create a subfolder in <em class="path">My Downloads</em>						to extract the zip file&#8217;s contents into.
-For ease of identification, it is recommended that the version number of the binary is included in the folder name.
-For example, <em class="path">ms-&lt;version&gt;</em> .</p>
-</li>
-<li>
-<p>Extract the contents of the archive, specifying the destination folder as the one created in the previous step.</p>
-</li>
-<li>
-<p>Alternatively, execute the <code>jar -xvf</code>	command to extract the binary distribution files from the zip archive.</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>Move the downloaded zip file from <em class="path">My Downloads</em> to the folder created in the previous step.</p>
-</li>
-<li>
-<p>Open the Windows Command Prompt and navigate to the folder that contains the archive using the <code>cd</code> command</p>
-</li>
-<li>
-<p>Execute the <code>jar -xvf</code> command to extract the archive contents into the current folder.</p>
-<div class="listingblock">
-<div class="content">
-<pre>C:\Users\&lt;user&gt;\My Downloads\ms-&lt;version&gt;\jar -xvf "mms-3.0.0.FINAL.zip"</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p>It is recommended that the folder holding the JBoss embedded Media Server files (in this example, the folder named <em class="path">ms-&lt;version&gt;</em>) is moved to a user-defined location for storing executable programs.
-For example, the <em class="path">Program Files</em> folder.</p>
-</li>
-<li>
-<p>Consider deleting the archive, if free disk space is an issue.</p>
-<div class="listingblock">
-<div class="content">
-<pre>C:\Users\&lt;user&gt;\My Downloads\ms-&lt;version&gt;\delete "mms-3.0.0.FINAL.zip"</pre>
+<pre>restcomm-media-server-&lt;version&gt;]$ rm restcomm-media-server-&lt;version&gt;.zip</pre>
 </div>
 </div>
 </li>
@@ -23551,39 +23464,33 @@ For example, the <em class="path">Program Files</em> folder.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_itms_binary_jboss_media_server_running"><a class="anchor" href="#_itms_binary_jboss_media_server_running"></a>2.1.4. Running</h4>
+<h4 id="_itms_binary_standalone_media_server_running"><a class="anchor" href="#_itms_binary_standalone_media_server_running"></a>2.1.4. Running</h4>
 <div class="paragraph">
-<p>In the Linux terminal or Windows command prompt, the JBoss embedded Media Server has started successfully if the last line of output is similar to the following (ending with &#8220;Started in 23s:648ms&#8221;				):</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>11:27:34,663 INFO  [ServerImpl] JBoss (Microcontainer) [5.1.0.GA (build: SVNTag=JBoss_5_1_0_GA date=200905221053)] Started in 37s:637ms</code></pre>
-</div>
+<p>Now that the Restcomm Media Server binary has been downloaded and properly installed in a local directory, we can bootstrap the project by following these steps:</p>
 </div>
 <div class="olist arabic">
-<div class="title">Procedure: Running the Media Server on Linux</div>
 <ol class="arabic">
 <li>
 <p>Change the working directory to installation directory (the one into which the zip file&#8217;s contents was extracted)</p>
 <div class="listingblock">
 <div class="content">
-<pre>						downloads]$ cd "mms-server"</pre>
+<pre>~]$ cd restcomm-media-server-&lt;version&gt;</pre>
 </div>
 </div>
 </li>
 <li>
-<p>(Optional) Ensure that the <em class="path">bin/run.sh</em>						start script is executable.</p>
+<p>(Optional) Ensure that the <em class="path">bin/run.sh</em> start script is executable.</p>
 <div class="listingblock">
 <div class="content">
-<pre>ms-&lt;version&gt;]$ chmod +x bin/run.sh</pre>
+<pre>restcomm-media-server-&lt;version&gt;]$ chmod +x bin/run.sh</pre>
 </div>
 </div>
 </li>
 <li>
-<p>Execute the <em class="path">run.sh</em>						Bourne shell script.</p>
+<p>Execute the <em class="path">run.sh</em> shell script.</p>
 <div class="listingblock">
 <div class="content">
-<pre>ms-&lt;version&gt;]$ ./bin/run.sh</pre>
+<pre>restcomm-media-server-&lt;version&gt;]$ ./bin/run.sh</pre>
 </div>
 </div>
 </li>
@@ -23597,68 +23504,58 @@ For example, the <em class="path">Program Files</em> folder.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Instead of executing the Bourne shell script to start the server, the <em class="path">run.jar</em>					executable Java archive can be executed from the <em class="path">bin</em>					directory:</p>
+<p>Instead of executing the shell script, the <em class="path">run.jar</em> executable Java archive can be executed from the <em class="path">bin</em> directory:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>ms-&lt;version&gt;]$ java -jar bin/run.jar</pre>
+<pre>restcomm-media-server-&lt;version&gt;]$ java -jar bin/run.jar</pre>
 </div>
 </div>
 </td>
 </tr>
 </table>
 </div>
-<div class="olist arabic">
-<div class="title">Procedure: Running the JBoss embedded Media Server on Windows</div>
-<ol class="arabic">
-<li>
-<p>Using Windows Explorer, navigate to the <em class="path">bin</em> subfolder in the installation directory.</p>
-</li>
-<li>
-<p>The preferred way to start the JBoss embedded Media Server is from the Command Prompt.
-The command line interface displays details of the startup process, including any problems encountered during the startup process.</p>
 <div class="paragraph">
-<p>Open the Command Prompt via the <span class="label">Start</span>						menu and navigate to the correct folder:</p>
+<p>You can verify that Restcomm Media Server has started successfully if the last line of output in the Linux Terminal window is similar to</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>C:\Users\&lt;user&gt;\My Downloads&gt; cd "mms-server"</pre>
+<pre class="highlight"><code>15:35:16,897 INFO  [MainDeployer] [[[[[[[[[ RestComm Media Server: release.version=5.0.0-SNAPSHOT Started ]]]]]]]]]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_itms-binary-standalone_media_server-stopping"><a class="anchor" href="#_itms-binary-standalone_media_server-stopping"></a>2.1.5. Stopping</h4>
+<div class="paragraph">
+<p>To stop the execution of an active Restcomm Media Server process, we a couple of possibilities:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Send interrupt signal (Ctrl+C) to the active Linux Terminal session where Restcomm Media Server process is running.</p>
+</li>
+<li>
+<p>Find the PID of the Restcomm Media Server Java process and kill it:</p>
+<div class="listingblock">
+<div class="content">
+<pre>~]$ ps aux | grep java
+hrosa            10947  16.8 22.4  6603132 3755516 s005  S+    3:51PM   0:07.51 /opt/.jenv/versions/oracle64-1.7.0.79/bin/java -Dprogram.name=run.sh -classpath /opt/restcomm-media-server/bin/run.jar org.mobicents.media.server.bootstrap.Main
+~]$ kill 10947</pre>
 </div>
 </div>
 </li>
 </ol>
 </div>
-<div class="ulist">
-<div class="title">Start the JBoss Application Server by executing one of the following files:</div>
-<ul>
-<li>
-<p><em class="path">run.bat</em> batch file:</p>
-<div class="listingblock">
-<div class="content">
-<pre>C:\Users\&lt;user&gt;\My Downloads\ms-&lt;version&gt;&gt;bin\run.bat</pre>
-</div>
-</div>
-</li>
-<li>
-<p><em class="path">run.jar</em> executable Java archive:</p>
-<div class="listingblock">
-<div class="content">
-<pre>C:\Users\&lt;user&gt;\My Downloads\ms-&lt;version&gt;&gt;java -jar bin\run.jar</pre>
-</div>
-</div>
-</li>
-</ul>
-</div>
 </div>
 <div class="sect3">
-<h4 id="_itms_jboss_server_structure"><a class="anchor" href="#_itms_jboss_server_structure"></a>2.1.5. Server Structure</h4>
+<h4 id="_itms_standalone_server_structure"><a class="anchor" href="#_itms_standalone_server_structure"></a>2.1.6. Server Structure</h4>
 <div class="paragraph">
-<p>Now the server is installed, it is important to understand the layout of the server directories.
+<p>Now that the server is installed, it is important to understand the layout of the server directories.
 An understanding of the server structure is useful when deploying examples, and making configuration changes.
 It is also useful to understand what components can be removed to reduce the server boot time.</p>
 </div>
 <div class="paragraph">
-<p>The directory structure in the JBoss embedded Media Server installation directory is named using a standard structure. <a href="#_tab_mms_jboss_directory_structure">Directory Structure</a> describes each directory, and the type of information contained within each location.</p>
+<p>The directory structure in the Restcomm Media Server installation directory is named using a standard structure. <a href="#_tab_mms_jboss_directory_structure">Directory Structure</a> describes each directory as well as the type of information contained within each location.</p>
 </div>
 <table id="_tab_mms_jboss_directory_structure" class="tableblock frame-all grid-all spread">
 <caption class="title">Table 1. Directory Structure</caption>
@@ -23679,7 +23576,7 @@ It is also useful to understand what components can be removed to reduce the ser
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">conf</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Contains the core services that are required for the server. This includes the bootstrap descriptor, log files, and the default bootstrap-beans.xml configuration file.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contains the core services that are required for the server. This includes the bootstrap descriptor, log files, and the default media server configuration file.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">deploy</p></td>
@@ -23687,19 +23584,22 @@ It is also useful to understand what components can be removed to reduce the ser
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">lib</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Contains the startup JAR files used by the server.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contains the dependency files required by the server.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">log</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Contains the logs from the bootstrap logging service. The log directory is the default directory into which the bootstrap logging service places its logs, however, the location can be overridden by altering the log4j.xml configuration file. This file is located in the /conf directory.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contains the logs from the bootstrap logging service. The log directory is the default directory into which the bootstrap logging service places its logs, however, the location can be overridden by altering the log4j.xml configuration file. This file is located in the <em>conf</em> directory.</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>The Media Server uses a number of XML configuration files that control various aspects of the server.
-In case of embedded Media Server all the files related Media Server are placed in  mms-jboss-5.1.0.GA-&lt;version&gt;/jboss-5.1.0.GA/server/default/deploy/mobicents-media-server <a href="#_tab_mms_jboss_core_configuration_file_set">Core Configuration File Set</a> describes the location of the key configuration files, and provides a description of the</p>
+<p>The standalone Media Server uses a number of XML configuration
+files that control various aspects of the server.
+&lt;xref linkend="tab-mms-standalone_core_configuration_file_set" /&gt;
+describes the location of the key configuration files,
+and provides a description of the</p>
 </div>
-<table id="_tab_mms_jboss_core_configuration_file_set" class="tableblock frame-all grid-all spread">
+<table id="_tab_mms_standalone_core_configuration_file_set" class="tableblock frame-all grid-all spread">
 <caption class="title">Table 2. Core Configuration File Set</caption>
 <colgroup>
 <col style="width: 50%;">
@@ -23714,33 +23614,31 @@ In case of embedded Media Server all the files related Media Server are placed i
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">conf/bootstrap-beans.xml</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies which additional microcontainer deployments are loaded as part of the bootstrap phase. bootstrap-beans.xml references other configuration files contained in the /conf/bootstrap/ directory. For a standard configuration, the bootstrap configuration files require no alteration.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies which additional microcontainer deployments are loaded as part of the bootstrap phase. For a standard configuration, the bootstrap configuration files require no alteration.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">conf/log4j.properties</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the Apache log4j framework category priorities and appenders used by the Media Server.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">conf/mediaserver.xml</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Main configuration file responsible for configure all aspects of the Media Server core. For in-depth details of this file please see chapter 3.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">conf/mgcp-conf.xml</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the configuration for the MGCP controller.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">conf/mediaserver.xml</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration file of the Media Server. For more information please see chapter 3.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">conf/log4j.properties</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the Apache log4j framework category priorities and appenders used by the Media Server.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">deploy/server-beans.xml</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specified list of Java Beans necessary for bootstrapping the Media Server.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specified list of Java Beans necessary for bootstrapping the Media Server. For a standard configuration, the bootstrap configuration files require no alteration.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_itms_writing_and_running_tests_against_the_media_server"><a class="anchor" href="#_itms_writing_and_running_tests_against_the_media_server"></a>2.1.6. Writing and Running Tests Against the Media Server</h4>
+<h4 id="_itms_writing_and_running_tests_against_the_media_server"><a class="anchor" href="#_itms_writing_and_running_tests_against_the_media_server"></a>2.1.7. Writing and Running Tests Against the Media Server</h4>
 <div class="paragraph">
-<p>For information about the different kinds of tests that the Media Server provides, refer to <a href="http://groups.google.com/group/mobicents-public/web/mobicents-ms-tests">
-				Writing and Running Tests Against MMS
-			</a></p>
+<p>For information about the different kinds of tests that the Media Server provides, refer to <a href="http://groups.google.com/group/mobicents-public/web/mobicents-ms-tests">Writing and Running Tests Against RestComm MS</a></p>
 </div>
 </div>
 </div>
@@ -23750,7 +23648,34 @@ In case of embedded Media Server all the files related Media Server are placed i
 <h2 id="_ctms_configuring_the_media_server"><a class="anchor" href="#_ctms_configuring_the_media_server"></a>3. Configuring the Media Server</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="network-configuration"><a class="anchor" href="#network-configuration"></a>3.1. Network Configuration</h3>
+<h3 id="_ctms_configuring_the_media_server_manual"><a class="anchor" href="#_ctms_configuring_the_media_server_manual"></a>3.1. Manual Configuration</h3>
+<div class="paragraph">
+<p>The RestComm Media Server features an extensible configuration file, allowing users to have some control over several aspects of its behavior.</p>
+</div>
+<div class="paragraph">
+<p>Users can configure the Media Server by editing the file located at <em>$MS_HOME/conf/mediaserver.xml</em>. The XML file is divided into several main nodes, each one representing a specific aspect of the Media Server:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Network</strong> refers to the network configuration. Depends on network topology of the machine where Media Server is installed.</p>
+</li>
+<li>
+<p><strong>Media</strong> refers to the media processing and RTP configuration.</p>
+</li>
+<li>
+<p><strong>Controller</strong> refers to the Media Server Controller configuration. Defines which control protocol is used so that Media Server can communicate with Call Agents.</p>
+</li>
+<li>
+<p><strong>Resources</strong> refers to the resource pooling configuration. Depends on expected load on the server.</p>
+</li>
+<li>
+<p><strong>DTLS</strong> refers to configuration of security layer for media.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="network-configuration"><a class="anchor" href="#network-configuration"></a>3.1.1. Network Configuration</h4>
 <div class="exampleblock">
 <div class="title">Example 1. Network configuration</div>
 <div class="content">
@@ -23798,8 +23723,8 @@ This is similar to when <strong>sbc</strong> is set to false.</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="controller-configuration"><a class="anchor" href="#controller-configuration"></a>3.2. Controller Configuration</h3>
+<div class="sect3">
+<h4 id="controller-configuration"><a class="anchor" href="#controller-configuration"></a>3.1.2. Controller Configuration</h4>
 <div class="paragraph">
 <p>This configuration subset defines the default Media Server Controller, the core component that processes incoming requests and manages media resources.</p>
 </div>
@@ -23826,8 +23751,8 @@ This is similar to when <strong>sbc</strong> is set to false.</p>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="network"><a class="anchor" href="#network"></a>3.2.1. Network</h4>
+<div class="sect4">
+<h5 id="network"><a class="anchor" href="#network"></a>Network</h5>
 <div class="paragraph">
 <p>The <strong>Address</strong> parameter defines the address of the network interface to which the controller is bound to. The control channel is open on this address.</p>
 </div>
@@ -23838,8 +23763,8 @@ This is similar to when <strong>sbc</strong> is set to false.</p>
 <p>The <strong>PoolSize</strong> parameter defines the number of MGCP requests that Media Server can handle concurrently.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="endpoints"><a class="anchor" href="#endpoints"></a>3.2.2. Endpoints</h4>
+<div class="sect4">
+<h5 id="endpoints"><a class="anchor" href="#endpoints"></a>Endpoints</h5>
 <div class="paragraph">
 <p>The <strong>Endpoints</strong> configuration allows you to configure all MGCP endpoint groups you want to use with the Media Server instance.</p>
 </div>
@@ -23966,7 +23891,7 @@ This implies that non-RTP connections can communicate with RTP endpoints and non
 </div>
 </div>
 <div class="paragraph">
-<p>In this scenario, both IVR and Conference endpoints will be connected by a pair of Local Connections to the Bridge Endpoint. This is considered a good practice as there will be no cross over of IVR Resources (player , recorder , etc ) to conference.
+<p>In this scenario, both IVR and Conference endpoints will be connected by a pair of Local Connections to the Bridge Endpoint. This is considered a good practice as there will be no cross over of IVR Resources (player , recorder , etc) to conference.
 The same applies to any conference traffic, it will not cross over to IVR.
 This is useful for recording RTP data for specific groups of users.</p>
 </div>
@@ -23992,8 +23917,8 @@ That means that any SS7 channel data will be sent to any connection and signal d
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="media-configuration"><a class="anchor" href="#media-configuration"></a>3.3. Media Configuration</h3>
+<div class="sect3">
+<h4 id="media-configuration"><a class="anchor" href="#media-configuration"></a>3.1.3. Media Configuration</h4>
 <div class="paragraph">
 <p>The media configuration contains definitions that have an impact on the media channels.</p>
 </div>
@@ -24019,8 +23944,8 @@ That means that any SS7 channel data will be sent to any connection and signal d
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="rtp-channels"><a class="anchor" href="#rtp-channels"></a>3.3.1. RTP Channels</h4>
+<div class="sect4">
+<h5 id="rtp-channels"><a class="anchor" href="#rtp-channels"></a>RTP Channels</h5>
 <div class="paragraph">
 <p>The <strong>LowPort</strong> and <strong>HighPort</strong> define the port range reserved for RTP channels.
 These values should be an even number, since odd ports are reserved for RTCP channels.</p>
@@ -24030,8 +23955,8 @@ These values should be an even number, since odd ports are reserved for RTCP cha
 Jitter Buffers are commonly configured to hold up to 50-60ms of audio.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="rtp-timeout"><a class="anchor" href="#rtp-timeout"></a>3.3.2. RTP Timeout</h4>
+<div class="sect4">
+<h5 id="rtp-timeout"><a class="anchor" href="#rtp-timeout"></a>RTP Timeout</h5>
 <div class="paragraph">
 <p>Most SIP UA do not support any type of keep-alive between 200 OK and BYE.
 Therefore, in case the network goes down while a call is established, the call may hang forever.
@@ -24076,8 +24001,8 @@ Control Server ---&gt; 200 ----&gt; UA</code></pre>
 <p>In case of 180 or 183 without SDP response , intermediate MDCX is not required.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="codecs"><a class="anchor" href="#codecs"></a>3.3.3. Codecs</h4>
+<div class="sect4">
+<h5 id="codecs"><a class="anchor" href="#codecs"></a>Codecs</h5>
 <div class="paragraph">
 <p>Currently media server supports five codecs : G711 A/U, Linear PCM Raw, GSM, ILBC and G.729.</p>
 </div>
@@ -24114,8 +24039,8 @@ It is not recommended to allow L16 codec for UA – server connections, this can
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="resources-configuration"><a class="anchor" href="#resources-configuration"></a>3.4. Resources Configuration</h3>
+<div class="sect3">
+<h4 id="resources-configuration"><a class="anchor" href="#resources-configuration"></a>3.1.4. Resources Configuration</h4>
 <div class="paragraph">
 <p>In the current Media Server release, a global pool of resources is used to decrease garbage collection and allow for faster resource allocation.</p>
 </div>
@@ -24219,8 +24144,8 @@ It is up to the user to decide the best trade-off for the setup (greater memory 
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="dtls-configuration"><a class="anchor" href="#dtls-configuration"></a>3.5. DTLS Configuration</h3>
+<div class="sect3">
+<h4 id="dtls-configuration"><a class="anchor" href="#dtls-configuration"></a>3.1.5. DTLS Configuration</h4>
 <div class="paragraph">
 <p>The DTLS configuration allows to define some properties that are used by WebRTC resources, through the DTLS protocol. Since the nature of this configuration is strongly related with security principles, <strong>some of the default values of this configuration need to be replaced by the user&#8217;s private information, ensuring that no vulnerabilities could be exploited by someone else.</strong> This refers mainly to the <strong>certificate</strong>, that is shipped with mediaserver for demonstration purposes only, and its better explained in the <strong>Certificate</strong> subsection.</p>
 </div>
@@ -24244,14 +24169,14 @@ It is up to the user to decide the best trade-off for the setup (greater memory 
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="dtls-version"><a class="anchor" href="#dtls-version"></a>3.5.1. DTLS Version</h4>
+<div class="sect4">
+<h5 id="dtls-version"><a class="anchor" href="#dtls-version"></a>DTLS Version</h5>
 <div class="paragraph">
 <p>The properties <strong>minVersion</strong> and <strong>maxVersion</strong> define the supported minimum and maximum version of the DTLS protocol, respectively. The possible values suported by each property is <strong>1.0</strong> or <strong>1.2</strong>.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="cipher-suites"><a class="anchor" href="#cipher-suites"></a>3.5.2. Cipher suites</h4>
+<div class="sect4">
+<h5 id="cipher-suites"><a class="anchor" href="#cipher-suites"></a>Cipher suites</h5>
 <div class="paragraph">
 <p>The <strong>cipherSuites</strong> property allows to inform one or more cipher suites to be used by DTLS. The names of the suites follows the <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html#ciphersuites">JSSE cipher suite naming standard</a> and must be separated by comma.
 The following examples show how to set the cipher suites can be configured using <strong>RSA</strong> and <strong>ECDSA</strong>.</p>
@@ -24301,8 +24226,8 @@ The following examples show how to set the cipher suites can be configured using
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="certificate"><a class="anchor" href="#certificate"></a>3.5.3. Certificate</h4>
+<div class="sect4">
+<h5 id="certificate"><a class="anchor" href="#certificate"></a>Certificate</h5>
 <div class="paragraph">
 <p>This property allows to set the absolute or relative path of the certificate and key files. The path for the certificate file must be informed in the <strong>path</strong> property, and the path for the key file must be informed in the <strong>key</strong> property. The signature algorithm used for the certificates must be informed at the <strong>algorithm</strong> property, which supports the values <strong>rsa</strong> and <strong>ecdsa</strong>. The default certificate files must be replaced by certificates generated by the user, as described by the following warning:</p>
 </div>
@@ -24374,6 +24299,184 @@ The following examples show how to properly set up mediaserver according to the 
 &lt;/dtls&gt;</code></pre>
 </div>
 </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ctms_configuring_the_media_server_automatic"><a class="anchor" href="#_ctms_configuring_the_media_server_automatic"></a>3.2. Automatic Configuration</h3>
+<div class="paragraph">
+<p>The RestComm Media Server features an automatic configuration mechanism to free the users from the burden of manually configuring every aspect of the platform.</p>
+</div>
+<div class="paragraph">
+<p>Not only users can inject configuration parameters in a very simple format, this mechanism allows for automatization and easy management and multiplexing of processes.</p>
+</div>
+<div class="sect3">
+<h4 id="_ctms_configuring_the_media_server_automatic_dependencies"><a class="anchor" href="#_ctms_configuring_the_media_server_automatic_dependencies"></a>3.2.1. Requirements</h4>
+<div class="paragraph">
+<p>The automatic configuration mechanism requires the following dependencies:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="http://xmlstar.sourceforge.net">XML Starlet</a>, a set of command line utilities (tools) which can be used to transform, query, validate, and edit XML documents and files using simple set of shell commands.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell"># CentOS/RHEL
+yum install xmlstarlet
+
+# Ubuntu/Debian
+apt-get install xmlstarlet
+
+# macOS
+homebrew install xmlstarlet</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><a href="https://tmux.github.io">TMux</a>, a terminal multiplexer that lets you switch easily between several programs in one terminal, detach them (they keep running in the background) and reattach them to a different terminal.</p>
+<div class="listingblock">
+<div class="content">
+<pre># CentOS/RHEL
+yum install tmux
+
+# Ubuntu/Debian
+apt-get install tmux
+
+# macOS
+homebrew install tmux</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ctms_configuring_the_media_server_automatic_file_structure"><a class="anchor" href="#_ctms_configuring_the_media_server_automatic_file_structure"></a>3.2.2. File Structure</h4>
+<table id="_ctms_configuring_the_media_server_automatic_file_structure_table" class="tableblock frame-all grid-all spread">
+<caption class="title">Table 4. Automatic Configuration File Set</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">File Name and Location</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mediaserver.conf</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration file containing the list of parameters used to configure the Media Server.
+Users must override the values of this file according to their preferences and environment.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">start-mediaserver.sh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shell script that auto-configures the Media Server and bootstraps the Media Server. Loads values from <em>mediaserver.conf</em> file.
+Initiates a new session on tmux named <em>mediaserver</em>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">stop-mediaserver.sh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shell script that stops the Media Server.
+Kills the active tmux session named <em>mediaserver</em>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">.autoconfig</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hidden folder in the root directory of the media server. Contains all scripts responsible for auto-configuration magic.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">.autoconfig/autoconfig.d</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Directory that contains all scripts responsible for configuring specific areas of the Media Server.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">.autoconfig/autoconfig.d/config-network.sh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Script responsible for configuring Network aspects of the Media Server.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">.autoconfig/autoconfig.d/config-controller-mgcp.sh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Script responsible for configuring the MGCP Controller of the Media Server.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">.autoconfig/autoconfig.d/config-media.sh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Script responsible for configuring Media aspects of the Media Server.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">.autoconfig/autoconfig.d/config-resources.sh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Script responsible for configuring Resource Pooling aspects of the Media Server.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">.autoconfig/autoconfig.d/config-dtls.sh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Script responsible for configuring DTLS aspects of the Media Server.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">.autoconfig/autoconfigure.sh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Script responsible for invoking all configuration scripts within autoconfig.d directory.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">.autoconfig/verify-dependencies.sh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Script responsible for verifying if all dependencies are installed in the system. Interrupts auto-configuration process if not all requirements are met.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_ctms_configuring_the_media_server_automatic_running"><a class="anchor" href="#_ctms_configuring_the_media_server_automatic_running"></a>3.2.3. Running</h4>
+<div class="paragraph">
+<p>To use the automatic configuration and bootstrapping mechanism, users simply need to edit <em>mediaserver.conf</em> file according to their environment and then execute the <em>start-mediaserver.sh</em> script.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">bash-3.2# ./start-mediaserver.sh
+Media Server automatic configuration started:
+Configuring MGCP Controller [Address=192.168.0.182, Port=2427, Expected Load=200]
+Configuring DTLS [Min Version=1.2, Max Version=1.2, Certificate=conf/dtls/x509-server-ecdsa.pem, Key=conf/dtls/x509-server-key-ecdsa.pem, Algorithm=ecdsa, Cipher Suite=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA]
+Configuring MGCP Media [Timeout=10, Lowest Port=44534, Highest Port=55534, Jitter Size=60]
+Configuring Media Codecs [pcmu,pcma,telephone-event]
+Configuring Network [BindAddress=192.168.0.182, ExternalAddress=5.158.17.91, Network=192.168.0.254, Subnet=192.168.0.255, Use SBC=false]
+Configuring Resource Pools [Local Connections=400, Remote Connections=200, Players=200, Recorders=200, DTMF Detectors=200, DTMF Generators=200]
+Configuring Audio Cache [Enabled=true, Size=50]
+Configuring DTMF Detector [Dbi=-25]
+Media Server automatic configuration finished!
+Starting RestComm Media Server...
+...RestComm Media Server started running on session named "mediaserver"!</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>From the Terminal output, we see the script configuring the Media Server according to the values of <em>mediaserver.conf</em>. Then, is created a tmux session named <em>mediaserver</em> where the Media Server process will be running.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">bash-3.2# tmux ls
+mediaserver: 1 windows (created Wed Nov  2 22:05:14 2016) [160x35]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To access the <em>mediaserver</em> session we just need to run the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">bash-3.2# tmux attach -t mediaserver</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To detach from tmux session, just press <code>ctrl+b d</code> from within tmux console.</p>
+</div>
+<div class="paragraph">
+<p>To stop the Media Server process and kill the tmux session, the user simply needs to execute the stop-mediaserver.sh script.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">bash-3.2# ./stop-mediaserver.sh
+Stopping RestComm Media Server...
+...stopped RestComm Media Server instance running on session "mediaserver".
+bash-3.2# tmux ls
+no server running on /private/tmp/tmux-501/default</code></pre>
 </div>
 </div>
 </div>
@@ -24456,7 +24559,7 @@ To further understand the JSR-309 API, download specs from <a href="http://jcp.o
 <p>Announcement Package(A): <code>org.mobicents.media.server.mgcp.pkg.ann</code></p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 4. Announcement Package(A):</caption>
+<caption class="title">Table 5. Announcement Package(A):</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -24489,7 +24592,7 @@ To further understand the JSR-309 API, download specs from <a href="http://jcp.o
 <p><code>Advanced Audio Package(AU): org.mobicents.media.server.mgcp.pkg.au</code></p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 5. Advanced Audio Package(AU):</caption>
+<caption class="title">Table 6. Advanced Audio Package(AU):</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -24534,7 +24637,7 @@ To further understand the JSR-309 API, download specs from <a href="http://jcp.o
 <p><code>Trunk Package(T): org.mobicents.media.server.mgcp.pkg.trunk</code></p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 6. Trunk Package(T):</caption>
+<caption class="title">Table 7. Trunk Package(T):</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -24579,7 +24682,7 @@ To further understand the JSR-309 API, download specs from <a href="http://jcp.o
 <p>Dtmf Package(D): <code>org.mobicents.media.server.mgcp.pkg.dtmf</code></p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 7. Dtmf Package(D):</caption>
+<caption class="title">Table 8. Dtmf Package(D):</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -24672,7 +24775,7 @@ To further understand the JSR-309 API, download specs from <a href="http://jcp.o
 <p>`Signal List Package (SL): org.mobicents.media.server.mgcp.pkg.sl `</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 8. Signal List Package (SL):</caption>
+<caption class="title">Table 9. Signal List Package (SL):</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -24710,7 +24813,7 @@ To further understand the JSR-309 API, download specs from <a href="http://jcp.o
 <p>The table belows shows supported packages and the related enabled endpoints</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 9. List of Supported Packages per Endpoint</caption>
+<caption class="title">Table 10. List of Supported Packages per Endpoint</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -24767,7 +24870,7 @@ The examples below are included in the &amp;Restcomm Media Server_SHORT_NAME; so
 <p>To get Jain-Slee examples please see following examples that are part of mobicents / telestax jain Slee release :</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 10. Example for Jain-Slee</caption>
+<caption class="title">Table 11. Example for Jain-Slee</caption>
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -24795,7 +24898,7 @@ The examples below are included in the &amp;Restcomm Media Server_SHORT_NAME; so
 <p>The following examples use Restcomm Media Server with Restcomm SIP Servlets :</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 11. Examples for SIP Servlets</caption>
+<caption class="title">Table 12. Examples for SIP Servlets</caption>
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -24990,7 +25093,7 @@ The Figure 5 shows the RTP header format.</p>
 </div>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 12. Supported RTP Formats</caption>
+<caption class="title">Table 13. Supported RTP Formats</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -25501,7 +25604,7 @@ As another hint, this topmost directory contains a <em class="path">bin</em> sub
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-03 10:46:23 WET
+Last updated 2016-11-04 10:44:46 WET
 </div>
 </div>
 <footer>
