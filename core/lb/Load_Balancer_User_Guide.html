@@ -23478,8 +23478,7 @@ http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
   &lt;isSend5xxResponse&gt;true&lt;/isSend5xxResponse&gt;
   &lt;isSend5xxResponseReasonHeader&gt;Destination not available&lt;/isSend5xxResponseReasonHeader&gt;
   &lt;isSend5xxResponseSatusCode&gt;503&lt;/isSend5xxResponseSatusCode&gt;
-  &lt;responseStatusCodeNodeRemoval&gt;503&lt;/responseStatusCodeNodeRemoval&gt;
-  &lt;responseReasonNodeRemoval&gt;Unable to setup media services&lt;/responseReasonNodeRemoval&gt;
+  &lt;responsesStatusCodeNodeRemoval&gt;503,504&lt;/responseStatusCodeNodeRemoval&gt;
   &lt;matchingHostnameForRoute&gt;restcomm.com&lt;/matchingHostnameForRoute&gt;
   &lt;isFilterSubdomain&gt;true&lt;/isFilterSubdomain&gt;
   &lt;algorithm&gt;
@@ -23722,10 +23721,9 @@ response message</p>
 <dd>
 <p>Code of error. You can manage it.</p>
 </dd>
-<dt class="hdlist1">responseStatusCodeNodeRemoval</dt>
-<dt class="hdlist1">responseReasonNodeRemoval</dt>
+<dt class="hdlist1">responsesStatusCodeNodeRemoval</dt>
 <dd>
-<p>if LB gets response from the node with this status code and reason more than three times,
+<p>if LB gets response from the node with this status code more than three times,
 it removes this node from the node&#8217;s map until the node will be restarted</p>
 </dd>
 <dt class="hdlist1">matchingHostnameForRoute</dt>
@@ -24923,7 +24921,7 @@ and you can see next line:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-04 10:53:24 WET
+Last updated 2016-11-07 11:09:33 WET
 </div>
 </div>
 <footer>
