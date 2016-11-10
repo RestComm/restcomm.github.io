@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Step 1 – Setting up the Hardware</title>
+<title>Untitled</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22750,318 +22750,171 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </head>
 <body class="article">
 <div id="header">
-<div id="toc" class="toc">
-<div id="toctitle">Table of Contents</div>
-<ul class="sectlevel3">
-<li><a href="#step-1-setting-up-the-hardware">Step 1 – Setting up the Hardware</a></li>
-<li><a href="#step-2-creating-rvd-application">Step 2 – Creating RVD application</a></li>
-<li><a href="#step-3-setting-up-the-electric-imp-device">Step 3 – Setting up the Electric Imp Device</a></li>
-</ul>
-</div>
 </div>
 <div id="content">
-<div class="paragraph">
-<p>In a recent <a href="http://www.telestax.com/restcomm-facilitates-internet-of-things-iot/">demo for the VoIP User Conference</a>, John Senay showed an <a href="http://electricimp.com/product/">Electric Imp</a> smart device that connects via WiFi to the Internet and sends programmable event triggers to an associated agent in the cloud to Restcomm. The <a href="http://electricimp.com/docs/api/agent/">cloud hosted agent</a> for the device is then scripted to execute further intelligent tasks.</p>
-</div>
-<div class="paragraph">
-<p>The IMP device costs under $100 and is a prime representative of a new generation of affordable IoT devices that are taking over the world faster than Big Data is. IoT devices can be now seen in flying self made drones, home appliances, cars, health monitoring gadgets and even clothes.</p>
-</div>
-<div class="paragraph">
-<p>In this blog post we will walk through the steps of John’s demo. After reading the article you will be able to build your own IoT device and program it to communicate intelligently with humans.</p>
-</div>
-<div class="paragraph">
-<p><a href="http://www.theconnectivist.com/2014/05/infographic-the-growth-of-the-internet-of-things/"><span class="image"><img src="http://theconnectivist-img.s3.amazonaws.com/wp-content/uploads/2014/05/Unknown.png" alt="IoT growth chart" width="1300" height="731"></span></a></p>
-</div>
-<div class="paragraph">
-<p>The IMP has a total of eleven pins, with six pins available for GPIO, to provide I2C, SPI and UART signaling.  John Senay showed the actual IDE with its three parts, one frame showed the code run on the IMP card, one frame showed the code for the agent, running in the Electric Cloud and one frame showing the live device log.</p>
-</div>
-<div class="paragraph">
-<p>Use case:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Electric Imp device is connected to a local Wi-Fi network</p>
-</li>
-<li>
-<p>The Imp observes a state change on the switch ( On or Off )</p>
-</li>
-<li>
-<p>The Imp sends a command to the Agent in the Electric Cloud</p>
-</li>
-<li>
-<p>The agent sends a RESTful command  to a Restcomm instance on the Amazon Web Service Cloud</p>
-</li>
-<li>
-<p>Restcomm sends an SMS to specified phone number</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="./images/diagram.jpg" alt="diagram" width="937" height="480"></span></p>
-</div>
-<div class="paragraph">
-<p>Technical skills required:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Knowledge of Restcomm</p>
-</li>
-<li>
-<p>Knowledge of JavaScript</p>
-</li>
-<li>
-<p>Basic electrical engineering knowledge</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>IoT parts needed:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Power Cable for April BoardL https://www.adafruit.com/products/1197</p>
-</li>
-<li>
-<p>April Board: https://www.adafruit.com/products/1130</p>
-</li>
-<li>
-<p>Electric IMP card: <a href="https://www.google.com/url?q=https%3A%2F%2Fwww.adafruit.com%2Fproducts%2F1129&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNHZJ1Uj5ItN9eTcnsJZ1rQ6khz0Uw">https://www.adafruit.com/products/1129</a></p>
-</li>
-<li>
-<p>Breadboard: https://www.adafruit.com/products/64</p>
-</li>
-<li>
-<p>Male to Female Jumpers: https://www.adafruit.com/products/1953</p>
-</li>
-<li>
-<p>Male to Male Jumpers: https://www.adafruit.com/products/758</p>
-</li>
-<li>
-<p>Button Switch: https://www.adafruit.com/products/1009</p>
-</li>
-</ul>
-</div>
-<div class="sect3">
-<h4 id="step-1-setting-up-the-hardware"><a class="anchor" href="#step-1-setting-up-the-hardware"></a>Step 1 – Setting up the Hardware</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>To get started with the Electric Imp please follow the User Guide and Getting started docs <a href="https://electricimp.com/docs/gettingstarted/">HERE</a></p>
-</li>
-<li>
-<p>Now let’s build the smart button gadget by following the steps <a href="https://electricimp.com/docs/examples/digitalin-button/">HERE</a></p>
-</li>
-<li>
-<p>See the complete wired setup on the image below:</p>
-</li>
-</ul>
-</div>
-<div id="setup" class="paragraph">
-<p><span class="image"><img src="./images/setup1.jpg" alt="setup" width="429" height="579"></span></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="step-2-creating-rvd-application"><a class="anchor" href="#step-2-creating-rvd-application"></a>Step 2 – Creating RVD application</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Go to Restcomm Admin UI</p>
-</li>
-<li>
-<p>Create Voice Application and bound it to registered DID</p>
-</li>
-<li>
-<p>Drag and drop SMS. Enter the message you want Restcomm to send to a specified number in the text are. In our case we will type: “Hello from my agent!, the Cat is out the door!!”.</p>
-</li>
-<li>
-<p>In “To” section specify the phone number to which SMS will be sent</p>
-</li>
-<li>
-<p>In “From” type the DID that is already bound to the application. We are using “12025520044”.</p>
-</li>
-<li>
-<p>Once you are done Save the application</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="./images/ElectricImpSMS.jpg" alt="ElectricImpSMS" width="835" height="338"></span></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="step-3-setting-up-the-electric-imp-device"><a class="anchor" href="#step-3-setting-up-the-electric-imp-device"></a>Step 3 – Setting up the Electric Imp Device</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>First we need to setup the example code</p>
-</li>
-<li>
-<p>You are now ready to start writing code for your imp.</p>
-</li>
-<li>
-<p>Once your imp is connected to your WiFi, go to the <a href="https://plan.electricimp.com/">IDE page</a></p>
-</li>
-<li>
-<p>Commission your imp as <a href="http://devwiki.electricimp.com/doku.php?id=commissioning">described by the imp team</a>. You will notice that the Electric Imp IDE has 3 collapsible windows: Agent, Device, and Logs. Logs provides all the collected and printed information from your device and code, this is an invaluable debugging tool. Agent and Device are where we will be putting our code. The Agent is the server side code, this code runs on Electric Imp’s servers and allows you to execute heavier tasks including HTTP requests. The Device code is the code runs on the physical imp card, an ARM M3 microcontroller, that will be inserted into your device. Electric Imp has created an easy way to pass messages from the device to the agent and vice versa. First we will focus on the Agent code since this is where we will do the communication with Restcomm.</p>
-</li>
-<li>
-<p>Copy the code below into your agent tab in the Electric Imp</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">constREST_SID=“ACCOUNT_ID”;    // Your Restcomm Account SID
-constREST_AUTH=“AUTH_TOKEN”;    // Your Restcomm Auth Token
-constREST_NUM=“15125555555″;    // Your Restcomm Phone Number
-classRestcomm{
-    _baseUrl=“http://SERVER IP ADDRESS:8080/restcomm/2012-04-24/Accounts/”;
-    _accountSid=null;
-    _authToken=null;
-    _phoneNumber=null;
-    constructor(accountSid,authToken,phoneNumber){
-        _accountSid=accountSid;
-        _authToken=authToken;
-        _phoneNumber=phoneNumber;
-    }
-    functionsend(to,message,callback=null){
-        local url=_baseUrl+_accountSid+“/SMS/Messages”
-        local auth=http.base64encode(_accountSid+“:”+_authToken);
-        local headers={“Authorization”:“Basic “+auth};
-        local body=http.urlencode({
-            From=_phoneNumber,
-            To=to,
-            Body=message
-        }
-    );
-    local request=http.post(url,headers,body);
-    if(callback==null)
-        returnrequest.sendsync();
-    else
-        request.sendasync(callback);
-    }
-    functionRespond(resp,message){
-        local data={Response={Message=message}};
-        local body=xmlEncode(data);
-        resp.header(“Content-Type”,“text/xml”);
-        server.log(body);
-        resp.send(200,body);
-    }
-    functionxmlEncode(data,version=“1.0″,encoding=“UTF-8″){
-        returnformat(“&lt;?xml version=\“%s\“encoding=\“%s\“?&gt;%s”,version,encoding,_recursiveEncode(data))
-    }
-    /******************** Private Function (DO NOT CALL) ********************/
-    function_recursiveEncode(data){
-        locals=“”;
-        foreach(k,vindata){
-            if(typeof(v)==“table”||typeof(v)==“array”){
-                s+=format(“&lt;%s&gt;%s&lt;/%s&gt;”,k.tostring(),_recursiveEncode(v),k.tostring());
-            }else{
-                s+=format(“&lt;%s&gt;%s&lt;/%s&gt;”,k.tostring(),v.tostring(),k.tostring());;
-            }
-        }
-        returns
-    }
-}
-//restcomm &lt;- Restcomm(REST_SID, REST_AUTH, REST_NUM);
-// sending a message
-//numberToSendTo &lt;- “15125555555″
-//restcomm.send(numberToSendTo, “Hello from my agent!, the Cat is out the door!!”, function(resp) { server.log(resp.statuscode + ” – ” + resp.body); });
-// processing messages
-http.onrequest(
-    function(req,resp){
-        local path=req.path.tolower();
-        if(path==“/restcomm”||path==“/restcomm/”){
-            // restcomm request handler
-            try{
-                local data=http.urldecode(req.body);
-                restcomm.Respond(resp,“You just said ‘”+data.Body+“‘”);
-            }catch(ex){
-                local message=“Uh oh, something went horribly wrong: “+ex;
-                restcomm.Respond(resp,message);
-            }
-        }else{
-            // default request handler
-            resp.send(200,“OK”);
-        }
-    }
-);
-functionbutton_pressed(status){
-    server.log(“button pressed, sending SMS”);
-    restcomm&lt;-Restcomm(REST_SID,REST_AUTH,REST_NUM);
-    // sending a message
-    numberToSendTo&lt;-“15125555555″
-    restcomm.send(numberToSendTo,“Hello from my agent!, the Cat is out the door!!”,function(resp){server.log(resp.statuscode+” – “+resp.body);});
-}
-device.on(“button_pressed”,button_pressed);</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Once copied, change where it says FEED_ID_HERE and API_KEY_HERE to your respective Restcomm Acoount  SID and Restcomm Auth Token that you can get from Restcomm Admin UI.</p>
-</li>
-<li>
-<p>Next it is time to setup our device code. This code may need to vary depending on the type of UART device you are trying to interface with. The basic setup provided will work with and FTDI cable or Arduino microcontroller.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">// Alias the GPIO pin as ‘button’
-button&lt;-hardware.pin1;
-functionbuttonPress()
-{
-    local state=button.read();
-    if(state==1)
-    {
-        // The button is released
-
-        server.log(“Release”);
-    }else
-    {
-        // The button is pressed
-
-        server.log(“Press”);
-        agent.send(“button_pressed”,“”);
-    }
-}
-// Configure the button to call buttonPress() when the pin’s state changes
-button.configure(DIGITAL_IN_PULLUP,buttonPress);</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You are now ready to test the device and receive SMS from Restcomm whenever there is a state change. For more information:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://docs.telestax.com/">Restcomm documentation</a></p>
-</li>
-<li>
-<p><a href="https://groups.google.com/forum/#!forum/restcomm">Restcomm public forum</a></p>
-</li>
-<li>
-<p><a href="https://electricimp.com/docs/api/">Electic Imp API documentation</a></p>
-</li>
-<li>
-<p><a href="https://electricimp.com/docs/examples/">Electric Imp example code</a></p>
-</li>
-<li>
-<p><a href="https://electricimp.com/docs/resources/">Electric Imp Developer resources</a></p>
-</li>
-<li>
-<p><a href="http://forums.electricimp.com/">Electric Imp public forum</a></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><a href="http://www.telestax.com/contactus/#InquiryForm">Contact Telestax</a> for help with your IoT and Restcomm projects.</p>
-</div>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Restcomm API Error and Warning Reference</caption>
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 42.8572%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Error Code</th>
+<th class="tableblock halign-left valign-top">Category</th>
+<th class="tableblock halign-left valign-top">Error Summary</th>
+<th class="tableblock halign-left valign-top">Cause/Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Account</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Account not initialized</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Make sure account is initialized in the Admin UI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Account</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10003</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Account</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10004</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Account</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Voice</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Voice</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11003</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Voice</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11004</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Voice</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMS</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMS</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12003</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMS</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12004</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMS</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">13001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">There was an error sending SMS to SMPP endpoint</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Make sure SMPP is correctly configured in the advanced.conf file</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">13002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">13003</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">13004</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">14001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Client</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">14002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Client</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">14003</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Client</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">14004</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Client</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">15001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">USSD</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">15002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">USSD</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">15003</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">USSD</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">15004</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">USSD</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="footer">
 <div id="footer-text">
