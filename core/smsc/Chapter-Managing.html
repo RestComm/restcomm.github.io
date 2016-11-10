@@ -26574,8 +26574,8 @@ This is useful only when SMS is suppose to be routed out of Restcomm SMSC to ESM
 
 SYNOPSIS
 	smpp esme create name &lt;systemId&gt; &lt;host-ip&gt; &lt;port&gt; &lt;SmppBindType&gt;
-	&lt;SmppSession.Type&gt; password &lt;password&gt; networkid &lt;networkId&gt;
-	system-type &lt;sms | vms | ota &gt;
+	&lt;SmppSession.Type&gt; password &lt;password&gt; networkid &lt;networkid&gt;
+	split-long-messages &lt;true | false&gt; system-type &lt;sms | vms | ota &gt;
 	interface-version &lt;3.3 | 3.4 | 5.0&gt; esme-ton &lt;esme address ton&gt;
 	esme-npi &lt;esme address npi&gt; esme-range &lt;esme address range&gt;
 	cluster-name &lt;clusterName&gt; window-size &lt;windowSize&gt;
@@ -26588,10 +26588,10 @@ SYNOPSIS
 	routing-npi &lt;routing address npi&gt; routing-range &lt;routing address range&gt;
 	ratelimit-second &lt;ratelimitsecond&gt; ratelimit-minute &lt;ratelimitminute&gt;
 	ratelimit-hour &lt;ratelimithour&gt; ratelimit-day &lt;ratelimitday&gt;
+	national-language-single-shift &lt;national-language-single-shift&gt;
+	national-language-locking-shift &lt;national-language-locking-shift&gt;
 	min-message-length &lt;min-message-length value&gt;
 	max-message-length &lt;max-message-length value&gt;
-	national-language-locking-shift &lt;NationalLanguageIdentifier value&gt;
-	national-language-single-shift &lt;NationalLanguageIdentifier value&gt;
 
 DESCRIPTION
 	This command is used to configure a new ESME.
@@ -26624,7 +26624,7 @@ PARAMETERS
 				  When you define multiple ESMEs with the same systemId,if
 				  host-ip and port values are -1 (for SMPP type Server),
 				  the SMSC will accept multiple incoming BIND requests
-					  from any IP:port as long as the systemId and password
+			          from any IP:port as long as the systemId and password
 				  match.
 
 				  When you define multiple ESMEs with the same systemId,if
@@ -26646,18 +26646,21 @@ PARAMETERS
 
 	Optional Parameters
 
-	Password		- It is used by the SMSC to authenticate the identity of
+	Password	    - It is used by the SMSC to authenticate the identity of
 				  the binding ESME. The Service Provider may require
-				  ESME’s to provide a password when binding to the SMSC.
+				  ESMEвЂ™s to provide a password when binding to the SMSC.
 
 	networkId       - indicates virtual subnetwork that this ESME belongs. SMS
-					flows within same netwrokId, unless changed using mproc
-					(this is for multi-tenancy support). If this parameter is
-					skipped - networkId will be set to "0" when ESME creation.
-					If you do not use multi-tenancy support - set this value
-					to 0 or skip.
+	                flows within same netwrokId, unless changed using mproc
+	                (this is for multi-tenancy support). If this parameter is
+                    skipped - networkId will be set to "0" when ESME creation.
+                    If you do not use multi-tenancy support - set this value
+                    to 0 or skip.
 
-	system-type 		- Default value is null.
+	split-long-messages - long messages will be split before sending to this
+				  ESME destination. Default value is false.
+
+	system-type     - Default value is null.
 				  This is used to categorize the type of ESME that is
 				  binding to the SMSC.
 
@@ -26759,18 +26762,24 @@ PARAMETERS
 				  sends an 'ENQUIRE_LINK' after every configured
 				  enquire-link-delay.
 
+				  0 means disabled. SMSC will not send ENQUIRE_LINK.
+
 	enquire-link-delay-server - Default value is 0 milli seconds.
 				  When SMSC connects to a remote server as SERVER, it
 				  sends an 'ENQUIRE_LINK' after every configured
 				  enquire-link-delay-server.
 
-	link-drop-server - Default value is 0 milli seconds.
-					  When SMSC connects to a remote server as SERVER, if it
-					  isn't received any data after configured link-drop-server,
-					  it will drop the esme session.
+				  0 means disabled. SMSC will not send ENQUIRE_LINK.
 
-					  If enquire-link-delay-server is enabled then link-drop-server
-					  always disabled.
+	link-drop-server - Default value is 0 milli seconds means disabled.
+				  When SMSC connects to a remote server as SERVER, if it
+				  isn't received any data after configured link-drop-server,
+				  it will drop the esme session.
+
+				  0 means disabled, SMSC will not drop smpp session.
+
+				  If enquire-link-delay-server is enabled then link-drop-server
+				  always disabled.
 
 	charging-enabled	- Flag to enable or disable charging for every SMS
 				  arriving from SIP.
@@ -26859,12 +26868,12 @@ PARAMETERS
 				  3) SmppBindType is TRANSMITTER and
 				  SmppSession.Type is CLIENT
 
-	ratelimit_second    - This parameter is used to specify a maximum limit
-					of messages that the SMSC will accept from this ESME
-					during any one second.
+    ratelimit_second    - This parameter is used to specify a maximum limit
+    				of messages that the SMSC will accept from this ESME
+    				during any one second.
 
-					If the ESME sends more messages (per second)
-					than the maximum limit specified by 'ratelimit_second',
+    				If the ESME sends more messages (per second)
+    				than the maximum limit specified by 'ratelimit_second',
 					these additional messages will be rejected by the
 					SMSC GW along with an error code - "throttled".
 
@@ -26873,11 +26882,11 @@ PARAMETERS
 					specified it implies "no restrictions".
 
 	ratelimit_minute    - This parameter is used to specify a maximum limit
-					of messages that the SMSC will accept from this ESME
-					during any one minute.
+    				of messages that the SMSC will accept from this ESME
+    				during any one minute.
 
-					If the ESME sends more messages (per minute)
-					than the maximum limit specified by 'ratelimit_minute',
+    				If the ESME sends more messages (per minute)
+    				than the maximum limit specified by 'ratelimit_minute',
 					these additional messages will be rejected by the
 					SMSC GW along with an error code - "throttled".
 
@@ -26886,11 +26895,11 @@ PARAMETERS
 					specified it implies "no restrictions".
 
 	ratelimit_hour    - This parameter is used to specify a maximum limit
-					of messages that the SMSC will accept from this ESME
-					during any one hour.
+    				of messages that the SMSC will accept from this ESME
+    				during any one hour.
 
-					If the ESME sends more messages (per hour)
-					than the maximum limit specified by 'ratelimit_hour',
+    				If the ESME sends more messages (per hour)
+    				than the maximum limit specified by 'ratelimit_hour',
 					these additional messages will be rejected by the
 					SMSC GW along with an error code - "throttled".
 
@@ -26899,17 +26908,39 @@ PARAMETERS
 					specified it implies "no restrictions".
 
 	ratelimit_day    - This parameter is used to specify a maximum limit
-					of messages that the SMSC will accept from this ESME
-					during any one day.
+    				of messages that the SMSC will accept from this ESME
+    				during any one day.
 
-					If the ESME sends more messages (per day)
-					than the maximum limit specified by 'ratelimit_day',
+    				If the ESME sends more messages (per day)
+    				than the maximum limit specified by 'ratelimit_day',
 					these additional messages will be rejected by the
 					SMSC GW along with an error code - "throttled".
 
 					The default value for this parameter is "0" and it
 					implies "no restrictions". If this parameter is not
 					specified it implies "no restrictions".
+
+	national-language-single-shift - National language single shift table can be
+	                configured for messages that have come via SMPP (ESME) that
+	                do not have UDHs inside and have GSM7 encoding (DCS==0). The
+	                default GSM data coding table is mostly used. Possible values:
+                       = 0  : default GSM data coding table
+                       = 13 : urdu (arabic) national language shift table
+                       = 1  : the national language locking shift value must be
+                              obtained from the option national-language-single-shift
+                              that is defined at SMSC GW general level.
+
+
+	national-language-locking-shift - National language locking shift table can be
+	                configured for messages that have come via SMPP (ESME) that
+	                do not have UDHs inside and have GSM7 encoding (DCS==0). The
+	                default GSM data coding table is mostly used. Possible values:
+                       = 0  : default GSM data coding table
+                       = 13 : urdu (arabic) national language shift table
+                       = 1  : the national language locking shift value must be
+                              obtained from the option national-language-locking-shift
+                              that is defined at SMSC GW general level.
+
 
 	min-message-length    - This paramter is used to specify the minimum
 					message length (in characters) acceptable to
@@ -26933,31 +26964,8 @@ PARAMETERS
 					implies "no limitations". Any other negative value
 					also implies "no limitations".
 
-	national-language-locking-shift - National language locking shift
-					table can be configured for messages that have come
-					via SMPP (this ESME), do not have UDHs inside and
-					have GSM7 encoding (DCS==0).
-					The default GSM data coding table is mostly used.
-					Possible values:
-					= 0: default GSM data coding table
-					= 13: urdu (arabic) national language shift table
-					=1: the national language locking shift value must
-					be obtained from the option
-					national-language-locking-shift that is defined at
-					SMSC GW general level.
-
-	national-language-single-shift - National language single shift
-					table can be configured for messages that have come
-					via SMPP (this ESME), do not have UDHs inside and
-					have GSM7 encoding (DCS==0).
-					The default GSM data coding table is mostly used.
-					Possible values:
-					= 0: default GSM data coding table
-					= 13: urdu (arabic) national language single table
-					=1: the national language locking shift value must
-					be obtained from the option
-					national-language-locking-single that is defined at
-					SMSC GW general level.</pre>
+EXAMPLES
+	smpp esme create test test 127.0.0.1 -1 TRANSCEIVER SERVER password yyyy esme-range 6667</pre>
 </div>
 </div>
 </div>
@@ -27002,23 +27010,23 @@ This action will create a new ESME with parameters as defined by you.</p>
 	smpp esme modify
 
 SYNOPSIS
-	smpp esme modify &lt;name&gt; password &lt;Specify new password&gt;
-	networkid &lt;networkId&gt;
-	esme-ton &lt;esme address ton&gt; esme-npi &lt;esme address npi&gt;
-	esme-range &lt;esme address range&gt; window-size &lt;windowSize&gt;
+	smpp esme modify &lt;name&gt; password &lt;Specify new password&gt; networkid &lt;networkid&gt;
+	split-long-messages &lt;true | false&gt; esme-ton &lt;esme address ton&gt;
+	esme-npi &lt;esme address npi&gt; esme-range &lt;esme address range&gt; window-size &lt;windowSize&gt;
 	connect-timeout &lt;connectTimeout&gt; request-expiry-timeout &lt;requestExpiryTimeout&gt;
 	client-bind-timeout &lt;clientBindTimeout&gt; window-monitor-interval &lt;windowMonitorInterval&gt;
 	window-wait-timeout &lt;windowWaitTimeout&gt; counters-enabled &lt;true | false&gt;
-	enquire-link-delay &lt;30000&gt; enquire-link-delay-server &lt;0&gt; link-drop-server &lt;0&gt; charging-enabled &lt;true | false&gt;
+	enquire-link-delay &lt;30000&gt; enquire-link-delay-server &lt;0&gt; link-drop-server <i class="conum" data-value="0"></i><b>(0)</b>
+	charging-enabled &lt;true | false&gt;
 	source-ton &lt;source address ton&gt; source-npi &lt;source address npi&gt;
 	source-range &lt;source address range&gt; routing-ton &lt;routing address ton&gt;
 	routing-npi &lt;routing address npi&gt; routing-range &lt;routing address range&gt;
 	ratelimit-second &lt;ratelimitsecond&gt; ratelimit-minute &lt;ratelimitminute&gt;
 	ratelimit-hour &lt;ratelimithour&gt; ratelimit-day &lt;ratelimitday&gt;
+	national-language-locking-shift &lt;national-language-locking-shift&gt;
+	national-language-single-shift &lt;national-language-single-shift&gt;
 	min-message-length &lt;min-message-length value&gt;
 	max-message-length &lt;max-message-length value&gt;
-	national-language-locking-shift &lt;NationalLanguageIdentifier value&gt;
-	national-language-single-shift &lt;NationalLanguageIdentifier value&gt;
 
 DESCRIPTION
 	This command is used to modify the settings of an existing ESME configuration.
@@ -27039,11 +27047,14 @@ PARAMETERS
 				  The new value takes effect when SMPP is restarted.
 
 	networkId       - indicates virtual subnetwork that this ESME belongs. SMS
-					flows within same netwrokId, unless changed using mproc
-					(this is for multi-tenancy support). If this parameter is
-					skipped - networkId will be set to "0" when ESME creation.
-					If you do not use multi-tenancy support - set this value
-					to 0 or skip.
+	                flows within same netwrokId, unless changed using mproc
+	                (this is for multi-tenancy support). If this parameter is
+                    skipped - networkId will be set to "0" when ESME creation.
+                    If you do not use multi-tenancy support - set this value
+                    to 0 or skip.
+
+	split-long-messages - long messages will be split before sending to this
+				  ESME destination. Default value is false.
 
 	esme-ton 		- Specify new ESME TON.
 				  If the SMPP Session Type is CLIENT,
@@ -27159,7 +27170,7 @@ PARAMETERS
 
 				  The new value takes effect immediately.
 
-	enquire-link-delay-server - Default value is 0 milli seconds.
+    enquire-link-delay-server - Default value is 0 milli seconds.
 				  When SMSC connects to a remote server as SERVER, it
 				  sends an 'ENQUIRE_LINK' after every configured
 				  enquire-link-delay-server.
@@ -27169,14 +27180,17 @@ PARAMETERS
 				  The new value takes effect immediately.
 
 	link-drop-server - Default value is 0 milli seconds.
-					  When SMSC connects to a remote server as SERVER, if it
-					  isn't received any data after configured link-drop-server,
-					  it will drop the esme session.
+				  When SMSC connects to a remote server as SERVER, if it
+				  isn't received any data after configured link-drop-server,
+				  it will drop the esme session.
 
-					  If enquire-link-delay-server is enabled then link-drop-server
-					  always disabled.
+				  0 means disabled, SMSC will not drop smpp session.
 
-					  The new value takes effect immediately.
+				  If enquire-link-delay-server is enabled then link-drop-server
+				  always disabled.
+
+  				  The new value takes effect immediately.
+
 
 	charging-enabled	- Flag to enable or disable charging for every SMS
 				  arriving from SIP.
@@ -27279,12 +27293,12 @@ PARAMETERS
 
 				  The new value takes effect immediately.
 
-	ratelimit_second    - This parameter is used to specify a maximum limit
-					of messages that the SMSC will accept from this ESME
-					during any one second.
+    ratelimit_second    - This parameter is used to specify a maximum limit
+    				of messages that the SMSC will accept from this ESME
+    				during any one second.
 
-					If the ESME sends more messages (per second)
-					than the maximum limit specified by 'ratelimit_second',
+    				If the ESME sends more messages (per second)
+    				than the maximum limit specified by 'ratelimit_second',
 					these additional messages will be rejected by the
 					SMSC GW along with an error code - "throttled".
 
@@ -27293,11 +27307,11 @@ PARAMETERS
 					specified it implies "no restrictions".
 
 	ratelimit_minute    - This parameter is used to specify a maximum limit
-					of messages that the SMSC will accept from this ESME
-					during any one minute.
+    				of messages that the SMSC will accept from this ESME
+    				during any one minute.
 
-					If the ESME sends more messages (per minute)
-					than the maximum limit specified by 'ratelimit_minute',
+    				If the ESME sends more messages (per minute)
+    				than the maximum limit specified by 'ratelimit_minute',
 					these additional messages will be rejected by the
 					SMSC GW along with an error code - "throttled".
 
@@ -27306,11 +27320,11 @@ PARAMETERS
 					specified it implies "no restrictions".
 
 	ratelimit_hour    - This parameter is used to specify a maximum limit
-					of messages that the SMSC will accept from this ESME
-					during any one hour.
+    				of messages that the SMSC will accept from this ESME
+    				during any one hour.
 
-					If the ESME sends more messages (per hour)
-					than the maximum limit specified by 'ratelimit_hour',
+    				If the ESME sends more messages (per hour)
+    				than the maximum limit specified by 'ratelimit_hour',
 					these additional messages will be rejected by the
 					SMSC GW along with an error code - "throttled".
 
@@ -27319,17 +27333,38 @@ PARAMETERS
 					specified it implies "no restrictions".
 
 	ratelimit_day    - This parameter is used to specify a maximum limit
-					of messages that the SMSC will accept from this ESME
-					during any one day.
+    				of messages that the SMSC will accept from this ESME
+    				during any one day.
 
-					If the ESME sends more messages (per day)
-					than the maximum limit specified by 'ratelimit_day',
+    				If the ESME sends more messages (per day)
+    				than the maximum limit specified by 'ratelimit_day',
 					these additional messages will be rejected by the
 					SMSC GW along with an error code - "throttled".
 
 					The default value for this parameter is "0" and it
 					implies "no restrictions". If this parameter is not
 					specified it implies "no restrictions".
+
+	national-language-single-shift - National language single shift table can be
+	                configured for messages that have come via SMPP (ESME) that
+	                do not have UDHs inside and have GSM7 encoding (DCS==0). The
+	                default GSM data coding table is mostly used. Possible values:
+                       = 0  : default GSM data coding table
+                       = 13 : urdu (arabic) national language shift table
+                       = 1  : the national language locking shift value must be
+                              obtained from the option national-language-single-shift
+                              that is defined at SMSC GW general level.
+
+
+	national-language-locking-shift - National language locking shift table can be
+	                configured for messages that have come via SMPP (ESME) that
+	                do not have UDHs inside and have GSM7 encoding (DCS==0). The
+	                default GSM data coding table is mostly used. Possible values:
+                       = 0  : default GSM data coding table
+                       = 13 : urdu (arabic) national language shift table
+                       = 1  : the national language locking shift value must be
+                              obtained from the option national-language-locking-shift
+                              that is defined at SMSC GW general level.
 
 	min-message-length    - This paramter is used to specify the minimum
 					message length (in characters) acceptable to
@@ -27353,16 +27388,8 @@ PARAMETERS
 					implies "no limitations". Any other negative value
 					also implies "no limitations".
 
-	enquire-server-enabled    - This parameter is used to enable or
-					disable SMPP server sending enquire message.
-
-					The default value for this parameter is "false".
-
-
-SEE ALSO
-	smsc get scgt, smsc set scgt, smsc get scssn, smsc set scssn, smsc get hlrssn,
-	smsc set hlrssn, smsc get mscssn, smsc set mscssn, smsc get maxmapv,
-	smsc set maxmapv, smpp esme create</pre>
+EXAMPLES
+	smpp esme modify test password yyyy</pre>
 </div>
 </div>
 </div>
@@ -29140,7 +29167,7 @@ Hence graph will show historic data from the point the page was loaded.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-10 10:49:39 WET
+Last updated 2016-11-10 15:58:45 WET
 </div>
 </div>
 <footer>
