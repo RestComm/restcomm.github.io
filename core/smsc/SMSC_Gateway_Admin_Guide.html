@@ -26677,6 +26677,10 @@ are GET and POST. Request URL must have “sendSms” context and contain all of
 <td class="tableblock halign-left valign-top"><p class="tableblock">senderNpi</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">NPI value for a source address (if missed then <a href="#_httpdefaultsourcenpi">Default NPI value for source addresses</a> value will be used)</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">udh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional User Data Header (UDH) part of the message. Must be URL encoded (if missed then SMSC GW will not include UDH value into message). UDH should be created by client</p></td>
+</tr>
 </tbody>
 </table>
 <div class="paragraph">
@@ -26692,7 +26696,7 @@ ID:destination”.</p>
 
 http://127.0.0.1:8080/restcomm/sendSms?userid=user1&password=password&msg=exampleMessage_02&format=String&smscEncoding=GSM7&messageBodyEncoding=UTF8&sender=1234&to=1111
 
-http://127.0.0.1:8080/restcomm/sendSms?userid=user1&password=password&msg=exampleMessage_03&format=json&smscEncoding=UCS2&messageBodyEncoding=UTF16&sender=4321&to=6666,6667&senderTon=5&senderNpi=0</pre>
+http://127.0.0.1:8080/restcomm/sendSms?userid=user1&password=password&msg=exampleMessage_03&format=json&smscEncoding=UCS2&messageBodyEncoding=UTF16&sender=4321&to=6666,6667&senderTon=5&senderNpi=0&udh=%06%05%04%13%01%13%01</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -34517,7 +34521,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-10 15:58:45 WET
+Last updated 2016-11-11 10:53:18 WET
 </div>
 </div>
 <footer>
