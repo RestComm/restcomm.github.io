@@ -22791,6 +22791,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#enabling-tls-for-smpp-load-balancer">Enabling TLS for SMPP load balancer</a></li>
 </ul>
 </li>
+<li><a href="#getting-statistic">Getting statistic</a></li>
 <li><a href="#configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine">Configuring Load-balancer and two Restcomm servers on the one local machine</a></li>
 <li><a href="#integration-load-balancer-smpp-with-restcomm-and-nexmo">Integration Load Balancer SMPP with Restcomm and Nexmo</a></li>
 </ul>
@@ -23089,11 +23090,11 @@ If the target node is dead, then the node selection algorithm is used to route t
 </table>
 </div>
 <div class="paragraph">
-<p>The following is a list of the built-in algorithms:</p>
+<p>The following is a list of the built-in algorithms for SIP:</p>
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">org.Restcomm.tools.sip.balancer.CallIDAffinityBalancerAlgorithm</dt>
+<dt class="hdlist1">org.mobicents.tools.sip.balancer.CallIDAffinityBalancerAlgorithm</dt>
 <dd>
 <p>This algorithm is not distributable.
 It selects nodes randomly to serve a give Call-ID extracted from the requests and responses.
@@ -23101,7 +23102,7 @@ It keeps a map with <code>Call-ID &#8594;
             nodeId</code> associations and this map is not shared with other load balancers which will cause them to make different decisions.
 For HTTP it behaves like apache.</p>
 </dd>
-<dt class="hdlist1">org.Restcomm.tools.sip.balancer.UserBasedAlgorithm</dt>
+<dt class="hdlist1">org.mobicents.tools.sip.balancer.UserBasedAlgorithm</dt>
 <dd>
 <p>This algorithm algorithm tie all calls for a given DID/Number to the same node.
 All participants for a given conference will be on the same node.
@@ -23110,23 +23111,23 @@ It keeps a map with <code>To &#8594;
             nodeId</code> associations and this map is not shared with other load balancers which will cause them to make different decisions.
 For HTTP it behaves like apache.</p>
 </dd>
-<dt class="hdlist1">org.Restcomm.tools.sip.balancer.ActiveStandbyAlgorithm</dt>
+<dt class="hdlist1">org.mobicents.tools.sip.balancer.ActiveStandbyAlgorithm</dt>
 <dd>
 <p>This algorithm allows to send all requests to the active node. If the active node
 will disconnected in some way then the Load balancer will send requests to the
-passive node. This algorithm works for all protocols(SIP,HTTP,SMPP).</p>
+passive node. This algorithm works for SIP and HTTP protocols.</p>
 </dd>
-<dt class="hdlist1">org.Restcomm.tools.sip.balancer.HeaderConsistentHashBalancerAlgorithm</dt>
+<dt class="hdlist1">org.mobicents.tools.sip.balancer.HeaderConsistentHashBalancerAlgorithm</dt>
 <dd>
 <p>This algorithm is distributable and can be used in distributed load balancer configurations.
 It extracts the hash value of specific headers from SIP and HTTP messages to decide which application server node will handle the request.
 Information about the options in this algorithms is available in the balancer configuration file comments.</p>
 </dd>
-<dt class="hdlist1">org.Restcomm.tools.sip.balancer.PersistentConsistentHashBalancerAlgorithm</dt>
+<dt class="hdlist1">org.mobicents.tools.sip.balancer.PersistentConsistentHashBalancerAlgorithm</dt>
 <dd>
 <p>This algorithm is distributable and is similar to the previous algorithm, but it attempts to keep session affinity even when the cluster nodes are removed or added, which would normally cause hash values to point to different nodes.</p>
 </dd>
-<dt class="hdlist1">org.Restcomm.tools.sip.balancer.ClusterSubdomainAffinityAlgorithm</dt>
+<dt class="hdlist1">org.mobicents.tools.sip.balancer.ClusterSubdomainAffinityAlgorithm</dt>
 <dd>
 <p>This algorithm is not distributable, but supports grouping server nodes to act as a subcluster.
 Any call of a node that belongs to a cluster group will be preferentially failed over to a node from the same group.
@@ -23142,6 +23143,47 @@ The groups are enclosed in parentheses and the IP addresses are separate by comm
 </div>
 </dd>
 </dl>
+</div>
+<div class="paragraph">
+<p>The following is a list of the built-in algorithms for SMPP:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>to SMPP provider side:</p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">org.mobicents.tools.smpp.multiplexer.SmppToProviderRoundRobinAlgorithm</dt>
+<dd>
+<p>It&#8217;s default algorithm. The Load balancer uses round-robin algorithm
+for sending SMPP requests to connected providers.</p>
+</dd>
+<dt class="hdlist1">org.mobicents.tools.smpp.multiplexer.SmppToProviderActiveStandbyAlgorithm</dt>
+<dd>
+<p>This algorithm allows to send all requests to the active SMPP provider.
+If the active SMPP provider will disconnected in some way then
+the Load balancer will send requests to the passive SMPP provider.</p>
+</dd>
+</dl>
+</div>
+</li>
+<li>
+<p>to Node side:</p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">org.mobicents.tools.smpp.multiplexer.SmppToNodeRoundRobinAlgorithm</dt>
+<dd>
+<p>It&#8217;s default algorithm. The Load balancer uses round-robin algorithm
+for sending SMPP requests to connected Nodes.</p>
+</dd>
+<dt class="hdlist1">org.mobicents.tools.smpp.multiplexer.SmppToNodeSubmitToAllAlgorithm</dt>
+<dd>
+<p>The Load balancer sends each SMPP requests from provider to all connected providers.</p>
+</dd>
+</dl>
+</div>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -23335,7 +23377,8 @@ http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
   &lt;reconnectPeriod&gt;1000&lt;/reconnectPeriod&gt;
   &lt;timeoutConnectionCheckClientSide&gt;1000&lt;/timeoutConnectionCheckClientSide&gt;
   &lt;timeoutConnectionCheckServerSide&gt;1000&lt;/timeoutConnectionCheckServerSide&gt;
-  &lt;isUseRrSendSmppRequestToClient&gt;false&lt;/isUseRrSendSmppRequestToClient&gt;
+  &lt;toNodeAlgorithmClass&gt;&lt;/toNodeAlgorithmClass&gt;
+  &lt;toProviderAlgorithmClass&gt;&lt;/toProviderAlgorithmClass&gt;
 &lt;/smpp&gt;
 &lt;ssl&gt;
   &lt;terminateTLSTraffic&gt;true&lt;/terminateTLSTraffic&gt;
@@ -23601,10 +23644,11 @@ After sending enquire link to client for checking connection, balancer wait this
 <p>In milliseconds.
 Connection check server side timer(time which LB wait for enquire_link_resp and if doesn’t receive, tries to rebind to server).</p>
 </dd>
-<dt class="hdlist1">isUseRrSendSmppRequestToClient</dt>
+<dt class="hdlist1">toNodeAlgorithmClass</dt>
+<dt class="hdlist1">toProviderAlgorithmClass</dt>
 <dd>
-<p>If true use round robin algorithm for sending SMPP requests from server to client
-if false send each request from server to all clients. Default is false.</p>
+<p>SMPP algorithms to Node side and to SMPP provider side. By default LB uses
+round-robin algorithm to both sides.</p>
 </dd>
 <dt class="hdlist1">javax.net.ssl.keyStore</dt>
 <dd>
@@ -24101,11 +24145,16 @@ If no response if received within a threshhold time then the third party SIP ser
 <p>enabledCipherSuites;</p>
 </li>
 <li>
-<p>tlsClientProtocols;
-== Getting statistic</p>
+<p>tlsClientProtocols;</p>
 </li>
 </ul>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="getting-statistic"><a class="anchor" href="#getting-statistic"></a>Getting statistic</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Load balancers provide some statistic by Java Management Extensions and JSON.
 You should use url <a href="http://host:statisticPort/lbstat" class="bare">http://host:statisticPort/lbstat</a> for getting JSON statistic data from load balancer.
@@ -24205,7 +24254,6 @@ You can get next data:</p>
 </div>
 </li>
 </ol>
-</div>
 </div>
 </div>
 </div>
@@ -24701,7 +24749,7 @@ and you can see next line:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-17 11:09:12 WET
+Last updated 2016-11-18 10:53:11 WET
 </div>
 </div>
 <footer>
