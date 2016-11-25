@@ -24926,7 +24926,7 @@ So this means that by default a message can not leave a "networkId" area via whi
 For each networkId we can configure a separate SS7 GlobalTitle and for an external peer each networkId can play a role as a separate independed SMSC.</p>
 </div>
 <div class="paragraph">
-<p>NetworkId for a generated inside SMSC receipt is assigned by two algoritms:</p>
+<p>NetworkId for a generated inside SMSC receipts and SMS-STATUS-REPORTs is assigned by two algoritms:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -24937,6 +24937,9 @@ For each networkId we can configure a separate SS7 GlobalTitle and for an extern
 <p>if the option "Delivery receipts will be routed to the origination networkId" is set to false - networkId from ESME/SIP/SAP via what an original message has come to SMSC GW will be assigned</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>Please take into account that mproc rules in <code>Arrival</code> trigger (actions like <code>newnetworkid</code>) do not affect receipts and SMS-STATUS-REPORTs. This may be used for do not pay attention for receipt routing and concentrate for routing of original messages.</p>
 </div>
 <div class="paragraph">
 <p>NetworkId are specified at different places:</p>
@@ -25333,6 +25336,12 @@ If a message fits to all conditions then the rule will be applied to the message
 <td class="tableblock halign-left valign-top"><p class="tableblock">originnetworkidmask</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&lt;networkId value&gt;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if a message has come to SMSC GW via networkId area with this rule&#8217;s originnetworkidmask.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages from any network area will match.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">receiptnetworkidmask</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;networkId value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rule will be applied only if a) a message is a delivery receipt, b) the delivery receipt is recognized by SMSC GW, c) an original message for the delivery receipt is found d), networkId of the original message == receiptnetworkidmask.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages from any network area will match.</p></td>
 </tr>
 <tr>
@@ -30311,7 +30320,7 @@ If there is an error in setting the value, then you will find the details of the
 <div class="sect5">
 <h6 id="_smsc_gateway_server_routing_dlv_cli"><a class="anchor" href="#_smsc_gateway_server_routing_dlv_cli"></a>6.1.8.5.1. Using CLI</h6>
 <div class="paragraph">
-<p>If this option is turned on for each generated delivery receipt networkId will be assigned to the value of networkId of an ESME via which the original message has come to SMSC.
+<p>If this option is turned on for each generated delivery receipts and SMS-STATUS-REPORTs networkId will be assigned to the value of networkId of an ESME via which the original message has come to SMSC.
 This can help for routing of receipts back to the originated ESME.
 If this option is turned off then the networkId of receipts will be taken from networkId of ESME / SS7 / SIP via which the original message has left SMSC GW.
 You can configure this option by issuing the command smsc set orignetworkidforreceipts with appropriate parameters as described below.</p>
@@ -32957,8 +32966,9 @@ SYNOPSIS
 
 	- Default mproc rules implementation (&lt;class name&gt; is "mproc"):
 	smsc mproc add mproc &lt;id&gt; networkidmask &lt;networkId value&gt; originnetworkidmask &lt;networkId
-	value&gt; desttonmask &lt;destination type of number&gt; destnpimask &lt;destination numbering plan
-	indicator&gt; destdigmask &lt;regular expression - destination number digits mask&gt; sourcetonmask
+	value&gt; receiptnetworkidmask &lt;networkId value&gt; desttonmask &lt;destination type of number&gt;
+	destnpimask &lt;destination numbering plan	indicator&gt;
+	destdigmask &lt;regular expression - destination number digits mask&gt; sourcetonmask
 	&lt;source type of number&gt; sourcenpimask &lt;source numbering plan indicator&gt;
 	sourcedigmask &lt;regular expression - source number digits mask&gt;
 	imsidigitsmask &lt;regular expression - imsi digits mask&gt; nnndigitsmask &lt;regular expression
@@ -32974,6 +32984,7 @@ SYNOPSIS
 	newnetworkidafterpermfail &lt;networkId value&gt; dropaftertempfail &lt;false | true&gt;
 	newnetworkidaftertempfail &lt;networkId value&gt;
 
+
 DESCRIPTION
 
 	This command is used to add a new mproc rule.
@@ -32987,6 +32998,7 @@ PARAMETERS
 
 	networkidmask - an optional parameter.
 	originnetworkidmask - an optional parameter.
+	receiptnetworkidmask - an optional parameter.
 	desttonmask - an optional parameter.
 	destnpimask - an optional parameter.
 	destdigmask - an optional parameter.
@@ -33068,8 +33080,9 @@ SYNOPSIS
 
 	- Default mproc rules implementation:
 	smsc mproc modify &lt;id&gt; networkidmask &lt;networkId value&gt; originnetworkidmask &lt;networkId
-	value&gt; desttonmask &lt;destination type of number&gt; destnpimask &lt;destination numbering plan
-	indicator&gt; destdigmask &lt;regular expression - destination number digits mask&gt; sourcetonmask
+	value&gt; receiptnetworkidmask &lt;networkId value&gt; desttonmask &lt;destination type of number&gt;
+	destnpimask &lt;destination numbering plan indicator&gt;
+	destdigmask &lt;regular expression - destination number digits mask&gt; sourcetonmask
 	&lt;source type of number&gt; sourcenpimask &lt;source numbering plan indicator&gt;
 	sourcedigmask &lt;regular expression - source number digits mask&gt;
 	imsidigitsmask &lt;regular expression - imsi digits mask&gt; nnndigitsmask &lt;regular expression
@@ -33096,6 +33109,7 @@ PARAMETERS
 
 	networkidmask - an optional parameter.
 	originnetworkidmask - an optional parameter.
+	receiptnetworkidmask - an optional parameter.
 	desttonmask - an optional parameter.
 	destnpimask - an optional parameter.
 	destdigmask - an optional parameter.
@@ -34521,7 +34535,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-24 10:50:37 WET
+Last updated 2016-11-25 10:52:05 WET
 </div>
 </div>
 <footer>

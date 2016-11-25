@@ -22809,8 +22809,9 @@ SYNOPSIS
 
 	- Default mproc rules implementation (&lt;class name&gt; is "mproc"):
 	smsc mproc add mproc &lt;id&gt; networkidmask &lt;networkId value&gt; originnetworkidmask &lt;networkId
-	value&gt; desttonmask &lt;destination type of number&gt; destnpimask &lt;destination numbering plan
-	indicator&gt; destdigmask &lt;regular expression - destination number digits mask&gt; sourcetonmask
+	value&gt; receiptnetworkidmask &lt;networkId value&gt; desttonmask &lt;destination type of number&gt;
+	destnpimask &lt;destination numbering plan	indicator&gt;
+	destdigmask &lt;regular expression - destination number digits mask&gt; sourcetonmask
 	&lt;source type of number&gt; sourcenpimask &lt;source numbering plan indicator&gt;
 	sourcedigmask &lt;regular expression - source number digits mask&gt;
 	imsidigitsmask &lt;regular expression - imsi digits mask&gt; nnndigitsmask &lt;regular expression
@@ -22826,6 +22827,7 @@ SYNOPSIS
 	newnetworkidafterpermfail &lt;networkId value&gt; dropaftertempfail &lt;false | true&gt;
 	newnetworkidaftertempfail &lt;networkId value&gt;
 
+
 DESCRIPTION
 
 	This command is used to add a new mproc rule.
@@ -22839,6 +22841,7 @@ PARAMETERS
 
 	networkidmask - an optional parameter.
 	originnetworkidmask - an optional parameter.
+	receiptnetworkidmask - an optional parameter.
 	desttonmask - an optional parameter.
 	destnpimask - an optional parameter.
 	destdigmask - an optional parameter.
@@ -22922,8 +22925,9 @@ SYNOPSIS
 
 	- Default mproc rules implementation:
 	smsc mproc modify &lt;id&gt; networkidmask &lt;networkId value&gt; originnetworkidmask &lt;networkId
-	value&gt; desttonmask &lt;destination type of number&gt; destnpimask &lt;destination numbering plan
-	indicator&gt; destdigmask &lt;regular expression - destination number digits mask&gt; sourcetonmask
+	value&gt; receiptnetworkidmask &lt;networkId value&gt; desttonmask &lt;destination type of number&gt;
+	destnpimask &lt;destination numbering plan indicator&gt;
+	destdigmask &lt;regular expression - destination number digits mask&gt; sourcetonmask
 	&lt;source type of number&gt; sourcenpimask &lt;source numbering plan indicator&gt;
 	sourcedigmask &lt;regular expression - source number digits mask&gt;
 	imsidigitsmask &lt;regular expression - imsi digits mask&gt; nnndigitsmask &lt;regular expression
@@ -22950,6 +22954,7 @@ PARAMETERS
 
 	networkidmask - an optional parameter.
 	originnetworkidmask - an optional parameter.
+	receiptnetworkidmask - an optional parameter.
 	desttonmask - an optional parameter.
 	destnpimask - an optional parameter.
 	destdigmask - an optional parameter.
@@ -23119,7 +23124,7 @@ Below this you will find the button 'Create Message Processing Rule'.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-24 10:50:37 WET
+Last updated 2016-11-25 10:52:05 WET
 </div>
 </div>
 <footer>
