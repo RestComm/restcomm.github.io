@@ -23535,10 +23535,6 @@ Connecting to 192.168.2.21:11111
 
 SCTP associations:
 
-RS-CDF1 - [STARTED][UP]
-
-RS-CDF2 - [STARTED][UP]
-
 RS-HLRFE0 - [STARTED][UP]
 
 RS-HLRFE1 - [STARTED][UP]
@@ -23885,8 +23881,7 @@ Done.</pre>
 <div class="paragraph">
 <p>Associations can be stopped and started with the switches --stop and
 --start respectively. Note that only M3UA associations can be started or
-stopped. Managing SCTP associations for Diameter connections is not
-supported.</p>
+stopped.</p>
 </div>
 <div class="paragraph">
 <p>Note that when you stop an association which has generated an alert
@@ -24002,7 +23997,7 @@ or both (-b) configurations on the domain’s running instances.</p>
 <div class="paragraph">
 <p><strong>Important note:</strong> When specifying “–a” or “–b” to instruct the domain’s
 servers to reload their configuration, this configuration reload does
-not affect SIGTRAN and DIAMETER settings of the Signaling Layer servers.
+not affect SIGTRAN settings of the Signaling Layer servers.
 After changing these settings, the affected Signaling Layer servers must
 be restarted for the changes to take effect.</p>
 </div>
@@ -24190,13 +24185,6 @@ used. The overview of the entities is shown on the following figure.</p>
 			&lt;remoteIp1&gt;10.133.128.2&lt;/remoteIp1&gt;
 			&lt;remoteIp2&gt;10.133.192.2&lt;/remoteIp2&gt;
 			&lt;remotePort&gt;2905&lt;/remotePort&gt;
-		&lt;/sctpAssociationRemoteSide&gt;
-		&lt;sctpAssociationRemoteSide name="RS-CDF1"&gt;
-			&lt;remoteSystemType&gt;SG&lt;/remoteSystemType&gt;
-			&lt;associationType&gt;diameter&lt;/associationType&gt;
-			&lt;remoteIp1&gt;10.133.128.90&lt;/remoteIp1&gt;
-			&lt;remoteIp2&gt;10.133.192.90&lt;/remoteIp2&gt;
-			&lt;remotePort&gt;3868&lt;/remotePort&gt;
 		&lt;/sctpAssociationRemoteSide&gt;</code></pre>
 </div>
 </div>
@@ -24208,37 +24196,20 @@ sides</em>:</p>
 <p>An <em>SCTP association remote side</em> has a name, remote IP addresses (IP2 is
 optional) and a remote port. The element <em>remoteSystemType</em> is always set
 to “SG”, the value of the element <em>associationType</em> are can be set to
-“m3ua” or “diameter”.</p>
+“m3ua”.</p>
 </div>
 <div class="paragraph">
 <p>An <em>SCTP association remote side</em> can then be referenced by name in an
-<em>SCTP association remote side profile</em> or in an <em>M3UA route</em>. SCTP
-association remote side profiles are used when the Signaling Layer
-server does not M3UA routes – that’s the case for Diameter servers.</p>
-</div>
-<div class="paragraph">
-<p>Defining <em>SCTP association remote side profiles</em>:</p>
+<em>SCTP association remote side profile</em> or in an <em>M3UA route</em>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;sctpAssociationRemoteSideProfiles&gt;
-	&lt;sctpAssociationRemoteSideProfile name="CDF_SCTP"&gt;
-		&lt;sctpAssociationRemoteSideWrapper&gt;
-			&lt;sctpAssociationRemoteSide&gt;RS-CDF1&lt;/sctpAssociationRemoteSide&gt;
-		&lt;/sctpAssociationRemoteSideWrapper&gt;
-		&lt;sctpAssociationRemoteSideWrapper&gt;
-			&lt;sctpAssociationRemoteSide&gt;RS-CDF2&lt;/sctpAssociationRemoteSide&gt;
-		&lt;/sctpAssociationRemoteSideWrapper&gt;
-	&lt;/sctpAssociationRemoteSideProfile&gt;
-&lt;/sctpAssociationRemoteSideProfiles&gt;</code></pre>
+<pre>Defining _M3UA profiles_ and _routes_:
+[source,xml]</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Defining <em>M3UA profiles</em> and <em>routes</em>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;m3uaProfiles&gt;
+<p>&lt;m3uaProfiles&gt;
 	&lt;m3uaProfile name="M3UA_ALL"&gt;
 		&lt;routingContext&gt;5&lt;/routingContext&gt;
 		&lt;ss7SignalingMode&gt;itu14&lt;/ss7SignalingMode&gt;
@@ -24252,27 +24223,26 @@ server does not M3UA routes – that’s the case for Diameter servers.</p>
 				&lt;pointCode&gt;281&lt;/pointCode&gt;
 				&lt;primaryAssociation&gt;RS-MSS1A&lt;/primaryAssociation&gt;
 				&lt;secondaryAssociation&gt;RS-MSS1B&lt;/secondaryAssociation&gt;
-			&lt;/m3uaRoute&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>An M3UA profile consists of multiple <em>M3UA routes</em>. A route defines the
-primary and secondary SCTP associations towards a point code, so the
-value between the <em>primaryAssociation</em> and <em>secondaryAssociation</em> tags must
-match a name attribute of an <em>sctpAssociationRemoteSide</em> tag seen above.</p>
-</div>
-<div class="paragraph">
-<p>SCTP configuration of a Signaling Layer server is manifested in its <em>SCTP
-association local side</em> setting. This setting sets the local SIGTRAN
-addresses, and references either an <em>M3UA profile</em> or an <em>SCTP association remote side profile</em>.
-Note that an SL server can have multiple <em>SCTP association local sides</em>.</p>
-</div>
-<div class="paragraph">
-<p>Example of an SL server with M3UA profile:</p>
+			&lt;/m3uaRoute&gt;</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;signalingLayerServers&gt;
+<pre>An M3UA profile consists of multiple _M3UA routes_. A route defines the
+primary and secondary SCTP associations towards a point code, so the
+value between the _primaryAssociation_ and _secondaryAssociation_ tags must
+match a name attribute of an _sctpAssociationRemoteSide_ tag seen above.
+
+SCTP configuration of a Signaling Layer server is manifested in its _SCTP
+association local side_ setting. This setting sets the local SIGTRAN
+addresses, and references either an _M3UA profile_ or an _SCTP association remote side profile_.
+Note that an SL server can have multiple _SCTP association local sides_.
+
+Example of an SL server with M3UA profile:
+[source,xml]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&lt;signalingLayerServers&gt;
 	&lt;signalingLayerServer name="sfulSL01a"&gt;
 		( … )
 		&lt;sctpAssociationLocalSides&gt;
@@ -24285,22 +24255,23 @@ Note that an SL server can have multiple <em>SCTP association local sides</em>.<
 			&lt;/sctpAssociationLocalSide&gt;
 		&lt;/sctpAssociationLocalSides&gt;
 		( … )
-	&lt;/signalingLayerServer&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_sccp"><a class="anchor" href="#_sccp"></a>3.3.1.2. SCCP</h5>
-<div class="paragraph">
-<p>SCCP configuration is split into <em>local</em> and <em>remote profiles</em>. The <em>local
-profile</em> defines the <em>local subsystems</em> and <em>local global title addresses</em>.
-Note that an IM-SCF domain can have multiple subsystems and GT addresses
-but in current installation only one subsystem and GT is used per IM-SCF
-domain.</p>
+	&lt;/signalingLayerServer&gt;</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;sccpLocalProfile&gt;
+<pre>[[_sccp]]
+==== SCCP
+
+SCCP configuration is split into _local_ and _remote profiles_. The _local
+profile_ defines the _local subsystems_ and _local global title addresses_.
+Note that an IM-SCF domain can have multiple subsystems and GT addresses
+but in current installation only one subsystem and GT is used per IM-SCF
+domain.
+[source,xml]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&lt;sccpLocalProfile&gt;
 	&lt;localNetworkIndicator&gt;national&lt;/localNetworkIndicator&gt;
 	&lt;removePcWhenRouteOnGt&gt;true&lt;/removePcWhenRouteOnGt&gt;
 	&lt;localSubSystems&gt;
@@ -24318,17 +24289,18 @@ domain.</p>
 			&lt;gtTranslationType&gt;0&lt;/gtTranslationType&gt;
 		&lt;/localGtAddress&gt;
 	&lt;/localGtAddresses&gt;
-&lt;/sccpLocalProfile&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The SCCP remote profile defines the remote systems and their addressing.
-<em>Remote systems</em> which are addressed by point code and subsystem number
-are listed under <em>remoteSubSystemPointCodeAddresses</em>:</p>
+&lt;/sccpLocalProfile&gt;</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;sccpRemoteProfile&gt;
+<pre>The SCCP remote profile defines the remote systems and their addressing.
+_Remote systems_ which are addressed by point code and subsystem number
+are listed under _remoteSubSystemPointCodeAddresses_:
+[source,xml]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&lt;sccpRemoteProfile&gt;
 	&lt;remoteSubSystemPointCodeAddresses&gt;
 		&lt;remoteSubSystemPointCode alias="HLRFE0"&gt;
 			&lt;subSystemNumber&gt;6&lt;/subSystemNumber&gt;
@@ -24336,16 +24308,17 @@ are listed under <em>remoteSubSystemPointCodeAddresses</em>:</p>
 			&lt;networkIndicator&gt;national&lt;/networkIndicator&gt;
 		&lt;/remoteSubSystemPointCode&gt;
 		( … )
-	&lt;/remoteSubSystemPointCodeAddresses&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p><em>Remote systems</em> addressed by global title are listed under
-<em>remoteGtAddresses</em>:</p>
+	&lt;/remoteSubSystemPointCodeAddresses&gt;</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;sccpRemoteProfile&gt;
+<pre>_Remote systems_ addressed by global title are listed under
+_remoteGtAddresses_:
+[source,xml]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&lt;sccpRemoteProfile&gt;
 	&lt;remoteSubSystemPointCodeAddresses&gt;
 	( … )
 	&lt;/remoteSubSystemPointCodeAddresses&gt;
@@ -24361,15 +24334,16 @@ are listed under <em>remoteSubSystemPointCodeAddresses</em>:</p>
 			&lt;pointCode&gt;280&lt;/pointCode&gt;
 		&lt;/remoteGtAddress&gt;
 		( … )
-	&lt;/remoteGtAddresses&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can configure Global Title routing right after remote GT addresses:</p>
+	&lt;/remoteGtAddresses&gt;</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;sccpRemoteProfile&gt;
+<pre>You can configure Global Title routing right after remote GT addresses:
+[source,xml]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&lt;sccpRemoteProfile&gt;
 	&lt;remoteSubSystemPointCodeAddresses&gt;
 	( … )
 	&lt;/remoteSubSystemPointCodeAddresses&gt;
@@ -24381,32 +24355,30 @@ are listed under <em>remoteSubSystemPointCodeAddresses</em>:</p>
 		&lt;secondaryGttPointCode&gt;282&lt;/secondaryGttPointCode&gt;
 		&lt;distribution&gt;loadbalance&lt;/distribution&gt;
 	&lt;/gtRouting&gt;
-&lt;/sccpRemoteProfile&gt;</code></pre>
+&lt;/sccpRemoteProfile&gt;</p>
 </div>
-</div>
-<div class="paragraph">
-<p>The elements below gtRouting configure GT translation. The
+<div class="listingblock">
+<div class="content">
+<pre>The elements below gtRouting configure GT translation. The
 primaryGttPointCode element is mandatory, its value is the point code
 which can provide global title translation. You can specify another
 GTT-capable point code in secondaryGttPointCode. The value of the
 element distribution can be either “loadbalance” or “failover”
-specifying how to query the point codes set above.</p>
+specifying how to query the point codes set above.
+
+[[_camel-configuration]]
+=== CAMEL configuration
+
+Configuring CAMEL parameters of an IM-SCF domain is basically means
+defining _CAP modules_. _CAP modules_ process and construct CAMEL messages
+which are received from and sent to the telco network.
+
+_CAP modules_ reference media resources, which are listed separately:
+[source,xml]</pre>
 </div>
 </div>
-</div>
-<div class="sect3">
-<h4 id="_camel-configuration"><a class="anchor" href="#_camel-configuration"></a>3.3.2. CAMEL configuration</h4>
 <div class="paragraph">
-<p>Configuring CAMEL parameters of an IM-SCF domain is basically means
-defining <em>CAP modules</em>. <em>CAP modules</em> process and construct CAMEL messages
-which are received from and sent to the telco network.</p>
-</div>
-<div class="paragraph">
-<p><em>CAP modules</em> reference media resources, which are listed separately:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;mediaResources&gt;
+<p>&lt;mediaResources&gt;
 	&lt;mediaResource name="MRF"&gt;
 		&lt;alias&gt;mrf&lt;/alias&gt;
 		&lt;addressDigits&gt;03&lt;/addressDigits&gt;
@@ -24421,16 +24393,17 @@ which are received from and sent to the telco network.</p>
 		&lt;numberingPlan&gt;ISDN&lt;/numberingPlan&gt;
 	&lt;bothwayThroughConnectionInd&gt;bothwayPathNotRequired&lt;/bothwayThroughConnectionInd&gt;
 	&lt;/mediaResource&gt;
-&lt;/mediaResources&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p><em>CAP modules</em> are then defined below the “capModules” tag, one “capModule”
-tag for each module.</p>
+&lt;/mediaResources&gt;</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;capModules&gt;
+<pre>_CAP modules_ are then defined below the “capModules” tag, one “capModule”
+tag for each module.
+[source,xml]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&lt;capModules&gt;
 	&lt;capModule name="cap2Module"&gt;
 		&lt;localGt&gt;IMSCF-GT&lt;/localGt&gt;
 		&lt;inTriggering&gt;
@@ -24448,70 +24421,57 @@ tag for each module.</p>
 		&lt;/inviteErrorHandlers&gt;
 	&lt;/capModule&gt;
 	( … )
-&lt;/capModules&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>As you can see, a <em>CAP module</em> has a name and a local address. In the
-example above the local address is given in the “localGT”, its value
-must reference a <em>localGtAddress</em> in the <em>SCCP local profile</em>. Of course the
-local address can be given by referencing a <em>localSubSystem</em> in the <em>local
-SCTP profile</em>:</p>
+&lt;/capModules&gt;</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;capModules&gt;
+<pre>As you can see, a _CAP module_ has a name and a local address. In the
+example above the local address is given in the “localGT”, its value
+must reference a _localGtAddress_ in the _SCCP local profile_. Of course the
+local address can be given by referencing a _localSubSystem_ in the _local
+SCTP profile_:
+[source,xml]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&lt;capModules&gt;
 	&lt;capModule name="cap2Module"&gt;
 		&lt;localSsn&gt;IMSCF-SSN&lt;/localSsn&gt;
 		&lt;inTriggering&gt;
-		( … )</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The “inTriggering” part specifies what triggering should be used in
-stateful services. It specifies the events to subscribe to in the
-outgoing requestReportBCSMEvent message and the monitoring type as well
-(interrupted or notify-and-continue).</p>
-</div>
-<div class="paragraph">
-<p>The settings under the “generalProperties” tag configure various
-properties of call handling and timeouts:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>reset timer intervals in seconds</p>
-</li>
-<li>
-<p>activityTest interval in seconds (after how many seconds of inactivity
-of a call must an activityTest message to be sent)</p>
-</li>
-<li>
-<p>asReactionTimeoutSec: how many seconds after the INVITE should the SIP
-AS answer</p>
-</li>
-<li>
-<p>maxCallLengthMinutes: the longest time in minutes a call can last</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>At “mediaResources” the media resources shown above are referenced.</p>
-</div>
-<div class="paragraph">
-<p>The “inviteErrorHandlers” part describes what should IM-SCF do in case
-when the AS replies to SIP INVITE with an error. The behavior can be
-separated by service key as well.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_map-configuration"><a class="anchor" href="#_map-configuration"></a>3.3.3. MAP configuration</h4>
-<div class="paragraph">
-<p>MAP configuration is about to define MAP modules in IM-SCF:</p>
+		( … )</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;mapModules&gt;
+<pre>The “inTriggering” part specifies what triggering should be used in
+stateful services. It specifies the events to subscribe to in the
+outgoing requestReportBCSMEvent message and the monitoring type as well
+(interrupted or notify-and-continue).
+
+The settings under the “generalProperties” tag configure various
+properties of call handling and timeouts:
+
+* reset timer intervals in seconds
+* activityTest interval in seconds (after how many seconds of inactivity
+of a call must an activityTest message to be sent)
+* asReactionTimeoutSec: how many seconds after the INVITE should the SIP
+AS answer
+* maxCallLengthMinutes: the longest time in minutes a call can last
+
+At “mediaResources” the media resources shown above are referenced.
+
+The “inviteErrorHandlers” part describes what should IM-SCF do in case
+when the AS replies to SIP INVITE with an error. The behavior can be
+separated by service key as well.
+
+[[_map-configuration]]
+=== MAP configuration
+
+MAP configuration is about to define MAP modules in IM-SCF:
+[source,xml]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&lt;mapModules&gt;
 	&lt;mapModule name="mapModule"&gt;
 		&lt;localSsn&gt;IMSCF-SSN&lt;/localSsn&gt;
 		&lt;mapGsmScfAddress&gt;
@@ -24521,109 +24481,33 @@ separated by service key as well.</p>
 		&lt;/mapGsmScfAddress&gt;
 		&lt;mapTimeoutSec&gt;8&lt;/mapTimeoutSec&gt;
 	&lt;/mapModule&gt;
-&lt;/mapModules&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>A MAP module has a unique name and a local address. In the example above
-the local address is defined by referencing a <em>localSubSystem</em> in the <em>SCTP
-local profile</em> but it could reference a <em>localGtAddress</em> as well:</p>
+&lt;/mapModules&gt;</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;mapModules&gt;
+<pre>A MAP module has a unique name and a local address. In the example above
+the local address is defined by referencing a _localSubSystem_ in the _SCTP
+local profile_ but it could reference a _localGtAddress_ as well:
+[source,xml]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&lt;mapModules&gt;
 	&lt;mapModule name="mapModule"&gt;
 		&lt;localGt&gt;IMSCF-GT&lt;/localGt&gt;
-		( … )</code></pre>
+		( … )</p>
 </div>
-</div>
-<div class="paragraph">
-<p>The <em>mapGsmScfAddress</em> specifies the GSM-SCF address to write to the
+<div class="listingblock">
+<div class="content">
+<pre>The _mapGsmScfAddress_ specifies the GSM-SCF address to write to the
 outgoing anyTimeInterrogation MAP message. The “mapTimeoutSec” specifies
-the timeout in seconds to wait for the answer the outgoing MAP message.</p>
+the timeout in seconds to wait for the answer the outgoing MAP message.</pre>
 </div>
-</div>
-<div class="sect3">
-<h4 id="_diameter-gateway-configuration"><a class="anchor" href="#_diameter-gateway-configuration"></a>3.3.4. DIAMETER Gateway configuration</h4>
-<div class="paragraph">
-<p>Multiple <em>DIAMETER Gateway modules</em> can be defined to handle DIAMETER
-traffic towards the <em>roamingsms service</em>. An example <em>DIAMETER Gateway
-module</em> definition is shown below.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;diameterGatewayModules&gt;
-	&lt;diameterGatewayModule name="roamingSmsDiameterGwModule"&gt;
-		&lt;acceptUndefinedPeer&gt;true&lt;/acceptUndefinedPeer&gt;
-		&lt;duplicationProtection&gt;true&lt;/duplicationProtection&gt;
-		&lt;duplicateTimer&gt;240000&lt;/duplicateTimer&gt;
-		&lt;duplicateSize&gt;5000&lt;/duplicateSize&gt;
-		&lt;queueSize&gt;10000&lt;/queueSize&gt;
-		&lt;messageTimeoutMs&gt;2000&lt;/messageTimeoutMs&gt;
-		&lt;stopTimeoutMs&gt;10000&lt;/stopTimeoutMs&gt;
-		&lt;ceaTimeoutMs&gt;2000&lt;/ceaTimeoutMs&gt;
-		&lt;iacTimeoutMs&gt;120000&lt;/iacTimeoutMs&gt;
-		&lt;dwaTimeoutMs&gt;2000&lt;/dwaTimeoutMs&gt;
-		&lt;dpaTimeoutMs&gt;5000&lt;/dpaTimeoutMs&gt;
-		&lt;recTimeoutMs&gt;10000&lt;/recTimeoutMs&gt;
-		&lt;sessionTimeoutSec&gt;60&lt;/sessionTimeoutSec&gt;
-		&lt;threadPools&gt;
-			&lt;threadGroupSize&gt;64&lt;/threadGroupSize&gt;
-			&lt;processingMessageTimerSize&gt;1&lt;/processingMessageTimerSize&gt;
-			&lt;dplicationMessageTimerSize&gt;1&lt;/dplicationMessageTimerSize&gt;
-			&lt;redirectMessageTimerSize&gt;1&lt;/redirectMessageTimerSize&gt;
-			&lt;peerOverloadTimerSize&gt;1&lt;/peerOverloadTimerSize&gt;
-			&lt;connectionTimerSize&gt;1&lt;/connectionTimerSize&gt;
-			&lt;statisticTimerSize&gt;1&lt;/statisticTimerSize&gt;
-			&lt;applicationSessionSize&gt;10&lt;/applicationSessionSize&gt;
-		&lt;/threadPools&gt;
-		&lt;productName&gt;diametergw&lt;/productName&gt;
-		&lt;originRealm&gt;tsdp.sometelecom.com&lt;/originRealm&gt;
-		&lt;originApplicationId&gt;
-			&lt;vendorId&gt;42215&lt;/vendorId&gt;
-			&lt;authApplId&gt;4&lt;/authApplId&gt;
-			&lt;acctApplId&gt;4&lt;/acctApplId&gt;
-		&lt;/originApplicationId&gt;
-		&lt;destinationRealm&gt;cdf.sometelecom.com&lt;/destinationRealm&gt;
-		&lt;destinationApplicationId&gt;
-			&lt;vendorId&gt;0&lt;/vendorId&gt;
-			&lt;authApplId&gt;4&lt;/authApplId&gt;
-			&lt;acctApplId&gt;0&lt;/acctApplId&gt;
-		&lt;/destinationApplicationId&gt;
-	&lt;sctpAssociationRemoteSideProfile&gt;CDF_SCTP&lt;/sctpAssociationRemoteSideProfile&gt;
-	&lt;/diameterGatewayModule&gt;
-&lt;/diameterGatewayModules&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The most important property is <em>sctpAssociationRemoteSideProfile</em> which
-refers to an <em>SCTP association remote side profile</em> shown in section SCTP
-and M3UA. The other properties configure timeouts, thread pool sizes and
-DIAMETER-related properties.</p>
-</div>
-<div class="paragraph">
-<p>Not strictly DIAMETER-related, but involved in DIAMETER Gateway
-functionality the list of HTTP application servers to where DIAMETER
-queries are routed to. HTTP AS can be defined at
-“httpApplicationServers” tag:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;httpApplicationServers&gt;
-	&lt;httpApplicationServerGroup name="tsdp5b_roamingsms_all"&gt;
-		&lt;connectTimeoutMs&gt;500&lt;/connectTimeoutMs&gt;
-		&lt;readTimeoutMs&gt;5500&lt;/readTimeoutMs&gt;
-		&lt;reenableTimeMs&gt;15000&lt;/reenableTimeMs&gt;
-		&lt;url&gt;http://192.168.1.112:8811/roamingsms_all_20140731/&lt;/url&gt;
-		&lt;url&gt;http://192.168.1.121:8212/roamingsms_all_20140731/&lt;/url&gt;
-	&lt;/httpApplicationServerGroup&gt;
-	( … )
-&lt;/httpApplicationServers&gt;</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_sip-configuration"><a class="anchor" href="#_sip-configuration"></a>3.3.5. SIP configuration</h4>
+<h4 id="_sip-configuration"><a class="anchor" href="#_sip-configuration"></a>3.3.2. SIP configuration</h4>
 <div class="paragraph">
 <p>SIP configuration in IM-SCF means configuring the SIP AS endpoints. SIP
 AS endpoints are grouped into <em>AS groups</em>. A call is routed to an <em>AS group</em>
@@ -24691,7 +24575,7 @@ edited by hand.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_routing-configuration"><a class="anchor" href="#_routing-configuration"></a>3.3.6. Routing configuration</h4>
+<h4 id="_routing-configuration"><a class="anchor" href="#_routing-configuration"></a>3.3.3. Routing configuration</h4>
 <div class="paragraph">
 <p>The following routing can be defined for an IM-SCF domain</p>
 </div>
@@ -24704,13 +24588,10 @@ edited by hand.</p>
 <p>Route incoming TCAP BEGIN messages by application context to an
 appropriate module</p>
 </li>
-<li>
-<p>Route incoming DIAMETER queries to HTTP AS</p>
-</li>
 </ul>
 </div>
 <div class="sect4">
-<h5 id="_route-calls-to-sip-as-group"><a class="anchor" href="#_route-calls-to-sip-as-group"></a>3.3.6.1. Route calls to SIP AS group</h5>
+<h5 id="_route-calls-to-sip-as-group"><a class="anchor" href="#_route-calls-to-sip-as-group"></a>3.3.3.1. Route calls to SIP AS group</h5>
 <div class="paragraph">
 <p>Routing is configured by adding <em>sipAsRoutingEntry</em> elements under the
 <em>sipAsRouting</em> tag:</p>
@@ -24750,7 +24631,7 @@ configuration scripts.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_route-tcap-begin-to-module"><a class="anchor" href="#_route-tcap-begin-to-module"></a>3.3.6.2. Route TCAP BEGIN to module</h5>
+<h5 id="_route-tcap-begin-to-module"><a class="anchor" href="#_route-tcap-begin-to-module"></a>3.3.3.2. Route TCAP BEGIN to module</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;moduleRouting&gt;
@@ -24804,36 +24685,15 @@ to route a call to different modules based on service key.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_route-diameter-to-http-as"><a class="anchor" href="#_route-diameter-to-http-as"></a>3.3.6.3. Route DIAMETER to HTTP AS</h5>
-<div class="paragraph">
-<p>A DIAMETER routing entry is simply a three-way relationship between a
-service context ID, an HTTP AS group and a DIAMETER Gateway module (see
-DIAMETER Gateway configuration).</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;diameterRouting&gt;
-	&lt;diameterRoutingEntry&gt;
-		&lt;serviceContextIds&gt;ROAMINGSMS&lt;/serviceContextIds&gt;
-		&lt;httpApplicationServerGroup&gt;tsdp5b_roamingsms_all&lt;/httpApplicationServerGroup&gt;
-		&lt;diameterGatewayModule&gt;roamingSmsDiameterGwModule&lt;/diameterGatewayModule&gt;
-	&lt;/diameterRoutingEntry&gt;
-&lt;/diameterRouting&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_notification-configuration"><a class="anchor" href="#_notification-configuration"></a>3.3.6.4. Notification configuration</h5>
+<h5 id="_notification-configuration"><a class="anchor" href="#_notification-configuration"></a>3.3.3.3. Notification configuration</h5>
 <div class="paragraph">
 <p>MBean notifications can be configured at the element
 “notificationConfiguration”. Notifications can be defined for various
-counter changes: MAP operation count, CAP operation count, DIAMETER
-query count. The three types of notifications each is collected by some
-kind of service identifier. In case of CAP operation count, it is
-service key (serviceKeyCounterThresholdNotifications), in case of MAP
-(mapCounterThresholdNotifications) it is the remote system alias and in
-case of DIAMETER (diameterCounterThresholdNotfications) it is the
-service context ID.</p>
+counter changes: MAP operation count, CAP operation count. The three
+types of notifications each is collected by some kind of service identifier.
+In case of CAP operation count, it is service key
+(serviceKeyCounterThresholdNotifications), in case of MAP
+(mapCounterThresholdNotifications) it is the remote system alias-</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -24851,7 +24711,6 @@ service context ID.</p>
 		&lt;/serviceKeyCounterThresholdNotification&gt;
 	&lt;/serviceKeyCounterThresholdNotifications&gt;
 	&lt;mapCounterThresholdNotifications/&gt;
-	&lt;diameterCounterThresholdNotifications/&gt;
 &lt;/notificationConfiguration&gt;</code></pre>
 </div>
 </div>
@@ -24892,7 +24751,7 @@ the threshold has been crossed from above or from below</p>
 </li>
 <li>
 <p>serviceIdentifier – the alias of the remote system (service), e.g.
-“HLRFE1” or “ROAMINGSMS” (only available for MAP or DIAMETER counter
+“HLRFE1” or “ROAMINGSMS” (only available for MAP counter
 notifications)</p>
 </li>
 </ul>
@@ -25066,29 +24925,10 @@ are available:</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>In case of DIAMETER the following counters are available:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>balanceQueryReceivedCount</p>
-</li>
-<li>
-<p>balanceQueryAnsweredCount</p>
-</li>
-<li>
-<p>debitQueryReceivedCount</p>
-</li>
-<li>
-<p>debitQueryAnsweredCount</p>
-</li>
-</ul>
-</div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_instance-configuration"><a class="anchor" href="#_instance-configuration"></a>3.3.7. Instance configuration</h4>
+<h4 id="_instance-configuration"><a class="anchor" href="#_instance-configuration"></a>3.3.4. Instance configuration</h4>
 <div class="paragraph">
 <p>IM-SCF instances can be defined under the “servers” tag</p>
 </div>
@@ -25193,7 +25033,7 @@ IM-SCF domain</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_overload-protection"><a class="anchor" href="#_overload-protection"></a>3.3.8. Overload protection</h4>
+<h4 id="_overload-protection"><a class="anchor" href="#_overload-protection"></a>3.3.5. Overload protection</h4>
 <div class="paragraph">
 <p>Under the “overloadProtection” tag the SL and EL servers can be
 configured when to enter overloaded state. When a server is in
@@ -25222,7 +25062,7 @@ from earlier experiences.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_technical-parameters"><a class="anchor" href="#_technical-parameters"></a>3.3.9. Technical parameters</h4>
+<h4 id="_technical-parameters"><a class="anchor" href="#_technical-parameters"></a>3.3.6. Technical parameters</h4>
 <div class="paragraph">
 <p>At the “lwCommParameters” section the IM-SCF configuration XML contains
 some technical parameters which are not likely to change in time.</p>
@@ -25794,233 +25634,7 @@ application server groups.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="configuring-diameter"><a class="anchor" href="#configuring-diameter"></a>3.4.4. Configuring DIAMETER</h4>
-<div class="paragraph">
-<p>Configuring Diameter with the imscfAdmin.sh script means managing HTTP
-application servers and routing incoming DIAMETER requests by service
-context ID to HTTP application servers and Diameter modules.</p>
-</div>
-<div class="paragraph">
-<p>HTTP application servers are organized into groups like the SIP
-application servers. Managing HTTP application server groups can be
-managed using the standard add-edit-remove commands under the switch
---diameterHandling.</p>
-</div>
-<div class="paragraph">
-<p>You can list the currently configured HTTP application servers with the
-HttpAs subcommand of the --configListing switch:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ imscfAdmin.sh &lt;domain&gt; --configListing HttpAs +
-HTTP Application Server Groups
-
-Name:imscf5b_roamingsms_all, Index:0
-
-+--------------------+-----------------+---------------------+
-
-| Connect Timeout MS | Read Timeout MS | Reenable Timeout MS |
-
-+--------------------+-----------------+---------------------+
-
-| 500 | 5500 | 15000 |
-
-+--------------------+-----------------+---------------------+
-
-imscf5b_roamingsms_all - URLs
-
-+----------------------------------------------------+
-
-| URLs |
-
-+----------------------------------------------------+
-
-| http://192.168.1.112:8811/roamingsms_all_20140731/ |
-
-| http://192.168.1.121:8212/roamingsms_all_20140731/ |
-
-+----------------------------------------------------+</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>To add a new HTTP application server group, issue:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ imscfAdmin.sh &lt;domain&gt; --diameterHandling addHttpAsGroup &lt;group_name&gt;
-&lt;url_list&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Where</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>group_name – a unique name for the new group</p>
-</li>
-<li>
-<p>url_list – a comma-separated list of the HTTP endpoints of the HTTP
-application servers inside the group</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>To modify the HTTP application server endpoints in a HTTP application
-server group, use the “—diameterHandling editHttpAsGroup” command. Note
-that HTTP application servers cannot be added to or removed from a group
-individually.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ imscfAdmin.sh &lt;domain&gt; --diameterHandling editHttpAsGroup &lt;group_name&gt;
-&lt;url_list&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>To remove a HTTP application server group, issue:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ imscfAdmin.sh &lt;domain&gt; --diameterHandling removeHttpAsGroup
-&lt;group_name&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>To configure the routing that which DIAMETER service context ID is
-routed to which HTTP AS group and Diameter Module use the
---diameterHandling switch with the addDiameterRouting,
-editDiameterRouting and removeDiameterRouting subcommands.</p>
-</div>
-<div class="paragraph">
-<p>You can check the currently active rules with the “—configListing
-DiameterRoutings” command:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ imscfAdmin.sh &lt;domain&gt; --configListing DiameterRoutings +
-Diameter Routings
-
-+-------+---------------------+-------------------------------+----------------------------+
-
-| INDEX | Service Context IDs | HTTP Application Server Group | Diameter
-Gateway Module |
-
-+-------+---------------------+-------------------------------+----------------------------+
-
-| 0 | ROAMINGSMS | imscf5b_roamingsms_all | roamingSmsDiameterGwModule |
-
-+-------+---------------------+-------------------------------+----------------------------+</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>To add a new DIAMETER routing rule:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ imscfAdmin.sh &lt;domain&gt; --diameterHandling addDiameterRouting
-&lt;context_id&gt; &lt;group_name&gt; &lt;diameter_module&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Where the parameters are the following:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>context_id – a service context ID which defines a service. For example
-“ROAMINGSMS”</p>
-</li>
-<li>
-<p>group_name – a name of an existing HTTP application server group</p>
-</li>
-<li>
-<p>diameter_module – a name of an existing Diameter Module. Diameter
-Modules can be configured as seen in DIAMETER Gateway configuration and
-you can list the with the --configListing switch. For example
-“roamingSmsDiameterGwModule”</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>You can list the available Diameter modules with the “—configListing
-DiameterModules” command:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ imscfAdmin.sh &lt;domain&gt; --configListing DiameterModules
-DiameterModules
-
-Diameter Gateway Modules
-
-+----------------------------+--------------+ (…)
-
-| Name | Product Name | (…)
-
-+----------------------------+--------------+ (…)
-
-| roamingSmsDiameterGwModule | diametergw | (…)
-
-+----------------------------+--------------+ (…)
-
------------------+--------------------------------------------------+
-(…)
-
-Origin Realm | Origin Application ID | (…)
-
------------------+--------------------------------------------------+
-(…)
-
-imscf.restcomm.com | Vendor ID: 42215, Auth App ID: 4, Acct App ID: 4 |
-(…)
-
------------------+--------------------------------------------------+
-(…)
-
--------------------+----------------------------------------------+--------------------------------+
-
-Destination Realm | Destination Application ID | SCTP Assoc Remote Side
-Profile |
-
--------------------+----------------------------------------------+--------------------------------+
-
-gycdf.telekom.hu | Vendor ID: 0, Auth App ID: 4, Acct App ID: 0 |
-CDF_SCTP |
-
--------------------+----------------------------------------------+--------------------------------+</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>To edit an existing routing rule, use</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ imscfAdmin.sh &lt;domain&gt; --diameterHandling editDiameterRouting &lt;index&gt;
-&lt;group_name&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This command changes the target HTTP application server group of an
-existing rule. The rule to modify is specified by its index (the index
-is zero-based and can be queried using one of the listing methods). The
-new HTTP application server group to route to is specified by the
-parameter &lt;group_name&gt;.</p>
-</div>
-<div class="paragraph">
-<p>To remove a routing entry, issue:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ imscfAdmin.sh &lt;domain&gt; --diameterHandling removeDiameterRouting
-&lt;index&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The command deletes the rule at the specified (zero-based) index.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_other-commands"><a class="anchor" href="#_other-commands"></a>3.4.5. Other commands</h4>
+<h4 id="_other-commands"><a class="anchor" href="#_other-commands"></a>3.4.4. Other commands</h4>
 <div class="paragraph">
 <p>To list all available commands of <code class="class">imscfAdmin.sh</code>, invoke the script with
 the parameter --listCommands:</p>
@@ -26106,10 +25720,6 @@ Port |
 | RS-MSS6A | SG | m3ua | 10.133.135.2 | 10.133.199.2 | 2905 |
 
 | RS-MSS6B | SG | m3ua | 10.133.135.6 | 10.133.199.6 | 2905 |
-
-| RS-CDF1 | SG | diameter | 10.133.128.90 | 10.133.192.90 | 3868 |
-
-| RS-CDF2 | SG | diameter | 10.133.128.110 | 10.133.192.110 | 3868 |
 
 +-----------+--------------+-------------+----------------+----------------+-------------+</pre>
 </div>
@@ -26311,12 +25921,10 @@ slessSL01a
 +--------------------------------+------------------------+-----+--------------------------------+
 
 | Internal Communication Address | Administration Address | PC |
-Diameter Gateway Origin Host |
 
 +--------------------------------+------------------------+-----+--------------------------------+
 
 | 192.168.2.21:11113 | 192.168.2.21:11111 | 393 |
-pilot-mobile03.imscf.restcomm.com |
 
 +--------------------------------+------------------------+-----+--------------------------------+
 
@@ -26324,14 +25932,11 @@ slessSL01a - SCTP Associations Local Side
 
 +----------------+----------------+------+--------+--------------+--------------------------------------+
 
-| Sigtran IP 1 | Sigtran IP 2 | Port | Side | M3ua Profile | SCTP
-Association Remote Side Profile |
+| Sigtran IP 1 | Sigtran IP 2 | Port | Side | M3ua Profile | SCTP |
 
 +----------------+----------------+------+--------+--------------+--------------------------------------+
 
 | 10.133.128.154 | 10.133.192.154 | 2905 | client | M3UA_ALL | |
-
-| 10.133.128.154 | 10.133.192.154 | 3868 | client | | CDF_SCTP |
 
 +----------------+----------------+------+--------+--------------+--------------------------------------+
 
@@ -26340,12 +25945,10 @@ slessSL02a
 +--------------------------------+------------------------+-----+--------------------------------+
 
 | Internal Communication Address | Administration Address | PC |
-Diameter Gateway Origin Host |
 
 +--------------------------------+------------------------+-----+--------------------------------+
 
 | 192.168.2.22:11213 | 192.168.2.22:11211 | 394 |
-pilot-mobile04.imscf.restcomm.com |
 
 +--------------------------------+------------------------+-----+--------------------------------+
 
@@ -26353,14 +25956,11 @@ slessSL02a - SCTP Associations Local Side
 
 +----------------+----------------+------+--------+--------------+--------------------------------------+
 
-| Sigtran IP 1 | Sigtran IP 2 | Port | Side | M3ua Profile | SCTP
-Association Remote Side Profile |
+| Sigtran IP 1 | Sigtran IP 2 | Port | Side | M3ua Profile | SCTP |
 
 +----------------+----------------+------+--------+--------------+--------------------------------------+
 
 | 10.133.128.158 | 10.133.192.158 | 2905 | client | M3UA_ALL | |
-
-| 10.133.128.158 | 10.133.192.158 | 3868 | client | | CDF_SCTP |
 
 +----------------+----------------+------+--------+--------------+--------------------------------------+
 
@@ -26390,98 +25990,6 @@ Address | SIP Listen Address | Transaction ID Range |
 192.168.1.22:31222 | 4999999-4999999 |
 
 +----------------+--------------------------------+------------------------+--------------------+----------------------+</pre>
-</div>
-</div>
-<div class="paragraph">
-<p><strong>DiameterModules</strong> – To list the Diameter Modules configured as described
-in section DIAMETER Gateway configuration. Example output:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>Diameter Gateway Modules
-
-+----------------------------+--------------+-----------------+--------------------------------------------------+
-…
-
-| Name | Product Name | Origin Realm | Origin Application ID | …
-
-+----------------------------+--------------+-----------------+--------------------------------------------------+
-…
-
-| roamingSmsDiameterGwModule | diametergw | imscf.restcomm.com | Vendor
-ID: 42215, Auth App ID: 4, Acct App ID: 4 | …
-
-+----------------------------+--------------+-----------------+--------------------------------------------------+
-…
-
-(right part of the table)
-
--------------------+----------------------------------------------+--------------------------------+
-
-Destination Realm | Destination Application ID | SCTP Assoc Remote Side
-Profile |
-
--------------------+----------------------------------------------+--------------------------------+
-
-gycdf.telekom.hu | Vendor ID: 0, Auth App ID: 4, Acct App ID: 0 |
-CDF_SCTP |
-
--------------------+----------------------------------------------+--------------------------------+</pre>
-</div>
-</div>
-<div class="paragraph">
-<p><strong>DiameterRoutings</strong> – To list the Diameter routings configured either by
-script or by hand. Example output:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>Diameter Routings
-
-+-------+---------------------+-------------------------------+----------------------------+
-
-| INDEX | Service Context IDs | HTTP Application Server Group | Diameter
-Gateway Module |
-
-+-------+---------------------+-------------------------------+----------------------------+
-
-| 0 | ROAMINGSMS | imscf5b_roamingsms_all | roamingSmsDiameterGwModule |
-
-+-------+---------------------+-------------------------------+----------------------------+</pre>
-</div>
-</div>
-<div class="paragraph">
-<p><strong>HttpAs</strong> – To list the configured HTTP application server groups and
-their HTTP application server endpoints. Example output:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>HTTP Application Server Groups
-
-Name:imscf5b_roamingsms_all, Index:0
-
-+--------------------+-----------------+---------------------+
-
-| Connect Timeout MS | Read Timeout MS | Reenable Timeout MS |
-
-+--------------------+-----------------+---------------------+
-
-| 500 | 5500 | 15000 |
-
-+--------------------+-----------------+---------------------+
-
-imscf5b_roamingsms_all - URLs
-
-+----------------------------------------------------+
-
-| URLs |
-
-+----------------------------------------------------+
-
-| http://192.168.1.112:8811/roamingsms_all_20140731/ |
-
-| http://192.168.1.121:8212/roamingsms_all_20140731/ |
-
-+----------------------------------------------------+</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -26578,7 +26086,7 @@ command resetAll.sh should be called on all affected machines.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-27 10:43:52 WET
+Last updated 2016-11-29 10:48:16 WET
 </div>
 </div>
 <footer>
