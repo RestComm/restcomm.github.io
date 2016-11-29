@@ -23185,6 +23185,27 @@ of nodes connected to the Load balancer. If the Load balancer finds the correspo
 </div>
 <div class="sect2">
 <h3 id="smpp-multiplexing-basics"><a class="anchor" href="#smpp-multiplexing-basics"></a>1.3. SMPP multiplexing basics</h3>
+<div class="sect3">
+<h4 id="modes-of-smpp"><a class="anchor" href="#modes-of-smpp"></a>1.3.1. Modes of SMPP</h4>
+<div class="paragraph">
+<p>The SMPP Load balancer has two working modes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Mux mode</p>
+</li>
+<li>
+<p>Regular mode</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You can choose it by property muxMode. If it&#8217;s true, the Load balancer will work in Mux mode.
+If it&#8217;s false, in regular mode.</p>
+</div>
+<div class="sect4">
+<h5 id="mux-mode"><a class="anchor" href="#mux-mode"></a>Mux mode</h5>
 <div class="paragraph">
 <p>SMPP providers (e.g.NEXMO) offer limited numbers of connections to their services
 but sometimes we need more than one client connections to it. So you can use our
@@ -23208,7 +23229,7 @@ round robin algorithm; if false, LB sends each request to all clients.</p>
 <div class="content">
 <img src="./images/SMPP-lb-diagram.png" alt="SMPP lb diagram">
 </div>
-<div class="title">Figure 2. SMPP load balancer diagram</div>
+<div class="title">Figure 2. SMPP load balancer diagram mux mode</div>
 </div>
 <div class="paragraph">
 <p>Main goal is to reuse connection to the servers (SMSC) and simply transfer packets
@@ -23221,8 +23242,35 @@ server. During this process (reconnect) it turns back all received packets until
 the new connection is established. If there are no established connection with
 the server, all connections will be closed.</p>
 </div>
+</div>
+<div class="sect4">
+<h5 id="regular-mode"><a class="anchor" href="#regular-mode"></a>Regular mode</h5>
+<div class="paragraph">
+<p>The regular mode is used for balancing load from SMPP clients (ESME) to SMPP servers
+(SMSC) based on round-robin algorithm by default. When new clients connect to SMPP load balancer,
+application creates new connection to SMPP server (SMSC). When connection established it can
+be used in both directions: ESME and SMSC can send messages.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/SMPP-lb-regular-diagram.png" alt="SMPP lb regular diagram">
+</div>
+<div class="title">Figure 3. SMPP load balancer diagram regular mode</div>
+</div>
+<div class="paragraph">
+<p>Main goal of application is reducing the load on servers (SMSC) and simply transfer packets
+between client (ESME) and server(SMSC). But also it can inspect the received packets for
+correct command ID and will not send incorrect packets forward instead turn them back.</p>
+</div>
+<div class="paragraph">
+<p>When connection to server drops, SMPP load balancer can reconnect (rebind) to the next working server.
+During this process (reconnect) it turns back all received packets until the new connection is established.
+If there are no established connections with the servers, the client connection is closed and vice versa.</p>
+</div>
+</div>
+</div>
 <div class="sect3">
-<h4 id="_sslb_smpp_load_balancer_implementation"><a class="anchor" href="#_sslb_smpp_load_balancer_implementation"></a>1.3.1. Implementation of the SMPP Load Balancer</h4>
+<h4 id="_sslb_smpp_load_balancer_implementation"><a class="anchor" href="#_sslb_smpp_load_balancer_implementation"></a>1.3.2. Implementation of the SMPP Load Balancer</h4>
 <div class="paragraph">
 <p>SMPP load balancer implements timers: enquire link timer, session initialization timer and response timer for connection handling.
 Timers of SMPP load balancer have next behaviour:</p>
@@ -23400,7 +23448,7 @@ the Load balancer will send requests to the passive SMPP provider.</p>
 </div>
 </li>
 <li>
-<p>to Node side:</p>
+<p>to Node side (only for Mux mode):</p>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">org.mobicents.tools.smpp.multiplexer.SmppToNodeRoundRobinAlgorithm</dt>
@@ -23430,7 +23478,7 @@ With consistent hash algorithms there is no state to be preserved in the Restcom
 <div class="content">
 <img src="./images/WSS_Failover_Goal.png" alt="WSS Failover Goal">
 </div>
-<div class="title">Figure 3. Example deployment: IP load balancers serving both directions forincoming/outgoing requests in a cluster</div>
+<div class="title">Figure 4. Example deployment: IP load balancers serving both directions forincoming/outgoing requests in a cluster</div>
 </div>
 </div>
 <div class="sect2">
@@ -23607,6 +23655,7 @@ http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
   &lt;timeoutConnectionCheckServerSide&gt;1000&lt;/timeoutConnectionCheckServerSide&gt;
   &lt;toNodeAlgorithmClass&gt;&lt;/toNodeAlgorithmClass&gt;
   &lt;toProviderAlgorithmClass&gt;&lt;/toProviderAlgorithmClass&gt;
+  &lt;muxMode&gt;true&lt;/muxMode&gt;
 &lt;/smpp&gt;
 &lt;ssl&gt;
   &lt;terminateTLSTraffic&gt;true&lt;/terminateTLSTraffic&gt;
@@ -23878,6 +23927,10 @@ Connection check server side timer(time which LB wait for enquire_link_resp and 
 <p>SMPP algorithms to Node side and to SMPP provider side. By default LB uses
 round-robin algorithm to both sides.</p>
 </dd>
+<dt class="hdlist1">muxMode</dt>
+<dd>
+<p>Boolean property. If true the LB will work in mux mode, if false in regular.</p>
+</dd>
 <dt class="hdlist1">javax.net.ssl.keyStore</dt>
 <dd>
 <p>Points to the keystore file we generated before.</p>
@@ -23993,7 +24046,7 @@ If the desired behaviour group these requests, we can just make sure the affinit
 <div class="content">
 <img src="./images/converged-integrated-lb.png" alt="converged integrated lb">
 </div>
-<div class="title">Figure 4. Ensuring SIP and HTTP requests are being grouped by commonaffinity value.</div>
+<div class="title">Figure 5. Ensuring SIP and HTTP requests are being grouped by commonaffinity value.</div>
 </div>
 </div>
 </div>
@@ -24217,7 +24270,7 @@ In the diagram, the Restcomm Load Balancer is the server with the IP address of 
 <div class="content">
 <img src="./images/mss-MSSSIPLoadBalancer-dia-ClusterIPsAndPorts.jpg" alt="mss MSSSIPLoadBalancer dia ClusterIPsAndPorts">
 </div>
-<div class="title">Figure 5. Basic IP and Port Cluster Configuration</div>
+<div class="title">Figure 6. Basic IP and Port Cluster Configuration</div>
 </div>
 </div>
 <div class="sect2">
@@ -24482,7 +24535,7 @@ You can get next data:</p>
 <div class="content">
 <img src="./images/Restcomm_servers-LB.png" alt="Restcomm servers LB">
 </div>
-<div class="title">Figure 6. Load balancer and Restcomm servers diagram</div>
+<div class="title">Figure 7. Load balancer and Restcomm servers diagram</div>
 </div>
 <div class="paragraph">
 <p>This chapter will show you how to configure two Restcomm instances and Load Balancer instance on one machine with OS Ubuntu.</p>
@@ -24972,7 +25025,7 @@ and you can see next line:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-27 10:56:41 WET
+Last updated 2016-11-29 11:05:11 WET
 </div>
 </div>
 <footer>
