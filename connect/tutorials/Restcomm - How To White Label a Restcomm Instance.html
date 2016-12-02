@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Restcomm RCML – Dial</title>
+<title>How to White Label Telestax Restcomm-Connect</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22750,218 +22750,168 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </head>
 <body class="article">
 <div id="header">
-<h1>Restcomm RCML – Dial</h1>
+<h1>How to White Label Telestax Restcomm-Connect</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#dial">Dial</a>
 <ul class="sectlevel2">
-<li><a href="#dial-attributes">Dial Attributes</a></li>
-<li><a href="#request-parameters">Request Parameters</a></li>
-</ul>
-</li>
-<li><a href="#examples">Examples</a></li>
+<li><a href="#step-1-edit-restcomm-management-war">Step 1 - Edit restcomm-management.war</a></li>
+<li><a href="#step-2-edit-restcomm-rvd-war">Step 2 - Edit restcomm-rvd.war</a></li>
+<li><a href="#step-3-replace-default-rvd-welcome-message">Step 3 - Replace Default RVD Welcome Message</a></li>
+<li><a href="#step-4-editing-the-logos">Step 4 - Editing the Logos</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="dial"><a class="anchor" href="#dial"></a>Dial</h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <strong>&lt;Dial&gt;</strong> verb connects the current caller to another phone. If the called party picks up, the two parties are connected and can communicate until one hangs up. If the called party does not pick up, if a busy signal is received, or if the number doesn&#8217;t exist, the dial verb will finish.</p>
+<p>Please see the instructions below</p>
 </div>
-<div class="sect2">
-<h3 id="dial-attributes"><a class="anchor" href="#dial-attributes"></a>Dial Attributes</h3>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Allowed Values</th>
-<th class="tableblock halign-left valign-top">Default Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">action</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">relative or absolute URL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no default for &lt;Dial&gt;</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">method</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">GET, POST</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">POST</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">timeout</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">positive integer in seconds</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">30 seconds</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">timeLimit</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">positive integer (seconds)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">14400 seconds (4 hours)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">callerId</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">a valid phone number, or client identifier if you are dialing a &lt;Client&gt;.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Caller&#8217;s callerId</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">record</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true, false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-</tr>
-</tbody>
-</table>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>action.</strong> The 'action' attribute takes a URL as an argument. When the dialed call ends, RestComm will make a GET or POST request to this URL including the parameters below. If you provide an 'action' URL, RestComm will continue the current call after the dialed party has hung up, using the RCML received in your response to the 'action' URL request. Any RCML verbs occuring after a &lt;Dial&gt; which specifies an 'action' attribute are unreachable. If no 'action' is provided, &lt;Dial&gt; will finish and RestComm will move on to the next RCML verb in the document. If there is no next verb, RestComm will end the phone call.</p>
-</li>
-</ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="request-parameters"><a class="anchor" href="#request-parameters"></a>Request Parameters</h3>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DialCallStatus</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The outcome of the &lt;Dial&gt; attempt. See the DialCallStatus section below for details.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DialCallSid</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The call sid of the new call leg. This parameter is not sent after dialing a conference.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DialCallDuration</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The duration in seconds of the dialed call. This parameter is not sent after dialing a conference.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">RecordingUrl</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The URL of the recorded audio. This parameter is only sent if record="true" is set on the <code>Dial</code> verb, and does not include recordings from the <code>Record</code> verb or Record=True on REST API calls..</p></td>
-</tr>
-</tbody>
-</table>
+<h3 id="step-1-edit-restcomm-management-war"><a class="anchor" href="#step-1-edit-restcomm-management-war"></a>Step 1 - Edit restcomm-management.war</h3>
 <div class="paragraph">
-<p><strong>DialCallStatus Values</strong></p>
+<p>Edit the following files inside <strong>restcomm-management.war</strong> directory</p>
 </div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">completed</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The called party answered the call and was connected to the caller.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">busy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">RestComm received a busy signal when trying to connect to the called party.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no-answer</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The called party did not pick up before the timeout period passed.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">failed</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">RestComm was unable to route to the given phone number. This is frequently caused by dialing a properly formated but non-existent phone number.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">canceled</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The call was canceled via the REST API before it was answered.</p></td>
-</tr>
-</tbody>
-</table>
+<div class="sect3">
+<h4 id="replace-all-restcomm-and-telestax-instances-in-the-following-files"><a class="anchor" href="#replace-all-restcomm-and-telestax-instances-in-the-following-files"></a>Replace all Restcomm and Telestax instances in the following files</h4>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>method.</strong> The 'method' attribute takes the value 'GET' or 'POST'. This tells RestComm whether to request the 'action' URL via HTTP GET or POST. This attribute is modeled after the HTML form 'method' attribute.</p>
-</li>
-<li>
-<p><strong>timeout.</strong> The 'timeout' attribute sets the limit in seconds that &lt;Dial&gt; waits for the called party to answer the call.</p>
-</li>
-<li>
-<p><strong>timelimit.</strong> The 'timeLimit' attribute sets the maximum duration of the &lt;Dial&gt; in seconds.</p>
-</li>
-<li>
-<p><strong>callerId.</strong> The 'callerId' attribute lets you specify the caller ID that will appear to the called party when RestComm calls. By default, when you put a &lt;Dial&gt; in your RCML response to RestComm&#8217;s inbound call request, the caller ID that the dialed party sees is the inbound caller&#8217;s caller ID. If you are dialing to a &lt;Client&gt;, you can set a client identifier as the callerId attribute. For instance, if you&#8217;ve set up a client for incoming calls and you are dialing to it, you could set the callerId attribute to client:thomas.</p>
-</li>
-<li>
-<p><strong>record.</strong> The 'record' attribute lets you specify whether the call will be recorded or not. By default, the call is not recorded. If you set the attribute to 'true' Restcomm will start recording when the two calls are bridged</p>
+<p>./modules/modals/modal-about.html</p>
 </li>
 </ul>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The current release of Restcomm doesn&#8217;t support recording for Dial Conference. This feature will be available in the next release
-</td>
-</tr>
-</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>&lt;h3 class="text-muted"&gt;&lt;img src="resources/img/telestax-logo-dark.png" class="navbar-telestax"&gt; &lt;img src="resources/img/restcomm-logo.png" class="navbar-restcomm"&gt; Telestax RestComm v&lt;strong&gt;{{ version.Version }} &lt;/strong&gt; &lt;small&gt;released {{ releaseDate | date:"MM/dd/yyyy h:mma"}}&lt;/small&gt; &lt;/h3&gt;</code></pre>
+</div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Nesting.</strong> You can nest the following nouns within &lt;Dial&gt;: &lt;Number&gt;, &lt;Client&gt;, &lt;Conference&gt;</p>
+<p>./WEB-INF/web.xml</p>
 </li>
 </ul>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>&lt;display-name&gt;RestComm&lt;/display-name&gt;</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>./index.html</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;title&gt; RestComm&lt;/title&gt;</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>./index.html</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;h4 class="pull-right"&gt;POWERED BY RestComm &lt;small&gt;(c) 2013 Telestax &lt;/small&gt;&lt;/h4&gt;</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>./templates/navbar.html</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;span class="navbar-brand"&gt;&lt;img src="resources/img/telestax-logo-dark.png" class="navbar-telestax" /&gt; &lt;img src="resources/img/restcomm-logo.png" class="navbar-restcomm" /&gt; RestComm&lt;/span&gt;</pre>
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-<div class="sectionbody">
+</div>
+<div class="sect2">
+<h3 id="step-2-edit-restcomm-rvd-war"><a class="anchor" href="#step-2-edit-restcomm-rvd-war"></a>Step 2 - Edit restcomm-rvd.war</h3>
+<div class="sect4">
+<h5 id="edit-the-following-files-inside-restcomm-rvd-war-directory"><a class="anchor" href="#edit-the-following-files-inside-restcomm-rvd-war-directory"></a>Edit the following files inside restcomm-rvd.war directory</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>./languages/pt-BR.json	"designerSettingsModalRestcommAPILabel": "API RestComm",
+./languages/pt-BR.json	"designerSettingsModalCredencialsLabel1": "Credenciais para acessar a RestComm API. Deve ser informado caso",
+./languages/pt-BR.json	"dialStepContinueCalledIdTooltip": "O ID de quem está ligando, que aparecerá para a parte chamada quando o RestComm fizer a chamada",
+./languages/pt-BR.json	"formPackageAppLabel2": "Loja de Aplicativos RestComm",
+./languages/pt-BR.json	"indexPageTitle": "RestComm Editor",
+./languages/pt-BR.json	"indexHeadDescriptorLabel": "RestComm serviço de edição visual",
+./languages/pt-BR.json	"webTriggerModalFallbackParamHelp10": "usam a sintaxe de discagem RestComm RCML. Por exemplo:",
+./languages/es.json	"designerSettingsModalRestcommAPILabel": "RestComm API",
+./languages/es.json	"designerSettingsModalCredencialsLabel1": "Credenciales para accesar a la RestComm API. Debe proporcionarlos si",
+./languages/es.json	"formPackageAppLabel2": "App store de RestComm",
+./languages/es.json	"indexPageTitle": "RestComm Designer",
+./languages/es.json	"indexHeadDescriptorLabel": "RestComm visual service designer",
+./languages/es.json	"webTriggerModalFallbackParamHelp10": "valores que utilizaron el sintax marcador RCML de RestComm. Por ejemplo:",
+./languages/en-US.json	"designerSettingsModalRestcommAPILabel": "RestComm API",
+./languages/en-US.json	"designerSettingsModalCredencialsLabel1": "Credentials for accessing RestComm API. You should provide these if",
+./languages/en-US.json	"formPackageAppLabel2": "RestComm Application Store",
+./languages/en-US.json	"indexPageTitle": "RestComm Designer",
+./languages/en-US.json	"indexHeadDescriptorLabel": "RestComm visual service designer",
+./languages/en-US.json	"webTriggerModalFallbackParamHelp10": "values use the RestComm RCML dial syntax. For example:",</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="step-3-replace-default-rvd-welcome-message"><a class="anchor" href="#step-3-replace-default-rvd-welcome-message"></a>Step 3 - Replace Default RVD Welcome Message</h3>
 <div class="paragraph">
-<p>For examples of how to use the &lt;Dial&gt; verb see below.</p>
+<p>Replace Restcomm in the ProjectState.java file to update default demo welcome message. You might need to do the same for the Telestax brand name.</p>
+</div>
+<div class="paragraph">
+<p>You will need to build the ProjectState.java class to replace the file in the</p>
+</div>
+<div class="paragraph">
+<p>$RESTCOMM_HOME/standalone/deployments/restcomm-rvd.war/WEB-INF/classes/org/restcomm/connect/rvd/model/client directory</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&lt;Response&gt;
-    &lt;Dial&gt;1-444-555-666&lt;/Dial&gt;
-&lt;/Response&gt;</pre>
+<pre class="highlight"><code>./WEB-INF/classes/org/restcomm/connect/rvd/model/client/ProjectState.java
+
+./workspace/APb70c33bf0b6748f09eaec97030af36f3/data/start.step1:1:{"phrase":"Welcome to Telestax RestComm Visual Designer Demo","kind":"say","label":"say","title":"say","name":"step1"}
+./workspace/AP87971d6fa2094658a4955c23bcd66355/data/start.step1:1:{"phrase":"Welcome to Telestax RestComm Visual Designer Demo","kind":"say","label":"say","title":"say","name":"step1"}
+./workspace/AP87971d6fa2094658a4955c23bcd66355/state:1:{"lastStepId":1,"nodes":[{"name":"start","label":"Welcome","kind":"voice","steps":[{"phrase":"Welcome to Telestax RestComm Visual Designer Demo","kind":"say","label":"say","title":"say","name":"step1"}]}],"lastNodeId":0,"header":{"projectKind":"voice","startNodeName":"start","version":"1.6","owner":"administrator@company.com"}}</code></pre>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="step-4-editing-the-logos"><a class="anchor" href="#step-4-editing-the-logos"></a>Step 4 - Editing the Logos</h3>
+<div class="sect3">
+<h4 id="rvd-logos"><a class="anchor" href="#rvd-logos"></a>RVD Logos,</h4>
+<div class="paragraph">
+<p>Replace all image files in the following directory. : <strong>$RESTCOMM_HOME/standalone/deployments/restcomm-rvd.war/images</strong></p>
+</div>
+<div class="paragraph">
+<p>You can right-click on the image files in the link below to check for image size:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&lt;Response&gt;
-    &lt;Dial record="true"&gt;1-444-555-666&lt;/Dial&gt;
-&lt;/Response&gt;</pre>
+<pre class="highlight"><code>https://github.com/RestComm/Restcomm-Connect/tree/162f637161a655bbcf6f2c5dc0346ddbd2d67cbc/restcomm/restcomm.rvd/src/main/webapp/images</code></pre>
 </div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="admin-ui-logos"><a class="anchor" href="#admin-ui-logos"></a>Admin UI Logos</h4>
+<div class="paragraph">
+<p>Replace all images in the Admin UI resources/img directory</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&lt;Response&gt;
-    &lt;Dial callerId="1555666777" record="true"&gt;1-444-555-666&lt;/Dial&gt;
-&lt;/Response&gt;</pre>
+<pre class="highlight"><code>$RESTCOMM_HOME/standalone/deployments/restcomm-management.war/resources/img</code></pre>
 </div>
 </div>
 </div>

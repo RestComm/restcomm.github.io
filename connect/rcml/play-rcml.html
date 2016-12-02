@@ -22759,6 +22759,10 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#play-attributes">Play Attributes</a></li>
 <li><a href="#supported-audio-formats">Supported Audio Formats</a></li>
 <li><a href="#media-server-audio-file-format">Media Server Audio File Format</a></li>
+</ul>
+</li>
+<li><a href="#how-to-convert-a-wav-file-to-the-correct-bitrate">How to Convert a Wav File to the Correct Bitrate</a>
+<ul class="sectlevel2">
 <li><a href="#nesting">Nesting</a></li>
 <li><a href="#basic-example">Basic example</a></li>
 </ul>
@@ -22835,7 +22839,104 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div class="sect2">
 <h3 id="media-server-audio-file-format"><a class="anchor" href="#media-server-audio-file-format"></a>Media Server Audio File Format</h3>
-
+<div class="paragraph">
+<p>Technical Specification and Capacity</p>
+</div>
+<div class="paragraph">
+<p>The Restcomm Media Server is capable of</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Media and Codecs :</p>
+<div class="literalblock">
+<div class="content">
+<pre>G711 (a-Law, u-Law)</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>GSM</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Linear PCM(L16)</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>G729</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>DTMF(RFC 2833, INBAND)</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Media Files :</p>
+<div class="literalblock">
+<div class="content">
+<pre>*Wav (Sample rate of 8000Hz, bit rate of 8, Mono)*</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>GSM</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Signaling and control :</p>
+<div class="literalblock">
+<div class="content">
+<pre>MGCP</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Java Media Control API(JSR-309)</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Capacity : Typical media sessions per server</p>
+<div class="literalblock">
+<div class="content">
+<pre>G.711 , L16 @20ms – 500+ per cpu core</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>GSM @ 20ms – 95 GSM mixed with 380 G.711 , L16 , 475 overall per cpu core</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>G.729 @20ms – 45 GSM mixed with 180 G.711 , L16 , 225 overall per cpu core</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>All benchmark tests where done on Amazon EC2 cloud instances.</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<h1 id="how-to-convert-a-wav-file-to-the-correct-bitrate" class="sect0"><a class="anchor" href="#how-to-convert-a-wav-file-to-the-correct-bitrate"></a>How to Convert a Wav File to the Correct Bitrate</h1>
+<div class="paragraph">
+<p>You can use a software call ffmpeg as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>ffmpeg -i source_file.wav -acodec pcm_s16le -ac 1 -ar 8000 result_file.wav</code></pre>
+</div>
 </div>
 <div class="sect2">
 <h3 id="nesting"><a class="anchor" href="#nesting"></a>Nesting</h3>
@@ -22857,11 +22958,9 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 </div>
 </div>
-</div>
-</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-11-30 13:51:57 WET
+Last updated 2016-12-02 10:38:56 WET
 </div>
 </div>
 <footer>
