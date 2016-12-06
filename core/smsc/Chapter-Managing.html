@@ -26147,6 +26147,102 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_smsc_gateway_min_messageid"><a class="anchor" href="#_smsc_gateway_min_messageid"></a>Minimum MessageId value</h4>
+<div class="sect4">
+<h5 id="_smsc_gateway_min_messageid_cli"><a class="anchor" href="#_smsc_gateway_min_messageid_cli"></a>Using CLI</h5>
+<div class="paragraph">
+<p>You can set the 'Minimum MessageId value' value by issuing the command <code>smsc set minmessageid</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get minmessageid</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set minmessageid
+
+SYNOPSIS
+	smsc set minmessageid &lt;min-MessageId-value&gt;
+
+DESCRIPTION
+	This command is used to set the value of minimum MessageId value
+	that is put into SMPP submit_sm_response.
+	Default value is 1.
+	You need to restart SMSC GW in order to changing will make effect.</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_smsc_gateway_max_messageid_gui"><a class="anchor" href="#_smsc_gateway_max_messageid_gui"></a>Using GUI</h5>
+<div class="olist arabic">
+<div class="title">Procedure: Minimum MessageId value option update by the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Processing' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify routing of delivery receipts by setting the value for the field 'Minimum MessageId value' to a neede value.
+For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_smsc_gateway_max_messageid"><a class="anchor" href="#_smsc_gateway_max_messageid"></a>Maximum MessageId value</h4>
+<div class="sect4">
+<h5 id="_smsc_gateway_max_messageid_cli"><a class="anchor" href="#_smsc_gateway_max_messageid_cli"></a>Using CLI</h5>
+<div class="paragraph">
+<p>You can set the 'Maximum MessageId value' value by issuing the command <code>smsc set maxmessageid</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get maxmessageid</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set maxmessageid
+
+SYNOPSIS
+	smsc set maxmessageid &lt;max-MessageId-value&gt;
+
+DESCRIPTION
+	This command is used to set the value of maximum MessageId value
+	that is put into SMPP submit_sm_response.
+	Default value is 10000000000L.
+	You need to restart SMSC GW in order to changing will make effect.</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_smsc_gateway_max_messageid_gui"><a class="anchor" href="#_smsc_gateway_max_messageid_gui"></a>Using GUI</h5>
+<div class="olist arabic">
+<div class="title">Procedure: Maximum MessageId value option update by the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Processing' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify routing of delivery receipts by setting the value for the field 'Maximum MessageId value' to a neede value.
+For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -29172,7 +29268,7 @@ Hence graph will show historic data from the point the page was loaded.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-05 11:06:12 WET
+Last updated 2016-12-06 10:54:18 WET
 </div>
 </div>
 <footer>
