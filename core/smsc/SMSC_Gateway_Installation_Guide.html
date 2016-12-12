@@ -22771,7 +22771,8 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <ul class="sectlevel2">
 <li><a href="#_downloading_binary">5.1. Binary Download and Installation</a></li>
 <li><a href="#_dir_structure">5.2. Directory Structure</a></li>
-<li><a href="#_source_code">5.3. Setup from Source</a></li>
+<li><a href="#_dialogic_setup">5.3. Extra setup when usage of Dialogic cards</a></li>
+<li><a href="#_source_code">5.4. Setup from Source</a></li>
 </ul>
 </li>
 <li><a href="#_setup_configuration">6. Post Installation Configuration</a>
@@ -23333,12 +23334,38 @@ It can only initiate BIND and act as a SMPP Client. You can also use it to test 
 				|+ restcomm-jss7-simulator
 				|+ restcomm-smpp-load
 				|+ restcomm-smpp-simulator
-				|+ twiddle</pre>
+				|+ twiddle
+		|- template
+				|+ META-INF-dialogic
+				|+ META-INF-m3ua-dialogic</pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_source_code"><a class="anchor" href="#_source_code"></a>5.3. Setup from Source</h3>
+<h3 id="_dialogic_setup"><a class="anchor" href="#_dialogic_setup"></a>5.3. Extra setup when usage of Dialogic cards</h3>
+<div class="paragraph">
+<p>If you use only m3ua stack for communicating via SS7 network we can skip this chapter. If you use legacy dialogic cards with or without m3ua you need to follow actions from this chaper.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure: Extra actions for dialogic card usage</div>
+<ol class="arabic">
+<li>
+<p>Copy gct java lib: <code>gctApi.jar</code> from downloaded dialogic drivers (from folder <code>dpk/JAVA</code>) into the folder <code>jboss-5.1.0.GA/server/default/deploy/restcomm-smsc-gateway/lib</code>.</p>
+</li>
+<li>
+<p>Copy native lib: <code>libgctjni.so</code> from downloaded dialogic drivers (from folder <code>dpk/64</code> or <code>dpk/32</code> depending on JAVA 64 or 32-bit version) into the folder <code>jboss-5.1.0.GA/bin/META-INF/lib/linux2/x64</code> for JAVA 64-bit or <code>jboss-5.1.0.GA/bin/META-INF/lib/linux2/x86</code> for JAVA 32-bit.</p>
+</li>
+<li>
+<p>Copy jboss mbean config files: <code>jboss-beans.xml</code> and <code>jboss-structure.xml</code> files from <code>template/META-INF-dialogic</code> folder (if we use dialogic boards WITHOUT m3ua) or from <code>template/META-INF-m3ua-dialogic</code> folder (if we use dialogic boards WITH m3ua together) to folder <code>jboss-5.1.0.GA/server/default/deploy/restcomm-smsc-gateway/META-INF</code></p>
+</li>
+<li>
+<p>In the copied <code>jboss-beans.xml</code> file you need to find a bean with DialogicMtp3UserPart class and update properties <code>sourceModuleId</code> and <code>destinationModuleId</code> with modules ids that are configured in your dialogc board.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_source_code"><a class="anchor" href="#_source_code"></a>5.4. Setup from Source</h3>
 <div class="paragraph">
 <p>Restcomm SMSC is an open source project and you have the freedom to build from source.
 Building from source means you can stay on top with the latest features.
@@ -23362,7 +23389,7 @@ In addition you must have the following tools installed.</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_source_building"><a class="anchor" href="#_source_building"></a>5.3.1. Release Source Code Building</h4>
+<h4 id="_source_building"><a class="anchor" href="#_source_building"></a>5.4.1. Release Source Code Building</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -23395,7 +23422,7 @@ You must ensure that <code>JAVA_HOME</code> environment variable is set properly
 </div>
 </div>
 <div class="sect3">
-<h4 id="_trunk_source_building"><a class="anchor" href="#_trunk_source_building"></a>5.3.2. Development Trunk Source Building</h4>
+<h4 id="_trunk_source_building"><a class="anchor" href="#_trunk_source_building"></a>5.4.2. Development Trunk Source Building</h4>
 <div class="paragraph">
 <p>Similar process as for <a href="#_source_building">Release Source Code Building</a>, the only change is don&#8217;t switch to specific tag.</p>
 </div>
@@ -23817,7 +23844,7 @@ As another hint, this topmost directory contains a <em class="path">bin</em> sub
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-09 10:52:38 WET
+Last updated 2016-12-12 10:52:29 WET
 </div>
 </div>
 <footer>
