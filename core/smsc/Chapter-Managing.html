@@ -23653,6 +23653,66 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_vpprolong"><a class="anchor" href="#_vpprolong"></a>Validity period scheduling prolongation</h4>
+<div class="sect4">
+<h5 id="_vpprolong_cli"><a class="anchor" href="#_vpprolong_cli"></a>Using CLI</h5>
+<div class="paragraph">
+<p>You can set the 'Validity period scheduling prolongation (sec)' value by issuing the command <code>smsc set vpprolong</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get vpprolong</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set vpprolong
+
+SYNOPSIS
+	smsc set vpprolong &lt;vpprolong&gt;
+
+DESCRIPTION
+	This command is used to set the value of Validity period scheduling
+	prolongation in seconds.
+	Conditions when a message with validity period will be scheduled after delivery
+	failure:
+	a) validity period end time &gt;= the time for next schedule time
+	or
+	b) validity period end time &gt;= now + Validity period scheduling prolongation
+	By changing of "Validity period scheduling prolongation" you can specify will
+	a message be scheduled after validity period end time or not.
+	Setting this parameter to 0 lead that all messages will be scheduled.
+	Setting this parameter to a very big value lead that no message will be scheduled.
+	The general rule is - you can allow messages to be scheduled for after validity
+	period end time when scheduling is for for after long time from now.
+	Default value: 120 (seconds).
+
+EXAMPLES
+	smsc set vpprolong 120</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_vpprolong_gui"><a class="anchor" href="#_vpprolong_gui"></a>Using GUI</h5>
+<div class="olist arabic">
+<div class="title">Procedure: Set Validity period scheduling prolongation using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Properties' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify the Validity period scheduling prolongation by entering the value in the text field 'Validity period scheduling prolongation (sec)'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_smsc_ss7_settings"><a class="anchor" href="#_smsc_ss7_settings"></a>SS7 Settings</h3>
@@ -25923,6 +25983,159 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 <div class="sect2">
 <h3 id="_smsc_gateway_server_processing"><a class="anchor" href="#_smsc_gateway_server_processing"></a>Processing</h3>
+<div class="sect3">
+<h4 id="_modefaultmessagingmode"><a class="anchor" href="#_modefaultmessagingmode"></a>Messaging mode for MO messages</h4>
+<div class="sect4">
+<h5 id="_modefaultmessagingmode_cli"><a class="anchor" href="#_modefaultmessagingmode_cli"></a>Using CLI</h5>
+<div class="paragraph">
+<p>You can set the messaging mode for MO originated messages value by issuing the command <code>smsc set modefaultmessagingmode</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get modefaultmessagingmode</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set modefaultmessagingmode
+
+SYNOPSIS
+	smsc set modefaultmessagingmode &lt;messaging mode value&gt;
+
+DESCRIPTION
+	This command is used to set a value for default messaging mode
+	value for mobile originated (MO) messages.
+	Possible values: 0-default SMSC mode, 1-datagram, 2-transactional,
+	3-storeAndForward.
+	Default value is 3.
+
+EXAMPLES
+	smsc set modefaultmessagingmode 3</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_modefaultmessagingmode_gui"><a class="anchor" href="#_modefaultmessagingmode_gui"></a>Using GUI</h5>
+<div class="olist arabic">
+<div class="title">Procedure: Set the messaging mode for MO originated messages option using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Processing' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify the messaging mode for MO originated messages option by selecting an appropriate value in the field "Default messaging mode - MO messages". For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_hrdefaultmessagingmode"><a class="anchor" href="#_hrdefaultmessagingmode"></a>Messaging mode for HR messages</h4>
+<div class="sect4">
+<h5 id="_hrdefaultmessagingmode_cli"><a class="anchor" href="#_hrdefaultmessagingmode_cli"></a>Using CLI</h5>
+<div class="paragraph">
+<p>You can set the messaging mode for HR originated messages value by issuing the command <code>smsc set hrdefaultmessagingmode</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get hrdefaultmessagingmode</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set hrdefaultmessagingmode
+
+SYNOPSIS
+	smsc set hrdefaultmessagingmode &lt;messaging mode value&gt;
+
+DESCRIPTION
+	This command is used to set a value for default messaging mode
+	value for messages that came by SS7 Home Routing procedure.
+	Possible values: 0-default SMSC mode, 1-datagram, 2-transactional
+	(this means HR transparent mode), 3-storeAndForward.
+	Default value is 3.
+
+EXAMPLES
+	smsc set hrdefaultmessagingmode 3</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_hrdefaultmessagingmode_gui"><a class="anchor" href="#_hrdefaultmessagingmode_gui"></a>Using GUI</h5>
+<div class="olist arabic">
+<div class="title">Procedure: Set the messaging mode for HR originated messages option using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Processing' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify the messaging mode for HR originated messages option by selecting an appropriate value in the field "Default messaging mode - HR messages". For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_sipdefaultmessagingmode"><a class="anchor" href="#_sipdefaultmessagingmode"></a>Messaging mode for SIP messages</h4>
+<div class="sect4">
+<h5 id="_sipdefaultmessagingmode_cli"><a class="anchor" href="#_sipdefaultmessagingmode_cli"></a>Using CLI</h5>
+<div class="paragraph">
+<p>You can set the messaging mode for SIP originated messages value by issuing the command <code>smsc set sipdefaultmessagingmode</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get sipdefaultmessagingmode</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set sipdefaultmessagingmode
+
+SYNOPSIS
+	smsc set sipdefaultmessagingmode &lt;messaging mode value&gt;
+
+DESCRIPTION
+	This command is used to set a value for default messaging mode
+	value for messages from a SIP connector.
+	Possible values: 0-default SMSC mode, 1-datagram, 2-transactional,
+	3-storeAndForward. Transactional mode mode is not supported now.
+	Default value is 3.
+
+EXAMPLES
+	smsc set sipdefaultmessagingmode 1</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_sipdefaultmessagingmode_gui"><a class="anchor" href="#_sipdefaultmessagingmode_gui"></a>Using GUI</h5>
+<div class="olist arabic">
+<div class="title">Procedure: Set the messaging mode for SIP originated messages option using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Processing' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify the messaging mode for SIP originated messages option by selecting an appropriate value in the field "Default messaging mode - SIP messages". For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
 <div class="sect3">
 <h4 id="smsc-pausing"><a class="anchor" href="#smsc-pausing"></a>SMSC pausing</h4>
 <div class="sect4">
@@ -28869,12 +29082,12 @@ SYNOPSIS
 	&lt;delivery processing type: SS7_SRI | SS7_MT | SMPP | SIP | -1&gt; errorcode &lt;internal SMSC
 	GW delivery error code value&gt; newnetworkid &lt;new networkId value&gt; newdestton &lt;new
 	destination type of number&gt; newdestnpi &lt;new destination numbering plan indicator&gt;
-	adddestdigprefix &lt;prefix value&gt; newsourceton &lt;new source type of number&gt; newsourcenpi
+	adddestdigprefix &lt;prefix value&gt; addsourcedigprefix &lt;prefix value&gt;
+	newsourceton &lt;new source type of number&gt; newsourcenpi
 	&lt;new source numbering plan indicator&gt; newsourceaddr &lt;new source address value&gt; hrbypass
 	&lt;false | true&gt; dropaftersri &lt;false | true&gt; newnetworkidaftersri &lt;networkId value&gt;
 	newnetworkidafterpermfail &lt;networkId value&gt; dropaftertempfail &lt;false | true&gt;
 	newnetworkidaftertempfail &lt;networkId value&gt;
-
 
 DESCRIPTION
 
@@ -28908,6 +29121,7 @@ PARAMETERS
 	newdestton - an optional parameter.
 	newdestnpi - an optional parameter.
 	adddestdigprefix - an optional parameter.
+	addsourcedigprefix - an optional parameter.
 	newsourceton - an optional parameter.
 	newsourcenpi - an optional parameter.
 	newsourceaddr - an optional parameter.
@@ -28983,8 +29197,9 @@ SYNOPSIS
 	&lt;delivery processing type: SS7_SRI | SS7_MT | SMPP | SIP | -1&gt; errorcode &lt;internal SMSC
 	GW delivery error code value&gt; newnetworkid &lt;new networkId value&gt; newdestton &lt;new
 	destination type of number&gt; newdestnpi &lt;new destination numbering plan indicator&gt;
-	adddestdigprefix &lt;prefix value&gt; newsourceton &lt;new source type of number&gt; newsourcenpi
-	&lt;new source numbering plan indicator&gt; newsourceaddr &lt;new source address value&gt; hrbypass
+	adddestdigprefix &lt;prefix value&gt; addsourcedigprefix &lt;prefix value&gt;
+	newsourceton &lt;new source type of number&gt; newsourcenpi &lt;new source numbering plan
+	indicator&gt; newsourceaddr &lt;new source address value&gt; hrbypass
 	&lt;false | true&gt; dropaftersri &lt;false | true&gt; newnetworkidaftersri &lt;networkId value&gt;
 	newnetworkidafterpermfail &lt;networkId value&gt; dropaftertempfail &lt;false | true&gt;
 	newnetworkidaftertempfail &lt;networkId value&gt;
@@ -29019,6 +29234,7 @@ PARAMETERS
 	newdestton - an optional parameter.
 	newdestnpi - an optional parameter.
 	adddestdigprefix - an optional parameter.
+	addsourcedigprefix - an optional parameter.
 	newsourceton - an optional parameter.
 	newsourcenpi - an optional parameter.
 	newsourceaddr - an optional parameter.
@@ -29268,7 +29484,7 @@ Hence graph will show historic data from the point the page was loaded.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-21 10:53:22 WET
+Last updated 2016-12-27 10:56:26 WET
 </div>
 </div>
 <footer>
