@@ -22778,6 +22778,12 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </ul>
 </li>
 <li><a href="#sms-home-routing">SMS Home Routing</a></li>
+<li><a href="#_smpp_interface_description">SMPP interface description</a>
+<ul class="sectlevel2">
+<li><a href="#_smpp_interface_encoding">Encoding at SMPP interface</a></li>
+<li><a href="#_smpp_dlivery_receipt_transit">Delivery receipts transit at SMPP interface</a></li>
+</ul>
+</li>
 <li><a href="#_http_interface_description">HTTP interface description</a>
 <ul class="sectlevel2">
 <li><a href="#_http_interface_description_send_sms">Send SMS</a></li>
@@ -24657,6 +24663,81 @@ to the messages prior to delivery.</p>
 You need to configure SMSC GW before you can use SMS Home Routing.
 For more details refer to <a href="#_smsc_gateway_server_hr">[_smsc_gateway_server_hr]</a>.</p>
 </div>
+<div class="paragraph">
+<p>There are two possible modes of home routing functionality:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>non-transparent mode - default mode when SMSC GW returns with successfull responses to incoming MT requests (without waiting till a message is delivered to a destination).</p>
+</li>
+<li>
+<p>transparent mode - SMSC GW waits (after a MT request) till a message is delivered to a destination and responds to the MT request with a result of message delivering (success / failure). To activate this mode you need to configure the option <a href="#_hrdefaultmessagingmode">[_hrdefaultmessagingmode]</a> to "Transactional".</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_smpp_interface_description"><a class="anchor" href="#_smpp_interface_description"></a>SMPP interface description</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_smpp_interface_encoding"><a class="anchor" href="#_smpp_interface_encoding"></a>Encoding at SMPP interface</h3>
+<div class="paragraph">
+<p>When message sending and recieveing via SMPP interface of SMSC GW we need to care of message body encoding and assigning of a parameter DCS (data coding schema).</p>
+</div>
+<div class="paragraph">
+<p>DCS parameter means the encoding that will be used when a message will be transferred at SS7 part. The most common parameteres for DCS are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>0 - GSM7 encoding (english characters and a little set of extra characters are supported). 7-bit encoding is used at SS7 network message transferring</p>
+</li>
+<li>
+<p>4 - GSM8 encoding (used mostly for binary messages). No recoding is applied. Binary messages are just transferred to the destination without any changes.</p>
+</li>
+<li>
+<p>8 - UCS2 encoding (all characters are supported). 2-bytes encoding is used at SS7 network message transferring.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For DCS 0 (GSM7 encdoing) and 8 (UCS2 encoding) SMSC GW decodes messages when receiving from SMPP connector and encode messages before sending them into SMPP connector. For this task it is important which data coding schema will be used for messages decoding / encoding.
+SMSC GW has two configurable parameters for decoding / encodoing, one for GSM 7 ancoding and another for UCS2 encoding (SMPP Encoding for GSM7 / SMPP Encoding for UCS2). See following chapter for configuring details: <a href="#_smpp_encoding_for_ucs2">[_smpp_encoding_for_ucs2]</a>. A user schould configure these parameters before of SMSC GW usage depending on which encoding are used by user&#8217;s SMPP applications for message body encoding.</p>
+</div>
+<div class="paragraph">
+<p>One of indication that says that message encoding parameters are wrongly configured is messages in server.log like <code>Message length in bytes is too big for solid message: 268&gt;134</code>. This may mean that SMPP application sends messages to SMSC GW in UCS2 encoding and SMSC GW decodes them in UTF8 encodoing and a message bode becomes too big length after it.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_smpp_dlivery_receipt_transit"><a class="anchor" href="#_smpp_dlivery_receipt_transit"></a>Delivery receipts transit at SMPP interface</h3>
+<div class="paragraph">
+<p>SMSC GW can generate delivery receipts after a message is delivered / failed to some destination. For this a SMPP application must set suitable values in the <code>registered_delivery</code> field. After a message is delivered / failed to some destionation, then SMSC GW will generate a delivery receipt. For simple routing such receipts back to an original ESME we can just assign to each ESME a separate networkId value and turn on the following option: <a href="#_smsc_gateway_server_routing_dlv">[_smsc_gateway_server_routing_dlv]</a>.</p>
+</div>
+<div class="paragraph">
+<p>But sometimes SMSC GW plays a role of a transit node and SMSC GW customers interest in delivery receipts from upper  SMSC GW nodes (nodes that deliver messages directly to customers) an not from a transit SMSC GW itself. Restcomm SMSC GW can play such role and this case is more complicated. SMSC GW must accept delivery receipts from upper SMSC GW nodes, replace messageId values in these receipts by a messageId which SMSC GW used in submit_sm_response to a lower node that has sumbitted an original message and sends an updated receipt to an original ESME. We call such process as a delivery receipt transit.</p>
+</div>
+<div class="paragraph">
+<p>To achieve this functionality we must make following configuring:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Turn on the option <a href="#_receiptsdisabling">[_receiptsdisabling]</a> (by this we prevent SMSC GW from generating of its own delivery receipts)</p>
+</li>
+<li>
+<p>Turn on the option <a href="#_incomereceiptsprocessing">[_incomereceiptsprocessing]</a>. This will force SMSC GW to store extra info for each received and resent original message into extra tables of cassandra database and then when a delivery receipt comes from an upper node then SMSC GW will replace messageID in the receipt to the proper messageId that was sent to the originator of submit_sm (to lower SMSC GW).</p>
+</li>
+<li>
+<p>A sent message and a received delivery receipt must be at the same ESME cluster.</p>
+</li>
+<li>
+<p>Then we have to force that the updated delivery receipt will be routed back to the original ESME. <a href="#_smsc_gateway_server_routing_dlv">[_smsc_gateway_server_routing_dlv]</a> will not help us in this case. There may be several approaches for it. The recommended one - put each ESME at the separate networkID area and then add mproc rules for rerouting that will use the parameter "receiptnetworkidmask" (check the chapter <a href="#_mproc_rules_default">Default message processing rules implementation</a>). For example a mproc rule <code>smsc mproc add mproc 1 receiptnetworkidmask 1 newnetworkid 1</code> will be applied only for delivery receipts and only for that delivery receipt an original message for which has come from netoworkId 1 area. And in this case the delivery receipt will be routed into networokId area 1.</p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -25126,7 +25207,7 @@ The details of the format and the possible values for the fields recorded in the
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-27 10:56:26 WET
+Last updated 2016-12-30 20:34:10 WET
 </div>
 </div>
 <footer>
