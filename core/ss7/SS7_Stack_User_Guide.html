@@ -22800,6 +22800,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#_running_shell">4.4. Running the Shell`Shell`</a></li>
 <li><a href="#_using_gui">4.5. Running the Graphical User Interface</a></li>
 <li><a href="#_running_ss7_simulator">4.6. Running Restcomm jSS7  Simulator</a></li>
+<li><a href="#_running_ss7_cards">4.7. Running with SS7 cards</a></li>
 </ul>
 </li>
 <li><a href="#_configuring_jss7">5. Configuring jboss-beans.xml</a>
@@ -24736,6 +24737,109 @@ In the URL field of the browser, type <span class="menuseq"><span class="menu"><
 <p>The Results of the tests can be found at the console (in the server) or in the log file (file name is "a1.log" where "a1" is the name of the Simulator instance).</p>
 </li>
 </ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_running_ss7_cards"><a class="anchor" href="#_running_ss7_cards"></a>4.7. Running with SS7 cards</h3>
+<div class="paragraph">
+<p>Apart from the simulator a Restcomm USSD Demo SLEE Application has been tested with Dialogic&#8217;s MAP Test Utility (MTU) tool in a process that is described below.
+<br>
+It is assumed that you have two Servers (each fitted with Dialogic card) connected to each other via cross cable and the OS is Linux-based. To understand how to set-up the environment for Dialogic card please download respective Programmers Manual. This test was carried out on <a href="https://www.dialogic.com/~/media/manuals/ss7/cd/ProductSpecific/SPCI-CPM8/ProgrammersManual/SPCI-PM.pdf">Dialogic SPCI2S cards</a>. It is recommened to read the <a href="http://resource.dialogic.com/telecom/support/ss7/cd/GenericInfo/GeneralDocumentation/U30SSS03-MTU-MTR-UG.pdf">MTU/MTR guide</a> before proceeding further.</p>
+</div>
+<div class="sect3">
+<h4 id="mtu-setup"><a class="anchor" href="#mtu-setup"></a>4.7.1. MTU setup</h4>
+<div class="paragraph">
+<p>Please download the <a href="http://www.dialogic.com/support/helpweb/helpweb.aspx/1580/ussd_map_sample_code/Signaling_SS7">modified MTU code for USSD</a> and build it to create the executable.</p>
+</div>
+<div class="paragraph">
+<p>Rename <a href="http://www.dialogic.com/den/cfs-file.ashx/__key/CommunityServer.Discussions.Components.Files/10/0654.config.txt">this file</a> to config.txt and <a href="http://www.dialogic.com/den/cfs-file.ashx/__key/CommunityServer.Discussions.Components.Files/10/0121.system.txt">this file</a> to system.txt and place them at /opt/dpklnx/ before loading the driver and activating links. Its is assumed that MTP2/MTP3 is loaded onboard and Dialogic SCCP, TCAP, MAP and MTU is loaded on host system.
+<br>
+Command at /opt/dpklnx/ to load drivers</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">/opt/dpklnx# ./gctload -d</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Command at /opt/dpklnx/ to activate link</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">/opt/dpklnx# ./mtpsl act 0 0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once the link is activated, don&#8217;t forget to execute the mtucfg.ms7 script. This script registers the MTU with Dialogic SCCP stack.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">./s7_play -f/home/abhayani/workarea/mobicents/dialogic/upd_tar_FILES/RUN/MTU/SCRIPTS/mtucfg.ms7</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="ussd-application-setup"><a class="anchor" href="#ussd-application-setup"></a>4.7.2. USSD Application Setup</h4>
+<div class="paragraph">
+<p>Download the configuration and system files for Restcomm USSD from <a href="https://developer.jboss.org/wiki/USSDMAPTestingWithDialogicBoards">here</a> and rename them to config.txt and system.txt respectively and place it to corect folder (/opt/dpklnx/ for linux) before loading the driver and activating links. Use same commands as shown above to load drivers and activate link. It is assumed here that MTP2/MTP3 is loaded onboard. The Mobicents Dialogic native driver (libmobicents-dialogic-linux.so) communicates with MTP3 onboard.
+<br>
+Once link is active start the Restcomm JAIN SLEE (JBoss Application) Server. Remember before starting application server, place the native file in correct folder (for example incase of 32bit linux mobicents-jainslee-2.4.0.CR1-jboss-5.1.0.GA/jboss-5.1.0.GA/bin/META-INF/lib/linux2/x86/libmobicents-dialogic-linux.so) or the java.library.path should be set to point the directory containing native component.
+<br>
+Deploy the Restcomm SS7 Service as explained in Mobicents SS7 Docs.
+Deploy the Restcomm MAP RA as explained in Mobicents JSLEE Docs. Use the following as map-default-ra.properties.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">sccp.service=java:/mobicents/ss7/sccp
+sccp.pointcode=0
+sccp.ssn=8</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Deploy your demo
+<br>
+One last step before the application can be tested is configuring the Linkset and SCCP rule. Fire the CLI and connect to Restcomm SS7 Service as explained in Restcomm SS7 Doc. Following configuration is to be done only once and it survives system restarts.
+<br>
+Execute bellow command to register routing rule based on DPC + SSN</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">mobicents(127.0.0.1:3435)&gt;sccprule create Rule4 dpc 1 ssn 8 mtpinfo name name1 opc 2 apc 1 sls 16</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Execute bellow command to register dialogic linkset</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">mobicents(127.0.0.1:3435)&gt;linkset create dialogic opc 2 apc 1 ni 3 srcmod 61 destmod 34 linkset1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Execute bellow command to activate linkset</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">mobicents(10.65.208.215)&gt;linkset activate linkset1</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="test"><a class="anchor" href="#test"></a>4.7.3. Test</h4>
+<div class="paragraph">
+<p>Execute the following MTU command from MTU machine</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">ussdtest -d6 -g43010008 -a43020008 -i987654321 -s"1" -U*88#</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see the [INFO] messages in the Mobicents JAIN SLEE Server console about received USSD short codes and response sent.</p>
+</div>
+<div class="paragraph">
+<p>The /opt/dpklnx in both machines will have mtp.pcap and mtp.txt showing the USSD messages exchanged.</p>
 </div>
 </div>
 </div>
@@ -37107,7 +37211,7 @@ If there are several dialogs with the same path they will be present only once i
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-31 14:42:50 WET
+Last updated 2016-12-31 15:39:52 WET
 </div>
 </div>
 <footer>
