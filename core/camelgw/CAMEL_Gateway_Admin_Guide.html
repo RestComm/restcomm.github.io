@@ -23247,8 +23247,7 @@ The only restricting factor is memory + CPU capacity of the host servers, third-
 </dd>
 <dt class="hdlist1">HTTP Transfer Mechanism</dt>
 <dd>
-<p>The Restcomm USSD Gateway makes use of HTTP protocol between the gateway and the third-party applications (or Value Added Service Modules). Restcomm USSD Gateway receives the USSD request from the subscriber&#8217;s handset/device via the GSM Signaling network and then translates these requests to HTTP depending on the rules configured in the Gateway.
-These rules can direct the subscriber to corresponding Value Added Service (VAS) or third-party application. The HTTP callback mechanism allows the third-party application to operate independently of the underlying Operating System, Programming Language and Framework.
+<p>The Restcomm CAMEL Gateway makes use of HTTP protocol between the gateway and the third-party applications. Restcomm CAMEL Gateway receives CAMEL request from the GSM Signaling network and then translates these requests to HTTP.
 The third-party application can be either of the following technologies on any Operating System:</p>
 <div class="ulist">
 <ul>
@@ -23425,16 +23424,12 @@ If you would like to get more details about setting up Multi tenancy at jSS7, pl
 <li>
 <p>You must have Restcomm CAMEL Gateway installed as explained in the Installation Guide.</p>
 </li>
-<li>
-<p>If you are using the SS7 board on your server, you must ensure that the <code>java.library.path</code> variable is set to point to the directory containing  the native component.
-Alternatively you can copy it to the JBoss native library path manually.</p>
-</li>
 </ul>
 </div>
 </li>
 <li>
 <p>In order to start the Gateway, you must start the JBoss Application Server.
-Execute the <em class="path">run.sh</em> (Unix) or  <em class="path">run.bat</em> (Microsoft Windows) startup script in the <em class="path">restcomm-camelgw-6.1.1.GA/jboss-5.1.0.GA/bin</em> folder (on Unix or Windows). Note that this will start the server in the default profile.
+Execute the <em class="path">run.sh</em> (Unix) or  <em class="path">run.bat</em> (Microsoft Windows) startup script in the <em class="path">restcomm-camel-7.0.0-SNAPSHOT/jboss-5.1.0.GA/bin</em> folder (on Unix or Windows). Note that this will start the server in the default profile.
 The "default" profile is a clean profile, which entails configuring the entire SS7 Stack and CAMEL Gateway.</p>
 </li>
 <li>
@@ -23448,7 +23443,7 @@ The "default" profile is a clean profile, which entails configuring the entire S
 03:09:15,982 INFO  [TCAPStackImpl] (main) Starting ...org.mobicents.protocols.ss7.tcap.TCAPProviderImpl@3e3fc7f9
 03:09:15,982 INFO  [TCAPProviderImpl] (main) Starting TCAP Provider
 03:09:15,982 INFO  [TCAPProviderImpl] (main) Registered SCCP listener with address 146
-03:09:16,215 INFO  [SS7Service] (main)  [[[[[[[[[ Restcomm Camle 3.0.0-SNAPSHOT service started ]]]]]]]]]
+03:09:16,215 INFO  [SS7Service] (main)  [[[[[[[[[ Restcomm Camel 3.0.0-SNAPSHOT service started ]]]]]]]]]
 03:09:16,222 INFO  [CamelPropertiesManagement] (main) Loading CAMEL Properties from /home/abhayani/workarea/mobicents/telestax/binary/CAMEL/restcomm-slee-6.1.1.GA/jboss-5.1.0.GA/server/default/data/CamelManagement_camelproperties.xml
 03:09:16,223 INFO  [CamelManagement] (main) Started CamelGatewayManagement
 03:09:16,231 INFO  [ShellServer] (main) Starting SS7 management shell environment
@@ -23481,7 +23476,7 @@ The "default" profile is a clean profile, which entails configuring the entire S
 </div>
 </li>
 <li>
-<p>You need to use the Shell Client to connect to {this-application-dirname} {this-version}  and configure the SS7 Stack and CAMEL Gateway routing rule.</p>
+<p>You need to use the Shell Client to connect to Restcomm CAMEL Gateway  and configure the SS7 Stack and CAMEL Gateway routing rule.</p>
 </li>
 </ol>
 </div>
@@ -23492,7 +23487,7 @@ The "default" profile is a clean profile, which entails configuring the entire S
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If you are starting {this-application-dirname} {this-version} for the first time, you must configure SS7.
+If you are starting Restcomm CAMEL Gateway for the first time, you must configure SS7.
 </td>
 </tr>
 </table>
@@ -23507,7 +23502,7 @@ The next chapter will provide more details about configuring SS7 and the CAMEL G
 <ol class="arabic">
 <li>
 <p>To stop the Restcomm CAMEL Gateway , you must shut down the JBoss Application Server.
-To shut down the server(s) you must execute the <code>shutdown.sh -s</code> (Unix) or  <code>shutdown.bat -s</code> (Microsoft Windows) script in the <em class="path">restcomm-camelgw-6.1.1.GA/jboss-5.1.0.GA/bin</em>					directory (on Unix or Windows).</p>
+To shut down the server(s) you must execute the <code>shutdown.sh -s</code> (Unix) or  <code>shutdown.bat -s</code> (Microsoft Windows) script in the <em class="path">restcomm-camel-7.0.0-SNAPSHOT/jboss-5.1.0.GA/bin</em> directory (on Unix or Windows).</p>
 </li>
 <li>
 <p>If the server stopped properly, you will see the following three lines as the  last output in the Unix terminal or Command Prompt:</p>
@@ -23538,7 +23533,7 @@ Starting the Gateway with the "simulator" profile is  similar to the steps expla
 <h3 id="_running_shell"><a class="anchor" href="#_running_shell"></a>4.3. Running the Shell</h3>
 <div class="paragraph">
 <p>Before you execute commands to configure the Gateway, you must start the Shell client and connect to the managed instance.
-The shell terminal can be started by issuing the following command from <em class="path">restcomm-camelgw-6.1.1.GA/jboss-5.1.0.GA/bin</em> directory:</p>
+The shell terminal can be started by issuing the following command from <em class="path">restcomm-camel-7.0.0-SNAPSHOT/jboss-5.1.0.GA/bin</em> directory:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -24083,7 +24078,7 @@ Possible values are.</p>
 </dd>
 <dt class="hdlist1">networkId</dt>
 <dd>
-<p><code>netwrokId</code> is used for multi-tenancy support. &amp;THIS.PLATFORM; CAMEL Gateway  can connect to multiple operators each differentiated by a <code>networkId</code>.
+<p><code>netwrokId</code> is used for multi-tenancy support. Restcomm CAMEL Gateway  can connect to multiple operators each differentiated by a <code>networkId</code>.
 The default value is 0.
 When a message reaches the Gateway, the SCCP Stack assigns a networkId.
 (For more details, please refer to the jSS7 Stack User Guide). The Gateway can route messages to different applications depending on the configured networkId routing rule.</p>
@@ -24260,7 +24255,7 @@ In such cases, the third party application should inform the Gateway that it wil
 </div>
 </div>
 <div class="sect4">
-<h5 id="_continue_request"><a class="anchor" href="#_continue_request"></a>HTTP payload for CONTINUE_REQUEST</h5>
+<h5 id="_continue_request"><a class="anchor" href="#_continue_request"></a>6.1.2.1. HTTP payload for CONTINUE_REQUEST</h5>
 <div class="paragraph">
 <p>In order to send a <code>CONTINUE_REQUEST</code> to the Gateway, the third party Application must provide the below XML Payload.</p>
 </div>
@@ -24276,7 +24271,7 @@ In such cases, the third party application should inform the Gateway that it wil
 </div>
 </div>
 <div class="sect4">
-<h5 id="_connect_request"><a class="anchor" href="#_connect_request"></a>HTTP payload for CONNECT_REQUEST</h5>
+<h5 id="_connect_request"><a class="anchor" href="#_connect_request"></a>6.1.2.2. HTTP payload for CONNECT_REQUEST</h5>
 <div class="paragraph">
 <p>In order to send a <code>CONNECT_REQUEST</code> to the Gateway, the third party Application must provide the below XML Payload.</p>
 </div>
@@ -24365,7 +24360,7 @@ In such cases, the third party application should inform the Gateway that it wil
 </div>
 </div>
 <div class="sect4">
-<h5 id="_release_call_request"><a class="anchor" href="#_release_call_request"></a>HTTP payload for RELEASE_CALL_REQUEST</h5>
+<h5 id="_release_call_request"><a class="anchor" href="#_release_call_request"></a>6.1.2.3. HTTP payload for RELEASE_CALL_REQUEST</h5>
 <div class="paragraph">
 <p>In order to send a <code>RELEASE_CALL_REQUEST</code> to the Gateway, the third party Application must provide the below XML Payload.</p>
 </div>
@@ -24385,7 +24380,7 @@ In such cases, the third party application should inform the Gateway that it wil
 </div>
 </div>
 <div class="sect4">
-<h5 id="_request_report_bcsm_event_request"><a class="anchor" href="#_request_report_bcsm_event_request"></a>HTTP payload for REQUEST_REPORT_BCSM_EVENT_REQUEST</h5>
+<h5 id="_request_report_bcsm_event_request"><a class="anchor" href="#_request_report_bcsm_event_request"></a>6.1.2.4. HTTP payload for REQUEST_REPORT_BCSM_EVENT_REQUEST</h5>
 <div class="paragraph">
 <p>In order to send a <code>REQUEST_REPORT_BCSM_EVENT_REQUEST</code> to the Gateway, the third party Application must provide the below XML Payload.</p>
 </div>
@@ -24438,7 +24433,7 @@ In such cases, the third party application should inform the Gateway that it wil
 </div>
 </div>
 <div class="sect4">
-<h5 id="_apply_charging_request"><a class="anchor" href="#_apply_charging_request"></a>HTTP payload for APPLY_CHARGING_REQUEST</h5>
+<h5 id="_apply_charging_request"><a class="anchor" href="#_apply_charging_request"></a>6.1.2.5. HTTP payload for APPLY_CHARGING_REQUEST</h5>
 <div class="paragraph">
 <p>In order to send a <code>APPLY_CHARGING_REQUEST</code> to the Gateway, the third party Application must provide the below XML Payload.</p>
 </div>
@@ -24464,7 +24459,7 @@ In such cases, the third party application should inform the Gateway that it wil
 </div>
 </div>
 <div class="sect4">
-<h5 id="_cancel_request"><a class="anchor" href="#_cancel_request"></a>HTTP payload for CANCEL_REQUEST</h5>
+<h5 id="_cancel_request"><a class="anchor" href="#_cancel_request"></a>6.1.2.6. HTTP payload for CANCEL_REQUEST</h5>
 <div class="paragraph">
 <p>In order to send a <code>CANCEL_REQUEST</code> to the Gateway, the third party Application must provide the below XML Payload.
 All 3 possible CANCEL_REQUEST formats are presented below.</p>
@@ -24557,7 +24552,7 @@ All 3 possible CANCEL_REQUEST formats are presented below.</p>
 <p>Templates for CAP primitives that can come from a SS7 peer are covered in the subsequent sections of this document.</p>
 </div>
 <div class="sect4">
-<h5 id="_initial_dp_request_from_peer"><a class="anchor" href="#_initial_dp_request_from_peer"></a>Payload for INITIAL_DP_REQUEST Invoke from a SS7 peer</h5>
+<h5 id="_initial_dp_request_from_peer"><a class="anchor" href="#_initial_dp_request_from_peer"></a>6.1.3.1. Payload for INITIAL_DP_REQUEST Invoke from a SS7 peer</h5>
 <div class="paragraph">
 <p>INITIAL_DP_REQUEST is a complicated operation.
 The templates below describe 3 possible payloads for this operation.</p>
@@ -24698,7 +24693,7 @@ The templates below describe 3 possible payloads for this operation.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_event_report_bcsm_request_from_peer"><a class="anchor" href="#_event_report_bcsm_request_from_peer"></a>Payload for EVENT_REPORT_BCSM_REQUEST Invoke from a SS7 peer</h5>
+<h5 id="_event_report_bcsm_request_from_peer"><a class="anchor" href="#_event_report_bcsm_request_from_peer"></a>6.1.3.2. Payload for EVENT_REPORT_BCSM_REQUEST Invoke from a SS7 peer</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-xml" data-lang="xml">	&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
@@ -24725,7 +24720,7 @@ The templates below describe 3 possible payloads for this operation.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_apply_charging_report_request_from_peer"><a class="anchor" href="#_apply_charging_report_request_from_peer"></a>Payload for APPLY_CHARGING_REPORT_REQUEST Invoke from a SS7 peer</h5>
+<h5 id="_apply_charging_report_request_from_peer"><a class="anchor" href="#_apply_charging_report_request_from_peer"></a>6.1.3.3. Payload for APPLY_CHARGING_REPORT_REQUEST Invoke from a SS7 peer</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-xml" data-lang="xml">	&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
@@ -24746,7 +24741,7 @@ The templates below describe 3 possible payloads for this operation.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_prompt_and_collect_user_information_response_from_peer"><a class="anchor" href="#_prompt_and_collect_user_information_response_from_peer"></a>Payload for PROMPT_AND_COLLECT_USER_INFORMATION_RESPONSE ReturnResultLast from a SS7 peer</h5>
+<h5 id="_prompt_and_collect_user_information_response_from_peer"><a class="anchor" href="#_prompt_and_collect_user_information_response_from_peer"></a>6.1.3.4. Payload for PROMPT_AND_COLLECT_USER_INFORMATION_RESPONSE ReturnResultLast from a SS7 peer</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-xml" data-lang="xml">	&lt;promptAndCollectUserInformation_Response invokeId="21"&gt;
@@ -24759,7 +24754,7 @@ The templates below describe 3 possible payloads for this operation.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_no_activity_call"><a class="anchor" href="#_no_activity_call"></a>No Acivity Timeout Call</h5>
+<h5 id="_no_activity_call"><a class="anchor" href="#_no_activity_call"></a>6.1.3.5. No Acivity Timeout Call</h5>
 <div class="paragraph">
 <p>If there is no activity for noactivitytimeout period in seconds, &amp;THIS.PLATFORM;will send &lt;dialog&gt; with attribute  <code>noActivityTimeOut</code> set to true indicating there is no activity.
 Application can take necessary action, for example either end Dialog or send empty response for Dialog to continue.</p>
@@ -24782,9 +24777,7 @@ Application can take necessary action, for example either end Dialog or send emp
 <h2 id="_xml_parser"><a class="anchor" href="#_xml_parser"></a>7. XML Parser API</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Restcomm CAMEL Gateway exposes easy to use Java framework to serialize and deserialize the CAP messages.
-If you are using Java Servlets for your business logic, this framework will make it very easy to compose your business logic.
-However, using this framework is not mandatory and you are free to create your own XML parser.</p>
+<p>Restcomm CAMEL Gateway exposes easy to use Java framework to serialize and deserialize the CAP messages. If you are using Java Servlets for your business logic, this framework will make it very easy to compose your business logic. However, using this framework is not mandatory and you are free to create your own XML parser.</p>
 </div>
 <div class="sect2">
 <h3 id="_mvn_dependency"><a class="anchor" href="#_mvn_dependency"></a>7.1. Maven dependency</h3>
@@ -24796,7 +24789,7 @@ However, using this framework is not mandatory and you are free to create your o
 <pre class="highlight"><code class="language-xml" data-lang="xml">		&lt;dependency&gt;
 			&lt;groupId&gt;org.restcomm.camelgw&lt;/groupId&gt;
 			&lt;artifactId&gt;xml&lt;/artifactId&gt;
-			&lt;version&gt;3.0.0-SNAPSHOT&lt;/version&gt;
+			&lt;version&gt;7.0.0-SNAPSHOT&lt;/version&gt;
 		&lt;/dependency&gt;</code></pre>
 </div>
 </div>
@@ -24809,70 +24802,24 @@ However, using this framework is not mandatory and you are free to create your o
 <td class="content">
 <div class="title">Note</div>
 <div class="paragraph">
-<p>Restcomm maintains the archieve in private repository.
-please add the following in your pom&#8217;s repositories tag</p>
+<p>Telestax maintains the archieve in sonatype repository. Please add the following in your pom&#8217;s repositories tag</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-xml" data-lang="xml">		&lt;repository&gt;
-		  &lt;id&gt;restcomm-releases-repository&lt;/id&gt;
-		  &lt;name&gt;Restcomm Releases Repository&lt;/name&gt;
-		  &lt;url&gt;http://telestax.artifactoryonline.com/telestax/releases&lt;/url&gt;
-		  &lt;releases&gt;
-		    &lt;enabled&gt;true&lt;/enabled&gt;
-		    &lt;updatePolicy&gt;never&lt;/updatePolicy&gt;
-		  &lt;/releases&gt;
-		  &lt;snapshots&gt;
-		    &lt;enabled&gt;false&lt;/enabled&gt;
-		    &lt;updatePolicy&gt;never&lt;/updatePolicy&gt;
-		  &lt;/snapshots&gt;
-		&lt;/repository&gt;
-		&lt;repository&gt;
-		  &lt;id&gt;restcomm-snapshots-repository&lt;/id&gt;
-		  &lt;name&gt;Restcomm Snapshots Repository&lt;/name&gt;
-		  &lt;url&gt;http://telestax.artifactoryonline.com/telestax/snapshots&lt;/url&gt;
-		  &lt;releases&gt;
-		    &lt;enabled&gt;false&lt;/enabled&gt;
-		    &lt;updatePolicy&gt;never&lt;/updatePolicy&gt;
-		  &lt;/releases&gt;
-		  &lt;snapshots&gt;
-		    &lt;enabled&gt;true&lt;/enabled&gt;
-		    &lt;updatePolicy&gt;never&lt;/updatePolicy&gt;
-		  &lt;/snapshots&gt;
+			&lt;id&gt;mobicents-public-repository-group&lt;/id&gt;
+			&lt;name&gt;Mobicens Public Maven Repository Group&lt;/name&gt;
+			&lt;url&gt;https://oss.sonatype.org/content/groups/public/&lt;/url&gt;
+			&lt;layout&gt;default&lt;/layout&gt;
+			&lt;releases&gt;
+				&lt;enabled&gt;true&lt;/enabled&gt;
+				&lt;updatePolicy&gt;never&lt;/updatePolicy&gt;
+			&lt;/releases&gt;
+			&lt;snapshots&gt;
+				&lt;enabled&gt;true&lt;/enabled&gt;
+				&lt;updatePolicy&gt;never&lt;/updatePolicy&gt;
+			&lt;/snapshots&gt;
 		&lt;/repository&gt;</code></pre>
-</div>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<div class="title">Important</div>
-<div class="paragraph">
-<p>Restcomm Releases and Snapshots Repository are password protected.
-Ask support to get your password.</p>
-</div>
-<div class="paragraph">
-<p>Once you have user name and password add following to your servers definition in your maven settings located in M2_HOME/conf/settings.xml</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml"> 	&lt;server&gt;
-      &lt;id&gt;restcomm-releases-repository&lt;/id&gt;
-      &lt;username&gt;xxx&lt;/username&gt;
-      &lt;password&gt;xxx&lt;/password&gt;
-    &lt;/server&gt;
-    &lt;server&gt;
-      &lt;id&gt;restcomm-snapshots-repository&lt;/id&gt;
-      &lt;username&gt;xxx&lt;/username&gt;
-      &lt;password&gt;xxx&lt;/password&gt;
-    &lt;/server&gt;</code></pre>
 </div>
 </div>
 </td>
@@ -24883,11 +24830,13 @@ Ask support to get your password.</p>
 <div class="sect2">
 <h3 id="_simple_tree_based_example"><a class="anchor" href="#_simple_tree_based_example"></a>7.2. Simple example</h3>
 <div class="paragraph">
-<p>Below is the simple <code class="class">HttpServlet</code> example that received INITIAL_DP_REQUEST and responds CONTINUE_REQUEST The flow of message is same as shown in  <a href="#_http_message_flow">Restcomm  HTTP message flow</a></p>
+<p>Below is the simple <code class="class">HttpServlet</code> example that received INITIAL_DP_REQUEST and responds CONTINUE_REQUEST The flow of message is same as shown in  <a href="#_http_messages">HTTP Message Structure</a>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">public class TestServlet extends HttpServlet {
+<pre class="highlight"><code class="language-java" data-lang="java">package org.restcomm.applications.camelgw.examples.http;
+
+public class TestServlet extends HttpServlet {
 
 	private static final Logger logger = Logger.getLogger(TestServlet.class);
 
@@ -24907,8 +24856,8 @@ Ask support to get your password.</p>
 		SccpAddress orgAddress = new SccpAddressImpl(RoutingIndicator.ROUTING_BASED_ON_DPC_AND_SSN, null, 1, 8);
 		SccpAddress dstAddress = new SccpAddressImpl(RoutingIndicator.ROUTING_BASED_ON_DPC_AND_SSN, null, 2, 8);
 
-		XmlCAPDialog copy = new XmlCAPDialog(CAPApplicationContext.CapV1_gsmSSF_to_gsmSCF, orgAddress,
-			dstAddress, 12l, 13l);
+		XmlCAPDialog copy = new XmlCAPDialog(CAPApplicationContext.CapV1_gsmSSF_to_gsmSCF, orgAddress, dstAddress, 12l,
+				13l);
 
 		try {
 			byte[] data = factory.serialize(copy);
@@ -24933,8 +24882,7 @@ Ask support to get your password.</p>
 
 			FastList&lt;CAPMessage&gt; capMessages = original.getCAPMessages();
 
-			for (FastList.Node&lt;CAPMessage&gt; n = capMessages.head(), end = capMessages.tail();
-			     (n = n.getNext()) != end;) {
+			for (FastList.Node&lt;CAPMessage&gt; n = capMessages.head(), end = capMessages.tail(); (n = n.getNext()) != end;) {
 
 				CAPMessage capMessage = n.getValue();
 				switch (capMessage.getMessageType()) {
@@ -24943,8 +24891,7 @@ Ask support to get your password.</p>
 					this.handleIdp(original, initialDPRequest);
 					break;
 				case applyChargingReport_Request:
-					ApplyChargingReportRequestImpl applyChargingReportRequest =
-					  (ApplyChargingReportRequestImpl) capMessage;
+					ApplyChargingReportRequestImpl applyChargingReportRequest = (ApplyChargingReportRequestImpl) capMessage;
 					logger.info(String.format("Received applyChargingReportRequest=%s", applyChargingReportRequest));
 					break;
 				case eventReportBCSM_Request:
@@ -25006,7 +24953,9 @@ Ask support to get your password.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">public class EventsSerializeFactory {
+<pre class="highlight"><code class="language-java" data-lang="java">package org.restcomm.camelgateway;
+
+public class EventsSerializeFactory {
 
 	private static final String DIALOG = "dialog";
 	private static final String TYPE = "type";
@@ -25016,16 +24965,11 @@ Ask support to get your password.</p>
 
 	public EventsSerializeFactory() {
         // CAPErrorMessage classes
-        binding.setAlias(CAPErrorMessageCancelFailedImpl.class,
-        	ErrorComponentCap.CAP_ERROR_MESSAGE_CANCEL_FAILED);
-        binding.setAlias(CAPErrorMessageParameterlessImpl.class,
-        	ErrorComponentCap.CAP_ERROR_MESSAGE_PARAMETERLESS);
-        binding.setAlias(CAPErrorMessageRequestedInfoErrorImpl.class,
-        	ErrorComponentCap.CAP_ERROR_MESSAGE_REQUESTED_INFO_ERROR);
-        binding.setAlias(CAPErrorMessageSystemFailureImpl.class,
-        	ErrorComponentCap.CAP_ERROR_MESSAGE_SYSTEM_FAILURE);
-        binding.setAlias(CAPErrorMessageTaskRefusedImpl.class,
-        	ErrorComponentCap.CAP_ERROR_MESSAGE_TASK_REFUSED);
+        binding.setAlias(CAPErrorMessageCancelFailedImpl.class, ErrorComponentCap.CAP_ERROR_MESSAGE_CANCEL_FAILED);
+        binding.setAlias(CAPErrorMessageParameterlessImpl.class, ErrorComponentCap.CAP_ERROR_MESSAGE_PARAMETERLESS);
+        binding.setAlias(CAPErrorMessageRequestedInfoErrorImpl.class, ErrorComponentCap.CAP_ERROR_MESSAGE_REQUESTED_INFO_ERROR);
+        binding.setAlias(CAPErrorMessageSystemFailureImpl.class, ErrorComponentCap.CAP_ERROR_MESSAGE_SYSTEM_FAILURE);
+        binding.setAlias(CAPErrorMessageTaskRefusedImpl.class, ErrorComponentCap.CAP_ERROR_MESSAGE_TASK_REFUSED);
 
 		//SCCP Gt classes
 		binding.setAlias(GlobalTitle0001Impl.class, GlobalTitle0001.class.getSimpleName());
@@ -25125,7 +25069,9 @@ Application can either pass <code class="class">byte[]</code> or <code class="cl
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">public class XmlCAPDialog implements org.mobicents.protocols.ss7.cap.api.CAPDialog, XMLSerializable {
+<pre class="highlight"><code class="language-java" data-lang="java">package org.restcomm.camelgateway;
+
+public class XmlCAPDialog implements org.mobicents.protocols.ss7.cap.api.CAPDialog, XMLSerializable {
 
 	private static final String NETWORK_ID = "networkId";
     private static final String DIALOG_TYPE = "type";
@@ -25198,8 +25144,8 @@ Application can either pass <code class="class">byte[]</code> or <code class="cl
 	/**
 	 *
 	 */
-	public XmlCAPDialog(CAPApplicationContext appCntx, SccpAddress origAddress, SccpAddress destAddress,
-			Long localId, Long remoteId) {
+	public XmlCAPDialog(CAPApplicationContext appCntx, SccpAddress origAddress, SccpAddress destAddress, Long localId,
+			Long remoteId) {
 		this.appCntx = appCntx;
 		this.origAddress = origAddress;
 		this.destAddress = destAddress;
@@ -25847,8 +25793,7 @@ Application can either pass <code class="class">byte[]</code> or <code class="cl
                 xml.add(dialog.rejectComponents, REJECT_COMPONENTS, RejectComponentCap.class);
 
             if (dialog.capMessages.size() &gt; 0) {
-                for (FastList.Node&lt;CAPMessage&gt; n = dialog.capMessages.head(), end = dialog.capMessages.tail();
-                	(n = n.getNext()) != end;) {
+                for (FastList.Node&lt;CAPMessage&gt; n = dialog.capMessages.head(), end = dialog.capMessages.tail(); (n = n.getNext()) != end;) {
 
                     CAPMessage capMessage = n.getValue();
 
@@ -25858,13 +25803,12 @@ Application can either pass <code class="class">byte[]</code> or <code class="cl
                                     InitialDPRequestImpl.class);
                             break;
                         case applyCharging_Request:
-                            xml.add((ApplyChargingRequestImpl) capMessage,
-                            	CAPMessageType.applyCharging_Request.name(), ApplyChargingRequestImpl.class);
+                            xml.add((ApplyChargingRequestImpl) capMessage, CAPMessageType.applyCharging_Request.name(),
+                                    ApplyChargingRequestImpl.class);
                             break;
                         case applyChargingReport_Request:
                             xml.add((ApplyChargingReportRequestImpl) capMessage,
-                                    CAPMessageType.applyChargingReport_Request.name(),
-                                    ApplyChargingReportRequestImpl.class);
+                                    CAPMessageType.applyChargingReport_Request.name(), ApplyChargingReportRequestImpl.class);
                             break;
                         case cancel_Request:
                             xml.add((CancelRequestImpl) capMessage, CAPMessageType.cancel_Request.name(),
@@ -25879,13 +25823,11 @@ Application can either pass <code class="class">byte[]</code> or <code class="cl
                                     ContinueRequestImpl.class);
                             break;
                         case eventReportBCSM_Request:
-                            xml.add((EventReportBCSMRequestImpl) capMessage,
-                            		CAPMessageType.eventReportBCSM_Request.name(),
+                            xml.add((EventReportBCSMRequestImpl) capMessage, CAPMessageType.eventReportBCSM_Request.name(),
                                     EventReportBCSMRequestImpl.class);
                             break;
                         case releaseCall_Request:
-                            xml.add((ReleaseCallRequestImpl) capMessage,
-                            		CAPMessageType.releaseCall_Request.name(),
+                            xml.add((ReleaseCallRequestImpl) capMessage, CAPMessageType.releaseCall_Request.name(),
                                     ReleaseCallRequestImpl.class);
                             break;
                         case requestReportBCSMEvent_Request:
@@ -25957,8 +25899,7 @@ Application can either pass <code class="class">byte[]</code> or <code class="cl
 
             String capUsrAbrtReaStr = xml.getAttribute(CAP_USER_ABORT_REASON, null);
             if (capUsrAbrtReaStr != null) {
-                dialog.capUserAbortReason = CAPUserAbortReason.valueOf(CAPUserAbortReason.class,
-                	capUsrAbrtReaStr);
+                dialog.capUserAbortReason = CAPUserAbortReason.valueOf(CAPUserAbortReason.class, capUsrAbrtReaStr);
             }
             String pAbortCauseTypeStr = xml.getAttribute(P_ABORT_CAUSE_TYPE, null);
             if (pAbortCauseTypeStr != null) {
@@ -25992,12 +25933,10 @@ Application can either pass <code class="class">byte[]</code> or <code class="cl
 
 			for (int count = 0; count &lt; capMssgsSize; count++) {
 
-				CAPMessage capMessage = xml.get(CAPMessageType.initialDP_Request.name(),
-					InitialDPRequestImpl.class);
+				CAPMessage capMessage = xml.get(CAPMessageType.initialDP_Request.name(), InitialDPRequestImpl.class);
 
 				if (capMessage == null) {
-					capMessage = xml.get(CAPMessageType.applyCharging_Request.name(),
-						ApplyChargingRequestImpl.class);
+					capMessage = xml.get(CAPMessageType.applyCharging_Request.name(), ApplyChargingRequestImpl.class);
 				}
 
 				if (capMessage == null) {
@@ -26023,8 +25962,7 @@ Application can either pass <code class="class">byte[]</code> or <code class="cl
 				}
 
 				if (capMessage == null) {
-					capMessage = xml.get(CAPMessageType.releaseCall_Request.name(),
-						ReleaseCallRequestImpl.class);
+					capMessage = xml.get(CAPMessageType.releaseCall_Request.name(), ReleaseCallRequestImpl.class);
 				}
 
                 if (capMessage == null) {
@@ -26033,27 +25971,22 @@ Application can either pass <code class="class">byte[]</code> or <code class="cl
                 }
 
                 if (capMessage == null) {
-                    capMessage = xml.get(CAPMessageType.connectToResource_Request.name(),
-                    	ConnectToResourceRequestImpl.class);
+                    capMessage = xml.get(CAPMessageType.connectToResource_Request.name(), ConnectToResourceRequestImpl.class);
                 }
                 if (capMessage == null) {
-                    capMessage = xml.get(CAPMessageType.furnishChargingInformation_Request.name(),
-                    	FurnishChargingInformationRequestImpl.class);
+                    capMessage = xml.get(CAPMessageType.furnishChargingInformation_Request.name(), FurnishChargingInformationRequestImpl.class);
                 }
                 if (capMessage == null) {
-                    capMessage = xml.get(CAPMessageType.promptAndCollectUserInformation_Request.name(),
-                    	PromptAndCollectUserInformationRequestImpl.class);
+                    capMessage = xml.get(CAPMessageType.promptAndCollectUserInformation_Request.name(), PromptAndCollectUserInformationRequestImpl.class);
                 }
                 if (capMessage == null) {
-                    capMessage = xml.get(CAPMessageType.promptAndCollectUserInformation_Response.name(),
-                    	PromptAndCollectUserInformationResponseImpl.class);
+                    capMessage = xml.get(CAPMessageType.promptAndCollectUserInformation_Response.name(), PromptAndCollectUserInformationResponseImpl.class);
                 }
 
 				dialog.addCAPMessage(capMessage);
 			}
 		}
 	};
-
 }</code></pre>
 </div>
 </div>
@@ -26069,7 +26002,7 @@ Application can either pass <code class="class">byte[]</code> or <code class="cl
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-01-04 11:01:21 WET
+Last updated 2017-01-05 18:18:35 WET
 </div>
 </div>
 <footer>

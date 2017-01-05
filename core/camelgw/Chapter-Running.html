@@ -22781,16 +22781,12 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li>
 <p>You must have Restcomm CAMEL Gateway installed as explained in the Installation Guide.</p>
 </li>
-<li>
-<p>If you are using the SS7 board on your server, you must ensure that the <code>java.library.path</code> variable is set to point to the directory containing  the native component.
-Alternatively you can copy it to the JBoss native library path manually.</p>
-</li>
 </ul>
 </div>
 </li>
 <li>
 <p>In order to start the Gateway, you must start the JBoss Application Server.
-Execute the <em class="path">run.sh</em> (Unix) or  <em class="path">run.bat</em> (Microsoft Windows) startup script in the <em class="path">restcomm-camelgw-6.1.1.GA/jboss-5.1.0.GA/bin</em> folder (on Unix or Windows). Note that this will start the server in the default profile.
+Execute the <em class="path">run.sh</em> (Unix) or  <em class="path">run.bat</em> (Microsoft Windows) startup script in the <em class="path">restcomm-camel-7.0.0-SNAPSHOT/jboss-5.1.0.GA/bin</em> folder (on Unix or Windows). Note that this will start the server in the default profile.
 The "default" profile is a clean profile, which entails configuring the entire SS7 Stack and CAMEL Gateway.</p>
 </li>
 <li>
@@ -22804,7 +22800,7 @@ The "default" profile is a clean profile, which entails configuring the entire S
 03:09:15,982 INFO  [TCAPStackImpl] (main) Starting ...org.mobicents.protocols.ss7.tcap.TCAPProviderImpl@3e3fc7f9
 03:09:15,982 INFO  [TCAPProviderImpl] (main) Starting TCAP Provider
 03:09:15,982 INFO  [TCAPProviderImpl] (main) Registered SCCP listener with address 146
-03:09:16,215 INFO  [SS7Service] (main)  [[[[[[[[[ Restcomm Camle 3.0.0-SNAPSHOT service started ]]]]]]]]]
+03:09:16,215 INFO  [SS7Service] (main)  [[[[[[[[[ Restcomm Camel 3.0.0-SNAPSHOT service started ]]]]]]]]]
 03:09:16,222 INFO  [CamelPropertiesManagement] (main) Loading CAMEL Properties from /home/abhayani/workarea/mobicents/telestax/binary/CAMEL/restcomm-slee-6.1.1.GA/jboss-5.1.0.GA/server/default/data/CamelManagement_camelproperties.xml
 03:09:16,223 INFO  [CamelManagement] (main) Started CamelGatewayManagement
 03:09:16,231 INFO  [ShellServer] (main) Starting SS7 management shell environment
@@ -22837,7 +22833,7 @@ The "default" profile is a clean profile, which entails configuring the entire S
 </div>
 </li>
 <li>
-<p>You need to use the Shell Client to connect to {this-application-dirname} {this-version}  and configure the SS7 Stack and CAMEL Gateway routing rule.</p>
+<p>You need to use the Shell Client to connect to Restcomm CAMEL Gateway  and configure the SS7 Stack and CAMEL Gateway routing rule.</p>
 </li>
 </ol>
 </div>
@@ -22848,7 +22844,7 @@ The "default" profile is a clean profile, which entails configuring the entire S
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If you are starting {this-application-dirname} {this-version} for the first time, you must configure SS7.
+If you are starting Restcomm CAMEL Gateway for the first time, you must configure SS7.
 </td>
 </tr>
 </table>
@@ -22863,7 +22859,7 @@ The next chapter will provide more details about configuring SS7 and the CAMEL G
 <ol class="arabic">
 <li>
 <p>To stop the Restcomm CAMEL Gateway , you must shut down the JBoss Application Server.
-To shut down the server(s) you must execute the <code>shutdown.sh -s</code> (Unix) or  <code>shutdown.bat -s</code> (Microsoft Windows) script in the <em class="path">restcomm-camelgw-6.1.1.GA/jboss-5.1.0.GA/bin</em>					directory (on Unix or Windows).</p>
+To shut down the server(s) you must execute the <code>shutdown.sh -s</code> (Unix) or  <code>shutdown.bat -s</code> (Microsoft Windows) script in the <em class="path">restcomm-camel-7.0.0-SNAPSHOT/jboss-5.1.0.GA/bin</em> directory (on Unix or Windows).</p>
 </li>
 <li>
 <p>If the server stopped properly, you will see the following three lines as the  last output in the Unix terminal or Command Prompt:</p>
@@ -22898,7 +22894,7 @@ Starting the Gateway with the "simulator" profile is  similar to the steps expla
 <div class="sectionbody">
 <div class="paragraph">
 <p>Before you execute commands to configure the Gateway, you must start the Shell client and connect to the managed instance.
-The shell terminal can be started by issuing the following command from <em class="path">restcomm-camelgw-6.1.1.GA/jboss-5.1.0.GA/bin</em> directory:</p>
+The shell terminal can be started by issuing the following command from <em class="path">restcomm-camel-7.0.0-SNAPSHOT/jboss-5.1.0.GA/bin</em> directory:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -22923,7 +22919,7 @@ For more details on connecting to an instance; for a list of all supported comma
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-01-04 11:01:21 WET
+Last updated 2017-01-05 18:18:35 WET
 </div>
 </div>
 <footer>

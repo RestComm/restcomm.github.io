@@ -22772,9 +22772,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Restcomm CAMEL Gateway exposes easy to use Java framework to serialize and deserialize the CAP messages.
-If you are using Java Servlets for your business logic, this framework will make it very easy to compose your business logic.
-However, using this framework is not mandatory and you are free to create your own XML parser.</p>
+<p>Restcomm CAMEL Gateway exposes easy to use Java framework to serialize and deserialize the CAP messages. If you are using Java Servlets for your business logic, this framework will make it very easy to compose your business logic. However, using this framework is not mandatory and you are free to create your own XML parser.</p>
 </div>
 </div>
 </div>
@@ -22789,7 +22787,7 @@ However, using this framework is not mandatory and you are free to create your o
 <pre class="highlight"><code class="language-xml" data-lang="xml">		&lt;dependency&gt;
 			&lt;groupId&gt;org.restcomm.camelgw&lt;/groupId&gt;
 			&lt;artifactId&gt;xml&lt;/artifactId&gt;
-			&lt;version&gt;3.0.0-SNAPSHOT&lt;/version&gt;
+			&lt;version&gt;7.0.0-SNAPSHOT&lt;/version&gt;
 		&lt;/dependency&gt;</code></pre>
 </div>
 </div>
@@ -22802,70 +22800,24 @@ However, using this framework is not mandatory and you are free to create your o
 <td class="content">
 <div class="title">Note</div>
 <div class="paragraph">
-<p>Restcomm maintains the archieve in private repository.
-please add the following in your pom&#8217;s repositories tag</p>
+<p>Telestax maintains the archieve in sonatype repository. Please add the following in your pom&#8217;s repositories tag</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-xml" data-lang="xml">		&lt;repository&gt;
-		  &lt;id&gt;restcomm-releases-repository&lt;/id&gt;
-		  &lt;name&gt;Restcomm Releases Repository&lt;/name&gt;
-		  &lt;url&gt;http://telestax.artifactoryonline.com/telestax/releases&lt;/url&gt;
-		  &lt;releases&gt;
-		    &lt;enabled&gt;true&lt;/enabled&gt;
-		    &lt;updatePolicy&gt;never&lt;/updatePolicy&gt;
-		  &lt;/releases&gt;
-		  &lt;snapshots&gt;
-		    &lt;enabled&gt;false&lt;/enabled&gt;
-		    &lt;updatePolicy&gt;never&lt;/updatePolicy&gt;
-		  &lt;/snapshots&gt;
-		&lt;/repository&gt;
-		&lt;repository&gt;
-		  &lt;id&gt;restcomm-snapshots-repository&lt;/id&gt;
-		  &lt;name&gt;Restcomm Snapshots Repository&lt;/name&gt;
-		  &lt;url&gt;http://telestax.artifactoryonline.com/telestax/snapshots&lt;/url&gt;
-		  &lt;releases&gt;
-		    &lt;enabled&gt;false&lt;/enabled&gt;
-		    &lt;updatePolicy&gt;never&lt;/updatePolicy&gt;
-		  &lt;/releases&gt;
-		  &lt;snapshots&gt;
-		    &lt;enabled&gt;true&lt;/enabled&gt;
-		    &lt;updatePolicy&gt;never&lt;/updatePolicy&gt;
-		  &lt;/snapshots&gt;
+			&lt;id&gt;mobicents-public-repository-group&lt;/id&gt;
+			&lt;name&gt;Mobicens Public Maven Repository Group&lt;/name&gt;
+			&lt;url&gt;https://oss.sonatype.org/content/groups/public/&lt;/url&gt;
+			&lt;layout&gt;default&lt;/layout&gt;
+			&lt;releases&gt;
+				&lt;enabled&gt;true&lt;/enabled&gt;
+				&lt;updatePolicy&gt;never&lt;/updatePolicy&gt;
+			&lt;/releases&gt;
+			&lt;snapshots&gt;
+				&lt;enabled&gt;true&lt;/enabled&gt;
+				&lt;updatePolicy&gt;never&lt;/updatePolicy&gt;
+			&lt;/snapshots&gt;
 		&lt;/repository&gt;</code></pre>
-</div>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<div class="title">Important</div>
-<div class="paragraph">
-<p>Restcomm Releases and Snapshots Repository are password protected.
-Ask support to get your password.</p>
-</div>
-<div class="paragraph">
-<p>Once you have user name and password add following to your servers definition in your maven settings located in M2_HOME/conf/settings.xml</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml"> 	&lt;server&gt;
-      &lt;id&gt;restcomm-releases-repository&lt;/id&gt;
-      &lt;username&gt;xxx&lt;/username&gt;
-      &lt;password&gt;xxx&lt;/password&gt;
-    &lt;/server&gt;
-    &lt;server&gt;
-      &lt;id&gt;restcomm-snapshots-repository&lt;/id&gt;
-      &lt;username&gt;xxx&lt;/username&gt;
-      &lt;password&gt;xxx&lt;/password&gt;
-    &lt;/server&gt;</code></pre>
 </div>
 </div>
 </td>
@@ -22878,11 +22830,13 @@ Ask support to get your password.</p>
 <h2 id="_simple_tree_based_example"><a class="anchor" href="#_simple_tree_based_example"></a>Simple example</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Below is the simple <code class="class">HttpServlet</code> example that received INITIAL_DP_REQUEST and responds CONTINUE_REQUEST The flow of message is same as shown in  <a href="#_http_message_flow">Restcomm  HTTP message flow</a></p>
+<p>Below is the simple <code class="class">HttpServlet</code> example that received INITIAL_DP_REQUEST and responds CONTINUE_REQUEST The flow of message is same as shown in  <a href="#_http_messages">[_http_messages]</a>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">public class TestServlet extends HttpServlet {
+<pre class="highlight"><code class="language-java" data-lang="java">package org.restcomm.applications.camelgw.examples.http;
+
+public class TestServlet extends HttpServlet {
 
 	private static final Logger logger = Logger.getLogger(TestServlet.class);
 
@@ -22902,8 +22856,8 @@ Ask support to get your password.</p>
 		SccpAddress orgAddress = new SccpAddressImpl(RoutingIndicator.ROUTING_BASED_ON_DPC_AND_SSN, null, 1, 8);
 		SccpAddress dstAddress = new SccpAddressImpl(RoutingIndicator.ROUTING_BASED_ON_DPC_AND_SSN, null, 2, 8);
 
-		XmlCAPDialog copy = new XmlCAPDialog(CAPApplicationContext.CapV1_gsmSSF_to_gsmSCF, orgAddress,
-			dstAddress, 12l, 13l);
+		XmlCAPDialog copy = new XmlCAPDialog(CAPApplicationContext.CapV1_gsmSSF_to_gsmSCF, orgAddress, dstAddress, 12l,
+				13l);
 
 		try {
 			byte[] data = factory.serialize(copy);
@@ -22928,8 +22882,7 @@ Ask support to get your password.</p>
 
 			FastList&lt;CAPMessage&gt; capMessages = original.getCAPMessages();
 
-			for (FastList.Node&lt;CAPMessage&gt; n = capMessages.head(), end = capMessages.tail();
-			     (n = n.getNext()) != end;) {
+			for (FastList.Node&lt;CAPMessage&gt; n = capMessages.head(), end = capMessages.tail(); (n = n.getNext()) != end;) {
 
 				CAPMessage capMessage = n.getValue();
 				switch (capMessage.getMessageType()) {
@@ -22938,8 +22891,7 @@ Ask support to get your password.</p>
 					this.handleIdp(original, initialDPRequest);
 					break;
 				case applyChargingReport_Request:
-					ApplyChargingReportRequestImpl applyChargingReportRequest =
-					  (ApplyChargingReportRequestImpl) capMessage;
+					ApplyChargingReportRequestImpl applyChargingReportRequest = (ApplyChargingReportRequestImpl) capMessage;
 					logger.info(String.format("Received applyChargingReportRequest=%s", applyChargingReportRequest));
 					break;
 				case eventReportBCSM_Request:
@@ -23003,7 +22955,9 @@ Ask support to get your password.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">public class EventsSerializeFactory {
+<pre class="highlight"><code class="language-java" data-lang="java">package org.restcomm.camelgateway;
+
+public class EventsSerializeFactory {
 
 	private static final String DIALOG = "dialog";
 	private static final String TYPE = "type";
@@ -23013,16 +22967,11 @@ Ask support to get your password.</p>
 
 	public EventsSerializeFactory() {
         // CAPErrorMessage classes
-        binding.setAlias(CAPErrorMessageCancelFailedImpl.class,
-        	ErrorComponentCap.CAP_ERROR_MESSAGE_CANCEL_FAILED);
-        binding.setAlias(CAPErrorMessageParameterlessImpl.class,
-        	ErrorComponentCap.CAP_ERROR_MESSAGE_PARAMETERLESS);
-        binding.setAlias(CAPErrorMessageRequestedInfoErrorImpl.class,
-        	ErrorComponentCap.CAP_ERROR_MESSAGE_REQUESTED_INFO_ERROR);
-        binding.setAlias(CAPErrorMessageSystemFailureImpl.class,
-        	ErrorComponentCap.CAP_ERROR_MESSAGE_SYSTEM_FAILURE);
-        binding.setAlias(CAPErrorMessageTaskRefusedImpl.class,
-        	ErrorComponentCap.CAP_ERROR_MESSAGE_TASK_REFUSED);
+        binding.setAlias(CAPErrorMessageCancelFailedImpl.class, ErrorComponentCap.CAP_ERROR_MESSAGE_CANCEL_FAILED);
+        binding.setAlias(CAPErrorMessageParameterlessImpl.class, ErrorComponentCap.CAP_ERROR_MESSAGE_PARAMETERLESS);
+        binding.setAlias(CAPErrorMessageRequestedInfoErrorImpl.class, ErrorComponentCap.CAP_ERROR_MESSAGE_REQUESTED_INFO_ERROR);
+        binding.setAlias(CAPErrorMessageSystemFailureImpl.class, ErrorComponentCap.CAP_ERROR_MESSAGE_SYSTEM_FAILURE);
+        binding.setAlias(CAPErrorMessageTaskRefusedImpl.class, ErrorComponentCap.CAP_ERROR_MESSAGE_TASK_REFUSED);
 
 		//SCCP Gt classes
 		binding.setAlias(GlobalTitle0001Impl.class, GlobalTitle0001.class.getSimpleName());
@@ -23124,7 +23073,9 @@ Application can either pass <code class="class">byte[]</code> or <code class="cl
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">public class XmlCAPDialog implements org.mobicents.protocols.ss7.cap.api.CAPDialog, XMLSerializable {
+<pre class="highlight"><code class="language-java" data-lang="java">package org.restcomm.camelgateway;
+
+public class XmlCAPDialog implements org.mobicents.protocols.ss7.cap.api.CAPDialog, XMLSerializable {
 
 	private static final String NETWORK_ID = "networkId";
     private static final String DIALOG_TYPE = "type";
@@ -23197,8 +23148,8 @@ Application can either pass <code class="class">byte[]</code> or <code class="cl
 	/**
 	 *
 	 */
-	public XmlCAPDialog(CAPApplicationContext appCntx, SccpAddress origAddress, SccpAddress destAddress,
-			Long localId, Long remoteId) {
+	public XmlCAPDialog(CAPApplicationContext appCntx, SccpAddress origAddress, SccpAddress destAddress, Long localId,
+			Long remoteId) {
 		this.appCntx = appCntx;
 		this.origAddress = origAddress;
 		this.destAddress = destAddress;
@@ -23846,8 +23797,7 @@ Application can either pass <code class="class">byte[]</code> or <code class="cl
                 xml.add(dialog.rejectComponents, REJECT_COMPONENTS, RejectComponentCap.class);
 
             if (dialog.capMessages.size() &gt; 0) {
-                for (FastList.Node&lt;CAPMessage&gt; n = dialog.capMessages.head(), end = dialog.capMessages.tail();
-                	(n = n.getNext()) != end;) {
+                for (FastList.Node&lt;CAPMessage&gt; n = dialog.capMessages.head(), end = dialog.capMessages.tail(); (n = n.getNext()) != end;) {
 
                     CAPMessage capMessage = n.getValue();
 
@@ -23857,13 +23807,12 @@ Application can either pass <code class="class">byte[]</code> or <code class="cl
                                     InitialDPRequestImpl.class);
                             break;
                         case applyCharging_Request:
-                            xml.add((ApplyChargingRequestImpl) capMessage,
-                            	CAPMessageType.applyCharging_Request.name(), ApplyChargingRequestImpl.class);
+                            xml.add((ApplyChargingRequestImpl) capMessage, CAPMessageType.applyCharging_Request.name(),
+                                    ApplyChargingRequestImpl.class);
                             break;
                         case applyChargingReport_Request:
                             xml.add((ApplyChargingReportRequestImpl) capMessage,
-                                    CAPMessageType.applyChargingReport_Request.name(),
-                                    ApplyChargingReportRequestImpl.class);
+                                    CAPMessageType.applyChargingReport_Request.name(), ApplyChargingReportRequestImpl.class);
                             break;
                         case cancel_Request:
                             xml.add((CancelRequestImpl) capMessage, CAPMessageType.cancel_Request.name(),
@@ -23878,13 +23827,11 @@ Application can either pass <code class="class">byte[]</code> or <code class="cl
                                     ContinueRequestImpl.class);
                             break;
                         case eventReportBCSM_Request:
-                            xml.add((EventReportBCSMRequestImpl) capMessage,
-                            		CAPMessageType.eventReportBCSM_Request.name(),
+                            xml.add((EventReportBCSMRequestImpl) capMessage, CAPMessageType.eventReportBCSM_Request.name(),
                                     EventReportBCSMRequestImpl.class);
                             break;
                         case releaseCall_Request:
-                            xml.add((ReleaseCallRequestImpl) capMessage,
-                            		CAPMessageType.releaseCall_Request.name(),
+                            xml.add((ReleaseCallRequestImpl) capMessage, CAPMessageType.releaseCall_Request.name(),
                                     ReleaseCallRequestImpl.class);
                             break;
                         case requestReportBCSMEvent_Request:
@@ -23956,8 +23903,7 @@ Application can either pass <code class="class">byte[]</code> or <code class="cl
 
             String capUsrAbrtReaStr = xml.getAttribute(CAP_USER_ABORT_REASON, null);
             if (capUsrAbrtReaStr != null) {
-                dialog.capUserAbortReason = CAPUserAbortReason.valueOf(CAPUserAbortReason.class,
-                	capUsrAbrtReaStr);
+                dialog.capUserAbortReason = CAPUserAbortReason.valueOf(CAPUserAbortReason.class, capUsrAbrtReaStr);
             }
             String pAbortCauseTypeStr = xml.getAttribute(P_ABORT_CAUSE_TYPE, null);
             if (pAbortCauseTypeStr != null) {
@@ -23991,12 +23937,10 @@ Application can either pass <code class="class">byte[]</code> or <code class="cl
 
 			for (int count = 0; count &lt; capMssgsSize; count++) {
 
-				CAPMessage capMessage = xml.get(CAPMessageType.initialDP_Request.name(),
-					InitialDPRequestImpl.class);
+				CAPMessage capMessage = xml.get(CAPMessageType.initialDP_Request.name(), InitialDPRequestImpl.class);
 
 				if (capMessage == null) {
-					capMessage = xml.get(CAPMessageType.applyCharging_Request.name(),
-						ApplyChargingRequestImpl.class);
+					capMessage = xml.get(CAPMessageType.applyCharging_Request.name(), ApplyChargingRequestImpl.class);
 				}
 
 				if (capMessage == null) {
@@ -24022,8 +23966,7 @@ Application can either pass <code class="class">byte[]</code> or <code class="cl
 				}
 
 				if (capMessage == null) {
-					capMessage = xml.get(CAPMessageType.releaseCall_Request.name(),
-						ReleaseCallRequestImpl.class);
+					capMessage = xml.get(CAPMessageType.releaseCall_Request.name(), ReleaseCallRequestImpl.class);
 				}
 
                 if (capMessage == null) {
@@ -24032,27 +23975,22 @@ Application can either pass <code class="class">byte[]</code> or <code class="cl
                 }
 
                 if (capMessage == null) {
-                    capMessage = xml.get(CAPMessageType.connectToResource_Request.name(),
-                    	ConnectToResourceRequestImpl.class);
+                    capMessage = xml.get(CAPMessageType.connectToResource_Request.name(), ConnectToResourceRequestImpl.class);
                 }
                 if (capMessage == null) {
-                    capMessage = xml.get(CAPMessageType.furnishChargingInformation_Request.name(),
-                    	FurnishChargingInformationRequestImpl.class);
+                    capMessage = xml.get(CAPMessageType.furnishChargingInformation_Request.name(), FurnishChargingInformationRequestImpl.class);
                 }
                 if (capMessage == null) {
-                    capMessage = xml.get(CAPMessageType.promptAndCollectUserInformation_Request.name(),
-                    	PromptAndCollectUserInformationRequestImpl.class);
+                    capMessage = xml.get(CAPMessageType.promptAndCollectUserInformation_Request.name(), PromptAndCollectUserInformationRequestImpl.class);
                 }
                 if (capMessage == null) {
-                    capMessage = xml.get(CAPMessageType.promptAndCollectUserInformation_Response.name(),
-                    	PromptAndCollectUserInformationResponseImpl.class);
+                    capMessage = xml.get(CAPMessageType.promptAndCollectUserInformation_Response.name(), PromptAndCollectUserInformationResponseImpl.class);
                 }
 
 				dialog.addCAPMessage(capMessage);
 			}
 		}
 	};
-
 }</code></pre>
 </div>
 </div>
@@ -24061,7 +23999,7 @@ Application can either pass <code class="class">byte[]</code> or <code class="cl
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-01-04 11:01:21 WET
+Last updated 2017-01-05 18:18:35 WET
 </div>
 </div>
 <footer>

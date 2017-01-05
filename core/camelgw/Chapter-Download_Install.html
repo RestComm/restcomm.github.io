@@ -22763,7 +22763,8 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <ul class="sectlevel1">
 <li><a href="#_downloading_binary">Binary Download and Installation</a></li>
 <li><a href="#_dir_structure">Directory Structure</a></li>
-<li><a href="#_source_code">Setup from Source</a>
+<li><a href="#_source_code">Setup from Source</a></li>
+<li><a href="#_dialogic_setup">Extra setup when usage of Dialogic cards</a>
 <ul class="sectlevel2">
 <li><a href="#_source_building">Release Source Code Building</a></li>
 <li><a href="#_trunk_source_building">Development Trunk Source Building</a></li>
@@ -22776,7 +22777,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Installing Restcomm Camel Gateway is easy and quick with the binary download.
+<p>Installing Restcomm CAMEL Gateway is easy and quick with the binary download.
 You can either download the binary release or download the source code and build from source.</p>
 </div>
 </div>
@@ -22785,7 +22786,7 @@ You can either download the binary release or download the source code and build
 <h2 id="_downloading_binary"><a class="anchor" href="#_downloading_binary"></a>Binary Download and Installation</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The binary release is available for download at the TeleStax Customer Support Portal &amp;THIS.RELEASE_BINARY_URL;link:</p>
+<p>The binary release is available for download at the following link: <a href="https://github.com/RestComm/camelgateway/releases/latest" class="bare">https://github.com/RestComm/camelgateway/releases/latest</a></p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure: Binary Download and Installation</div>
@@ -22812,7 +22813,7 @@ You can either download the binary release or download the source code and build
 <h2 id="_dir_structure"><a class="anchor" href="#_dir_structure"></a>Directory Structure</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>When you download the binary release, you will notice that the top level directory is named <code>restcomm-camelgw-&lt;version&gt;</code> and immediately underneath, are four sub-directories as explained below:</p>
+<p>When you download the binary release, you will notice that the top level directory is named <code>restcomm-camel-&lt;version&gt;</code> and immediately underneath, are four sub-directories as explained below:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -22825,7 +22826,7 @@ The "simulator" profile is a pre-configured profile to work with jss7-simulator.
 Refer to the Admin Guide for instructions on how to start the server in either of the profiles.</p>
 </li>
 <li>
-<p>resources: Contains SLEE MAP, JDBC and http-client RA jars.</p>
+<p>resources: Contains SLEE MAP, CAP and http-client RA jars.</p>
 </li>
 <li>
 <p>tools: Contains SLEE tools and jss7-simulator.</p>
@@ -22834,11 +22835,13 @@ Refer to the Admin Guide for instructions on how to start the server in either o
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>|- restcomm-camelgw-&lt;version&gt;
+<pre>|- restcomm-camel-<version>
 		|- docs
 				|+ camel
+				|+ container
 				|+ jss7
 				|+ slee
+				|+ tools
 		|- jboss-5.1.0.GA
 				|+ bin    //contains start up and shutdown scripts for the Server and the start up script for Shell.
 				|+ client
@@ -22851,8 +22854,10 @@ Refer to the Admin Guide for instructions on how to start the server in either o
 		|- tools
 				|+ eclipslee
 				|+ jopr-plugin
-				|+ Restcomm-jss7-simulator
 				|+ remote-slee-connection
+				|+ snmp
+				|+ restcomm-jss7-simulator
+				|+ TelScale-SCF-Server
 				|+ twiddle</pre>
 </div>
 </div>
@@ -22862,12 +22867,12 @@ Refer to the Admin Guide for instructions on how to start the server in either o
 <h2 id="_source_code"><a class="anchor" href="#_source_code"></a>Setup from Source</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Restcomm Camel Gateway is an open source project and you have the freedom to build from source.
+<p>Restcomm CAMEL Gateway is an open source project and you have the freedom to build from source.
 Building from source means you will always be able to work with the latest features.
-Whilst aspects of Restcomm Camel Gateway are quite  complicated, you may find ways to become contributors.</p>
+Whilst aspects of Restcomm CAMEL Gateway are quite  complicated, you may find ways to become contributors.</p>
 </div>
 <div class="paragraph">
-<p>Restcomm Camel Gateway works with JDK1.7 or above.
+<p>Restcomm CAMEL Gateway works with JDK1.7 or above.
 In addition you must have the following tools installed.</p>
 </div>
 <div class="ulist">
@@ -22879,12 +22884,37 @@ In addition you must have the following tools installed.</p>
 <p><code>Subversion Client 1.4</code> : Instructions for using SVN, including install, can be found at <a href="http://subversion.tigris.org" class="bare">http://subversion.tigris.org</a></p>
 </li>
 <li>
-<p><code>Maven 2.0.9</code> : Instructions for using Maven, including install, can be found at <a href="http://maven.apache.org/" class="bare">http://maven.apache.org/</a></p>
+<p><code>Maven 3.*</code> : Instructions for using Maven, including install, can be found at <a href="http://maven.apache.org/" class="bare">http://maven.apache.org/</a></p>
 </li>
 <li>
 <p><code>Ant 1.7.0</code> : Instructions for using Ant, including install, can be found at <a href="http://ant.apache.org" class="bare">http://ant.apache.org</a></p>
 </li>
 </ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dialogic_setup"><a class="anchor" href="#_dialogic_setup"></a>Extra setup when usage of Dialogic cards</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you use only m3ua stack for communicating via SS7 network we can skip this chapter. If you use legacy dialogic cards with or without m3ua you need to follow actions from this chaper.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure: Extra actions for dialogic card usage</div>
+<ol class="arabic">
+<li>
+<p>Copy gct java lib: <code>gctApi.jar</code> from downloaded dialogic drivers (from folder <code>dpk/JAVA</code>) into the folder <code>jboss-5.1.0.GA/server/default/deploy/restcomm-camel-gateway/lib</code>.</p>
+</li>
+<li>
+<p>Copy native lib: <code>libgctjni.so</code> from downloaded dialogic drivers (from folder <code>dpk/64</code> or <code>dpk/32</code> depending on JAVA 64 or 32-bit version) into the folder <code>jboss-5.1.0.GA/bin/META-INF/lib/linux2/x64</code> for JAVA 64-bit or <code>jboss-5.1.0.GA/bin/META-INF/lib/linux2/x86</code> for JAVA 32-bit.</p>
+</li>
+<li>
+<p>Copy jboss mbean config files: <code>jboss-beans.xml</code> and <code>jboss-structure.xml</code> files from <code>template/META-INF-dialogic</code> folder (if we use dialogic boards WITHOUT m3ua) or from <code>template/META-INF-m3ua-dialogic</code> folder (if we use dialogic boards WITH m3ua together) to folder <code>jboss-5.1.0.GA/server/default/deploy/restcomm-camel-gateway/META-INF</code></p>
+</li>
+<li>
+<p>In the copied <code>jboss-beans.xml</code> file you need to find a bean with DialogicMtp3UserPart class and update properties <code>sourceModuleId</code> and <code>destinationModuleId</code> with modules ids that are configured in your dialogc board.</p>
+</li>
+</ol>
 </div>
 <div class="sect2">
 <h3 id="_source_building"><a class="anchor" href="#_source_building"></a>Release Source Code Building</h3>
@@ -22893,13 +22923,13 @@ In addition you must have the following tools installed.</p>
 <li>
 <p>Downloading the source code</p>
 <div class="paragraph">
-<p>Use GIT to checkout a specific release source, the base URL is &amp;THIS.TRUNK_SOURCE_CODE_URL;, then add the specific release version.</p>
+<p>Use GIT to checkout a specific release source, the base URL is <a href="https://github.com/Restcomm/camelgateway" class="bare">https://github.com/Restcomm/camelgateway</a>, then add the specific release version.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>[usr]$ git clone https://userid@bitbucket.org/telestax/restcomm-camelgw.git
-[usr]$ cd restcomm-camelgw
-[usr]$ git checkout &lt;version&gt;</code></pre>
+<pre class="highlight"><code>[usr]$ git clone https://github.com/Restcomm/camelgateway.git
+[usr]$ cd restcomm-camelgateway
+[usr]$ git checkout <version></code></pre>
 </div>
 </div>
 </li>
@@ -22907,7 +22937,7 @@ In addition you must have the following tools installed.</p>
 <p>Building the source code</p>
 <div class="paragraph">
 <p>Now that we have the source the next step is to build and install the source.
- Restcomm Camel Gateway uses Maven 2 to build the system.
+ Restcomm CAMEL Gateway uses Maven 3 to build the system.
 You must ensure that <code>JAVA_HOME</code> environment variable is correctly set prior to building the source.
 See <a href="#_jboss_home_setup">[_jboss_home_setup]</a></p>
 </div>
@@ -22931,7 +22961,7 @@ See <a href="#_jboss_home_setup">[_jboss_home_setup]</a></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-01-04 11:01:21 WET
+Last updated 2017-01-05 18:18:35 WET
 </div>
 </div>
 <footer>

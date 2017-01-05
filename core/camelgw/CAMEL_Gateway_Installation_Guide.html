@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Installation Guide to Restcomm Camel Gateway</title>
+<title>Installation Guide to Restcomm CAMEL Gateway</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22757,7 +22757,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </head>
 <body class="book">
 <div id="header">
-<h1>Installation Guide to Restcomm Camel Gateway</h1>
+<h1>Installation Guide to Restcomm CAMEL Gateway</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -22778,6 +22778,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#_downloading_binary">4.1. Binary Download and Installation</a></li>
 <li><a href="#_dir_structure">4.2. Directory Structure</a></li>
 <li><a href="#_source_code">4.3. Setup from Source</a></li>
+<li><a href="#_dialogic_setup">4.4. Extra setup when usage of Dialogic cards</a></li>
 </ul>
 </li>
 <li><a href="#_setup_configuration">5. Post Installation Configuration</a>
@@ -23037,10 +23038,10 @@ Ignoring warnings will most likely cause data loss.</p>
 <p></p>
 </div>
 <div class="paragraph">
-<p>If you find a typographical error in this manual, or if you have thought of a way to make this manual better, we would love to hear from you! Please submit a report in the the {this-issue.tracker.ur}, against the product Restcomm Camel Gateway`   `, or contact the authors.</p>
+<p>If you find a typographical error in this manual, or if you have thought of a way to make this manual better, we would love to hear from you! Please submit a report in the the {this-issue.tracker.ur}, against the product Restcomm CAMEL Gateway`   `, or contact the authors.</p>
 </div>
 <div class="paragraph">
-<p>When submitting a bug report, be sure to mention the manual&#8217;s identifier: Restcomm Camel Gateway</p>
+<p>When submitting a bug report, be sure to mention the manual&#8217;s identifier: Restcomm CAMEL Gateway</p>
 </div>
 <div class="paragraph">
 <p>If you have a suggestion for improving the documentation, try to be as specific as possible when describing it.
@@ -23052,31 +23053,27 @@ If you have found an error, please include the section number and some of the su
 <h2 id="introduction"><a class="anchor" href="#introduction"></a>1. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Restcomm Camel Gateway is an Open Source Java based CAMEL Gateway Platform that routes CAMEL messages between signaling network and service applications.</p>
+<p>Restcomm CAMEL Gateway is an Open Source Java based CAMEL Gateway Platform that routes CAMEL messages between signaling network and service applications.</p>
 </div>
 <div class="paragraph">
-<p>Restcomm Camel Gateway acts as an intermediary platform linking the service applications to the GSM network in a session oriented communication. Restcomm Camel Gateway is an easy-to-install and easy-to-deploy platform.</p>
+<p>Restcomm CAMEL Gateway acts as an intermediary platform linking the service applications to the GSM network in a session oriented communication. Restcomm CAMEL Gateway is an easy-to-install and easy-to-deploy platform.</p>
 </div>
 <div class="paragraph">
-<p>Restcomm Camel Gateway supports TDM hardware offered by major vendors in the market, namely Intel family boards (Dialogic) and  Zaptel/Dahdi (Digium, Sangoma). TeleStax also offrers an in-house SS7 cards known as Restcomm SS7 Cards.
-Restcomm SS7 cards have on-board MTP2/3 support.
-Using Restcomm SS7 cards reduces the processing load on the server hosting the Restcomm Camel Gateway platform.</p>
+<p>Restcomm CAMEL Gateway supports TDM hardware offered by major vendors in the market, namely Intel family boards (Dialogic) and  Zaptel/Dahdi (Digium, Sangoma).</p>
 </div>
 <div class="paragraph">
-<p>Restcomm Camel Gateway is based on the robust and proven Restcomm JAIN SLEE 1.1 Server and Restcomm jSS7 Stack. Restcomm JAIN SLEE Server is a highly scalable event-driven application server with a robust component model and fault tolerant execution environment.
+<p>Restcomm CAMEL Gateway is based on the robust and proven Restcomm JAIN SLEE 1.1 Server and Restcomm jSS7 Stack. Restcomm JAIN SLEE Server is a highly scalable event-driven application server with a robust component model and fault tolerant execution environment.
 It provides a set of connectors to a variety of networks elements: SS7 MAP, TCAP, INAP, ISUP, SMPP, XMPP, SIP, MGCP, HTTP, XDM, XCAP, Diameter and many more.
 It is fully compliant with JSR 240 (JSLEE 1.1). Restcomm jSS7 is a software based implementation of the SS7 protocol.
 It provides implementation for Level 2 and above in the SS7 protocol Stack. Restcomm jSS7 Stack User Guide is included for your convenience.
 You can refer to the guide for more details on the Stack.</p>
 </div>
 <div class="paragraph">
-<p>The Restcomm CAMEL Gateway makes use of HTTP protocol between the gateway and the third-party applications (or Value Added Service Modules). Restcomm USSD Gateway receives the USSD request from the subscriber&#8217;s handset/device via the GSM Signaling network and then translates these requests to HTTP depending on the rules configured in the Gateway.
-The traffic can be routed to a corresponding Value Added Service (VAS) or third-party application.
-The HTTP callback mechanism allows third-party applications to be developed independent of the underlying Operating System, Programming Language and Framework.</p>
+<p>The Restcomm CAMEL Gateway makes use of HTTP protocol between the gateway and the third-party applications. Restcomm CAMEL Gateway receives the CAMEL request from SS7 network elements via the GSM Signaling network and then translates these requests to HTTP application.</p>
 </div>
 <div class="paragraph">
-<p>This guide will assist you with installing Restcomm Camel Gateway .
-For more details on configuring and using the platform, please refer to the Restcomm Camel Gateway User Guide.</p>
+<p>This guide will assist you with installing Restcomm CAMEL Gateway.
+For more details on configuring and using the platform, please refer to the Restcomm CAMEL Gateway User Guide.</p>
 </div>
 </div>
 </div>
@@ -23084,8 +23081,8 @@ For more details on configuring and using the platform, please refer to the Rest
 <h2 id="pre-requisites"><a class="anchor" href="#pre-requisites"></a>2. Pre-Requisites</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Restcomm Camel Gateway 's core requirement is Java.
-The following table details the Hardware, Operating System and Software requirements for new installation of Restcomm Camel Gateway .</p>
+<p>Restcomm CAMEL Gateway 's core requirement is Java.
+The following table details the Hardware, Operating System and Software requirements for new installation of Restcomm CAMEL Gateway .</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 1. Installation Pre-Requisites</caption>
@@ -23108,9 +23105,9 @@ The following table details the Hardware, Operating System and Software requirem
 <td class="tableblock halign-left valign-top"><p class="tableblock">The higher the amount of RAM and processing power, the better the throughput that can be achieved</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TDM Hardware</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">For legacy SS7 links, you must have dahdi or dialogic cards installed along with their native libraries.</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TDM Hardware (Optional)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Restcomm CAMEL Gateway supports legacy E1/T1 links via SS7 cards. You must have dahdi or dialogic cards installed along with their native libraries. Restcomm CAMEL Gateway also supports SIGTRAN (M3UA).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In case if you are connecting to core network via SIGTRAN, TDM hardware is not needed.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Operating System</p></td>
@@ -23119,7 +23116,7 @@ The following table details the Hardware, Operating System and Software requirem
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Java</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">You must have a working Java Run-time Environment (JRE) or Java Development Kit (JDK) installed on your system. The only supported version is JAVA 7. Oracle JDK is recommended.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">You must have a working Java Runtime Environment (JRE) or Java Development Kit (JDK) installed on your system and it must be version 7. JDK from Oracle is preferred.</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -23151,7 +23148,7 @@ For more details on setting this variable, please refer to the <a href="#_jboss_
 <p>For legacy SS7 links, you must have relevant SS7 cards installed along with their native libraries.</p>
 </div>
 <div class="paragraph">
-<p>Restcomm Camel Gateway supports <code>dahdi</code> based SS7 cards like <code>diguim</code>, <code>sangoma</code> and <code>dialogic</code> cards.
+<p>Restcomm CAMEL Gateway supports <code>dahdi</code> based SS7 cards like <code>diguim</code>, <code>sangoma</code> and <code>dialogic</code> cards.
 Since <code>dahdi</code> based SS7 crads do not have MTP2/MTP3 support on board they rely on external software to provide these services.
  <code>Dialogic</code> based SS7 cards have on board support for MTP2/MTP3.</p>
 </div>
@@ -23179,13 +23176,13 @@ The following external links point to information that will assist you in settin
 <h2 id="_setup_downloading"><a class="anchor" href="#_setup_downloading"></a>4. Downloading and Installing</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Installing Restcomm Camel Gateway is easy and quick with the binary download.
+<p>Installing Restcomm CAMEL Gateway is easy and quick with the binary download.
 You can either download the binary release or download the source code and build from source.</p>
 </div>
 <div class="sect2">
 <h3 id="_downloading_binary"><a class="anchor" href="#_downloading_binary"></a>4.1. Binary Download and Installation</h3>
 <div class="paragraph">
-<p>The binary release is available for download at the TeleStax Customer Support Portal &amp;THIS.RELEASE_BINARY_URL;link:</p>
+<p>The binary release is available for download at the following link: <a href="https://github.com/RestComm/camelgateway/releases/latest" class="bare">https://github.com/RestComm/camelgateway/releases/latest</a></p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure: Binary Download and Installation</div>
@@ -23210,7 +23207,7 @@ You can either download the binary release or download the source code and build
 <div class="sect2">
 <h3 id="_dir_structure"><a class="anchor" href="#_dir_structure"></a>4.2. Directory Structure</h3>
 <div class="paragraph">
-<p>When you download the binary release, you will notice that the top level directory is named <code>restcomm-camelgw-&lt;version&gt;</code> and immediately underneath, are four sub-directories as explained below:</p>
+<p>When you download the binary release, you will notice that the top level directory is named <code>restcomm-camel-&lt;version&gt;</code> and immediately underneath, are four sub-directories as explained below:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -23223,7 +23220,7 @@ The "simulator" profile is a pre-configured profile to work with jss7-simulator.
 Refer to the Admin Guide for instructions on how to start the server in either of the profiles.</p>
 </li>
 <li>
-<p>resources: Contains SLEE MAP, JDBC and http-client RA jars.</p>
+<p>resources: Contains SLEE MAP, CAP and http-client RA jars.</p>
 </li>
 <li>
 <p>tools: Contains SLEE tools and jss7-simulator.</p>
@@ -23232,11 +23229,13 @@ Refer to the Admin Guide for instructions on how to start the server in either o
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>|- restcomm-camelgw-&lt;version&gt;
+<pre>|- restcomm-camel-<version>
 		|- docs
 				|+ camel
+				|+ container
 				|+ jss7
 				|+ slee
+				|+ tools
 		|- jboss-5.1.0.GA
 				|+ bin    //contains start up and shutdown scripts for the Server and the start up script for Shell.
 				|+ client
@@ -23249,8 +23248,10 @@ Refer to the Admin Guide for instructions on how to start the server in either o
 		|- tools
 				|+ eclipslee
 				|+ jopr-plugin
-				|+ Restcomm-jss7-simulator
 				|+ remote-slee-connection
+				|+ snmp
+				|+ restcomm-jss7-simulator
+				|+ TelScale-SCF-Server
 				|+ twiddle</pre>
 </div>
 </div>
@@ -23258,12 +23259,12 @@ Refer to the Admin Guide for instructions on how to start the server in either o
 <div class="sect2">
 <h3 id="_source_code"><a class="anchor" href="#_source_code"></a>4.3. Setup from Source</h3>
 <div class="paragraph">
-<p>Restcomm Camel Gateway is an open source project and you have the freedom to build from source.
+<p>Restcomm CAMEL Gateway is an open source project and you have the freedom to build from source.
 Building from source means you will always be able to work with the latest features.
-Whilst aspects of Restcomm Camel Gateway are quite  complicated, you may find ways to become contributors.</p>
+Whilst aspects of Restcomm CAMEL Gateway are quite  complicated, you may find ways to become contributors.</p>
 </div>
 <div class="paragraph">
-<p>Restcomm Camel Gateway works with JDK1.7 or above.
+<p>Restcomm CAMEL Gateway works with JDK1.7 or above.
 In addition you must have the following tools installed.</p>
 </div>
 <div class="ulist">
@@ -23275,27 +23276,50 @@ In addition you must have the following tools installed.</p>
 <p><code>Subversion Client 1.4</code> : Instructions for using SVN, including install, can be found at <a href="http://subversion.tigris.org" class="bare">http://subversion.tigris.org</a></p>
 </li>
 <li>
-<p><code>Maven 2.0.9</code> : Instructions for using Maven, including install, can be found at <a href="http://maven.apache.org/" class="bare">http://maven.apache.org/</a></p>
+<p><code>Maven 3.*</code> : Instructions for using Maven, including install, can be found at <a href="http://maven.apache.org/" class="bare">http://maven.apache.org/</a></p>
 </li>
 <li>
 <p><code>Ant 1.7.0</code> : Instructions for using Ant, including install, can be found at <a href="http://ant.apache.org" class="bare">http://ant.apache.org</a></p>
 </li>
 </ul>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_dialogic_setup"><a class="anchor" href="#_dialogic_setup"></a>4.4. Extra setup when usage of Dialogic cards</h3>
+<div class="paragraph">
+<p>If you use only m3ua stack for communicating via SS7 network we can skip this chapter. If you use legacy dialogic cards with or without m3ua you need to follow actions from this chaper.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure: Extra actions for dialogic card usage</div>
+<ol class="arabic">
+<li>
+<p>Copy gct java lib: <code>gctApi.jar</code> from downloaded dialogic drivers (from folder <code>dpk/JAVA</code>) into the folder <code>jboss-5.1.0.GA/server/default/deploy/restcomm-camel-gateway/lib</code>.</p>
+</li>
+<li>
+<p>Copy native lib: <code>libgctjni.so</code> from downloaded dialogic drivers (from folder <code>dpk/64</code> or <code>dpk/32</code> depending on JAVA 64 or 32-bit version) into the folder <code>jboss-5.1.0.GA/bin/META-INF/lib/linux2/x64</code> for JAVA 64-bit or <code>jboss-5.1.0.GA/bin/META-INF/lib/linux2/x86</code> for JAVA 32-bit.</p>
+</li>
+<li>
+<p>Copy jboss mbean config files: <code>jboss-beans.xml</code> and <code>jboss-structure.xml</code> files from <code>template/META-INF-dialogic</code> folder (if we use dialogic boards WITHOUT m3ua) or from <code>template/META-INF-m3ua-dialogic</code> folder (if we use dialogic boards WITH m3ua together) to folder <code>jboss-5.1.0.GA/server/default/deploy/restcomm-camel-gateway/META-INF</code></p>
+</li>
+<li>
+<p>In the copied <code>jboss-beans.xml</code> file you need to find a bean with DialogicMtp3UserPart class and update properties <code>sourceModuleId</code> and <code>destinationModuleId</code> with modules ids that are configured in your dialogc board.</p>
+</li>
+</ol>
+</div>
 <div class="sect3">
-<h4 id="_source_building"><a class="anchor" href="#_source_building"></a>4.3.1. Release Source Code Building</h4>
+<h4 id="_source_building"><a class="anchor" href="#_source_building"></a>4.4.1. Release Source Code Building</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
 <p>Downloading the source code</p>
 <div class="paragraph">
-<p>Use GIT to checkout a specific release source, the base URL is &amp;THIS.TRUNK_SOURCE_CODE_URL;, then add the specific release version.</p>
+<p>Use GIT to checkout a specific release source, the base URL is <a href="https://github.com/Restcomm/camelgateway" class="bare">https://github.com/Restcomm/camelgateway</a>, then add the specific release version.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>[usr]$ git clone https://userid@bitbucket.org/telestax/restcomm-camelgw.git
-[usr]$ cd restcomm-camelgw
-[usr]$ git checkout &lt;version&gt;</code></pre>
+<pre class="highlight"><code>[usr]$ git clone https://github.com/Restcomm/camelgateway.git
+[usr]$ cd restcomm-camelgateway
+[usr]$ git checkout <version></code></pre>
 </div>
 </div>
 </li>
@@ -23303,7 +23327,7 @@ In addition you must have the following tools installed.</p>
 <p>Building the source code</p>
 <div class="paragraph">
 <p>Now that we have the source the next step is to build and install the source.
- Restcomm Camel Gateway uses Maven 2 to build the system.
+ Restcomm CAMEL Gateway uses Maven 3 to build the system.
 You must ensure that <code>JAVA_HOME</code> environment variable is correctly set prior to building the source.
 See <a href="#_jboss_home_setup">Setting the JBOSS_HOME Environment Variable</a></p>
 </div>
@@ -23317,7 +23341,7 @@ See <a href="#_jboss_home_setup">Setting the JBOSS_HOME Environment Variable</a>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_trunk_source_building"><a class="anchor" href="#_trunk_source_building"></a>4.3.2. Development Trunk Source Building</h4>
+<h4 id="_trunk_source_building"><a class="anchor" href="#_trunk_source_building"></a>4.4.2. Development Trunk Source Building</h4>
 <div class="paragraph">
 <p>Similar process as for <a href="#_source_building">Release Source Code Building</a>, the only change is don&#8217;t switch to specific tag.</p>
 </div>
@@ -23350,8 +23374,8 @@ However, you may choose any settings that better fits your setup.</p>
 <div class="sect2">
 <h3 id="_ss7_camel_settings"><a class="anchor" href="#_ss7_camel_settings"></a>5.2. Configuring the Gateway</h3>
 <div class="paragraph">
-<p>Once you have installed Restcomm Camel Gateway , you can go ahead and configure the SS7 Stack and the CAMEL Gateway.
-The Restcomm jSS7 Stack User Guide in the <em class="path">restcomm-camelgw-&lt;version&gt;/docs/ss7/</em> folder will assist you in configuring and managing the SS7 Stack.</p>
+<p>Once you have installed Restcomm CAMEL Gateway , you can go ahead and configure the SS7 Stack and the CAMEL Gateway.
+The Restcomm jSS7 Stack User Guide in the <em class="path">restcomm-camel-&lt;version&gt;/docs/jss7/</em> folder will assist you in configuring and managing the SS7 Stack.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -23369,9 +23393,9 @@ The Restcomm jSS7 Stack User Guide in the <em class="path">restcomm-camelgw-&lt;
 </table>
 </div>
 <div class="paragraph">
-<p>The Restcomm Camel Gateway Admin Guide in the <em class="path">restcomm-camelgw-&lt;version&gt;/docs/camel/</em> folder will assist you in configuring and managing the CAMEL Gateway.
+<p>The Restcomm CAMEL Gateway Admin Guide in the <em class="path">restcomm-camel-&lt;version&gt;/docs/camel/</em> folder will assist you in configuring and managing the CAMEL Gateway.
 To configure and manage both the Stack and the Gateway you must use the Command Line Interface (CLI) tool that comes with the platform.
-For instructions on starting the Shell and help with commands, please refer to the Restcomm  Camel Gateway  Admin Guide.</p>
+For instructions on starting the Shell and help with commands, please refer to the Restcomm  CAMEL Gateway  Admin Guide.</p>
 </div>
 </div>
 </div>
@@ -23380,7 +23404,7 @@ For instructions on starting the Shell and help with commands, please refer to t
 <h2 id="_setup_uninstalling"><a class="anchor" href="#_setup_uninstalling"></a>6. Uninstalling</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If you wish to remove Restcomm Camel Gateway you can do so by deleting the installation directory.</p>
+<p>If you wish to remove Restcomm CAMEL Gateway you can do so by deleting the installation directory.</p>
 </div>
 </div>
 </div>
@@ -23388,12 +23412,12 @@ For instructions on starting the Shell and help with commands, please refer to t
 <h2 id="_jdk_installing_configuring_and_running"><a class="anchor" href="#_jdk_installing_configuring_and_running"></a>Appendix A: Java Development Kit (): Installing, Configuring and Running</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The [app]` Platform` is written in Java; therefore, before running any <code class="app"> server, you must have a working Java Runtime Environment () or Java Development Kit () installed on your system.
-In addition, the JRE or JDK you are using to run [app]</code> must be version 5 or higher<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup>.</p>
+<p>The Restcomm CAMEL Gateway is written in Java; therefore, before running any server, you must have a working Java Runtime Environment () or Java Development Kit () installed on your system.
+In addition, the JRE or JDK you are using to run Restcomm CAMEL Gateway must be version 7.</p>
 </div>
 <div class="paragraph">
 <div class="title">Should I Install the JRE or JDK?</div>
-<p>Although you can run <code class="app"> servers using the Java Runtime Environment, we assume that most users are developers interested in developing Java-based, [app]</code>-driven solutions.
+<p>Although you can run Restcomm CAMEL Gateway using the Java Runtime Environment, we assume that most users are developers interested in developing Java-based, Restcomm CAMEL Gateway-driven solutions.
 Therefore, in this guide we take the tact of showing how to install the full Java Development Kit.</p>
 </div>
 <div class="paragraph">
@@ -23424,7 +23448,7 @@ Barring memory issues, 64-bit hardware with the same relative clock speed and ar
 </div>
 <div class="paragraph">
 <div class="title">Downloading</div>
-<p>You can download the Sun JDK 5.0 (Java 2 Development Kit) from Sun&#8217;s website: <a href="http://java.sun.com/javase/downloads/index_jdk5.jsp" class="bare">http://java.sun.com/javase/downloads/index_jdk5.jsp</a>.
+<p>You can download the Sun JDK 7 (Java 2 Development Kit) from Sun&#8217;s website: <a href="http://java.sun.com/javase/downloads/index_jdk5.jsp" class="bare">http://java.sun.com/javase/downloads/index_jdk5.jsp</a>.
 Click on the <span class="label">Download</span> link next to "JDK 5.0 Update <code class="replaceable">&lt;x&gt;`" (where [replaceable]</code>&lt;x&gt;` is the latest minor version release number). On the next page, select your language and platform (both architecture&#8212;&#8203;whether 32- or 64-bit&#8212;&#8203;and operating system), read and agree to the <code>Java Development Kit 5.0 License Agreement</code>, and proceed to the download page.</p>
 </div>
 <div class="paragraph">
@@ -23633,7 +23657,7 @@ On Unix, it is possible to set <code class="var">JBOSS_HOME</code> as a system-w
 <p>Save and close the <em class="path">.bashrc</em> startup script.</p>
 </li>
 <li>
-<p>You should <code>source</code> the <em class="path">.bashrc</em> script to force your change to take effect, so that <code class="var">JBOSS_HOME</code> becomes set for the current session<sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnote_2" title="View footnote.">2</a>]</sup>.</p>
+<p>You should <code>source</code> the <em class="path">.bashrc</em> script to force your change to take effect, so that <code class="var">JBOSS_HOME</code> becomes set for the current session<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup>.</p>
 <div class="listingblock">
 <div class="content">
 <pre>~]$ source ~/.bashrc</pre>
@@ -23685,15 +23709,12 @@ As another hint, this topmost directory contains a <em class="path">bin</em> sub
 <div id="footnotes">
 <hr>
 <div class="footnote" id="_footnote_1">
-<a href="#_footnoteref_1">1</a>. At this point in time, it is possible to run most  servers, such as the JAIN SLEE, using a Java 6 JRE or JDK. Be aware, however, that presently the XML Document Management Server does not run on Java 6. We suggest checking the  web site, forums or discussion pages if you need to inquire about the status of running the XML Document Management Server with Java 6.
-</div>
-<div class="footnote" id="_footnote_2">
-<a href="#_footnoteref_2">2</a>. Note that any other terminals which were opened prior to your having altered .bashrc will need to source ~/.bashrc as well should they require access to JBOSS_HOME.
+<a href="#_footnoteref_1">1</a>. Note that any other terminals which were opened prior to your having altered .bashrc will need to source ~/.bashrc as well should they require access to JBOSS_HOME.
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-01-04 11:01:21 WET
+Last updated 2017-01-05 18:18:35 WET
 </div>
 </div>
 <footer>
