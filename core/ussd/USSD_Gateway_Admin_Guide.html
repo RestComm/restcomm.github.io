@@ -26266,14 +26266,14 @@ However using this framework is not mandatory and you are free to create your ow
 <div class="sect2">
 <h3 id="_mvn_dependency"><a class="anchor" href="#_mvn_dependency"></a>9.1. Maven dependency</h3>
 <div class="paragraph">
-<p>If you are using maven to build your project define following dependencies to use XML Framework in your project</p>
+<p>If you are using maven to build your project, define following dependencies to use XML Framework in your project</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-xml" data-lang="xml">		&lt;dependency&gt;
 			&lt;groupId&gt;org.mobicents.ussd&lt;/groupId&gt;
 			&lt;artifactId&gt;xml&lt;/artifactId&gt;
-			&lt;version&gt;6.1.5.GA&lt;/version&gt;
+			&lt;version&gt;7.0.0-SNAPSHOT&lt;/version&gt;
 		&lt;/dependency&gt;</code></pre>
 </div>
 </div>
@@ -26286,70 +26286,24 @@ However using this framework is not mandatory and you are free to create your ow
 <td class="content">
 <div class="title">Note</div>
 <div class="paragraph">
-<p>Restcomm maintains the archieve in private repository.
-please add the following in your pom&#8217;s repositories tag</p>
+<p>Telestax maintains the archieve in sonatype repository. Please add the following in your pom&#8217;s repositories tag.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-xml" data-lang="xml">		&lt;repository&gt;
-		  &lt;id&gt;mobicents-releases-repository&lt;/id&gt;
-		  &lt;name&gt;Mobicents Releases Repository&lt;/name&gt;
-		  &lt;url&gt;http://telestax.artifactoryonline.com/telestax/releases&lt;/url&gt;
-		  &lt;releases&gt;
-		    &lt;enabled&gt;true&lt;/enabled&gt;
-		    &lt;updatePolicy&gt;never&lt;/updatePolicy&gt;
-		  &lt;/releases&gt;
-		  &lt;snapshots&gt;
-		    &lt;enabled&gt;false&lt;/enabled&gt;
-		    &lt;updatePolicy&gt;never&lt;/updatePolicy&gt;
-		  &lt;/snapshots&gt;
-		&lt;/repository&gt;
-		&lt;repository&gt;
-		  &lt;id&gt;mobicents-snapshots-repository&lt;/id&gt;
-		  &lt;name&gt;Mobicents Snapshots Repository&lt;/name&gt;
-		  &lt;url&gt;http://telestax.artifactoryonline.com/telestax/snapshots&lt;/url&gt;
-		  &lt;releases&gt;
-		    &lt;enabled&gt;false&lt;/enabled&gt;
-		    &lt;updatePolicy&gt;never&lt;/updatePolicy&gt;
-		  &lt;/releases&gt;
-		  &lt;snapshots&gt;
-		    &lt;enabled&gt;true&lt;/enabled&gt;
-		    &lt;updatePolicy&gt;never&lt;/updatePolicy&gt;
-		  &lt;/snapshots&gt;
+			&lt;id&gt;mobicents-public-repository-group&lt;/id&gt;
+			&lt;name&gt;Mobicens Public Maven Repository Group&lt;/name&gt;
+			&lt;url&gt;https://oss.sonatype.org/content/groups/public/&lt;/url&gt;
+			&lt;layout&gt;default&lt;/layout&gt;
+			&lt;releases&gt;
+				&lt;enabled&gt;true&lt;/enabled&gt;
+				&lt;updatePolicy&gt;never&lt;/updatePolicy&gt;
+			&lt;/releases&gt;
+			&lt;snapshots&gt;
+				&lt;enabled&gt;true&lt;/enabled&gt;
+				&lt;updatePolicy&gt;never&lt;/updatePolicy&gt;
+			&lt;/snapshots&gt;
 		&lt;/repository&gt;</code></pre>
-</div>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<div class="title">Important</div>
-<div class="paragraph">
-<p>Mobicents Releases and Snapshots Repository are password protected.
-Ask support to get your password.</p>
-</div>
-<div class="paragraph">
-<p>Once you have user name and password add following to your servers definition in your maven settings located in M2_HOME/conf/settings.xml</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml"> 	&lt;server&gt;
-      &lt;id&gt;mobicents-releases-repository&lt;/id&gt;
-      &lt;username&gt;xxx&lt;/username&gt;
-      &lt;password&gt;xxx&lt;/password&gt;
-    &lt;/server&gt;
-    &lt;server&gt;
-      &lt;id&gt;mobicents-snapshots-repository&lt;/id&gt;
-      &lt;username&gt;xxx&lt;/username&gt;
-      &lt;password&gt;xxx&lt;/password&gt;
-    &lt;/server&gt;</code></pre>
 </div>
 </div>
 </td>
@@ -27418,7 +27372,7 @@ You must change the value of <code>DATASOURCE_JNDI_NAME</code> (which is hardcod
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-01-05 18:17:24 WET
+Last updated 2017-01-06 10:50:45 WET
 </div>
 </div>
 <footer>
