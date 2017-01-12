@@ -22973,6 +22973,22 @@ The Application needs to provide "capMessagesSize="0" attribute for &lt;dialog&g
 <div class="ulist">
 <ul>
 <li>
+<p>Empty TC-CONTINUE message (without CAP requests or error messages) will be sent only at a dialog intiating state.
+If a dialog is already set and no CAP requests or error messages in HTTP payload then CAMEL GW will not send an empty TC-CONTINUE message to a peer.
+If you do need to send an empty TC-CONTINUE in a dialog set step you need to add <code>sendEmptyContinue="true"</code> attribute</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+	&lt;dialog capMessagesSize="0" sendEmptyContinue="true"&gt;
+&lt;/dialog&gt;</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
 <p>Empty message that will end the CAP Dialog: To end the dialog, the application needs to add a parameter <code>prearrangedEnd="false"</code>.
 The Gateway will send an empty TC-END and close the Dialog.</p>
 </li>
@@ -23620,7 +23636,7 @@ Application can take necessary action, for example either end Dialog or send emp
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-01-09 07:47:04 WET
+Last updated 2017-01-12 10:59:44 WET
 </div>
 </div>
 <footer>
