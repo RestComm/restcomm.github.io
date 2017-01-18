@@ -22802,6 +22802,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#getting-statistic">Getting statistic</a></li>
 <li><a href="#configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine">Configuring Load-balancer and two Restcomm servers on the one local machine</a></li>
 <li><a href="#integration-load-balancer-smpp-with-restcomm-and-nexmo">Integration Load Balancer SMPP with Restcomm and Nexmo</a></li>
+<li><a href="#active-active-setup-and-graceful-upgrades-of-load-balancer">Active-Active setup and Graceful Upgrades of Load Balancer</a></li>
 </ul>
 </div>
 </div>
@@ -23337,6 +23338,7 @@ http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
   &lt;heartbeatInterval&gt;150&lt;/heartbeatInterval&gt;
   &lt;statisticPort&gt;2006&lt;/statisticPort&gt;
   &lt;jmxHtmlAdapterPort&gt;8000&lt;/jmxHtmlAdapterPort&gt;
+  &lt;shutdownTimeout&gt;10000&lt;shutdownTimeout&gt;
 &lt;/common&gt;
 &lt;sip&gt;
   &lt;publicIp&gt;&lt;/publicIp&gt;
@@ -23551,6 +23553,11 @@ When this connection fails or a disconnection instruction is received, an applic
 <dt class="hdlist1">rmiRemoteObjectPort</dt>
 <dd>
 <p>Port on which the Restcomm Load Balancer will use to export the RMI Remote Object.</p>
+</dd>
+<dt class="hdlist1">shutdownTimeout</dt>
+<dd>
+<p>Time after which LB will shutdown completely after getting request
+<a href="http://ip:statisticPort/lbstop" class="bare">http://ip:statisticPort/lbstop</a></p>
 </dd>
 <dt class="hdlist1">httpPort</dt>
 <dd>
@@ -23964,12 +23971,11 @@ in the same terminal in which you started it.</p>
 <a href="http://www.keepalived.org/">keepalived</a> for maintaining active and standby
 Load balancers as it was described
 <a href="http://documentation.telestax.com/core/tutorials/high-availability/Load-Balancer_failover-keepalived.html">here</a>
-then you can gracefully shutdown active Load balancer by using http request
-<a href="http://host:statisticPort/lbstop" class="bare">http://host:statisticPort/lbstop</a> for upgrades without loosing calls
-and redirect new calls to another active LB. The request will turn off the
-statistic port. The keepalived utility checks the statistic port and then
-switches traffic to the standby Load balancer if the statistic port is turned off.
-After two seconds the Load balancer finally  stops.
+then you can shutdown active Load balancer by using http request
+<a href="http://host:statisticPort/lbstop" class="bare">http://host:statisticPort/lbstop</a> for upgrades and redirect new calls to another LB.
+The request will turn off the statistic port. The keepalived utility checks the
+statistic port and then switches traffic to the standby Load balancer if the statistic
+port is turned off. After two seconds the Load balancer finally  stops.
 .</p>
 </div>
 <div class="paragraph">
@@ -24811,10 +24817,271 @@ and you can see next line:</p>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="active-active-setup-and-graceful-upgrades-of-load-balancer"><a class="anchor" href="#active-active-setup-and-graceful-upgrades-of-load-balancer"></a>Active-Active setup and Graceful Upgrades of Load Balancer</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="http://www.keepalived.org/">Keepalived service</a> provides possibility graceful
+shutdown of the Load balancer using health-checks and using virtual IP
+on which client/server from external/internal side sends message. The Load balancer
+gets this message on its real IP and transfer forward. So we can use two LBs in same
+time which controlled one keepalived service.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/Active-Active.png" alt="Active Active">
+</div>
+<div class="title">Figure 8. Active-Active Load balancer diagram</div>
+</div>
+<div class="paragraph">
+<p>If LB2 will be gracefully shutdown via http request
+<a href="http://ipLoadbalancer:statisticPort/lbstop" class="bare">http://ipLoadbalancer:statisticPort/lbstop</a> (<a href="http://10.0.0.20:2006/lbstop" class="bare">http://10.0.0.20:2006/lbstop</a>), than the keepalived service
+will switch virtual IPs 10.0.0.200 and 172.21.0.200 of second load balancer (LB2)
+to other active (LB1) and all traffic which client will send to virtual IP 10.0.0.200
+will be redirected to LB1.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/Active-Active-Graceful-Shutdown.png" alt="Active Active Graceful Shutdown">
+</div>
+<div class="title">Figure 9. The graceful shutdown of Load balancer diagram</div>
+</div>
+<div class="paragraph">
+<p>For configuring of Load balancer you need setup keepalived service and set
+additional properties in lb-configuration.xml file.</p>
+</div>
+<div class="paragraph">
+<p>First you need install keepalived service on your machines on which you have
+the Load balancers.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>sudo apt-get install keepalived</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The service looks for its configuration files in the /etc/keepalived directory.
+Create that directory and file on both etc/keepalived/keepalived.conf.</p>
+</div>
+<div class="paragraph">
+<p>keepalived.conf on machine with LB1:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre> vrrp_script chk_lb_ext {
+ script  "/home/user/lbhealthcheck.sh"
+ interval 1
+ fall 1
+ rise 1
+}
+ vrrp_script chk_lb_int {
+  script  "/home/user/lbhealthcheck.sh"
+  interval 1
+  fall 10
+  rise 1
+}
+ vrrp_instance VI_1 {
+    state MASTER
+    interface eth0
+    virtual_router_id 51
+    priority 150
+    advert_int 1
+    authentication {
+    auth_type AH
+    auth_pass k@l!ve1
+    }
+    virtual_ipaddress {
+    10.0.0.100/24
+    }
+    track_script {
+     chk_lb_ext
+     }
+}
+vrrp_instance VI_2 {
+   state MASTER
+   interface eth1
+   virtual_router_id 52
+   priority 150
+   advert_int 1
+   authentication {
+   auth_type AH
+   auth_pass k@l!ve1
+   }
+   virtual_ipaddress {
+   172.21.0.100/24
+   }
+   track_script {
+    chk_lb_int
+    }
+}
+vrrp_instance VI_3 {
+    state BACKUP
+    interface eth0
+    virtual_router_id 53
+    priority 100
+    advert_int 1
+    authentication {
+    auth_type AH
+    auth_pass k@l!ve3
+    }
+    virtual_ipaddress {
+    10.0.0.200/24
+    }
+    track_script {
+     chk_lb_ext
+     }
+}
+vrrp_instance VI_4 {
+    state BACKUP
+    interface eth1
+    virtual_router_id 54
+    priority 100
+    advert_int 1
+    authentication {
+    auth_type AH
+    auth_pass k@l!ve3
+    }
+    virtual_ipaddress {
+    172.21.0.200/24
+    }
+    track_script {
+     chk_lb_int
+     }
+}
+virtual_server 10.0.0.100 {
+    delay_loop 10
+    protocol TCP
+    lb_algo rr
+    lb_kind NAT
+    persistence_timeout 7200
+    real_server 10.0.0.10 {
+    }
+}
+virtual_server 172.21.0.100 {
+    delay_loop 10
+    protocol TCP
+    lb_algo rr
+    lb_kind NAT
+    persistence_timeout 7200
+    real_server 172.21.0.10 {
+    }
+}
+ virtual_server 10.0.0.200 {
+    delay_loop 10
+    protocol TCP
+    lb_algo rr
+    lb_kind NAT
+    persistence_timeout 7200
+    real_server 10.0.0.10 {
+    }
+}
+virtual_server 172.21.0.200 {
+   delay_loop 10
+   protocol TCP
+   lb_algo rr
+   lb_kind NAT
+   persistence_timeout 7200
+   real_server 172.21.0.10 {
+   }
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then we define the symmetric configuration file on second machine. VI_3 &amp; VI_4
+are in MASTER state with a higher priority 150 to start with a stable state.
+Symmetrically VI_1 &amp; VI_2 are in default BACKUP state with lower priority of 100.
+virtual_server should be 10.0.0.200, 172.21.0.200 and real_server 10.0.0.20,
+172.21.0.20 accordingly. Other parameters should be same.
+Also you need create file lbhealthcheck.sh somewhere(for example /home/user/),
+which will be check is opened statistic port:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>port=$(nc -z 172.21.0.220 2006;echo $?)
+if [ $port -eq 1 ]; then
+  exit 1
+else
+  exit 0
+fi</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next you need set IP Load balancer adresses and ports for example next
+configuration for LB1:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;external&gt;
+   &lt;host&gt;10.0.0.10&lt;/host&gt;
+   &lt;ipLoadBalancerAddress&gt;10.0.0.100,10.0.0.200&lt;/ipLoadBalancerAddress&gt;
+   &lt;udpPort&gt;5060&lt;/udpPort&gt;
+   &lt;tcpPort&gt;5060&lt;/tcpPort&gt;
+   &lt;tlsPort&gt;5061&lt;/tlsPort&gt;
+   &lt;wsPort&gt;5062&lt;/wsPort&gt;
+   &lt;wssPort&gt;5063&lt;/wssPort&gt;
+   &lt;ipLoadBalancerUdpPort&gt;5060&lt;/ipLoadBalancerUdpPort&gt;
+   &lt;ipLoadBalancerTcpPort&gt;5060&lt;/ipLoadBalancerTcpPort&gt;
+   &lt;ipLoadBalancerTlsPort&gt;5061&lt;/ipLoadBalancerTlsPort&gt;
+   &lt;ipLoadBalancerWsPort&gt;5062&lt;/ipLoadBalancerWsPort&gt;
+   &lt;ipLoadBalancerWssPort&gt;5063&lt;/ipLoadBalancerWssPort&gt;
+ &lt;/external&gt;
+ &lt;internal&gt;
+   &lt;host&gt;172.21.0.10&lt;/host&gt;
+   &lt;ipLoadBalancerAddress&gt;172.21.0.100,172.21.0.200&lt;/ipLoadBalancerAddress&gt;
+   &lt;udpPort&gt;5080&lt;/udpPort&gt;
+   &lt;tcpPort&gt;5080&lt;/tcpPort&gt;
+   &lt;tlsPort&gt;5081&lt;/tlsPort&gt;
+   &lt;wsPort&gt;5082&lt;/wsPort&gt;
+   &lt;wssPort&gt;5083&lt;/wssPort&gt;
+   &lt;ipLoadBalancerUdpPort&gt;5080&lt;/ipLoadBalancerUdpPort&gt;
+   &lt;ipLoadBalancerTcpPort&gt;5080&lt;/ipLoadBalancerTcpPort&gt;
+   &lt;ipLoadBalancerTlsPort&gt;5081&lt;/ipLoadBalancerTlsPort&gt;
+   &lt;ipLoadBalancerWsPort&gt;5082&lt;/ipLoadBalancerWsPort&gt;
+   &lt;ipLoadBalancerWssPort&gt;5083&lt;/ipLoadBalancerWssPort&gt;
+ &lt;/internal&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Also you need set next tags:
+in &lt;sip&gt; section</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;useIpLoadBalancerAddressInViaHeaders&gt;true&lt;/useIpLoadBalancerAddressInViaHeaders&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>in &lt;common&gt; section</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;shutdownTimeout&gt;10000&lt;shutdownTimeout&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>in &lt;sipStack&gt; section</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;property&gt;
+   	&lt;key&gt;gov.nist.javax.sip.NEVER_ADD_RECEIVED_RPORT&lt;/key&gt;
+	&lt;value&gt;true&lt;/value&gt;
+&lt;/property&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Same property should be set for LB2.</p>
+</div>
+<div class="paragraph">
+<p>On server side you should also set
+sip stack property gov.nist.javax.sip.NEVER_ADD_RECEIVED_RPORT=true</p>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-01-17 10:51:44 WET
+Last updated 2017-01-18 10:54:20 WET
 </div>
 </div>
 <footer>
