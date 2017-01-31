@@ -22892,7 +22892,7 @@ The CDR generated in the text file is of the below format:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>SIMBIT_DATE,ADDR_SRC_DIGITS,ADDR_SRC_TON,ADDR_SRC_NPI,ADDR_DST_DIGITS,ADDR_DST_TON,ADDR_DST_NPI,Message_Delivery_Status,ORIG_SYSTEM_ID,MESSAGE_ID,NNN_DIGITS,IMSI,CORR_ID,First 20 characters of SMS, Reason_For_Failure</pre>
+<pre>DELIVERY_DATE,SIMBIT_DATE,ADDR_SRC_DIGITS,ADDR_SRC_TON,ADDR_SRC_NPI,ADDR_DST_DIGITS,ADDR_DST_TON,ADDR_DST_NPI,Message_Delivery_Status,ORIG_SYSTEM_ID,MESSAGE_ID,NNN_DIGITS,IMSI,CORR_ID,ORIGINATOR_SCCP_ADDRESS,ORIG_NETWORK_ID,NETWORK_ID,MtServiceCenterAddress,First 20 characters of SMS, Reason_For_Failure</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -22909,6 +22909,10 @@ The CDR generated in the text file is of the below format:</p>
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<div class="title">DELIVERY_DATE</div>
+<p>Time when CDR is created (and is equals the time when the message delivery is succeded / failed at SMSC Gateway)</p>
 </div>
 <div class="paragraph">
 <div class="title">SIMBIT_DATE</div>
@@ -23010,8 +23014,12 @@ It does not indicate if a resend will be attempted or not.</p>
 </dl>
 </div>
 <div class="paragraph">
-<p>.
-The last field in the CDR generated is <code>Reason_For_Failure</code>, which records the reason for delivery failure and is empty if the delivery is successful.
+<div class="title">MtServiceCenterAddress</div>
+<p>Local SMSC GW address (GT) that is used in MT procedure (for mobile terminated messages).</p>
+</div>
+<div class="paragraph">
+<div class="title">Reason_For_Failure</div>
+<p>The last field in the CDR generated is <code>Reason_For_Failure</code>, which records the reason for delivery failure and is empty if the delivery is successful.
 The possible delivery failure cases are explained below.</p>
 </div>
 <div class="dlist">
@@ -23094,7 +23102,7 @@ This is an abnormal case and implies MAP incompatibility.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-01-29 10:54:05 WET
+Last updated 2017-01-31 10:51:05 WET
 </div>
 </div>
 <footer>

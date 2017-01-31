@@ -23133,7 +23133,7 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_ID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">BIGINT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A unique message ID assigned by SMSC. Max value is 10 000 000 000 (because of limitation of delivery receipts IDs), so this value may repeats in some big time.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A unique message ID assigned by SMSC. Max value is 10 000 000 000 (because of limitation of delivery receipts IDs), so this value may repeats in some big time. This messageId is used in SMPP protocol at the leg when a client is sending (submitting) a message to SMSC GW.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MO_MESSAGE_REF</p></td>
@@ -23148,7 +23148,7 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ORIG_SYSTEM_ID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP systemId of origination ESME for SMPP originated messages, HTTP account name for HTTP messages, empty for MO, HR and SIP messages.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP systemId of origination ESME for SMPP originated messages, HTTP account name for HTTP originated messages, empty for MO, HR and SIP originated messages.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">DEST_CLUSTER_NAME</p></td>
@@ -23248,17 +23248,17 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">IMSI</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">From SRI response.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IMSI of a mobile station (in SS7 network). This value is obtained after a successful SRI request. SRI request is executed in two cases: a) when delivering messages into SS7 network (MT procedure), b) when submitting (receiving) of a message from SS7 network b Home Routing procedure (if a request to a local HLR was made).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CORR_ID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This field is used for keeping of correlationId value for home routing procedure. This table will keep this value when StoreAndForward mode for time between storing of message and scheduling it for delivering.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This field is used for keeping of correlationId value for home routing procedure (SS7 originating messages). CorrelationId value plays a role of a fake “IMSI” when remote SMSC GW sends a short message to SMSC GW. Empty for messages that come to SMSC GW not via a Home Routing procedure. This table will keep this value when StoreAndForward mode for time between storing of message and scheduling it for delivering.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">NNN_DIGITS</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NetworkNodeNumber = MSC that serves MS – from SRI response.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NetworkNodeNumber = MSC/VLR address that serves a mobile station (in SS7 network). This value is obtained after a successful SRI request. SRI request is executed in two cases: a) when delivering messages into SS7 network (MT procedure), b) when submitting (receiving) of a message from SS7 network b Home Routing procedure (if a request to a local HLR was made).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">NNN_AN</p></td>
@@ -23429,7 +23429,7 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_ID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">BIGINT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A unique message ID assigned by SMSC. Max value is 10 000 000 000 (because of limitation of delivery receipts IDs), so this value may repeats in some big time.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A unique message ID assigned by SMSC. Max value is 10 000 000 000 (because of limitation of delivery receipts IDs), so this value may repeats in some big time. This messageId is used in SMPP protocol at the leg when a client is sending (submitting) a message to SMSC GW.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MO_MESSAGE_REF</p></td>
@@ -23444,7 +23444,7 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ORIG_SYSTEM_ID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP systemId of origination ESME for SMPP originated messages, HTTP account name for HTTP messages, empty for MO, HR and SIP messages.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP systemId of origination ESME for SMPP originated messages, HTTP account name for HTTP originated messages, empty for MO, HR and SIP originated messages.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">DEST_CLUSTER_NAME</p></td>
@@ -23544,17 +23544,17 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">IMSI</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">From SRI response.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IMSI of a mobile station (in SS7 network). This value is obtained after a successful SRI request. SRI request is executed in two cases: a) when delivering messages into SS7 network (MT procedure), b) when submitting (receiving) of a message from SS7 network b Home Routing procedure (if a request to a local HLR was made).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CORR_ID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This field is used for keeping of correlationId value for home routing procedure. This table will keep this value for logging purpose.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This field is used for keeping of correlationId value for home routing procedure (SS7 originating messages). CorrelationId value plays a role of a fake “IMSI” when remote SMSC GW sends a short message to SMSC GW. Empty for messages that come to SMSC GW not via a Home Routing procedure. This table will keep this value for logging purpose.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">NNN_DIGITS</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NetworkNodeNumber = MSC that serves MS – from SRI response.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NetworkNodeNumber = MSC/VLR address that serves a mobile station (in SS7 network). This value is obtained after a successful SRI request. SRI request is executed in two cases: a) when delivering messages into SS7 network (MT procedure), b) when submitting (receiving) of a message from SS7 network b Home Routing procedure (if a request to a local HLR was made).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">NNN_AN</p></td>
@@ -23714,7 +23714,7 @@ The next release of Restcomm SMSC will feature a reporting section and also the 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-01-29 10:54:05 WET
+Last updated 2017-01-31 10:51:05 WET
 </div>
 </div>
 <footer>
