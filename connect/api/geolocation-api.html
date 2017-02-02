@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Restcomm API – Geolocation</title>
+<title>Restcomm API â€“ Geolocation</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22556,10 +22556,6 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 			})();
 		</script>
 		<!-- Google Analytics end -->
-		<!-- Start of HubSpot Embed Code -->
-		<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/1877839.js"></script>
-		<!-- End of HubSpot Embed Code -->
-
 <header class=" has_top scroll_header_top_area dark stick scrolled_not_transparent page_header">
     <div class="header_inner clearfix">
 
@@ -22757,10 +22753,13 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 	</div>
 
 </header>
+<!-- Start of HubSpot Embed Code -->
+<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/1877839.js"></script>
+<!-- End of HubSpot Embed Code -->
 </head>
 <body class="article">
 <div id="header">
-<h1>Restcomm API – Geolocation</h1>
+<h1>Restcomm API â€“ Geolocation</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -22808,44 +22807,36 @@ applications.</p>
 </div>
 <div class="paragraph">
 <p>The API aims to cater either IP Geolocation (from Restcomm SDKs) or
-cellular telephony Geolocation (from Mobile Network Operator´s core and
+cellular telephony Geolocation (from Mobile Network OperatorÂ´s core and
 radio access networks, either by SS7 MAP or LTE Diameter operations) in
 terms of API.</p>
 </div>
 <div class="paragraph">
 <p>The use cases this API aims covering are:</p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Notify Restcomm the current location of client X or certain
-MSISDN (e.g. iWatch cardio activity alarm –2015 TADHack Chicago winner-,
+<div class="paragraph">
+<p>1.Â Â Â Â Â  Notify Restcomm the current location of client X or certain
+MSISDN (e.g. iWatch cardio activity alarm â€“2015 TADHack Chicago winner-,
 E911, friend/family finder, etc.).</p>
-</li>
-<li>
-<p>Notify Restcomm if client X or certain MSISDN enters or exits a
-geofence. Use cases like mobile advertising use cases apply to this type of Geolocation service.</p>
-</li>
-<li>
-<p>Notify Restcomm if client X is within N meters from client Y. Many use cases apply to this type of Geolocation service, namely:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Parental control: Notify a parent when their child/children are further than X metres away.</p>
-</li>
-<li>
-<p>Hanging out: Notify friends when they are within X Kms.</p>
-</li>
-<li>
-<p>Business matching: at a conference, notify attendees of other attendees within range who also have related interest based on LinkedIn profile.</p>
-</li>
-<li>
-<p>Court restraining order: when someone is legally not allowed to be writhing certain range of another individual.</p>
-</li>
-</ul>
 </div>
-</li>
-</ol>
+<div class="paragraph">
+<p>2.Â Â Â Â Â  Notify Restcomm if client X or certain MSISDN enters or exits a
+geofence. Use cases like mobile advertising use cases apply to this type of Geolocation service.</p>
+</div>
+<div class="paragraph">
+<p>3.Â Â Â Â Â  Notify Restcomm if client X is within N meters from client Y. Many use cases apply to this type of Geolocation service, namely:</p>
+</div>
+<div class="paragraph">
+<p>*Â Â Â Â Â Â Â Â Â Â Parental control: Notify a parent when their child/children are further than X metres away.</p>
+</div>
+<div class="paragraph">
+<p>*Â Â Â Â Â Â Â Â Â Â Hanging out: Notify friends when they are within X Kms.</p>
+</div>
+<div class="paragraph">
+<p>*Â Â Â Â Â Â Â Â Â Â Business matching: at a conference, notify attendees of other attendees within range who also have related interest based on LinkedIn profile.</p>
+</div>
+<div class="paragraph">
+<p>*Â Â Â Â Â Â Â Â Â Â Court restraining order: when someone is legally not allowed to be writhing certain range of another individual.</p>
 </div>
 <div class="paragraph">
 <p>Other use cases will be covered in future iterations of the API based on
@@ -22929,7 +22920,7 @@ client, phone number or device that initiated the Geolocation service.</p></td>
 <div class="paragraph">
 <p><strong><em>Immediate</em></strong>: after a successful geolocation attempt has been
 delivered with its associated timestamp, the location information and
-timestamp are referred to as the ‘current location’ at that point in
+timestamp are referred to as the â€˜current locationâ€™ at that point in
 time.</p>
 </div>
 <div class="paragraph">
@@ -22978,12 +22969,12 @@ precision is not reliable due to high error margin.</p>
 <div class="paragraph">
 <p><strong><em>last-known</em></strong>: when location information could not be retrieved from
 the network but there is a previous persisted location information for
-the targeted ‘DeviceIdentifier’ of this Geolocation service.</p>
+the targeted â€˜DeviceIdentifierâ€™ of this Geolocation service.</p>
 </div>
 <div class="paragraph">
 <p><strong><em>failed</em></strong>: when location information could not be retrieved from the
-network and there’s no previous location information persisted for the
-targeted ‘DeviceIdentifier’ of this Geolocation service, or when an
+network and thereâ€™s no previous location information persisted for the
+targeted â€˜DeviceIdentifierâ€™ of this Geolocation service, or when an
 attempt to update this Geolocation service was malformed or not API
 compliant. In the latter situation, the record persists, but previous
 geolocation information is erased (expecting a correct geolocation
@@ -22997,7 +22988,7 @@ not authorizing this kind of location requests. A record is persisted
 for security and analytics purposes.</p>
 </div>
 <div class="paragraph">
-<p><strong><em>rejected</em></strong>: when the location request does not meet the API’s
+<p><strong><em>rejected</em></strong>: when the location request does not meet the APIâ€™s
 requirements for mandatory parameters (or some of them are missing), or
 prohibited parameters are included for a certain type of Geolocation. No
 records are persisted in this eventuality.</p>
@@ -23045,39 +23036,27 @@ Earth&#8217;s surface.</p>
 <div class="paragraph">
 <p>Latitude valid formats include:</p>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>  N43°38'19.39"</pre>
+<div class="paragraph">
+<p>Â  N43Â°38'19.39"</p>
 </div>
+<div class="paragraph">
+<p>Â  43Â°38'19.39"N</p>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>  43°38'19.39"N</pre>
+<div class="paragraph">
+<p>Â  43 38 19.39</p>
 </div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>  43 38 19.39</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>  43.63871944444445</pre>
-</div>
+<div class="paragraph">
+<p>Â  43.63871944444445</p>
 </div>
 <div class="paragraph">
 <p>If expressed in decimal form, northern latitudes are positive, southern
 latitudes are negative. The following longitude variants are also allowed:</p>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>  N43 38 19.39</pre>
+<div class="paragraph">
+<p>Â  N43 38 19.39</p>
 </div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>  43 38 19.39N</pre>
-</div>
+<div class="paragraph">
+<p>Â  43 38 19.39N</p>
 </div>
 <div class="paragraph">
 <p><strong><em>DeviceLongitude</em></strong>: an estimate of the location of the phone number,
@@ -23091,39 +23070,27 @@ Earth&#8217;s surface.</p>
 <div class="paragraph">
 <p>Longitude valid formats include:</p>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>  W116°14'28.86"</pre>
+<div class="paragraph">
+<p>Â  W116Â°14'28.86"</p>
 </div>
+<div class="paragraph">
+<p>Â  116Â°14'28.86"W</p>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>  116°14'28.86"W</pre>
+<div class="paragraph">
+<p>Â  -116 14 28.86</p>
 </div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>  -116 14 28.86</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>  -116.2413513485235</pre>
-</div>
+<div class="paragraph">
+<p>Â  -116.2413513485235</p>
 </div>
 <div class="paragraph">
 <p>If expressed in decimal form, eastern longitudes are positive, western
 longitudes are negative. The following longitude variants are also allowed:</p>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>  W116 14 28.86</pre>
+<div class="paragraph">
+<p>Â  W116 14 28.86</p>
 </div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>  116 14 28.86W</pre>
-</div>
+<div class="paragraph">
+<p>Â  116 14 28.86W</p>
 </div>
 <div class="paragraph">
 <p><strong><em>Accuracy</em></strong>: quality of location information or estimated precision
@@ -23142,22 +23109,22 @@ closest closest WiFi Access Point.</p>
 <p><strong><em>FormattedAddress</em>:</strong> refers to the civic location of the phone
 number, device/beacon or closest WiFi Access Point, expressed as civic
 data (e.g. floor, street number, city.) It shall be represented in a
-well-defined universal format, compliant with Google Geolocation API’s
-"formatted_address” json/xml field.</p>
+well-defined universal format, compliant with Google Geolocation APIâ€™s
+"formatted_addressâ€� json/xml field.</p>
 </div>
 <div class="paragraph">
 <p><strong><em>LocationTimestamp</em></strong>: indication of when the geolocation information
 was gathered (informed as a time stamp);</p>
 </div>
 <div class="paragraph">
-<p><strong><em>EventGeofenceLatitude:</em></strong> refers to the geographic coordinates’
+<p><strong><em>EventGeofenceLatitude:</em></strong> refers to the geographic coordinatesâ€™
 latitude of a specific location. Used to notify when a device is within
-a certain distance (in metres) from that specific location. Some format used as for “DeviceLatitude” parameter.</p>
+a certain distance (in metres) from that specific location. Some format used as for â€œDeviceLatitudeâ€� parameter.</p>
 </div>
 <div class="paragraph">
-<p><strong><em>EventGeofenceLongitude:</em></strong> refers to the geographic coordinates’
+<p><strong><em>EventGeofenceLongitude:</em></strong> refers to the geographic coordinatesâ€™
 longitude of a specific location. Used to notify when a device is within
-a certain distance (in metres) from that specific location. WSome format used as for “DeviceLongitude” parameter.</p>
+a certain distance (in metres) from that specific location. WSome format used as for â€œDeviceLongitudeâ€� parameter.</p>
 </div>
 <div class="paragraph">
 <p><strong><em>Radius:</em></strong> distance in meters from the Geofence geographic coordinates.</p>
@@ -23187,9 +23154,9 @@ Galileo).</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">LastGeolocationResponse</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Indication whether “GeolocationData”
+<td class="tableblock halign-left valign-top"><p class="tableblock">Indication whether â€œGeolocationDataâ€�
 values provided are  the last to be gathered in this Geolocation
-request (true/yes) or further are expected to be sent asynchronously (false/no) to the “StatusCallback” URL.</p></td>
+request (true/yes) or further are expected to be sent asynchronously (false/no) to the â€œStatusCallbackâ€� URL.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cause</p></td>
@@ -23321,29 +23288,29 @@ positioning procedure:</p>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;RestcommResponse&gt;
-  &lt;Geolocation&gt;
-   &lt;Sid&gt;GLfa51b104354440b09213d04752f50271&lt;/Sid&gt;
-   &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateCreated&gt;
-   &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:36:12 -0500&lt;/DateUpdated&gt;
-   &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateExecuted&gt;
-   &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
-   &lt;DeviceIdentifier&gt;client:david&lt;/DeviceIdentifier&gt;
-   &lt;GeolocationType&gt;immediate&lt;/GeolocationType&gt;
-   &lt;ResponseStatus&gt;partially-successful&lt;/ResponseStatus&gt;
-   &lt;GeolocationData&gt;
-       &lt;DeviceLatitude&gt;33.786442&lt;/DeviceLatitude&gt;
-       &lt;DeviceLongitude&gt;-84.38103&lt;/DeviceLongitude&gt;
-       &lt;PhysicalAddress&gt;00-41-76-C0-00-D1&lt;/PhysicalAddress&gt;
-       &lt;InternetAddress&gt;65.17.24.177&lt;/InternetAddress&gt;
-       &lt;FormattedAddress&gt;187 14th St NE Atlanta, GA 30309-2674,
-       USA&lt;/FormattedAddress&gt;
-       &lt;LocationTimestamp&gt;Mon, 25 Jan 2016 16:36:12 -0500&lt;/LocationTimestamp&gt;
-   &lt;/GeolocationData&gt;
-   &lt;GeolocationPositioningType&gt;last-known&lt;/GeolocationPositioningType&gt;
-   &lt;LastGeolocationResponse&gt;false&lt;/LastGeolocationResponse&gt;
-   &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
-   &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate/GLfa51b104354440b09213d04752f50271&lt;/Uri&gt;
-  &lt;/Geolocation&gt;
+Â  &lt;Geolocation&gt;
+Â Â  &lt;Sid&gt;GLfa51b104354440b09213d04752f50271&lt;/Sid&gt;
+Â Â  &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateCreated&gt;
+Â Â  &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:36:12 -0500&lt;/DateUpdated&gt;
+Â Â  &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateExecuted&gt;
+Â Â  &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
+Â Â  &lt;DeviceIdentifier&gt;client:david&lt;/DeviceIdentifier&gt;
+Â Â  &lt;GeolocationType&gt;immediate&lt;/GeolocationType&gt;
+Â Â  &lt;ResponseStatus&gt;partially-successful&lt;/ResponseStatus&gt;
+Â Â  &lt;GeolocationData&gt;
+Â Â Â Â Â Â  &lt;DeviceLatitude&gt;33.786442&lt;/DeviceLatitude&gt;
+Â Â Â Â Â Â  &lt;DeviceLongitude&gt;-84.38103&lt;/DeviceLongitude&gt;
+Â Â Â Â Â Â  &lt;PhysicalAddress&gt;00-41-76-C0-00-D1&lt;/PhysicalAddress&gt;
+Â Â Â Â Â Â  &lt;InternetAddress&gt;65.17.24.177&lt;/InternetAddress&gt;
+Â Â Â Â Â Â  &lt;FormattedAddress&gt;187 14th St NE Atlanta, GA 30309-2674,
+Â Â Â Â Â Â  USA&lt;/FormattedAddress&gt;
+Â Â Â Â Â Â  &lt;LocationTimestamp&gt;Mon, 25 Jan 2016 16:36:12 -0500&lt;/LocationTimestamp&gt;
+Â Â  &lt;/GeolocationData&gt;
+Â Â  &lt;GeolocationPositioningType&gt;last-known&lt;/GeolocationPositioningType&gt;
+Â Â  &lt;LastGeolocationResponse&gt;false&lt;/LastGeolocationResponse&gt;
+Â Â  &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
+Â Â  &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate/GLfa51b104354440b09213d04752f50271&lt;/Uri&gt;
+Â  &lt;/Geolocation&gt;
 &lt;/RestcommResponse&gt;</pre>
 </div>
 </div>
@@ -23356,29 +23323,29 @@ not accomplished yet):</p>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;RestcommResponse&gt;
-  &lt;Geolocation&gt;
-   &lt;Sid&gt;GLfa51b104354440b09213d04752f50271&lt;/Sid&gt;
-   &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateCreated&gt;
-   &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:36:25 -0500&lt;/DateUpdated&gt;
-   &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateExecuted&gt;
-   &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
-   &lt;DeviceIdentifier&gt;client:david&lt;/DeviceIdentifier&gt;
-   &lt;GeolocationType&gt;immediate&lt;/GeolocationType&gt;
-   &lt;ResponseStatus&gt;partially-successful&lt;/ResponseStatus&gt;
-   &lt;GeolocationData&gt;
-       &lt;DeviceLatitude&gt;33.770002&lt;/DeviceLatitude&gt;
-       &lt;DeviceLongitude&gt;-84.5200998&lt;/DeviceLongitude&gt;
-       &lt;Accuracy&gt;150&lt;/Accuracy&gt;
-       &lt;PhysicalAddress&gt;00-41-76-C0-00-D1&lt;/PhysicalAddress&gt;
-       &lt;InternetAddress&gt;65.17.21.37&lt;/InternetAddress&gt;
-       &lt;FormattedAddress&gt;37 5th St NE Atlanta, GA 30310-2179, USA&lt;/FormattedAddress&gt;
-       &lt;LocationTimestamp&gt;Mon, 25 Jan 2016 16:36:25 -0500&lt;/LocationTimestamp&gt;
-   &lt;/GeolocationData&gt;
-   &lt;GeolocationPositioningType&gt;Network&lt;/GeolocationPositioningType&gt;
-   &lt;LastGeolocationResponse&gt;false&lt;/LastGeolocationResponse&gt;
-   &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
-   &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate/GLfa51b104354440b09213d04752f50271&lt;/Uri&gt;
-  &lt;/Geolocation&gt;
+Â  &lt;Geolocation&gt;
+Â Â  &lt;Sid&gt;GLfa51b104354440b09213d04752f50271&lt;/Sid&gt;
+Â Â  &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateCreated&gt;
+Â Â  &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:36:25 -0500&lt;/DateUpdated&gt;
+Â Â  &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateExecuted&gt;
+Â Â  &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
+Â Â  &lt;DeviceIdentifier&gt;client:david&lt;/DeviceIdentifier&gt;
+Â Â  &lt;GeolocationType&gt;immediate&lt;/GeolocationType&gt;
+Â Â  &lt;ResponseStatus&gt;partially-successful&lt;/ResponseStatus&gt;
+Â Â  &lt;GeolocationData&gt;
+Â Â Â Â Â Â  &lt;DeviceLatitude&gt;33.770002&lt;/DeviceLatitude&gt;
+Â Â Â Â Â Â  &lt;DeviceLongitude&gt;-84.5200998&lt;/DeviceLongitude&gt;
+Â Â Â Â Â Â  &lt;Accuracy&gt;150&lt;/Accuracy&gt;
+Â Â Â Â Â Â  &lt;PhysicalAddress&gt;00-41-76-C0-00-D1&lt;/PhysicalAddress&gt;
+Â Â Â Â Â Â  &lt;InternetAddress&gt;65.17.21.37&lt;/InternetAddress&gt;
+Â Â Â Â Â Â  &lt;FormattedAddress&gt;37 5th St NE Atlanta, GA 30310-2179, USA&lt;/FormattedAddress&gt;
+Â Â Â Â Â Â  &lt;LocationTimestamp&gt;Mon, 25 Jan 2016 16:36:25 -0500&lt;/LocationTimestamp&gt;
+Â Â  &lt;/GeolocationData&gt;
+Â Â  &lt;GeolocationPositioningType&gt;Network&lt;/GeolocationPositioningType&gt;
+Â Â  &lt;LastGeolocationResponse&gt;false&lt;/LastGeolocationResponse&gt;
+Â Â  &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
+Â Â  &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate/GLfa51b104354440b09213d04752f50271&lt;/Uri&gt;
+Â  &lt;/Geolocation&gt;
 &lt;/RestcommResponse&gt;</pre>
 </div>
 </div>
@@ -23390,29 +23357,29 @@ accuracy is accomplished through GPS assistance:</p>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;RestcommResponse&gt;
-  &lt;Geolocation&gt;
-   &lt;Sid&gt;GLfa51b104354440b09213d04752f50271&lt;/Sid&gt;
-   &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateCreated&gt;
-   &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:38:24 -0500&lt;/DateUpdated&gt;
-   &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateExecuted&gt;
-   &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
-   &lt;DeviceIdentifier&gt;client:david&lt;/DeviceIdentifier&gt;
-   &lt;GeolocationType&gt;immediate&lt;/GeolocationType&gt;
-   &lt;ResponseStatus&gt;partially-successful&lt;/ResponseStatus&gt;
-   &lt;GeolocationData&gt;
-       &lt;DeviceLatitude&gt;33.870042&lt;/DeviceLatitude&gt;
-       &lt;DeviceLongitude&gt;-84.5190103&lt;/DeviceLongitude&gt;
-       &lt;Accuracy&gt;5&lt;/Accuracy&gt;
-       &lt;PhysicalAddress&gt;00-41-76-C0-00-D1&lt;/PhysicalAddress&gt;
-       &lt;InternetAddress&gt;65.17.21.37&lt;/InternetAddress&gt;
-       &lt;FormattedAddress&gt;34 5th St NE Atlanta, GA 30310-2178, USA&lt;/FormattedAddress&gt;
-       &lt;LocationTimestamp&gt;Mon, 25 Jan 2016 16:38:24 -0500&lt;/LocationTimestamp&gt;
-   &lt;/GeolocationData&gt;
-   &lt;GeolocationPositioningType&gt;GPS&lt;/GeolocationPositioningType&gt;
-   &lt;LastGeolocationResponse&gt;true&lt;/LastGeolocationResponse&gt;
-   &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
-   &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate/GLfa51b104354440b09213d04752f50271&lt;/Uri&gt;
-  &lt;/Geolocation&gt;
+Â  &lt;Geolocation&gt;
+Â Â  &lt;Sid&gt;GLfa51b104354440b09213d04752f50271&lt;/Sid&gt;
+Â Â  &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateCreated&gt;
+Â Â  &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:38:24 -0500&lt;/DateUpdated&gt;
+Â Â  &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateExecuted&gt;
+Â Â  &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
+Â Â  &lt;DeviceIdentifier&gt;client:david&lt;/DeviceIdentifier&gt;
+Â Â  &lt;GeolocationType&gt;immediate&lt;/GeolocationType&gt;
+Â Â  &lt;ResponseStatus&gt;partially-successful&lt;/ResponseStatus&gt;
+Â Â  &lt;GeolocationData&gt;
+Â Â Â Â Â Â  &lt;DeviceLatitude&gt;33.870042&lt;/DeviceLatitude&gt;
+Â Â Â Â Â Â  &lt;DeviceLongitude&gt;-84.5190103&lt;/DeviceLongitude&gt;
+Â Â Â Â Â Â  &lt;Accuracy&gt;5&lt;/Accuracy&gt;
+Â Â Â Â Â Â  &lt;PhysicalAddress&gt;00-41-76-C0-00-D1&lt;/PhysicalAddress&gt;
+Â Â Â Â Â Â  &lt;InternetAddress&gt;65.17.21.37&lt;/InternetAddress&gt;
+Â Â Â Â Â Â  &lt;FormattedAddress&gt;34 5th St NE Atlanta, GA 30310-2178, USA&lt;/FormattedAddress&gt;
+Â Â Â Â Â Â  &lt;LocationTimestamp&gt;Mon, 25 Jan 2016 16:38:24 -0500&lt;/LocationTimestamp&gt;
+Â Â  &lt;/GeolocationData&gt;
+Â Â  &lt;GeolocationPositioningType&gt;GPS&lt;/GeolocationPositioningType&gt;
+Â Â  &lt;LastGeolocationResponse&gt;true&lt;/LastGeolocationResponse&gt;
+Â Â  &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
+Â Â  &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate/GLfa51b104354440b09213d04752f50271&lt;/Uri&gt;
+Â  &lt;/Geolocation&gt;
 &lt;/RestcommResponse&gt;</pre>
 </div>
 </div>
@@ -23442,33 +23409,33 @@ http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0
 <div class="literalblock">
 <div class="content">
 <pre>&lt;RestcommResponse&gt;
-  &lt;Geolocation&gt;
-   &lt;Sid&gt;GLfa51b104354440b09213d04752f50272&lt;/Sid&gt;
-   &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 -0300&lt;/DateCreated&gt;
-   &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:37:21 -0300&lt;/DateUpdated&gt;
-   &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 -0300&lt;/DateExecuted&gt;
-   &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
-   &lt;DeviceIdentifier&gt;59897018375&lt;/DeviceIdentifier&gt;
-   &lt;GeolocationType&gt;immediate&lt;/GeolocationType&gt;
-   &lt;ResponseStatus&gt;successful&lt;/ResponseStatus&gt;
-   &lt;GeolocationData&gt;
-       &lt;CellId&gt;90183B&lt;/CellId&gt;
-       &lt;LocationAreaCode&gt;751&lt;/LocationAreaCode&gt;
-       &lt;MobileCountryCode&gt;748&lt;/MobileCountryCode&gt;
-       &lt;MobileNetworkCode&gt;01&lt;/MobileNetworkCode&gt;
-       &lt;NetworkEntityAddress&gt;59800023041&lt;/NetworkEntityAddress&gt;
-       &lt;LocationAge&gt;0&lt;/LocationAge&gt;
-       &lt;DeviceLatitude&gt;-34.541079&lt;/DeviceLatitude&gt;
-       &lt;DeviceLongitude&gt;-56.1421274&lt;/DeviceLongitude&gt;
-       &lt;Accuracy&gt;50&lt;/Accuracy&gt;
-       &lt;LocationTimestamp&gt;Mon, 25 Jan 2016 16:37:21 -0300&lt;/LocationTimestamp&gt;
-   &lt;/GeolocationData&gt;
-   &lt;GeolocationPositioningType&gt;Network&lt;/GeolocationPositioningType&gt;
-   &lt;LastGeolocationResponse&gt;true&lt;/LastGeolocationResponse&gt;
-   &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
-   &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate/GLfa51b104354440b09213d04752f50272&lt;/Uri&gt;
-  &lt;/Geolocation&gt;
-&lt;/RestcommResponse&gt; </pre>
+Â  &lt;Geolocation&gt;
+Â Â  &lt;Sid&gt;GLfa51b104354440b09213d04752f50272&lt;/Sid&gt;
+Â Â  &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 -0300&lt;/DateCreated&gt;
+Â Â  &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:37:21 -0300&lt;/DateUpdated&gt;
+Â Â  &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 -0300&lt;/DateExecuted&gt;
+Â Â  &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
+Â Â  &lt;DeviceIdentifier&gt;59897018375&lt;/DeviceIdentifier&gt;
+Â Â  &lt;GeolocationType&gt;immediate&lt;/GeolocationType&gt;
+Â Â  &lt;ResponseStatus&gt;successful&lt;/ResponseStatus&gt;
+Â Â  &lt;GeolocationData&gt;
+Â Â Â Â Â Â  &lt;CellId&gt;90183B&lt;/CellId&gt;
+Â Â Â Â Â Â  &lt;LocationAreaCode&gt;751&lt;/LocationAreaCode&gt;
+Â Â Â Â Â Â  &lt;MobileCountryCode&gt;748&lt;/MobileCountryCode&gt;
+Â Â Â Â Â Â  &lt;MobileNetworkCode&gt;01&lt;/MobileNetworkCode&gt;
+Â Â Â Â Â Â  &lt;NetworkEntityAddress&gt;59800023041&lt;/NetworkEntityAddress&gt;
+Â Â Â Â Â Â  &lt;LocationAge&gt;0&lt;/LocationAge&gt;
+Â Â Â Â Â Â  &lt;DeviceLatitude&gt;-34.541079&lt;/DeviceLatitude&gt;
+Â Â Â Â Â Â  &lt;DeviceLongitude&gt;-56.1421274&lt;/DeviceLongitude&gt;
+Â Â Â Â Â Â  &lt;Accuracy&gt;50&lt;/Accuracy&gt;
+Â Â Â Â Â Â  &lt;LocationTimestamp&gt;Mon, 25 Jan 2016 16:37:21 -0300&lt;/LocationTimestamp&gt;
+Â Â  &lt;/GeolocationData&gt;
+Â Â  &lt;GeolocationPositioningType&gt;Network&lt;/GeolocationPositioningType&gt;
+Â Â  &lt;LastGeolocationResponse&gt;true&lt;/LastGeolocationResponse&gt;
+Â Â  &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
+Â Â  &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate/GLfa51b104354440b09213d04752f50272&lt;/Uri&gt;
+Â  &lt;/Geolocation&gt;
+&lt;/RestcommResponse&gt;Â </pre>
 </div>
 </div>
 </div>
@@ -23476,7 +23443,7 @@ http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0
 <h4 id="example-3-geolocation-of-a-specific-mobile-device-associated-to-a-phone-number-no-geographic-coordinates-included-in-response"><a class="anchor" href="#example-3-geolocation-of-a-specific-mobile-device-associated-to-a-phone-number-no-geographic-coordinates-included-in-response"></a>Example 3.- Geolocation of a specific Mobile Device associated to a phone number; no geographic coordinates included in response</h4>
 <div class="paragraph">
 <p>See below a curl example for a Geolocation request originated from an
-application called “eTop” requesting location information of E.164 phone
+application called â€œeTopâ€� requesting location information of E.164 phone
 number 59897018375.</p>
 </div>
 <div class="paragraph">
@@ -23497,29 +23464,29 @@ http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0
 <div class="literalblock">
 <div class="content">
 <pre>&lt;RestcommResponse&gt;
-  &lt;Geolocation&gt;
-   &lt;Sid&gt;GLfa51b104354440b09213d04752f50273&lt;/Sid&gt;
-   &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 +0200&lt;/DateCreated&gt;
-   &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:36:11 +0200&lt;/DateUpdated&gt;
-   &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 +0200&lt;/DateExecuted&gt;
-   &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
-   &lt;DeviceIdentifier&gt;39897018375&lt;/DeviceIdentifier&gt;
-   &lt;GeolocationType&gt;immediate&lt;/GeolocationType&gt;
-   &lt;ResponseStatus&gt;partially-successful&lt;/ResponseStatus&gt;
-   &lt;GeolocationData&gt;
-       &lt;CellId&gt;19012A&lt;/CellId&gt;
-       &lt;LocationAreaCode&gt;901&lt;/LocationAreaCode&gt;
-       &lt;MobileCountryCode&gt;222&lt;/MobileCountryCode&gt;
-       &lt;MobileNetworkCode&gt;48&lt;/MobileNetworkCode&gt;
-       &lt;NetworkEntityAddress&gt;3980000101&lt;/NetworkEntityAddress&gt;
-       &lt;LocationAge&gt;0&lt;/LocationAge&gt;
-       &lt;LocationTimestamp&gt;Mon, 25 Jan 2016 16:36:11 +0200&lt;/LocationTimestamp&gt;
-   &lt;/GeolocationData&gt;
-   &lt;GeolocationPositioningType&gt;Network&lt;/GeolocationPositioningType&gt;
-   &lt;LastGeolocationResponse&gt;true&lt;/LastGeolocationResponse&gt;
-   &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
-   &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate/GLfa51b104354440b09213d04752f50273&lt;/Uri&gt;
-  &lt;/Geolocation&gt;
+Â  &lt;Geolocation&gt;
+Â Â  &lt;Sid&gt;GLfa51b104354440b09213d04752f50273&lt;/Sid&gt;
+Â Â  &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 +0200&lt;/DateCreated&gt;
+Â Â  &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:36:11 +0200&lt;/DateUpdated&gt;
+Â Â  &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 +0200&lt;/DateExecuted&gt;
+Â Â  &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
+Â Â  &lt;DeviceIdentifier&gt;39897018375&lt;/DeviceIdentifier&gt;
+Â Â  &lt;GeolocationType&gt;immediate&lt;/GeolocationType&gt;
+Â Â  &lt;ResponseStatus&gt;partially-successful&lt;/ResponseStatus&gt;
+Â Â  &lt;GeolocationData&gt;
+Â Â Â Â Â Â  &lt;CellId&gt;19012A&lt;/CellId&gt;
+Â Â Â Â Â Â  &lt;LocationAreaCode&gt;901&lt;/LocationAreaCode&gt;
+Â Â Â Â Â Â  &lt;MobileCountryCode&gt;222&lt;/MobileCountryCode&gt;
+Â Â Â Â Â Â  &lt;MobileNetworkCode&gt;48&lt;/MobileNetworkCode&gt;
+Â Â Â Â Â Â  &lt;NetworkEntityAddress&gt;3980000101&lt;/NetworkEntityAddress&gt;
+Â Â Â Â Â Â  &lt;LocationAge&gt;0&lt;/LocationAge&gt;
+Â Â Â Â Â Â  &lt;LocationTimestamp&gt;Mon, 25 Jan 2016 16:36:11 +0200&lt;/LocationTimestamp&gt;
+Â Â  &lt;/GeolocationData&gt;
+Â Â  &lt;GeolocationPositioningType&gt;Network&lt;/GeolocationPositioningType&gt;
+Â Â  &lt;LastGeolocationResponse&gt;true&lt;/LastGeolocationResponse&gt;
+Â Â  &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
+Â Â  &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate/GLfa51b104354440b09213d04752f50273&lt;/Uri&gt;
+Â  &lt;/Geolocation&gt;
 &lt;/RestcommResponse&gt;</pre>
 </div>
 </div>
@@ -23529,7 +23496,7 @@ http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0
 <div class="paragraph">
 <p>See below a curl example for a Geolocation request originated from a
 mobile (iOS or Android) location client, exactly like the latest
-example, but on this occasion with a ‘failed’ result (e.g. no geographic
+example, but on this occasion with a â€˜failedâ€™ result (e.g. no geographic
 coordinates or civic address could be obtained from the AP management
 system):</p>
 </div>
@@ -23545,25 +23512,25 @@ http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0
 <div class="literalblock">
 <div class="content">
 <pre>&lt;RestcommResponse&gt;
-  &lt;Geolocation&gt;
-   &lt;Sid&gt;GLfa51b104354440b09213d04752f50274&lt;/Sid&gt;
-   &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateCreated&gt;
-   &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:36:37 -0500&lt;/DateUpdated&gt;
-   &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateExecuted&gt;
-   &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
-   &lt;DeviceIdentifier&gt;sip:david@65.17.24.177&lt;/DeviceIdentifier&gt;
-   &lt;GeolocationType&gt;immediate&lt;/GeolocationType&gt;
-   &lt;ResponseStatus&gt;failed&lt;/ResponseStatus&gt;
-   &lt;/GeolocationData&gt;
-   &lt;Cause&gt;Timeout, no response from network&lt;/Cause&gt;
-   &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
-   &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate/GLfa51b104354440b09213d04752f50274&lt;/Uri&gt;
-  &lt;/Geolocation&gt;
+Â  &lt;Geolocation&gt;
+Â Â  &lt;Sid&gt;GLfa51b104354440b09213d04752f50274&lt;/Sid&gt;
+Â Â  &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateCreated&gt;
+Â Â  &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:36:37 -0500&lt;/DateUpdated&gt;
+Â Â  &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateExecuted&gt;
+Â Â  &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
+Â Â  &lt;DeviceIdentifier&gt;sip:david@65.17.24.177&lt;/DeviceIdentifier&gt;
+Â Â  &lt;GeolocationType&gt;immediate&lt;/GeolocationType&gt;
+Â Â  &lt;ResponseStatus&gt;failed&lt;/ResponseStatus&gt;
+Â Â  &lt;/GeolocationData&gt;
+Â Â  &lt;Cause&gt;Timeout, no response from network&lt;/Cause&gt;
+Â Â  &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
+Â Â  &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate/GLfa51b104354440b09213d04752f50274&lt;/Uri&gt;
+Â  &lt;/Geolocation&gt;
 &lt;/RestcommResponse&gt;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Note: records are persisted when ResponseStatus equals “failed”, thus
+<p>Note: records are persisted when ResponseStatus equals â€œfailedâ€�, thus
 they could be updated by a further operation, a POST or PUT request, or
 retrieved by a GET request.</p>
 </div>
@@ -23603,7 +23570,7 @@ retrieved by a GET request.</p>
     &lt;GeolocationPositioningType&gt;last-known&lt;/GeolocationPositioningType&gt;
     &lt;LastGeolocationResponse&gt;false&lt;/LastGeolocationResponse&gt;
     &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
-    &lt;Uri&gt;/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate/GLfa51b104354440b09213d04752f50274&lt;/Uri&gt;
+    &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate/GLfa51b104354440b09213d04752f50274&lt;/Uri&gt;
   &lt;/Geolocation&gt;
 &lt;/RestcommResponse&gt;</pre>
 </div>
@@ -23651,7 +23618,7 @@ retrieved by a GET request.</p>
 <div class="sect3">
 <h4 id="example-7-rejected-immediate-geolocation-request"><a class="anchor" href="#example-7-rejected-immediate-geolocation-request"></a>Example 7.- Rejected Immediate Geolocation request</h4>
 <div class="paragraph">
-<p>See below a curl example for a Geolocation request originated from a RestComm Location Client, but on this occasion with a ‘rejected’ result as a mandatory parameter is missing:</p>
+<p>See below a curl example for a Geolocation request originated from a RestComm Location Client, but on this occasion with a â€˜rejectedâ€™ result as a mandatory parameter is missing:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -23747,7 +23714,7 @@ this Geolocation service.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">EventGeofenceLatitude</p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>This parameter refers to the geographic coordinates’ latitude of a
+<p>This parameter refers to the geographic coordinatesâ€™ latitude of a
 specific location. Used to notify when a device is within a certain
 distance (in metres) from that specific location.</p>
 </div>
@@ -23757,45 +23724,33 @@ distance (in metres) from that specific location.</p>
 <div class="paragraph">
 <p>Latitude valid formats include:</p>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>  N43°38'19.39"</pre>
+<div class="paragraph">
+<p>Â  N43Â°38'19.39"</p>
 </div>
+<div class="paragraph">
+<p>Â  43Â°38'19.39"N</p>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>  43°38'19.39"N</pre>
+<div class="paragraph">
+<p>Â  43 38 19.39</p>
 </div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>  43 38 19.39</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>  43.63871944444445</pre>
-</div>
+<div class="paragraph">
+<p>Â  43.63871944444445</p>
 </div>
 <div class="paragraph">
 <p>If expressed in decimal form, northern latitudes are positive, southern
 latitudes are negative. The following latitude variants are also allowed:</p>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>  N43 38 19.39</pre>
+<div class="paragraph">
+<p>Â  N43 38 19.39</p>
 </div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>  43 38 19.39N</pre>
-</div>
+<div class="paragraph">
+<p>Â  43 38 19.39N</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">EventGeofenceLongitude</p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>Same as previous, but for geographic coordinates’ longitude.</p>
+<p>Same as previous, but for geographic coordinatesâ€™ longitude.</p>
 </div>
 <div class="paragraph">
 <p>WGS84 is used, whose formats for Longitude is described next:</p>
@@ -23803,45 +23758,33 @@ latitudes are negative. The following latitude variants are also allowed:</p>
 <div class="paragraph">
 <p>Longitude valid formats include:</p>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>  W116°14'28.86"</pre>
+<div class="paragraph">
+<p>Â  W116Â°14'28.86"</p>
 </div>
+<div class="paragraph">
+<p>Â  116Â°14'28.86"W</p>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>  116°14'28.86"W</pre>
+<div class="paragraph">
+<p>Â  -116 14 28.86</p>
 </div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>  -116 14 28.86</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>  -116.2413513485235</pre>
-</div>
+<div class="paragraph">
+<p>Â  -116.2413513485235</p>
 </div>
 <div class="paragraph">
 <p>If expressed in decimal form, eastern longitudes are positive, western
 longitudes are negative.The following longitude variants are also allowed:</p>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>  W116 14 28.86</pre>
+<div class="paragraph">
+<p>Â  W116 14 28.86</p>
 </div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>  116 14 28.86W</pre>
-</div>
+<div class="paragraph">
+<p>Â  116 14 28.86W</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">GeofenceRange</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Distance in meters from the specific location denoted by
-‘EventGeofenceLatitude’ and ‘EventGeofenceLongitude’ geographic
+â€˜EventGeofenceLatitudeâ€™ and â€˜EventGeofenceLongitudeâ€™ geographic
 coordinates, that would require a Geolocation procedure (e.g. as an
 alert that certain device is within a specific location area framed with
 beacons, sensors, etc.).</p></td>
@@ -23851,25 +23794,21 @@ beacons, sensors, etc.).</p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
 <p>Indication if this Notification Geolocation service is intended to
 inform about a target device entering or leaving a certain location area
-(implicitly specified by ‘EventGeofenceLatitude’,
-‘EventGeofenceLongitude’ and ‘GeofenceRange’ parameters). Allowed values
+(implicitly specified by â€˜EventGeofenceLatitudeâ€™,
+â€˜EventGeofenceLongitudeâ€™ and â€˜GeofenceRangeâ€™ parameters). Allowed values
 are:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>in: reports when the target device has been detected within
+<div class="paragraph">
+<p>-Â Â Â Â Â Â Â Â Â  in: reports when the target device has been detected within
 the specified location area.</p>
-</li>
-<li>
-<p>out: reports when the target device has been detected leaving
+</div>
+<div class="paragraph">
+<p>-Â Â Â Â Â Â Â Â Â  out: reports when the target device has been detected leaving
 the specified location area.</p>
-</li>
-<li>
-<p>in-out:  reports when the target device has been detected
+</div>
+<div class="paragraph">
+<p>-Â Â Â Â Â Â Â Â Â  in-out:Â  reports when the target device has been detected
 either entering or leaving the specified location area.</p>
-</li>
-</ul>
 </div></div></td>
 </tr>
 <tr>
@@ -23913,28 +23852,28 @@ is obtained:</p>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;RestcommResponse&gt;
-  &lt;Geolocation&gt;
-   &lt;Sid&gt;GLfa51b104354440b09213d04752f50275&lt;/Sid&gt;
-   &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateCreated&gt;
-   &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:36:15 -0500&lt;/DateUpdated&gt;
-   &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateExecuted&gt;
-   &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
-   &lt;DeviceIdentifier&gt;56790122158&lt;/DeviceIdentifier&gt;
-   &lt;GeolocationType&gt;notification&lt;/GeolocationType&gt;
-   &lt;ResponseStatus&gt;partially-successful&lt;/ResponseStatus&gt;
-   &lt;GeolocationData&gt;
-       &lt;LocationTimestamp&gt;Mon, 25 Jan 2016 16:36:15 -0500&lt;/LocationTimestamp&gt;
-       &lt;DeviceLatitude&gt;-34.800182&lt;/DeviceLatitude&gt;
-       &lt;DeviceLongitude&gt;-71.579001&lt;/DeviceLongitude&gt;
-       &lt;Radius&gt;178956.60&lt;/Radius&gt;
-       &lt;InternetAddress&gt;200.1.122.4&lt;/InternetAddress&gt;
-       &lt;PhysicalAddress&gt;00-50-56-C0-00-08&lt;/PhysicalAddress&gt;
-   &lt;/GeolocationData&gt;
-   &lt;GeolocationPositioningType&gt;last-known&lt;/GeolocationPositioningType&gt;
-   &lt;LastGeolocationResponse&gt;false&lt;/LastGeolocationResponse&gt;
-   &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
-   &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification/GLfa51b104354440b09213d04752f50275&lt;/Uri&gt;
-  &lt;/Geolocation&gt;
+Â  &lt;Geolocation&gt;
+Â Â  &lt;Sid&gt;GLfa51b104354440b09213d04752f50275&lt;/Sid&gt;
+Â Â  &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateCreated&gt;
+Â Â  &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:36:15 -0500&lt;/DateUpdated&gt;
+Â Â  &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateExecuted&gt;
+Â Â  &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
+Â Â  &lt;DeviceIdentifier&gt;56790122158&lt;/DeviceIdentifier&gt;
+Â Â  &lt;GeolocationType&gt;notification&lt;/GeolocationType&gt;
+Â Â  &lt;ResponseStatus&gt;partially-successful&lt;/ResponseStatus&gt;
+Â Â  &lt;GeolocationData&gt;
+Â Â Â Â Â Â  &lt;LocationTimestamp&gt;Mon, 25 Jan 2016 16:36:15 -0500&lt;/LocationTimestamp&gt;
+Â Â Â Â Â Â  &lt;DeviceLatitude&gt;-34.800182&lt;/DeviceLatitude&gt;
+Â Â Â Â Â Â  &lt;DeviceLongitude&gt;-71.579001&lt;/DeviceLongitude&gt;
+Â Â Â Â Â Â  &lt;Radius&gt;178956.60&lt;/Radius&gt;
+Â Â Â Â Â Â  &lt;InternetAddress&gt;200.1.122.4&lt;/InternetAddress&gt;
+Â Â Â Â Â Â  &lt;PhysicalAddress&gt;00-50-56-C0-00-08&lt;/PhysicalAddress&gt;
+Â Â  &lt;/GeolocationData&gt;
+Â Â  &lt;GeolocationPositioningType&gt;last-known&lt;/GeolocationPositioningType&gt;
+Â Â  &lt;LastGeolocationResponse&gt;false&lt;/LastGeolocationResponse&gt;
+Â Â  &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
+Â Â  &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification/GLfa51b104354440b09213d04752f50275&lt;/Uri&gt;
+Â  &lt;/Geolocation&gt;
 &lt;/RestcommResponse&gt;</pre>
 </div>
 </div>
@@ -23947,29 +23886,29 @@ not accomplished yet):</p>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;RestcommResponse&gt;
-  &lt;Geolocation&gt;
-   &lt;Sid&gt;GLfa51b104354440b09213d04752f50275&lt;/Sid&gt;
-   &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateCreated&gt;
-   &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:36:44 -0500&lt;/DateUpdated&gt;
-   &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateExecuted&gt;
-   &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
-   &lt;DeviceIdentifier&gt;56790122158&lt;/DeviceIdentifier&gt;
-   &lt;GeolocationType&gt;notification&lt;/GeolocationType&gt;
-   &lt;ResponseStatus&gt;partially-successful&lt;/ResponseStatus&gt;
-   &lt;GeolocationData&gt;
-       &lt;LocationTimestamp&gt;Mon, 25 Jan 2016 16:36:44 -0500&lt;/LocationTimestamp&gt;
-       &lt;DeviceLatitude&gt;-33.428423&lt;/DeviceLatitude&gt;
-       &lt;DeviceLongitude&gt;-70.5678026&lt;/DeviceLongitude&gt;
-       &lt;Accuracy&gt;220&lt;/Accuracy&gt;
-       &lt;Radius&gt;264.73&lt;/Radius&gt;
-       &lt;PhysicalAddress&gt;00-50-56-C0-00-08&lt;/PhysicalAddress&gt;
-       &lt;InternetAddress&gt;201.2.108.42&lt;/InternetAddress&gt;
-   &lt;/GeolocationData&gt;
-   &lt;GeolocationPositioningType&gt;Network&lt;/GeolocationPositioningType&gt;
-   &lt;LastGeolocationResponse&gt;false&lt;/LastGeolocationResponse&gt;
-   &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
-   &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification/GLfa51b104354440b09213d04752f50275&lt;/Uri&gt;
-  &lt;/Geolocation&gt;
+Â  &lt;Geolocation&gt;
+Â Â  &lt;Sid&gt;GLfa51b104354440b09213d04752f50275&lt;/Sid&gt;
+Â Â  &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateCreated&gt;
+Â Â  &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:36:44 -0500&lt;/DateUpdated&gt;
+Â Â  &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateExecuted&gt;
+Â Â  &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
+Â Â  &lt;DeviceIdentifier&gt;56790122158&lt;/DeviceIdentifier&gt;
+Â Â  &lt;GeolocationType&gt;notification&lt;/GeolocationType&gt;
+Â Â  &lt;ResponseStatus&gt;partially-successful&lt;/ResponseStatus&gt;
+Â Â  &lt;GeolocationData&gt;
+Â Â Â Â Â Â  &lt;LocationTimestamp&gt;Mon, 25 Jan 2016 16:36:44 -0500&lt;/LocationTimestamp&gt;
+Â Â Â Â Â Â  &lt;DeviceLatitude&gt;-33.428423&lt;/DeviceLatitude&gt;
+Â Â Â Â Â Â  &lt;DeviceLongitude&gt;-70.5678026&lt;/DeviceLongitude&gt;
+Â Â Â Â Â Â  &lt;Accuracy&gt;220&lt;/Accuracy&gt;
+Â Â Â Â Â Â  &lt;Radius&gt;264.73&lt;/Radius&gt;
+Â Â Â Â Â Â  &lt;PhysicalAddress&gt;00-50-56-C0-00-08&lt;/PhysicalAddress&gt;
+Â Â Â Â Â Â  &lt;InternetAddress&gt;201.2.108.42&lt;/InternetAddress&gt;
+Â Â  &lt;/GeolocationData&gt;
+Â Â  &lt;GeolocationPositioningType&gt;Network&lt;/GeolocationPositioningType&gt;
+Â Â  &lt;LastGeolocationResponse&gt;false&lt;/LastGeolocationResponse&gt;
+Â Â  &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
+Â Â  &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification/GLfa51b104354440b09213d04752f50275&lt;/Uri&gt;
+Â  &lt;/Geolocation&gt;
 &lt;/RestcommResponse&gt;</pre>
 </div>
 </div>
@@ -23981,29 +23920,29 @@ accuracy is accomplished through GPS assistance:</p>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;RestcommResponse&gt;
-  &lt;Geolocation&gt;
-   &lt;Sid&gt;GLfa51b104354440b09213d04752f50275&lt;/Sid&gt;
-   &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateCreated&gt;
-   &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:37:04 -0500&lt;/DateUpdated&gt;
-   &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateExecuted&gt;
-   &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
-   &lt;DeviceIdentifier&gt;56790122158&lt;/DeviceIdentifier&gt;
-   &lt;GeolocationType&gt;notification&lt;/GeolocationType&gt;
-   &lt;ResponseStatus&gt;partially-successful&lt;/ResponseStatus&gt;
-   &lt;GeolocationData&gt;
-       &lt;LocationTimestamp&gt;Mon, 25 Jan 2016 16:37:04 -0500&lt;/LocationTimestamp&gt;
-       &lt;DeviceLatitude&gt;-33.426391&lt;/DeviceLatitude&gt;
-       &lt;DeviceLongitude&gt;-70.566399&lt;/DeviceLongitude&gt;
-       &lt;Accuracy&gt;10&lt;/Accuracy&gt;
-       &lt;Radius&gt;19.38&lt;/Radius&gt;
-       &lt;PhysicalAddress&gt;00-50-56-C0-00-08&lt;/PhysicalAddress&gt;
-       &lt;InternetAddress&gt;201.2.108.42&lt;/InternetAddress&gt;
-   &lt;/GeolocationData&gt;
-   &lt;GeolocationPositioningType&gt;GPS&lt;/GeolocationPositioningType&gt;
-   &lt;LastGeolocationResponse&gt;true&lt;/LastGeolocationResponse&gt;
-   &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
-   &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification/GLfa51b104354440b09213d04752f50275&lt;/Uri&gt;
-  &lt;/Geolocation&gt;
+Â  &lt;Geolocation&gt;
+Â Â  &lt;Sid&gt;GLfa51b104354440b09213d04752f50275&lt;/Sid&gt;
+Â Â  &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateCreated&gt;
+Â Â  &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:37:04 -0500&lt;/DateUpdated&gt;
+Â Â  &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateExecuted&gt;
+Â Â  &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
+Â Â  &lt;DeviceIdentifier&gt;56790122158&lt;/DeviceIdentifier&gt;
+Â Â  &lt;GeolocationType&gt;notification&lt;/GeolocationType&gt;
+Â Â  &lt;ResponseStatus&gt;partially-successful&lt;/ResponseStatus&gt;
+Â Â  &lt;GeolocationData&gt;
+Â Â Â Â Â Â  &lt;LocationTimestamp&gt;Mon, 25 Jan 2016 16:37:04 -0500&lt;/LocationTimestamp&gt;
+Â Â Â Â Â Â  &lt;DeviceLatitude&gt;-33.426391&lt;/DeviceLatitude&gt;
+Â Â Â Â Â Â  &lt;DeviceLongitude&gt;-70.566399&lt;/DeviceLongitude&gt;
+Â Â Â Â Â Â  &lt;Accuracy&gt;10&lt;/Accuracy&gt;
+Â Â Â Â Â Â  &lt;Radius&gt;19.38&lt;/Radius&gt;
+Â Â Â Â Â Â  &lt;PhysicalAddress&gt;00-50-56-C0-00-08&lt;/PhysicalAddress&gt;
+Â Â Â Â Â Â  &lt;InternetAddress&gt;201.2.108.42&lt;/InternetAddress&gt;
+Â Â  &lt;/GeolocationData&gt;
+Â Â  &lt;GeolocationPositioningType&gt;GPS&lt;/GeolocationPositioningType&gt;
+Â Â  &lt;LastGeolocationResponse&gt;true&lt;/LastGeolocationResponse&gt;
+Â Â  &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
+Â Â  &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification/GLfa51b104354440b09213d04752f50275&lt;/Uri&gt;
+Â  &lt;/Geolocation&gt;
 &lt;/RestcommResponse&gt;</pre>
 </div>
 </div>
@@ -24030,32 +23969,32 @@ http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0
 <div class="literalblock">
 <div class="content">
 <pre>&lt;RestcommResponse&gt;
-  &lt;Geolocation&gt;
-   &lt;Sid&gt;GLfa51b104354440b09213d04752f50276&lt;/Sid&gt;
-   &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateCreated&gt;
-   &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:36:12 -0500&lt;/DateUpdated&gt;
-   &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateExecuted&gt;
-   &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
-   &lt;DeviceIdentifier&gt;56790122158&lt;/DeviceIdentifier&gt;
-   &lt;GeolocationType&gt;notification&lt;/GeolocationType&gt;
-   &lt;ResponseStatus&gt;unauthorized&lt;/ResponseStatus&gt;
-   &lt;/GeolocationData&gt;
-   &lt;Cause&gt;Target device not allowed by the network&lt;/Cause&gt;
-   &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
-   &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification/GLfa51b104354440b09213d04752f50276&lt;/Uri&gt;
-  &lt;/Geolocation&gt;
+Â  &lt;Geolocation&gt;
+Â Â  &lt;Sid&gt;GLfa51b104354440b09213d04752f50276&lt;/Sid&gt;
+Â Â  &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateCreated&gt;
+Â Â  &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:36:12 -0500&lt;/DateUpdated&gt;
+Â Â  &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 -0500&lt;/DateExecuted&gt;
+Â Â  &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
+Â Â  &lt;DeviceIdentifier&gt;56790122158&lt;/DeviceIdentifier&gt;
+Â Â  &lt;GeolocationType&gt;notification&lt;/GeolocationType&gt;
+Â Â  &lt;ResponseStatus&gt;unauthorized&lt;/ResponseStatus&gt;
+Â Â  &lt;/GeolocationData&gt;
+Â Â  &lt;Cause&gt;Target device not allowed by the network&lt;/Cause&gt;
+Â Â  &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
+Â Â  &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification/GLfa51b104354440b09213d04752f50276&lt;/Uri&gt;
+Â  &lt;/Geolocation&gt;
 &lt;/RestcommResponse&gt;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Note: records are persisted when ResponseStatus equals “unauthorized”.</p>
+<p>Note: records are persisted when ResponseStatus equals â€œunauthorizedâ€�.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="example-3-geolocation-of-a-specific-ip-device-when-it-enters-a-1km-range-of-a-specific-geolocation-rejected-answer"><a class="anchor" href="#example-3-geolocation-of-a-specific-ip-device-when-it-enters-a-1km-range-of-a-specific-geolocation-rejected-answer"></a>Example 3.- Geolocation of a specific IP device when it enters a 1km range of a specific Geolocation: Rejected Answer</h4>
 <div class="paragraph">
 <p>See below a curl of the exact same example of the latter Geolocation
-request but inappropriately as “GeofenceEvent” parameter is missing:</p>
+request but inappropriately as â€œGeofenceEventâ€� parameter is missing:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -24090,9 +24029,9 @@ specified by a 200 metres distance to the geographic location of a
 specific business shop (e.g.: for mobile advertising). The example
 response additionally provides location information in terms of the
 radio access network identifiers which triggered the positioning method.
-The accuracy of location information is gathered as “Average” (100m to
+The accuracy of location information is gathered as â€œAverageâ€� (100m to
 300m of error margin), which could prevent further actions as only
-“High” accuracy could be set for them (e.g. mobile advertising
+â€œHighâ€� accuracy could be set for them (e.g. mobile advertising
 containing a special offer):</p>
 </div>
 <div class="literalblock">
@@ -24110,33 +24049,33 @@ http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0
 <div class="literalblock">
 <div class="content">
 <pre>&lt;RestcommResponse&gt;
-  &lt;Geolocation&gt;
-   &lt;Sid&gt;GLfa51b104354440b09213d04752f50278&lt;/Sid&gt;
-   &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 +0900&lt;/DateCreated&gt;
-   &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:41:10 +0900&lt;/DateUpdated&gt;
-   &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 +0900&lt;/DateExecuted&gt;
-   &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
-   &lt;DeviceIdentifier&gt;SB7089A&lt;/DeviceIdentifier&gt;
-   &lt;GeolocationType&gt;notification&lt;/GeolocationType&gt;
-   &lt;ResponseStatus&gt;successful&lt;/ResponseStatus&gt;
-   &lt;GeolocationData&gt;
-       &lt;CellId&gt;47501A&lt;/CellId&gt;
-       &lt;LocationAreaCode&gt;239&lt;/LocationAreaCode&gt;
-       &lt;MobileCountryCode&gt;441&lt;/MobileCountryCode&gt;
-       &lt;MobileNetworkCode&gt;98&lt;/MobileNetworkCode&gt;
-       &lt;NetworkEntityAddress&gt;810002304&lt;/NetworkEntityAddress&gt;
-       &lt;LocationAge&gt;0&lt;/LocationAge&gt;
-       &lt;DeviceLatitude&gt;35.526375&lt;/DeviceLatitude&gt;
-       &lt;DeviceLongitude&gt;139.566802&lt;/DeviceLongitude&gt;
-       &lt;Accuracy&gt;50&lt;/Accuracy&gt;
-       &lt;Radius&gt;24&lt;/Radius&gt;
-       &lt;LocationTimestamp&gt;Mon, 25 Jan 2016 16:41:10 +0900&lt;/LocationTimestamp&gt;
-   &lt;/GeolocationData&gt;
-   &lt;GeolocationPositioningType&gt;Network&lt;/GeolocationPositioningType&gt;
-   &lt;LastGeolocationResponse&gt;true&lt;/LastGeolocationResponse&gt;
-   &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
-   &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification/GLfa51b104354440b09213d04752f50278&lt;/Uri&gt;
-  &lt;/Geolocation&gt;
+Â  &lt;Geolocation&gt;
+Â Â  &lt;Sid&gt;GLfa51b104354440b09213d04752f50278&lt;/Sid&gt;
+Â Â  &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 +0900&lt;/DateCreated&gt;
+Â Â  &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:41:10 +0900&lt;/DateUpdated&gt;
+Â Â  &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 +0900&lt;/DateExecuted&gt;
+Â Â  &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
+Â Â  &lt;DeviceIdentifier&gt;SB7089A&lt;/DeviceIdentifier&gt;
+Â Â  &lt;GeolocationType&gt;notification&lt;/GeolocationType&gt;
+Â Â  &lt;ResponseStatus&gt;successful&lt;/ResponseStatus&gt;
+Â Â  &lt;GeolocationData&gt;
+Â Â Â Â Â Â  &lt;CellId&gt;47501A&lt;/CellId&gt;
+Â Â Â Â Â Â  &lt;LocationAreaCode&gt;239&lt;/LocationAreaCode&gt;
+Â Â Â Â Â Â  &lt;MobileCountryCode&gt;441&lt;/MobileCountryCode&gt;
+Â Â Â Â Â Â  &lt;MobileNetworkCode&gt;98&lt;/MobileNetworkCode&gt;
+Â Â Â Â Â Â  &lt;NetworkEntityAddress&gt;810002304&lt;/NetworkEntityAddress&gt;
+Â Â Â Â Â Â  &lt;LocationAge&gt;0&lt;/LocationAge&gt;
+Â Â Â Â Â Â  &lt;DeviceLatitude&gt;35.526375&lt;/DeviceLatitude&gt;
+Â Â Â Â Â Â  &lt;DeviceLongitude&gt;139.566802&lt;/DeviceLongitude&gt;
+Â Â Â Â Â Â  &lt;Accuracy&gt;50&lt;/Accuracy&gt;
+Â Â Â Â Â Â  &lt;Radius&gt;24&lt;/Radius&gt;
+Â Â Â Â Â Â  &lt;LocationTimestamp&gt;Mon, 25 Jan 2016 16:41:10 +0900&lt;/LocationTimestamp&gt;
+Â Â  &lt;/GeolocationData&gt;
+Â Â  &lt;GeolocationPositioningType&gt;Network&lt;/GeolocationPositioningType&gt;
+Â Â  &lt;LastGeolocationResponse&gt;true&lt;/LastGeolocationResponse&gt;
+Â Â  &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
+Â Â  &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification/GLfa51b104354440b09213d04752f50278&lt;/Uri&gt;
+Â  &lt;/Geolocation&gt;
 &lt;/RestcommResponse&gt;</pre>
 </div>
 </div>
@@ -24154,7 +24093,7 @@ several purposes (emergency services, friends and family finder, etc.).</p>
 <p>In this case, the location information is assumed to be retrieved from
 an LTE-Advanced cellular network, where all location data parameters can
 be obtained, including parameters such as civic address
-(‘FormattedAddress’ parameter):</p>
+(â€˜FormattedAddressâ€™ parameter):</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -24173,36 +24112,36 @@ http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0
 <div class="literalblock">
 <div class="content">
 <pre>&lt;RestcommResponse&gt;
-  &lt;Geolocation&gt;
-   &lt;Sid&gt;GLfa51b104354440b09213d04752f50279&lt;/Sid&gt;
-   &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 -0300&lt;/DateCreated&gt;
-   &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:37:18 -0300&lt;/DateUpdated&gt;
-   &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 -0300&lt;/DateExecuted&gt;
-   &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
-   &lt;DeviceIdentifier&gt;59897018375&lt;/DeviceIdentifier&gt;
-   &lt;GeolocationType&gt;notification&lt;/GeolocationType&gt;
-   &lt;ResponseStatus&gt;successful&lt;/ResponseStatus&gt;
-   &lt;GeolocationData&gt;
-       &lt;CellId&gt;90183B&lt;/CellId&gt;
-       &lt;LocationAreaCode&gt;751&lt;/LocationAreaCode&gt;
-       &lt;MobileCountryCode&gt;748&lt;/MobileCountryCode&gt;
-       &lt;MobileNetworkCode&gt;01&lt;/MobileNetworkCode&gt;
-       &lt;NetworkEntityAddress&gt;59800023041&lt;/NetworkEntityAddress&gt;
-       &lt;LocationAge&gt;0&lt;/LocationAge&gt;
-       &lt;DeviceLatitude&gt;-34.542029&lt;/DeviceLatitude&gt;
-       &lt;DeviceLongitude&gt;56.058181&lt;/DeviceLongitude&gt;
-       &lt;Accuracy&gt;5&lt;/Accuracy&gt;
-       &lt;Radius&gt;115.24&lt;/Radius&gt;
-       &lt;PhysicalAddress&gt;00-50-56-C0-00-08&lt;/PhysicalAddress&gt;
-       &lt;InternetAddress&gt;167.57.122.14&lt;/InternetAddress&gt;
-       &lt;FormattedAddress&gt;Avenida Italia 2643, 11500, Montevideo, Uruguay&lt;/FormattedAddress&gt;
-       &lt;LocationTimestamp&gt;Mon, 25 Jan 2016 16:37:17 -0300&lt;/LocationTimestamp&gt;
-   &lt;/GeolocationData&gt;
-   &lt;GeolocationPositioningType&gt;GPS&lt;/GeolocationPositioningType&gt;
-   &lt;LastGeolocationResponse&gt;true&lt;/LastGeolocationResponse&gt;
-   &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
-   &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification/GLfa51b104354440b09213d04752f50279&lt;/Uri&gt;
-  &lt;/Geolocation&gt;
+Â  &lt;Geolocation&gt;
+Â Â  &lt;Sid&gt;GLfa51b104354440b09213d04752f50279&lt;/Sid&gt;
+Â Â  &lt;DateCreated&gt;Mon, 25 Jan 2016 16:36:10 -0300&lt;/DateCreated&gt;
+Â Â  &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:37:18 -0300&lt;/DateUpdated&gt;
+Â Â  &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 -0300&lt;/DateExecuted&gt;
+Â Â  &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
+Â Â  &lt;DeviceIdentifier&gt;59897018375&lt;/DeviceIdentifier&gt;
+Â Â  &lt;GeolocationType&gt;notification&lt;/GeolocationType&gt;
+Â Â  &lt;ResponseStatus&gt;successful&lt;/ResponseStatus&gt;
+Â Â  &lt;GeolocationData&gt;
+Â Â Â Â Â Â  &lt;CellId&gt;90183B&lt;/CellId&gt;
+Â Â Â Â Â Â  &lt;LocationAreaCode&gt;751&lt;/LocationAreaCode&gt;
+Â Â Â Â Â Â  &lt;MobileCountryCode&gt;748&lt;/MobileCountryCode&gt;
+Â Â Â Â Â Â  &lt;MobileNetworkCode&gt;01&lt;/MobileNetworkCode&gt;
+Â Â Â Â Â Â  &lt;NetworkEntityAddress&gt;59800023041&lt;/NetworkEntityAddress&gt;
+Â Â Â Â Â Â  &lt;LocationAge&gt;0&lt;/LocationAge&gt;
+Â Â Â Â Â Â  &lt;DeviceLatitude&gt;-34.542029&lt;/DeviceLatitude&gt;
+Â Â Â Â Â Â  &lt;DeviceLongitude&gt;56.058181&lt;/DeviceLongitude&gt;
+Â Â Â Â Â Â  &lt;Accuracy&gt;5&lt;/Accuracy&gt;
+Â Â Â Â Â Â  &lt;Radius&gt;115.24&lt;/Radius&gt;
+Â Â Â Â Â Â  &lt;PhysicalAddress&gt;00-50-56-C0-00-08&lt;/PhysicalAddress&gt;
+Â Â Â Â Â Â  &lt;InternetAddress&gt;167.57.122.14&lt;/InternetAddress&gt;
+Â Â Â Â Â Â  &lt;FormattedAddress&gt;Avenida Italia 2643, 11500, Montevideo, Uruguay&lt;/FormattedAddress&gt;
+Â Â Â Â Â Â  &lt;LocationTimestamp&gt;Mon, 25 Jan 2016 16:37:17 -0300&lt;/LocationTimestamp&gt;
+Â Â  &lt;/GeolocationData&gt;
+Â Â  &lt;GeolocationPositioningType&gt;GPS&lt;/GeolocationPositioningType&gt;
+Â Â  &lt;LastGeolocationResponse&gt;true&lt;/LastGeolocationResponse&gt;
+Â Â  &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
+Â Â  &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification/GLfa51b104354440b09213d04752f50279&lt;/Uri&gt;
+Â  &lt;/Geolocation&gt;
 &lt;/RestcommResponse&gt;</pre>
 </div>
 </div>
@@ -24227,36 +24166,36 @@ http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0
 <div class="literalblock">
 <div class="content">
 <pre>&lt;RestcommResponse&gt;
-  &lt;Geolocation&gt;
-   &lt;Sid&gt;GLfa51b104354440b09213d04752f50280&lt;/Sid&gt;
-   &lt;DateCreated&gt;Mon, 25 Jan 2016 16:38:10 -0300&lt;/DateCreated&gt;
-   &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:39:18 -0300&lt;/DateUpdated&gt;
-   &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 -0300&lt;/DateExecuted&gt;
-   &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
-   &lt;DeviceIdentifier&gt;59897018375&lt;/DeviceIdentifier&gt;
-   &lt;GeolocationType&gt;notification&lt;/GeolocationType&gt;
-   &lt;ResponseStatus&gt;partially-successful&lt;/ResponseStatus&gt;
-   &lt;GeolocationData&gt;
-       &lt;CellId&gt;90182A&lt;/CellId&gt;
-       &lt;LocationAreaCode&gt;751&lt;/LocationAreaCode&gt;
-       &lt;MobileCountryCode&gt;748&lt;/MobileCountryCode&gt;
-       &lt;MobileNetworkCode&gt;01&lt;/MobileNetworkCode&gt;
-       &lt;NetworkEntityAddress&gt;59800023041&lt;/NetworkEntityAddress&gt;
-       &lt;LocationAge&gt;0&lt;/LocationAge&gt;
-       &lt;DeviceLatitude&gt;-34.560071&lt;/DeviceLatitude&gt;
-       &lt;DeviceLongitude&gt;56.057710&lt;/DeviceLongitude&gt;
-       &lt;Accuracy&gt;180&lt;/Accuracy&gt;
-       &lt;Radius&gt;115&lt;/Radius&gt;
-       &lt;InternetAddress&gt;167.57.122.14&lt;/InternetAddress&gt;
-       &lt;PhysicalAddress&gt;00-50-56-C0-00-08&lt;/PhysicalAddress&gt;
-       &lt;FormattedAddress&gt;Avenida Italia 2552, 11500, Montevideo, Uruguay&lt;/FormattedAddress&gt;
-       &lt;LocationTimestamp&gt;Mon, 25 Jan 2016 16:37:18 -0300&lt;/LocationTimestamp&gt;
-   &lt;/GeolocationData&gt;
-   &lt;GeolocationPositioningType&gt;Network&lt;/GeolocationPositioningType&gt;
-   &lt;LastGeolocationResponse&gt;true&lt;/LastGeolocationResponse&gt;
-   &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
-   &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification/GLfa51b104354440b09213d04752f50280&lt;/Uri&gt;
-  &lt;/Geolocation&gt;
+Â  &lt;Geolocation&gt;
+Â Â  &lt;Sid&gt;GLfa51b104354440b09213d04752f50280&lt;/Sid&gt;
+Â Â  &lt;DateCreated&gt;Mon, 25 Jan 2016 16:38:10 -0300&lt;/DateCreated&gt;
+Â Â  &lt;DateUpdated&gt;Mon, 25 Jan 2016 16:39:18 -0300&lt;/DateUpdated&gt;
+Â Â  &lt;DateExecuted&gt;Mon, 25 Jan 2016 16:36:10 -0300&lt;/DateExecuted&gt;
+Â Â  &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
+Â Â  &lt;DeviceIdentifier&gt;59897018375&lt;/DeviceIdentifier&gt;
+Â Â  &lt;GeolocationType&gt;notification&lt;/GeolocationType&gt;
+Â Â  &lt;ResponseStatus&gt;partially-successful&lt;/ResponseStatus&gt;
+Â Â  &lt;GeolocationData&gt;
+Â Â Â Â Â Â  &lt;CellId&gt;90182A&lt;/CellId&gt;
+Â Â Â Â Â Â  &lt;LocationAreaCode&gt;751&lt;/LocationAreaCode&gt;
+Â Â Â Â Â Â  &lt;MobileCountryCode&gt;748&lt;/MobileCountryCode&gt;
+Â Â Â Â Â Â  &lt;MobileNetworkCode&gt;01&lt;/MobileNetworkCode&gt;
+Â Â Â Â Â Â  &lt;NetworkEntityAddress&gt;59800023041&lt;/NetworkEntityAddress&gt;
+Â Â Â Â Â Â  &lt;LocationAge&gt;0&lt;/LocationAge&gt;
+Â Â Â Â Â Â  &lt;DeviceLatitude&gt;-34.560071&lt;/DeviceLatitude&gt;
+Â Â Â Â Â Â  &lt;DeviceLongitude&gt;56.057710&lt;/DeviceLongitude&gt;
+Â Â Â Â Â Â  &lt;Accuracy&gt;180&lt;/Accuracy&gt;
+Â Â Â Â Â Â  &lt;Radius&gt;115&lt;/Radius&gt;
+Â Â Â Â Â Â  &lt;InternetAddress&gt;167.57.122.14&lt;/InternetAddress&gt;
+Â Â Â Â Â Â  &lt;PhysicalAddress&gt;00-50-56-C0-00-08&lt;/PhysicalAddress&gt;
+Â Â Â Â Â Â  &lt;FormattedAddress&gt;Avenida Italia 2552, 11500, Montevideo, Uruguay&lt;/FormattedAddress&gt;
+Â Â Â Â Â Â  &lt;LocationTimestamp&gt;Mon, 25 Jan 2016 16:37:18 -0300&lt;/LocationTimestamp&gt;
+Â Â  &lt;/GeolocationData&gt;
+Â Â  &lt;GeolocationPositioningType&gt;Network&lt;/GeolocationPositioningType&gt;
+Â Â  &lt;LastGeolocationResponse&gt;true&lt;/LastGeolocationResponse&gt;
+Â Â  &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
+Â Â  &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification/GLfa51b104354440b09213d04752f50280&lt;/Uri&gt;
+Â  &lt;/Geolocation&gt;
 &lt;/RestcommResponse&gt;</pre>
 </div>
 </div>
@@ -24381,7 +24320,7 @@ information is initially returned. Afterwards, a better procedure
 returns a more accurate location information based on the current access
 point. Ultimately, the best possible available method (GPS) gathers the
 location information and is delivered to the requesting application.
-Accordingly, ‘LastGeolocationResponse’ parameter is set to "true” in the
+Accordingly, â€˜LastGeolocationResponseâ€™ parameter is set to "trueâ€� in the
 last status callback, as the desired accuracy is ultimately achieved.</p>
 </div>
 <div class="paragraph">
@@ -24415,7 +24354,7 @@ password are optional for GMLC.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-02 10:41:34 WET
+Last updated 2017-02-02 16:15:27 WET
 </div>
 </div>
 <footer>
