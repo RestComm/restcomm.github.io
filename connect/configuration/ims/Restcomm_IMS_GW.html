@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Restcomm SDKs</title>
+<title>Restcomm as a WebRTC gateway to IMS</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22757,15 +22757,21 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/1877839.js"></script>
 <!-- End of HubSpot Embed Code -->
 </head>
-<body class="article">
+<body id="intro" class="article">
 <div id="header">
-<h1>Restcomm SDKs</h1>
+<h1>Restcomm as a WebRTC gateway to IMS</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#call-flows-and-examples">Call flows and examples</a>
 <ul class="sectlevel2">
-<li><a href="#web-sdk">Web SDK</a></li>
-<li><a href="#ios-sdk">iOS SDK</a></li>
-<li><a href="#android-sdk">Android SDK</a></li>
+<li><a href="#1-webrtc-client-registration">1. WebRTC client registration</a></li>
+<li><a href="#2-webrtc-client-outgoing-call">2. WebRTC client outgoing call</a></li>
+<li><a href="#3-webrtc-client-incoming-call">3. WebRTC client incoming call</a></li>
+<li><a href="#4-webrtc-call-hold-flow">4. WebRTC call hold flow</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -22773,56 +22779,84 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Restcomm comes with three powerful WebRTC SDKs that allow you to embed Communications as a feature in your Web, iOS and Android Native Applications. Moreover, there&#8217;s Olympus, a full fledged Client that take advantage of the respective Restcomm SDKs and provides webrtc video/audio calling and messaging capabilities on each of Web, iOS and Android platforms out of the box.</p>
+<p>The main aspect of this feature is to associate WebRTC clients with IMS core network, in other words to make WebRTC clients act as IMS core network clients.</p>
+</div>
+<div class="paragraph">
+<p>All signaling from WebRTC client should be sent toward IMS, and signaling from IMS should be passed to WebRTC clients.</p>
+</div>
+<div class="paragraph">
+<p>Restcomm will act as a WebRTC gateway to IMS core network.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configuration"><a class="anchor" href="#configuration"></a>Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To enable this feature you will need to modify the <strong>restcomm.xml</strong> configuation file, and edit the <strong>ims-authentication</strong> section:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;ims-authentication&gt;
+	&lt;act-as-ims-ua&gt;true&lt;/act-as-ims-ua&gt;
+	&lt;domain&gt;ims.com&lt;/domain&gt;
+	&lt;proxy-address&gt;ims.com&lt;/proxy-address&gt;
+	&lt;proxy-port&gt;5060&lt;/proxy-port&gt;
+	&lt;call-id-prefix&gt;WebRTCGW__1@&lt;/call-id-prefix&gt;
+	&lt;user-agent&gt;WebRTCGW/1.0&lt;/user-agent&gt;
+	&lt;account&gt;ims&lt;/account&gt;
+&lt;/ims-authentication&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="call-flows-and-examples"><a class="anchor" href="#call-flows-and-examples"></a>Call flows and examples</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="1-webrtc-client-registration"><a class="anchor" href="#1-webrtc-client-registration"></a>1. WebRTC client registration</h3>
+<div class="paragraph">
+<p>The registration of WebRTC clients is routed to IMS, and only when accepted by IMS it is stored in Restcomm-Connect database. The sequence diagram below illustrates IMS registration process.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/webrtc_client_registration.png" alt="WebRTC client Registration">
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="web-sdk"><a class="anchor" href="#web-sdk"></a>Web SDK</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="restcomm-client-web-sdk-quick-start.html#web-sdk-guide">Restcomm Web SDK Quick Start Guide</a></p>
-</li>
-<li>
-<p><a href="http://documentation.telestax.com/restcomm-web-sdk/doc/">Restcomm Web SDK Reference Documentation</a></p>
-</li>
-<li>
-<p><a href="restcomm-web-olympus-user-guide.html#web-olympus-guide">Restcomm Web Olympus App User Guide</a></p>
-</li>
-</ul>
+<h3 id="2-webrtc-client-outgoing-call"><a class="anchor" href="#2-webrtc-client-outgoing-call"></a>2. WebRTC client outgoing call</h3>
+<div class="paragraph">
+<p>The outgoing call from WebRTC client registered in IMS is routed to IMS. The sequence diagram below illustrates outgoing call flow.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/webrtc_client_outgoing_call.png" alt="WebRTC client outgoing call to IMS core network">
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="ios-sdk"><a class="anchor" href="#ios-sdk"></a>iOS SDK</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="restcomm-client-ios-sdk-quick-start.html#ios-sdk-guide">Restcomm iOS SDK Quick Start Guide</a></p>
-</li>
-<li>
-<p><a href="http://documentation.telestax.com/restcomm-ios-sdk/doc/html/">Restcomm iOS SDK Reference Documentation</a></p>
-</li>
-<li>
-<p><a href="restcomm-ios-olympus-user-guide.html#ios-olympus-guide">Restcomm iOS Olympus App User Guide</a></p>
-</li>
-</ul>
+<h3 id="3-webrtc-client-incoming-call"><a class="anchor" href="#3-webrtc-client-incoming-call"></a>3. WebRTC client incoming call</h3>
+<div class="paragraph">
+<p>The incoming call from IMS is passed to WebRTC client. The sequence diagram below illustrates incoming call flow.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/webrtc_incoming_call.png" alt="WebRTC client incoming call">
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="android-sdk"><a class="anchor" href="#android-sdk"></a>Android SDK</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="restcomm-client-android-sdk-quick-start.html#android-sdk-guide">Restcomm Android SDK Quick Start Guide</a></p>
-</li>
-<li>
-<p><a href="http://documentation.telestax.com/restcomm-android-sdk/doc/">Restcomm Android SDK Reference Documentation</a></p>
-</li>
-<li>
-<p><a href="restcomm-android-olympus-user-guide.html#android-olympus-guide">Restcomm Android Olympus App User Guide</a></p>
-</li>
-</ul>
+<h3 id="4-webrtc-call-hold-flow"><a class="anchor" href="#4-webrtc-call-hold-flow"></a>4. WebRTC call hold flow</h3>
+<div class="paragraph">
+<p>The Restcomm-Connect handles call hold action and makes sure to pass hold indication to client and IMS. The sequence diagram below illustrates the call hold scenario.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/webrtc_call_hold.png" alt="WebRTC call hold flow">
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
