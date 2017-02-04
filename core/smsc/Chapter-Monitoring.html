@@ -22894,11 +22894,11 @@ The CDR generated in the text file is of the below format:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>DELIVERY_DATE,SIMBIT_DATE,ADDR_SRC_DIGITS,ADDR_SRC_TON,ADDR_SRC_NPI,ADDR_DST_DIGITS,ADDR_DST_TON,ADDR_DST_NPI,Message_Delivery_Status,ORIG_SYSTEM_ID,MESSAGE_ID,NNN_DIGITS,IMSI,CORR_ID,ORIGINATOR_SCCP_ADDRESS,ORIG_NETWORK_ID,NETWORK_ID,MtServiceCenterAddress,First 20 characters of SMS, Reason_For_Failure</pre>
+<pre>DELIVERY_DATE,SIMBIT_DATE,ADDR_SRC_DIGITS,ADDR_SRC_TON,ADDR_SRC_NPI,ADDR_DST_DIGITS,ADDR_DST_TON,ADDR_DST_NPI,Message_Delivery_Status,ORIGINATION_TYPE,MESSAGE_TYPE,ORIG_SYSTEM_ID,MESSAGE_ID,DVL_MESSAGE_ID,RECEIPT_LOCAL_MESSAGE_ID,NNN_DIGITS,IMSI,CORR_ID,ORIGINATOR_SCCP_ADDRESS,MtServiceCenterAddress,ORIG_NETWORK_ID,NETWORK_ID,MPROC_NOTES,MSG_PARTS,CHAR_NUMBERS,First 20 characters of SMS,Reason_For_Failure</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>where <code>ADDR_SRC_DIGITS, ADDR_SRC_TON, ADDR_SRC_NPI, ADDR_DST_DIGITS, ADDR_DST_TON, ADDR_DST_NPI, ORIG_SYSTEM_ID, MESSAGE_ID, NNN_DIGITS, IMSI</code> and <code>CORR_ID</code> are as explained in <a href="#_slot_messages_table_yyyy_mm_dd">[_slot_messages_table_yyyy_mm_dd]</a>; <code>SIMBIT_DATE</code>, <code>Message_Delivery_Status</code> and <code>Reason_For_Failure</code> are described below in this section.</p>
+<p>where <code>ADDR_SRC_DIGITS, ADDR_SRC_TON, ADDR_SRC_NPI, ADDR_DST_DIGITS, ADDR_DST_TON, ADDR_DST_NPI, ORIG_SYSTEM_ID, MESSAGE_ID, NNN_DIGITS, IMSI, ORIG_NETWORK_ID, NETWORK_ID</code> and <code>CORR_ID</code> are as explained in <a href="#_slot_messages_table_yyyy_mm_dd">[_slot_messages_table_yyyy_mm_dd]</a> and other values are described below in this section.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -23016,8 +23016,45 @@ It does not indicate if a resend will be attempted or not.</p>
 </dl>
 </div>
 <div class="paragraph">
+<div class="title">ORIGINATION_TYPE</div>
+<p>A message origination: SMPP, SS7_MO, SS7_HR, SIP, HTTP, LOCAL_ORIG (delivery receipts that are created by SMSC GW).</p>
+</div>
+<div class="dlist">
+<div class="title">MESSAGE_TYPE</div>
+<dl>
+<dt class="hdlist1">message</dt>
+<dd>
+<p>Regular messages</p>
+</dd>
+<dt class="hdlist1">dlr</dt>
+<dd>
+<p>Delivery receipts</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<div class="title">DVL_MESSAGE_ID</div>
+<p>A messageID that is used at SMPP protocol when sending a message to a peer. Only for SMPP terminated messages. "MESSAGE_ID" feild displays a messageId value for a leg when SMSC GW receives a message from a SMPP peer.</p>
+</div>
+<div class="paragraph">
+<div class="title">RECEIPT_LOCAL_MESSAGE_ID</div>
+<p>This field is used for delivery receipt – an original messageId that was used in the original message in field MESSAGE_ID (for correlation between an original message and DLR). If a message is a DLR but the original message is not known for SMSC GW this field will be filled by <code>xxxx</code> value.</p>
+</div>
+<div class="paragraph">
 <div class="title">MtServiceCenterAddress</div>
 <p>Local SMSC GW address (GT) that is used in MT procedure (for mobile terminated messages).</p>
+</div>
+<div class="paragraph">
+<div class="title">MPROC_NOTES</div>
+<p>Some custom mproc rules implementations may put here some verbal remarks of made processing.</p>
+</div>
+<div class="paragraph">
+<div class="title">MSG_PARTS</div>
+<p>A count of message parts for which SMSC GW will split a message when delivering to SS7 network. If a message is short or already splitted then this field will contain <code>1</code>.</p>
+</div>
+<div class="paragraph">
+<div class="title">CHAR_NUMBERS</div>
+<p>A count of characters that are present in the message / message segment. If SMSC GW is making a message splitting for a long message then only a last segment (with Message_Delivery_Status <code>success</code> or <code>success_esme</code>) will contain a character number for all segments. Non-last segments in this case (with Message_Delivery_Status <code>partial</code> or <code>partial_esme</code>) will contain 0 in this field. This is because of a way how SMSC GW makes of message splitting.</p>
 </div>
 <div class="paragraph">
 <div class="title">Reason_For_Failure</div>
@@ -23104,7 +23141,7 @@ This is an abnormal case and implies MAP incompatibility.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-03 10:49:55 WET
+Last updated 2017-02-04 11:03:59 WET
 </div>
 </div>
 <footer>

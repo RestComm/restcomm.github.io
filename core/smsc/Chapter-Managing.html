@@ -22771,7 +22771,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#_smsc_scheduler_settings">Scheduler Settings</a></li>
 <li><a href="#_smsc_diameter_settings">Diameter Settings</a></li>
 <li><a href="#_smsc_gateway_server_hr">Home Routing Settings</a></li>
-<li><a href="#_smsc_gateway_server_cdr">CDR</a></li>
+<li><a href="#_smsc_gateway_server_cdr">CDRs and archive tables</a></li>
 <li><a href="#_smsc_gateway_server_processing">Processing</a></li>
 </ul>
 </li>
@@ -25824,7 +25824,7 @@ Results will be shown in the bottom of the screen For more details of this param
 </div>
 </div>
 <div class="sect2">
-<h3 id="_smsc_gateway_server_cdr"><a class="anchor" href="#_smsc_gateway_server_cdr"></a>CDR</h3>
+<h3 id="_smsc_gateway_server_cdr"><a class="anchor" href="#_smsc_gateway_server_cdr"></a>CDRs and archive tables</h3>
 <div class="sect3">
 <h4 id="_generatecdr"><a class="anchor" href="#_generatecdr"></a>CDR generation</h4>
 <div class="sect4">
@@ -25837,26 +25837,29 @@ You can verify this by issuing the command <code>smsc get generatecdr</code> whi
 <div class="listingblock">
 <div class="content">
 <pre>Name
-    smsc set generatecdr
+	smsc set generatecdr
 
 SYNOPSIS
-    smsc set generatecdr &lt;digital option&gt;
+	smsc set generatecdr &lt;0 | 1 | 2 | 4 | 7&gt;
 
 DESCRIPTION
-    This command is used to set which messages (or none) will be stored into
-    CDR log file. Details of CDR log format can be found in "8.2. CDR Log"
-    Options will have following bits values:
-    bit 1 - records will be done for SMPP originated messages with datagramm
-            mode
-    bit 2 - records will be done for SMPP originated messages with
-            transactional mode
-    bit 4 - records will be done for SMPP originated messages with
-            storeAndForward mode and for all SS7 or SIP originated messages
-    Value 0 will mean store none and value 7 - store all.
-    Default value: 7 (store all)
+	This command is used to set the generatecdr value. generatecdr
+	defines which messages records will be added into .txt CDR's
+
+	Options will have following bits values:
+
+	1 - records will be done for SMPP originated messages with
+	datagramm mode
+	2 - records will be done for SMPP originated messages with
+	transactional mode
+	4 - records will be done for SMPP originated messages with
+	storeAndForward mode and for all SS7 or SIP originated messages
+
+	Value 0 will mean store none and value 7 - store all.
+	Default value: 7
 
 EXAMPLES
-    smsc set generatecdr 7</pre>
+	smsc set generatecdr 7</pre>
 </div>
 </div>
 </div>
@@ -25870,7 +25873,7 @@ EXAMPLES
 </li>
 <li>
 <p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
-Switch to the 'Properties' tab in the GUI.</p>
+Switch to the 'CDR' tab in the GUI.</p>
 </li>
 <li>
 <p>You can specify CDR generation option by selecting an appropriate value in the field "CDR generation". For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
@@ -25929,7 +25932,7 @@ EXAMPLES
 </li>
 <li>
 <p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
-Switch to the 'Properties' tab in the GUI.</p>
+Switch to the 'CDR' tab in the GUI.</p>
 </li>
 <li>
 <p>You can specify archive table CDR generation option by selecting an appropriate value in the field "Archive table generation". For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
@@ -25962,7 +25965,11 @@ DESCRIPTION
 	The SMSC can be configured to generate CDR for both receipt and regular messages
 	or generate CDR only for regular messages. By default the SMSC will generate CDR
 	for regular messages only. However if you require the SMSC to generate CDR for
-	receipt messages as well, you must set the parameter 'generatereceiptcdr' to true.</pre>
+	receipt messages as well, you must set the parameter 'generatereceiptcdr' to true.
+	Default value: false
+
+EXAMPLES
+	smsc set generatereceiptcdr false</pre>
 </div>
 </div>
 </div>
@@ -25976,10 +25983,115 @@ DESCRIPTION
 </li>
 <li>
 <p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
-Switch to the 'Properties' tab in the GUI.</p>
+Switch to the 'CDR' tab in the GUI.</p>
 </li>
 <li>
 <p>You can specify if the SMSC should generate CDR for receipt messages by choosing the value true for the field 'Generate receipt CDR'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_generatetempfailurecdr"><a class="anchor" href="#_generatetempfailurecdr"></a>Generate CDR for temporary failure case</h4>
+<div class="sect4">
+<h5 id="_generatetempfailurecdr_cli"><a class="anchor" href="#_generatetempfailurecdr_cli"></a>Using CLI</h5>
+<div class="paragraph">
+<p>You can set the 'generatetempfailurecdr' value to true/false by issuing the command <code>smsc set generatetempfailurecdr</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get generatetempfailurecdr</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set generatetempfailurecdr
+
+SYNOPSIS
+	smsc set generatetempfailurecdr &lt;true | false&gt;
+
+DESCRIPTION
+	The SMSC can be configured to generate CDR for a successful delivery case,
+	a permanent failure case and a temporary failure case. If we configure
+	generatetempfailurecdr to true then CDR will be generated for all cases.
+	If we configure generatetempfailurecdr to false then CDR will be generated for
+	successful delivery and permanent failure cases and not for a temporary failure
+	case.
+	Default value: true
+
+EXAMPLES
+	smsc set generatetempfailurecdr true</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_generatetempfailurecdr_gui"><a class="anchor" href="#_generatetempfailurecdr_gui"></a>Using GUI</h5>
+<div class="olist arabic">
+<div class="title">Procedure: Set 'generate CDR for a temporary failure case'  using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'CDR' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify if the SMSC should generate CDR for for a temporary failure case by choosing the value true for the field 'Generate CDR for a temporary failure case'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_calculatemsgpartslencdr"><a class="anchor" href="#_calculatemsgpartslencdr"></a>Calculating of message parts and characters count per a CDR record</h4>
+<div class="sect4">
+<h5 id="_calculatemsgpartslencdr_cli"><a class="anchor" href="#_calculatemsgpartslencdr_cli"></a>Using CLI</h5>
+<div class="paragraph">
+<p>You can set the 'calculatemsgpartslencdr' value to true/false by issuing the command <code>smsc set calculatemsgpartslencdr</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get calculatemsgpartslencdr</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set calculatemsgpartslencdr
+
+SYNOPSIS
+	smsc set calculatemsgpartslencdr &lt;true | false&gt;
+
+DESCRIPTION
+	When SMSC GW generates CDR records it can calculate message parts and characters
+	count per a CDR record. Message parts count means a count of parts to that
+	SMSC GW will have to split a long messages when sending messages into SS7 network.
+	This demands some extra calculating and therefore is disabled by default.
+	You can turn it on by setting to a true of calculatemsgpartslencdr option.
+	Default value: false
+
+EXAMPLES
+	smsc set calculatemsgpartslencdr false</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_calculatemsgpartslencdr_gui"><a class="anchor" href="#_calculatemsgpartslencdr_gui"></a>Using GUI</h5>
+<div class="olist arabic">
+<div class="title">Procedure: Set 'calculating of message parts and characters count per a CDR record'  using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'CDR' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify if the SMSC should calculating of message parts and characters count per a CDR record by choosing the value true for the field 'Calculating of message parts and characters count per a CDR record'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
 </li>
 <li>
 <p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
@@ -29493,7 +29605,7 @@ Hence graph will show historic data from the point the page was loaded.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-03 10:49:55 WET
+Last updated 2017-02-04 11:03:59 WET
 </div>
 </div>
 <footer>

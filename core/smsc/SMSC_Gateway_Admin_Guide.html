@@ -23831,7 +23831,7 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A compound field that contains XML serialized info for several auxiliary fields.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA_2</p></td>
@@ -24127,7 +24127,7 @@ The messages are not deleted after delivery.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A compound field that contains XML serialized info for several auxiliary fields.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA_2</p></td>
@@ -30141,7 +30141,7 @@ Results will be shown in the bottom of the screen For more details of this param
 </div>
 </div>
 <div class="sect3">
-<h4 id="_smsc_gateway_server_cdr"><a class="anchor" href="#_smsc_gateway_server_cdr"></a>6.1.7. CDR</h4>
+<h4 id="_smsc_gateway_server_cdr"><a class="anchor" href="#_smsc_gateway_server_cdr"></a>6.1.7. CDRs and archive tables</h4>
 <div class="sect4">
 <h5 id="_generatecdr"><a class="anchor" href="#_generatecdr"></a>6.1.7.1. CDR generation</h5>
 <div class="sect5">
@@ -30154,26 +30154,29 @@ You can verify this by issuing the command <code>smsc get generatecdr</code> whi
 <div class="listingblock">
 <div class="content">
 <pre>Name
-    smsc set generatecdr
+	smsc set generatecdr
 
 SYNOPSIS
-    smsc set generatecdr &lt;digital option&gt;
+	smsc set generatecdr &lt;0 | 1 | 2 | 4 | 7&gt;
 
 DESCRIPTION
-    This command is used to set which messages (or none) will be stored into
-    CDR log file. Details of CDR log format can be found in "8.2. CDR Log"
-    Options will have following bits values:
-    bit 1 - records will be done for SMPP originated messages with datagramm
-            mode
-    bit 2 - records will be done for SMPP originated messages with
-            transactional mode
-    bit 4 - records will be done for SMPP originated messages with
-            storeAndForward mode and for all SS7 or SIP originated messages
-    Value 0 will mean store none and value 7 - store all.
-    Default value: 7 (store all)
+	This command is used to set the generatecdr value. generatecdr
+	defines which messages records will be added into .txt CDR's
+
+	Options will have following bits values:
+
+	1 - records will be done for SMPP originated messages with
+	datagramm mode
+	2 - records will be done for SMPP originated messages with
+	transactional mode
+	4 - records will be done for SMPP originated messages with
+	storeAndForward mode and for all SS7 or SIP originated messages
+
+	Value 0 will mean store none and value 7 - store all.
+	Default value: 7
 
 EXAMPLES
-    smsc set generatecdr 7</pre>
+	smsc set generatecdr 7</pre>
 </div>
 </div>
 </div>
@@ -30187,7 +30190,7 @@ EXAMPLES
 </li>
 <li>
 <p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
-Switch to the 'Properties' tab in the GUI.</p>
+Switch to the 'CDR' tab in the GUI.</p>
 </li>
 <li>
 <p>You can specify CDR generation option by selecting an appropriate value in the field "CDR generation". For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
@@ -30246,7 +30249,7 @@ EXAMPLES
 </li>
 <li>
 <p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
-Switch to the 'Properties' tab in the GUI.</p>
+Switch to the 'CDR' tab in the GUI.</p>
 </li>
 <li>
 <p>You can specify archive table CDR generation option by selecting an appropriate value in the field "Archive table generation". For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
@@ -30279,7 +30282,11 @@ DESCRIPTION
 	The SMSC can be configured to generate CDR for both receipt and regular messages
 	or generate CDR only for regular messages. By default the SMSC will generate CDR
 	for regular messages only. However if you require the SMSC to generate CDR for
-	receipt messages as well, you must set the parameter 'generatereceiptcdr' to true.</pre>
+	receipt messages as well, you must set the parameter 'generatereceiptcdr' to true.
+	Default value: false
+
+EXAMPLES
+	smsc set generatereceiptcdr false</pre>
 </div>
 </div>
 </div>
@@ -30293,10 +30300,115 @@ DESCRIPTION
 </li>
 <li>
 <p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
-Switch to the 'Properties' tab in the GUI.</p>
+Switch to the 'CDR' tab in the GUI.</p>
 </li>
 <li>
 <p>You can specify if the SMSC should generate CDR for receipt messages by choosing the value true for the field 'Generate receipt CDR'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_generatetempfailurecdr"><a class="anchor" href="#_generatetempfailurecdr"></a>6.1.7.4. Generate CDR for temporary failure case</h5>
+<div class="sect5">
+<h6 id="_generatetempfailurecdr_cli"><a class="anchor" href="#_generatetempfailurecdr_cli"></a>6.1.7.4.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'generatetempfailurecdr' value to true/false by issuing the command <code>smsc set generatetempfailurecdr</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get generatetempfailurecdr</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set generatetempfailurecdr
+
+SYNOPSIS
+	smsc set generatetempfailurecdr &lt;true | false&gt;
+
+DESCRIPTION
+	The SMSC can be configured to generate CDR for a successful delivery case,
+	a permanent failure case and a temporary failure case. If we configure
+	generatetempfailurecdr to true then CDR will be generated for all cases.
+	If we configure generatetempfailurecdr to false then CDR will be generated for
+	successful delivery and permanent failure cases and not for a temporary failure
+	case.
+	Default value: true
+
+EXAMPLES
+	smsc set generatetempfailurecdr true</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_generatetempfailurecdr_gui"><a class="anchor" href="#_generatetempfailurecdr_gui"></a>6.1.7.4.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set 'generate CDR for a temporary failure case'  using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'CDR' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify if the SMSC should generate CDR for for a temporary failure case by choosing the value true for the field 'Generate CDR for a temporary failure case'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_calculatemsgpartslencdr"><a class="anchor" href="#_calculatemsgpartslencdr"></a>6.1.7.5. Calculating of message parts and characters count per a CDR record</h5>
+<div class="sect5">
+<h6 id="_calculatemsgpartslencdr_cli"><a class="anchor" href="#_calculatemsgpartslencdr_cli"></a>6.1.7.5.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'calculatemsgpartslencdr' value to true/false by issuing the command <code>smsc set calculatemsgpartslencdr</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get calculatemsgpartslencdr</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set calculatemsgpartslencdr
+
+SYNOPSIS
+	smsc set calculatemsgpartslencdr &lt;true | false&gt;
+
+DESCRIPTION
+	When SMSC GW generates CDR records it can calculate message parts and characters
+	count per a CDR record. Message parts count means a count of parts to that
+	SMSC GW will have to split a long messages when sending messages into SS7 network.
+	This demands some extra calculating and therefore is disabled by default.
+	You can turn it on by setting to a true of calculatemsgpartslencdr option.
+	Default value: false
+
+EXAMPLES
+	smsc set calculatemsgpartslencdr false</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_calculatemsgpartslencdr_gui"><a class="anchor" href="#_calculatemsgpartslencdr_gui"></a>6.1.7.5.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set 'calculating of message parts and characters count per a CDR record'  using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'CDR' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify if the SMSC should calculating of message parts and characters count per a CDR record by choosing the value true for the field 'Calculating of message parts and characters count per a CDR record'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
 </li>
 <li>
 <p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
@@ -34037,11 +34149,11 @@ The CDR generated in the text file is of the below format:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>DELIVERY_DATE,SIMBIT_DATE,ADDR_SRC_DIGITS,ADDR_SRC_TON,ADDR_SRC_NPI,ADDR_DST_DIGITS,ADDR_DST_TON,ADDR_DST_NPI,Message_Delivery_Status,ORIG_SYSTEM_ID,MESSAGE_ID,NNN_DIGITS,IMSI,CORR_ID,ORIGINATOR_SCCP_ADDRESS,ORIG_NETWORK_ID,NETWORK_ID,MtServiceCenterAddress,First 20 characters of SMS, Reason_For_Failure</pre>
+<pre>DELIVERY_DATE,SIMBIT_DATE,ADDR_SRC_DIGITS,ADDR_SRC_TON,ADDR_SRC_NPI,ADDR_DST_DIGITS,ADDR_DST_TON,ADDR_DST_NPI,Message_Delivery_Status,ORIGINATION_TYPE,MESSAGE_TYPE,ORIG_SYSTEM_ID,MESSAGE_ID,DVL_MESSAGE_ID,RECEIPT_LOCAL_MESSAGE_ID,NNN_DIGITS,IMSI,CORR_ID,ORIGINATOR_SCCP_ADDRESS,MtServiceCenterAddress,ORIG_NETWORK_ID,NETWORK_ID,MPROC_NOTES,MSG_PARTS,CHAR_NUMBERS,First 20 characters of SMS,Reason_For_Failure</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>where <code>ADDR_SRC_DIGITS, ADDR_SRC_TON, ADDR_SRC_NPI, ADDR_DST_DIGITS, ADDR_DST_TON, ADDR_DST_NPI, ORIG_SYSTEM_ID, MESSAGE_ID, NNN_DIGITS, IMSI</code> and <code>CORR_ID</code> are as explained in <a href="#_slot_messages_table_yyyy_mm_dd">[_slot_messages_table_yyyy_mm_dd]</a>; <code>SIMBIT_DATE</code>, <code>Message_Delivery_Status</code> and <code>Reason_For_Failure</code> are described below in this section.</p>
+<p>where <code>ADDR_SRC_DIGITS, ADDR_SRC_TON, ADDR_SRC_NPI, ADDR_DST_DIGITS, ADDR_DST_TON, ADDR_DST_NPI, ORIG_SYSTEM_ID, MESSAGE_ID, NNN_DIGITS, IMSI, ORIG_NETWORK_ID, NETWORK_ID</code> and <code>CORR_ID</code> are as explained in <a href="#_slot_messages_table_yyyy_mm_dd">[_slot_messages_table_yyyy_mm_dd]</a> and other values are described below in this section.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -34159,8 +34271,45 @@ It does not indicate if a resend will be attempted or not.</p>
 </dl>
 </div>
 <div class="paragraph">
+<div class="title">ORIGINATION_TYPE</div>
+<p>A message origination: SMPP, SS7_MO, SS7_HR, SIP, HTTP, LOCAL_ORIG (delivery receipts that are created by SMSC GW).</p>
+</div>
+<div class="dlist">
+<div class="title">MESSAGE_TYPE</div>
+<dl>
+<dt class="hdlist1">message</dt>
+<dd>
+<p>Regular messages</p>
+</dd>
+<dt class="hdlist1">dlr</dt>
+<dd>
+<p>Delivery receipts</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<div class="title">DVL_MESSAGE_ID</div>
+<p>A messageID that is used at SMPP protocol when sending a message to a peer. Only for SMPP terminated messages. "MESSAGE_ID" feild displays a messageId value for a leg when SMSC GW receives a message from a SMPP peer.</p>
+</div>
+<div class="paragraph">
+<div class="title">RECEIPT_LOCAL_MESSAGE_ID</div>
+<p>This field is used for delivery receipt – an original messageId that was used in the original message in field MESSAGE_ID (for correlation between an original message and DLR). If a message is a DLR but the original message is not known for SMSC GW this field will be filled by <code>xxxx</code> value.</p>
+</div>
+<div class="paragraph">
 <div class="title">MtServiceCenterAddress</div>
 <p>Local SMSC GW address (GT) that is used in MT procedure (for mobile terminated messages).</p>
+</div>
+<div class="paragraph">
+<div class="title">MPROC_NOTES</div>
+<p>Some custom mproc rules implementations may put here some verbal remarks of made processing.</p>
+</div>
+<div class="paragraph">
+<div class="title">MSG_PARTS</div>
+<p>A count of message parts for which SMSC GW will split a message when delivering to SS7 network. If a message is short or already splitted then this field will contain <code>1</code>.</p>
+</div>
+<div class="paragraph">
+<div class="title">CHAR_NUMBERS</div>
+<p>A count of characters that are present in the message / message segment. If SMSC GW is making a message splitting for a long message then only a last segment (with Message_Delivery_Status <code>success</code> or <code>success_esme</code>) will contain a character number for all segments. Non-last segments in this case (with Message_Delivery_Status <code>partial</code> or <code>partial_esme</code>) will contain 0 in this field. This is because of a way how SMSC GW makes of message splitting.</p>
 </div>
 <div class="paragraph">
 <div class="title">Reason_For_Failure</div>
@@ -34960,7 +35109,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-03 10:49:55 WET
+Last updated 2017-02-04 11:03:59 WET
 </div>
 </div>
 <footer>
