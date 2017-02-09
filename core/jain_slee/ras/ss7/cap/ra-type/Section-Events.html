@@ -22766,6 +22766,8 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#_ratype_events_component">Component</a></li>
 <li><a href="#_ratype_events_dialog">Dialog</a></li>
 <li><a href="#_ratype_events_service_circuitswitchedcall">Circuit Switched Call</a></li>
+<li><a href="#_ratype_events_service_gprs">GPRS</a></li>
+<li><a href="#_ratype_events_service_sms">SMS</a></li>
 </ul>
 </div>
 </div>
@@ -23007,7 +23009,7 @@ Please remove them when using copy/paste.</p>
 </table>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 3. Mobility - Location Management Service events</caption>
+<caption class="title">Table 3. Circuit Switched Call Service events</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -23027,19 +23029,74 @@ Please remove them when using copy/paste.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The SSF will send InitialDPRequest to SCF to start CAMEL service.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ACTIVITY_TEST_REQUEST</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ActivityTestRequest</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The activity test (AT) is used for testing the CAMEL dialogue between the gsmSCF and the gsmSSF. The SCP may send CAP AT at regular intervals to the gsmSSF, e.g. every 15 min. The only function of CAP AT is to verify the existence of the CAMEL dialogue. When the gsmSSF receives CAP AT, it returns an empty RESULT to the gsmSCF. If the gsmSCF does not receive an operation RESULT within the operation time for CAP AT, e.g. 5 s, then the gsmSCF terminates the CAMEL service. CAP AT is normally sent by the SCP platform, not by the CAMEL service. The arrival of CAP AT in the gsmSSF has no impact on any call handling process or on the BCSM. The sending of CAP AT is not dependent on the phase of the call or on the gsmSSF FSM state</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ASSIST_REQUEST_ INSTRUCTIONS_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AssistRequest InstructionsRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Used by assisting gsmSSF to start the assisting dialogue.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ACTIVITY_TEST_RESPONSE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ActivityTestResponse</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Response to ActivityTestRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ESTABLISH_TEMPORARY_ CONNECTION_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EstablishTemporary ConnectionRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This event is used to establish a temporary connection between the serving (G)MSC and an MSC with assisting gsmSSF</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">APPLY_CHARGING_ REPORT_REQUEST</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ApplyChargingReportRequest</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This is the report that is sent from gsmSSF to gsmSCF at the end of a call period or when the call is released. In addition, when call set up failure occurs, such as called party busy or no answer, the gsmSSF also sends a charging report (if previously requested).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DISCONNECT_FORWARD_ CONNECTION_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DisconnectForward ConnectionRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to terminate the connection to a specialized resource or to terminate a temporary connection to an assisting gsmSSF or intelligent peripheral</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CONNECT_TO_ RESOURCE_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ConnectToResourceRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This event is used to instruct the gsmSSF or assisting gsmSSF to connect the call to a specialized resource, for user interaction</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CONNECT_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ConnectRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This event is used to instruct the gsmSSF to continue call establishment with modified information. This operation may also be used to generate a follow-on call.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RELEASE_CALL_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ReleaseCallRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used by the gsmSCF to release a call</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">REQUEST_REPORT_BCSM_ EVENT_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RequestReportBCSM EventRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation may be used by the gsmSCF to arm or disarm detection points in the BCSM</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EVENT_REPORT_BCSM_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EventReportBCSMRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This event is used by the gsmSSF to inform the gsmSCF about the occurrence of an event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">COLLECT_INFORMATION_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CollectInformationRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to request the gsmSSF to perform the call processing actions to prompt a calling party for additional digits.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CONTINUE_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ContinueRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to instruct the gsmSSF to continue call processing at the DP where call processing was suspended</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INITIATE_CALL_ATTEMPT_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">InitiateCallAttemptRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to instruct the gsmSSF to create a new call to a call party using the address information provided by the gsmSCF.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INITIATE_CALL_ATTEMPT_RESPONSE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">InitiateCallAttemptResponse</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RESET_TIMER_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ResetTimerRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation may be used by the gsmSCF to reload and restart the Tssf timer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FURNISH_CHARGING_ INFORMATION_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FurnishChargingInformationRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The gsmSCF may use this operation to place service-specific data in the CDR for the call</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">APPLY_CHARGING_REQUEST</p></td>
@@ -23047,9 +23104,14 @@ Please remove them when using copy/paste.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">This is the instruction from the gsmSCF to the gsmSSF to start or continue monitoring the call duration.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASSIST_REQUEST_ INSTRUCTIONS_REQUEST</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">AssistRequest InstructionsRequest</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Used by assisting gsmSSF to start the assisting dialogue.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">APPLY_CHARGING_ REPORT_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ApplyChargingReportRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This is the report that is sent from gsmSSF to gsmSCF at the end of a call period or when the call is released. In addition, when call set up failure occurs, such as called party busy or no answer, the gsmSSF also sends a charging report (if previously requested).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CALL_GAP_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CallGapRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to request the gsmSSF to reduce the rate at which specific service requests are sent to the gsmSCF.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CALL_INFORMATION_ REPORT_REQUEST</p></td>
@@ -23062,56 +23124,14 @@ Please remove them when using copy/paste.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to request call-related information.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CANCEL_REQUEST</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CancelRequest</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This event has a dual purpose:
-</p><p class="tableblock">* It may be used to disarm armed detection points and to cancel requests for reports. It is normally used when a CAMEL service wants to terminate the relationship
-</p><p class="tableblock">* It may be used to prevent or stop the execution of a user interaction operation, which was previously sent to the gsmSRF or to the intelligent peripheral.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SEND_CHARGING_ INFORMATION_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SendChargingInformationRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation may be used by the gsmSCF to send advice of charge information to the served subscriber</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CONNECT_REQUEST</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ConnectRequest</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This event is used to instruct the gsmSSF to continue call establishment with modified information. This operation may also be used to generate a follow-on call.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CONNECT_TO_ RESOURCE_REQUEST</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ConnectToResourceRequest</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This event is used to instruct the gsmSSF or assisting gsmSSF to connect the call to a specialized resource, for user interaction</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CONTINUE_REQUEST</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ContinueRequest</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to instruct the gsmSSF to continue call processing at the DP where call processing was suspended</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DISCONNECT_FORWARD_ CONNECTION_REQUEST</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DisconnectForward ConnectionRequest</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to terminate the connection to a specialized resource or to terminate a temporary connection to an assisting gsmSSF or intelligent peripheral</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ESTABLISH_TEMPORARY_ CONNECTION_REQUEST</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EstablishTemporary ConnectionRequest</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This event is used to establish a temporary connection between the serving (G)MSC and an MSC with assisting gsmSSF</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EVENT_REPORT_BCSM_REQUEST</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EventReportBCSMRequest</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This event is used by the gsmSSF to inform the gsmSCF about the occurrence of an event</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">FURNISH_CHARGING_ INFORMATION_REQUEST</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">FurnishChargingInformationRequest</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The gsmSCF may use this operation to place service-specific data in the CDR for the call</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PLAY_ANNOUNCEMENT_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PLAY_ANNOUNCEMENT_ REQUEST</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">PlayAnnouncementRequest</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A CAMEL service may use this operation to instruct the gsmSRF or intelligent peripheral to play an announcement</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">RELEASE_CALL_REQUEST</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ReleaseCallRequest</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used by the gsmSCF to release a call</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">PROMPT_AND_COLLECT_ USER_INFORMATION_REQUEST</p></td>
@@ -23124,24 +23144,256 @@ Please remove them when using copy/paste.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Response to PromptAndCollectUser InformationRequest</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">REQUEST_REPORT_BCSM_ EVENT_REQUEST</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">RequestReportBCSM EventRequest</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This operation may be used by the gsmSCF to arm or disarm detection points in the BCSM</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">RESET_TIMER_REQUEST</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ResetTimerRequest</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This operation may be used by the gsmSCF to reload and restart the Tssf timer</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SEND_CHARGING_ INFORMATION_REQUEST</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SendChargingInformationRequest</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This operation may be used by the gsmSCF to send advice of charge information to the served subscriber</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SPECIALIZED_RESOURCE_ REPORT_REQUEST</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SpecializedResourceReportRequest</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used by the gsmSRF to inform the gsmSCF that the playing of an announcement is complete</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CANCEL_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CancelRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This event has a dual purpose:
+1) It may be used to disarm armed detection points and to cancel requests for reports. It is normally used when a CAMEL service wants to terminate the relationship
+2) It may be used to prevent or stop the execution of a user interaction operation, which was previously sent to the gsmSRF or to the intelligent peripheral.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ACTIVITY_TEST_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ActivityTestRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The activity test (AT) is used for testing the CAMEL dialogue between the gsmSCF and the gsmSSF. The SCP may send CAP AT at regular intervals to the gsmSSF, e.g. every 15 min. The only function of CAP AT is to verify the existence of the CAMEL dialogue. When the gsmSSF receives CAP AT, it returns an empty RESULT to the gsmSCF. If the gsmSCF does not receive an operation RESULT within the operation time for CAP AT, e.g. 5 s, then the gsmSCF terminates the CAMEL service. CAP AT is normally sent by the SCP platform, not by the CAMEL service. The arrival of CAP AT in the gsmSSF has no impact on any call handling process or on the BCSM. The sending of CAP AT is not dependent on the phase of the call or on the gsmSSF FSM state</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ACTIVITY_TEST_RESPONSE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ActivityTestResponse</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Response to ActivityTestRequest</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DISCONNECT_FORWARD_ CONNECTION_WITH_ ARGUMENT_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DisconnectForwardConnectionWithArgumentRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to disconnect a forward temporary connection or a connection to a resource. Refer to clause 11 for a description of the procedures associated with this operation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CONTINUE_WITH_ARGUMENT_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ContinueWithArgumentRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to request the gsmSSF to proceed with call processing at the DP at which it previously suspended call processing to await gsmSCF instructions (i.e. proceed to the next point in call in the BCSM). The gsmSSF continues call processing with the modified call setup information as received from the gsmSCF.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DISCONNECT_LEG_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DisconnectLegRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used by the gsmSCF to release a specific leg associated with the call and retain any other legs not specified in the DisconnectLeg. Refer to clause 11 for a description of the procedures associated with this operation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DISCONNECT_LEG_RESPONSE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DisconnectLegResponse</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Response to DisconnectLegRequest</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MOVE_LEG_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MoveLegRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used by the gsmSCF to move a leg from one call segment to another call segment within the same call segment association.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MOVE_LEG_RESPONSE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MoveLegResponse</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Response to MoveLegRequest</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SPLIT_LEG_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SplitLegRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used by the gsmSCF to separate a leg from its source call segment and place it in a new call segment within the same call segment association.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SPLIT_LEG_RESPONSE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SplitLegResponse</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Response to SplitLegRequest</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ratype_events_service_gprs"><a class="anchor" href="#_ratype_events_service_gprs"></a>GPRS</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Below events are fired when dialog receives callbacks for GPRS service.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 4. GPRS Service events</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Event Class</th>
+<th class="tableblock halign-left valign-top">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ACTIVITY_TEST_GPRS_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ActivityTestGPRSRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to check for the continued existence of a relationship between the gsmSCF and gprsSSF. If the relationship is still in existence, then the gprsSSF will respond. If no reply is received, then the gsmSCF will assume that the gprsSSF has failed in some way and will take the appropriate action.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ACTIVITY_TEST_GPRS_RESPONSE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ActivityTestGPRSResponse</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A reponse to ActivityTestGPRSRequest</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">APPLY_CHARGING_GPRS_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ApplyChargingGPRSRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used for interacting from the gsmSCF with the gprsSSF CSE-controlled GPRS session or PDP Context charging mechanism.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">APPLY_CHARGING_REPORT_GPRS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ApplyChargingReportGPRSRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ApplyChargingReportGPRS operation provides the feedback from the gprsSCF to the gsmSCF CSE-controlled GPRS session charging mechanism.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">APPLY_CHARGING_REPORT_GPRS_RESPONSE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ApplyChargingReportGPRSResponse</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A response to ApplyChargingReportGPRSRequest</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CANCEL_GPRS_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CancelGPRSRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This generic operation cancels all previous requests, i.e. all EDPs and reports can be cancelled by the gsmSCF.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CONNECT_GPRS_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ConnectGPRSRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to modify the Access Point Name used when establishing a PDP Context.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CONTINUE_GPRS_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ContinueGPRSRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to request the gprsSSF to proceed with processing at the DP at which it previously suspended processing to await gsmSCF instructions (i.e., proceed to the next point in processing in the Attach/Detach state model or PDP Context state model) substituting new data from the gsmSCF.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ENTITY_RELEASED_GPRS_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EntityReleasedGPRSRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used when the GPRS Session is detached or a PDP Context is diconnected and the associated event is not armed for reporting. The usage of this operation is independent of the functional entity that initiates the Detach or PDP Context Disconnection and is independent of the cause of the Detach or PDP Context Disconnect.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ENTITY_RELEASED_GPRS_RESPONSE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EntityReleasedGPRSResponse</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A response to EntityReleasedGPRSRequest</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ENTITY_RELEASED_GPRS_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EntityReleasedGPRSRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used when the GPRS Session is detached or a PDP Context is diconnected and the associated event is not armed for reporting. The usage of this operation is independent of the functional entity that initiates the Detach or PDP Context Disconnection and is independent of the cause of the Detach or PDP Context Disconnect.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ENTITY_RELEASED_GPRS_RESPONSE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EntityReleasedGPRSResponse</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A response to EntityReleasedGPRSRequest</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FURNISH_CHARGING_INFORMATION_GPRS_REQUESTRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FurnishChargingInformationGPRS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to request the gprsSSF to generate, register a logical record or to include some information in the default logical GPRS record. The registered logical record is intended for off line charging of the GPRS session or PDP Context.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INITIAL_DP_GPRS_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">InitialDPGPRSRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used by the gprsSSF when a trigger is detected at a DP in the GPRS state machines to request instructions from the gsmSCF</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RELEASE_GPRS_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ReleaseGPRSRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to tear down an existing GPRS session or PDP Context at any phase.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EVENT_REPORT_GPRS_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EventReportGPRSRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to notify the gsmSCF of a GPRS session or PDP context related events (e.g. PDP context activation) previously requested by the gsmSCF in a RequestReportGPRSEventoperation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EVENT_REPORT_GPRS_RESPONSE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EventReportGPRSResponse</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A response to EventReportGPRSRequest</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">REQUEST_REPORT_GPRS_EVENT_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RequestReportGPRSEventRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to request the gprsSSF to monitor for an event (e.g., GPRS events such as attach or PDP Context activiation), then send a notification back to the gsmSCF when the event is detected.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RESET_TIMER_GPRS_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ResetTimerGPRSRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to request the gprsSSF to refresh an application timer in the gprsSSF.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SEND_CHARGING_INFORMATION_GPRS_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sendChargingInformationGPRS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to instruct the gprsSSF on the charging information which the gprsSSF shall send to the Mobile Station by means of GSM access signalling.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ratype_events_service_sms"><a class="anchor" href="#_ratype_events_service_sms"></a>SMS</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Below events are fired when dialog receives callbacks for SMS service.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 5. SMS Service events</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Event Class</th>
+<th class="tableblock halign-left valign-top">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INITIAL_DP_SMS_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">InitialDPSMSRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used after a TDP to indicate request for service.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FURNISH_CHARGING_INFORMATION_SMS_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FurnishChargingInformationSMSRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to request the smsSSF to generate, register a charging record or to include some information in the default SM record. The registered charging record is intended for off line charging of the Short Message.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CONNECT_SMS_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ConnectSMSRequestRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to request the smsSSF to perform the SMS processing actions to route or forward a short message to a specified destination.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">REQUEST_REPORT_SMS_EVENT_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RequestReportSMSEventRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to request the gsmSSF or gprsSSF to monitor for a Short Message related event (FSM events such as submission, delivery or failure) and to send a notification to the gsmSCF when the event is detected.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EVENT_REPORT_SMS_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EventReportSMSRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to notify the gsmSCF of a Short Message related event (FSM events such as submission, delivery or failure) previously requested by the gsmSCF in a RequestReportSMSEvent operation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CONTINUE_SMS_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ContinueSMSRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to request the smsSSF to proceed with Short Message processing at the DP at which it previously suspended Short Message processing to await gsmSCF instructions (i.e. proceed to the next Point in Association in the SMS FSM). The smsSSF continues SMS processing without substituting new data from the gsmSCF.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RELEASE_SMS_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ReleaseSMSRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to prevent an attempt to submit or deliver a short message.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RESET_TIMER_SMS_REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ResetTimerSMSRequest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This operation is used to request the smsSSF to refresh an application timer in the smsSSF.</p></td>
 </tr>
 </tbody>
 </table>
@@ -23150,7 +23402,7 @@ Please remove them when using copy/paste.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-08 10:44:28 WET
+Last updated 2017-02-09 10:43:31 WET
 </div>
 </div>
 <footer>
