@@ -23341,6 +23341,9 @@ http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
   &lt;statisticPort&gt;2006&lt;/statisticPort&gt;
   &lt;jmxHtmlAdapterPort&gt;8000&lt;/jmxHtmlAdapterPort&gt;
   &lt;shutdownTimeout&gt;10000&lt;shutdownTimeout&gt;
+  &lt;securityRequired&gt;true&lt;/securityRequired&gt;
+  &lt;login&gt;daddy&lt;/login&gt;
+  &lt;password&gt;123456&lt;/password&gt;
 &lt;/common&gt;
 &lt;sip&gt;
   &lt;publicIp&gt;&lt;/publicIp&gt;
@@ -23560,6 +23563,15 @@ When this connection fails or a disconnection instruction is received, an applic
 <dd>
 <p>Time after which LB will shutdown completely after getting request
 <a href="http://ip:statisticPort/lbstop" class="bare">http://ip:statisticPort/lbstop</a></p>
+</dd>
+<dt class="hdlist1">securityRequired</dt>
+<dd>
+<p>should we check login and password while stopping the Load balancer</p>
+</dd>
+<dt class="hdlist1">login</dt>
+<dt class="hdlist1">password</dt>
+<dd>
+<p>login and password for authorization for stopping the Load balancer</p>
 </dd>
 <dt class="hdlist1">httpPort</dt>
 <dd>
@@ -23799,7 +23811,13 @@ The default ports are: TCP: 2000, 2001, 2080, 5060, 5065, 8000 UDP: 5060, 5065
 <p>The Restcomm Load Balancer uses <a href="http://logging.apache.org/log4j">Log4J</a> as a logging mechanism.
 You can configure it through the typical log4j xml configuration file and specify the path as follows <code>-DlogConfigFile=./log4j.xml</code> . Please refer to Log4J documentation for more information on how to configure the logging.
 A shortcut exists if you want to switch between INFO/DEBUG/WARN logging levels.
-The JVM option <code>-DlogLevel=DEBUG</code> will allow you to switch all loggig categories to the specified log level.</p>
+The JVM option <code>-DlogLevel=DEBUG</code> will allow you to switch all loggig categories to the specified log level.
+Also you can dynamically change log level of the  Restcomm Load balancer via http request:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>http://lbIpAddress:statisticPort/lbloglevel?logLevel=DEBUG</pre>
+</div>
 </div>
 </li>
 </ol>
@@ -23977,8 +23995,27 @@ then you can shutdown active Load balancer by using http request
 <a href="http://host:statisticPort/lbstop" class="bare">http://host:statisticPort/lbstop</a> for upgrades and redirect new calls to another LB.
 The request will turn off the statistic port. The keepalived utility checks the
 statistic port and then switches traffic to the standby Load balancer if the statistic
-port is turned off. After two seconds the Load balancer finally  stops.
-.</p>
+port is turned off. After two seconds the Load balancer finally  stops. For more security
+you can add login and password as parameters in request. You should set next properties in
+configuration file in &lt;common&gt; section:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;securityRequired&gt;true&lt;/securityRequired&gt;
+&lt;login&gt;login&lt;/login&gt;
+&lt;password&gt;password&lt;/password&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and use request (example) :</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>http://127.0.0.1:2006/lbstop?login=daddy&amp;password=123456</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>.</p>
 </div>
 <div class="paragraph">
 <p>This should produce similar output to the following:</p>
@@ -25083,7 +25120,7 @@ sip stack property gov.nist.javax.sip.NEVER_ADD_RECEIVED_RPORT=true</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-09 10:48:41 WET
+Last updated 2017-02-10 10:56:13 WET
 </div>
 </div>
 <footer>
