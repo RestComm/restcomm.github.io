@@ -22909,15 +22909,15 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">UssdUrl</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The URL Restcomm will request when receiving an incoming SMS message to this number.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The URL Restcomm will request when receiving an incoming USSD request to this number.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">UssdMethod</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The HTTP method Restcomm will use when making requests to the SmsUrl. Either GET or POST.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The HTTP method Restcomm will use when making requests to the UssdUrl. Either GET or POST.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">UssdFallbackUrl</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The URL that Restcomm will request if an error occurs retrieving or executing the RCML from SmsUrl.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The URL that Restcomm will request if an error occurs retrieving or executing the RCML from UssdUrl.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">UssdFallbackMethod</p></td>
@@ -22925,7 +22925,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">UssdApplicationSid</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The 34 character sid of the application Restcomm should use to handle SMSs sent to this number. If a SmsApplicationSid is present, Restcomm will ignore all of the SMS urls above and use those set on the application.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The 34 character sid of the application Restcomm should use to handle USSD requests to this number. If a UssdApplicationSid is present, Restcomm will ignore all of the Ussd urls above and use those set on the application.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">UssdApplicationName</p></td>
@@ -22933,15 +22933,15 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ReferUrl</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The URL Restcomm will request when receiving an incoming SMS message to this number.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The URL Restcomm will request when receiving a SIP Refer request to this number.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ReferMethod</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The HTTP method Restcomm will use when making requests to the SmsUrl. Either GET or POST.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The HTTP method Restcomm will use when making requests to the ReferUrl. Either GET or POST.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ReferApplicationSid</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The 34 character sid of the application Restcomm should use to handle SMSs sent to this number. If a SmsApplicationSid is present, Restcomm will ignore all of the SMS urls above and use those set on the application.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The 34 character sid of the application Restcomm should use to handle SIP Refer requests to this number. If a ReferApplicationSid is present, Restcomm will ignore all of the Refer urls above and use those set on the application.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ReferApplicationName</p></td>
@@ -23553,7 +23553,7 @@ If you are trying to attach a number that you didn&#8217;t look up previously fr
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-13 14:55:45 WET
+Last updated 2017-02-13 18:07:16 WET
 </div>
 </div>
 <footer>
