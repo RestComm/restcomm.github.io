@@ -22770,6 +22770,11 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </ul>
 </li>
 <li><a href="#examples">Examples</a></li>
+<li><a href="#answer-delay-with-dial-verb">Answer Delay with Dial verb</a>
+<ul class="sectlevel2">
+<li><a href="#call-flows">Call flows</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -22975,10 +22980,62 @@ The current release of Restcomm doesn&#8217;t support recording for Dial Confere
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="answer-delay-with-dial-verb"><a class="anchor" href="#answer-delay-with-dial-verb"></a>Answer Delay with Dial verb</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For certain scenarios the 200 OK on the initial call should be delayed when the first verb is Dial, until Restcomm receives the final response from the Dial branch (or branches).</p>
+</div>
+<div class="paragraph">
+<p>Before this feature, when processing an incoming call for a hosted application, the application immediately created media session and sent SIP 200 OK response to the client no matter if there was a Dial verb in the hosted application or not. The incoming call was established with the application and the 'ringing' sound was transmitted through media channel. At the same time, if the RCML hosted application had Dial verb, the application sent SIP INVITE request to the destination. Depending on the destination response, the incoming call was either updated with the new media session (when the response was 200 OK), or it was disconnected (in case of failure response).</p>
+</div>
+<div class="paragraph">
+<p>With this new feature, in the above scenario, the application sends SIP 180 Ringing response instead of SIP 200 OK. The SIP 200 OK response is sent to the client only when the outgoing call is established with the destination. When outgoing call is failed, then the failure response is passed to the client.</p>
+</div>
+<div class="paragraph">
+<p>The feature was implemented as a feature flag. In order to configure this functionality, the following definition must be present in restcomm.xml file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;enable-200-ok-delay&gt;true&lt;/enable-200-ok-delay&gt;</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="call-flows"><a class="anchor" href="#call-flows"></a>Call flows</h3>
+<div class="paragraph">
+<p>The following sequence flow diagrams illustrate the new way of Restcomm-Connect functionality for RCML &lt;Dial&gt; verb.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The following sequence flow diagram illustrate the use of the feature when dialing to a single destination. Here you can see how all the possible states (answered, failed, busy etc) are handled.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/answer_delay_call_flow.png" alt="Answer Delay Call Flow">
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The next sequence flow diagram illustrate the feature when in Dial Forking.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/answer_delay_dial_forking_call_flow.png" alt="Answer Delay Dial forking Call Flow">
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-13 10:35:36 WET
+Last updated 2017-02-13 14:55:45 WET
 </div>
 </div>
 <footer>

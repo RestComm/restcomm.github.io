@@ -22794,7 +22794,10 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <p>The IncomingPhoneNumbers list resource represents an account&#8217;s Restcomm phone numbers. You can POST to the list resource to provision a new Restcomm number. To find a new number to provision use the subresources of the AvailablePhoneNumbers resource.</p>
 </div>
 <div class="paragraph">
-<p>You can transfer phone numbers between two Restcomm accounts if you&#8217;re using subaccounts. For details, see Exchanging Numbers Between Subaccounts. Provisioning a phone number is a two-step process. First, you must find an available phone number to provision using the subresources of the AvailablePhoneNumbers resource. Second, you must POST to the IncomingPhoneNumbers list resource, documented below.</p>
+<p>You can move phone numbers between two Restcomm accounts if you&#8217;re using subaccounts. For details, see Exchanging Numbers Between Subaccounts.</p>
+</div>
+<div class="paragraph">
+<p>Provisioning a phone number is a two-step process. First, you must find an available phone number to provision using the subresources of the AvailablePhoneNumbers resource. Second, you must POST to the IncomingPhoneNumbers list resource, documented below.</p>
 </div>
 <div class="sect2">
 <h3 id="incomingphonenumber-instance-resource"><a class="anchor" href="#incomingphonenumber-instance-resource"></a>IncomingPhoneNumber Instance Resource</h3>
@@ -22877,6 +22880,10 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <td class="tableblock halign-left valign-top"><p class="tableblock">The 34 character sid of the application Restcomm should use to handle phone calls to this number. If a VoiceApplicationSid is present, Restcomm will ignore all of the voice urls above and use those set on the application.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VoiceApplicationName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application name.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SmsUrl</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The URL Restcomm will request when receiving an incoming SMS message to this number.</p></td>
 </tr>
@@ -22897,54 +22904,56 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <td class="tableblock halign-left valign-top"><p class="tableblock">The 34 character sid of the application Restcomm should use to handle SMSs sent to this number. If a SmsApplicationSid is present, Restcomm will ignore all of the SMS urls above and use those set on the application.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SmsApplicationName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application name.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UssdUrl</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The URL Restcomm will request when receiving an incoming SMS message to this number.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UssdMethod</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The HTTP method Restcomm will use when making requests to the SmsUrl. Either GET or POST.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UssdFallbackUrl</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The URL that Restcomm will request if an error occurs retrieving or executing the RCML from SmsUrl.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UssdFallbackMethod</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The HTTP method Restcomm will use when requesting the above URL. Either GET or POST.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UssdApplicationSid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The 34 character sid of the application Restcomm should use to handle SMSs sent to this number. If a SmsApplicationSid is present, Restcomm will ignore all of the SMS urls above and use those set on the application.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UssdApplicationName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application name.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ReferUrl</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The URL Restcomm will request when receiving an incoming SMS message to this number.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ReferMethod</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The HTTP method Restcomm will use when making requests to the SmsUrl. Either GET or POST.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ReferApplicationSid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The 34 character sid of the application Restcomm should use to handle SMSs sent to this number. If a SmsApplicationSid is present, Restcomm will ignore all of the SMS urls above and use those set on the application.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ReferApplicationName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application name.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Capabilities</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">This is a set of boolean properties that indicate whether a phone number can receive calls or messages. Possible capabilities are Voice, SMS, and MMS with each having a value of either true or false.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">AddressRequirements</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This indicates whether the phone number requires you or your customer to have an Address registered with Restcomm. Possible values are none, any, local, or foreign.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Beta</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Phone numbers new to the Restcomm platform are marked as beta. Possible values are either true or false.</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Uri</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The URI for this resource, relative to <a href="https://api.Restcomm.com" class="bare">https://api.Restcomm.com</a>.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="address-requirement-values"><a class="anchor" href="#address-requirement-values"></a>Address Requirement Values</h4>
-<div class="paragraph">
-<p>The following are the possible values for the address_required property.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Status</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Description</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">none</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An Address is not required for this phone number.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">any</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Your account must have an Address, but it can be anywhere in the world.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">local</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Your account must have an Address within the phone number&#8217;s country.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">foreign</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Your account must have an Address outside the phone number&#8217;s country.</p></td>
 </tr>
 </tbody>
 </table>
@@ -23544,7 +23553,7 @@ If you are trying to attach a number that you didn&#8217;t look up previously fr
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-13 10:35:36 WET
+Last updated 2017-02-13 14:55:45 WET
 </div>
 </div>
 <footer>

@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Accessing Application Log</title>
+<title>Restcomm SIP Refer support</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22757,84 +22757,98 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/1877839.js"></script>
 <!-- End of HubSpot Embed Code -->
 </head>
-<body class="article">
+<body id="sip_refer_support" class="article">
 <div id="header">
+<h1>Restcomm SIP Refer support</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
-<ul class="sectlevel3">
-<li><a href="#accessing-application-log">Accessing Application Log</a></li>
+<ul class="sectlevel1">
+<li><a href="#example">Example</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>Application Logging is designed to help users troubleshoot their applications.</p>
-</div>
-<div class="sect3">
-<h4 id="accessing-application-log"><a class="anchor" href="#accessing-application-log"></a>Accessing Application Log</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Go to RestComm Visual Designer</p>
-</li>
-<li>
-<p>Open the application you wish to enable logging for</p>
-</li>
-<li>
-<p>On the top of the application screen click on the <em>Settings</em> icon</p>
-</li>
-<li>
-<p>Select <em>Project Settings</em></p>
-</li>
-</ul>
+<p>Restcomm now supports RFC5589 flow 6.1 SIP Refer that allows clients to transfer calls .</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="./images/Selection_096.png" alt="Project Settings" width="763" height="108"></span></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Enable Application Logging</p>
-</li>
-</ul>
+<p>This new feature enables usage of blind transfer capabilities in desk phones and other SIP clients such as Linphone.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="./images/Selection_098.png" alt="enable app logging" width="519" height="177"></span></p>
+<p>The feature is supported for calls that were created using the Dial verb and was tested with Yealink SIP-T21P E2, Cisco SPA525G and Polycom SoundPoint IP 335 deskphones.</p>
+</div>
+<div class="paragraph">
+<p>Currently call transfer is not supported on peer to peer calls.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="example"><a class="anchor" href="#example"></a>Example</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let’s start with the simple scenario involving three parties: Alice, Bob and Carol. Alice calls Bob and Bob wants to connect Alice to Carol. Bob presses the Blind Transfer button on his desk phone and types Carol’s number. His phone hungs up and Alice should be connected to Carol. There is also a possibility that Carol will not answer timely or will be busy talking with somebody else. In that case, it’s needed to connect Alice to Bob again, and this is easy to implement with existing RestComm features as we’ll see later.</p>
+</div>
+<div class="paragraph">
+<p>For the described scenario, we will need two incoming phone numbers:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Make a test call to your application</p>
+<p>Number A which is the number that Alice will call to connect to Bob. This number points to RVD application that dials Bob. For this Number we need to set the refer url application</p>
 </li>
 <li>
-<p>After the test call click on the <em>Settings</em> button again and and open <em>Application log</em></p>
+<p>Number B will be used by Bob as a transfer target during the call transfer. This Number points to an RVD application that dials Carol.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="./images/Selection_095.png" alt="enable application logging" width="767" height="114"></span></p>
+<p>The number A has additional property called Refer URL which could be either RVD application name or any other URL and is used to point to the refer application that will be executed during the call transfer. So configuration for number A should look like this:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/Restcomm_SIP_Refer.png" alt="Incoming Phone Number SIP Refer URL">
+</div>
+</div>
+<div class="paragraph">
+<p>During call transfer, Restcomm will check the SIP Refer request in order to extract the call transfer details and will create the following new parameters:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>If your application is working properly you should see a screen similar to the one below.</p>
-<div class="paragraph">
-<p><span class="image"><img src="./images/Selection_102.png" alt="application log screen" width="1056" height="399"></span></p>
-</div>
+<p>Transferor. Transferor is the one that initates the transfer</p>
 </li>
 <li>
-<p>If there are some issues with the external service you are using or any other part of your application you should see similar log screen:</p>
-<div class="paragraph">
-<p><span class="image"><img src="./images/Selection_101.png" alt="application log screen with an exception" width="1059" height="409"></span></p>
-</div>
+<p>Transferee. Transferee is the one that gets transfered</p>
 </li>
 <li>
-<p>In this case an EXCEPTION has been thrown. The error relates to the external service used in the application.</p>
+<p>ReferTarget. Is the transfer target</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Enabling Application log can help you easily find and troubleshoot issues related with your application while you are still developing it. If you want to clear the application log just click on the Reset button. Reload your application log screen each time you are testing your application in order to view new logs.</p>
+<p>The above new parameters will be part of the HTTP request that Restcomm will do download the RCML and so at RVD you can use the following new core variables:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>$core_Transferor</p>
+</li>
+<li>
+<p>$core_Transferee</p>
+</li>
+<li>
+<p>$core_ReferTarget</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For example, the RVD application for number B that will be executed after call transfer can use <code>&lt;Dial&gt;&lt;Number&gt;$core_ReferTarget&lt;/Number&gt;&lt;/Dial&gt;</code> so what ever Bob dialed during the call transfered it will be in the Dial verb of the Refer application.</p>
+</div>
+<div class="paragraph">
+<p>Call flow exceptions such as no answer, failed etc, should be handled the usual way, by using Dial Action or verbs after Dial.</p>
+</div>
 </div>
 </div>
 </div>
