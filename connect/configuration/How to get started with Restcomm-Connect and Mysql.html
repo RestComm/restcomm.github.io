@@ -22905,7 +22905,7 @@ the following tutorial will show how to get started with Restcomm and Mysql.</em
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash"> mysql -u root &lt; $RESTCOMM_HOME/standalone/deployments/restcomm.war/WEB-INF/scripts/mariadb/init.sql</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash"> mysql -u root -p &lt; $RESTCOMM_HOME/standalone/deployments/restcomm.war/WEB-INF/scripts/mariadb/init.sql</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -22947,7 +22947,7 @@ The is important if you have multiple Restcomm instances in the same subnet and 
 
 WARNING: If you need to change an existing GRANT, you can use the ALTER command as follows
 
-ALTER USER PRIVILEGES ON *.* TO 'root'@'192.168.1.%' IDENTIFIED BY 'V!rg1nMySql' WITH GRANT OPTION;</pre>
+ALTER USER PRIVILEGES ON *.* TO 'root'@'192.168.1.%' IDENTIFIED BY 'YourMysqlDBPwd' WITH GRANT OPTION;</pre>
 </div>
 </div>
 <div class="ulist">
@@ -23091,7 +23091,7 @@ If you have changed the default password before, you should insert your own pass
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-15 14:01:24 WET
+Last updated 2017-02-16 10:36:10 WET
 </div>
 </div>
 <footer>
