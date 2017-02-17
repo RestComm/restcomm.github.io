@@ -22766,7 +22766,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#_sslb_sip_load_balancing_basics">SIP Load Balancing Basics</a>
 <ul class="sectlevel2">
 <li><a href="#_sslb_load_balancer_node_discovery">Node Discovery of the Restcomm Load Balancer</a></li>
-<li><a href="#_sslb_load_balancer_keepalive">Keepalives to the Restcomm Load Balancer</a></li>
+<li><a href="#_sslb_load_balancer_keepalive">Heartbeats to the Restcomm Load Balancer</a></li>
 <li><a href="#restcomm-load-balancer-supports-sip-over-websockets">Restcomm Load Balancer supports SIP Over Websockets</a></li>
 <li><a href="#restcomm-load-balancer-supports-ipv6-protocol">Restcomm Load Balancer supports IPv6 protocol</a></li>
 </ul>
@@ -22875,15 +22875,75 @@ The Load Balancer forwards all same-session requests to the first node selected 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_sslb_load_balancer_keepalive"><a class="anchor" href="#_sslb_load_balancer_keepalive"></a>Keepalives to the Restcomm Load Balancer</h3>
+<h3 id="_sslb_load_balancer_keepalive"><a class="anchor" href="#_sslb_load_balancer_keepalive"></a>Heartbeats to the Restcomm Load Balancer</h3>
 <div class="paragraph">
-<p>Each individual Restcomm SIP Server in the cluster is responsible for contacting the Restcomm Load Balancer and relaying its health status through regular "heartbeats" that are sent over a TCP connection.</p>
+<p>Heartbeats service based on http protocol. Each http request and response has JSON
+object with required data. The load balancer and SIP-HA listens on heartbeats
+ports which we should set in configuration. Also for SIP-HA we should set port
+of the load balancer on which SIP-HA will send requests.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/heartbeat-protocol.png" alt="heartbeat protocol">
+</div>
+<div class="title">Figure 2. Heartbeat protocol</div>
 </div>
 <div class="paragraph">
-<p>The nodes typically send the IP addresses, ports and transports thay are listening on plus an optional list of custom information to allow more more powerful dynamic and intelligent routing to be done by the Load Balancer.</p>
+<p>Protocol has next requests:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Node’s start request</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>If the Load Balancer doesn&#8217;t receive the keepalive information from a node after a certain configurable amount of time, it discards the node. The time is reset for each message that the Load Balancer receives from the node as well be it a keepalive or a regular SIP or HTTP message.</p>
+<p>After Node’s start sip-ha will send start POST http request with JSON object
+with info about Node (hostname, ip, ports, sessionId etc.). sessionId generates
+after Restcomm’s start or restart. The Node sends periodically start request
+until getting http start response from the Load balancer.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Node’s heartbeat request</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>After getting start http response, RC will send heartbeat requests
+This request will have JSON object with only sessionId value. On each heartbeat
+request the Load balancer sends heartbeat http response.</p>
+</div>
+<div class="paragraph">
+<p>For signalising about gracefully shutdown the Node can send the shutdown request
+to the Load balancer</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Node’s shutdown request</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If node will shutdown then it will send shutdown request. If we don’t need
+gracefully shutdown but need just stop the Node then the Node can use stop request.
+For signaling about stopping of the Load balancer, it can send stop http request
+to the Node.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>LB’s stop request:</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>When the Node gets stop request from the Load balancer,
+it will start send the start request to the Load balancer until will not get
+start response.</p>
 </div>
 </div>
 <div class="sect2">
@@ -23006,7 +23066,7 @@ round robin algorithm; if false, LB sends each request to all clients.</p>
 <div class="content">
 <img src="./images/SMPP-lb-diagram.png" alt="SMPP lb diagram">
 </div>
-<div class="title">Figure 2. SMPP load balancer diagram mux mode</div>
+<div class="title">Figure 3. SMPP load balancer diagram mux mode</div>
 </div>
 <div class="paragraph">
 <p>Main goal is to reuse connection to the servers (SMSC) and simply transfer packets
@@ -23032,7 +23092,7 @@ be used in both directions: ESME and SMSC can send messages.</p>
 <div class="content">
 <img src="./images/SMPP-lb-regular-diagram.png" alt="SMPP lb regular diagram">
 </div>
-<div class="title">Figure 3. SMPP load balancer diagram regular mode</div>
+<div class="title">Figure 4. SMPP load balancer diagram regular mode</div>
 </div>
 <div class="paragraph">
 <p>Main goal of application is reducing the load on servers (SMSC) and simply transfer packets
@@ -23259,7 +23319,7 @@ With consistent hash algorithms there is no state to be preserved in the Restcom
 <div class="content">
 <img src="./images/WSS_Failover_Goal.png" alt="WSS Failover Goal">
 </div>
-<div class="title">Figure 4. Example deployment: IP load balancers serving both directions forincoming/outgoing requests in a cluster</div>
+<div class="title">Figure 5. Example deployment: IP load balancers serving both directions forincoming/outgoing requests in a cluster</div>
 </div>
 </div>
 </div>
@@ -23334,10 +23394,9 @@ http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
 &lt;common&gt;
   &lt;host&gt;172.21.0.105&lt;/host&gt;
   &lt;ipv6Host&gt;&lt;/ipv6Host&gt;
-  &lt;rmiRegistryPort&gt;2000&lt;/rmiRegistryPort&gt;
-  &lt;rmiRemoteObjectPort&gt;2001&lt;/rmiRemoteObjectPort&gt;
   &lt;nodeTimeout&gt;8400&lt;/nodeTimeout&gt;
   &lt;heartbeatInterval&gt;150&lt;/heartbeatInterval&gt;
+  &lt;heartbeatPort&gt;2610&lt;/heartbeatPort&gt;
   &lt;statisticPort&gt;2006&lt;/statisticPort&gt;
   &lt;jmxHtmlAdapterPort&gt;8000&lt;/jmxHtmlAdapterPort&gt;
   &lt;shutdownTimeout&gt;10000&lt;shutdownTimeout&gt;
@@ -23550,14 +23609,9 @@ http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
 <dd>
 <p>Port on which the Restcomm Load Balancer forwards incoming requests to available, and healthy, SIP Server cluster nodes.</p>
 </dd>
-<dt class="hdlist1">rmiRegistryPort</dt>
+<dt class="hdlist1">heartbeatPort</dt>
 <dd>
-<p>Port on which the Restcomm Load Balancer will establish the RMI heartbeat connection to the application servers.
-When this connection fails or a disconnection instruction is received, an application server node is removed and handling of requests continues without it by redirecting the load to the lie nodes.</p>
-</dd>
-<dt class="hdlist1">rmiRemoteObjectPort</dt>
-<dd>
-<p>Port on which the Restcomm Load Balancer will use to export the RMI Remote Object.</p>
+<p>Port on which the Restcomm Load Balancer listens heartbeats from nodes</p>
 </dd>
 <dt class="hdlist1">shutdownTimeout</dt>
 <dd>
@@ -23853,7 +23907,7 @@ If the desired behaviour group these requests, we can just make sure the affinit
 <div class="content">
 <img src="./images/converged-integrated-lb.png" alt="converged integrated lb">
 </div>
-<div class="title">Figure 5. Ensuring SIP and HTTP requests are being grouped by commonaffinity value.</div>
+<div class="title">Figure 6. Ensuring SIP and HTTP requests are being grouped by commonaffinity value.</div>
 </div>
 </div>
 </div>
@@ -23883,7 +23937,6 @@ In the Linux terminal, or using the Windows Command Prompt, the Load Balancers a
 2016-02-08 15:54:28,036 INFO main - nodeTimeout=8400
 2016-02-08 15:54:28,038 INFO main - heartbeatInterval=150
 2016-02-08 15:54:28,039 INFO main - Node registry starting...
-2016-02-08 15:54:28,103 INFO main - RMI heartbeat listener bound to internalHost, port 2000
 2016-02-08 15:54:28,103 INFO main - Node expiration task created
 2016-02-08 15:54:28,103 INFO main - Node registry started
 2016-02-08 15:54:28,130 INFO main - value -1000 will be used for reliableConnectionKeepAliveTimeout stack property
@@ -24097,7 +24150,7 @@ In the diagram, the Restcomm Load Balancer is the server with the IP address of 
 <div class="content">
 <img src="./images/mss-MSSSIPLoadBalancer-dia-ClusterIPsAndPorts.jpg" alt="mss MSSSIPLoadBalancer dia ClusterIPsAndPorts">
 </div>
-<div class="title">Figure 6. Basic IP and Port Cluster Configuration</div>
+<div class="title">Figure 7. Basic IP and Port Cluster Configuration</div>
 </div>
 </div>
 </div>
@@ -24148,9 +24201,6 @@ This function is cruicial when the direction of the requests withing the dialog 
 The load balancer will respond to every heartbeat request with 200 OK immediately.
 The third party server must expect the OK response.
 If no response if received within a threshhold time then the third party SIP server must assume the Restcomm Load Balancer is not available and use another (backup) load balancer.</p>
-</div>
-<div class="paragraph">
-<p>The regular Restcomm Load Balancer setting are still in effect for third party servers and you can expect the same behavior as the Restcomm-specific RMI heartbeat configuration.</p>
 </div>
 <div class="paragraph">
 <p>If you are desgning a pluggable algorithm using the SIP metadata, you can access the properties passed in the SIP message contents using <code>SIPNode.getProperties()</code></p>
@@ -24374,7 +24424,7 @@ You should use url <a href="http://host:statisticPort/lbinfo" class="bare">http:
 <div class="content">
 <img src="./images/Restcomm_servers-LB.png" alt="Restcomm servers LB">
 </div>
-<div class="title">Figure 7. Load balancer and Restcomm servers diagram</div>
+<div class="title">Figure 8. Load balancer and Restcomm servers diagram</div>
 </div>
 <div class="paragraph">
 <p>This chapter will show you how to configure two Restcomm instances and Load Balancer instance on one machine with OS Ubuntu.</p>
@@ -24870,7 +24920,7 @@ time which controlled one keepalived service.</p>
 <div class="content">
 <img src="./images/Active-Active.png" alt="Active Active">
 </div>
-<div class="title">Figure 8. Active-Active Load balancer diagram</div>
+<div class="title">Figure 9. Active-Active Load balancer diagram</div>
 </div>
 <div class="paragraph">
 <p>If LB2 will be gracefully shutdown via http request
@@ -24883,7 +24933,7 @@ will be redirected to LB1.</p>
 <div class="content">
 <img src="./images/Active-Active-Graceful-Shutdown.png" alt="Active Active Graceful Shutdown">
 </div>
-<div class="title">Figure 9. The graceful shutdown of Load balancer diagram</div>
+<div class="title">Figure 10. The graceful shutdown of Load balancer diagram</div>
 </div>
 <div class="paragraph">
 <p>For configuring of Load balancer you need setup keepalived service and set
@@ -25120,7 +25170,7 @@ sip stack property gov.nist.javax.sip.NEVER_ADD_RECEIVED_RPORT=true</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-16 11:03:58 WET
+Last updated 2017-02-17 10:53:40 WET
 </div>
 </div>
 <footer>
