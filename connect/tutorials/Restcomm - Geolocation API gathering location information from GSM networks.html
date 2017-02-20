@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Restcomm Visual Designer</title>
+<title>Requirements</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22759,54 +22759,276 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </head>
 <body class="article">
 <div id="header">
-<h1>Restcomm Visual Designer</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel0">
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#step-1-shift-default-port-offset-for-running-restcomm-gmlc">Step 1 - Shift default port offset for running Restcomm GMLC</a></li>
+<li><a href="#step-2-configure-restcomm-connect-to-work-along-with-desired-restcomm-gmlc">Step 2 - Configure Restcomm-Connect to work along with desired Restcomm GMLC</a></li>
+<li><a href="#step-3-run-restcomm-connect-restcomm-gmlc-in-simulator-mode-and-jss7-simulator">Step 3 - Run Restcomm-Connect, Restcomm GMLC in simulator mode and jSS7 simulator</a></li>
+<li><a href="#step-4-execute-restcomm-geolocation-api-location-requests">Step 4 - Execute Restcomm Geolocation API location requests</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
 <div class="paragraph">
-<p>The Restcomm Visual Designer is a quick and great way to create communications application. Gone are the days when you have to be an expert in a programming language and know everything about telecommunications in order to create a simple voice application.</p>
+<p>In this tutorial, you will learn how to use Restcomm Geolocation API together with Restcomm GMLC for retrieving location information from GSM networks.  </p>
 </div>
+<h1 id="requirements" class="sect0"><a class="anchor" href="#requirements"></a>Requirements</h1>
+<div class="ulist">
+<ul>
+<li>
+<p>Restcomm-Connect running on your local server previously configured to send HTTP messages to the desired Restcomm GMLC IP and port.</p>
+</li>
+<li>
+<p>Restcomm GMLC running on your local server with a default port offset of 100.</p>
+</li>
+<li>
+<p>Make sure that JBOS_HOME is properly set for either Restcomm-Connect and Restcomm GMLC if running Open Source builds.</p>
+</li>
+</ul>
+</div>
+<h1 id="step-1-shift-default-port-offset-for-running-restcomm-gmlc" class="sect0"><a class="anchor" href="#step-1-shift-default-port-offset-for-running-restcomm-gmlc"></a>Step 1 - Shift default port offset for running Restcomm GMLC</h1>
 <div class="paragraph">
-<p>The following articles will guide you through using RVD quickly and efficiently to build powerful communications applications:</p>
+<p>For running Restcomm-Connect and Restcomm-GMLC you&#8217;ll need to configure Restcomm GMLC to use a port offset. Please proceed then in identical way as explained <a href="http://documentation.telestax.com/connect/tutorials/Running%20USSD%20SMSC%20and%20Restcomm%20on%20the%20Same%20Server.html">HERE</a> for running Restcomm, SMSC and USSD Gateways in the same server. In this case we will setup Restcomm GMLC to run with the default port with an offset of 100. Hence,</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="Restcomm - RVD Quick Video Tutorial.html#video">Restcomm RVD Quick Video Tutorials</a></p>
+<p>Restcomm GMLC will use port 8180 to access the GUI.</p>
 </li>
 <li>
-<p><a href="Restcomm - Making HTTP requests with External Service client.html#http">Making HTTP requests with External Service client</a></p>
+<p>Restcomm GMLC will use port 5160 to listen to SIP messages.</p>
 </li>
 <li>
-<p><a href="Restcomm - Understanding RVD Variables.html#rvd-variables">Restcomm RVD Variables</a></p>
-</li>
-<li>
-<p><a href="Restcomm RVD - Control Element.html">Making decisions - Control element</a></p>
-</li>
-<li>
-<p><a href="Restcomm - External Services Arrays Strings and Objects.html#external-services">Restcomm - External Services Arrays Strings and Objects</a></p>
-</li>
-<li>
-<p><a href="Accessing custom SIP headers from an RCML or RVD application.html#custom-sip-headers">Accessing custom SIP headers from an RCML or RVD application</a></p>
-</li>
-<li>
-<p><a href="Restcomm RVD - Using Web Trigger.html#web-trigger">Restcomm RVD Web Trigger</a></p>
-</li>
-<li>
-<p><a href="Restcomm RVD - Introducing Diagrams.html#diagrams">Restcomm RVD Diagrams</a></p>
-</li>
-<li>
-<p><a href="Restcomm - Quick External Service Demo.html#video">Restcomm RVD External Service Demo</a></p>
-</li>
-<li>
-<p><a href="Restcomm - Enable Application Log in RVD.html#rvd-variables">Restcomm RVD - Enable Application Log</a></p>
-</li>
-<li>
-<p><a href="Hosting RVD External Services in the Cloud.html#web-trigger">Hosting RVD External Services in the Cloud</a></p>
-</li>
-<li>
-<p><a href="Fixing RVD projects with deprecated dynamic routing.html#deprecated-routing">Fixing RVD projects with deprecated dynamic routing</a></p>
+<p>Restcomm GMLC will use port 3535 for the CLI shell.</p>
 </li>
 </ul>
+</div>
+<h1 id="step-2-configure-restcomm-connect-to-work-along-with-desired-restcomm-gmlc" class="sect0"><a class="anchor" href="#step-2-configure-restcomm-connect-to-work-along-with-desired-restcomm-gmlc"></a>Step 2 - Configure Restcomm-Connect to work along with desired Restcomm GMLC</h1>
+<div class="paragraph">
+<p>Let&#8217;s assume your local server&#8217;s IP is 192.168.26.132. Then, edit the following Restcomm-Connect configuration file <code>$RESTCOMM_HOME/standalone/deployments/restcomm.war/WEB-INF/conf/restcomm.xml</code> so that the following section looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-lang:xml" data-lang="lang:xml">&lt;!-- TelScale GMLC --&gt;
+		&lt;gmlc&gt;
+			&lt;gmlc-uri&gt;http://192.168.26.132:8180/restcomm/gmlc/rest?msisdn=&lt;/gmlc-uri&gt;
+			&lt;gmlc-user&gt;&lt;/gmlc-user&gt;
+			&lt;gmlc-password&gt;&lt;/gmlc-password&gt;
+		&lt;/gmlc&gt;</code></pre>
+</div>
+</div>
+<h1 id="step-3-run-restcomm-connect-restcomm-gmlc-in-simulator-mode-and-jss7-simulator" class="sect0"><a class="anchor" href="#step-3-run-restcomm-connect-restcomm-gmlc-in-simulator-mode-and-jss7-simulator"></a>Step 3 - Run Restcomm-Connect, Restcomm GMLC in simulator mode and jSS7 simulator</h1>
+<div class="ulist">
+<ul>
+<li>
+<p>Go to <code>$RESTCOMM_HOME/bin/restcomm</code> and proceed with editing the network configuration in by editing <code>restcomm.conf</code> file accordingly, e.g.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre># Network configuration
+NET_INTERFACE='eth0'
+PRIVATE_IP='192.168.26.132'
+SUBNET_MASK='255.255.255.0'
+NETWORK='192.168.26.0'
+BROADCAST_ADDRESS='192.168.26.255'</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Initiate Restcomm-Connect by executing the BASH file like this: <code>sudo ./start-restcomm.sh</code>.</p>
+</li>
+<li>
+<p>It&#8217;s recommended you verify everything is running properly with screen. If you want to follow this advice, please run the following <code>sudo screen -r restcomm</code>. If you ever want to stop this screen view while not stopping Restcomm-Connect, click Ctrl+A followed by Ctrl+D.</p>
+</li>
+<li>
+<p>Run Restcomm GMLC in simulator mode, bound to the eth0 IP and with default port shifted by 100 by going to <code>$GMLC_HOME/jboss-5.1.0.GA/bin</code> and executing the BASH file like this: <code>sudo ./run.sh -b 192.168.26.132 -c simulator -Djboss.service.binding.set=ports-01</code>.</p>
+</li>
+<li>
+<p>Go to <code>$GMLC_HOME/tools/telscale-jss7-simulator/bin/</code> and run jSS7 simulator by executing the BASH file like this: <code>sudo ./run.sh gui</code>. For further instructions on how to operate jSS7 simulator for MAP ATI operations, please refer to the explanation detailed <a href="http://documentation.telestax.com/core/gmlc/GMLC_Admin_Guide.html#_simulator_gmlc_example">HERE</a>.</p>
+</li>
+</ul>
+</div>
+<h1 id="step-4-execute-restcomm-geolocation-api-location-requests" class="sect0"><a class="anchor" href="#step-4-execute-restcomm-geolocation-api-location-requests"></a>Step 4 - Execute Restcomm Geolocation API location requests</h1>
+<div class="ulist">
+<ul>
+<li>
+<p>Login to Restcomm-Connect. For this example this would happen by introducing the user credentials in <code><a href="http://192.168.26.132:8080" class="bare">http://192.168.26.132:8080</a></code>. Restcomm-Connect&#8217;s dashboard will appear, then get the <code>Account SID</code> and <code>Auth Token</code> values. For this example, we will use <code>Account SID = ACae6e420f425248d6a26948c17a9e2acf</code> and <code>Auth Token = f8bc1274677b173d1a1cf3b9924eaa7e</code> values, as obtained from the image below. Please notice that these values change accordingly to your credentials (Email/Account SID and password used to sign in to Restcomm-Connect).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./images/RestComm_Dashboard_AccountSID-AuthToken.png" alt="restcomm-rvd-smstest1" width="900" height="200"></span></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>For Immediate type of Geolocation HTTP POST requests you only need two mandatory parameters: <code>DeviceIdentifier</code> and <code>StatusCallback</code>. Please refer to Restcomm Geolocation API documentation for a full description on Immediate type of Geolocation as explained <a href="http://documentation.telestax.com/connect/api/geolocation-api.html#immediate-geolocation">HERE</a>.</p>
+</li>
+<li>
+<p>Assuming for the former values <code>59899077937</code> and <code><a href="http://52.19.10.207:8888/rcgla" class="bare">http://52.19.10.207:8888/rcgla</a></code> correspondingly, execute the following HTTP POST command:</p>
+</li>
+</ul>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -X POST -H "application/json" http://ACae6e420f425248d6a26948c17a9e2acf:f8bc1274677b173d1a1cf3b9924eaa7e@192.168.26.132:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate -d "DeviceIdentifier=59899077937" -d "StatusCallback=http://52.19.10.207:8888/rcgla"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should obtain the following XML formatted response:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-lang:xml" data-lang="lang:xml">&lt;RestcommResponse&gt;
+  &lt;Geolocation&gt;
+    &lt;Sid&gt;GLa6f05ba18e934c90801e10939cc117b6&lt;/Sid&gt;
+    &lt;DateCreated&gt;Sun, 19 Feb 2017 22:17:02 -0200&lt;/DateCreated&gt;
+    &lt;DateUpdated&gt;Sun, 19 Feb 2017 22:17:02 -0200&lt;/DateUpdated&gt;
+    &lt;DateExecuted&gt;Sun, 19 Feb 2017 22:17:02 -0200&lt;/DateExecuted&gt;
+    &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
+    &lt;DeviceIdentifier&gt;59899077937&lt;/DeviceIdentifier&gt;
+    &lt;GeolocationType&gt;Immediate&lt;/GeolocationType&gt;
+    &lt;GeolocationData&gt;
+      &lt;CellId&gt;221&lt;/CellId&gt;
+      &lt;LocationAreaCode&gt;32000&lt;/LocationAreaCode&gt;
+      &lt;MobileCountryCode&gt;250&lt;/MobileCountryCode&gt;
+      &lt;MobileNetworkCode&gt;1&lt;/MobileNetworkCode&gt;
+      &lt;NetworkEntityAddress&gt;5555555666&lt;/NetworkEntityAddress&gt;
+      &lt;LocationAge&gt;5&lt;/LocationAge&gt;
+    &lt;/GeolocationData&gt;
+    &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
+    &lt;Uri&gt;/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate/GLa6f05ba18e934c90801e10939cc117b6&lt;/Uri&gt;
+  &lt;/Geolocation&gt;
+&lt;/RestcommResponse&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice that the parameters obtained under GeolocationData correspond to the ones provided by the jSS7 simulator after it received the MAP ATI request from Restcomm GMLC. These values are the same as the ones you would obtain by executing the following HTTP GET request from a Web browser directly to Restcomm GMLC: <code><a href="http://192.168.26.132:8180/restcomm/gmlc/rest?msisdn=59899077937" class="bare">http://192.168.26.132:8180/restcomm/gmlc/rest?msisdn=59899077937</a></code> whose response would be the ones obtained from a MAP ATI request to the HLR, containing the Cell Global Identity, Age of Location and the MSC/VLR address (Global Title) the target mobile subscriber (MSISDN) is attached to according to latest location update between VLR and HLR:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>mcc=250,mnc=1,lac=32000,cellid=221,aol=5,vlrNumber=5555555666</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For a JSON type of response, just append <code>.json</code> in the HTTP POST request. Let&#8217;s see this by gathering the generated record with <code>Sid=GLa6f05ba18e934c90801e10939cc117b6</code> after the former HTTP POST request by executing the following HTTP GET request:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -X GET -H "application/json" http://ACae6e420f425248d6a26948c17a9e2acf:f8bc1274677b173d1a1cf3b9924eaa7e@192.168.26.132:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate/GLa6f05ba18e934c90801e10939cc117b6.json</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should obtain the following JSON formatted response:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>{
+  "sid": "GLa6f05ba18e934c90801e10939cc117b6",
+  "date_created": "Sun, 19 Feb 2017 22:17:02 -0200",
+  "date_updated": "Sun, 19 Feb 2017 22:17:02 -0200",
+  "date_executed": "Sun, 19 Feb 2017 22:17:02 -0200",
+  "account_sid": "ACae6e420f425248d6a26948c17a9e2acf",
+  "device_identifier": "59899077937",
+  "geolocation_type": "Immediate",
+  "geolocation_data": {
+    "cell_id": "221",
+    "location_area_code": "32000",
+    "mobile_country_code": 250,
+    "mobile_network_code": "1",
+    "network_entity_address": 5555555666,
+    "location_age": 5
+  },
+  "api_version": "2012-04-24",
+  "uri": "/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Immediate/GLa6f05ba18e934c90801e10939cc117b6.json"
+}</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>For Notification type of Geolocation HTTP POST requests you need more mandatory parameters, i.e. <code>DeviceIdentifier</code> and <code>StatusCallback</code> as in Immediate type, plus <code>EventGeofenceLatitude</code>, <code>EventGeofenceLongitude</code>, <code>GeofenceRange</code> and <code>GeofenceEvent</code>. Please refer to Restcomm Geolocation API documentation for a full description on Notification type of Geolocation as explained <a href="http://documentation.telestax.com/connect/api/geolocation-api.html#notification-geolocation">HERE</a>.</p>
+</li>
+<li>
+<p>Assuming for the former values <code>59827098828</code> and <code><a href="http://162.19.10.207:8988/rcgla/Fer" class="bare">http://162.19.10.207:8988/rcgla/Fer</a></code>, <code>-33.426280</code>, <code>101.566567</code>, <code>500</code> and <code>in</code> correspondingly, execute the following HTTP POST command:</p>
+</li>
+</ul>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -X POST -H "application/json" http://ACae6e420f425248d6a26948c17a9e2acf:f8bc1274677b173d1a1cf3b9924eaa7e@192.168.26.132:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification.json -d "DeviceIdentifier=59827098828" -d "EventGeofenceLatitude=-33.426280" -d "EventGeofenceLongitude=101.566567" -d "GeofenceRange=500" -d "GeofenceEvent=in" -d "StatusCallback=http://162.19.10.207:8988/rcgla/Fer"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should obtain the following JSON formatted response:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>{
+  "sid": "GL7aef69951fee4ae2b1c8988473d5e7b0",
+  "date_created": "Sun, 19 Feb 2017 22:43:03 -0200",
+  "date_updated": "Sun, 19 Feb 2017 22:43:03 -0200",
+  "date_executed": "Sun, 19 Feb 2017 22:43:03 -0200",
+  "account_sid": "ACae6e420f425248d6a26948c17a9e2acf",
+  "device_identifier": "59827098828",
+  "geolocation_type": "Notification",
+  "geolocation_data": {
+    "cell_id": "221",
+    "location_area_code": "32000",
+    "mobile_country_code": 250,
+    "mobile_network_code": "1",
+    "network_entity_address": 5555555666,
+    "location_age": 5,
+    "event_geofence_latitude": "-33.426280",
+    "event_geofence_longitude": "101.566567"
+  },
+  "api_version": "2012-04-24",
+  "uri": "/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification/GL7aef69951fee4ae2b1c8988473d5e7b0.json"
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s gather the generated record with <code>Sid=GL7aef69951fee4ae2b1c8988473d5e7b0</code> in XML format after the former HTTP POST request by executing the following HTTP GET request:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>curl -X GET http://ACae6e420f425248d6a26948c17a9e2acf:f8bc1274677b173d1a1cf3b9924eaa7e@192.168.26.132:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification/GL7aef69951fee4ae2b1c8988473d5e7b0</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-lang:xml" data-lang="lang:xml">&lt;RestcommResponse&gt;
+  &lt;Geolocation&gt;
+    &lt;Sid&gt;GL7aef69951fee4ae2b1c8988473d5e7b0&lt;/Sid&gt;
+    &lt;DateCreated&gt;Sun, 19 Feb 2017 22:43:03 -0200&lt;/DateCreated&gt;
+    &lt;DateUpdated&gt;Sun, 19 Feb 2017 22:43:03 -0200&lt;/DateUpdated&gt;
+    &lt;DateExecuted&gt;Sun, 19 Feb 2017 22:43:03 -0200&lt;/DateExecuted&gt;
+    &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
+    &lt;DeviceIdentifier&gt;59827098828&lt;/DeviceIdentifier&gt;
+    &lt;GeolocationType&gt;Notification&lt;/GeolocationType&gt;
+    &lt;GeolocationData&gt;
+      &lt;CellId&gt;221&lt;/CellId&gt;
+      &lt;LocationAreaCode&gt;32000&lt;/LocationAreaCode&gt;
+      &lt;MobileCountryCode&gt;250&lt;/MobileCountryCode&gt;
+      &lt;MobileNetworkCode&gt;1&lt;/MobileNetworkCode&gt;
+      &lt;NetworkEntityAddress&gt;5555555666&lt;/NetworkEntityAddress&gt;
+      &lt;LocationAge&gt;5&lt;/LocationAge&gt;
+      &lt;EventGeofenceLatitude&gt;-33.426280&lt;/EventGeofenceLatitude&gt;
+      &lt;EventGeofenceLongitude&gt;101.566567&lt;/EventGeofenceLongitude&gt;
+    &lt;/GeolocationData&gt;
+    &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
+    &lt;Uri&gt;/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Geolocation/Notification/GL7aef69951fee4ae2b1c8988473d5e7b0&lt;/Uri&gt;
+  &lt;/Geolocation&gt;
+&lt;RestcommResponse&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Again, the parameters obtained the parameters obtained under GeolocationData correspond to the ones provided by the jSS7 simulator after it received the MAP ATI request from Restcomm GMLC, i.e. Cell Global Identity, Age of Location and the MSC/VLR address (Global Title) the target mobile subscriber (MSISDN) is attached to, plus the geographic coordinates set for the geofence. Keep in mind that for Notification type of Geolocation, a MAP ATI operation is useless. Further generation location procedures either for MAP operations or Diameter requests for LTE networks would be needed for this (which will be explained in further tutorials and as already detailed in Restcomm Geolocation API documentation and Restcomm GMLC Admin Guide). Anyway, notice that Notification type of Geolocation is already available as per the examples described above.</p>
 </div>
 </div>
 <div id="footer">
