@@ -22766,7 +22766,12 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#step-1-shift-default-port-offset-for-running-restcomm-gmlc">Step 1 - Shift default port offset for running Restcomm GMLC</a></li>
 <li><a href="#step-2-configure-restcomm-connect-to-work-along-with-desired-restcomm-gmlc">Step 2 - Configure Restcomm-Connect to work along with desired Restcomm GMLC</a></li>
 <li><a href="#step-3-run-restcomm-connect-restcomm-gmlc-in-simulator-mode-and-jss7-simulator">Step 3 - Run Restcomm-Connect, Restcomm GMLC in simulator mode and jSS7 simulator</a></li>
-<li><a href="#step-4-execute-restcomm-geolocation-api-location-requests">Step 4 - Execute Restcomm Geolocation API location requests</a></li>
+<li><a href="#step-4-execute-restcomm-geolocation-api-location-requests">Step 4 - Execute Restcomm Geolocation API location requests</a>
+<ul class="sectlevel1">
+<li><a href="#step-4-1-immediate-type-of-geolocation-requests">Step 4.1 - Immediate type of Geolocation requests</a></li>
+<li><a href="#step-4-2-notification-type-of-geolocation-requests">Step 4.2 - Notification type of Geolocation requests</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -22781,10 +22786,10 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <p>Restcomm-Connect running on your local server previously configured to send HTTP messages to the desired Restcomm GMLC IP and port.</p>
 </li>
 <li>
-<p>Restcomm GMLC running on your local server with a default port offset of 100.</p>
+<p>Restcomm GMLC running on your local server with a default port offset of 100. This is needed as either Restcomm-Connect and Restcomm GMLC are based on JBoss Application Server. This <a href="https://developer.jboss.org/wiki/ConfigurePorts">wiki</a> explains it very well for JBoss AS. However, for restless souls, the best way to start multiple instances is passing the system property <em>jboss.service.binding.set</em> while you start the JBoss AS like explained in step 1 below.</p>
 </li>
 <li>
-<p>Make sure that JBOS_HOME is properly set for either Restcomm-Connect and Restcomm GMLC if running Open Source builds.</p>
+<p>Make sure that JBOSS_HOME is properly set for either Restcomm-Connect and Restcomm GMLC if running Open Source builds.</p>
 </li>
 </ul>
 </div>
@@ -22864,6 +22869,9 @@ BROADCAST_ADDRESS='192.168.26.255'</pre>
 <div class="paragraph">
 <p><span class="image"><img src="./images/RestComm_Dashboard_AccountSID-AuthToken.png" alt="restcomm-rvd-smstest1" width="900" height="200"></span></p>
 </div>
+<div class="sect1">
+<h2 id="step-4-1-immediate-type-of-geolocation-requests"><a class="anchor" href="#step-4-1-immediate-type-of-geolocation-requests"></a>Step 4.1 - Immediate type of Geolocation requests</h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
@@ -22949,6 +22957,11 @@ BROADCAST_ADDRESS='192.168.26.255'</pre>
 }</pre>
 </div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="step-4-2-notification-type-of-geolocation-requests"><a class="anchor" href="#step-4-2-notification-type-of-geolocation-requests"></a>Step 4.2 - Notification type of Geolocation requests</h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
@@ -23031,9 +23044,11 @@ BROADCAST_ADDRESS='192.168.26.255'</pre>
 <p>Again, the parameters obtained the parameters obtained under GeolocationData correspond to the ones provided by the jSS7 simulator after it received the MAP ATI request from Restcomm GMLC, i.e. Cell Global Identity, Age of Location and the MSC/VLR address (Global Title) the target mobile subscriber (MSISDN) is attached to, plus the geographic coordinates set for the geofence. Keep in mind that for Notification type of Geolocation, a MAP ATI operation is useless. Further generation location procedures either for MAP operations or Diameter requests for LTE networks would be needed for this (which will be explained in further tutorials and as already detailed in Restcomm Geolocation API documentation and Restcomm GMLC Admin Guide). Anyway, notice that Notification type of Geolocation is already available as per the examples described above.</p>
 </div>
 </div>
+</div>
+</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-20 10:36:33 WET
+Last updated 2017-02-22 10:36:20 WET
 </div>
 </div>
 <footer>
