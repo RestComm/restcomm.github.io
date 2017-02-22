@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Preface</title>
+<title>Restcomm JAIN SLEE SIP Resource Adaptor User Guide</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22759,10 +22759,11 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </head>
 <body class="article">
 <div id="header">
-<h1>Preface</h1>
+<h1>Restcomm JAIN SLEE SIP Resource Adaptor User Guide</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
+<li><a href="#preface">Preface</a></li>
 <li><a href="#document-conventions">Document Conventions</a>
 <ul class="sectlevel2">
 <li><a href="#typographic-conventions">Typographic Conventions</a></li>
@@ -22799,6 +22800,12 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 </div>
 <div id="content">
+<div class="sect1">
+<h2 id="preface"><a class="anchor" href="#preface"></a>Preface</h2>
+<div class="sectionbody">
+
+</div>
+</div>
 <div class="sect1">
 <h2 id="document-conventions"><a class="anchor" href="#document-conventions"></a>Document Conventions</h2>
 <div class="sectionbody">
@@ -23288,9 +23295,9 @@ Instructions for downloading, installing and using Git can be found at <a href="
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>				    [usr]$ git clone git@github.com:RestComm/jain-slee.sip.git
-				    [usr]$ cd jain-slee-sip
-				    [usr]$ git checkout tags/{this-version}</code></pre>
+<pre class="highlight"><code>[usr]$ git clone git@github.com:RestComm/jain-slee.sip.git
+[usr]$ cd jain-slee-sip
+[usr]$ git checkout tags/{this-version}</code></pre>
 </div>
 </div>
 </li>
@@ -23314,8 +23321,8 @@ Instructions for using Maven2, including install, can be found at <a href="http:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>				    [usr]$ cd resources/
-				    [usr]$ mvn install</code></pre>
+<pre class="highlight"><code>[usr]$ cd resources/
+[usr]$ mvn install</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23334,7 +23341,7 @@ If already performed, the following should be used in order to switch back to th
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>		    [usr]$ git checkout master</code></pre>
+<pre class="highlight"><code>[usr]$ git checkout master</code></pre>
 </div>
 </div>
 </div>
@@ -23350,7 +23357,7 @@ If already performed, the following should be used in order to switch back to th
 </div>
 </div>
 <div class="paragraph">
-<p>The script will copy the RA deployable unit jar to the <code>default</code> Restcomm JAIN SLEE server profile deploy directory, to deploy to another server profile use the argument <code>-Dnode=</code>.</p>
+<p>The script will copy the RA deployable unit jar to the default deploy folder &lt;literal&gt;standalone/deployments&lt;/literal&gt;.</p>
 </div>
 </div>
 <div class="sect2">
@@ -23364,7 +23371,7 @@ If already performed, the following should be used in order to switch back to th
 </div>
 </div>
 <div class="paragraph">
-<p>The script will delete the RA deployable unit jar from the <code>default</code> Restcomm JAIN SLEE server profile deploy directory, to undeploy from another server profile use the argument <code>-Dnode=</code>.</p>
+<p>The script will delete the RA deployable unit jar from the default deploy folder &lt;literal&gt;standalone/deployments&lt;/literal&gt;.</p>
 </div>
 </div>
 </div>
@@ -23396,7 +23403,7 @@ The recommended version is {loadbalancer-version}.</p>
 <dd>
 <p>the property must be configured with the list of load balancer IP address and internal ports.
 As an example, suppose a single Restcomm SIP Load Balancer is running with IP <code>192.168.0.1</code> and internal port <code>5065</code>.
-The property would be set with a value of<code>192.168.0.1:5065</code>.
+The property would be set with a value of <code>192.168.0.1:5065</code>.
 To specify multiple balancers use <code>;</code> as a separator.</p>
 </dd>
 <dt class="hdlist1">org.mobicents.ha.javax.sip.LoadBalancerHeartBeatingServiceClassName</dt>
@@ -23425,7 +23432,7 @@ Currently only one elector implementation is available, <code>org.mobicents.ha.j
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-20 10:49:14 WET
+Last updated 2017-02-22 10:49:48 WET
 </div>
 </div>
 <footer>
