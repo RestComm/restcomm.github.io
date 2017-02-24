@@ -22814,7 +22814,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">finishOnKey</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">any digit, #, *</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">any digit, #, * or -1 to disable</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1234567890*#</p></td>
 </tr>
 <tr>
@@ -22884,7 +22884,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <p><strong>timeout.</strong> The 'timeout' attribute tells RestComm to end the recording after a number of seconds of silence has passed.</p>
 </li>
 <li>
-<p><strong>finishOnKey.</strong> The 'finishOnKey' attribute lets you choose a set of digits that end the recording when entered. For example, if you set 'finishOnKey' to '#' and the caller presses '#', RestComm will immediately stop recording and submit 'RecordingUrl', 'RecordingDuration', and the '#' as parameters in a request to the 'action' URL. The allowed values are the digits 0-9, '#' and '*'. Unlike &lt;Gather&gt;, you may specify more than one character as a 'finishOnKey' value.</p>
+<p><strong>finishOnKey.</strong> The 'finishOnKey' attribute lets you choose a set of digits that end the recording when entered. For example, if you set 'finishOnKey' to '#' and the caller presses '#', RestComm will immediately stop recording and submit 'RecordingUrl', 'RecordingDuration', and the '#' as parameters in a request to the 'action' URL. The allowed values are the digits 0-9, '#', '*' and '-1'. The default value is '1234567890*#' which means that any key will end the recording. The value '-1' is a special value that can be used to disable finishOnKey and never stop recording on a DTMF. Unlike &lt;Gather&gt;, you may specify more than one character as a 'finishOnKey' value but '-1' must be used alone.</p>
 </li>
 <li>
 <p><strong>maxLength.</strong> The 'maxLength' attribute lets you set the maximum length for the recording in seconds.</p>
@@ -22959,7 +22959,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-23 10:38:30 WET
+Last updated 2017-02-24 10:35:43 WET
 </div>
 </div>
 <footer>
