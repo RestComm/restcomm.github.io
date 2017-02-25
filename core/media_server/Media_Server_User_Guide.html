@@ -23937,7 +23937,8 @@ That means that any SS7 channel data will be sent to any connection and signal d
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;media&gt;
-	&lt;timeout&gt;0&lt;/timeout&gt;
+	&lt;timeout&gt;30&lt;/timeout&gt;
+	&lt;maxDuration&gt;14400&lt;/maxDuration&gt;
 	&lt;lowPort&gt;34534&lt;/lowPort&gt;
 	&lt;highPort&gt;65534&lt;/highPort&gt;
 	&lt;jitterBuffer size="50" /&gt;
@@ -23960,6 +23961,9 @@ That means that any SS7 channel data will be sent to any connection and signal d
 These values should be an even number, since odd ports are reserved for RTCP channels.</p>
 </div>
 <div class="paragraph">
+<p>The <strong>MaxDuration</strong> value defines the maximum duration an RTP channel can remain open, thus limiting the lifetime of calls. If set to zero, the connection will stay open forever.</p>
+</div>
+<div class="paragraph">
 <p>The <strong>JitterBuffer</strong> size parameter sets the maximum capacity of the jitter buffer, in milliseconds.
 Jitter Buffers are commonly configured to hold up to 50-60ms of audio.</p>
 </div>
@@ -23969,10 +23973,10 @@ Jitter Buffers are commonly configured to hold up to 50-60ms of audio.</p>
 <div class="paragraph">
 <p>Most SIP UA do not support any type of keep-alive between 200 OK and BYE.
 Therefore, in case the network goes down while a call is established, the call may hang forever.
-That is why RTP streaming should not be interrupted (exception to rule being <em>recvonly</em> and <em>inactive</em> modes). With the this in mind, the Media Server features the <strong>RtpTimeout</strong> parameter.</p>
+That is why RTP streaming should not be interrupted (exception to rule being <em>recvonly</em> and <em>inactive</em> modes). With the this in mind, the Media Server features the <strong>timeout</strong> parameter.</p>
 </div>
 <div class="paragraph">
-<p>When <strong>RtpTimeout</strong> is set to greater than 0, the Media Server will monitor RTP traffic and if it finds period equal or greater then the RTP timeout (in seconds) it will delete the connection and notify the server that a connection was removed (by sending DLCX MGCP command). Consequently, any border server will receive a reliable notification that the call is still alive even when the communication network is no longer available.</p>
+<p>When <strong>timeout</strong> is set to greater than 0, the Media Server will monitor RTP traffic and if it finds period equal or greater then the RTP timeout (in seconds) it will delete the connection and notify the server that a connection was removed (by sending DLCX MGCP command). Consequently, any border server will receive a reliable notification that the call is still alive even when the communication network is no longer available.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -25112,7 +25116,7 @@ The examples below are included in the &amp;Restcomm Media Server_SHORT_NAME; so
 <div class="sect2">
 <h3 id="restcomm-media-server-best-practices"><a class="anchor" href="#restcomm-media-server-best-practices"></a>7.1. Restcomm Media Server  Best Practices</h3>
 <div class="paragraph">
-<p>Note: these best practices apply to Restcomm Media Server version 5.2.0-SNAPSHOT and later</p>
+<p>Note: these best practices apply to Restcomm Media Server version 6.0.0-SNAPSHOT and later</p>
 </div>
 <div class="sect3">
 <h4 id="dtmf-detection-mode-rfc2833-versus-inband-versus-auto"><a class="anchor" href="#dtmf-detection-mode-rfc2833-versus-inband-versus-auto"></a>7.1.1. DTMF Detection Mode: RFC2833 versus Inband versus Auto</h4>
@@ -25760,7 +25764,7 @@ As another hint, this topmost directory contains a <em class="path">bin</em> sub
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-24 10:42:50 WET
+Last updated 2017-02-25 10:53:10 WET
 </div>
 </div>
 <footer>
