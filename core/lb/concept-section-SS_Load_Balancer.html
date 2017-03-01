@@ -22877,6 +22877,28 @@ The Load Balancer forwards all same-session requests to the first node selected 
 <div class="sect2">
 <h3 id="_sslb_load_balancer_keepalive"><a class="anchor" href="#_sslb_load_balancer_keepalive"></a>Heartbeats to the Restcomm Load Balancer</h3>
 <div class="paragraph">
+<p>Currently the Load balancer support two protocols for heartbeats(RMI and protocol
+based on http requests). For setup you should
+set property &lt;nodeCommunicationProtocolClassName&gt;&lt;/nodeCommunicationProtocolClassName&gt;
+in &lt;common&gt; section.</p>
+</div>
+<div class="paragraph">
+<p>For RMI protocol you should set:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>org.mobicents.tools.heartbeat.rmi.ServerControllerRmi</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For protocol based on http requests:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>org.mobicents.tools.heartbeat.impl.ServerController</pre>
+</div>
+</div>
+<div class="paragraph">
 <p>Heartbeats service based on http protocol. Each http request and response has JSON
 object with required data. The load balancer and SIP-HA listens on heartbeats
 ports which we should set in configuration. Also for SIP-HA we should set port
@@ -23396,7 +23418,8 @@ http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
   &lt;ipv6Host&gt;&lt;/ipv6Host&gt;
   &lt;nodeTimeout&gt;8400&lt;/nodeTimeout&gt;
   &lt;heartbeatInterval&gt;150&lt;/heartbeatInterval&gt;
-  &lt;heartbeatPort&gt;2610&lt;/heartbeatPort&gt;
+  &lt;nodeCommunicationProtocolClassName&gt;org.mobicents.tools.heartbeat.impl.ServerController&lt;/nodeCommunicationProtocolClassName&gt;
+  &lt;heartbeatPorts&gt;2610&lt;/heartbeatPorts&gt;
   &lt;statisticPort&gt;2006&lt;/statisticPort&gt;
   &lt;jmxHtmlAdapterPort&gt;8000&lt;/jmxHtmlAdapterPort&gt;
   &lt;shutdownTimeout&gt;10000&lt;shutdownTimeout&gt;
@@ -23609,9 +23632,14 @@ http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
 <dd>
 <p>Port on which the Restcomm Load Balancer forwards incoming requests to available, and healthy, SIP Server cluster nodes.</p>
 </dd>
-<dt class="hdlist1">heartbeatPort</dt>
+<dt class="hdlist1">nodeCommunicationProtocolClassName</dt>
 <dd>
-<p>Port on which the Restcomm Load Balancer listens heartbeats from nodes</p>
+<p>Protocol which will be used for communicating with nodes</p>
+</dd>
+<dt class="hdlist1">heartbeatPorts</dt>
+<dd>
+<p>Port on which the Restcomm Load Balancer listens heartbeats from nodes.
+For RMI protocol there mast be two ports separated by comma.</p>
 </dd>
 <dt class="hdlist1">shutdownTimeout</dt>
 <dd>
@@ -25170,7 +25198,7 @@ sip stack property gov.nist.javax.sip.NEVER_ADD_RECEIVED_RPORT=true</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-28 10:52:28 WET
+Last updated 2017-03-01 11:01:48 WET
 </div>
 </div>
 <footer>
