@@ -22797,7 +22797,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div class="sect2">
 <h3 id="_httpuser_settings_add_cli"><a class="anchor" href="#_httpuser_settings_add_cli"></a>Using CLI</h3>
 <div class="paragraph">
-<p>You can configure a new HTTP user account by issuing the command <code>smsc httpuser add</code> with appropriate parameters as described below.</p>
+<p>You can configure a new HTTP user account by issuing the command <code>smsc httpuser add</code> with appropriate parameters as described below. If the optional parameter <code>networkid</code> is not specified, the default network area ID is used as configured in general HTTP Settings (<a href="#_smsc_gateway_http_properties">[_smsc_gateway_http_properties]</a>).</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -22805,7 +22805,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 	smsc httpuser add
 
 SYNOPSIS
-	smsc httpuser add &lt;userName&gt; password &lt;password&gt;
+	smsc httpuser add &lt;userName&gt; password &lt;password&gt; networkId &lt;networkId&gt;
 
 DESCRIPTION
 	This command is used to configure a new HTTP User account
@@ -22817,7 +22817,10 @@ PARAMETERS
 
 	Optional Parameters
 
-	password      - Password for accestting of HTTP connector.</pre>
+	password      - Password for accessing of HTTP connector.
+	networkId     - Network ID assigned with this user account.
+	                If the value is lower than 0 or not specified, the default
+	                networkId area is used (defined in HTTP Settings section).</pre>
 </div>
 </div>
 </div>
@@ -22856,7 +22859,7 @@ This action will create a new HTTP user account with parameters as defined by yo
 <div class="sect2">
 <h3 id="_httpuser_settings_modify_cli"><a class="anchor" href="#_httpuser_settings_modify_cli"></a>Using CLI</h3>
 <div class="paragraph">
-<p>You can modify an existing HTTP user account by issuing the command <code>smsc httpuser modify</code> with appropriate parameters as described below.</p>
+<p>You can modify an existing HTTP user account by issuing the command <code>smsc httpuser modify</code> with appropriate parameters as described below. If the optional parameter <code>networkid</code> is not specified, the default network area ID is used as configured in general HTTP Settings (<a href="#_smsc_gateway_http_properties">[_smsc_gateway_http_properties]</a>).</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -22864,7 +22867,7 @@ This action will create a new HTTP user account with parameters as defined by yo
 	smsc httpuser modify
 
 SYNOPSIS
-	smsc httpuser modify &lt;userName&gt; password &lt;password&gt;
+	smsc httpuser modify &lt;userName&gt; password &lt;password&gt; networkId &lt;networkId&gt;
 
 DESCRIPTION
 	This command is used to modify parameters of a HTTP User account.
@@ -22875,7 +22878,10 @@ PARAMETERS
 
 	Optional Parameters
 
-	password      - Password for accessing of HTTP connector.</pre>
+	password      - Password for accessing of HTTP connector.
+	networkId     - Network ID assigned with this user account.
+	                If the value is lower than 0 or not specified, the default
+	                networkId area is used (defined in HTTP Settings section).</pre>
 </div>
 </div>
 </div>
@@ -23001,7 +23007,7 @@ PARAMETERS
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-03-03 10:47:35 WET
+Last updated 2017-03-04 11:08:52 WET
 </div>
 </div>
 <footer>
