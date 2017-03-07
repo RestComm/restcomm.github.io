@@ -22786,528 +22786,84 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </ul>
 </div>
 <div class="paragraph">
-<p>The RestComm docker image supports a set of environment variables to configure the application.</p>
+<p>The RestComm docker image supports the same set of environment variables to configure the RestComm application.</p>
+</div>
+<div class="sect4">
+<h5 id="the-only-main-difference-is-that-some-prefixes-need-to-be-used-dependent-on-where-the-corresponding-variable-is-located-at-the-configuration-file-of-the-restcomm-binary"><a class="anchor" href="#the-only-main-difference-is-that-some-prefixes-need-to-be-used-dependent-on-where-the-corresponding-variable-is-located-at-the-configuration-file-of-the-restcomm-binary"></a>The only main difference is that some prefixes need to be used dependent on where the corresponding variable is located at the configuration file of the RestComm binary.</h5>
+<div class="paragraph">
+<p>Explanation:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>STATIC_ADDRESS</strong> Set the public ip address that RestComm should use</p>
+<p>Variables that are located at "restcomm.conf" need to be prefixed with "RCBCONF_"</p>
 </li>
 <li>
-<p><strong>NET_INTERFACE</strong> Set specific interface for RestComm to use (default eth0 )</p>
+<p>Variables that are located at "advanced.conf" need to be prefixed with "RCADVCONF_"</p>
 </li>
 <li>
-<p><strong>RESTCOMM_HOSTNAME</strong> Set the hostname for this machine for RestComm to recognize it and use it for relative URL requests</p>
+<p>Variables that are used to configure RMS ("mediaserver.conf") need to be prefixed with "RMSCONF_"</p>
 </li>
 <li>
-<p><strong>RC_JAVA_OPTS</strong> Used to add extra JAVA options for RestComm (e.g RC_JAVA_OPTS="-Xms2048m -Xmx2048m").</p>
+<p>Variables that are docker specific only need to be prefixed with "EXTCONF_".</p>
 </li>
 <li>
-<p><strong>PLAY_WAIT_MUSIC</strong> Enable wait on music, for conference calls when only one participant is connected (By default is enabled).</p>
+<p>Variables that are used to configure Load Balancer need to be prefixed with "LBCONF_".</p>
 </li>
 <li>
-<p><strong>USE_STANDARD_HTTP_PORTS</strong> Use standard HTTS(S) ports such as 80, 443</p>
-</li>
-<li>
-<p><strong>USE_STANDARD_SIP_PORTS</strong> Use standard SIP such as 5060, 5061, 5062, 5063</p>
-</li>
-<li>
-<p><strong>PORT_OFFSET</strong> Used to port enable port offset if two RestComm-docker instances are running in same host. (e.g PORT_OFFSET=100. ports will be used are 180,543,5180,5182…)</p>
-</li>
-<li>
-<p><strong>OUTBOUND_PROXY</strong> Set the SIP Outbound proxy</p>
-</li>
-<li>
-<p><strong>OUTBOUND_PROXY_USERNAME</strong> Set the SIP Outbound proxy username</p>
-</li>
-<li>
-<p><strong>OUTBOUND_PROXY_PASSWORD</strong> Set the SIP Outbound proxy password</p>
-</li>
-<li>
-<p><strong>PROVISION_PROVIDER</strong> Set the Provision Provider, choose one of the following: VI (VoipInnovation), BW (Bandwidth), NX (Nexmo), VB (Voxbone)</p>
-</li>
-<li>
-<p><strong>DID_LOGIN</strong> Set the DID Provider username</p>
-</li>
-<li>
-<p><strong>DID_PASSWORD</strong> Set the DID Provider password</p>
-</li>
-<li>
-<p><strong>DID_ENDPOINT</strong> Set the Endpoint ID for VoipInnovation Provision Provider</p>
-</li>
-<li>
-<p><strong>DID_SITEID</strong> Set the Site Id for Bandwidth Provision Provider</p>
-</li>
-<li>
-<p><strong>DID_ACCOUNTID</strong> Set the Account Id for Bandwidth Provision Provider</p>
-</li>
-<li>
-<p><strong>INTERFAX_USER</strong> Set the Interfax username</p>
-</li>
-<li>
-<p><strong>INTERFAX_PASSWORD</strong> Set the Interfax password</p>
-</li>
-<li>
-<p><strong>ISPEECH_KEY</strong> Set the iSpeech speech recognition key</p>
-</li>
-<li>
-<p><strong>VOICERSS_KEY</strong> Set the VoiceRss Text-To-Speech key</p>
-</li>
-<li>
-<p><strong>ACAPELA_APPLICATION</strong> Set the Acapela Text-To-Speech application key</p>
-</li>
-<li>
-<p><strong>ACAPELA_LOGIN</strong> Set the Acapela Text-To-Speech username</p>
-</li>
-<li>
-<p><strong>ACAPELA_PASSWORD</strong> Set the Acapela Text-To-Speech password</p>
-</li>
-<li>
-<p><strong>HSQL_PERSIST</strong> Path to use for persist date using HSQL.</p>
-</li>
-<li>
-<p><strong>INIT_PASSWORD</strong> Set password for “<a href="mailto:administrator@company.com">administrator@company.com</a>” when running RestComm-docker</p>
-</li>
-<li>
-<p><strong>ADDITIONAL_CONNECTOR_</strong>* Specify additional custom port connectors use -e ADDITIONAL_CONNECTOR_1=second-sip-udp:5090  -e ADDITIONAL_CONNECTOR_2=second-sip-tcpp:5090 etc.More info <a href="http://documentation.telestax.com/core/sip_servlets/SIP_Servlets_Server_User_Guide.html">HERE</a></p>
+<p>Variables that are set from the RUN command line to overwrite the ones set at the configuration file need to be prefixed with "CLI_".</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>Docker Specific variables:</p>
+</div>
 </div>
 <div class="sect4">
 <h5 id="restcomm-logs-configuration"><a class="anchor" href="#restcomm-logs-configuration"></a>RestComm Logs Configuration</h5>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>RESTCOMM_LOGS</strong> Base path where all RestComm related logs will be placed.</p>
+<p><strong>EXTCONF_RESTCOMM_LOGS</strong> Base path where all RestComm related logs will be placed.</p>
 </li>
 <li>
-<p><strong>RVD_LOCATION</strong> Set the Location for Restcomm Visual Designer to store the workspaces in a shared filesystem</p>
+<p><strong>EXTCONF_RESTCOMM_TRACE_LOG</strong> Set the location were to store network trace logs (pcap files)</p>
 </li>
 <li>
-<p><strong>RVD_PORT</strong> Set custom port mapping for RVD, when custom port is used instead of (-p 80:80, -p 443:443). E.g. (-e RVD_PORT="555" -p 555:443).</p>
-</li>
-<li>
-<p><strong>LOG_LEVEL</strong> Set the Log Level for Restcomm and MMS</p>
-</li>
-<li>
-<p><strong>AKKA_LOG_LEVEL</strong> Set the Log level for the AKKA actor system.</p>
-</li>
-<li>
-<p><strong>LOG_LEVEL_COMPONENT_GOVNIST</strong> Set the Log level for the "gov.nist" module.</p>
-</li>
-<li>
-<p><strong>LOG_LEVEL_COMPONENT_SIPSERVLET</strong> Set the Log level for the sip-servlets.</p>
-</li>
-<li>
-<p><strong>CORE_LOGS_LOCATION</strong> Set the location were to store Restcomm logs</p>
-</li>
-<li>
-<p><strong>RESTCOMM_TRACE_LOG</strong> Set the location were to store network trace logs (pcap files)</p>
+<p><strong>EXTCONF_MEDIASERVER_LOGS_LOCATION</strong> Set the location were to store Mediaserver logs.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect4">
-<h5 id="media-server"><a class="anchor" href="#media-server"></a>Media server</h5>
+<h5 id="other"><a class="anchor" href="#other"></a>Other</h5>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>MEDIASERVER_LOWEST_PORT</strong> Set the Media Server lowest RTP port</p>
-</li>
-<li>
-<p><strong>MEDIASERVER_HIGHEST_PORT</strong> Set the Media Server highest RTP port</p>
-</li>
-<li>
-<p><strong>MEDIASERVER_LOGS_LOCATION</strong> Set the location were to store Mediaserver logs.</p>
-</li>
-<li>
-<p><strong>USESBC</strong> Disable Session Border Control for MS. (Used for RestComm chain topology)</p>
-</li>
-<li>
-<p><strong>DTMFDBI</strong> Set dtmf detection dbi value for inband detection. (Value range -36-0)</p>
-</li>
-<li>
-<p><strong>MS_COMPATIBILITY_MODE</strong> Use external XMS dialogig Media Server. Need to combine with the appropriate "Media Server Network Configuration"</p>
-</li>
-<li>
-<p><strong>RECORDINGS_PATH</strong> Directory where recordings are saved (Mainly set when external Media server is used).</p>
-</li>
-<li>
-<p><strong>RMS_JAVA_OPTS</strong> Add extra JAVA options on Medias Server (e.g RMS_JAVA_OPTS="-Xms2048m -Xmx2048m").</p>
+<p><strong>EXTCONF_RVD_PORT</strong> Used when port mapping at docker is not the default (e.g: -p 445:443).</p>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p><strong>Medias server MGCP ports</strong></p>
 </div>
 <div class="ulist">
+<div class="title">Related Documentation</div>
 <ul>
 <li>
-<p><strong>LOCALMGCP</strong> Local MGCP port (Default 2727).</p>
+<p>Documentation for RestComm configuration can be found <a href="http://documentation.telestax.com/core/media_server/Media_Server_User_Guide.html#_ctms_configuring_the_media_server">HERE</a>
+As well short description of the configuration options can be found at restcomm.conf <a href="https://raw.githubusercontent.com/RestComm/Restcomm-Connect/master/restcomm/configuration/config-scripts/as7-config-scripts/restcomm/restcomm.conf">HERE</a> &amp; advanced.conf <a href="https://raw.githubusercontent.com/RestComm/Restcomm-Connect/master/restcomm/configuration/config-scripts/as7-config-scripts/restcomm/advanced.conf">HERE</a> at "RESTCOMM_PATH/bin/restcomm".</p>
 </li>
 <li>
-<p><strong>REMOTEMGCP</strong> Remote MGCP port (Default 2427).</p>
+<p>Documentation for RMS configuration can be found <a href="http://documentation.telestax.com/core/media_server/Media_Server_User_Guide.html#_ctms_configuring_the_media_server">HERE</a></p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p><strong>Media Server Network Configuration</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>MS_ADDRESS</strong> Specify MS IP different than RestComm. Can be used for external MS as well.</p>
-</li>
-<li>
-<p><strong>MS_SUBNET_MASK</strong> MS subnet mask</p>
-</li>
-<li>
-<p><strong>MS_NETWORK</strong> MS network</p>
-</li>
-<li>
-<p><strong>MEDIASERVER_EXTERNAL_ADDRESS</strong> Public IP address to enable “srflx” candidates in ice negotiation.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><strong>RMS pool size (Should calculated from number of concurrent calls expected).</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>RESOURCE_IVR</strong>  ivr = max conc calls * 2</p>
-</li>
-<li>
-<p><strong>RESOURCE_CNF</strong>  cnf = max concurrent calls</p>
-</li>
-<li>
-<p><strong>RESOURCE_Bridge</strong> bridge = max concurrent calls</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="sms-outbound-proxy-configuration"><a class="anchor" href="#sms-outbound-proxy-configuration"></a>SMS outbound proxy configuration</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>SMS_OUTBOUND_PROXY</strong> Set the ip address and port for the SMS proxy server that needs to be used (-e SMS_OUTBOUND_PROXY="PROXY_IP:PROXY_PORT").</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="https-related-configuration"><a class="anchor" href="#https-related-configuration"></a>HTTPS related configuration</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>SECURESSL</strong> Configure RestComm to be used in secure mode ie only on HTTPS not HTTP and SIP Over Secure WebSockets + TLS (Values: AUTH - need to provide JKS file. SELF - self sighned certificate generation)</p>
-</li>
-<li>
-<p><strong>TRUSTSTORE_PASSWORD</strong> Set the password to use for RestComm to configure the certificate for HTTPS and SIP TLS</p>
-</li>
-<li>
-<p><strong>TRUSTSTORE_ALIAS</strong> Set the Alias to use for RestComm to configure the certificate for HTTPS and SIP TLS</p>
-</li>
-<li>
-<p><strong>SSL_MODE</strong> Set the SSL Mode for Restcomm and RVD to query External Service over HTTPS. Values : allowall, strict</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Configuration options For <strong>SECURESSL=AUTH</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>CERTCONFURL</strong> JKS file URL location</p>
-</li>
-<li>
-<p><strong>CERTREPOUSR</strong> Username for authentication if needed.</p>
-</li>
-<li>
-<p><strong>CERTREPOPWRD</strong> Password for authentications if needed</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="smpp-related-configuration"><a class="anchor" href="#smpp-related-configuration"></a>SMPP related configuration</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>SMPP_ACTIVATE</strong> Activate SMPP</p>
-</li>
-<li>
-<p><strong>SMPP_TYPE</strong> The SMPP type</p>
-</li>
-<li>
-<p><strong>SMPP_ID</strong> The SMPP id</p>
-</li>
-<li>
-<p><strong>SMPP_PASSWORD</strong> The SMPP password</p>
-</li>
-<li>
-<p><strong>SMPP_PEER_IP</strong> The SMPP peer IP Address</p>
-</li>
-<li>
-<p><strong>SMPP_PEER_PORT</strong> The SMPP peer port</p>
-</li>
-<li>
-<p><strong>SMPP_SOURCE_MAP</strong> The SMPP source map</p>
-</li>
-<li>
-<p><strong>SMPP_DEST_MAP</strong> The SMPP destination map</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="mysql-server-configuration-default-false-if-not-configured-hsql-will-be-used"><a class="anchor" href="#mysql-server-configuration-default-false-if-not-configured-hsql-will-be-used"></a>Mysql Server configuration. Default: false. If not configured HSQL will be used.</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>ENABLE_MYSQL</strong> Enable MYSQL db usage. If not configured HSQL will be used (Default value FALSE).</p>
-</li>
-<li>
-<p><strong>MYSQL_USER</strong> Set the MySQL User so that Restcomm configures RestComm to use a MySQL DB instead of In memory DB</p>
-</li>
-<li>
-<p><strong>MYSQL_PASSWORD</strong> Set the MySQL Password so that Restcomm configures RestComm to use a MySQL DB instead of In memory DB</p>
-</li>
-<li>
-<p><strong>MYSQL_HOST</strong> Set the MySQL Host so that Restcomm configures RestComm to use a MySQL DB instead of In memory DB</p>
-</li>
-<li>
-<p><strong>MYSQL_SNDHOST</strong> Set the MySQL Failover Host, a secondary MySQL DB with Master-Slave topology (will use same DB name and password as primary DB)</p>
-</li>
-<li>
-<p><strong>MYSQL_SCHEMA</strong> Set the MySQL Schema so that Restcomm configures RestComm to use a MySQL DB instead of In memory DB</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="amazon-s3-bucket-conficuration-used-to-store-recordings-default-false-if-not-configured-internal-recordings-directory-will-be-used"><a class="anchor" href="#amazon-s3-bucket-conficuration-used-to-store-recordings-default-false-if-not-configured-internal-recordings-directory-will-be-used"></a>Amazon S3 Bucket conficuration. Used to store Recordings. Default: false. If not configured internal recordings directory will be used.</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>ACTIVATE_S3_BUCKET</strong> Activate Amazon S3 Bucket for recordings. Default: false.</p>
-</li>
-<li>
-<p><strong>S3_BUCKET_NAME</strong> Set the S3 Bucket Name so that Restcomm stores the Recording in Amazon Web Services S3 Service</p>
-</li>
-<li>
-<p><strong>S3_ACCESS_KEY</strong> Set the S3 Access Key so that Restcomm stores the Recording in Amazon Web Services S3 Service</p>
-</li>
-<li>
-<p><strong>S3_SECURITY_KEY</strong> Set the S3 Security Key so that Restcomm stores the Recording in Amazon Web Services S3 Service</p>
-</li>
-<li>
-<p><strong>S3_BUCKET_REGION</strong> Set S3 bucket region to be used. If not set, "us-east-1" will be used.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="restcomm-monitoring"><a class="anchor" href="#restcomm-monitoring"></a>RestComm Monitoring</h5>
-<div class="paragraph">
-<p><strong>Jboss Management interface. Used for RestComm statistics consultation (Graylog). More info <a href="https://docs.jboss.org/author/display/AS7/Management+resources">HERE</a></strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>MGMT_PASS</strong> Management Interface User configuration.</p>
-</li>
-<li>
-<p><strong>MGMT_USER</strong> Management Interface Password configuration.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><strong>Graylog Open source monitoring system configuration. More info <a href="https://www.graylog.org/">HERE</a></strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>GRAYLOG_SERVER</strong> IP of the Graylog server to send data. To disable please use empty string (By default is disabled).</p>
-</li>
-<li>
-<p><strong>SERVERLABEL</strong> RestComm server Label, used to recognise server at Graylog server.</p>
-</li>
-<li>
-<p><strong>HD_MONITOR</strong> Enable HD usage monitoring.</p>
-</li>
-<li>
-<p><strong>RCJVM_MONITOR</strong> Enable JVM (Memory, CPU) usage monitoring for RC.</p>
-</li>
-<li>
-<p><strong>RMSJVM_MONITOR</strong> Enable JVM (Memory, RAM, CPU) usage monitoring for RMS.</p>
-</li>
-<li>
-<p><strong>RAM_MONITOR</strong> Enable overall RAM system monitoring.</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Enabling monitoring configuration means that there is Graylog server running somewhere as well.
-You can use Telestax open source Graylog-docker project from <a href="https://github.com/RestComm/restcomm-graylog-docker">HERE</a>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="telestax-loadbalancer-configuration-multi-transport-algorithm-used"><a class="anchor" href="#telestax-loadbalancer-configuration-multi-transport-algorithm-used"></a>Telestax LoadBalancer configuration. Multi transport algorithm used</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>ACTIVATE_LB</strong> Activate LB. Use LB for the current setup.</p>
-</li>
-<li>
-<p><strong>LB_PUBLIC_IP</strong> The "external" IP of the LB. Is used for the incoming traffic.</p>
-</li>
-<li>
-<p><strong>LB_INTERNAL_IP</strong> The "internal" IP of the LB. Is used for RC to connect to the LB.</p>
-</li>
-<li>
-<p><strong>RC_PORTFORLB_UDP</strong> The port used from the LB for UDP transport (Default 5080).</p>
-</li>
-<li>
-<p><strong>RC_PORTFORLB_TCP</strong> The port used from the LB for TCP transport (Default 5080).</p>
-</li>
-<li>
-<p><strong>RC_PORTFORLB_TLS</strong> The port used from the LB for TLS transport (Default 5081).</p>
-</li>
-<li>
-<p><strong>RC_PORTFORLB_WS</strong> The port used from the Web Socket (WebRTC - Default 5082).</p>
-</li>
-<li>
-<p><strong>RC_PORTFORLB_WSS</strong> The port used from the Secure Web Socket (WebRTC - Default 503).</p>
-</li>
-<li>
-<p><strong>LB_RMI_PORT</strong> The port used from RMI connection between RC and LB (Default 2000).</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<div class="title">LB INTERNAL PORTS</div>
-Need to be set same values as LB is configured for the corresponding transport internal Ports.
-</td>
-</tr>
-</table>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>LB_INTERNAL_PORT_UDP</strong> LB internal port used from RC for UDP traffic. Default is 5080.</p>
-</li>
-<li>
-<p><strong>LB_INTERNAL_PORT_TCP</strong> LB internal port used from RC for TCP traffic. Default is 5080</p>
-</li>
-<li>
-<p><strong>LB_INTERNAL_PORT_TLS</strong> LB internal port used from RC for TLS traffic. Default is 5081</p>
-</li>
-<li>
-<p><strong>LB_INTERNAL_PORT_WS</strong>	 LB internal port used from RC for WS traffic. Default is 5082</p>
-</li>
-<li>
-<p><strong>LB_INTERNAL_PORT_WSS</strong> LB internal port used from RC for WSS traffic. Default is 5083</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<div class="title">LB External Ports</div>
-Need to be set same values as LB is configured for the corresponding transport external Ports.
-</td>
-</tr>
-</table>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>LB_EXTERNAL_PORT_UDP</strong> LB external port of LB for UDP traffic. Default is 5060.</p>
-</li>
-<li>
-<p><strong>LB_EXTERNAL_PORT_TCP</strong> LB external port of LB for UDP traffic. Default is 5060.</p>
-</li>
-<li>
-<p><strong>LB_EXTERNAL_PORT_TLS</strong> LB external port of LB for TLS traffic. Default is 5061.</p>
-</li>
-<li>
-<p><strong>LB_EXTERNAL_PORT_WS</strong>	 LB external port of LB for WS traffic. Default is 5062.</p>
-</li>
-<li>
-<p><strong>LB_EXTERNAL_PORT_WSS</strong>  LB external port of LB for WSS traffic. Default is 5063. (Port used for Olympus)</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-Load Balancer external HOSTNAME/IP. Must be set if RC under LB. Used to configure DID provider.This way PSTN calls going through LB.
-LB_EXTERNAL_PORT_UDP will be used for the DID provider PORT configuration.
-</td>
-</tr>
-</table>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>LBHOST</strong> Obligatory to set if Load Balancer is used for PSTN (DID provider configuration).</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>*More Info on LB <a href="http://documentation.telestax.com/core/lb/Load_Balancer_User_Guide.html">HERE</a></p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="smtp-configuration-used-for-restcomm-email-service-email-verb-as-well-used-for-system-email-notifications-when-system-errors-occur"><a class="anchor" href="#smtp-configuration-used-for-restcomm-email-service-email-verb-as-well-used-for-system-email-notifications-when-system-errors-occur"></a>SMTP Configuration. Used for Restcomm email service (Email Verb).As well used for system email notifications (When system errors occur).</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>SMTP_USER</strong> Set the SMTP User so that Restcomm configures the SMTP Service for the Email API and RVD Tag</p>
-</li>
-<li>
-<p><strong>SMTP_PASSWORD</strong> Set the SMTP Password so that Restcomm configures the SMTP Service for the Email API and RVD Tag</p>
-</li>
-<li>
-<p><strong>SMTP_HOST</strong> Set the SMTP Host so that Restcomm configures the SMTP Service for the Email API and RVD Tag</p>
-</li>
-<li>
-<p><strong>SMTP_PORT</strong> If not set default Port will be used. Port 25.</p>
-</li>
-</ul>
-</div>
+<hr>
+<hr>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-03-06 10:36:41 WET
+Last updated 2017-03-07 10:35:27 WET
 </div>
 </div>
 <footer>

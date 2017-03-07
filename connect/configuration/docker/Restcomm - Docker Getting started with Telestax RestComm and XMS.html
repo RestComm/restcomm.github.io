@@ -23001,7 +23001,7 @@ the NFS version to get the mount to work</p>
 <p>Start the docker container:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>docker run  -i -d --name=restcomm-myInstance -v /var/log/restcomm/:/var/log/restcomm/ -v /mnt/nfs/home/recordings/:/opt/Restcomm-JBoss-AS7/standalone/deployments/restcomm.war/recordings/ -e STATIC_ADDRESS="192.168.1.50" -e ENVCONFURL="https://raw.githubusercontent.com/RestComm/Restcomm-Docker/master/env_files/restcomm_env_locally.sh" -e MS_COMPATIBILITY_MODE="xms" -e MS_ADDRESS="192.168.1.105" -p 80:80 -p 443:443 -p 9990:9990 -p 5060:5060 -p 5061:5061 -p 5062:5062 -p 5063:5063 -p 5060:5060/udp -p 65000-65050:65000-65050/udp restcomm/restcomm:latest</code></pre>
+<pre class="highlight"><code>docker run  -i -d --name=restcomm-myInstance -v /var/log/restcomm/:/var/log/restcomm/ -v /mnt/nfs/home/recordings/:/opt/Restcomm-JBoss-AS7/standalone/deployments/restcomm.war/recordings/ -e RCBCONF_STATIC_ADDRESS="192.168.1.50" -e ENVCONFURL="https://raw.githubusercontent.com/RestComm/Restcomm-Docker/master/env_files/restcomm_env_locally.sh" -e RMSCONF_MS_COMPATIBILITY_MODE="xms" -e RMSCONF_MS_ADDRESS="192.168.1.105" -p 80:80 -p 443:443 -p 9990:9990 -p 5080:5080 -p 5081:5081 -p 5082:5082 -p 5083:5083 -p 5080:5080/udp -p 65000-65050:65000-65050/udp restcomm/restcomm:latest</code></pre>
 </div>
 </div>
 <div class="olist lowerroman">
@@ -23104,7 +23104,7 @@ the NFS version to get the mount to work</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-03-06 10:36:41 WET
+Last updated 2017-03-07 10:35:27 WET
 </div>
 </div>
 <footer>
