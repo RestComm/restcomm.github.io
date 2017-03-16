@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Automatic Configuration Options for RestComm-Connect</title>
+<title>Restcomm Amazon S3 Integration</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22757,13 +22757,14 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/1877839.js"></script>
 <!-- End of HubSpot Embed Code -->
 </head>
-<body id="restcomm-connect_configuration_options" class="article">
+<body id="intro" class="article">
 <div id="header">
-<h1>Automatic Configuration Options for RestComm-Connect</h1>
+<h1>Restcomm Amazon S3 Integration</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
-<ul class="sectlevel4">
-<li><a href="#basic-configuration-options-on-restcomm-con-file">Basic configuration options on restcomm.con File.</a></li>
+<ul class="sectlevel1">
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#advanced-configuration">Advanced configuration</a></li>
 </ul>
 </div>
 </div>
@@ -22771,191 +22772,62 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>RestComm-Connect used two configuration files (restcomm.conf &amp; advanced.conf) located at <strong>$RESTCOMM_HOME/bin/restcomm</strong>. directory.
-At the continuation we are providing detailed explanation for each property available.</p>
+<p>With Restcomm Amazon S3 Integration you can use Amazon S3 for recording storage.</p>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-A lot of the options explained here are available for a RestComm-connect version &gt;= 7.8.0.
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>Either if you use Record verb or you use Dial with record, if the Amazon S3 integrations is enabled, the recording will be uploaded to Amazon S3 bucket you specified.</p>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="basic-configuration-options-on-restcomm-con-file"><a class="anchor" href="#basic-configuration-options-on-restcomm-con-file"></a>Basic configuration options on restcomm.con File.</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Section <strong>#Network configuration</strong>. Information can be found <a href="http://documentation.telestax.com/connect/configuration/Starting%20Restcomm-Connect.html#start-restcomm-connect">HERE</a></p>
-</li>
-</ul>
+<div class="sect1">
+<h2 id="configuration"><a class="anchor" href="#configuration"></a>Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To enable Amazon S3 integration check instructions here: <a href="../Restcomm-Advanced Automatic Configuration Options.html#amazons3">Amazon S3 configuration</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="advanced-configuration"><a class="anchor" href="#advanced-configuration"></a>Advanced configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can configure how Restcomm will treat the Amazon S3 URL of the uploaded recording by changing the security level at restcomm.xml:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>#hostname of the server to be used at restcomm.xml. If not set the STATIC_ADDRESS will be used.
-RESTCOMM_HOSTNAME=''
-
-# Activate music on conference when participants==1
-PLAY_WAIT_MUSIC='TRUE'</pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Section <strong>#Telscale MEDIA SERVER CONFIGURATION</strong>.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>#Media server running external (different node than Restcomm)
-MS_EXTERNAL=FALSE
-#MEDIA SERVER COMPATIBILITY MODE (mms=Mobicents Media Server, xms=Dialogic XMS)
-MS_COMPATIBILITY_MODE='mms'
-
-#XMS IP ADDRESS or RMS IP ADDRESS if using different IP from RestComm
-MS_ADDRESS=''
-MS_NETWORK=''
-MS_SUBNET_MASK=''
-
-# Media Server RTP ports
-MEDIASERVER_LOWEST_PORT=''
-MEDIASERVER_HIGHEST_PORT=''
-MEDIASERVER_EXTERNAL_ADDRESS=''
-#Medias server MGCP ports
-LOCALMGCP=2727
-REMOTEMGCP=2427
-
-# When working with external Media Server specify the location of the Recording files
-RECORDINGS_PATH=''
-#Other
-USESBC=TRUE
-#For in-Band DTMF
-DTMFDBI='0'
-#MGCP_TIMOUT
-MGCP_RESPONSE_TIMEOUT=500</pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Section <strong>#outbound proxy configuration</strong>.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre># Address for outbound calls
-OUTBOUND_PROXY='' #Provide port if different than 5060
-OUTBOUND_PROXY_USERNAME=''
-OUTBOUND_PROXY_PASSWORD=''
-
-# Outbound proxy for SMS
-SMS_PREFIX='#' #For VoipInnovation you will need the '#' character for SMS Prefix
-SMS_OUTBOUND_PROXY='' #Please provide port if different than 5060</pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Section <strong>#Restcomm SMPP integration</strong>.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre># Connection details for SMPP Restcomm integration
-SMPP_ACTIVATE='false'  		#default SMPP activate is always false. Set to true to activate SMPP
-SMPP_SYSTEM_ID=''
-SMPP_PASSWORD=''
-SMPP_SYSTEM_TYPE=''
-SMPP_PEER_IP=''	#use IP or DNS name of peer SMPP server
-SMPP_PEER_PORT=''
-SMPP_SOURCE_MAP=''
-SMPP_DEST_MAP=''</pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Section <strong>#Restcomm DID provider integration</strong>.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre># DID Provision provider variable declarations
-PROVISION_PROVIDER=''  # values: BW (Bandwidth), NX (Nexmo), VB (Voxbone)
-#Username and password for all supported DID provision providers
-DID_LOGIN=''
-DID_PASSWORD=''</pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Section <strong>#Text-to-speech</strong>.</p>
-</li>
-<li>
-<p>Go to link:http://www.voicerss.org and get a Text-to-Speech account. This is a free account that is required to activate Text-to-Speech in Restcomm.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre># VoiceRSS variable declarations
-VOICERSS_KEY=</pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Section <strong>#RestComm PORT configuration</strong>.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>HTTP_PORT='8080' #Port used for HTTP. Default 8080
-HTTPS_PORT='8443' #Port used for HTTPS. Default 8443
-#Connectors port configuration
-SIP_PORT_UDP='5080'		#LB UDP port. Default is 5080
-SIP_PORT_TCP='5080'		#LB TCP port. Default is 5080
-SIP_PORT_TLS='5081'		#LB TLS port. Default is 5081
-SIP_PORT_WS='5082'		#LB WS port. Default is 5082
-SIP_PORT_WSS='5083'		#LB WSS port. Default is 5083
-#Port Offset Used when more that one RC is running on the same machine. To avoid port conflicts
-#E.g. If set PORT_OFFSET='100' all configured ports will be accessible from PORT+100.
-PORT_OFFSET='0' #Port offset configurations. Default '0'.</pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Section <strong>#LOGS level</strong>.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>#Usual values : WARN,INFO,DEBUG
-LOG_LEVEL='INFO' #Used for RMS &amp; RC console-handler.
-LOG_LEVEL_COMPONENT_GOVNIST='INFO' #Log level for "gov.nist" module
-LOG_LEVEL_COMPONENT_SIPSERVLET='INFO' #Log level for "org.mobicents.servlet" module
-
-#AKKA log level. Set the Log level for the AKKA actor system.
-AKKA_LOG_LEVEL='INFO'</pre>
+<pre class="highlight"><code class="language-xml" data-lang="xml">	&lt;amazon-s3&gt;
+		&lt;enabled&gt;false&lt;/enabled&gt;
+		&lt;bucket-name&gt;restcomm-recordings&lt;/bucket-name&gt;
+		&lt;folder&gt;&lt;/folder&gt;
+		&lt;access-key&gt;&lt;/access-key&gt;
+		&lt;security-key&gt;&lt;/security-key&gt;
+		&lt;reduced-redundancy&gt;false&lt;/reduced-redundancy&gt;
+		&lt;minutes-to-retain-public-url&gt;10&lt;/minutes-to-retain-public-url&gt;
+		&lt;remove-original-file&gt;true&lt;/remove-original-file&gt;
+		&lt;bucket-region&gt;us-east-1&lt;/bucket-region&gt;
+		&lt;security-level&gt;secure&lt;/security-level&gt;
+	&lt;/amazon-s3&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><strong>*For Advanced configuration options <a href="http://HERE">HERE</a></strong></p>
+<p>The Security level controls the details that the Recordings REST API will provide to the user and also how the user will access the wav file.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>NONE</strong>: Recordings REST API response, will contain the S3_URI with no credentials. Restcomm will fetch and serve recording to the user if the FILE_URI of the Recording is used</p>
+</li>
+<li>
+<p><strong>REDIRECT</strong>: Recordings REST API response will NOT contain the S3_URI. Restcomm will create redirect response and recording will be served by Amazon S3 if the FILE_URI of the Recording is used</p>
+</li>
+<li>
+<p><strong>SECURE</strong>: Recordings REST API response will NOT contain the S3_URI. Restcomm will fetch and serve recording to the user if the FILE_URI of the Recording is used</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Default value is <strong>SECURE</strong></p>
+</div>
 </div>
 </div>
 </div>
