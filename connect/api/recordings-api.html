@@ -22778,6 +22778,23 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </li>
 <li><a href="#how-to-record-a-message">How to Record a Message</a></li>
 <li><a href="#get-list-of-recordings">Get List of Recordings</a></li>
+<li><a href="#list-filter">List Filter</a>
+<ul class="sectlevel2">
+<li><a href="#request-parameters">Request Parameters</a></li>
+<li><a href="#filter-using-the-callsid-parameter">Filter using the CallSid parameter.</a></li>
+</ul>
+</li>
+<li><a href="#paging-information">Paging Information</a>
+<ul class="sectlevel2">
+<li><a href="#request-parameters-2">Request Parameters</a></li>
+<li><a href="#example">Example.</a></li>
+</ul>
+</li>
+<li><a href="#additional-paging-information">Additional Paging Information.</a>
+<ul class="sectlevel2">
+<li><a href="#request-parameters-3">Request Parameters</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -22898,37 +22915,6 @@ Unlike the Recording instance resource described above, the list of recordings I
 <div class="paragraph">
 <p>Returns the list representation of all the Recording resources for this Account, including the properties above.</p>
 </div>
-<div class="paragraph">
-<p>Returns a list of Recording resource representations, each representing a recording generated during the course of a phone call. The list includes paging information.</p>
-</div>
-<div class="sect4">
-<h5 id="list-get-filters"><a class="anchor" href="#list-get-filters"></a>List Filters</h5>
-<div class="paragraph">
-<p>The following GET query string parameters allow you to limit the list returned. Note, parameters are case-sensitive:</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CallSid</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Show only recordings made during the call given by this sid.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DateCreated</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Only show recordings created on the given date. Should be formatted as <code>YYYY-MM-DD</code>. You can also specify inequality, such as <code>DateCreated&#8656;YYYY-MM-DD</code> for recordings generated at or before midnight on a date, and <code>DateCreated&gt;=YYYY-MM-DD</code> for recordings generated at or after midnight on a date.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 </div>
 </div>
@@ -22952,7 +22938,7 @@ Unlike the Recording instance resource described above, the list of recordings I
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X GET  https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Recordings</pre>
+<pre>curl -X GET  https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Recordings.json</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -22960,17 +22946,22 @@ Unlike the Recording instance resource described above, the list of recordings I
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-lang:xml" data-lang="lang:xml">&lt;RestcommResponse&gt;
-&lt;Recording&gt;
-      &lt;Sid&gt;REb4c03af76cdc4a27aad0d9d759e119bc&lt;/Sid&gt;
-      &lt;DateCreated&gt;2014-08-11T10:53:25.000-04:00&lt;/DateCreated&gt;
-      &lt;DateUpdated&gt;2014-08-11T10:53:25.000-04:00&lt;/DateUpdated&gt;
-      &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
-      &lt;CallSid&gt;CA2647e1424239420087d75ff4083e9f2b&lt;/CallSid&gt;
-      &lt;Duration&gt;13.0&lt;/Duration&gt;
-      &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
-      &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Recordings/REb4c03af76cdc4a27aad0d9d759e119bc&lt;/Uri&gt;
-    &lt;/Recording&gt;</code></pre>
+<pre class="highlight"><code class="language-decode:true" data-lang="decode:true">{"page":0,"num_pages":0,"page_size":50,"total":34,"start":"0","end":"34","uri":"/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Recordings.json","first_page_uri":"/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Recordings.json?Page=0&amp;PageSize=50","previous_page_uri":"null","next_page_uri":"null","last_page_uri":"/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Recordings.json?Page=0&amp;PageSize=50","recordings":
+    [
+        {
+            "sid":"RF50675909d9c94acda36f0e119b6cb431",
+            "date_created":"Mon, 6 Jan 2014 08:51:07 +0900",
+            "date_updated":"Mon, 6 Jan 2014 08:51:07 +0900",
+            "account_sid":"ACae6e420f425248d6a26948c17a9e2acf",
+            "call_sid":"CAfe9ce46f104f4beeb10c83a5ddd2be66",
+            "duration":"14.70275",
+            "api_version":"2012-04-24",
+            "uri":"/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Recordings/RE50675909d9c94acda36f0e119b6cb431.json",
+            "file_uri":"http://instance1.restcomm.com:8080/restcomm/recordings/RE50675909d9c94acda36f0e119b6cb431.wav"
+        },
+        ...
+    ]
+}</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -22990,14 +22981,228 @@ Unlike the Recording instance resource described above, the list of recordings I
 </div>
 <div class="paragraph">
 <p>The <strong>&lt;Uri&gt;</strong> holds the http URI that can be used for playback or to download the recorded message.
-Here is how to access the file using http <strong><a href="https://IP_ADDRESS/restcomm/recordings/REb4c03af76cdc4a27aad0d9d759e119bc.wav" class="bare">https://IP_ADDRESS/restcomm/recordings/REb4c03af76cdc4a27aad0d9d759e119bc.wav</a></strong></p>
+Here is how to access the file using http <strong><a href="https://IP_ADDRESS/restcomm/recordings/REb4c03af76cdc4a27aad0d9d759e119bc.wav" class="bare">https://IP_ADDRESS/restcomm/recordings/REb4c03af76cdc4a27aad0d9d759e119bc.wav</a></strong>
+ </p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="list-filter"><a class="anchor" href="#list-filter"></a>List Filter</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>HTTP GET</strong>. The following GET query string parameters allow you to limit the list returned. Note, parameters are case-sensitive:</p>
+</div>
+<div class="sect2">
+<h3 id="request-parameters"><a class="anchor" href="#request-parameters"></a>Request Parameters</h3>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">StartTime</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only show recordings that started on this date, given as YYYY-MM-DD. Also supports inequalities, such as StartTime=YYYY-MM-DD for recordings that started at or before midnight on a date, and StartTime=YYYY-MM-DD for recordings that started at or after midnight on a date.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EndTime</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only show recordings that ended on this date, given as YYYY-MM-DD. Also supports inequalities, such as StartTime=YYYY-MM-DD for recordings that started at or before midnight on a date, and StartTime=YYYY-MM-DD for recordings that started at or after midnight on a date.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CallSid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only show recordings that have been started from this CallSid</p></td>
+</tr>
+</tbody>
+</table>
+<div class="literalblock">
+<div class="content">
+<pre> </pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="filter-using-the-callsid-parameter"><a class="anchor" href="#filter-using-the-callsid-parameter"></a>Filter using the CallSid parameter.</h3>
+<div class="paragraph">
+<p>The example below will only return Recordings that has been started from this CallSid</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre> curl -X GET  https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Recordings.json?CallSid=CAfe9ce46f104f5beeb10c83a5dad2be66</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The result will be similar to the one below</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-lang:xml" data-lang="lang:xml">{"page":0,"num_pages":0,"page_size":50,"total":17,"start":"0","end":"17","uri":"/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Recordings.json","first_page_uri":"/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Recordings.json?Page=0&amp;PageSize=50","previous_page_uri":"null","next_page_uri":"null","last_page_uri":"/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Recordings.json?Page=0&amp;PageSize=50","recordings":
+    [
+        {
+            "sid":"RF50675909d9c94acda36f0e119b6cb431",
+            "date_created":"Mon, 6 Jan 2014 08:51:07 +0900",
+            "date_updated":"Mon, 6 Jan 2014 08:51:07 +0900",
+            "account_sid":"ACae6e420f425248d6a26948c17a9e2acf",
+            "call_sid":"CAfe9ce46f104f5beeb10c83a5dad2be66",
+            "duration":"14.70275",
+            "api_version":"2012-04-24",
+            "uri":"/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Recordings/RE50675909d9c94acda36f0e119b6cb431.json",
+            "file_uri":"http://instance1.restcomm.com:8080/restcomm/recordings/RE50675909d9c94acda36f0e119b6cb431.wav"
+        },
+        ...
+    ]
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="paging-information"><a class="anchor" href="#paging-information"></a>Paging Information</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>HTTP GET.</strong> The following GET query string parameters allow you to limit the list returned. Note, parameters are case-sensitive:</p>
+</div>
+<div class="sect2">
+<h3 id="request-parameters-2"><a class="anchor" href="#request-parameters-2"></a>Request Parameters</h3>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">PParameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Page</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The current page number. Zero-indexed, so the first page is 0.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NumPages</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The total number of pages.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PageSize</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">How many items are in each page</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Total</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The total number of items in the list.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Start</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The position in the overall list of the first item in this page.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">End</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The position in the overall list of the last item in this page.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="literalblock">
+<div class="content">
+<pre> </pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="example"><a class="anchor" href="#example"></a>Example.</h3>
+<div class="paragraph">
+<p>The command below will return a single item from the list of recordings using the PageSize parameter</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -X GET  https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Recordings.json?PageSize=1</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The result of the <strong>PageSize</strong> parameter</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-lang:xml" data-lang="lang:xml">{"page":0,"num_pages":34,"page_size":1,"total":34,"start":"0","end":"0","uri":"/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Recordings.json","first_page_uri":"/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Recordings.json?Page=0&amp;PageSize=1","previous_page_uri":"null","next_page_uri":"/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Recordings.json?Page=1&amp;PageSize=1&amp;AfterSid=RF50675909d9c94acda36f0e119b6cb431","last_page_uri":"/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Recordings.json?Page=34&amp;PageSize=1","recordings":
+    [
+        {
+            "sid":"RF50675909d9c94acda36f0e119b6cb431",
+            "date_created":"Mon, 6 Jan 2014 08:51:07 +0900",
+            "date_updated":"Mon, 6 Jan 2014 08:51:07 +0900",
+            "account_sid":"ACae6e420f425248d6a26948c17a9e2acf",
+            "call_sid":"CAfe9ce46f104f5beeb10c83a5dad2be66",
+            "duration":"14.70275",
+            "api_version":"2012-04-24",
+            "uri":"/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Recordings/RE50675909d9c94acda36f0e119b6cb431.json",
+            "file_uri":"http://instance1.restcomm.com:8080/restcomm/recordings/RE50675909d9c94acda36f0e119b6cb431.wav"
+        }
+    ]
+}</code></pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre> </pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="additional-paging-information"><a class="anchor" href="#additional-paging-information"></a>Additional Paging Information.</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The API returns URIs to the next, previous, first and last pages of the returned list as shown in the table below:</p>
+</div>
+<div class="sect2">
+<h3 id="request-parameters-3"><a class="anchor" href="#request-parameters-3"></a>Request Parameters</h3>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Uri</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The URI of the current page.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Firstpageuri</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The URI for the first page of this list.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nextpageuri</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The URI for the next page of this list.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Previouspageuri</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The URI for the previous page of this list.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Lastpageuri</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The URI for the last page of this list.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-03-16 10:35:29 WET
+Last updated 2017-03-17 10:35:26 WET
 </div>
 </div>
 <footer>
