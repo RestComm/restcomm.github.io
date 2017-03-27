@@ -22982,12 +22982,16 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <td class="tableblock halign-left valign-top"><p class="tableblock">The HTTP method that RestComm should use to request the FallbackUrl. Must be either GET or POST. Defaults to POST.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">StatusCallback</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A URL that RestComm will request when the call ends to notify your app.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">statusCallbackEvent</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>initiated</code>, <code>ringing</code>, <code>answered</code>, <code>completed</code>. Default none</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">StatusCallbackMethod</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The HTTP method RestComm should use when requesting the above StatusCallback. Defaults to POST.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">statusCallback</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">any url. Default none</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">statusCallbackMethod</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET</code>, <code>POST</code>. Default <code>POST</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Timeout</p></td>
@@ -23709,7 +23713,7 @@ The call will now be redirected to the Url specified(hello-world.xml)</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-03-27 10:35:48 WEST
+Last updated 2017-03-27 11:59:11 WEST
 </div>
 </div>
 <footer>

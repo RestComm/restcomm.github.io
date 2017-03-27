@@ -22849,9 +22849,6 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <p>The <strong>statusCallbackEvent</strong> attribute allows you to specify which events Restcomm should webhook on. To specify multiple events separate them with a space: initiated ringing answered completed. If a statusCallback is provided and no status callback events are specified the completed event will be sent by default.</p>
 </div>
 <div class="paragraph">
-<p>The initiated, ringing, and answered events have a cost of $0.0001 per event, which results in $10 for every 100,000 events. The completed event is not charged.</p>
-</div>
-<div class="paragraph">
 <p>As opposed to creating an outbound call via the API, outbound calls created using &lt;Dial&gt; are initiated right away and never queued. The following shows a timeline of possible call events that can be returned and the different call statuses that a &lt;Dial&gt; leg may experience:</p>
 </div>
 <div class="paragraph">
@@ -22864,37 +22861,31 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
+<col style="width: 50%;">
+<col style="width: 50%;">
 </colgroup>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Event</th>
 <th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Cost</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">initiated</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The <code>initiated</code> event is fired when Restcomm starts dialing the call.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">$0.0001 per event</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ringing</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The <code>ringing</code> event is fired when the call starts ringing.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">$0.0001 per event</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">answered</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The <code>answered</code> event is fired when the call is answered.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">$0.0001 per event</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">completed</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The <code>completed</code> event is fired when the call is completed regardless of the termination status: <code>busy</code>, <code>canceled</code>, <code>completed</code>, <code>failed</code>, or <code>no-answer</code>. If no <code>statusCallbackEvent</code> is specified, <code>completed</code> will be fired by default.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No cost</p></td>
 </tr>
 </tbody>
 </table>
@@ -22942,18 +22933,6 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CallDuration</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The duration in seconds of the just-completed call. Only present in the <code>completed</code> event.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">RecordingUrl</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The URL of the phone call&#8217;s recorded audio. This parameter is included only if <strong><code>Record=true</code></strong> is set on the REST API request and does not include recordings from <code>&lt;Dial&gt;</code> or <code>&lt;Record&gt;</code>. <strong><code>RecordingUrl</code></strong> is only present in the <code>completed</code> event.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">RecordingSid</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The unique ID of the Recording from this call. <code>RecordingSid</code> is only present in the <code>completed</code> event.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">RecordingDuration</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The duration of the recorded audio (in seconds). <code>RecordingDuration</code> is only present in the <code>completed</code> event.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Timestamp</p></td>
@@ -23036,7 +23015,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-03-27 10:35:48 WEST
+Last updated 2017-03-27 11:59:11 WEST
 </div>
 </div>
 <footer>
