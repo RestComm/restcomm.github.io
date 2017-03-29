@@ -22765,34 +22765,30 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#step-1---create-the-voice-application">Step 1 - Create the Voice application</a></li>
 <li><a href="#step-2---enable-web-trigger">Step 2 - Enable Web Trigger</a></li>
 <li><a href="#step-3---register-your-sip-client">Step 3 - Register your SIP client</a></li>
-<li><a href="#step-4---configure-web-trigger">Step 4 - Configure Web Trigger</a></li>
-<li><a href="#step-5---provide-credentials-for-restcomm-api-access-once-per-operating-user">Step 5 - Provide credentials for Restcomm API access (once per operating user)</a></li>
-<li><a href="#step-6---build-trigger-url">Step 6 - Build trigger URL</a></li>
-<li><a href="#step-7---trigger-the-call">Step 7 - Trigger the call</a></li>
-<li><a href="#adding-variables-to-the-mix">Adding variables to the mix</a></li>
-<li><a href="#override-destination-of-the-call">Override destination of the call</a></li>
-<li><a href="#note-on-destinations">Note on destinations</a></li>
-<li><a href="#basic-http-authentication">HTTP Basic Authentication</a></li>
+<li><a href="#step-4-trigger-a-call">Step 4 - Trigger a call</a></li>
+<li><a href="#authenticate-with-application-specific-tokens">Authenticate with application-specific tokens</a></li>
+<li><a href="#call-source-and-destination-overrides">Call source and destination overrides</a></li>
+<li><a href="#configure-restcomm-api-credentials">Configure Restcomm API access credentials</a></li>
+<li><a href="#adding-variables-to-the-mix">Adding variables</a></li>
+<li><a href="#note-on-destinations">Destination address syntax</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="paragraph">
-<p>Web Trigger is an alternative way to start a voice application over HTTP. It allows establishing a call between an RVD application and a destination address using a simple HTTP request.</p>
-</div>
-<div class="paragraph">
-<p>Any RVD Voice application can be configured to be started through Web Trigger. The process of doing that is roughly the following:</p>
+<p>Web Trigger is an alternative way to start a voice application. It allows establishing a call between an RVD application and a destination address using a simple HTTP request.
+Any RVD Voice application can be configured to be started using Web Trigger. The process of doing that is roughly the following:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Create the Voice application in RVD.</p>
+<p>Create a Voice application in RVD.</p>
 </li>
 <li>
 <p>Enable and configure Web Trigger feature for this application.</p>
 </li>
 <li>
-<p>Configure Restcomm REST API access for the logged user in RVD.</p>
+<p>Start your application by making a request to the WebTrigger URL.</p>
 </li>
 </ul>
 </div>
@@ -22802,13 +22798,13 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div class="ulist">
 <ul>
 <li>
-<p>Secure your trigger using a custom token.</p>
+<p>Custom authentication using an application-specific token.</p>
 </li>
 <li>
-<p>Provide additional HTTP parameters that are available as RVD application variables.</p>
+<p>Initialization of RVD variables by using HTTP parameters.</p>
 </li>
 <li>
-<p>Set the caller identifier that will be presented to the callee.</p>
+<p>Control caller identifier that will be presented to the callee.</p>
 </li>
 </ul>
 </div>
@@ -22816,7 +22812,8 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <p>Web Trigger relies on the Restcomm Calls REST API to do the actual work. You can find more information on how a call between an RCML application and a destination address is established at <a href="../api/calls-api.html#calls">Restcomm API – Calls</a>.</p>
 </div>
 <div class="paragraph">
-<p>In the following example we will create a sample application that will establish a call between a Restcomm Client and an application and execute it.</p>
+<p>In the following example we will create a sample application that, when
+ trigerred, will establish a call between a Restcomm Client and the application and execute it.</p>
 </div>
 <div class="sect4">
 <h5 id="step-1---create-the-voice-application"><a class="anchor" href="#step-1---create-the-voice-application"></a>Step 1 - Create the Voice application</h5>
@@ -22833,75 +22830,134 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div class="sect4">
 <h5 id="step-2---enable-web-trigger"><a class="anchor" href="#step-2---enable-web-trigger"></a>Step 2 - Enable Web Trigger</h5>
-<div class="ulist">
-<ul>
-<li>
+<div class="paragraph">
 <p>In the project menu, click on <em>Web Trigger</em>:</p>
-</li>
-</ul>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="./images/show_web_trigger_form.png" alt="show_web_trigger_form" width="624" height="75"></span></p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Check <em>Enable Web Trigger</em>:</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>Then, check <em>Enable Web Trigger</em>:</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="./images/enable_web_trigger.png" alt="enable_web_trigger" width="489" height="230"></span></p>
+<p><span class="image"><img src="./images/WebTrigger_enable.png" alt="web_trigger_enable" width="489" height="230"></span></p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="step-3---register-your-sip-client"><a class="anchor" href="#step-3---register-your-sip-client"></a>Step 3 - Register your SIP client</h5>
 <div class="paragraph">
-<p>You will need a destination address to receive the triggered call.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Fire up your favourite SIP client and register to your Restcomm instance as <strong>alice</strong>. Default password is <em>1234.</em></p>
-</li>
-</ul>
+<p>You will need a registered destination address to receive the triggered call.
+Fire up your favourite SIP client and register to your Restcomm instance as <strong>alice</strong>. Default password is <em>1234.</em></p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="step-4---configure-web-trigger"><a class="anchor" href="#step-4---configure-web-trigger"></a>Step 4 - Configure Web Trigger</h5>
+<h5 id="step-4-trigger-a-call"><a class="anchor" href="#step-4-trigger-a-call"></a>Step 4 - Trigger a call</h5>
 <div class="paragraph">
-<p>Back to RVD, after enabling Web Trigger in <strong>Step 2</strong> complete the configuration form so that it looks as follows:</p>
-</div>
-<div id="web_trigger_form_completed" class="paragraph">
-<p><span class="image"><img src="./images/web_trigger_form_completed.png" alt="web_trigger_form_completed" width="487" height="622"></span></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Fill <strong>To</strong> with <strong>client:alice</strong>. This should be the same as the client you registered to Restcomm in <strong>Step 3</strong>.</p>
-</li>
-<li>
-<p>Fill <strong>From</strong> with <strong>1234</strong>. This is the arbitrary caller id that will appear to Alice when she receives the call.</p>
-</li>
-<li>
-<p>Fill <strong>Access token</strong> with <strong>ToPsEcReT</strong>. This is a secret token that will protect your Web Trigger from malicious users. Though RVD won&#8217;t require this field it&#8217;s <strong>VERY IMPORTANT</strong> to provide it.</p>
-</li>
-<li>
-<p>Notice the suggested <em>Web Trigger URL</em> on the top of the form. We will use that on <strong>Step 6 - Build trigger URL</strong>.</p>
-</li>
-</ul>
+<p>Using your favorite REST client make a call to the WebTrigger URL. You can copy it from the configuration form:</p>
 </div>
 <div class="paragraph">
-<p>If a warning about Restcomm API credentials appears at the bottom of the form the additional <strong>Step 5</strong> is needed. link:[]</p>
+<p><span class="image"><img src="./images/WebTrigger_copy_URL.png" alt="copy_web_trigger_url"></span></p>
+</div>
+<div class="paragraph">
+<p>Before making the request you need to specify a destination for the call in the <code>to</code> parameter. You may use the <em>client</em>
+you just registered. The destination goes in the <code>to</code> parameter of the request:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>http://this:8080/restcomm-rvd/services/apps/APdc8c1eea063d4a85b64a5bebda8e8c04/start?to=client:alice</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice <em>client:</em> prefix in the <code>to</code> parameter.</p>
+</div>
+<div class="paragraph">
+<p>Also, WebTrigger supports Basic HTTP authentication. Use your restcomm account credentials in order
+to authenticate. In this example we will use <strong>administrator@company.com</strong> / <strong>RestComm</strong>.</p>
+</div>
+<div class="paragraph">
+<p>Here is the cURL command to make the request:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ curl -X GET --user 'administrator@company.com:RestComm' 'http://this:8080/restcomm-rvd/services/apps/APdc8c1eea063d4a85b64a5bebda8e8c04/start?to=client:alice'</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In addition to specifying the destination of the call, the caller ID may also be specified (optional) using
+the <code>from</code> parameter. Here is the how the trigger URL  will look like when the caller ID  is set to <strong>bob</strong>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>.../start?to=client:alice&amp;from=bob</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>At this point you should be able to trigger a call to your registered client and listen to
+ your application.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="step-5---provide-credentials-for-restcomm-api-access-once-per-operating-user"><a class="anchor" href="#step-5---provide-credentials-for-restcomm-api-access-once-per-operating-user"></a>Step 5 - Provide credentials for Restcomm API access (once per operating user)</h5>
+<h5 id="authenticate-with-application-specific-tokens"><a class="anchor" href="#authenticate-with-application-specific-tokens"></a>Authenticate with application-specific tokens</h5>
 <div class="paragraph">
-<p>If you&#8217;ve already done this for the logged user you may skip this step.</p>
+<p>In case you don&#8217;t want to reveal your account credentials to the user of the trigger you can
+use an alternative form of authentication that relies on custom application-specific tokens. To enable it
+you will need to define an arbitrary security token in the configuration form and then use it in the request that
+will trigger the call. If the tokens match the request will be accepted.</p>
 </div>
 <div class="paragraph">
-<p>As already noted, RVD relies on Restcomm Calls REST API to create the actual call between the application and the destination address. For that, RVD needs to know the credentials of the Restcomm Account that will make the call. In order to supply these credentials:</p>
+<p>Here is the configuration form with the <em>application access token</em> set to <strong>MyTopSeCrEt</strong>.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./images/WebTrigger_specify_application_token.png" alt="specify_application_access_token"></span></p>
+</div>
+<div class="paragraph">
+<p>Since there are no Basic HTTP authentication headers involved you may easily trigger the call by typing the WebTrigger URL
+directly in the browser:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>http://this:8080/restcomm-rvd/services/apps/APdc8c1eea063d4a85b64a5bebda8e8c04/start?to=client:alice&amp;token=MyTopSeCrEt</pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Before giving it a try make sure that you have configured
+ <a href="#configure-restcomm-api-credentials">Restcomm API credentials</a> in RVD settings.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="call-source-and-destination-overrides"><a class="anchor" href="#call-source-and-destination-overrides"></a>Call source and destination overrides</h5>
+<div class="paragraph">
+<p>There can be cases when the destination or the source of a WebTrigger call should be locked
+down to a fixed value and not be controlled from the request. In order to do that <em>overrides</em> can
+be provided in the configuration form as follows:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./images/WebTrigger_overrides.png" alt="source_dest_overrides"></span></p>
+</div>
+<div class="paragraph">
+<p>Now, the <code>to</code> and <code>form</code> parameters in the HTTP request will be ignored and values in the form
+will be used instead.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="configure-restcomm-api-credentials"><a class="anchor" href="#configure-restcomm-api-credentials"></a>Configure Restcomm API access credentials</h5>
+<div class="paragraph">
+<p>In order to use application-specific tokens Restcomm API credentials should be configured in RVD
+ settings. RVD relies on Restcomm Calls REST API to create the actual call between the
+ application and the destination address. For that, it needs to know the credentials of
+ the Restcomm Account that will make the call.</p>
+</div>
+<div class="paragraph">
+<p>To supply these credentials:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -22920,131 +22976,61 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <p><span class="image"><img src="./images/ide_settings_profile_form_complete.png" alt="ide_settings_profile_form_complete" width="300" height="179"></span></p>
 </div>
 <div class="paragraph">
-<p>Supply the credentials of the Restcomm account that will be used to create the call. Typing the <em>username</em> and <em>password</em> you use to log into RVD will do.</p>
+<p>Supply the credentials of the Restcomm account that will be used to create the call.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Set <strong>Username</strong> to <em>administrator@company.com</em></p>
+<p>Set <strong>Username</strong> to the restcomm username on whose behalf the calls will be made. In this tutorial we used <em>administrator@company.com</em></p>
 </li>
 <li>
-<p>Set <strong>Password</strong> to whatever password you have set</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><em>* As of Restcomm 7.5.0 these credentials need to be configured separately for each different user that operates RVD. For older versions, an RVD-wide approach was used that posed various security issues and was abandoned.</em></p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="step-6---build-trigger-url"><a class="anchor" href="#step-6---build-trigger-url"></a>Step 6 - Build trigger URL</h5>
-<div class="paragraph">
-<p>You will now need to build the URL that will initiate the Web Trigger. The generic form of this URL is the following: <a href="http://HOST:PORT/restcomm-rvd/services/apps/APPLICATION_NAME/start?token=ACCESS_TOKEN" class="bare">http://HOST:PORT/restcomm-rvd/services/apps/APPLICATION_NAME/start?token=ACCESS_TOKEN</a></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>HOST</strong> and <strong>PORT</strong> depend on how you have set up and access restcomm.</p>
-</li>
-<li>
-<p><strong>APPLICATION_NAME</strong> is the name of the RVD application. In this case that would be <em>TestWebTrigger</em>. You will need to url-encode the name in case it contains any special characters like spaces etc.</p>
-</li>
-<li>
-<p><strong>ACCESS_TOKEN</strong> is the <em>Access token</em> specified in Step 4. In this case it would be <em>ToPsEcReT</em>.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>RVD will also try to build the URL automatically. You may copy it from Web Trigger Configuration form in <strong>Step 4</strong>. It&#8217;s right under <em>Web Trigger URL</em> field.</p>
-</div>
-<div class="paragraph">
-<p>Here is the URL used for this example:</p>
-</div>
-<div class="paragraph">
-<p><strong><a href="http://HOST:PORT/restcomm-rvd/services/apps/TestWebTrigger/start?token=ToPsEcReT" class="bare">http://HOST:PORT/restcomm-rvd/services/apps/TestWebTrigger/start?token=ToPsEcReT</a></strong></p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="step-7---trigger-the-call"><a class="anchor" href="#step-7---trigger-the-call"></a>Step 7 - Trigger the call</h5>
-<div class="paragraph">
-<p>Everything has been set up. Time to test the trigger.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Using your web browser or your favourite HTTP client  make a GET request to the URL you built in <strong>Step 6</strong>. Your SIP client should ring!</p>
-</li>
-<li>
-<p>Notice the caller ID in the incoming call. It should be set to 1234. That&#8217;s the <strong>From</strong> value we specified in <strong>Step 4.</strong></p>
-</li>
-<li>
-<p>Pick up the call. You should now hear the application and the typical RVD greeting: <em>"Welcome to Telestax Restcom Visual Designer Demo".</em></p>
+<p>Set <strong>Password</strong> to the <em>AuthToken</em> of your account displayed in Dashboard.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect4">
-<h5 id="adding-variables-to-the-mix"><a class="anchor" href="#adding-variables-to-the-mix"></a>Adding variables to the mix</h5>
+<h5 id="adding-variables-to-the-mix"><a class="anchor" href="#adding-variables-to-the-mix"></a>Adding variables</h5>
 <div class="paragraph">
-<p>Application behaviour can be further enhanced by adding parameters to your trigger URL and use them in your application. We will now personalize the greeting by passing caller <em>firstname</em> and <em>lastname</em> parameters.</p>
+<p>Application behaviour can be further enhanced by adding parameters to your trigger URL.
+All additional parameters will be converted to RVD variables and can be used in your application.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Modify your TestWebTrigger project so that it looks as follows:</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>Bellow is a personalized greeting of the application using <code>firstname</code> and <code>lastname</code> variables.</p>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="./images/add_variables_to_the_mix.png" alt="add_variables_to_the_mix" width="763" height="341"></span></p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Modify the trigger URL by adding <em>firstname</em> and <em>lastname</em> custom parameters. It should look like the following:http://RESTCOMM_HOSTNAME:PORT/restcomm-rvd/services/apps/TestWebTrigger/start?token=ToPsEcReT<strong>&amp;firstname=foo&amp;lastname=bar</strong></p>
-</li>
-</ul>
+<div class="paragraph">
+<p>This application will use the <em>firstname</em> and <em>lastname</em> parameters from a trigger URL like the
+following:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>http://this:8080/restcomm-rvd/services/apps/APdc8c1eea063d4a85b64a5bebda8e8c04/start?to=client:alice&amp;firstname=nick&amp;lastname=the+greek</pre>
+</div>
+</div>
+<div class="sect5">
+<h6 id="variable-scope"><a class="anchor" href="#variable-scope"></a>Variable scope</h6>
+<div class="paragraph">
+<p>In the example above <code>firstname</code> and <code>lastname</code> parameters defined in the url will result in creating module-scoped
+RVD variables. This means that the variables will be available only in the first module
+execution. To make them last for the whole application lifecycle the 'User parameter scope'
+option in <em>Advanced configuration</em> options should be set to <em>Application</em> as illustrated below.</p>
 </div>
 <div class="paragraph">
-<p>RVD will detect these additional parameters and create variables using the same name.</p>
+<p><span class="image"><img src="./images/WebTrigger_application_scoped_vars.png" alt="application_scoped_variables"></span></p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Point your web browser or  your HTTP client to the url above.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Your SIP phone should ring. Pick it up. You should now hear the personalized greeting: <em>"Hello <strong>foo bar</strong>. Welcome to Telestax Restcom Visual Designer Demo !"</em></p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="override-destination-of-the-call"><a class="anchor" href="#override-destination-of-the-call"></a>Override destination of the call</h5>
+<h5 id="note-on-destinations"><a class="anchor" href="#note-on-destinations"></a>Destination address syntax</h5>
 <div class="paragraph">
-<p>You can explicitly specify the destination of the call by adding the special <strong>to</strong> parameter to your URL. This won&#8217;t create an RVD variable but will change the destination of the call instead.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Modify the trigger URL so that is calls <strong>bob</strong> instead of <strong>alice</strong>. The URL should now look like this: <a href="http://RESTCOMM_HOSTNAME:PORT/restcomm-rvd/services/apps/TestWebTrigger/start?token=ToPsEcReT&amp;firstname=foo&amp;lastname=bar&amp" class="bare">http://RESTCOMM_HOSTNAME:PORT/restcomm-rvd/services/apps/TestWebTrigger/start?token=ToPsEcReT&amp;firstname=foo&amp;lastname=bar&amp</a>;<strong>to=client:bob</strong></p>
-</li>
-<li>
-<p>Register your SIP phone as <strong>bob</strong> instead of <strong>alice</strong></p>
-</li>
-<li>
-<p>Make the HTTP request</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Bob should now receive the call.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="note-on-destinations"><a class="anchor" href="#note-on-destinations"></a>Note on destinations</h5>
-<div class="paragraph">
-<p>Throughout this tutorial we have only used <em>client</em> destinations for the call. Restcomm Calls REST API and consequently RVD WebTrigger support four different types of destination address. Any of these types can be used as a destination address. Here are some example values you can use as <strong>to</strong> parameters in the URL (or specify in Step 4 <strong>To</strong> field) for each of these types:</p>
+<p>Throughout this tutorial we have only used <em>client</em> destinations for the call. Restcomm
+Calls REST API and consequently RVD WebTrigger support four different types of destination
+address. Any of these types can be used as a destination address. Here are some example
+values you can use as destinations either directly in the URL <code>to</code> parameter or as overrides
+ in the configuration form.</p>
 </div>
 <div id="client" class="ulist">
 <ul>
@@ -23118,56 +23104,10 @@ Make sure you url-encode these values if you specify the <strong>to</strong> des
 </table>
 </div>
 </div>
-<div class="sect4">
-<h5 id="basic-http-authentication"><a class="anchor" href="#basic-http-authentication"></a>HTTP Basic Authentication</h5>
-<div class="paragraph">
-<p>As of Restcomm version 7.7.0 support for HTTP Basic authentication has been added to WebTrigger. The mechanism works as an alternative to custom token authentication. In order to take advantage of it you&#8217;ll just have to provide your restcomm account credentials as an HTTP <em>Authorization</em> header.</p>
-</div>
-<div class="paragraph">
-<p><strong>Example</strong></p>
-</div>
-<div class="paragraph">
-<p>credentials</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>_administrator@company.com:RestComm</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>URL</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>http://RESTCOMM_HOSTNAME:PORT/restcomm-rvd/services/apps/TestWebTrigger/start</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Headers</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>Authorization: Basic YWRtaW5pc3RyYXRvckBjb21wYW55LmNvbTpSZXN0Q29tbQ==</pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Note that there is no <strong>token</strong> URL parameter</p>
-</li>
-<li>
-<p>You don&#8217;t need to supply the <em>Access Token</em> field in the WebTrigger form discribed in <em>Step 4</em>. In fact, you can have this field empty to disable token authentication.</p>
-</li>
-<li>
-<p>You don&#8217;t need to supply credentials for <em>Restcomm API access</em> as decribed in <em>Step 5</em>. Skip this step.</p>
-</li>
-</ul>
-</div>
-</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-03-28 10:38:13 WEST
+Last updated 2017-03-29 13:35:55 WEST
 </div>
 </div>
 <footer>
