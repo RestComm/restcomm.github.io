@@ -24296,9 +24296,17 @@ You can do these using the CLI tool or the GUI.</p>
 <dd>
 <p>The error message shown to user when something goes wrong on the USSD gateway.</p>
 </dd>
+<dt class="hdlist1">serveroverloadedmsg</dt>
+<dd>
+<p>The error message shown to user when a request is rejected because of too many TCAP dialogs are in processing.</p>
+</dd>
 <dt class="hdlist1">dialogtimeout</dt>
 <dd>
-<p>The maximum time allowed by the Gateway for the	application to respond.</p>
+<p>The maximum time allowed by the Gateway for the application to respond.</p>
+</dd>
+<dt class="hdlist1">maxactivitycount</dt>
+<dd>
+<p>A count of TCAP dialogs allowed to process at the same time.</p>
 </dd>
 <dt class="hdlist1">cdrloggingto</dt>
 <dd>
@@ -24524,9 +24532,57 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_set_dialogtimeout"><a class="anchor" href="#_set_dialogtimeout"></a>6.6.4. Dialog Timeout</h4>
+<h4 id="_set_serveroverloadedmsg"><a class="anchor" href="#_set_serveroverloadedmsg"></a>6.6.4. Server Overload Message</h4>
 <div class="sect4">
-<h5 id="_set_dialogtimeout_cli"><a class="anchor" href="#_set_dialogtimeout_cli"></a>6.6.4.1. Using CLI</h5>
+<h5 id="_set_serveroverloadedmsg_cli"><a class="anchor" href="#_set_serveroverloadedmsg_cli"></a>6.6.4.1. Using CLI</h5>
+<div class="paragraph">
+<p>You can set the 'Server Overload Message' by issuing the command <code>ussd set serveroverloadedmsg</code> with appropriate parameters as described below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	ussd set serveroverloadedmsg
+
+SYNOPSIS
+	ussd set serveroverloadedmsg &lt;message&gt;
+
+DESCRIPTION
+	This command is used to set the error message to be displayed to the end user
+	when a request is rejected because of too many TCAP dialogs are in processing.
+
+EXAMPLES
+	ussd set serveroverloadedmsg Request timeout please try again after sometime.</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_set_serveroverloadedmsg_gui"><a class="anchor" href="#_set_serveroverloadedmsg_gui"></a>6.6.4.2. Using GUI</h5>
+<div class="olist arabic">
+<div class="title">Procedure: Set Server Overload Message using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for USSD Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Server Settings (if any), segregated into three tabs: Error Messages, SS7 Settings, Various.
+Switch to the 'Error Messages' tab in the GUI.</p>
+</li>
+<li>
+<p>In the text field 'Server overload message', you can set the message to be displayed to the end user when USSD Gateway is overloaded.
+For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_set_dialogtimeout"><a class="anchor" href="#_set_dialogtimeout"></a>6.6.5. Dialog Timeout</h4>
+<div class="sect4">
+<h5 id="_set_dialogtimeout_cli"><a class="anchor" href="#_set_dialogtimeout_cli"></a>6.6.5.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can set the 'Dialog Timeout' value by issuing the command <code>ussd set dialogtimeout</code> with appropriate parameters as described below:</p>
 </div>
@@ -24568,7 +24624,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="_set_dialogtimeout_gui"><a class="anchor" href="#_set_dialogtimeout_gui"></a>6.6.4.2. Using GUI</h5>
+<h5 id="_set_dialogtimeout_gui"><a class="anchor" href="#_set_dialogtimeout_gui"></a>6.6.5.2. Using GUI</h5>
 <div class="olist arabic">
 <div class="title">Procedure: Set Dialog Timeout using the GUI</div>
 <ol class="arabic">
@@ -24592,9 +24648,60 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_set_hrhlrnumber"><a class="anchor" href="#_set_hrhlrnumber"></a>6.6.5. Special HLR addressing</h4>
+<h4 id="_set_maxactivitycount"><a class="anchor" href="#_set_maxactivitycount"></a>6.6.6. Max activity count</h4>
 <div class="sect4">
-<h5 id="_set_hrhlrnumber_cli"><a class="anchor" href="#_set_hrhlrnumber_cli"></a>6.6.5.1. Using CLI</h5>
+<h5 id="_set_maxactivitycount_cli"><a class="anchor" href="#_set_maxactivitycount_cli"></a>6.6.6.1. Using CLI</h5>
+<div class="paragraph">
+<p>You can set the 'Max activity count' value by issuing the command <code>ussd set maxactivitycount</code> with appropriate parameters as described below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	ussd set maxactivitycount
+
+SYNOPSIS
+	ussd set maxactivitycount &lt;timeout-value&gt;
+
+DESCRIPTION
+	This command is used to set the parameter maxactivitycount. If a count of
+	TCAP dialogs exceeds of this value then USSD GW will reject new incoming
+	PULL requests from subscribers with the message from serveroverloadedmsg
+	parameter. Setting of 0 value will turn off this value.
+	Default value: 5000
+
+EXAMPLES
+	ussd set maxactivitycount 5000</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_set_maxactivitycount_gui"><a class="anchor" href="#_set_maxactivitycount_gui"></a>6.6.6.2. Using GUI</h5>
+<div class="olist arabic">
+<div class="title">Procedure: Set Max activity count using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for USSD Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Server Settings (if any), segregated into three tabs: Error Messages, SS7 Settings, Various.
+Switch to the 'Various' tab in the GUI.</p>
+</li>
+<li>
+<p>In the text field 'Max activity count', you can set a needed value.
+For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_set_hrhlrnumber"><a class="anchor" href="#_set_hrhlrnumber"></a>6.6.7. Special HLR addressing</h4>
+<div class="sect4">
+<h5 id="_set_hrhlrnumber_cli"><a class="anchor" href="#_set_hrhlrnumber_cli"></a>6.6.7.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can set the 'HLR address' (for SRI) to be used if SMSC is also present and configured in Home Routing mode, by issuing the command <code>ussd set hrhlrnumber</code> with appropriate parameters as described below:</p>
 </div>
@@ -24623,7 +24730,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="_set_hrhlrnumber_gui"><a class="anchor" href="#_set_hrhlrnumber_gui"></a>6.6.5.2. Using GUI</h5>
+<h5 id="_set_hrhlrnumber_gui"><a class="anchor" href="#_set_hrhlrnumber_gui"></a>6.6.7.2. Using GUI</h5>
 <div class="olist arabic">
 <div class="title">Procedure: Set HLR (for SRI) using the GUI</div>
 <ol class="arabic">
@@ -24647,9 +24754,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_set_cdrlogging"><a class="anchor" href="#_set_cdrlogging"></a>6.6.6. CDR logging - Database / Textfile</h4>
+<h4 id="_set_cdrlogging"><a class="anchor" href="#_set_cdrlogging"></a>6.6.8. CDR logging - Database / Textfile</h4>
 <div class="sect4">
-<h5 id="_set_cdrlogging_cli"><a class="anchor" href="#_set_cdrlogging_cli"></a>6.6.6.1. Using CLI</h5>
+<h5 id="_set_cdrlogging_cli"><a class="anchor" href="#_set_cdrlogging_cli"></a>6.6.8.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can switch between Database and Textfile for CDR logging, by setting the 'cdrloggingto' value issuing the command <code>ussd set cdrloggingto</code> with appropriate parameters as described below:</p>
 </div>
@@ -24669,7 +24776,7 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect4">
-<h5 id="_set_cdrlogging_gui"><a class="anchor" href="#_set_cdrlogging_gui"></a>6.6.6.2. Using GUI</h5>
+<h5 id="_set_cdrlogging_gui"><a class="anchor" href="#_set_cdrlogging_gui"></a>6.6.8.2. Using GUI</h5>
 <div class="olist arabic">
 <div class="title">Procedure: Set CDR logging using the GUI</div>
 <ol class="arabic">
@@ -24693,9 +24800,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_setting_ussd_gt"><a class="anchor" href="#_setting_ussd_gt"></a>6.6.7. USSD Global Title</h4>
+<h4 id="_setting_ussd_gt"><a class="anchor" href="#_setting_ussd_gt"></a>6.6.9. USSD Global Title</h4>
 <div class="sect4">
-<h5 id="_setting_ussd_gt_cli"><a class="anchor" href="#_setting_ussd_gt_cli"></a>6.6.7.1. Using CLI</h5>
+<h5 id="_setting_ussd_gt_cli"><a class="anchor" href="#_setting_ussd_gt_cli"></a>6.6.9.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can set the 'USSD Global Title' by issuing the command <code>ussd set ussdgt</code> with appropriate parameters as described below:</p>
 </div>
@@ -24742,7 +24849,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="_setting_ussd_gt_gui"><a class="anchor" href="#_setting_ussd_gt_gui"></a>6.6.7.2. Using GUI</h5>
+<h5 id="_setting_ussd_gt_gui"><a class="anchor" href="#_setting_ussd_gt_gui"></a>6.6.9.2. Using GUI</h5>
 <div class="olist arabic">
 <div class="title">Procedure: Set USSD Gateway Global Title using the GUI</div>
 <ol class="arabic">
@@ -24767,9 +24874,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_setting_ussd_ssn"><a class="anchor" href="#_setting_ussd_ssn"></a>6.6.8. USSD Sub System Number</h4>
+<h4 id="_setting_ussd_ssn"><a class="anchor" href="#_setting_ussd_ssn"></a>6.6.10. USSD Sub System Number</h4>
 <div class="sect4">
-<h5 id="_setting_ussd_ssn_cli"><a class="anchor" href="#_setting_ussd_ssn_cli"></a>6.6.8.1. Using CLI</h5>
+<h5 id="_setting_ussd_ssn_cli"><a class="anchor" href="#_setting_ussd_ssn_cli"></a>6.6.10.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can set the 'USSD Sub System Number' by issuing the command <code>ussd set ussdssn</code> with appropriate parameters as described below:</p>
 </div>
@@ -24804,7 +24911,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="_setting_ussd_ssn_gui"><a class="anchor" href="#_setting_ussd_ssn_gui"></a>6.6.8.2. Using GUI</h5>
+<h5 id="_setting_ussd_ssn_gui"><a class="anchor" href="#_setting_ussd_ssn_gui"></a>6.6.10.2. Using GUI</h5>
 <div class="olist arabic">
 <div class="title">Procedure: Set USSD Sub System Number (SSN) using the GUI</div>
 <ol class="arabic">
@@ -24828,9 +24935,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_setting_ussd_hlrssn"><a class="anchor" href="#_setting_ussd_hlrssn"></a>6.6.9. HLR Sub System Number</h4>
+<h4 id="_setting_ussd_hlrssn"><a class="anchor" href="#_setting_ussd_hlrssn"></a>6.6.11. HLR Sub System Number</h4>
 <div class="sect4">
-<h5 id="_setting_ussd_hlrssn_cli"><a class="anchor" href="#_setting_ussd_hlrssn_cli"></a>6.6.9.1. Using CLI</h5>
+<h5 id="_setting_ussd_hlrssn_cli"><a class="anchor" href="#_setting_ussd_hlrssn_cli"></a>6.6.11.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can set the 'HLR Sub System Number' by issuing the command <code>ussd set hlrssn</code> with appropriate parameters as described below:</p>
 </div>
@@ -24861,7 +24968,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="_setting_ussd_hlrssn_gui"><a class="anchor" href="#_setting_ussd_hlrssn_gui"></a>6.6.9.2. Using GUI</h5>
+<h5 id="_setting_ussd_hlrssn_gui"><a class="anchor" href="#_setting_ussd_hlrssn_gui"></a>6.6.11.2. Using GUI</h5>
 <div class="olist arabic">
 <div class="title">Procedure: Set HLR Sub System Number (SSN) using the GUI</div>
 <ol class="arabic">
@@ -24884,9 +24991,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_setting_ussd_mscssn"><a class="anchor" href="#_setting_ussd_mscssn"></a>6.6.10. MSC Sub System Number</h4>
+<h4 id="_setting_ussd_mscssn"><a class="anchor" href="#_setting_ussd_mscssn"></a>6.6.12. MSC Sub System Number</h4>
 <div class="sect4">
-<h5 id="_setting_ussd_mscssn_cli"><a class="anchor" href="#_setting_ussd_mscssn_cli"></a>6.6.10.1. Using CLI</h5>
+<h5 id="_setting_ussd_mscssn_cli"><a class="anchor" href="#_setting_ussd_mscssn_cli"></a>6.6.12.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can set the 'MSC Sub System Number' by issuing the command <code>ussd set mscssn</code> with appropriate parameters as described below:</p>
 </div>
@@ -24917,7 +25024,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="_setting_ussd_mscssn_gui"><a class="anchor" href="#_setting_ussd_mscssn_gui"></a>6.6.10.2. Using GUI</h5>
+<h5 id="_setting_ussd_mscssn_gui"><a class="anchor" href="#_setting_ussd_mscssn_gui"></a>6.6.12.2. Using GUI</h5>
 <div class="olist arabic">
 <div class="title">Procedure: Set MSC Sub System Number (SSN) using the GUI</div>
 <ol class="arabic">
@@ -24940,9 +25047,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_setting_ussd_maxmapv"><a class="anchor" href="#_setting_ussd_maxmapv"></a>6.6.11. MAP Application Context version</h4>
+<h4 id="_setting_ussd_maxmapv"><a class="anchor" href="#_setting_ussd_maxmapv"></a>6.6.13. MAP Application Context version</h4>
 <div class="sect4">
-<h5 id="_setting_ussd_maxmapv_cli"><a class="anchor" href="#_setting_ussd_maxmapv_cli"></a>6.6.11.1. Using CLI</h5>
+<h5 id="_setting_ussd_maxmapv_cli"><a class="anchor" href="#_setting_ussd_maxmapv_cli"></a>6.6.13.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can set the 'MAP Application Context version' by issuing the command <code>ussd set maxmapv</code> with appropriate parameters as described below:</p>
 </div>
@@ -24979,7 +25086,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="_setting_ussd_maxmapv_gui"><a class="anchor" href="#_setting_ussd_maxmapv_gui"></a>6.6.11.2. Using GUI</h5>
+<h5 id="_setting_ussd_maxmapv_gui"><a class="anchor" href="#_setting_ussd_maxmapv_gui"></a>6.6.13.2. Using GUI</h5>
 <div class="olist arabic">
 <div class="title">Procedure: Set MAP Application Context version using the GUI</div>
 <ol class="arabic">
@@ -25004,9 +25111,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_setting_ussd_routing_rules_show"><a class="anchor" href="#_setting_ussd_routing_rules_show"></a>6.6.12. View USSD Rules</h4>
+<h4 id="_setting_ussd_routing_rules_show"><a class="anchor" href="#_setting_ussd_routing_rules_show"></a>6.6.14. View USSD Rules</h4>
 <div class="sect4">
-<h5 id="_setting_ussd_routing_rules_show_cli"><a class="anchor" href="#_setting_ussd_routing_rules_show_cli"></a>6.6.12.1. Using CLI</h5>
+<h5 id="_setting_ussd_routing_rules_show_cli"><a class="anchor" href="#_setting_ussd_routing_rules_show_cli"></a>6.6.14.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can view the details of all or specified configured routing rules in the USSD Gateway by issuing the command <code>ussd scrule show</code> with appropriate parameters as described below:</p>
 </div>
@@ -25031,7 +25138,7 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect4">
-<h5 id="_setting_ussd_routing_rules_show_gui"><a class="anchor" href="#_setting_ussd_routing_rules_show_gui"></a>6.6.12.2. Using GUI</h5>
+<h5 id="_setting_ussd_routing_rules_show_gui"><a class="anchor" href="#_setting_ussd_routing_rules_show_gui"></a>6.6.14.2. Using GUI</h5>
 <div class="olist arabic">
 <div class="title">Procedure: View USSD Routing Rule</div>
 <ol class="arabic">
@@ -25047,9 +25154,9 @@ The main panel will display the existing Short Code Routing Rules (if any) in a 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_setting_ussd_routing_rules_create"><a class="anchor" href="#_setting_ussd_routing_rules_create"></a>6.6.13. Create new USSD Rule</h4>
+<h4 id="_setting_ussd_routing_rules_create"><a class="anchor" href="#_setting_ussd_routing_rules_create"></a>6.6.15. Create new USSD Rule</h4>
 <div class="sect4">
-<h5 id="_setting_ussd_routing_rules_create_cli"><a class="anchor" href="#_setting_ussd_routing_rules_create_cli"></a>6.6.13.1. Using CLI</h5>
+<h5 id="_setting_ussd_routing_rules_create_cli"><a class="anchor" href="#_setting_ussd_routing_rules_create_cli"></a>6.6.15.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can create a new USSD Routing Rule for every possible short code by issuing the command <code>ussd scrule create</code> with appropriate parameters as described below:</p>
 </div>
@@ -25137,7 +25244,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="_setting_ussd_routing_rules_create_gui"><a class="anchor" href="#_setting_ussd_routing_rules_create_gui"></a>6.6.13.2. Using GUI</h5>
+<h5 id="_setting_ussd_routing_rules_create_gui"><a class="anchor" href="#_setting_ussd_routing_rules_create_gui"></a>6.6.15.2. Using GUI</h5>
 <div class="olist arabic">
 <div class="title">Procedure: Create new USSD Routing Rule</div>
 <ol class="arabic">
@@ -25161,9 +25268,9 @@ If there is an error in creating the Rule, then you will find the details of the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_setting_ussd_routing_rules_modify"><a class="anchor" href="#_setting_ussd_routing_rules_modify"></a>6.6.14. Modify an existing USSD Rule</h4>
+<h4 id="_setting_ussd_routing_rules_modify"><a class="anchor" href="#_setting_ussd_routing_rules_modify"></a>6.6.16. Modify an existing USSD Rule</h4>
 <div class="sect4">
-<h5 id="_setting_ussd_routing_rules_modify_cli"><a class="anchor" href="#_setting_ussd_routing_rules_modify_cli"></a>6.6.14.1. Using CLI</h5>
+<h5 id="_setting_ussd_routing_rules_modify_cli"><a class="anchor" href="#_setting_ussd_routing_rules_modify_cli"></a>6.6.16.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can modify an existing USSD Routing Rule for by issuing the command <code>ussd scrule modify</code> with appropriate parameters as described below:</p>
 </div>
@@ -25243,7 +25350,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="_setting_ussd_routing_rules_modify_gui"><a class="anchor" href="#_setting_ussd_routing_rules_modify_gui"></a>6.6.14.2. Using GUI</h5>
+<h5 id="_setting_ussd_routing_rules_modify_gui"><a class="anchor" href="#_setting_ussd_routing_rules_modify_gui"></a>6.6.16.2. Using GUI</h5>
 <div class="olist arabic">
 <div class="title">Procedure: Modify an existing USSD Routing Rule</div>
 <ol class="arabic">
@@ -25267,9 +25374,9 @@ If there is an error in creating the Rule, then you will find the details of the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_setting_ussd_routing_rules_delete"><a class="anchor" href="#_setting_ussd_routing_rules_delete"></a>6.6.15. Delete USSD Rule</h4>
+<h4 id="_setting_ussd_routing_rules_delete"><a class="anchor" href="#_setting_ussd_routing_rules_delete"></a>6.6.17. Delete USSD Rule</h4>
 <div class="sect4">
-<h5 id="_setting_ussd_routing_rules_delete_cli"><a class="anchor" href="#_setting_ussd_routing_rules_delete_cli"></a>6.6.15.1. Using CLI</h5>
+<h5 id="_setting_ussd_routing_rules_delete_cli"><a class="anchor" href="#_setting_ussd_routing_rules_delete_cli"></a>6.6.17.1. Using CLI</h5>
 <div class="paragraph">
 <p>You can delete an existing USSD Routing Rule by issuing the command <code>ussd scrule delete</code> with appropriate parameters as described below:</p>
 </div>
@@ -25313,7 +25420,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="_setting_ussd_routing_rules_delete_gui"><a class="anchor" href="#_setting_ussd_routing_rules_delete_gui"></a>6.6.15.2. Using GUI</h5>
+<h5 id="_setting_ussd_routing_rules_delete_gui"><a class="anchor" href="#_setting_ussd_routing_rules_delete_gui"></a>6.6.17.2. Using GUI</h5>
 <div class="olist arabic">
 <div class="title">Procedure: Delete USSD Routing Rule</div>
 <ol class="arabic">
@@ -27374,7 +27481,7 @@ You must change the value of <code>DATASOURCE_JNDI_NAME</code> (which is hardcod
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-04-02 10:49:16 WEST
+Last updated 2017-04-03 10:49:42 WEST
 </div>
 </div>
 <footer>
