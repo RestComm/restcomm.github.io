@@ -22810,17 +22810,17 @@ By using the Restcomm  SS7 Service you will be able to configure the SS7 stack u
 The SS7 Service wraps SS7 Level 4 (i.e., MAP, CAP and ISUP) and the lower layers and exposes via JNDI, such that the layer above can perform the look-up and use it in any application.</p>
 </div>
 <div class="olist arabic">
-<div class="title">Procedure: Installing Restcomm  SS7 Service</div>
+<div class="title">Procedure: Installing Restcomm SS7 Service to JBoss 5.1.0.GA</div>
 <ol class="arabic">
 <li>
 <p>Pre-Requisites:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>The Restcomm SS7 Service binary requires that you have JBoss Application Server installed and <code>JBOSS_HOME</code> Environment variable set properly. The latest binaries of JBoss Application Server can by obtained from <a href="https://github.com/RestComm/jain-slee/releases/latest" class="bare">https://github.com/RestComm/jain-slee/releases/latest</a>. For more details on setting the <code>JBOSS_HOME</code> variable, please refer to the section <a href="#_jboss_home_setup">[_jboss_home_setup]</a>.</p>
+<p>The Restcomm SS7 Service binary requires that you have JBoss Application Server installed and <code>JBOSS_HOME</code> Environment variable set properly. The latest binaries of JBoss Application Server can by obtained from <a href="https://github.com/RestComm/jain-slee/releases/tag/2.8.0.FINAL" class="bare">https://github.com/RestComm/jain-slee/releases/tag/2.8.0.FINAL</a>. For more details on setting the <code>JBOSS_HOME</code> variable, please refer to the section <a href="#_jboss_home_setup">[_jboss_home_setup]</a>.</p>
 </li>
 <li>
-<p>Ant 1.6 (or higher) must be used to install the binary.
+<p><code>Ant 1.9</code> (or higher) must be used to install the binary.
 Instructions for using Ant, including install, can be found at <a href="http://ant.apache.org/" class="bare">http://ant.apache.org/</a>.</p>
 </li>
 <li>
@@ -22838,7 +22838,7 @@ Alternatively you can copy it to the JBoss native library path manually.</p>
 <p>You can now deploy the service using the <code>ant deploy</code> command as shown below:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>[usr1]$ cd -/ss7
+<pre class="highlight"><code>[usr1]$ cd {path}/ss7-jboss
 [usr1]$ ant deploy</code></pre>
 </div>
 </div>
@@ -22854,12 +22854,79 @@ Alternatively you can copy it to the JBoss native library path manually.</p>
 <p>If the service has been deployed successfully, you will find the below message appear on screen:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>Buildfile: /home/vinu/Downloads/restcomm-jss7-3.0.0/ss7/build.xml
+<pre class="highlight"><code>Buildfile: ../{path}/ss7-jboss/build.xml
 
 deploy:
-     [copy] Copying 38 files to /home/vinu/Downloads/restcomm-jss7-3.0.0/ss7/${system.JBOSS_HOME}/server/default/deploy/restcomm-ss7-service
-     [copy] Copying 2 files to /home/vinu/Downloads/restcomm-jss7-3.0.0/ss7/${system.JBOSS_HOME}/bin
-     [copy] Copying 9 files to /home/vinu/Downloads/restcomm-jss7-3.0.0/ss7/${system.JBOSS_HOME}/lib
+     [copy] Copying 47 files to JBOSS_HOME/server/default/deploy/restcomm-ss7-service
+     [copy] Copying 2 files to JBOSS_HOME/bin
+     [copy] Copying 11 files to JBOSS_HOME/lib
+     [copy] Copying 2 files to JBOSS_HOME/server/default/deploy
+
+BUILD SUCCESSFUL</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>You have now deployed Restcomm SS7 Service successfully.
+Note that this procedure will also install the Shell Components (shell scripts and libraries) on this machine.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure: Installing Restcomm SS7 Service to WildFly 10.1.0.Final</div>
+<ol class="arabic">
+<li>
+<p>Pre-Requisites:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The Restcomm SS7 Service binary requires that you have WildFly installed and <code>JBOSS_HOME</code> Environment variable set properly. The latest binaries of WildFly can by obtained from <a href="https://github.com/RestComm/jain-slee/releases/latest" class="bare">https://github.com/RestComm/jain-slee/releases/latest</a>. For more details on setting the <code>JBOSS_HOME</code> variable, please refer to the section <a href="#_jboss_home_setup">[_jboss_home_setup]</a>.</p>
+</li>
+<li>
+<p><code>Ant 1.9</code> (or higher) must be used to install the binary.
+Instructions for using Ant, including install, can be found at <a href="http://ant.apache.org/" class="bare">http://ant.apache.org/</a>.</p>
+</li>
+<li>
+<p>If you are using the SS7 board on server, you must ensure that the <code>java.library.path</code> variable is set to point to the directory containing the native component.
+Alternatively you can copy it to the JBoss native library path manually.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Deploying the SS7 Service:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>You can now deploy the service using the <code>ant deploy</code> command as shown below:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>[usr1]$ cd {path}/ss7-wildfly
+[usr1]$ ant deploy</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Result:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If the service has been deployed successfully, you will find the below message appear on screen:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Buildfile: ../{path}/ss7-wildfly/build.xml
+
+deploy:
+     [copy] Copying 48 files to JBOSS_HOME/modules/system/layers/base/org/mobicents/ss7
+     [copy] Copying 2 files to JBOSS_HOME/bin
+     [copy] Copying 11 files to JBOSS_HOME/lib
+     [copy] Copying 2 files to JBOSS_HOME/standalone/deployments
 
 BUILD SUCCESSFUL</code></pre>
 </div>
@@ -22921,7 +22988,7 @@ For more details on using the Shell and the commands available, please refer to 
 For more details on setting the <code>JBOSS_HOME</code> variable, please refer to the section <a href="#_jboss_home_setup">[_jboss_home_setup]</a>.</p>
 </li>
 <li>
-<p>Ant 1.6 (or higher) must be used to install the binary.
+<p><code>Ant 1.9</code> (or higher) must be used to install the binary.
 Instructions for using Ant, including install, can be found at <a href="http://ant.apache.org/" class="bare">http://ant.apache.org/</a>.</p>
 </li>
 </ul>
@@ -23146,7 +23213,7 @@ The Shell Management module will enable you to easily configure the Stack using 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-04-11 10:48:39 WEST
+Last updated 2017-04-12 10:47:34 WEST
 </div>
 </div>
 <footer>

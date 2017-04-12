@@ -23212,13 +23212,13 @@ You can either download the binary release or download the source code and set u
 <div class="title">Procedure: Binary Download</div>
 <ol class="arabic">
 <li>
-<p>Download the zip file <em class="path">-.zip</em> to any folder of your choice.</p>
+<p>Download the zip file <em>restcomm-jSS7-8.0.0-SNAPSHOT.zip</em> to any folder of your choice.</p>
 </li>
 <li>
 <p>Extract the contents of the zip file.</p>
 <div class="listingblock">
 <div class="content">
-<pre>Downloads]$ unzip -.zip</pre>
+<pre class="highlight"><code>Downloads]$ unzip restcomm-jSS7-8.0.0-SNAPSHOT.zip</code></pre>
 </div>
 </div>
 </li>
@@ -23228,7 +23228,7 @@ You can either download the binary release or download the source code and set u
 </ol>
 </div>
 <div class="paragraph">
-<p>When you download the binary release, you will notice that the top level directory is named <em class="path">-</em> and immediately below this are five sub-directories named <em class="path">asn</em>, <em class="path">_docs</em>, <em class="path">oam</em>, <em class="path">sctp</em> and <em class="path">ss7</em>,  encompassing the major services and libraries that make up Restcomm  jSS7 .
+<p>When you download the binary release, you will notice that the top level directory is named <em>restcomm-jSS7-8.0.0-SNAPSHOT</em> and immediately below this are 7 sub-directories named <em>asn</em>, <em>_docs</em>, <em>oam</em>, <em>sctp</em>, <em>ss7</em>, <em>ss7-jboss</em> and <em>ss7-wildfly</em> encompassing the major services and libraries that make up Restcomm  jSS7 .
 For details on what is included in the sub-directories, please refer to the Restcomm  jSS7  User Guide.</p>
 </div>
 <div class="paragraph">
@@ -23237,22 +23237,22 @@ For details on what is included in the sub-directories, please refer to the Rest
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>SS7 Service <em class="dir: [path">restcomm-ss7-service</em>]</p>
+<p>SS7 Service [dir: <em>restcomm-ss7-service</em>]</p>
 </li>
 <li>
-<p>Signaling Gateway <em class="dir: [path">restcomm-ss7-sgw</em>]</p>
+<p>Signaling Gateway [dir: <em>restcomm-ss7-sgw</em>]</p>
 </li>
 <li>
-<p>Shell <em class="dir: [path">shell</em>]</p>
+<p>Shell [dir: <em>shell</em>]</p>
 </li>
 <li>
-<p>SS7 Simulator <em class="dir: [path">restcomm-ss7-simulator</em>]</p>
+<p>SS7 Simulator [dir: <em>restcomm-ss7-simulator</em>]</p>
 </li>
 </ol>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>|- restcomm-jss7-<version>
+<pre>|- restcomm-jss7-8.0.0-SNAPSHOT
 		|- asn
 
 		|- _docs
@@ -23264,11 +23264,17 @@ For details on what is included in the sub-directories, please refer to the Rest
 		|- ss7
 				|+ protocols
 				|+ shell
-				|+ restcomm-ss7-service
-				|+ restcomm-ss7-sgw
 				|+ restcomm-ss7-simulator
 				|+ restcomm-ss7-trace-parser
-				|+ template</pre>
+
+		|- ss7-jboss
+				|+ restcomm-ss7-service
+				|+ restcomm-ss7-sgw
+				|+ template
+
+		|- ss7-wildfly
+                |+ restcomm-ss7-service
+                |+ template</pre>
 </div>
 </div>
 </div>
@@ -23317,13 +23323,13 @@ From the list, select "Java Management Extension (JMX) 1.2.1"</p>
 <p>Read and understand the License Agreement and then press "Accept License Agreement".</p>
 </li>
 <li>
-<p>Download the <em class="path">jmx-1_2_1-ri.zip</em> file.</p>
+<p>Download the <em>jmx-1_2_1-ri.zip</em> file.</p>
 </li>
 <li>
-<p>Extract <em class="path">lib/jmxtools:jar</em></p>
+<p>Extract <em>lib/jmxtools:jar</em></p>
 </li>
 <li>
-<p>Once extracted, place this file in your maven repository as <em class="path">.m2/repository/com/sun/jdmk/jmxtools/1.2.1/jmxtools-1.2.1.jar</em> file if <em class="path">.m2/repository</em> is a root of this repository.
+<p>Once extracted, place this file in your maven repository as <em>.m2/repository/com/sun/jdmk/jmxtools/1.2.1/jmxtools-1.2.1.jar</em> file if <em>.m2/repository</em> is a root of this repository.
 Alternatively you can register it.</p>
 </li>
 </ul>
@@ -23337,11 +23343,11 @@ Alternatively you can register it.</p>
 <div class="paragraph">
 <p>Checkout a specific release source using GIT.
 The base URL to clone from is <a href="https://github.com/Restcomm/jss7" class="bare">https://github.com/Restcomm/jss7</a>.
-Then add the specific release version, in the below example we are downloading the version "3.0.0".</p>
+Then add the specific release version, in the below example we are downloading the version 8.0.0-SNAPSHOT.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>[usr]$ git clone https://github.com/Restcomm/jss7.git
+<pre class="highlight"><code>[usr]$ git clone https://github.com/Restcomm/jss7 jss7
 [usr]$ cd jss7
 [usr]$ git checkout <version></code></pre>
 </div>
@@ -23428,7 +23434,7 @@ Make sure you pass the "include.zap" system property with a value pointing to th
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>[usr]$ git clone https://github.com/Restcomm/jss7.git
+<pre class="highlight"><code>[usr]$ git clone https://github.com/Restcomm/jss7 jss7
 [usr]$ cd jss7
 [usr]$ git checkout</code></pre>
 </div>
@@ -23465,17 +23471,17 @@ By using the Restcomm  SS7 Service you will be able to configure the SS7 stack u
 The SS7 Service wraps SS7 Level 4 (i.e., MAP, CAP and ISUP) and the lower layers and exposes via JNDI, such that the layer above can perform the look-up and use it in any application.</p>
 </div>
 <div class="olist arabic">
-<div class="title">Procedure: Installing Restcomm  SS7 Service</div>
+<div class="title">Procedure: Installing Restcomm SS7 Service to JBoss 5.1.0.GA</div>
 <ol class="arabic">
 <li>
 <p>Pre-Requisites:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>The Restcomm SS7 Service binary requires that you have JBoss Application Server installed and <code>JBOSS_HOME</code> Environment variable set properly. The latest binaries of JBoss Application Server can by obtained from <a href="https://github.com/RestComm/jain-slee/releases/latest" class="bare">https://github.com/RestComm/jain-slee/releases/latest</a>. For more details on setting the <code>JBOSS_HOME</code> variable, please refer to the section <a href="#_jboss_home_setup">Setting the JBOSS_HOME Environment Variable</a>.</p>
+<p>The Restcomm SS7 Service binary requires that you have JBoss Application Server installed and <code>JBOSS_HOME</code> Environment variable set properly. The latest binaries of JBoss Application Server can by obtained from <a href="https://github.com/RestComm/jain-slee/releases/tag/2.8.0.FINAL" class="bare">https://github.com/RestComm/jain-slee/releases/tag/2.8.0.FINAL</a>. For more details on setting the <code>JBOSS_HOME</code> variable, please refer to the section <a href="#_jboss_home_setup">Setting the JBOSS_HOME Environment Variable</a>.</p>
 </li>
 <li>
-<p>Ant 1.6 (or higher) must be used to install the binary.
+<p><code>Ant 1.9</code> (or higher) must be used to install the binary.
 Instructions for using Ant, including install, can be found at <a href="http://ant.apache.org/" class="bare">http://ant.apache.org/</a>.</p>
 </li>
 <li>
@@ -23493,7 +23499,7 @@ Alternatively you can copy it to the JBoss native library path manually.</p>
 <p>You can now deploy the service using the <code>ant deploy</code> command as shown below:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>[usr1]$ cd -/ss7
+<pre class="highlight"><code>[usr1]$ cd restcomm-jSS7-8.0.0-SNAPSHOT/ss7-jboss
 [usr1]$ ant deploy</code></pre>
 </div>
 </div>
@@ -23509,12 +23515,79 @@ Alternatively you can copy it to the JBoss native library path manually.</p>
 <p>If the service has been deployed successfully, you will find the below message appear on screen:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>Buildfile: /home/vinu/Downloads/restcomm-jss7-3.0.0/ss7/build.xml
+<pre class="highlight"><code>Buildfile: ../restcomm-jSS7-8.0.0-SNAPSHOT/ss7-jboss/build.xml
 
 deploy:
-     [copy] Copying 38 files to /home/vinu/Downloads/restcomm-jss7-3.0.0/ss7/${system.JBOSS_HOME}/server/default/deploy/restcomm-ss7-service
-     [copy] Copying 2 files to /home/vinu/Downloads/restcomm-jss7-3.0.0/ss7/${system.JBOSS_HOME}/bin
-     [copy] Copying 9 files to /home/vinu/Downloads/restcomm-jss7-3.0.0/ss7/${system.JBOSS_HOME}/lib
+     [copy] Copying 47 files to JBOSS_HOME/server/default/deploy/restcomm-ss7-service
+     [copy] Copying 2 files to JBOSS_HOME/bin
+     [copy] Copying 11 files to JBOSS_HOME/lib
+     [copy] Copying 2 files to JBOSS_HOME/server/default/deploy
+
+BUILD SUCCESSFUL</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>You have now deployed Restcomm SS7 Service successfully.
+Note that this procedure will also install the Shell Components (shell scripts and libraries) on this machine.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure: Installing Restcomm SS7 Service to WildFly 10.1.0.Final</div>
+<ol class="arabic">
+<li>
+<p>Pre-Requisites:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The Restcomm SS7 Service binary requires that you have WildFly installed and <code>JBOSS_HOME</code> Environment variable set properly. The latest binaries of WildFly can by obtained from <a href="https://github.com/RestComm/jain-slee/releases/latest" class="bare">https://github.com/RestComm/jain-slee/releases/latest</a>. For more details on setting the <code>JBOSS_HOME</code> variable, please refer to the section <a href="#_jboss_home_setup">Setting the JBOSS_HOME Environment Variable</a>.</p>
+</li>
+<li>
+<p><code>Ant 1.9</code> (or higher) must be used to install the binary.
+Instructions for using Ant, including install, can be found at <a href="http://ant.apache.org/" class="bare">http://ant.apache.org/</a>.</p>
+</li>
+<li>
+<p>If you are using the SS7 board on server, you must ensure that the <code>java.library.path</code> variable is set to point to the directory containing the native component.
+Alternatively you can copy it to the JBoss native library path manually.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Deploying the SS7 Service:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>You can now deploy the service using the <code>ant deploy</code> command as shown below:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>[usr1]$ cd restcomm-jSS7-8.0.0-SNAPSHOT/ss7-wildfly
+[usr1]$ ant deploy</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Result:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If the service has been deployed successfully, you will find the below message appear on screen:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Buildfile: ../restcomm-jSS7-8.0.0-SNAPSHOT/ss7-wildfly/build.xml
+
+deploy:
+     [copy] Copying 48 files to JBOSS_HOME/modules/system/layers/base/org/mobicents/ss7
+     [copy] Copying 2 files to JBOSS_HOME/bin
+     [copy] Copying 11 files to JBOSS_HOME/lib
+     [copy] Copying 2 files to JBOSS_HOME/standalone/deployments
 
 BUILD SUCCESSFUL</code></pre>
 </div>
@@ -23576,7 +23649,7 @@ For more details on using the Shell and the commands available, please refer to 
 For more details on setting the <code>JBOSS_HOME</code> variable, please refer to the section <a href="#_jboss_home_setup">Setting the JBOSS_HOME Environment Variable</a>.</p>
 </li>
 <li>
-<p>Ant 1.6 (or higher) must be used to install the binary.
+<p><code>Ant 1.9</code> (or higher) must be used to install the binary.
 Instructions for using Ant, including install, can be found at <a href="http://ant.apache.org/" class="bare">http://ant.apache.org/</a>.</p>
 </li>
 </ul>
@@ -23804,12 +23877,12 @@ If you installed it as a JBoss Service then you must remember to clean up the SS
 The procedure below can be ignored if you installed the Stack as a standalone component.</p>
 </div>
 <div class="paragraph">
-<div class="title">Procedure: Uninstalling Restcomm  SS7 Service</div>
+<div class="title">Procedure: Uninstalling Restcomm SS7 Service from JBoss 5.1.0.GA</div>
 <p>Undeploy:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>[usr1]$ cd -/ss7
+<pre class="highlight"><code>[usr1]$ cd restcomm-jSS7-8.0.0-SNAPSHOT/ss7-jboss
 [usr1]$ ant undeploy</code></pre>
 </div>
 </div>
@@ -23818,10 +23891,55 @@ The procedure below can be ignored if you installed the Stack as a standalone co
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>Buildfile: /home/vinu/Downloads/restcomm-jss7-6.1.3.GA/ss7/build.xml
+<pre class="highlight"><code>Buildfile: ../restcomm-jSS7-8.0.0-SNAPSHOT/ss7-jboss/build.xml
 
 undeploy:
-   [delete] Deleting directory /home/vinu/Downloads/restcomm-jss7-6.1.3.GA/ss7/${system.JBOSS_HOME}/server/default/deploy/mobicents-ss7-service
+   [delete] Deleting directory JBOSS_HOME/server/default/deploy/restcomm-ss7-service
+   [delete] Deleting: JBOSS_HOME/server/default/deploy/jss7-management-console.war
+   [delete] Deleting: JBOSS_HOME/server/default/deploy/jolokia.war
+   [delete] Deleting: JBOSS_HOME/bin/ss7-cli.sh
+   [delete] Deleting: JBOSS_HOME/bin/ss7-cli.bat
+
+BUILD SUCCESSFUL
+Total time: 0 seconds</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Procedure: Uninstalling Restcomm SS7 Service from WildFly 10.1.0.Final</div>
+<p>Undeploy:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>[usr1]$ cd restcomm-jSS7-8.0.0-SNAPSHOT/ss7-wildfly
+[usr1]$ ant undeploy</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Result:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Buildfile: ../restcomm-jSS7-8.0.0-SNAPSHOT/ss7-wildfly/build.xml
+
+undeploy:
+   [delete] Deleting directory JBOSS_HOME/modules/system/layers/base/org/mobicents/ss7
+   [delete] Deleting: JBOSS_HOME/standalone/deployments/jss7-management-console.war
+   [delete] Deleting: JBOSS_HOME/standalone/deployments/jolokia.war
+   [delete] Deleting: JBOSS_HOME/bin/ss7-cli.sh
+   [delete] Deleting: JBOSS_HOME/bin/ss7-cli.bat
+   [delete] Deleting JBOSS_HOME/lib/jansi-1.8.jar
+   [delete] Deleting JBOSS_HOME/lib/javolution-5.5.1.jar
+   [delete] Deleting JBOSS_HOME/lib/jreadline-0.17.jar
+   [delete] Deleting JBOSS_HOME/lib/shell-transport-8.0.84.jar
+   [delete] Deleting: JBOSS_HOME/lib/linkset-cli.jar
+   [delete] Deleting: JBOSS_HOME/lib/m3ua-cli-m3ua.jar
+   [delete] Deleting: JBOSS_HOME/lib/m3ua-cli-sctp.jar
+   [delete] Deleting: JBOSS_HOME/lib/restcomm-ss7-shell.jar
+   [delete] Deleting: JBOSS_HOME/lib/sccp-cli.jar
+   [delete] Deleting: JBOSS_HOME/lib/tcap-ansi-cli.jar
+   [delete] Deleting: JBOSS_HOME/lib/tcap-cli.jar
+   [delete] Deleting: JBOSS_HOME/standalone/configuration/jmx-roles.properties
+   [delete] Deleting: JBOSS_HOME/standalone/configuration/jmx-users.properties
 
 BUILD SUCCESSFUL
 Total time: 0 seconds</code></pre>
@@ -24127,7 +24245,7 @@ As another hint, this topmost directory contains a <em class="path">bin</em> sub
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-04-11 10:48:39 WEST
+Last updated 2017-04-12 10:47:34 WEST
 </div>
 </div>
 <footer>

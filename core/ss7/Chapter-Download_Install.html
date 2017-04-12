@@ -22792,13 +22792,13 @@ You can either download the binary release or download the source code and set u
 <div class="title">Procedure: Binary Download</div>
 <ol class="arabic">
 <li>
-<p>Download the zip file <em class="path">-.zip</em> to any folder of your choice.</p>
+<p>Download the zip file <em>{path}.zip</em> to any folder of your choice.</p>
 </li>
 <li>
 <p>Extract the contents of the zip file.</p>
 <div class="listingblock">
 <div class="content">
-<pre>Downloads]$ unzip -.zip</pre>
+<pre class="highlight"><code>Downloads]$ unzip {path}.zip</code></pre>
 </div>
 </div>
 </li>
@@ -22808,7 +22808,7 @@ You can either download the binary release or download the source code and set u
 </ol>
 </div>
 <div class="paragraph">
-<p>When you download the binary release, you will notice that the top level directory is named <em class="path">-</em> and immediately below this are five sub-directories named <em class="path">asn</em>, <em class="path">_docs</em>, <em class="path">oam</em>, <em class="path">sctp</em> and <em class="path">ss7</em>,  encompassing the major services and libraries that make up Restcomm  jSS7 .
+<p>When you download the binary release, you will notice that the top level directory is named <em>{path}</em> and immediately below this are 7 sub-directories named <em>asn</em>, <em>_docs</em>, <em>oam</em>, <em>sctp</em>, <em>ss7</em>, <em>ss7-jboss</em> and <em>ss7-wildfly</em> encompassing the major services and libraries that make up Restcomm  jSS7 .
 For details on what is included in the sub-directories, please refer to the Restcomm  jSS7  User Guide.</p>
 </div>
 <div class="paragraph">
@@ -22817,22 +22817,22 @@ For details on what is included in the sub-directories, please refer to the Rest
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>SS7 Service <em class="dir: [path">restcomm-ss7-service</em>]</p>
+<p>SS7 Service [dir: <em>restcomm-ss7-service</em>]</p>
 </li>
 <li>
-<p>Signaling Gateway <em class="dir: [path">restcomm-ss7-sgw</em>]</p>
+<p>Signaling Gateway [dir: <em>restcomm-ss7-sgw</em>]</p>
 </li>
 <li>
-<p>Shell <em class="dir: [path">shell</em>]</p>
+<p>Shell [dir: <em>shell</em>]</p>
 </li>
 <li>
-<p>SS7 Simulator <em class="dir: [path">restcomm-ss7-simulator</em>]</p>
+<p>SS7 Simulator [dir: <em>restcomm-ss7-simulator</em>]</p>
 </li>
 </ol>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>|- restcomm-jss7-<version>
+<pre>|- restcomm-jss7-8.0.0-SNAPSHOT
 		|- asn
 
 		|- _docs
@@ -22844,11 +22844,17 @@ For details on what is included in the sub-directories, please refer to the Rest
 		|- ss7
 				|+ protocols
 				|+ shell
-				|+ restcomm-ss7-service
-				|+ restcomm-ss7-sgw
 				|+ restcomm-ss7-simulator
 				|+ restcomm-ss7-trace-parser
-				|+ template</pre>
+
+		|- ss7-jboss
+				|+ restcomm-ss7-service
+				|+ restcomm-ss7-sgw
+				|+ template
+
+		|- ss7-wildfly
+                |+ restcomm-ss7-service
+                |+ template</pre>
 </div>
 </div>
 </div>
@@ -22899,13 +22905,13 @@ From the list, select "Java Management Extension (JMX) 1.2.1"</p>
 <p>Read and understand the License Agreement and then press "Accept License Agreement".</p>
 </li>
 <li>
-<p>Download the <em class="path">jmx-1_2_1-ri.zip</em> file.</p>
+<p>Download the <em>jmx-1_2_1-ri.zip</em> file.</p>
 </li>
 <li>
-<p>Extract <em class="path">lib/jmxtools:jar</em></p>
+<p>Extract <em>lib/jmxtools:jar</em></p>
 </li>
 <li>
-<p>Once extracted, place this file in your maven repository as <em class="path">.m2/repository/com/sun/jdmk/jmxtools/1.2.1/jmxtools-1.2.1.jar</em> file if <em class="path">.m2/repository</em> is a root of this repository.
+<p>Once extracted, place this file in your maven repository as <em>.m2/repository/com/sun/jdmk/jmxtools/1.2.1/jmxtools-1.2.1.jar</em> file if <em>.m2/repository</em> is a root of this repository.
 Alternatively you can register it.</p>
 </li>
 </ul>
@@ -22919,11 +22925,11 @@ Alternatively you can register it.</p>
 <div class="paragraph">
 <p>Checkout a specific release source using GIT.
 The base URL to clone from is <a href="https://github.com/Restcomm/jss7" class="bare">https://github.com/Restcomm/jss7</a>.
-Then add the specific release version, in the below example we are downloading the version "3.0.0".</p>
+Then add the specific release version, in the below example we are downloading the version 8.0.0-SNAPSHOT.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>[usr]$ git clone https://github.com/Restcomm/jss7.git
+<pre class="highlight"><code>[usr]$ git clone https://github.com/Restcomm/jss7 jss7
 [usr]$ cd jss7
 [usr]$ git checkout <version></code></pre>
 </div>
@@ -23010,7 +23016,7 @@ Make sure you pass the "include.zap" system property with a value pointing to th
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>[usr]$ git clone https://github.com/Restcomm/jss7.git
+<pre class="highlight"><code>[usr]$ git clone https://github.com/Restcomm/jss7 jss7
 [usr]$ cd jss7
 [usr]$ git checkout</code></pre>
 </div>
@@ -23024,7 +23030,7 @@ Make sure you pass the "include.zap" system property with a value pointing to th
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-04-11 10:48:39 WEST
+Last updated 2017-04-12 10:47:34 WEST
 </div>
 </div>
 <footer>
