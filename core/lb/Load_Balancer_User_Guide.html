@@ -22775,7 +22775,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#_sslb_mss_load_balancer">1. Load Balancer</a>
 <ul class="sectlevel2">
 <li><a href="#_sslb_sip_load_balancing_basics">1.1. SIP Load Balancing Basics</a></li>
-<li><a href="#http-load-balancing-basics">1.2. HTTP Load Balancing Basics</a></li>
+<li><a href="#http-load-balancing">1.2. HTTP Load Balancing</a></li>
 <li><a href="#smpp-multiplexing-basics">1.3. SMPP multiplexing basics</a></li>
 <li><a href="#pluggable-balancer-algorithms">1.4. Pluggable balancer algorithms</a></li>
 <li><a href="#distributed-load-balancing">1.5. Distributed load balancing</a></li>
@@ -22787,6 +22787,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine">1.11. Configuring Load-balancer and two Restcomm servers on the one local machine</a></li>
 <li><a href="#integration-load-balancer-smpp-with-restcomm-and-nexmo">1.12. Integration Load Balancer SMPP with Restcomm and Nexmo</a></li>
 <li><a href="#active-active-setup-and-graceful-upgrades-of-load-balancer">1.13. Active-Active setup and Graceful Upgrades of Load Balancer</a></li>
+<li><a href="#kubernetes-integration">1.14. Kubernetes integration</a></li>
 </ul>
 </li>
 <li><a href="#revision-history">Appendix A: Revision History</a></li>
@@ -23093,7 +23094,9 @@ This enables SIP applications to meet the real-time demand for SIP services.</p>
 <div class="sect3">
 <h4 id="_sslb_load_balancer_node_discovery"><a class="anchor" href="#_sslb_load_balancer_node_discovery"></a>1.1.1. Node Discovery of the Restcomm Load Balancer</h4>
 <div class="paragraph">
-<p>Each individual Restcomm SIP Server in the cluster is responsible for contacting the Restcomm Load Balancer and relaying its health status and regular "heartbeats".</p>
+<p>Each individual Restcomm SIP Server in the cluster is responsible for
+contacting the Restcomm Load Balancer and relaying its health status and
+regular "heartbeats" except case with <a href="#kubernetes-integration">Kubernetes integration</a>.</p>
 </div>
 <div class="paragraph">
 <p>From these health status reports and heartbeats, the Restcomm Load Balancer creates and maintains a list of all available and healthy nodes in the cluster allowing for making the whole cluster dynamic and capable of autoscaling with no downtime.</p>
@@ -23114,10 +23117,32 @@ The Load Balancer forwards all same-session requests to the first node selected 
 <div class="sect3">
 <h4 id="_sslb_load_balancer_keepalive"><a class="anchor" href="#_sslb_load_balancer_keepalive"></a>1.1.2. Heartbeats to the Restcomm Load Balancer</h4>
 <div class="paragraph">
-<p>Currently the Load balancer support two protocols for heartbeats(RMI and protocol
-based on http requests). For setup you should
-set property &lt;nodeCommunicationProtocolClassName&gt;&lt;/nodeCommunicationProtocolClassName&gt;
-in &lt;common&gt; section.</p>
+<p>Currently the Load balancer support three protocols for heartbeats(RMI, protocol
+based on http requests, and protocol for Kubernetes(explained in )).
+For RMI you should set:</p>
+</div>
+<div class="paragraph">
+<p>&lt;heartbeat configclass = "org.mobicents.tools.heartbeat.rmi.HeartbeatConfigRmi"&gt;
+  &lt;heartbeatConfig&gt;
+    &lt;ProtocolClassName&gt;org.mobicents.tools.heartbeat.rmi.ServerControllerRmi&lt;/ProtocolClassName&gt;
+      &lt;rmiRegistryPort&gt;2000&lt;/rmiRegistryPort&gt;
+      &lt;rmiRemoteObjectPort&gt;2001&lt;/rmiRemoteObjectPort&gt;
+  &lt;/heartbeatConfig&gt;
+&lt;/heartbeat&gt;</p>
+</div>
+<div class="paragraph">
+<p>For http protocol:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre> &lt;heartbeat configclass = "org.mobicents.tools.heartbeat.impl.HeartbeatConfigHttp"&gt;
+   &lt;heartbeatConfig&gt;
+     &lt;ProtocolClassName&gt;org.mobicents.tools.heartbeat.impl.ServerController&lt;/ProtocolClassName&gt;
+       &lt;heartbeatPort&gt;2610&lt;/heartbeatPort&gt;
+   &lt;/heartbeatConfig&gt;
+&lt;/heartbeat&gt;
+.</pre>
+</div>
 </div>
 <div class="paragraph">
 <p>For RMI protocol you should set:</p>
@@ -23239,7 +23264,9 @@ connection. The same goes for other connection-oriented transport protocols.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="http-load-balancing-basics"><a class="anchor" href="#http-load-balancing-basics"></a>1.2. HTTP Load Balancing Basics</h3>
+<h3 id="http-load-balancing"><a class="anchor" href="#http-load-balancing"></a>1.2. HTTP Load Balancing</h3>
+<div class="sect3">
+<h4 id="basics"><a class="anchor" href="#basics"></a>1.2.1. Basics</h4>
 <div class="paragraph">
 <p>In addition to the SIP load balancing, there are several options for coordinated or cooperative load balancing with other protocols such as HTTP.</p>
 </div>
@@ -23273,6 +23300,45 @@ However, the integrated HTTP Balancer has an advantage when related SIP and HTTP
 <p>Also HTTP load balancer can choose the next node by 'instanceId' which is got from the Restcomm connector info. First the Load balancer
 checks whether http request contains 'CallSID' parameter. If it does, the Load balancer gets 'instanceId' from it and checks whether 'instanceId' corresponds to 'instanceId'
 of nodes connected to the Load balancer. If the Load balancer finds the correspondence, it sends http request to this node.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="url-rewriting"><a class="anchor" href="#url-rewriting"></a>1.2.2. Url rewriting</h4>
+<div class="paragraph">
+<p>The load balancer can rewrite incoming HTTP requests. For enabling this feature
+you should change http section in config file of the Load balancer. You need to
+add section &lt;urlrewrite&gt; :</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;http&gt;
+  &lt;httpPort&gt;2080&lt;/httpPort&gt;
+  &lt;httpsPort&gt;2081&lt;/httpsPort&gt;
+  &lt;maxContentLength&gt;1048576&lt;/maxContentLength&gt;
+  &lt;urlrewrite decode-using="utf-8"&gt;
+    &lt;rule&gt;
+        &lt;from&gt;someCompany&lt;/from&gt;
+        &lt;to&gt;restcomm&lt;/to&gt;
+    &lt;/rule&gt;
+  &lt;/urlrewrite&gt;
+&lt;/http&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This rule will change all requests with “someCompany” string to “restcomm” for example:</p>
+</div>
+<div class="paragraph">
+<p>/someCompany/2012-04-24/Accounts/0/Calls/ID1f</p>
+</div>
+<div class="paragraph">
+<p>To</p>
+</div>
+<div class="paragraph">
+<p>/restcomm/2012-04-24/Accounts/0/Calls/ID1f</p>
+</div>
+<div class="paragraph">
+<p>More info about rules you can find <a href="http://tuckey.org/urlrewrite/manual/3.0/guide.html">here</a>.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -23645,8 +23711,6 @@ http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
   &lt;ipv6Host&gt;&lt;/ipv6Host&gt;
   &lt;nodeTimeout&gt;8400&lt;/nodeTimeout&gt;
   &lt;heartbeatInterval&gt;150&lt;/heartbeatInterval&gt;
-  &lt;nodeCommunicationProtocolClassName&gt;org.mobicents.tools.heartbeat.impl.ServerController&lt;/nodeCommunicationProtocolClassName&gt;
-  &lt;heartbeatPorts&gt;2610&lt;/heartbeatPorts&gt;
   &lt;statisticPort&gt;2006&lt;/statisticPort&gt;
   &lt;jmxHtmlAdapterPort&gt;8000&lt;/jmxHtmlAdapterPort&gt;
   &lt;shutdownTimeout&gt;10000&lt;shutdownTimeout&gt;
@@ -23840,6 +23904,12 @@ http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
 		&lt;value&gt;ssl&lt;/value&gt;
 	&lt;/property&gt;
 &lt;/sipStack&gt;
+&lt;heartbeat configclass = "org.mobicents.tools.heartbeat.impl.HeartbeatConfigHttp"&gt;
+   &lt;heartbeatConfig&gt;
+     &lt;ProtocolClassName&gt;org.mobicents.tools.heartbeat.impl.ServerController&lt;/ProtocolClassName&gt;
+       &lt;heartbeatPort&gt;2610&lt;/heartbeatPort&gt;
+   &lt;/heartbeatConfig&gt;
+&lt;/heartbeat&gt;
 &lt;/load-balancer-properties&gt;</code></pre>
 </div>
 </div>
@@ -23859,7 +23929,7 @@ http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
 <dd>
 <p>Port on which the Restcomm Load Balancer forwards incoming requests to available, and healthy, SIP Server cluster nodes.</p>
 </dd>
-<dt class="hdlist1">nodeCommunicationProtocolClassName</dt>
+<dt class="hdlist1">ProtocolClassName</dt>
 <dd>
 <p>Protocol which will be used for communicating with nodes</p>
 </dd>
@@ -25407,6 +25477,93 @@ in &lt;sip&gt; section</p>
 sip stack property gov.nist.javax.sip.NEVER_ADD_RECEIVED_RPORT=true</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="kubernetes-integration"><a class="anchor" href="#kubernetes-integration"></a>1.14. Kubernetes integration</h3>
+<div class="paragraph">
+<p>With Kubernetes integration  the Load balancer can get info about running
+SIP Server Nodes from Pods and get data as IP, ports etc. When SIP Server Node
+starts, it can set its property (ip, ports) in labels of pods. It will be looks
+like:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>"apiVersion": "v1",
+  "kind": "Pod",
+  "metadata": {
+      "creationTimestamp": "2017-03-17T09:05:43Z",
+      "labels": {
+          "Restcomm-Instance-Id": "qwe123rty",
+          "hostName": "node1",
+          "httpPort": "2080",
+          "name": "sip-node",
+          "sessionId": "123456789",
+          "sslPort": "2081",
+          "tcpPort": "4060",
+          "tlsPort": "4061",
+          "udpPort": "4060",
+          "version": "0",
+      },
+      "name": "sip-node-1",
+      "namespace": "default",
+      "resourceVersion": "501683",
+      ...</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>From these labels, the Restcomm Load Balancer
+creates and maintains a list of all available and healthy nodes in the cluster
+allowing for making the whole cluster dynamic and capable of autoscaling with no
+downtime.
+For creating this pod we can use script like:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre> {
+  "kind": "Pod",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "sip-node-1",
+  },
+  "spec": {
+    "volumes": [
+    ],
+    "containers": [
+      {
+        "name": "sip-node",
+        "image": "knosach/sip-node",
+        "ports": [
+        ]
+      }
+    ]
+  }
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Only one property should be set in MSS configuration, it is
+org.mobicents.ha.javax.sip.POD_NAME which should be same as in name of pod.</p>
+</div>
+<div class="paragraph">
+<p>On side of the Load balancer we should set next tags:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre> &lt;heartbeat configclass = "org.mobicents.tools.heartbeat.kube.HeartbeatConfigKube"&gt;
+    &lt;heartbeatConfig&gt;
+    	&lt;ProtocolClassName&gt;org.mobicents.tools.heartbeat.kube.ServerControllerKube&lt;/ProtocolClassName&gt;
+        &lt;nodeName&gt;sip-node&lt;/nodeName&gt;
+        &lt;pullPeriod&gt;2000&lt;/pullPeriod&gt;
+    &lt;/heartbeatConfig&gt;
+&lt;/heartbeat&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>pullPeriod - it&#8217;s period in which the Load balancer will check active pods;
+nodeName - it&#8217;s string from which all names of pods with SIP Server Nodes should
+start. For example if we have pods with SIP Server Nodes :
+sip-node-1, sip-node-2 etc., then this tag should be &lt;nodeName&gt;sip-node&lt;/nodeName&gt;.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -25418,7 +25575,7 @@ sip stack property gov.nist.javax.sip.NEVER_ADD_RECEIVED_RPORT=true</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-04-13 10:51:27 WEST
+Last updated 2017-04-14 10:52:24 WEST
 </div>
 </div>
 <footer>
