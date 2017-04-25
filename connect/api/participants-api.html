@@ -22768,11 +22768,13 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#participant-resource-uri">Participant Resource URI</a></li>
 <li><a href="#resource-properties">Resource Properties</a></li>
 <li><a href="#supported-operations">Supported Operations</a></li>
+<li><a href="#request-parameters">Request Parameters</a></li>
 </ul>
 </li>
 <li><a href="#participant-list-resource-uri">Participant List Resource URI</a>
 <ul class="sectlevel2">
 <li><a href="#supported-operations-2">Supported Operations</a></li>
+<li><a href="#examples">Examples</a></li>
 </ul>
 </li>
 </ul>
@@ -22852,9 +22854,45 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <p><strong>HTTP GET</strong>. Returns the representation of a Participant resource, including the properties above.</p>
 </div>
 <div class="paragraph">
-<p><strong>HTTP POST</strong>.
-Not supported</p>
+<p><strong>HTTP POST</strong> to a Participant to mute/unmute a live Participant, we make an <strong>HTTP POST</strong> request to a live Participant instance resource URI:</p>
 </div>
+<div class="literalblock">
+<div class="content">
+<pre>/2012-04-24/Accounts/{AccountSid}/Conferences/{ConferenceSid}/Participants/{CallSid}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>/2012-04-24/Accounts/{AccountSid}/Conferences/{ConferenceSid}/Participants/{CallSid}.json</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following parameters are available for you to <strong>POST</strong> request.:</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="request-parameters"><a class="anchor" href="#request-parameters"></a>Request Parameters</h3>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mute</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Either <strong>true</strong> or <strong>flase</strong>. Setting value of this parameter to <strong>true</strong> will mute the call. Setting value of this parameter to <strong>false</strong> will unmute the call.</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p><strong>HTTP PUT</strong>.
 Not supported</p>
@@ -22880,7 +22918,7 @@ Not supported</p>
 <p><strong>HTTP GET</strong>. Returns the list representation of all the Participant resources for this Account, including the properties above.</p>
 </div>
 <div class="paragraph">
-<p><strong>HTTP POST</strong>.
+<p><strong>HTTP POST</strong>
 Not supported</p>
 </div>
 <div class="paragraph">
@@ -22892,12 +22930,76 @@ Not supported</p>
 Not supported</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="examples"><a class="anchor" href="#examples"></a>Examples</h3>
+<div class="paragraph">
+<p>You can Mute/unMute an inprogress call as shown bellow.</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 1. Mute a Participant</div>
+<div class="content">
+<div class="paragraph">
+<p>curl -X POST <a href="http://&lt;AccountSid&gt;:&lt;AutheToken&gt;@&lt;Domain&gt;/restcomm/2012-04-24/Accounts/&lt;AccountSid&gt;/Conferences/&lt;ConferenceSid&gt;/Participants/&lt;CallSid&gt" class="bare">http://&lt;AccountSid&gt;:&lt;AutheToken&gt;@&lt;Domain&gt;/restcomm/2012-04-24/Accounts/&lt;AccountSid&gt;/Conferences/&lt;ConferenceSid&gt;/Participants/&lt;CallSid&gt</a>; -d "Mute=true"</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Sample Mute Response</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;RestcommResponse&gt;
+  &lt;Call&gt;
+    &lt;Sid&gt;CA02b649d3ffe24408a1e141be089f347b&lt;/Sid&gt;
+    &lt;ConferenceSid&gt;CFcc373b0637114f088eae954fa73f0f57&lt;/ConferenceSid&gt;
+    &lt;DateCreated&gt;Wed, 15 Mar 2017 10:10:57 +0000&lt;/DateCreated&gt;
+    &lt;DateUpdated&gt;Wed, 15 Mar 2017 10:15:33 +0000&lt;/DateUpdated&gt;
+    &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
+    &lt;Muted&gt;true&lt;/Muted&gt;
+    &lt;Hold&gt;false&lt;/Hold&gt;
+    &lt;StartConferenceOnEnter&gt;true&lt;/StartConferenceOnEnter&gt;
+    &lt;EndConferenceOnEnter&gt;false&lt;/EndConferenceOnEnter&gt;
+    &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls/CA02b649d3ffe24408a1e141be089f347b&lt;/Uri&gt;
+  &lt;/Call&gt;
+&lt;/RestcommResponse&gt;</pre>
+</div>
+</div>
+<div class="exampleblock">
+<div class="title">Example 2. unMute a Muted Participant</div>
+<div class="content">
+<div class="paragraph">
+<p>curl -X POST <a href="http://&lt;AccountSid&gt;:&lt;AutheToken&gt;@&lt;Domain&gt;/restcomm/2012-04-24/Accounts/&lt;AccountSid&gt;/Conferences/&lt;ConferenceSid&gt;/Participants/&lt;CallSid&gt" class="bare">http://&lt;AccountSid&gt;:&lt;AutheToken&gt;@&lt;Domain&gt;/restcomm/2012-04-24/Accounts/&lt;AccountSid&gt;/Conferences/&lt;ConferenceSid&gt;/Participants/&lt;CallSid&gt</a>; -d "Mute=false"</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Sample unMute Response</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;RestcommResponse&gt;
+  &lt;Call&gt;
+    &lt;Sid&gt;CA02b649d3ffe24408a1e141be089f347b&lt;/Sid&gt;
+    &lt;ConferenceSid&gt;CFcc373b0637114f088eae954fa73f0f57&lt;/ConferenceSid&gt;
+    &lt;DateCreated&gt;Wed, 15 Mar 2017 10:10:57 +0000&lt;/DateCreated&gt;
+    &lt;DateUpdated&gt;Wed, 15 Mar 2017 10:16:44 +0000&lt;/DateUpdated&gt;
+    &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
+    &lt;Muted&gt;false&lt;/Muted&gt;
+    &lt;Hold&gt;false&lt;/Hold&gt;
+    &lt;StartConferenceOnEnter&gt;true&lt;/StartConferenceOnEnter&gt;
+    &lt;EndConferenceOnEnter&gt;false&lt;/EndConferenceOnEnter&gt;
+    &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls/CA02b649d3ffe24408a1e141be089f347b&lt;/Uri&gt;
+  &lt;/Call&gt;
+&lt;/RestcommResponse&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-04-24 10:35:07 WEST
+Last updated 2017-04-25 10:35:18 WEST
 </div>
 </div>
 <footer>
