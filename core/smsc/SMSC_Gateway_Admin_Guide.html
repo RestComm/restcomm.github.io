@@ -28772,9 +28772,99 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_db_removinglivetablesdays"><a class="anchor" href="#_db_removinglivetablesdays"></a>6.1.3.5. Cassandra Configuration - Removing Live Tables Days</h5>
+<h5 id="cassandra_user"><a class="anchor" href="#cassandra_user"></a>6.1.3.5. Cassandra Configuration - User Name</h5>
 <div class="sect5">
-<h6 id="_db_removinglivetablesdays_cli"><a class="anchor" href="#_db_removinglivetablesdays_cli"></a>6.1.3.5.1. Using CLI</h6>
+<h6 id="_cassandra_user_cli"><a class="anchor" href="#_cassandra_user_cli"></a>6.1.3.5.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'Cassandra User Name' by issuing the command <code>smsc set cassandrauser</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get cassandrauser</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set cassandrauser
+
+SYNOPSIS
+	smsc set cassandrauser &lt;username&gt;
+
+DESCRIPTION
+	This command is used to set the user name for Cassandra Database. Default user is `cassandra`
+	You must restart SMSC GW to take effect.</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_cassandra_user_gui"><a class="anchor" href="#_cassandra_user_gui"></a>6.1.3.5.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set Cassandra Configuration - User Name using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Cassandra' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify the User Name by entering the value in the text field 'User Name'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="cassandra_pass"><a class="anchor" href="#cassandra_pass"></a>6.1.3.6. Cassandra Configuration - Password</h5>
+<div class="sect5">
+<h6 id="_cassandra_pass_cli"><a class="anchor" href="#_cassandra_pass_cli"></a>6.1.3.6.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'Cassandra Password' by issuing the command <code>smsc set cassandrapass</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get cassandrapass</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set cassandrapass
+
+SYNOPSIS
+	smsc set cassandrapass &lt;password&gt;
+
+DESCRIPTION
+	This command is used to set the password for Cassandra Database. Default password is `cassandra`
+	You must restart SMSC GW to take effect.</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_cassandra_user_gui"><a class="anchor" href="#_cassandra_user_gui"></a>6.1.3.6.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set Cassandra Configuration - Password using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Cassandra' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify the Cassandra Password by entering the value in the text field 'Password'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_db_removinglivetablesdays"><a class="anchor" href="#_db_removinglivetablesdays"></a>6.1.3.7. Cassandra Configuration - Removing Live Tables Days</h5>
+<div class="sect5">
+<h6 id="_db_removinglivetablesdays_cli"><a class="anchor" href="#_db_removinglivetablesdays_cli"></a>6.1.3.7.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'Removing Live Tables Days' value by issuing the command <code>smsc set removinglivetablesdays</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get removinglivetablesdays</code> which will display the value set for this property.</p>
@@ -28814,7 +28904,7 @@ PARAMETERS
 </div>
 </div>
 <div class="sect5">
-<h6 id="_db_removinglivetablesdays_gui"><a class="anchor" href="#_db_removinglivetablesdays_gui"></a>6.1.3.5.2. Using GUI</h6>
+<h6 id="_db_removinglivetablesdays_gui"><a class="anchor" href="#_db_removinglivetablesdays_gui"></a>6.1.3.7.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set Cassandra Configuration - Removing Live Tables Days</div>
 <ol class="arabic">
@@ -28837,9 +28927,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_db_removingarchivetablesdays"><a class="anchor" href="#_db_removingarchivetablesdays"></a>6.1.3.6. Cassandra Configuration - Removing Live Tables Days</h5>
+<h5 id="_db_removingarchivetablesdays"><a class="anchor" href="#_db_removingarchivetablesdays"></a>6.1.3.8. Cassandra Configuration - Removing Live Tables Days</h5>
 <div class="sect5">
-<h6 id="_db_removingarchivetablesdays_cli"><a class="anchor" href="#_db_removingarchivetablesdays_cli"></a>6.1.3.6.1. Using CLI</h6>
+<h6 id="_db_removingarchivetablesdays_cli"><a class="anchor" href="#_db_removingarchivetablesdays_cli"></a>6.1.3.8.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'Removing Live Tables Days' value by issuing the command <code>smsc set removingarchivetablesdays</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get removingarchivetablesdays</code> which will display the value set for this property.</p>
@@ -28879,7 +28969,7 @@ PARAMETERS
 </div>
 </div>
 <div class="sect5">
-<h6 id="_db_removingarchivetablesdays_gui"><a class="anchor" href="#_db_removingarchivetablesdays_gui"></a>6.1.3.6.2. Using GUI</h6>
+<h6 id="_db_removingarchivetablesdays_gui"><a class="anchor" href="#_db_removingarchivetablesdays_gui"></a>6.1.3.8.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set Cassandra Configuration - Removing Archive Tables Days</div>
 <ol class="arabic">
@@ -35133,7 +35223,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-04-27 10:43:51 WEST
+Last updated 2017-04-28 10:49:00 WEST
 </div>
 </div>
 <footer>
