@@ -22778,6 +22778,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#_tcap_property_executordelaythreshold">Thresholds for Executors congestion control</a></li>
 <li><a href="#_tcap_property_memorythreshold">Thresholds for Memory congestion control</a></li>
 <li><a href="#_tcap_property_blockingincomingtcapmessages">Blocking of incoming messages in congestion case</a></li>
+<li><a href="#_tcap_property_slsrange">SLS Range</a></li>
 </ul>
 </li>
 </ul>
@@ -23428,12 +23429,58 @@ Change value and save.</p>
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_tcap_property_slsrange"><a class="anchor" href="#_tcap_property_slsrange"></a>SLS Range</h3>
+<div class="sect3">
+<h4 id="_tcap_property_slsrange_cli"><a class="anchor" href="#_tcap_property_slsrange_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'slsrange' by issuing the command <code>tcap set slsrange</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>tcap get slsrange</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	tcap set slsrange
+
+SYNOPSIS
+	tcap set slsrange &lt;All | Odd | Even&gt; stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	slsRanger: set the value of SLS to odd or even or both.
+
+PARAMETERS
+
+	Standard Parameters
+
+	&lt;All&gt;	-	If set to All, SLS number can be odd or even value
+	&lt;Odd&gt;	-	If set to Odd, SLS number can get only odd value
+	&lt;Even&gt;	-	If set to Even, SLS number can get only even value
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	tcap set slsrange All</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_tcap_property_slsrange_gui"><a class="anchor" href="#_tcap_property_slsrange_gui"></a>Using GUI</h4>
+<div class="paragraph">
+<p>On TCAP management page, click on pencil against the 'SLS Range' property and text box becomes editable.
+Change value and save.</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-04-27 10:43:08 WEST
+Last updated 2017-04-28 10:47:33 WEST
 </div>
 </div>
 <footer>
