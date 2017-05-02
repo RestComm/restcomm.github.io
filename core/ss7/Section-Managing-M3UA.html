@@ -23067,7 +23067,7 @@ EXAMPLES
 <div class="sect3">
 <h4 id="_m3ua_property_heartbeattime_gui"><a class="anchor" href="#_m3ua_property_heartbeattime_gui"></a>Using GUI</h4>
 <div class="paragraph">
-<p>On M3UA management page, click on pencil against the 'Worker Threads' property and text box becomes editable.
+<p>On M3UA management page, click on pencil against the 'heartbeatTime' property and text box becomes editable.
 Change value and save.</p>
 </div>
 </div>
@@ -23118,7 +23118,7 @@ DESCRIPTION
 <div class="sect3">
 <h4 id="_m3ua_property_deliverymessagethreadcount_gui"><a class="anchor" href="#_m3ua_property_deliverymessagethreadcount_gui"></a>Using GUI</h4>
 <div class="paragraph">
-<p>In the M3UA management page, you can view the current settings of the 'Max As for Route' property.
+<p>In the M3UA management page, you can view the current settings of the 'DeliveryMessageThreadCount' property.
 But as explained above, you cannot change the settings in the GUI.
 For more details about this parameter, refer to the detailed description about the parameter in the above section for CLI.</p>
 </div>
@@ -23176,7 +23176,7 @@ DESCRIPTION
 <div class="sect3">
 <h4 id="_m3ua_property_routinglabelformat_gui"><a class="anchor" href="#_m3ua_property_routinglabelformat_gui"></a>Using GUI</h4>
 <div class="paragraph">
-<p>In the M3UA management page, you can view the current settings of the 'MTP3 RoutingLabel Format' property.
+<p>In the M3UA management page, you can view the current settings of the 'RoutingLabelFormat' property.
 But as explained above, you cannot change the settings in the GUI.
 For more details about this parameter, refer to the detailed description about the parameter in the above section for CLI.</p>
 </div>
@@ -23200,7 +23200,9 @@ SYNOPSIS
 
 DESCRIPTION
 	Possible values are false or true. Sets which bit of SLS will be used
-	for loadbalancing between Linkset.
+	for loadbalancing between Linkset. True value means lowest bit of SLS
+	is used for loadbalancing between Linkset, false value means highest bit
+	of SLS is used.
 
 PARAMETERS
 
@@ -23224,7 +23226,7 @@ EXAMPLES
 <div class="sect3">
 <h4 id="_m3ua_property_uselsbforlinksetselection_gui"><a class="anchor" href="#_m3ua_property_uselsbforlinksetselection_gui"></a>Using GUI</h4>
 <div class="paragraph">
-<p>On M3UA management page, click on pencil against the 'Worker Threads' property and text box becomes editable.
+<p>On M3UA management page, click on pencil against the 'Use the lowest bit for link set selection' property and text box becomes editable.
 Change value and save.</p>
 </div>
 </div>
@@ -24152,7 +24154,7 @@ For definition of these parameters, please refer to the description of the CLI c
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-05-01 10:46:00 WEST
+Last updated 2017-05-02 10:44:10 WEST
 </div>
 </div>
 <footer>
