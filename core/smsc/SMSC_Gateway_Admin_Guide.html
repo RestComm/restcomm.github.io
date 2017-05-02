@@ -25448,6 +25448,12 @@ If a message fits to all conditions then the rule will be applied to the message
 <td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if an internal SMSC GW&#8217;s delivery error code value matches with this rule&#8217;s errorcode. Value 0 means a successful delivery, non 0 value means some delivery error. You can specify several values via comma (example: "6,7,8"). Error code values list can be found in chapter <a href="#_appendix_smsc_errorcodes">Error Codes</a>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages with any delivery result will match.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tlv_&lt;value type&gt;_&lt;tag key&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;tag value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if message contains a TLV parameter which matches the tag key, value type, and tag value.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1", "string", "-1" : acts as wild card and hence messages with any optional parameter will match.</p></td>
+</tr>
 </tbody>
 </table>
 <div class="paragraph">
@@ -25551,14 +25557,20 @@ If a message fits to all conditions then the rule will be applied to the message
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dropaftertempfail</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">DeliveryTempFailure trigger / &lt;false | true&gt;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This action at the step when a message delivery has failed temporary. Message will be dropped without further delivery attempts.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This action at the step when a message delivery has failed temporarily. Message will be dropped without further delivery attempts.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">newnetworkidaftertempfail</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">DeliveryTempFailure trigger / &lt;networkId value&gt;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This action at the step when a message delivery has failed temporary. Message will be rerouted for delivery to another networkId.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This action at the step when a message delivery has failed temporarily. Message will be rerouted for delivery to another networkId.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that networkId of the message will not be changed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">remove_tlv</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arrival trigger / &lt;tlv tag value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional parameter with the tag value in the message will be removed.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that no optional parameter will be removed.</p></td>
 </tr>
 </tbody>
 </table>
@@ -33616,14 +33628,15 @@ SYNOPSIS
 	-1&gt; origesmenamemask &lt;regualar expression - origination ESME name mask&gt;
 	originatorsccpaddressmask &lt;originator SCCP CallingPartyAddress mask&gt; processingtype
 	&lt;delivery processing type: SS7_SRI | SS7_MT | SMPP | SIP | -1&gt; errorcode &lt;internal SMSC
-	GW delivery error code value&gt; newnetworkid &lt;new networkId value&gt; newdestton &lt;new
-	destination type of number&gt; newdestnpi &lt;new destination numbering plan indicator&gt;
+	GW delivery error code value&gt; tlv_&lt;tlv tag key&gt;_&lt;tlv value type&gt; &lt;tlv value&gt;
+	newnetworkid &lt;new networkId value&gt; newdestton &lt;new destination type of number&gt;
+	newdestnpi &lt;new destination numbering plan indicator&gt;
 	adddestdigprefix &lt;prefix value&gt; addsourcedigprefix &lt;prefix value&gt;
 	newsourceton &lt;new source type of number&gt; newsourcenpi
 	&lt;new source numbering plan indicator&gt; newsourceaddr &lt;new source address value&gt; hrbypass
 	&lt;false | true&gt; dropaftersri &lt;false | true&gt; newnetworkidaftersri &lt;networkId value&gt;
 	newnetworkidafterpermfail &lt;networkId value&gt; dropaftertempfail &lt;false | true&gt;
-	newnetworkidaftertempfail &lt;networkId value&gt;
+	newnetworkidaftertempfail &lt;networkId value&gt; remove_tlv &lt;tlv tag key&gt;
 
 DESCRIPTION
 
@@ -33652,6 +33665,7 @@ PARAMETERS
 	originatorsccpaddressmask - an optional parameter.
 	processingtype - an optional parameter.
 	errorcode - an optional parameter.
+	tlv_&lt;valuetype&gt;_&lt;tagkey&gt; - an optional parameter.
 
 	newnetworkid - an optional parameter.
 	newdestton - an optional parameter.
@@ -33668,9 +33682,11 @@ PARAMETERS
 	newnetworkidafterpermfail - an optional parameter.
 	dropaftertempfail - an optional parameter.
 	newnetworkidaftertempfail - an optional parameter.
+	remove_tlv - an optional parameter.
 
 EXAMPLES
-	smsc mproc add mproc 1 networkidmask 11 newnetworkid 12</pre>
+	smsc mproc add mproc 1 networkidmask 11 newnetworkid 12
+	smsc mproc add mproc 1 tlv_int_1550 13 newnetworkid 13</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -33722,7 +33738,7 @@ SYNOPSIS
 	- Default mproc rules implementation:
 	smsc mproc modify &lt;id&gt; networkidmask &lt;networkId value&gt; originnetworkidmask &lt;networkId
 	value&gt; receiptnetworkidmask &lt;networkId value&gt; desttonmask &lt;destination type of number&gt;
-	destnpimask &lt;destination numbering plan indicator&gt;
+	destnpimask &lt;destination numbering plan	indicator&gt;
 	destdigmask &lt;regular expression - destination number digits mask&gt; sourcetonmask
 	&lt;source type of number&gt; sourcenpimask &lt;source numbering plan indicator&gt;
 	sourcedigmask &lt;regular expression - source number digits mask&gt;
@@ -33731,14 +33747,15 @@ SYNOPSIS
 	-1&gt; origesmenamemask &lt;regualar expression - origination ESME name mask&gt;
 	originatorsccpaddressmask &lt;originator SCCP CallingPartyAddress mask&gt; processingtype
 	&lt;delivery processing type: SS7_SRI | SS7_MT | SMPP | SIP | -1&gt; errorcode &lt;internal SMSC
-	GW delivery error code value&gt; newnetworkid &lt;new networkId value&gt; newdestton &lt;new
-	destination type of number&gt; newdestnpi &lt;new destination numbering plan indicator&gt;
+	GW delivery error code value&gt; tlv_&lt;tlv tag key&gt;_&lt;tlv value type&gt; &lt;tlv value&gt;
+	newnetworkid &lt;new networkId value&gt; newdestton &lt;new destination type of number&gt;
+	newdestnpi &lt;new destination numbering plan indicator&gt;
 	adddestdigprefix &lt;prefix value&gt; addsourcedigprefix &lt;prefix value&gt;
-	newsourceton &lt;new source type of number&gt; newsourcenpi &lt;new source numbering plan
-	indicator&gt; newsourceaddr &lt;new source address value&gt; hrbypass
+	newsourceton &lt;new source type of number&gt; newsourcenpi
+	&lt;new source numbering plan indicator&gt; newsourceaddr &lt;new source address value&gt; hrbypass
 	&lt;false | true&gt; dropaftersri &lt;false | true&gt; newnetworkidaftersri &lt;networkId value&gt;
 	newnetworkidafterpermfail &lt;networkId value&gt; dropaftertempfail &lt;false | true&gt;
-	newnetworkidaftertempfail &lt;networkId value&gt;
+	newnetworkidaftertempfail &lt;networkId value&gt; remove_tlv &lt;tlv tag key&gt;
 
 DESCRIPTION
 
@@ -33765,6 +33782,7 @@ PARAMETERS
 	originatorsccpaddressmask - an optional parameter.
 	processingtype - an optional parameter.
 	errorcode - an optional parameter.
+	tlv_&lt;valuetype&gt;_&lt;tagkey&gt; - an optional parameter.
 
 	newnetworkid - an optional parameter.
 	newdestton - an optional parameter.
@@ -33781,6 +33799,7 @@ PARAMETERS
 	newnetworkidafterpermfail - an optional parameter.
 	dropaftertempfail - an optional parameter.
 	newnetworkidaftertempfail - an optional parameter.
+	remove_tlv - an optional parameter.
 
 EXAMPLES
 	smsc mproc modify 1 newnetworkid 13</pre>
@@ -35223,7 +35242,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-05-01 10:46:47 WEST
+Last updated 2017-05-02 10:44:55 WEST
 </div>
 </div>
 <footer>

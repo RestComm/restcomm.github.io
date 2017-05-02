@@ -22828,14 +22828,15 @@ SYNOPSIS
 	-1&gt; origesmenamemask &lt;regualar expression - origination ESME name mask&gt;
 	originatorsccpaddressmask &lt;originator SCCP CallingPartyAddress mask&gt; processingtype
 	&lt;delivery processing type: SS7_SRI | SS7_MT | SMPP | SIP | -1&gt; errorcode &lt;internal SMSC
-	GW delivery error code value&gt; newnetworkid &lt;new networkId value&gt; newdestton &lt;new
-	destination type of number&gt; newdestnpi &lt;new destination numbering plan indicator&gt;
+	GW delivery error code value&gt; tlv_&lt;tlv tag key&gt;_&lt;tlv value type&gt; &lt;tlv value&gt;
+	newnetworkid &lt;new networkId value&gt; newdestton &lt;new destination type of number&gt;
+	newdestnpi &lt;new destination numbering plan indicator&gt;
 	adddestdigprefix &lt;prefix value&gt; addsourcedigprefix &lt;prefix value&gt;
 	newsourceton &lt;new source type of number&gt; newsourcenpi
 	&lt;new source numbering plan indicator&gt; newsourceaddr &lt;new source address value&gt; hrbypass
 	&lt;false | true&gt; dropaftersri &lt;false | true&gt; newnetworkidaftersri &lt;networkId value&gt;
 	newnetworkidafterpermfail &lt;networkId value&gt; dropaftertempfail &lt;false | true&gt;
-	newnetworkidaftertempfail &lt;networkId value&gt;
+	newnetworkidaftertempfail &lt;networkId value&gt; remove_tlv &lt;tlv tag key&gt;
 
 DESCRIPTION
 
@@ -22864,6 +22865,7 @@ PARAMETERS
 	originatorsccpaddressmask - an optional parameter.
 	processingtype - an optional parameter.
 	errorcode - an optional parameter.
+	tlv_&lt;valuetype&gt;_&lt;tagkey&gt; - an optional parameter.
 
 	newnetworkid - an optional parameter.
 	newdestton - an optional parameter.
@@ -22880,9 +22882,11 @@ PARAMETERS
 	newnetworkidafterpermfail - an optional parameter.
 	dropaftertempfail - an optional parameter.
 	newnetworkidaftertempfail - an optional parameter.
+	remove_tlv - an optional parameter.
 
 EXAMPLES
-	smsc mproc add mproc 1 networkidmask 11 newnetworkid 12</pre>
+	smsc mproc add mproc 1 networkidmask 11 newnetworkid 12
+	smsc mproc add mproc 1 tlv_int_1550 13 newnetworkid 13</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -22936,7 +22940,7 @@ SYNOPSIS
 	- Default mproc rules implementation:
 	smsc mproc modify &lt;id&gt; networkidmask &lt;networkId value&gt; originnetworkidmask &lt;networkId
 	value&gt; receiptnetworkidmask &lt;networkId value&gt; desttonmask &lt;destination type of number&gt;
-	destnpimask &lt;destination numbering plan indicator&gt;
+	destnpimask &lt;destination numbering plan	indicator&gt;
 	destdigmask &lt;regular expression - destination number digits mask&gt; sourcetonmask
 	&lt;source type of number&gt; sourcenpimask &lt;source numbering plan indicator&gt;
 	sourcedigmask &lt;regular expression - source number digits mask&gt;
@@ -22945,14 +22949,15 @@ SYNOPSIS
 	-1&gt; origesmenamemask &lt;regualar expression - origination ESME name mask&gt;
 	originatorsccpaddressmask &lt;originator SCCP CallingPartyAddress mask&gt; processingtype
 	&lt;delivery processing type: SS7_SRI | SS7_MT | SMPP | SIP | -1&gt; errorcode &lt;internal SMSC
-	GW delivery error code value&gt; newnetworkid &lt;new networkId value&gt; newdestton &lt;new
-	destination type of number&gt; newdestnpi &lt;new destination numbering plan indicator&gt;
+	GW delivery error code value&gt; tlv_&lt;tlv tag key&gt;_&lt;tlv value type&gt; &lt;tlv value&gt;
+	newnetworkid &lt;new networkId value&gt; newdestton &lt;new destination type of number&gt;
+	newdestnpi &lt;new destination numbering plan indicator&gt;
 	adddestdigprefix &lt;prefix value&gt; addsourcedigprefix &lt;prefix value&gt;
-	newsourceton &lt;new source type of number&gt; newsourcenpi &lt;new source numbering plan
-	indicator&gt; newsourceaddr &lt;new source address value&gt; hrbypass
+	newsourceton &lt;new source type of number&gt; newsourcenpi
+	&lt;new source numbering plan indicator&gt; newsourceaddr &lt;new source address value&gt; hrbypass
 	&lt;false | true&gt; dropaftersri &lt;false | true&gt; newnetworkidaftersri &lt;networkId value&gt;
 	newnetworkidafterpermfail &lt;networkId value&gt; dropaftertempfail &lt;false | true&gt;
-	newnetworkidaftertempfail &lt;networkId value&gt;
+	newnetworkidaftertempfail &lt;networkId value&gt; remove_tlv &lt;tlv tag key&gt;
 
 DESCRIPTION
 
@@ -22979,6 +22984,7 @@ PARAMETERS
 	originatorsccpaddressmask - an optional parameter.
 	processingtype - an optional parameter.
 	errorcode - an optional parameter.
+	tlv_&lt;valuetype&gt;_&lt;tagkey&gt; - an optional parameter.
 
 	newnetworkid - an optional parameter.
 	newdestton - an optional parameter.
@@ -22995,6 +23001,7 @@ PARAMETERS
 	newnetworkidafterpermfail - an optional parameter.
 	dropaftertempfail - an optional parameter.
 	newnetworkidaftertempfail - an optional parameter.
+	remove_tlv - an optional parameter.
 
 EXAMPLES
 	smsc mproc modify 1 newnetworkid 13</pre>
@@ -23136,7 +23143,7 @@ Below this you will find the button 'Create Message Processing Rule'.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-05-01 10:46:47 WEST
+Last updated 2017-05-02 10:44:55 WEST
 </div>
 </div>
 <footer>

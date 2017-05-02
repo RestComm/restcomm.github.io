@@ -23478,6 +23478,12 @@ If a message fits to all conditions then the rule will be applied to the message
 <td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if an internal SMSC GW&#8217;s delivery error code value matches with this rule&#8217;s errorcode. Value 0 means a successful delivery, non 0 value means some delivery error. You can specify several values via comma (example: "6,7,8"). Error code values list can be found in chapter <a href="#_appendix_smsc_errorcodes">[_appendix_smsc_errorcodes]</a>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">"-1" : acts as wild card and hence messages with any delivery result will match.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tlv_&lt;value type&gt;_&lt;tag key&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;tag value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if message contains a TLV parameter which matches the tag key, value type, and tag value.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1", "string", "-1" : acts as wild card and hence messages with any optional parameter will match.</p></td>
+</tr>
 </tbody>
 </table>
 <div class="paragraph">
@@ -23581,14 +23587,20 @@ If a message fits to all conditions then the rule will be applied to the message
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">dropaftertempfail</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">DeliveryTempFailure trigger / &lt;false | true&gt;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This action at the step when a message delivery has failed temporary. Message will be dropped without further delivery attempts.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This action at the step when a message delivery has failed temporarily. Message will be dropped without further delivery attempts.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">newnetworkidaftertempfail</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">DeliveryTempFailure trigger / &lt;networkId value&gt;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This action at the step when a message delivery has failed temporary. Message will be rerouted for delivery to another networkId.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This action at the step when a message delivery has failed temporarily. Message will be rerouted for delivery to another networkId.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that networkId of the message will not be changed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">remove_tlv</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arrival trigger / &lt;tlv tag value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional parameter with the tag value in the message will be removed.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that no optional parameter will be removed.</p></td>
 </tr>
 </tbody>
 </table>
@@ -25216,7 +25228,7 @@ The details of the format and the possible values for the fields recorded in the
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-05-01 10:46:47 WEST
+Last updated 2017-05-02 10:44:55 WEST
 </div>
 </div>
 <footer>
