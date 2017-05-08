@@ -30520,6 +30520,57 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 </div>
+<div class="sect4">
+<h5 id="_delayparametersincdr"><a class="anchor" href="#_delayparametersincdr"></a>6.1.7.6. Adding of delay parameters into a CDR record</h5>
+<div class="sect5">
+<h6 id="_delayparametersincdr_cli"><a class="anchor" href="#_delayparametersincdr_cli"></a>6.1.7.6.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'delayparametersincdr' value to true/false by issuing the command <code>smsc set delayparametersincdr</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get delayparametersincdr</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set delayparametersincdr
+
+SYNOPSIS
+	smsc set delayparametersincdr &lt;true | false&gt;
+
+DESCRIPTION
+	When SMSC GW generates CDR records it can calculate a message processing time,
+	delivery delay, schedule delivery delay and delivery count per a CDR record.
+	This demands some extra calculating and therefore is disabled by default.
+	You can turn it on by this option.
+	Default value: false
+
+EXAMPLES
+	smsc set delayparametersincdr true</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_delayparametersincdr_gui"><a class="anchor" href="#_delayparametersincdr_gui"></a>6.1.7.6.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set 'Adding of delay parameters into a CDR record'  using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'CDR' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify if the SMSC should add of delay parameters into a CDR record by choosing the value true for the field 'Delay parameters in CDR'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_smsc_gateway_server_processing"><a class="anchor" href="#_smsc_gateway_server_processing"></a>6.1.8. Processing</h4>
@@ -34282,11 +34333,11 @@ The CDR generated in the text file is of the below format:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>DELIVERY_DATE,SIMBIT_DATE,ADDR_SRC_DIGITS,ADDR_SRC_TON,ADDR_SRC_NPI,ADDR_DST_DIGITS,ADDR_DST_TON,ADDR_DST_NPI,Message_Delivery_Status,ORIGINATION_TYPE,MESSAGE_TYPE,ORIG_SYSTEM_ID,MESSAGE_ID,DVL_MESSAGE_ID,RECEIPT_LOCAL_MESSAGE_ID,NNN_DIGITS,IMSI,CORR_ID,ORIGINATOR_SCCP_ADDRESS,MtServiceCenterAddress,ORIG_NETWORK_ID,NETWORK_ID,MPROC_NOTES,MSG_PARTS,CHAR_NUMBERS,First 20 characters of SMS,Reason_For_Failure</pre>
+<pre>DELIVERY_DATE,SUBMIT_DATE,ADDR_SRC_DIGITS,ADDR_SRC_TON,ADDR_SRC_NPI,ADDR_DST_DIGITS,ADDR_DST_TON,ADDR_DST_NPI,Message_Delivery_Status,ORIGINATION_TYPE,MESSAGE_TYPE,ORIG_SYSTEM_ID,MESSAGE_ID,DVL_MESSAGE_ID,RECEIPT_LOCAL_MESSAGE_ID,NNN_DIGITS,IMSI,CORR_ID,ORIGINATOR_SCCP_ADDRESS,MtServiceCenterAddress,ORIG_NETWORK_ID,NETWORK_ID,MPROC_NOTES,MSG_PARTS,CHAR_NUMBERS,PROCESSING_TIME,DELIVERY_DELAY,SCHEDULE_DELIVERY_DELAY,DELIVERY_COUNT,First 20 characters of SMS,Reason_For_Failure</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>where <code>ADDR_SRC_DIGITS, ADDR_SRC_TON, ADDR_SRC_NPI, ADDR_DST_DIGITS, ADDR_DST_TON, ADDR_DST_NPI, ORIG_SYSTEM_ID, MESSAGE_ID, NNN_DIGITS, IMSI, ORIG_NETWORK_ID, NETWORK_ID</code> and <code>CORR_ID</code> are as explained in <a href="#_slot_messages_table_yyyy_mm_dd">[_slot_messages_table_yyyy_mm_dd]</a> and other values are described below in this section.</p>
+<p>where <code>ADDR_SRC_DIGITS, ADDR_SRC_TON, ADDR_SRC_NPI, ADDR_DST_DIGITS, ADDR_DST_TON, ADDR_DST_NPI, ORIG_SYSTEM_ID, MESSAGE_ID, NNN_DIGITS, IMSI, ORIG_NETWORK_ID, NETWORK_ID, DELIVERY_COUNT</code> and <code>CORR_ID</code> are as explained in <a href="#_slot_messages_table_yyyy_mm_dd">[_slot_messages_table_yyyy_mm_dd]</a> and other values are described below in this section.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -34305,7 +34356,7 @@ The CDR generated in the text file is of the below format:</p>
 <p>Time when CDR is created (and is equals the time when the message delivery is succeded / failed at SMSC Gateway)</p>
 </div>
 <div class="paragraph">
-<div class="title">SIMBIT_DATE</div>
+<div class="title">SUBMIT_DATE</div>
 <p>Time when the message reached the SMSC Gateway.</p>
 </div>
 <div class="paragraph">
@@ -34443,6 +34494,18 @@ It does not indicate if a resend will be attempted or not.</p>
 <div class="paragraph">
 <div class="title">CHAR_NUMBERS</div>
 <p>A count of characters that are present in the message / message segment. If SMSC GW is making a message splitting for a long message then only a last segment (with Message_Delivery_Status <code>success</code> or <code>success_esme</code>) will contain a character number for all segments. Non-last segments in this case (with Message_Delivery_Status <code>partial</code> or <code>partial_esme</code>) will contain 0 in this field. This is because of a way how SMSC GW makes of message splitting.</p>
+</div>
+<div class="paragraph">
+<div class="title">PROCESSING_TIME</div>
+<p>A processing time in milliseconds for message in SMSC GW calculated since the submit date.</p>
+</div>
+<div class="paragraph">
+<div class="title">DELIVERY_DELAY</div>
+<p>A delivery delay time in milliseconds for message calculated as time before submit date and delivery date.</p>
+</div>
+<div class="paragraph">
+<div class="title">SCHEDULE_DELIVERY_DELAY</div>
+<p>A schedule delivery time in milliseconds for message calculated as time before submit date and schedule delivery date.</p>
 </div>
 <div class="paragraph">
 <div class="title">Reason_For_Failure</div>
@@ -35242,7 +35305,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-05-07 10:46:56 WEST
+Last updated 2017-05-08 10:45:58 WEST
 </div>
 </div>
 <footer>
