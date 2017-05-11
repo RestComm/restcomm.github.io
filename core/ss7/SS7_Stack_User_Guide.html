@@ -33019,7 +33019,8 @@ The GUI will look similar to the figure below.</p>
 <div class="paragraph">
 <p>Click on 'Create Statistics Campaign' button to create new campaign.
 Select the stack from 'Counter Definition Set Name' drop down on which you want to define new campaign.
-Next select the time period from 'Duration' drop down and enter unique 'Campaign Name'.</p>
+Next select the time period from 'Duration' drop down and enter unique 'Campaign Name'.
+An 'Output format' field allows you to select a type of statistics logging: CSV, verbose or both of them.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -33049,7 +33050,7 @@ Last tab also displays the 'Start Time' and 'End Time' representing time duratio
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/GUI_Campaign_Management_View.png" alt="GUI Campaign Management View">
+<img src="./images/GUI_Campaign_Management_view.png" alt="GUI Campaign Management view">
 </div>
 <div class="title">Figure 27. GUI - Campaigns View</div>
 </div>
@@ -33089,7 +33090,7 @@ If you are running the platform as standalone, then you should configure in <em 
 <dl>
 <dt class="hdlist1">Logging stats to main server log file</dt>
 <dd>
-<p>If you wish to have the stats logged in the main server log file located at <em class="path">jboss-5.1.0.GA/server/default/log/server.log</em>,  then you must add a new category to the <em class="path">jboss-log4j.xml</em> as shown below and set priority value to "DEBUG".</p>
+<p>If you wish to have the stats logged in the main server log file located at <em class="path">jboss-5.1.0.GA/server/default/log/server.log</em>,  then you must add a new category to the <em class="path">jboss-log4j.xml</em> as shown below and set priority value to "DEBUG". For verbose stats:</p>
 </dd>
 </dl>
 </div>
@@ -33100,11 +33101,21 @@ If you are running the platform as standalone, then you should configure in <em 
 &lt;/category&gt;</pre>
 </div>
 </div>
+<div class="paragraph">
+<p>and for a CSV stats:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;category name="org.mobicents.protocols.ss7.oam.common.statistics.CsvStatsPrinter" additivity="false"&gt;
+	    &lt;priority value="DEBUG" /&gt;
+&lt;/category&gt;</pre>
+</div>
+</div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">Logging stats to a separate stats log file</dt>
+<dt class="hdlist1">Logging stats to a separate stats log files</dt>
 <dd>
-<p>If you wish to have the stats logged to a separate log file located at <em class="path">jboss-5.1.0.GA/server/default/log/stats.log</em>,  then you must add a new appender to the <em class="path">jboss-log4j.xml</em> and change category as shown below.
+<p>If you wish to have the stats logged to a separate log files located at <em class="path">jboss-5.1.0.GA/server/default/log/stats.log</em> and <em class="path">jboss-5.1.0.GA/server/default/log/csvstats.log</em>,  then you must add a new appenders to the <em class="path">jboss-log4j.xml</em> and change category as shown below.
 You must set the priority value to "DEBUG".</p>
 </dd>
 </dl>
@@ -33128,6 +33139,25 @@ You must set the priority value to "DEBUG".</p>
 &lt;category name="org.mobicents.protocols.ss7.oam.common.statistics.StatsPrinter" additivity="false"&gt;
 &lt;priority value="DEBUG" /&gt;
 &lt;appender-ref ref="STATS"/&gt;
+&lt;/category&gt;
+
+&lt;appender name="CSVSTATS" class="org.jboss.logging.appender.DailyRollingFileAppender"&gt;
+&lt;errorHandler class="org.jboss.logging.util.OnlyOnceErrorHandler"/&gt;
+&lt;param name="File" value="$
+{jboss.server.home.dir}
+/log/csvstats.log"/&gt;
+&lt;param name="Append" value="true"/&gt;
+&lt;param name="MaxFileSize" value="500KB" /&gt;
+&lt;param name="MaxBackupIndex" value="1" /&gt;
+&lt;param name="Threshold" value="DEBUG"/&gt;
+&lt;param name="DatePattern" value="'.'yyyy-MM-dd"/&gt;
+&lt;layout class="org.apache.log4j.PatternLayout"&gt;
+&lt;param name="ConversionPattern" value="%d %-5p [%c] %m%n"/&gt;
+&lt;/layout&gt;
+&lt;/appender&gt;
+&lt;category name="org.mobicents.protocols.ss7.oam.common.statistics.CsvStatsPrinter" additivity="false"&gt;
+&lt;priority value="DEBUG" /&gt;
+&lt;appender-ref ref="CSVSTATS"/&gt;
 &lt;/category&gt;</pre>
 </div>
 </div>
@@ -37261,7 +37291,7 @@ If there are several dialogs with the same path they will be present only once i
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-05-10 10:44:47 WEST
+Last updated 2017-05-11 12:18:42 WEST
 </div>
 </div>
 <footer>
