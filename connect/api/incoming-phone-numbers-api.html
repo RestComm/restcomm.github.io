@@ -22778,8 +22778,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#attach-a-sip-virtual-number-to-an-application">Attach a SIP Virtual number to an application</a></li>
 </ul>
 </li>
-<li><a href="#delete-a-phone-number">Delete a phone number</a></li>
-<li><a href="#list-of-phone-numbers">List of phone numbers</a></li>
+<li><a href="#incoming-phone-number-regex-support">Incoming Phone Number Regex Support</a></li>
 </ul>
 </div>
 </div>
@@ -23525,35 +23524,54 @@ If you are trying to attach a number that you didn&#8217;t look up previously fr
 </div>
 </div>
 <div class="sect1">
-<h2 id="delete-a-phone-number"><a class="anchor" href="#delete-a-phone-number"></a>Delete a phone number</h2>
+<h2 id="incoming-phone-number-regex-support"><a class="anchor" href="#incoming-phone-number-regex-support"></a>Incoming Phone Number Regex Support</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>You have to get the SID of the phone and use curl to delete as follows</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>curl -X DELETE https://administrator%40company.com:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/IncomingPhoneNumbers/PNdd7a0a0248244615978bd5781598e5eb</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="list-of-phone-numbers"><a class="anchor" href="#list-of-phone-numbers"></a>List of phone numbers</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Gets all numbers created using <strong>IncomingPhoneNumbers.json</strong></p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>curl -X GET  https://administrator%40company.com:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/IncomingPhoneNumbers.json</pre>
-</div>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Regex Sample</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Description</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7777|8888</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Matches the numbers 7777 or 8888</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">^*77&#8230;&#8203;33#$</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Matches any number that starts with *77 and and the three dots matches any character and it must end with a # sign</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">^[12]2233#$</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Matches any number that starts with 1 or 2 and ends with 2233#</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">^7688[456]#$</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">matches any number that starts with 76884# or 76885# or 76886#</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[45]234[23]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">matches 42342, 42343, 52342 and 52343</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">^<strong>222</strong>&#8230;&#8203;*&#8230;&#8203;*500#$</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the Regext (^<strong>222</strong>&#8230;&#8203;*&#8230;&#8203;*500#$) matches *222*888*999*500# or *222*444*321*500#  the dots maches any character</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">999&#8230;&#8203;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Matches 999222, 999123, 999555 the dots matches any character</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-05-11 12:09:58 WEST
+Last updated 2017-05-12 10:35:18 WEST
 </div>
 </div>
 <footer>
