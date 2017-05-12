@@ -23574,6 +23574,7 @@ http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
 &lt;http&gt;
   &lt;httpPort&gt;2080&lt;/httpPort&gt;
   &lt;httpsPort&gt;2081&lt;/httpsPort&gt;
+  &lt;requestCheckPattern&gt;(admin)&lt;/requestCheckPattern&gt;
   &lt;unavailableHost&gt;&lt;/unavailableHost&gt;
 &lt;/http&gt;
 &lt;smpp&gt;
@@ -23735,6 +23736,11 @@ For RMI protocol there mast be two ports separated by comma.</p>
 <dt class="hdlist1">httpsPort</dt>
 <dd>
 <p>Port on which the Restcomm Load Balancer will accept HTTPS requests to be distributed across the nodes.</p>
+</dd>
+<dt class="hdlist1">requestCheckPattern</dt>
+<dd>
+<p>If LB gets http response with error (&gt;=400 and &lt;600) from the Node on request which will
+be matched to this pattern, then LB will remove this Node.</p>
 </dd>
 <dt class="hdlist1">externalIpLoadBalancerAddress</dt>
 <dd>
@@ -25360,7 +25366,7 @@ sip-node-1, sip-node-2 etc., then this tag should be &lt;nodeName&gt;sip-node&lt
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-05-11 12:21:09 WEST
+Last updated 2017-05-12 10:45:22 WEST
 </div>
 </div>
 <footer>
