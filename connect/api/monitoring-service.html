@@ -22766,7 +22766,10 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#supervisor-api">Supervisor API</a>
 <ul class="sectlevel2">
 <li><a href="#supervisor-resource-uri">Supervisor Resource URI</a></li>
+<li><a href="#resource-properties">Resource Properties</a></li>
 <li><a href="#supported-operations">Supported Operations</a></li>
+<li><a href="#supervisor-resource-uri-2">Supervisor Resource URI</a></li>
+<li><a href="#supported-operations-2">Supported Operations</a></li>
 <li><a href="#get-metrics">Get metrics</a></li>
 </ul>
 </li>
@@ -22864,11 +22867,53 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <p><strong>/2012-04-24/Accounts/{AccountSid}/Supervisor.json/metrics</strong></p>
 </div>
 <div class="paragraph">
+<p>Will return MonitoringService metrics.</p>
+</div>
+<div class="paragraph">
 <p>Supervisor API supports only json format.</p>
 </div>
 </div>
 <div class="sect2">
+<h3 id="resource-properties"><a class="anchor" href="#resource-properties"></a>Resource Properties</h3>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LiveCallDetails</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(optional) Set to <strong>true</strong> to get an array of live calls. Default value <strong>false</strong></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
 <h3 id="supported-operations"><a class="anchor" href="#supported-operations"></a>Supported Operations</h3>
+<div class="paragraph">
+<p><strong>HTTP GET</strong>. Returns the monitoring service metrics in json format.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="supervisor-resource-uri-2"><a class="anchor" href="#supervisor-resource-uri-2"></a>Supervisor Resource URI</h3>
+<div class="paragraph">
+<p><strong>/2012-04-24/Accounts/{AccountSid}/Supervisor.json/livecalls</strong></p>
+</div>
+<div class="paragraph">
+<p>Will return array of live calls (if any)</p>
+</div>
+<div class="paragraph">
+<p>Supervisor API supports only json format.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="supported-operations-2"><a class="anchor" href="#supported-operations-2"></a>Supported Operations</h3>
 <div class="paragraph">
 <p><strong>HTTP GET</strong>. Returns the monitoring service metrics in json format.</p>
 </div>
@@ -22888,7 +22933,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Supervisor.json/metrics</pre>
+<pre>curl https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Supervisor.json/metrics?LiveCallDetails=true</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -22949,7 +22994,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-05-13 10:35:09 WEST
+Last updated 2017-05-16 10:35:25 WEST
 </div>
 </div>
 <footer>
