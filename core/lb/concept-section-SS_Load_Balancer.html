@@ -23509,6 +23509,8 @@ http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
   &lt;matchingHostnameForRoute&gt;restcomm.com&lt;/matchingHostnameForRoute&gt;
   &lt;isFilterSubdomain&gt;true&lt;/isFilterSubdomain&gt;
   &lt;internalTransport&gt;&lt;/internalTransport&gt;
+  &lt;cyclePeriod&gt;&lt;/cyclePeriod&gt;
+  &lt;maxWeightIndex&gt;&lt;/maxWeightIndex&gt;
   &lt;algorithm&gt;
     &lt;algorithmClass&gt;&lt;/algorithmClass&gt;
     &lt;sipHeaderAffinityKey&gt;&lt;/sipHeaderAffinityKey&gt;
@@ -23795,10 +23797,27 @@ if true LB will remove route ended with .matchingHostnameForRoute(a.restcomm.com
 <dd>
 <p>if set, all external transport will switch to this internal(e.g. WSS,WS,TLS,UDP &#8594; TCP)</p>
 </dd>
-<dt class="hdlist1">isSendTrying</dt>
+<dt class="hdlist1">cyclePeriod</dt>
 <dd>
-<p>if true LB will send own Trying to sender after requests (INVITE,SUBSCRIBE,NOTIFY,MESSAGE,REFER,PUBLISH,UPDATE)</p>
+<p>Uses if rump-up needed.Period after which LB will update Node&#8217;s array based
+on weight of the Node.</p>
 </dd>
+<dt class="hdlist1">maxWeightIndex</dt>
+<dd>
+<p>Uses if rump-up needed. Max weight of node.</p>
+</dd>
+</dl>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Uses if rump-up needed.
+isSendTrying::
+if true LB will send own Trying to sender after requests (INVITE,SUBSCRIBE,NOTIFY,MESSAGE,REFER,PUBLISH,UPDATE)</p>
+</div>
+<div class="dlist">
+<dl>
 <dt class="hdlist1">extraServerNodes</dt>
 <dd>
 <p>Comma-separated list of hosts that are server nodes.
@@ -23828,6 +23847,14 @@ The hearbeat interval must be much smaller than the interval specified in the JA
 <dt class="hdlist1">smppHost</dt>
 <dd>
 <p>Local IP address on which the SMPP load balancer will listen for incoming requests from clients.</p>
+</dd>
+<dt class="hdlist1">smppInternalHost</dt>
+<dd>
+<p>If neede two NIC for SMPP. Interface to SMPP provider side.</p>
+</dd>
+<dt class="hdlist1">smppExternalHost</dt>
+<dd>
+<p>If neede two NIC for SMPP. Interface to SMPP RC/Node/client side.</p>
 </dd>
 <dt class="hdlist1">smppPort</dt>
 <dd>
@@ -23962,10 +23989,8 @@ The default ports are: TCP: 2000, 2001, 2080, 5060, 5065, 8000 UDP: 5060, 5065
 </tr>
 </table>
 </div>
-</dd>
-</dl>
-</div>
-</li>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
 <p>Configure logging</p>
 <div class="paragraph">
@@ -23982,6 +24007,9 @@ Also you can dynamically change log level of the  Restcomm Load balancer via htt
 </div>
 </li>
 </ol>
+</div>
+</dd>
+</dl>
 </div>
 <div class="sect3">
 <h4 id="converged-load-balancing"><a class="anchor" href="#converged-load-balancing"></a>Converged Load Balancing</h4>
@@ -25366,7 +25394,7 @@ sip-node-1, sip-node-2 etc., then this tag should be &lt;nodeName&gt;sip-node&lt
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-05-19 10:47:22 WEST
+Last updated 2017-05-20 10:46:49 WEST
 </div>
 </div>
 <footer>
