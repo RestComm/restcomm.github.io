@@ -22769,6 +22769,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#_sslb_load_balancer_keepalive">Heartbeats to the Restcomm Load Balancer</a></li>
 <li><a href="#restcomm-load-balancer-supports-sip-over-websockets">Restcomm Load Balancer supports SIP Over Websockets</a></li>
 <li><a href="#restcomm-load-balancer-supports-ipv6-protocol">Restcomm Load Balancer supports IPv6 protocol</a></li>
+<li><a href="#ramp-up-of-restarting-nodes">Ramp-up of restarting Nodes</a></li>
 </ul>
 </li>
 <li><a href="#http-load-balancing">HTTP Load Balancing</a>
@@ -23028,6 +23029,34 @@ connection. The same goes for other connection-oriented transport protocols.</p>
 </div>
 <div class="paragraph">
 <p>Other tags you can see in example of lb-configuration.xml below.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ramp-up-of-restarting-nodes"><a class="anchor" href="#ramp-up-of-restarting-nodes"></a>Ramp-up of restarting Nodes</h3>
+<div class="paragraph">
+<p>When a node is added to the list of available nodes, the traffic should be slowly
+injected to the new node, until it gets the best performance. A fresh started node
+needs to initialize internal data structures,and fill different caches to get the
+best performance, if we allow to inject high traffic to restarted node, we may
+face high response times in the beginning, potentially leading to failed calls.
+So the Load balancer allow to ramp-up of freshly added node. It can be enabled via
+next properties:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>cyclePeriod</p>
+</li>
+<li>
+<p>maxWeightIndex</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The Load balancer will create array of nodes based on weight of this node. So if
+node will have weight = 3, this node will present 3 times in this array. Max of
+weight sets via 'maxWeightIndex' property. 'cyclePeriod' it&#8217;s period in wich LB will
+update array of nodes and its weight. This will be work in all algorithms.</p>
 </div>
 </div>
 </div>
@@ -25394,7 +25423,7 @@ sip-node-1, sip-node-2 etc., then this tag should be &lt;nodeName&gt;sip-node&lt
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-05-25 10:48:47 WEST
+Last updated 2017-05-26 10:49:45 WEST
 </div>
 </div>
 <footer>
