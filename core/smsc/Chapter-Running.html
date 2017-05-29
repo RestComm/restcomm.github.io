@@ -22772,6 +22772,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#_running_the_simulator_hlr">Running the HLR Simulator</a></li>
 <li><a href="#_running_the_simulator_smpp_load">Running the SMPP Load tool</a></li>
 <li><a href="#_sip_phone">Running Jitsi or Linphone SIP phones</a></li>
+<li><a href="#_http_connector">Usage of a HTTP connector for message uploading</a></li>
 </ul>
 </li>
 <li><a href="#_running_shell">Running the Shell</a></li>
@@ -22902,7 +22903,7 @@ Halting VM</pre>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The Restcomm SMSC offers you an option to run the Gateway with a "simulator" profile for testing purpose.
-The "simulator" profile is a pre-configured profile to work with the jss7-simulator, the smpp-simulator and some SIP phone.
+The "simulator" profile is a pre-configured profile to work with the jss7-simulator, the smpp-simulator, some SIP phone and loading of messages via a HTTP connector.
 Starting the Gateway with the "simulator" profile is similar to the steps explained for the "default" profile except that you must pass the string value "simulator" to the -c command line option when invoking the run script.</p>
 </div>
 <div class="listingblock">
@@ -22921,9 +22922,9 @@ For using it under Microsoft Windows you need to open the file <em class="path">
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>sctp server create serv1 127.0.0.1 8012 sockettype SCTP
+<pre>sctp server create serv1 127.0.0.1 8012 sockettype TCP
 sctp server start serv1
-sctp association create ass1 SERVER serv1 127.0.0.1 8011 sockettype SCTP
+sctp association create ass1 SERVER serv1 127.0.0.1 8011 sockettype TCP
 
 m3ua as create as1 IPSP mode SE ipspType server rc 101 traffic-mode loadsharing network-appearance 102
 m3ua asp create asp1 ass1
@@ -22935,8 +22936,8 @@ sccp sap create 1 1 2 2
 sccp dest create 1 1 1 1 0 255 255
 sccp address create 1 82 1 8 0 1 4 000
 sccp address create 2 82 2 8 0 1 4 000
-sccp rule create 1 K 82 0 8 0 1 4 * solitary 1 origination-type localOriginated
-sccp rule create 2 K 82 0 8 0 1 4 * solitary 2 origination-type remoteOriginated
+sccp rule create 1 K 82 0 0 0 1 4 * solitary 1 origination-type localOriginated
+sccp rule create 2 K 82 0 0 0 1 4 * solitary 2 origination-type remoteOriginated
 sccp rsp create 1 1 0 0
 sccp rss create 1 1 8 0
 
@@ -22946,12 +22947,56 @@ smsc set hlrssn 8
 smsc set mscssn 8
 smsc set maxmapv 3
 
-smpp esme create test test 127.0.0.1 -1 TRANSCEIVER SERVER password test esme-ton -1 esme-npi -1 esme-range 6666 source-range 6666 routing-range 6666 charging-enabled false
-smpp esme start test
+smsc set httpdefaultnetworkid 10
+smsc httpuser add user password password networkId 10
 
-smsc sip modify SIP cluster-name SIP host 127.0.0.1 port 5065 routing-ton 1 routing-npi 1 routing-range 5555 counters-enabled false charging-enabled false</pre>
+smpp esme create test test 127.0.0.1 -1 TRANSCEIVER SERVER password test esme-ton -1 esme-npi -1 esme-range 6666 source-range ^[0-9a-zA-Z]* routing-range ^[0-9a-zA-Z]* networkid 20
+smpp esme create test2 test2 127.0.0.1 -1 TRANSCEIVER SERVER password test esme-ton -1 esme-npi -1 esme-range 6667 source-range ^[0-9a-zA-Z]* routing-range ^[0-9a-zA-Z]* networkid 21
+smpp esme start test
+smpp esme start test2
+
+smsc sip modify SIP cluster-name SIP host 127.0.0.1 port 5065 routing-ton 1 routingnpi 1 routing-range ^[0-9a-zA-Z]* counters-enabled false charging-enabled false networkid 30
+
+smsc mproc add mproc 1 destdigmask 6666 newnetworkid 20
+smsc mproc add mproc 2 destdigmask 6667 newnetworkid 21
+smsc mproc add mproc 3 destdigmask 5555 newnetworkid 30
+smsc mproc add mproc 4 destdigmask ^(?!6666|6667|5555).* newnetworkid 0</pre>
 </div>
 </div>
+<div class="paragraph">
+<p>We use following message Id values:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. The list of Id values</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Network Id value</th>
+<th class="tableblock halign-left valign-top">Connector</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SS7</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">20, 21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SIP</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect2">
 <h3 id="_running_the_simulator_ss7"><a class="anchor" href="#_running_the_simulator_ss7"></a>Running the jSS7 Simulator</h3>
@@ -23229,6 +23274,21 @@ After about 1 minute you will receive the message on the SS7 Simulator or the SI
 </ol>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_http_connector"><a class="anchor" href="#_http_connector"></a>Usage of a HTTP connector for message uploading</h3>
+<div class="paragraph">
+<p>SMSC GW with a "simulator" profile is configured for accepting messages via HTTP connector with a preconfigured user name "user" and a password "password". Examples for sending of messages by a WEB browser are:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>127.0.0.1:8080/restcomm/sendSms?userid=user&password=password&msg=Thisisamessage_00001&sender=4444&to=6666
+127.0.0.1:8080/restcomm/sendSms?userid=user&password=password&msg=Thisisamessage_00002&sender=4444&to=1111</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These examples send messages "Thisisamessage_00001" and "Thisisamessage_00002" to destination addresses "6666" (for delivering into SMPP Simulator) and "1111" (for delivering into SS7 Simulator).</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -23341,7 +23401,7 @@ You can change the user-id and password in files <em class="path">jmx-console-ro
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-05-28 10:47:50 WEST
+Last updated 2017-05-29 10:45:15 WEST
 </div>
 </div>
 <footer>

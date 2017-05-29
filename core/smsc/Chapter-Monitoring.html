@@ -22769,6 +22769,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#_smsc_stat_get_gui">Using GUI</a></li>
 </ul>
 </li>
+<li><a href="#_slee_stat_get">View SLEE Based SMPP Statistics</a></li>
 <li><a href="#_monitoring_smsc_cdr_log">CDR Log</a></li>
 </ul>
 </div>
@@ -22882,6 +22883,34 @@ EXAMPLES
 </li>
 </ol>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_slee_stat_get"><a class="anchor" href="#_slee_stat_get"></a>View SLEE Based SMPP Statistics</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Restcomm SMSC provides a SLEE based statistics for SMPP services.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure: View SLEE Based Statistics using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the SLEE Management Console for SLEE (thai is avalable by a link like <code><a href="http://localhost:8080/slee-management-console/" class="bare">http://localhost:8080/slee-management-console/</a></code>), click on 'Services' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display all of deployed services. Click on the 'Usage Parameters' tab.</p>
+</li>
+<li>
+<p>Select one of the SMPP services and a SBB corresponding to the chosen one.</p>
+</li>
+<li>
+<p>The main panel will display a parameter entries in 'Parameter Sets' tab. You can view the current SMPP statistics by clicking on the row corresponding to the name of the parameters set.</p>
+<div class="paragraph">
+<p>You can reset a counter for a single parameter by selecting the reset option in the 'Actions' column or reset all usage parameters by clicking on the button at the bottom of the page.</p>
+</div>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -23153,7 +23182,7 @@ This is an abnormal case and implies MAP incompatibility.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-05-28 10:47:50 WEST
+Last updated 2017-05-29 10:45:15 WEST
 </div>
 </div>
 <footer>

@@ -22829,7 +22829,8 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#monitoring">8. Monitoring</a>
 <ul class="sectlevel2">
 <li><a href="#_smsc_stat_get">8.1. View SMSC Statistics</a></li>
-<li><a href="#_monitoring_smsc_cdr_log">8.2. CDR Log</a></li>
+<li><a href="#_slee_stat_get">8.2. View SLEE Based SMPP Statistics</a></li>
+<li><a href="#_monitoring_smsc_cdr_log">8.3. CDR Log</a></li>
 </ul>
 </li>
 <li><a href="#_smsc_restcomm">9. SMSC RestComm-Connect Integration</a>
@@ -24357,7 +24358,7 @@ Halting VM</pre>
 <h3 id="_running_the_gateway_simulator"><a class="anchor" href="#_running_the_gateway_simulator"></a>4.2. Running the Gateway - Simulator Profile</h3>
 <div class="paragraph">
 <p>The Restcomm SMSC offers you an option to run the Gateway with a "simulator" profile for testing purpose.
-The "simulator" profile is a pre-configured profile to work with the jss7-simulator, the smpp-simulator and some SIP phone.
+The "simulator" profile is a pre-configured profile to work with the jss7-simulator, the smpp-simulator, some SIP phone and loading of messages via a HTTP connector.
 Starting the Gateway with the "simulator" profile is similar to the steps explained for the "default" profile except that you must pass the string value "simulator" to the -c command line option when invoking the run script.</p>
 </div>
 <div class="listingblock">
@@ -24376,9 +24377,9 @@ For using it under Microsoft Windows you need to open the file <em class="path">
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>sctp server create serv1 127.0.0.1 8012 sockettype SCTP
+<pre>sctp server create serv1 127.0.0.1 8012 sockettype TCP
 sctp server start serv1
-sctp association create ass1 SERVER serv1 127.0.0.1 8011 sockettype SCTP
+sctp association create ass1 SERVER serv1 127.0.0.1 8011 sockettype TCP
 
 m3ua as create as1 IPSP mode SE ipspType server rc 101 traffic-mode loadsharing network-appearance 102
 m3ua asp create asp1 ass1
@@ -24390,8 +24391,8 @@ sccp sap create 1 1 2 2
 sccp dest create 1 1 1 1 0 255 255
 sccp address create 1 82 1 8 0 1 4 000
 sccp address create 2 82 2 8 0 1 4 000
-sccp rule create 1 K 82 0 8 0 1 4 * solitary 1 origination-type localOriginated
-sccp rule create 2 K 82 0 8 0 1 4 * solitary 2 origination-type remoteOriginated
+sccp rule create 1 K 82 0 0 0 1 4 * solitary 1 origination-type localOriginated
+sccp rule create 2 K 82 0 0 0 1 4 * solitary 2 origination-type remoteOriginated
 sccp rsp create 1 1 0 0
 sccp rss create 1 1 8 0
 
@@ -24401,12 +24402,56 @@ smsc set hlrssn 8
 smsc set mscssn 8
 smsc set maxmapv 3
 
-smpp esme create test test 127.0.0.1 -1 TRANSCEIVER SERVER password test esme-ton -1 esme-npi -1 esme-range 6666 source-range 6666 routing-range 6666 charging-enabled false
-smpp esme start test
+smsc set httpdefaultnetworkid 10
+smsc httpuser add user password password networkId 10
 
-smsc sip modify SIP cluster-name SIP host 127.0.0.1 port 5065 routing-ton 1 routing-npi 1 routing-range 5555 counters-enabled false charging-enabled false</pre>
+smpp esme create test test 127.0.0.1 -1 TRANSCEIVER SERVER password test esme-ton -1 esme-npi -1 esme-range 6666 source-range ^[0-9a-zA-Z]* routing-range ^[0-9a-zA-Z]* networkid 20
+smpp esme create test2 test2 127.0.0.1 -1 TRANSCEIVER SERVER password test esme-ton -1 esme-npi -1 esme-range 6667 source-range ^[0-9a-zA-Z]* routing-range ^[0-9a-zA-Z]* networkid 21
+smpp esme start test
+smpp esme start test2
+
+smsc sip modify SIP cluster-name SIP host 127.0.0.1 port 5065 routing-ton 1 routingnpi 1 routing-range ^[0-9a-zA-Z]* counters-enabled false charging-enabled false networkid 30
+
+smsc mproc add mproc 1 destdigmask 6666 newnetworkid 20
+smsc mproc add mproc 2 destdigmask 6667 newnetworkid 21
+smsc mproc add mproc 3 destdigmask 5555 newnetworkid 30
+smsc mproc add mproc 4 destdigmask ^(?!6666|6667|5555).* newnetworkid 0</pre>
 </div>
 </div>
+<div class="paragraph">
+<p>We use following message Id values:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 9. The list of Id values</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Network Id value</th>
+<th class="tableblock halign-left valign-top">Connector</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SS7</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">20, 21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SIP</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="_running_the_simulator_ss7"><a class="anchor" href="#_running_the_simulator_ss7"></a>4.2.2. Running the jSS7 Simulator</h4>
@@ -24682,6 +24727,21 @@ After about 1 minute you will receive the message on the SS7 Simulator or the SI
 <p>For testing sending messages to the SIP phone you just need to send a message from the SS7 Simulator or SMPP Simulator to the address "5555". You must put the originating address as "1111" for SS7 Simulator and "6666" for SMPP Simulator.</p>
 </li>
 </ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_http_connector"><a class="anchor" href="#_http_connector"></a>4.2.7. Usage of a HTTP connector for message uploading</h4>
+<div class="paragraph">
+<p>SMSC GW with a "simulator" profile is configured for accepting messages via HTTP connector with a preconfigured user name "user" and a password "password". Examples for sending of messages by a WEB browser are:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>127.0.0.1:8080/restcomm/sendSms?userid=user&password=password&msg=Thisisamessage_00001&sender=4444&to=6666
+127.0.0.1:8080/restcomm/sendSms?userid=user&password=password&msg=Thisisamessage_00002&sender=4444&to=1111</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These examples send messages "Thisisamessage_00001" and "Thisisamessage_00002" to destination addresses "6666" (for delivering into SMPP Simulator) and "1111" (for delivering into SS7 Simulator).</p>
 </div>
 </div>
 </div>
@@ -25336,7 +25396,7 @@ This chapter covers a description of conditions and actions that are present in 
 If a message fits to all conditions then the rule will be applied to the message.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 9. The list of possible conditions</caption>
+<caption class="title">Table 10. The list of possible conditions</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -25460,7 +25520,7 @@ If a message fits to all conditions then the rule will be applied to the message
 <p>b) Actions, which will be applied to messages.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 10. The list of possible actions</caption>
+<caption class="title">Table 11. The list of possible actions</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -25849,7 +25909,7 @@ public interface MProcRuleMBean {
 </div>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 11. <code class="class">MProcRule</code> and <code class="class">MProcRuleMBean</code> interfaces methods description</caption>
+<caption class="title">Table 12. <code class="class">MProcRule</code> and <code class="class">MProcRuleMBean</code> interfaces methods description</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -26738,7 +26798,7 @@ create and send HTTP request in proper format. Supported HTTP methods
 are GET and POST. Request URL must have “sendSms” context and contain all of mandatory parameters.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 12. Mandatory parameters:</caption>
+<caption class="title">Table 13. Mandatory parameters:</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -26773,7 +26833,7 @@ are GET and POST. Request URL must have “sendSms” context and contain all of
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 13. Optional parameters:</caption>
+<caption class="title">Table 14. Optional parameters:</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -26845,7 +26905,7 @@ error:6,request not accepted</pre>
 status we should create and send HTTP request in proper format. Supported HTTP methods are GET and POST. Request URL must have "msgQuery" context and contain all of mandatory parameters.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 14. Mandatory parameters:</caption>
+<caption class="title">Table 15. Mandatory parameters:</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -26872,7 +26932,7 @@ status we should create and send HTTP request in proper format. Supported HTTP m
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 15. Optional parameters:</caption>
+<caption class="title">Table 16. Optional parameters:</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -26937,7 +26997,7 @@ So MO and SMPP part will be informed if the message is rejected.
 <p>For interconnecting with OCS Server SMSC GW uses diameter CCR (Credit-Control Request) with following filled AVPs (all of them are located in AVP Service-Information (873)):</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 16. The AVP list</caption>
+<caption class="title">Table 17. The AVP list</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 20%;">
@@ -34328,7 +34388,33 @@ EXAMPLES
 </div>
 </div>
 <div class="sect2">
-<h3 id="_monitoring_smsc_cdr_log"><a class="anchor" href="#_monitoring_smsc_cdr_log"></a>8.2. CDR Log</h3>
+<h3 id="_slee_stat_get"><a class="anchor" href="#_slee_stat_get"></a>8.2. View SLEE Based SMPP Statistics</h3>
+<div class="paragraph">
+<p>Restcomm SMSC provides a SLEE based statistics for SMPP services.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure: View SLEE Based Statistics using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the SLEE Management Console for SLEE (thai is avalable by a link like <code><a href="http://localhost:8080/slee-management-console/" class="bare">http://localhost:8080/slee-management-console/</a></code>), click on 'Services' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display all of deployed services. Click on the 'Usage Parameters' tab.</p>
+</li>
+<li>
+<p>Select one of the SMPP services and a SBB corresponding to the chosen one.</p>
+</li>
+<li>
+<p>The main panel will display a parameter entries in 'Parameter Sets' tab. You can view the current SMPP statistics by clicking on the row corresponding to the name of the parameters set.</p>
+<div class="paragraph">
+<p>You can reset a counter for a single parameter by selecting the reset option in the 'Actions' column or reset all usage parameters by clicking on the button at the bottom of the page.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_monitoring_smsc_cdr_log"><a class="anchor" href="#_monitoring_smsc_cdr_log"></a>8.3. CDR Log</h3>
 <div class="paragraph">
 <p>Restcomm SMSC is configured to generate CDR in a plain text file located at <em class="path">restcomm-smscgateway-&lt;version&gt;/jboss-5.1.0.GA/server/&lt;profile&gt;/log/cdr.log</em>.
 The CDR generated in the text file is of the below format:</p>
@@ -35307,7 +35393,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-05-28 10:47:50 WEST
+Last updated 2017-05-29 10:45:15 WEST
 </div>
 </div>
 <footer>
