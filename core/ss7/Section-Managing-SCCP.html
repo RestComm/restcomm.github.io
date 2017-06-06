@@ -24731,7 +24731,14 @@ For example, Digit1 "800/????/9" will be above Digit2 "800/?????/9"</p>
 <p>Between Rules with two GT digits both having an equal number of wildcard "?", the digit whose first appearance of "?" is after other, is at the top of the list.
 For example between Digit1 "80/??/0/???/9" and Digit 2 "800/?????/9", Digit2 is above Digit1.				When a Rule is compared during Translation, comparison always starts from the top of the list.</p>
 </li>
+<li>
+<p>If 2 rules have exactly same digits then rules are sorted using the above logic for calling digits.</p>
+</li>
 </ol>
+</div>
+<div class="paragraph">
+<p>Parameters backup-addressid (when ruleType parameter is "solitary"), loadsharing-algo (when ruleType parameter is not "loadshared"), newcgparty-addressid, origination-type, networkid, stackname and parameters for a calling party address (calling-ai, calling-pc, calling-ssn, calling-tt, calling-np, calling-nai, calling-digits-pattern) are optional. If newcgparty-addressid is not specified then calling party address will not be changed. If origination-type is not specified then a rule applies to
+all messages regardless of their origination. If networkid is not specified then networkid will be assigned to 0. If stackname is not specified then a rule will be applied to a default SCCP stack. If calling party address parameters are not specified then only called party address patterns will be taken into account.</p>
 </div>
 </div>
 <div class="sect2">
@@ -24750,7 +24757,11 @@ SYNOPSIS
 	&lt;ruleType&gt; &lt;primary-address-id&gt; backup-addressid &lt;backup-address-id&gt;
 	loadsharing-algo &lt;loadsharing-algorithm&gt; newcgparty-addressid
 	&lt;new-callingPartyAddress-id&gt; origination-type &lt;originationType&gt;
-	stackname &lt;stack-name&gt; networkid &lt;networkId&gt;
+	networkid &lt;networkId&gt; calling-ai &lt;calling-address-indicator&gt;
+	calling-pc &lt;calling-point-code&gt; calling-ssn &lt;calling-subsystem-number&gt;
+	calling-tt &lt;calling-translation-type&gt; calling-np &lt;calling-numbering-plan&gt;
+	calling-nai &lt;calling-nature-of-address-indicator&gt;
+	calling-digits-pattern &lt;calling-digits-pattern&gt; stackname &lt;stack-name&gt;
 
 DESCRIPTION
 	This command is used to create a new SCCP Routing Rule. You must ensure that
@@ -25114,12 +25125,45 @@ PARAMETERS
                     be set to "0" when a Rule creation.
                     Refer &lt;xref linkend="design_multitenancy"/&gt;.
 
+    &lt;calling-address-indicator&gt;
+                -   Address indicator for calling address matching.
+                    See above address-indicator
+
+    &lt;calling-point-code&gt;
+                -   Pointcode of calling sccp address. MTP Signaling Point Code.
+                    This is ignored if Bit '0' of address-indicator is not set.
+
+    &lt;calling-subsystem-number&gt;
+                -   This is ignored if Bit '1' of address-indicator is
+                    not set.
+
+    &lt;calling-translation-type&gt;
+                -   This is ignored if GT Indicator is 0000 or 0001.
+                    See &lt;translation-type&gt; above for more details.
+
+    &lt;calling-numbering-plan&gt;
+                -   A digital parameter that specifies to which virtual SS7
+                    network this rule belongs. If this parameter
+                    is skipped - networkId will be set to "0" by default.
+
+    &lt;calling-nature-of-address-indicator&gt;
+                -   The Nature of Address Indicator (NAI) field
+                    defines the address range for a specific numbering
+                    plan. This is only used if GT Indicator is 0100.
+
+     &lt;calling-digits-pattern&gt;
+                -   Specifies the string of digits for pattern matching.
+                    There is no mask for calling digits, hence the division separator is ignored.
+                    See above &lt;digits&gt; for more information on pattern matching.
+
 EXAMPLES
 	sccp rule create 1 R 71 2 8 0 0 3 123456789 solitary 1
 
 	sccp rule create 2 R 71 2 8 0 0 3 123456789 dominant 1 1
 
-	sccp rule create 2 R 71 2 8 0 0 3 123456789 loadshared 1 1 bit4</pre>
+	sccp rule create 2 R 71 2 8 0 0 3 123456789 loadshared 1 1 bit4
+
+    sccp rule create 21 R 71 2 8 0 0 3 123456789 dominant 2 backup-addressid 1 loadsharing-algo bit3 newcgparty-addressid 1 origination-type remoteoriginated calling-ai 18 calling-pc 0 calling-ssn 0 calling-tt 0 calling-nai 0 calling-np 0 calling-digits-pattern 567*</pre>
 </div>
 </div>
 </div>
@@ -25169,7 +25213,11 @@ SYNOPSIS
 	&lt;ruleType&gt; &lt;primary-address-id&gt; backup-addressid &lt;backup-address-id&gt;
 	loadsharing-algo &lt;loadsharing-algorithm&gt; newcgparty-addressid
 	&lt;new-callingPartyAddress-id&gt; origination-type &lt;originationType&gt;
-	stackname &lt;stack-name&gt; networkid &lt;networkId&gt;
+	networkid &lt;networkId&gt; calling-ai &lt;calling-address-indicator&gt;
+	calling-pc &lt;calling-point-code&gt; calling-ssn &lt;calling-subsystem-number&gt;
+	calling-tt &lt;calling-translation-type&gt; calling-np &lt;calling-numbering-plan&gt;
+	calling-nai &lt;calling-nature-of-address-indicator&gt;
+	calling-digits-pattern &lt;calling-digits-pattern&gt; stackname &lt;stack-name&gt;
 
 DESCRIPTION
 	This command is used to modify the values of a SCCP Route previously defined.
@@ -25501,7 +25549,38 @@ PARAMETERS
     &lt;networkId&gt;     - A digital parameter that means to which virtual SS7 network
                     belongs a Rule. If this parameter is skipped - networkId will
                     be set to "0" when a Rule creation.
-                    Refer &lt;xref linkend="design_multitenancy"/&gt;.</pre>
+                    Refer &lt;xref linkend="design_multitenancy"/&gt;.
+
+   &lt;calling-address-indicator&gt;
+               -   Address indicator for calling address matching.
+                   See above address-indicator
+
+   &lt;calling-point-code&gt;
+               -   Pointcode of calling sccp address. MTP Signaling Point Code.
+                   This is ignored if Bit '0' of address-indicator is not set.
+
+   &lt;calling-subsystem-number&gt;
+               -   This is ignored if Bit '1' of address-indicator is
+                   not set.
+
+   &lt;calling-translation-type&gt;
+               -   This is ignored if GT Indicator is 0000 or 0001.
+                   See &lt;translation-type&gt; above for more details.
+
+   &lt;calling-numbering-plan&gt;
+               -   A digital parameter that specifies to which virtual SS7
+                   network this rule belongs. If this parameter
+                   is skipped - networkId will be set to "0" by default.
+
+   &lt;calling-nature-of-address-indicator&gt;
+               -   The Nature of Address Indicator (NAI) field
+                   defines the address range for a specific numbering
+                   plan. This is only used if GT Indicator is 0100.
+
+    &lt;calling-digits-pattern&gt;
+               -   Specifies the string of digits for pattern matching.
+                   There is no mask for calling digits, hence the division separator is ignored.
+                   See above &lt;digits&gt; for more information on pattern matching.</pre>
 </div>
 </div>
 </div>
@@ -26480,7 +26559,7 @@ EXAMPLES
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-06-05 12:38:48 WEST
+Last updated 2017-06-06 10:44:43 WEST
 </div>
 </div>
 <footer>
