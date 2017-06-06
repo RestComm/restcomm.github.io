@@ -22778,6 +22778,8 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#attach-a-sip-virtual-number-to-an-application">Attach a SIP Virtual number to an application</a></li>
 </ul>
 </li>
+<li><a href="#delete-a-phone-number">Delete a phone number</a></li>
+<li><a href="#list-of-phone-numbers">List of phone numbers</a></li>
 <li><a href="#incoming-phone-number-regex-support">Incoming Phone Number Regex Support</a></li>
 </ul>
 </div>
@@ -23103,6 +23105,62 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </tr>
 </tbody>
 </table>
+</div>
+<div class="sect5">
+<h6 id="example-list-of-phone-numbers"><a class="anchor" href="#example-list-of-phone-numbers"></a>Example - List of phone numbers</h6>
+<div class="paragraph">
+<p>Gets all numbers created using <strong>IncomingPhoneNumbers.json</strong></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -G  https://\{account_sid}:\{auth_token}@127.0.0.1/restcomm/2012-04-24/Accounts/\{account_sid}/IncomingPhoneNumbers.json</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Result of the above command</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[
+  {
+    "sid": "PN0b4201c6c87749f29367e6cf000686cb",
+    "account_sid": "\{account_sid}",
+    "friendly_name": "This app calls registered restcomm client Alice ",
+    "phone_number": "+1238",
+    "voice_url": "/restcomm/demos/dial/client/dial-client.xml",
+    "voice_method": "POST",
+    "voice_fallback_url": null,
+    "voice_fallback_method": "POST",
+    "status_callback": null,
+    "status_callback_method": "POST",
+    "voice_caller_id_lookup": false,
+    "voice_application_sid": null,
+    "date_created": "Mon, 4 Nov 2013 12:14:11 +0000",
+    "date_updated": "Mon, 4 Nov 2013 12:14:11 +0000",
+    "sms_url": null,
+    "sms_method": "POST",
+    "sms_fallback_url": null,
+    "sms_fallback_method": "POST",
+    "sms_application_sid": null,
+    "ussd_url": null,
+    "ussd_method": null,
+    "ussd_fallback_url": null,
+    "ussd_fallback_method": null,
+    "ussd_application_sid": null,
+    "refer_url": null,
+    "refer_method": null,
+    "refer_application_sid": null,
+    "capabilities": {
+      "voice_capable": true,
+      "sms_capable": false,
+      "mms_capable": false,
+      "fax_capable": false
+    },
+    "api_version": "2012-04-24",
+    "uri": "/restcomm/2012-04-24/Accounts/\{account_sid}/IncomingPhoneNumbers/PN0b4201c6c87749f29367e6cf000686cb.json"
+  },...</pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect4">
@@ -23524,6 +23582,32 @@ If you are trying to attach a number that you didn&#8217;t look up previously fr
 </div>
 </div>
 <div class="sect1">
+<h2 id="delete-a-phone-number"><a class="anchor" href="#delete-a-phone-number"></a>Delete a phone number</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You have to get the SID of the phone and use curl to delete as follows</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -X DELETE https://administrator%40company.com:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/IncomingPhoneNumbers/PNdd7a0a0248244615978bd5781598e5eb</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="list-of-phone-numbers"><a class="anchor" href="#list-of-phone-numbers"></a>List of phone numbers</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Gets all numbers created using <strong>IncomingPhoneNumbers.json</strong></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -X GET  https://administrator%40company.com:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/IncomingPhoneNumbers.json</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="incoming-phone-number-regex-support"><a class="anchor" href="#incoming-phone-number-regex-support"></a>Incoming Phone Number Regex Support</h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all spread">
@@ -23571,7 +23655,7 @@ If you are trying to attach a number that you didn&#8217;t look up previously fr
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-06-05 12:29:28 WEST
+Last updated 2017-06-06 10:35:18 WEST
 </div>
 </div>
 <footer>
