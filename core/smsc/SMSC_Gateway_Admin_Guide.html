@@ -34421,7 +34421,7 @@ The CDR generated in the text file is of the below format:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>DELIVERY_DATE,SUBMIT_DATE,ADDR_SRC_DIGITS,ADDR_SRC_TON,ADDR_SRC_NPI,ADDR_DST_DIGITS,ADDR_DST_TON,ADDR_DST_NPI,Message_Delivery_Status,ORIGINATION_TYPE,MESSAGE_TYPE,ORIG_SYSTEM_ID,MESSAGE_ID,DVL_MESSAGE_ID,RECEIPT_LOCAL_MESSAGE_ID,NNN_DIGITS,IMSI,CORR_ID,ORIGINATOR_SCCP_ADDRESS,MtServiceCenterAddress,ORIG_NETWORK_ID,NETWORK_ID,MPROC_NOTES,MSG_PARTS,CHAR_NUMBERS,PROCESSING_TIME,DELIVERY_DELAY,SCHEDULE_DELIVERY_DELAY,DELIVERY_COUNT,First 20 characters of SMS,Reason_For_Failure</pre>
+<pre>DELIVERY_DATE,SUBMIT_DATE,ADDR_SRC_DIGITS,ADDR_SRC_TON,ADDR_SRC_NPI,ADDR_DST_DIGITS,ADDR_DST_TON,ADDR_DST_NPI,Message_Delivery_Status,ORIGINATION_TYPE,MESSAGE_TYPE,ORIG_SYSTEM_ID,MESSAGE_ID,DVL_MESSAGE_ID,RECEIPT_LOCAL_MESSAGE_ID,NNN_DIGITS,IMSI,CORR_ID,ORIGINATOR_SCCP_ADDRESS,MtServiceCenterAddress,ORIG_NETWORK_ID,NETWORK_ID,MPROC_NOTES,MSG_PARTS,CHAR_NUMBERS,PROCESSING_TIME,SCHEDULE_DELIVERY_DELAY,DELIVERY_COUNT,First 20 characters of SMS,Reason_For_Failure</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -34585,15 +34585,11 @@ It does not indicate if a resend will be attempted or not.</p>
 </div>
 <div class="paragraph">
 <div class="title">PROCESSING_TIME</div>
-<p>A processing time in milliseconds for message in SMSC GW calculated since the submit date.</p>
-</div>
-<div class="paragraph">
-<div class="title">DELIVERY_DELAY</div>
-<p>A delivery delay time in milliseconds for message calculated as time before submit date and delivery date.</p>
+<p>A processing time between a CDR generation time and a message submit time in milliseconds.</p>
 </div>
 <div class="paragraph">
 <div class="title">SCHEDULE_DELIVERY_DELAY</div>
-<p>A schedule delivery time in milliseconds for message calculated as time before submit date and schedule delivery date.</p>
+<p>A processing time between a time for which a message is scheduled and a message submit time in milliseconds (this field is empty if a message has not be scheduled to a database but was delivered immediately).</p>
 </div>
 <div class="paragraph">
 <div class="title">Reason_For_Failure</div>
@@ -35393,7 +35389,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-06-06 10:46:01 WEST
+Last updated 2017-06-07 10:44:35 WEST
 </div>
 </div>
 <footer>
