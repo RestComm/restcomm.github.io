@@ -22939,8 +22939,10 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div class="sect2">
 <h3 id="supported-operations-2"><a class="anchor" href="#supported-operations-2"></a>Supported Operations</h3>
 <div class="paragraph">
-<p><strong>HTTP GET</strong>. Returns the list representation of all the Call resources for this Account, including the properties above.
-<strong>HTTP POST</strong>. Makes a new Call and returns the representation of the Call resource, including the properties above. Below you will find a list of required and optional parameters.  </p>
+<p><strong>HTTP GET</strong>. Returns the list representation of all the Call resources for this Account, including the properties above.</p>
+</div>
+<div class="paragraph">
+<p><strong>HTTP POST</strong>. Makes a new Call and returns the representation of the Call resource, including the properties above. Below you will find a list of required and optional parameters.  </p>
 </div>
 </div>
 <div class="sect2">
@@ -22999,6 +23001,109 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </tr>
 </tbody>
 </table>
+<div class="sect3">
+<h4 id="statuscallbackevent"><a class="anchor" href="#statuscallbackevent"></a>statusCallbackEvent</h4>
+<div class="paragraph">
+<p>When creating a Call using the Calls API, an outbound call is initiated. The call transitions from the initiated state to the ringing state when the phone starts ringing. It transitions to the answered state when the call is picked up, and finally to the completed state when the call is over. With <strong>statusCallbackEvent</strong>, you can subscribe to receive webhooks for the different call progress events: initiated, ringing, answered, or completed for a given call.</p>
+</div>
+<div class="paragraph">
+<p>The <strong>statusCallbackEvent</strong> attribute allows you to specify which events Restcomm should webhook on. To specify multiple events separate them with a space: initiated ringing answered completed. If a statusCallback is provided and no status callback events are specified the completed event will be sent by default.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/status-callback-events-dial.png" alt="Outbound Dial call events diagram">
+</div>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Event</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">initiated</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The <code>initiated</code> event is fired when Restcomm starts dialing the call.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ringing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The <code>ringing</code> event is fired when the call starts ringing.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">answered</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The <code>answered</code> event is fired when the call is answered.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">completed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The <code>completed</code> event is fired when the call is completed regardless of the termination status: <code>busy</code>, <code>canceled</code>, <code>completed</code>, <code>failed</code>, or <code>no-answer</code>. If no <code>statusCallbackEvent</code> is specified, <code>completed</code> will be fired by default.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="attributes-status-callback"><a class="anchor" href="#attributes-status-callback"></a>statusCallback</h4>
+<div class="paragraph">
+<p>The <strong>statusCallback</strong> attribute allows you to specify a URL for Restcomm to send webhook requests to on each event specified in the statusCallbackEvent attribute.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="statuscallbackmethod"><a class="anchor" href="#statuscallbackmethod"></a>statusCallbackMethod</h4>
+<div class="paragraph">
+<p>The <strong>statusCallbackMethod</strong> attribute allows you to specify which HTTP method Restcomm should use when requesting the URL in the statusCallback attribute. The default is POST.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="status-callback-http-parameters"><a class="anchor" href="#status-callback-http-parameters"></a>Status Callback HTTP Parameters</h4>
+<div class="paragraph">
+<p>The parameters Restcomm passes to your application in its asynchronous request to the StatusCallback URL include all parameters passed in a synchronous request to retrieve RCML when Restcomm receives a call to one of your Restcomm numbers. The full list of parameters and descriptions of each are in the RCML Voice Request documentation.</p>
+</div>
+<div class="paragraph">
+<p>When the call progress events are fired, the Status Callback request also passes these additional parameters:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CallSid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A unique identifier for this call, generated by Restcomm. You can use the <code>CallSid</code> to modify the child call by POSTing to Calls/{CallSid} with a new RCML URL.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CallStatus</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A descriptive status for the call. The value is one of <strong><code>queued</code></strong>, <strong><code>initiated</code></strong>, <strong><code>ringing</code></strong>, <strong><code>in-progress</code></strong>, <strong><code>busy</code></strong>, <strong><code>failed</code></strong>, or <strong><code>no-answer</code></strong>. See the CallStatus section for more details.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CallDuration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The duration in seconds of the just-completed call. Only present in the <code>completed</code> event.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Timestamp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The timestamp when the event was fired, given as UTC in <a href="http://php.net/manual/en/class.datetime.php#datetime.constants.rfc2822">RFC 2822</a> format.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CallbackSource</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A string that describes the source of the webhook. This is provided to help disambiguate why the webhook was made. On Status Callbacks, this value is always <strong><code>call-progress-events</code>.</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SequenceNumber</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The order in which the events were fired, starting from <code>0</code>. Although events are fired in order, they are made as separate HTTP requests and there is no guarantee they will arrive in the same order.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 </div>
@@ -23778,7 +23883,7 @@ The call will now be redirected to the Url specified(hello-world.xml)</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-06-07 10:35:21 WEST
+Last updated 2017-06-07 17:28:20 WEST
 </div>
 </div>
 <footer>
