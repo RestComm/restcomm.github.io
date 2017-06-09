@@ -31160,6 +31160,23 @@ DESCRIPTION
 <div class="listingblock">
 <div class="content">
 <pre>Name
+	smpp smppserver set bindipaddress
+
+SYNOPSIS
+	smpp smppserver set bindipaddress &lt;ip-address&gt;
+
+DESCRIPTION
+	This command is used to set the IP for SMPP server.
+	The SMSC server will use this ip for listening incoming bind request from SMPP client.
+
+	If unspecified, the default value is 0.0.0.0, that means SMPP server will listen on all interfaces.
+
+	You must restart the SMPP Server for the new value to take effect.</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
 	smpp smppserver set bindtimeout
 
 SYNOPSIS
@@ -35389,7 +35406,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-06-08 10:45:27 WEST
+Last updated 2017-06-09 10:46:37 WEST
 </div>
 </div>
 <footer>
