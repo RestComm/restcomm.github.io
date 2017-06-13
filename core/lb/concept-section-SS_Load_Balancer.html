@@ -22767,6 +22767,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <ul class="sectlevel2">
 <li><a href="#_sslb_load_balancer_node_discovery">Node Discovery of the Restcomm Load Balancer</a></li>
 <li><a href="#_sslb_load_balancer_keepalive">Heartbeats to the Restcomm Load Balancer</a></li>
+<li><a href="#additional-health-check-of-the-nodes-by-the-restcomm-load-balancer">Additional health check of the Nodes by the Restcomm Load Balancer</a></li>
 <li><a href="#restcomm-load-balancer-supports-sip-over-websockets">Restcomm Load Balancer supports SIP Over Websockets</a></li>
 <li><a href="#restcomm-load-balancer-supports-ipv6-protocol">Restcomm Load Balancer supports IPv6 protocol</a></li>
 <li><a href="#ramp-up-of-restarting-nodes">Ramp-up of restarting Nodes</a></li>
@@ -22997,6 +22998,48 @@ to the Node.</p>
 <p>When the Node gets stop request from the Load balancer,
 it will start send the start request to the Load balancer until will not get
 start response.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="additional-health-check-of-the-nodes-by-the-restcomm-load-balancer"><a class="anchor" href="#additional-health-check-of-the-nodes-by-the-restcomm-load-balancer"></a>Additional health check of the Nodes by the Restcomm Load Balancer</h3>
+<div class="paragraph">
+<p>Sometimes we face the situation when the server goes down but LB considers
+it is alive since ping packets are sent in the normal way.
+This problem arises because the processing of keep alive and SIP messages
+takes place on different levels and even if SIP is not responding, the ping
+packets still can be sent. On client side this situation looks as follows:
+a client sends messages to LB, LB forwards the messages to the dead server
+and no response is received. In such way a client tries and fails to
+connect to the server, because LB is not aware that the server is dead.
+The snag is that it is not possible to identify this issue via keep alive since
+the keep alive message flow is not interrupted in this case.</p>
+</div>
+<div class="paragraph">
+<p>So we need to identify the dead server by its ability to process the messages.
+It implemented by recording the number of requests (which remain without any
+response) and storing the timestamp of last packet sent by server. If maxRequestNumberWithoutResponse
+and maxResponseTime values are exceeded then LB removes the node.
+It is important to note that the node is considered dead only when both
+these values are exceeded. If only one value is exceeded, the node is
+still considered as alive. By monitoring these two values we can insure
+that LB does not send any packets to the dead server while we do not remove
+the node which is active but coincidentally exceeded maxResponseTime or
+ maxRequestNumberWithoutResponse. Below you can find more details on how it works.</p>
+</div>
+<div class="paragraph">
+<p>Counter stores the number of requests which were sent to the server till the
+server response was received. When LB sends request to the server – the
+counter increments by one. As soon as LB receives any packet from the server –
+the counter sets to zero. The “maxRequestNumberWithoutResponse” is a configurable
+value. If maxRequestNumberWithoutResponse without response is exceeded but the
+server response does not take too long (it keeps within maxResponseTime limits),
+the node is still considered active. The “maxResponseTime” parameter also configurable.
+The maxResponseTime will allow to identify the server which fails to respond
+within specific time frame. The timestamp of last packet sent by server is
+stored and if the server response takes too long (the maxResponseTime value is
+exceeded) but the number of requests without response is small, then LB considers
+the server is active. In case both maxResponseTime and maxRequestNumberWithoutResponse
+are exceeded, LB considers the server is dead and stops sending messages to the server.</p>
 </div>
 </div>
 <div class="sect2">
@@ -23365,7 +23408,10 @@ Information about the options in this algorithms is available in the balancer co
 </dd>
 <dt class="hdlist1">org.mobicents.tools.sip.balancer.PersistentConsistentHashBalancerAlgorithm</dt>
 <dd>
-<p>This algorithm is distributable and is similar to the previous algorithm, but it attempts to keep session affinity even when the cluster nodes are removed or added, which would normally cause hash values to point to different nodes.</p>
+<p>This algorithm is distributable and is similar to the previous algorithm,
+but it attempts to keep session affinity even when the cluster nodes are removed or
+added. It implemented by storing "header value" &lt;&#8594; "SIP Node" to cache. So this
+cache can be shared between LBs.</p>
 </dd>
 <dt class="hdlist1">org.mobicents.tools.sip.balancer.ClusterSubdomainAffinityAlgorithm</dt>
 <dd>
@@ -23847,6 +23893,16 @@ if true LB will send own Trying to sender after requests (INVITE,SUBSCRIBE,NOTIF
 </div>
 <div class="dlist">
 <dl>
+<dt class="hdlist1">maxRequestNumberWithoutResponse</dt>
+<dd>
+<p>Used in additional health check. It sets max request number which LB can send
+to the Node from which did not get any response. Work only with "maxResponseTime"</p>
+</dd>
+<dt class="hdlist1">maxResponseTime</dt>
+<dd>
+<p>Used in additional health check. It sets max time in which LB can send request to the Node
+from which did not get any response.</p>
+</dd>
 <dt class="hdlist1">extraServerNodes</dt>
 <dd>
 <p>Comma-separated list of hosts that are server nodes.
@@ -25423,7 +25479,7 @@ sip-node-1, sip-node-2 etc., then this tag should be &lt;nodeName&gt;sip-node&lt
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-06-12 10:52:20 WEST
+Last updated 2017-06-13 10:48:21 WEST
 </div>
 </div>
 <footer>
