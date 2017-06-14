@@ -23318,7 +23318,7 @@ next properties:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>cyclePeriod</p>
+<p>trafficRampupCyclePeriod</p>
 </li>
 <li>
 <p>maxWeightIndex</p>
@@ -23328,7 +23328,7 @@ next properties:</p>
 <div class="paragraph">
 <p>The Load balancer will create array of nodes based on weight of this node. So if
 node will have weight = 3, this node will present 3 times in this array. Max of
-weight sets via 'maxWeightIndex' property. 'cyclePeriod' it&#8217;s period in wich LB will
+weight sets via 'maxWeightIndex' property. 'trafficRampupCyclePeriod' it&#8217;s period in wich LB will
 update array of nodes and its weight. This will be work in all algorithms.</p>
 </div>
 </div>
@@ -23804,7 +23804,7 @@ http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
   &lt;matchingHostnameForRoute&gt;restcomm.com&lt;/matchingHostnameForRoute&gt;
   &lt;isFilterSubdomain&gt;true&lt;/isFilterSubdomain&gt;
   &lt;internalTransport&gt;&lt;/internalTransport&gt;
-  &lt;cyclePeriod&gt;&lt;/cyclePeriod&gt;
+  &lt;trafficRampupCyclePeriod&gt;&lt;/trafficRampupCyclePeriod&gt;
   &lt;maxWeightIndex&gt;&lt;/maxWeightIndex&gt;
   &lt;algorithm&gt;
     &lt;algorithmClass&gt;&lt;/algorithmClass&gt;
@@ -24092,7 +24092,7 @@ if true LB will remove route ended with .matchingHostnameForRoute(a.restcomm.com
 <dd>
 <p>if set, all external transport will switch to this internal(e.g. WSS,WS,TLS,UDP &#8594; TCP)</p>
 </dd>
-<dt class="hdlist1">cyclePeriod</dt>
+<dt class="hdlist1">trafficRampupCyclePeriod</dt>
 <dd>
 <p>Uses if rump-up needed.Period after which LB will update Node&#8217;s array based
 on weight of the Node.</p>
@@ -25690,7 +25690,7 @@ sip-node-1, sip-node-2 etc., then this tag should be &lt;nodeName&gt;sip-node&lt
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-06-13 10:48:21 WEST
+Last updated 2017-06-14 10:49:10 WEST
 </div>
 </div>
 <footer>
