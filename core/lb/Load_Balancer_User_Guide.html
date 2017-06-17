@@ -23318,18 +23318,18 @@ next properties:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>trafficRampupCyclePeriod</p>
+<p>trafficRampupCyclePeriod (ms)</p>
 </li>
 <li>
-<p>maxWeightIndex</p>
+<p>trafficPercentageIncrease (%)</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>The Load balancer will create array of nodes based on weight of this node. So if
-node will have weight = 3, this node will present 3 times in this array. Max of
-weight sets via 'maxWeightIndex' property. 'trafficRampupCyclePeriod' it&#8217;s period in wich LB will
-update array of nodes and its weight. This will be work in all algorithms.</p>
+<p>trafficPercentageIncrease = 10 mean the Load Balancer increases traffic to the node by 10% after
+the trafficRampupCyclePeriod = 1000 and will keep doing that until 100%. So after
+10 second (10000ms) the Load Balancer will send to newly added Node same traffic as
+for other nodes.</p>
 </div>
 </div>
 </div>
@@ -23805,7 +23805,7 @@ http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
   &lt;isFilterSubdomain&gt;true&lt;/isFilterSubdomain&gt;
   &lt;internalTransport&gt;&lt;/internalTransport&gt;
   &lt;trafficRampupCyclePeriod&gt;&lt;/trafficRampupCyclePeriod&gt;
-  &lt;maxWeightIndex&gt;&lt;/maxWeightIndex&gt;
+  &lt;trafficPercentageIncrease&gt;&lt;/trafficPercentageIncrease&gt;
   &lt;algorithm&gt;
     &lt;algorithmClass&gt;&lt;/algorithmClass&gt;
     &lt;sipHeaderAffinityKey&gt;&lt;/sipHeaderAffinityKey&gt;
@@ -24097,9 +24097,10 @@ if true LB will remove route ended with .matchingHostnameForRoute(a.restcomm.com
 <p>Uses if rump-up needed.Period after which LB will update Node&#8217;s array based
 on weight of the Node.</p>
 </dd>
-<dt class="hdlist1">maxWeightIndex</dt>
+<dt class="hdlist1">trafficPercentageIncrease</dt>
 <dd>
-<p>Uses if rump-up needed. Max weight of node.</p>
+<p>Uses if rump-up needed. Percent on which traffic will be increased after
+each trafficRampupCyclePeriod.</p>
 </dd>
 </dl>
 </div>
@@ -25690,7 +25691,7 @@ sip-node-1, sip-node-2 etc., then this tag should be &lt;nodeName&gt;sip-node&lt
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-06-16 10:46:49 WEST
+Last updated 2017-06-17 10:50:28 WEST
 </div>
 </div>
 <footer>
