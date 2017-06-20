@@ -22764,13 +22764,13 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <ul class="sectlevel3">
 <li><a href="#prerequisites">Prerequisites</a></li>
 <li><a href="#restcomm">1. Restcomm</a></li>
-<li><a href="#restcomm-client-androidsdk">2. Restcomm Client Android SDK</a></li>
+<li><a href="#restcomm-client-androidsdk">2. Restcomm WebRTC Android SDK</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="paragraph">
-<p>This tutorial will show you how to integrate Restcomm Client Android SDK into your Apps to tap into the Restcomm telecom capabilities.</p>
+<p>This tutorial will show you how to integrate Restcomm WebRTC Android SDK into your Apps to tap into the Restcomm telecom capabilities.</p>
 </div>
 <div class="sect3">
 <h4 id="prerequisites"><a class="anchor" href="#prerequisites"></a>Prerequisites</h4>
@@ -22802,20 +22802,20 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 </div>
 <div class="sect3">
-<h4 id="restcomm-client-androidsdk"><a class="anchor" href="#restcomm-client-androidsdk"></a>2. Restcomm Client Android SDK</h4>
+<h4 id="restcomm-client-androidsdk"><a class="anchor" href="#restcomm-client-androidsdk"></a>2. Restcomm WebRTC Android SDK</h4>
 <div class="paragraph">
 <p>Once you have installed the  Restcomm platform (or you are using RaaS) you are ready to start taking advantage of Restcomm&#8217;s features from your Android Applications. Here&#8217;s what you need to do:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Grab the latest Restcomm Client Android SDK release from GitHub: https://github.com/RestComm/restcomm-android-sdk/releases/tag/v1.0.0-BETA4. At the time of this writing it is v1.0.0-beta5 and the bundle you need to download is restcomm-android-sdk-1.0.0-beta5.tar.bz2</p>
+<p>Grab the latest Restcomm WebRTC Android SDK release from GitHub: https://github.com/RestComm/restcomm-android-sdk/releases/tag/v1.0.0-BETA6. At the time of this writing it is v1.0.0-beta6 and the bundle you need to download is restcomm-android-sdk-1.0.0-beta6.tar.bz2</p>
 </li>
 <li>
 <p>Extract it:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-theme:github" data-lang="theme:github">$ tar -jxvf restcomm-android-sdk-1.0.0-beta5.tar.bz2</code></pre>
+<pre class="highlight"><code class="language-theme:github" data-lang="theme:github">$ tar -jxvf restcomm-android-sdk-1.0.0-beta6.tar.bz2</code></pre>
 </div>
 </div>
 </li>
@@ -22950,7 +22950,7 @@ project(':restcomm.android.sdk').projectDir=new File('../../restcomm.android.sdk
 </div>
 </li>
 <li>
-<p>Ok, now that we have all the settings ready the App should be able to build and run but with no actual functionality yet. For that we need to take advantage of the SDK facilities. So first you need to import required Android Client packages and make your Activity the listener of Android Client events (such as incoming calls and messages) as well as OnClick events for the buttons:</p>
+<p>Ok, now that we have all the settings ready the App should be able to build and run but with no actual functionality yet. For that we need to take advantage of the SDK facilities. So first you need to import required Android SDK packages and make your Activity the listener of Android SDK events (such as incoming calls and messages) as well as OnClick events for the buttons:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">import org.restcomm.android.sdk.RCClient;
@@ -22966,7 +22966,7 @@ public class MainActivity extends Activity implements RCDeviceListener, RCConnec
 </div>
 </li>
 <li>
-<p>Once you do that you 'll have to implement the Android Client listener interface methods with empty stubs so that Java doesn&#8217;t complain. Notice that for this example we are keeping things simple and not handling incoming events, but you could add that later. An exception are the webrtc video events (i.e. onReceiveLocal/RemoteVideo), which need to be there so that the video tracks can be added to our video view.</p>
+<p>Once you do that you 'll have to implement the Android SDK listener interface methods with empty stubs so that Java doesn&#8217;t complain. Notice that for this example we are keeping things simple and not handling incoming events, but you could add that later. An exception are the webrtc video events (i.e. onReceiveLocal/RemoteVideo), which need to be there so that the video tracks can be added to our video view.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">// RCDevice Listeners
@@ -22975,32 +22975,9 @@ public void onStartListening(RCDevice device, RCDeviceListener.RCConnectivitySta
 
 }
 
-public void onStopListening(RCDevice device)
-{
-
-}
-
 public void onStopListening(RCDevice device, int errorCode, String errorText)
 {
    Log.i(TAG, errorText);
-}
-
-public boolean receivePresenceEvents(RCDevice device)
-{
-   return false;
-}
-
-public void onPresenceChanged(RCDevice device, RCPresenceEvent presenceEvent)
-{
-
-}
-
-public void onIncomingConnection(RCDevice device, RCConnection connection)
-{
-}
-
-public void onIncomingMessage(RCDevice device, String message, HashMap&lt;String, String&gt; parameters)
-{
 }
 
 public void onConnectivityUpdate(RCDevice device, RCConnectivityStatus connectivityStatus)
@@ -23080,7 +23057,7 @@ public void onInitializationError(int errorCode, String errorText)
 </div>
 </li>
 <li>
-<p>Add the needed Android Client objects (i.e. RCDevice and RCConnection) in the Activity class as well as some convenience variables:</p>
+<p>Add the needed Android SDK objects (i.e. RCDevice and RCConnection) in the Activity class as well as some convenience variables:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">public class MainActivity extends Activity implements RCDeviceListener, RCConnectionListener, View.OnClickListener {
@@ -23094,7 +23071,7 @@ public void onInitializationError(int errorCode, String errorText)
 </div>
 </li>
 <li>
-<p>In order to make the buttons we created available to the App and also initialise the Android Client you need to update the onCreate() method of your activity as follows:</p>
+<p>In order to make the buttons we created available to the App and also initialise the Android SDK you need to update the onCreate() method of your activity as follows:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">protected void onCreate(Bundle savedInstanceState) {
@@ -23125,7 +23102,7 @@ public void onInitializationError(int errorCode, String errorText)
 </div>
 </li>
 <li>
-<p>Handle Android Service callbacks to initialized the SDK facilities. Remember that the SDK is wrapped inside and Android Service to be able to linger on even after Activities have been sent in the background or have been destroyed.</p>
+<p>Handle Android Service callbacks to initialized the SDK facilities. Remember that the SDK is wrapped inside an Android Service to be able to linger on even after Activities have been sent in the background or have been destroyed.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">// Callbacks for service binding, passed to bindService()
@@ -23291,7 +23268,7 @@ private void resumeCall()
 </div>
 </li>
 <li>
-<p>Now press dial and your Appliation will instruct the Android Client Library to call the configured Restcomm instance and voila, you will hear the announcement!</p>
+<p>Now press dial and your Appliation will instruct the Android SDK to call the configured Restcomm instance and voila, you will hear the announcement!</p>
 </li>
 <li>
 <p>Finally, you can press Hang up to terminate the call whenever you like.</p>
@@ -23322,7 +23299,7 @@ private void resumeCall()
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-06-19 10:35:10 WEST
+Last updated 2017-06-20 10:35:19 WEST
 </div>
 </div>
 <footer>
