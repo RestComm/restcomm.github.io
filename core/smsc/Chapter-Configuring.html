@@ -24699,6 +24699,28 @@ For more details refer to <a href="#_smsc_gateway_server_hr">[_smsc_gateway_serv
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>Pay also attention that SMSC GW in Home Routing mode usually plays "HLR role" and listens an extra SSN (usually SSN 6 as additionto SSN 8 for other functionality). These parameters are configured in <code>jboss-beans.xml</code> file for TCAP stack. You can find below the example of configuring of two listerning SSNs (8 and 6 in the example). This configuration is a default configuration out of box.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">	&lt;bean name="TcapStack" class="org.mobicents.protocols.ss7.tcap.TCAPStackImpl"&gt;
+		&lt;constructor&gt;
+			&lt;parameter&gt;TcapStack&lt;/parameter&gt;
+			&lt;parameter&gt;
+				&lt;inject bean="SccpStack" property="sccpProvider" /&gt;
+			&lt;/parameter&gt;
+			&lt;parameter&gt;8&lt;/parameter&gt;
+		&lt;/constructor&gt;
+		&lt;property name="persistDir"&gt;${jboss.server.data.dir}&lt;/property&gt;
+		&lt;property name="extraSsns"&gt;
+			&lt;list class="javolution.util.FastList" elementClass="java.lang.Integer"&gt;
+				&lt;value&gt;6&lt;/value&gt;
+			&lt;/list&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -25230,7 +25252,7 @@ The details of the format and the possible values for the fields recorded in the
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-06-26 10:47:31 WEST
+Last updated 2017-06-27 10:46:52 WEST
 </div>
 </div>
 <footer>
