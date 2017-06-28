@@ -25514,6 +25514,12 @@ If a message fits to all conditions then the rule will be applied to the message
 <td class="tableblock halign-left valign-top"><p class="tableblock">mproc rule will be applied only if message contains a TLV parameter which matches the tag key, value type, and tag value.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">"-1", "string", "-1" : acts as wild card and hence messages with any optional parameter will match.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">percent</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;percent value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines probability with which mproc rule will be applied to a message. For example, if percent is specified as 60, there will be 60% chance that this rule will be applied. Consequently, in 40% of cases, mproc rule will be skipped.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that mproc rule will be applied to 100% of messages.</p></td>
+</tr>
 </tbody>
 </table>
 <div class="paragraph">
@@ -25625,6 +25631,18 @@ If a message fits to all conditions then the rule will be applied to the message
 <td class="tableblock halign-left valign-top"><p class="tableblock">DeliveryTempFailure trigger / &lt;networkId value&gt;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">This action at the step when a message delivery has failed temporarily. Message will be rerouted for delivery to another networkId.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that networkId of the message will not be changed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">droponarrival</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arrival trigger / &lt;false | true&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This action is performed at the step when message has arrived to the server. Message will be dropped without delivery attempt and success response will be returned to a sender.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rejectonarrival</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arrival trigger / &lt;NONE | DEFAULT | UNEXPECTED\_DATA\_VALUE | SYSTEM\_FAILURE | THROTTLING | FACILITY\_NOT\_SUPPORTED&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This action is performed at the step when message has arrived to the server. If value is NONE, no action will be performed. Otherwise message will be rejected without delivery attempt and reject response will be returned to a sender. Reject response will contain error codes for SMPP, SS7 and HTTP. Following are error codes listed in order SS7-SMPP-HTTP: DEFAULT: 34 (systemFailure) - 0 (Success) - 1; UNEXPECTED\_DATA\_VALUE: 36 (unexpectedDataValue) - 0x15 (Invalid service type) - 2; SYSTEM\_FAILURE: 34 (systemFailure) - 0x8 (System error) - 3; THROTTLING: 51 (resoureLimitation) - 0x58 (Throttling error) - 4; FACILITY_NOT_SUPPORTED: 21 (facilityNotSupported) - 0x65 (Permanent application error) - 5.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NONE</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">remove_tlv</p></td>
@@ -33780,15 +33798,16 @@ SYNOPSIS
 	-1&gt; origesmenamemask &lt;regualar expression - origination ESME name mask&gt;
 	originatorsccpaddressmask &lt;originator SCCP CallingPartyAddress mask&gt; processingtype
 	&lt;delivery processing type: SS7_SRI | SS7_MT | SMPP | SIP | -1&gt; errorcode &lt;internal SMSC
-	GW delivery error code value&gt; tlv_&lt;tlv tag key&gt;_&lt;tlv value type&gt; &lt;tlv value&gt;
-	newnetworkid &lt;new networkId value&gt; newdestton &lt;new destination type of number&gt;
+	GW delivery error code value&gt; tlv_&lt;tlv tag key&gt;_&lt;tlv value type&gt; &lt;tlv value&gt; percent
+	&lt;percent value&gt; newnetworkid &lt;new networkId value&gt; newdestton &lt;new destination type of number&gt;
 	newdestnpi &lt;new destination numbering plan indicator&gt;
 	adddestdigprefix &lt;prefix value&gt; addsourcedigprefix &lt;prefix value&gt;
 	newsourceton &lt;new source type of number&gt; newsourcenpi
 	&lt;new source numbering plan indicator&gt; newsourceaddr &lt;new source address value&gt; hrbypass
 	&lt;false | true&gt; dropaftersri &lt;false | true&gt; newnetworkidaftersri &lt;networkId value&gt;
-	newnetworkidafterpermfail &lt;networkId value&gt; dropaftertempfail &lt;false | true&gt;
-	newnetworkidaftertempfail &lt;networkId value&gt; remove_tlv &lt;tlv tag key&gt;
+	dropaftertempfail &lt;false | true&gt; newnetworkidaftertempfail &lt;networkId value&gt;
+	droponarrival &lt;false | true&gt; rejectonarrival &lt;NONE | DEFAULT | UNEXPECTED_DATA_VALUE
+	| SYSTEM_FAILURE |	THROTTLING | FACILITY_NOT_SUPPORTED&gt; remove_tlv &lt;tlv tag key&gt;
 
 DESCRIPTION
 
@@ -33818,6 +33837,7 @@ PARAMETERS
 	processingtype - an optional parameter.
 	errorcode - an optional parameter.
 	tlv_&lt;valuetype&gt;_&lt;tagkey&gt; - an optional parameter.
+	percent &lt;percent value&gt; - an optional parameter.
 
 	newnetworkid - an optional parameter.
 	newdestton - an optional parameter.
@@ -33834,6 +33854,8 @@ PARAMETERS
 	newnetworkidafterpermfail - an optional parameter.
 	dropaftertempfail - an optional parameter.
 	newnetworkidaftertempfail - an optional parameter.
+	droponarrival - an optional parameter.
+	rejectonarrival - an optional parameter.
 	remove_tlv - an optional parameter.
 
 EXAMPLES
@@ -33899,15 +33921,16 @@ SYNOPSIS
 	-1&gt; origesmenamemask &lt;regualar expression - origination ESME name mask&gt;
 	originatorsccpaddressmask &lt;originator SCCP CallingPartyAddress mask&gt; processingtype
 	&lt;delivery processing type: SS7_SRI | SS7_MT | SMPP | SIP | -1&gt; errorcode &lt;internal SMSC
-	GW delivery error code value&gt; tlv_&lt;tlv tag key&gt;_&lt;tlv value type&gt; &lt;tlv value&gt;
-	newnetworkid &lt;new networkId value&gt; newdestton &lt;new destination type of number&gt;
+	GW delivery error code value&gt; tlv_&lt;tlv tag key&gt;_&lt;tlv value type&gt; &lt;tlv value&gt; percent
+	&lt;percent value&gt; newnetworkid &lt;new networkId value&gt; newdestton &lt;new destination type of number&gt;
 	newdestnpi &lt;new destination numbering plan indicator&gt;
 	adddestdigprefix &lt;prefix value&gt; addsourcedigprefix &lt;prefix value&gt;
 	newsourceton &lt;new source type of number&gt; newsourcenpi
 	&lt;new source numbering plan indicator&gt; newsourceaddr &lt;new source address value&gt; hrbypass
 	&lt;false | true&gt; dropaftersri &lt;false | true&gt; newnetworkidaftersri &lt;networkId value&gt;
-	newnetworkidafterpermfail &lt;networkId value&gt; dropaftertempfail &lt;false | true&gt;
-	newnetworkidaftertempfail &lt;networkId value&gt; remove_tlv &lt;tlv tag key&gt;
+	dropaftertempfail &lt;false | true&gt; newnetworkidaftertempfail &lt;networkId value&gt;
+	droponarrival &lt;false | true&gt; rejectonarrival &lt;NONE | DEFAULT | UNEXPECTED_DATA_VALUE
+	| SYSTEM_FAILURE | THROTTLING | FACILITY_NOT_SUPPORTED&gt; remove_tlv &lt;tlv tag key&gt;
 
 DESCRIPTION
 
@@ -33935,6 +33958,7 @@ PARAMETERS
 	processingtype - an optional parameter.
 	errorcode - an optional parameter.
 	tlv_&lt;valuetype&gt;_&lt;tagkey&gt; - an optional parameter.
+	percent &lt;percent value&gt; - an optional parameter.
 
 	newnetworkid - an optional parameter.
 	newdestton - an optional parameter.
@@ -33951,6 +33975,8 @@ PARAMETERS
 	newnetworkidafterpermfail - an optional parameter.
 	dropaftertempfail - an optional parameter.
 	newnetworkidaftertempfail - an optional parameter.
+	droponarrival - an optional parameter.
+	rejectonarrival - an optional parameter.
 	remove_tlv - an optional parameter.
 
 EXAMPLES
@@ -35428,7 +35454,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-06-27 11:59:57 WEST
+Last updated 2017-06-28 10:47:26 WEST
 </div>
 </div>
 <footer>

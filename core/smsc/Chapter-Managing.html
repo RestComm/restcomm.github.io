@@ -29383,15 +29383,16 @@ SYNOPSIS
 	-1&gt; origesmenamemask &lt;regualar expression - origination ESME name mask&gt;
 	originatorsccpaddressmask &lt;originator SCCP CallingPartyAddress mask&gt; processingtype
 	&lt;delivery processing type: SS7_SRI | SS7_MT | SMPP | SIP | -1&gt; errorcode &lt;internal SMSC
-	GW delivery error code value&gt; tlv_&lt;tlv tag key&gt;_&lt;tlv value type&gt; &lt;tlv value&gt;
-	newnetworkid &lt;new networkId value&gt; newdestton &lt;new destination type of number&gt;
+	GW delivery error code value&gt; tlv_&lt;tlv tag key&gt;_&lt;tlv value type&gt; &lt;tlv value&gt; percent
+	&lt;percent value&gt; newnetworkid &lt;new networkId value&gt; newdestton &lt;new destination type of number&gt;
 	newdestnpi &lt;new destination numbering plan indicator&gt;
 	adddestdigprefix &lt;prefix value&gt; addsourcedigprefix &lt;prefix value&gt;
 	newsourceton &lt;new source type of number&gt; newsourcenpi
 	&lt;new source numbering plan indicator&gt; newsourceaddr &lt;new source address value&gt; hrbypass
 	&lt;false | true&gt; dropaftersri &lt;false | true&gt; newnetworkidaftersri &lt;networkId value&gt;
-	newnetworkidafterpermfail &lt;networkId value&gt; dropaftertempfail &lt;false | true&gt;
-	newnetworkidaftertempfail &lt;networkId value&gt; remove_tlv &lt;tlv tag key&gt;
+	dropaftertempfail &lt;false | true&gt; newnetworkidaftertempfail &lt;networkId value&gt;
+	droponarrival &lt;false | true&gt; rejectonarrival &lt;NONE | DEFAULT | UNEXPECTED_DATA_VALUE
+	| SYSTEM_FAILURE |	THROTTLING | FACILITY_NOT_SUPPORTED&gt; remove_tlv &lt;tlv tag key&gt;
 
 DESCRIPTION
 
@@ -29421,6 +29422,7 @@ PARAMETERS
 	processingtype - an optional parameter.
 	errorcode - an optional parameter.
 	tlv_&lt;valuetype&gt;_&lt;tagkey&gt; - an optional parameter.
+	percent &lt;percent value&gt; - an optional parameter.
 
 	newnetworkid - an optional parameter.
 	newdestton - an optional parameter.
@@ -29437,6 +29439,8 @@ PARAMETERS
 	newnetworkidafterpermfail - an optional parameter.
 	dropaftertempfail - an optional parameter.
 	newnetworkidaftertempfail - an optional parameter.
+	droponarrival - an optional parameter.
+	rejectonarrival - an optional parameter.
 	remove_tlv - an optional parameter.
 
 EXAMPLES
@@ -29502,15 +29506,16 @@ SYNOPSIS
 	-1&gt; origesmenamemask &lt;regualar expression - origination ESME name mask&gt;
 	originatorsccpaddressmask &lt;originator SCCP CallingPartyAddress mask&gt; processingtype
 	&lt;delivery processing type: SS7_SRI | SS7_MT | SMPP | SIP | -1&gt; errorcode &lt;internal SMSC
-	GW delivery error code value&gt; tlv_&lt;tlv tag key&gt;_&lt;tlv value type&gt; &lt;tlv value&gt;
-	newnetworkid &lt;new networkId value&gt; newdestton &lt;new destination type of number&gt;
+	GW delivery error code value&gt; tlv_&lt;tlv tag key&gt;_&lt;tlv value type&gt; &lt;tlv value&gt; percent
+	&lt;percent value&gt; newnetworkid &lt;new networkId value&gt; newdestton &lt;new destination type of number&gt;
 	newdestnpi &lt;new destination numbering plan indicator&gt;
 	adddestdigprefix &lt;prefix value&gt; addsourcedigprefix &lt;prefix value&gt;
 	newsourceton &lt;new source type of number&gt; newsourcenpi
 	&lt;new source numbering plan indicator&gt; newsourceaddr &lt;new source address value&gt; hrbypass
 	&lt;false | true&gt; dropaftersri &lt;false | true&gt; newnetworkidaftersri &lt;networkId value&gt;
-	newnetworkidafterpermfail &lt;networkId value&gt; dropaftertempfail &lt;false | true&gt;
-	newnetworkidaftertempfail &lt;networkId value&gt; remove_tlv &lt;tlv tag key&gt;
+	dropaftertempfail &lt;false | true&gt; newnetworkidaftertempfail &lt;networkId value&gt;
+	droponarrival &lt;false | true&gt; rejectonarrival &lt;NONE | DEFAULT | UNEXPECTED_DATA_VALUE
+	| SYSTEM_FAILURE | THROTTLING | FACILITY_NOT_SUPPORTED&gt; remove_tlv &lt;tlv tag key&gt;
 
 DESCRIPTION
 
@@ -29538,6 +29543,7 @@ PARAMETERS
 	processingtype - an optional parameter.
 	errorcode - an optional parameter.
 	tlv_&lt;valuetype&gt;_&lt;tagkey&gt; - an optional parameter.
+	percent &lt;percent value&gt; - an optional parameter.
 
 	newnetworkid - an optional parameter.
 	newdestton - an optional parameter.
@@ -29554,6 +29560,8 @@ PARAMETERS
 	newnetworkidafterpermfail - an optional parameter.
 	dropaftertempfail - an optional parameter.
 	newnetworkidaftertempfail - an optional parameter.
+	droponarrival - an optional parameter.
+	rejectonarrival - an optional parameter.
 	remove_tlv - an optional parameter.
 
 EXAMPLES
@@ -29794,7 +29802,7 @@ Hence graph will show historic data from the point the page was loaded.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-06-27 11:59:57 WEST
+Last updated 2017-06-28 10:47:26 WEST
 </div>
 </div>
 <footer>
