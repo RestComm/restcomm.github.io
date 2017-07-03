@@ -23037,7 +23037,7 @@ If we use default routing rules, then for routing SMSC GW makes following steps:
 <ul>
 <li>
 <p>it checks all ESMEs / ESME clustes that belong to the networkId.
-It checks if TON, NPI and AddressRange of an ESME / cluster Routing Address fit to a message destination TON, NPI and address digits the the message will be routed to this ESME. Several ESMEs inside a single networkId area can be grouped in a cluster. In this case the load is shared in a round robin fashion between ESME nodes in the cluster.
+It checks if TON, NPI and AddressRange of an ESME / cluster Routing Address fit to a message destination TON, NPI and address digits the the message will be routed to this ESME. Several ESMEs inside a single networkId area can be grouped in a cluster.
 There is one exception of this rule.
 A message will not be routed in any case to the ESME from which it has come.</p>
 </li>
@@ -23050,6 +23050,9 @@ If yes the message will be routed to SIP</p>
 Then routing rules at SCCP level will be taken into account for further routing.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>ESMEs (inside a networkId area) can be grouped in a cluster (by setting of a parameter "cluster-name" to the same for all ESMEs). "routing-range" must be the same for all ESMEs in a cluster. When routing procedure SMSC GW firstly select a cluster (based on "routing-range" value). Then SMSC GW selects an ESME inside a cluster in a round robin fashion (only those ESMEs are taken into account that are connected). This allow make load sharing across ESMEs inside a cluster (and use an ESME cluster for loadsharing between destinations).</p>
 </div>
 <div class="paragraph">
 <p>For configuring of ESME and SIP routing parameters see <a href="#_esme_settings">[_esme_settings]</a> and <a href="#_sip">[_sip]</a>.</p>
@@ -25270,7 +25273,7 @@ The details of the format and the possible values for the fields recorded in the
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-07-02 10:44:57 WEST
+Last updated 2017-07-03 10:45:28 WEST
 </div>
 </div>
 <footer>

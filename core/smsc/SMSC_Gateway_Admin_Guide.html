@@ -25069,7 +25069,7 @@ If we use default routing rules, then for routing SMSC GW makes following steps:
 <ul>
 <li>
 <p>it checks all ESMEs / ESME clustes that belong to the networkId.
-It checks if TON, NPI and AddressRange of an ESME / cluster Routing Address fit to a message destination TON, NPI and address digits the the message will be routed to this ESME. Several ESMEs inside a single networkId area can be grouped in a cluster. In this case the load is shared in a round robin fashion between ESME nodes in the cluster.
+It checks if TON, NPI and AddressRange of an ESME / cluster Routing Address fit to a message destination TON, NPI and address digits the the message will be routed to this ESME. Several ESMEs inside a single networkId area can be grouped in a cluster.
 There is one exception of this rule.
 A message will not be routed in any case to the ESME from which it has come.</p>
 </li>
@@ -25082,6 +25082,9 @@ If yes the message will be routed to SIP</p>
 Then routing rules at SCCP level will be taken into account for further routing.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>ESMEs (inside a networkId area) can be grouped in a cluster (by setting of a parameter "cluster-name" to the same for all ESMEs). "routing-range" must be the same for all ESMEs in a cluster. When routing procedure SMSC GW firstly select a cluster (based on "routing-range" value). Then SMSC GW selects an ESME inside a cluster in a round robin fashion (only those ESMEs are taken into account that are connected). This allow make load sharing across ESMEs inside a cluster (and use an ESME cluster for loadsharing between destinations).</p>
 </div>
 <div class="paragraph">
 <p>For configuring of ESME and SIP routing parameters see <a href="#_esme_settings">External Short Messaging Entities (ESMEs)</a> and <a href="#_sip">SIP Settings</a>.</p>
@@ -31579,6 +31582,9 @@ This is useful only when SMS is suppose to be routed out of Restcomm SMSC to ESM
 </ul>
 </div>
 <div class="paragraph">
+<p>In order to this algo works properly we need to specify same "routing-ton", "routing-npi" and "routing-range" parameters for all ESMEs in a cluster.</p>
+</div>
+<div class="paragraph">
 <p>Below diagram explains the load-balancing between SMPP connections</p>
 </div>
 <div class="imageblock">
@@ -34535,7 +34541,7 @@ It does not indicate if a resend will be attempted or not.</p>
 </dd>
 <dt class="hdlist1">failed</dt>
 <dd>
-<p>Failed delivering a message and the SMSC will now attempt to resend the message or part of the message.</p>
+<p>Failed delivering a message and the SMSC will not attempt to resend the message or part of the message. This status may also be when ValidityPeriod for a short message is expire (SMSC will now attempt to resend the message)</p>
 </dd>
 <dt class="hdlist1">failed_imsi</dt>
 <dd>
@@ -34560,7 +34566,7 @@ It does not indicate if a resend will be attempted or not.</p>
 </dd>
 <dt class="hdlist1">failed_esme</dt>
 <dd>
-<p>Failed delivering a message and the SMSC will now attempt to resend the message or part of the message.</p>
+<p>Failed delivering a message and the SMSC will nor attempt to resend the message or part of the message.</p>
 </dd>
 </dl>
 </div>
@@ -34581,7 +34587,7 @@ It does not indicate if a resend will be attempted or not.</p>
 </dd>
 <dt class="hdlist1">failed_sip</dt>
 <dd>
-<p>Failed delivering a message and the SMSC will now attempt to resend the message or part of the message.</p>
+<p>Failed delivering a message and the SMSC will not attempt to resend the message or part of the message.</p>
 </dd>
 </dl>
 </div>
@@ -34642,7 +34648,7 @@ It does not indicate if a resend will be attempted or not.</p>
 </div>
 <div class="paragraph">
 <div class="title">MSG_PARTS</div>
-<p>A count of message parts for which SMSC GW will split a message when delivering to SS7 network. If a message is short or already splitted then this field will contain <code>1</code>.</p>
+<p>A count of message parts of long sms, which were sent to an operator in a solid manner (not split) (may be used for charging purposes). For other cases if a message is short, already split by a message originator or split by SMSC GW itself then this field will contain <code>1</code>.</p>
 </div>
 <div class="paragraph">
 <div class="title">CHAR_NUMBERS</div>
@@ -35454,7 +35460,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-07-02 10:44:57 WEST
+Last updated 2017-07-03 10:45:28 WEST
 </div>
 </div>
 <footer>

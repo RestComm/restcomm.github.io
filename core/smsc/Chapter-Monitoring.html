@@ -22972,7 +22972,7 @@ It does not indicate if a resend will be attempted or not.</p>
 </dd>
 <dt class="hdlist1">failed</dt>
 <dd>
-<p>Failed delivering a message and the SMSC will now attempt to resend the message or part of the message.</p>
+<p>Failed delivering a message and the SMSC will not attempt to resend the message or part of the message. This status may also be when ValidityPeriod for a short message is expire (SMSC will now attempt to resend the message)</p>
 </dd>
 <dt class="hdlist1">failed_imsi</dt>
 <dd>
@@ -22997,7 +22997,7 @@ It does not indicate if a resend will be attempted or not.</p>
 </dd>
 <dt class="hdlist1">failed_esme</dt>
 <dd>
-<p>Failed delivering a message and the SMSC will now attempt to resend the message or part of the message.</p>
+<p>Failed delivering a message and the SMSC will nor attempt to resend the message or part of the message.</p>
 </dd>
 </dl>
 </div>
@@ -23018,7 +23018,7 @@ It does not indicate if a resend will be attempted or not.</p>
 </dd>
 <dt class="hdlist1">failed_sip</dt>
 <dd>
-<p>Failed delivering a message and the SMSC will now attempt to resend the message or part of the message.</p>
+<p>Failed delivering a message and the SMSC will not attempt to resend the message or part of the message.</p>
 </dd>
 </dl>
 </div>
@@ -23079,7 +23079,7 @@ It does not indicate if a resend will be attempted or not.</p>
 </div>
 <div class="paragraph">
 <div class="title">MSG_PARTS</div>
-<p>A count of message parts for which SMSC GW will split a message when delivering to SS7 network. If a message is short or already splitted then this field will contain <code>1</code>.</p>
+<p>A count of message parts of long sms, which were sent to an operator in a solid manner (not split) (may be used for charging purposes). For other cases if a message is short, already split by a message originator or split by SMSC GW itself then this field will contain <code>1</code>.</p>
 </div>
 <div class="paragraph">
 <div class="title">CHAR_NUMBERS</div>
@@ -23178,7 +23178,7 @@ This is an abnormal case and implies MAP incompatibility.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-07-02 10:44:57 WEST
+Last updated 2017-07-03 10:45:28 WEST
 </div>
 </div>
 <footer>
