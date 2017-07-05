@@ -22772,30 +22772,31 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </ul>
 </li>
 <li><a href="#_http_client_ra">3. Configuring JSLEE http-client RA</a></li>
-<li><a href="#_logging">4. Configuring log4j Logging Service</a></li>
-<li><a href="#_configuring_ss7">5. Configuring the SS7 Stack</a></li>
-<li><a href="#_configuring_ussd_gw">6. Configuring the USSD Gateway</a>
+<li><a href="#_http_server_ra">4. Configuring JSLEE http-servlet RA</a></li>
+<li><a href="#_logging">5. Configuring log4j Logging Service</a></li>
+<li><a href="#_configuring_ss7">6. Configuring the SS7 Stack</a></li>
+<li><a href="#_configuring_ussd_gw">7. Configuring the USSD Gateway</a>
 <ul class="sectlevel2">
-<li><a href="#_set_noroutingruleconfigerrmssg">6.1. No Routing Rule Configured Error Message</a></li>
-<li><a href="#_set_dialogtimeouterrmssg">6.2. Dialog Timeout Error Message</a></li>
-<li><a href="#_set_servererrmssg">6.3. Server Error Message</a></li>
-<li><a href="#_set_serveroverloadedmsg">6.4. Server Overload Message</a></li>
-<li><a href="#_set_dialogtimeout">6.5. Dialog Timeout</a></li>
-<li><a href="#_set_maxactivitycount">6.6. Max activity count</a></li>
-<li><a href="#_set_hrhlrnumber">6.7. Special HLR addressing</a></li>
-<li><a href="#_set_cdrlogging">6.8. CDR logging - Database / Textfile</a></li>
-<li><a href="#_setting_ussd_gt">6.9. USSD Global Title</a></li>
-<li><a href="#_setting_ussd_ssn">6.10. USSD Sub System Number</a></li>
-<li><a href="#_setting_ussd_hlrssn">6.11. HLR Sub System Number</a></li>
-<li><a href="#_setting_ussd_mscssn">6.12. MSC Sub System Number</a></li>
-<li><a href="#_setting_ussd_maxmapv">6.13. MAP Application Context version</a></li>
-<li><a href="#_setting_ussd_routing_rules_show">6.14. View USSD Rules</a></li>
-<li><a href="#_setting_ussd_routing_rules_create">6.15. Create new USSD Rule</a></li>
-<li><a href="#_setting_ussd_routing_rules_modify">6.16. Modify an existing USSD Rule</a></li>
-<li><a href="#_setting_ussd_routing_rules_delete">6.17. Delete USSD Rule</a></li>
+<li><a href="#_set_noroutingruleconfigerrmssg">7.1. No Routing Rule Configured Error Message</a></li>
+<li><a href="#_set_dialogtimeouterrmssg">7.2. Dialog Timeout Error Message</a></li>
+<li><a href="#_set_servererrmssg">7.3. Server Error Message</a></li>
+<li><a href="#_set_serveroverloadedmsg">7.4. Server Overload Message</a></li>
+<li><a href="#_set_dialogtimeout">7.5. Dialog Timeout</a></li>
+<li><a href="#_set_maxactivitycount">7.6. Max activity count</a></li>
+<li><a href="#_set_hrhlrnumber">7.7. Special HLR addressing</a></li>
+<li><a href="#_set_cdrlogging">7.8. CDR logging - Database / Textfile</a></li>
+<li><a href="#_setting_ussd_gt">7.9. USSD Global Title</a></li>
+<li><a href="#_setting_ussd_ssn">7.10. USSD Sub System Number</a></li>
+<li><a href="#_setting_ussd_hlrssn">7.11. HLR Sub System Number</a></li>
+<li><a href="#_setting_ussd_mscssn">7.12. MSC Sub System Number</a></li>
+<li><a href="#_setting_ussd_maxmapv">7.13. MAP Application Context version</a></li>
+<li><a href="#_setting_ussd_routing_rules_show">7.14. View USSD Rules</a></li>
+<li><a href="#_setting_ussd_routing_rules_create">7.15. Create new USSD Rule</a></li>
+<li><a href="#_setting_ussd_routing_rules_modify">7.16. Modify an existing USSD Rule</a></li>
+<li><a href="#_setting_ussd_routing_rules_delete">7.17. Delete USSD Rule</a></li>
 </ul>
 </li>
-<li><a href="#_configuring_ussd_simulator_profile">7. Simulator Profile</a></li>
+<li><a href="#_configuring_ussd_simulator_profile">8. Simulator Profile</a></li>
 </ul>
 </div>
 </div>
@@ -23094,9 +23095,9 @@ Usually this will also create some ERROR traces in server.log</p>
 <h2 id="_http_client_ra"><a class="anchor" href="#_http_client_ra"></a>3. Configuring JSLEE http-client RA</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Restcomm USSD GateWay acts as a HTTP Client to achieve USSD pull by sending a HTTP POST request to third party applications (HTTP Server) for every dialled short code.
+<p>Restcomm USSD GateWay acts as a HTTP Client to achieve USSD PULL by sending a HTTP POST request to third party applications (HTTP Server) for every dialled short code.
 You must configure the HTTP Client JSLEE Resource Adaptor&#8217;s properties to suit your requirements.
-Please refer to the SLEE RA HTTP Client User Guide available in <em class="path">restcomm-ussdgateway/docs/slee/Mobicents_SLEE_RA_HTTP_Client_User_Guide.pdf</em>.</p>
+Please refer to the SLEE RA HTTP Client User Guide available in restcomm-ussdgateway/docs/resources/http-client.</p>
 </div>
 <div class="paragraph">
 <p>For every Short Code Routing rule added in the USSD Gateway, you must ensure that there is a corresponding <code>MAX_CONNECTIONS_FOR_ROUTES</code> property appropriately configured in the HTTP Client JSLEE RA.</p>
@@ -23117,7 +23118,20 @@ You must modify the <code>MAX_CONNECTIONS_FOR_ROUTES</code> property to meet you
 </div>
 </div>
 <div class="sect1">
-<h2 id="_logging"><a class="anchor" href="#_logging"></a>4. Configuring log4j Logging Service</h2>
+<h2 id="_http_server_ra"><a class="anchor" href="#_http_server_ra"></a>4. Configuring JSLEE http-servlet RA</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Restcomm USSD GateWay acts as a HTTP Server to achieve USSD PUSH by accepting of a HTTP POST request from third party applications.
+You must configure the HTTP Servlet JSLEE Resource Adaptor&#8217;s properties and the HTTP Tomcat server properties to suit your requirements.
+Please refer to the SLEE RA HTTP Servlet User Guide available in restcomm-ussdgateway/docs/resources/http-server and HTTP Tomcat server configuring in <a href="https://docs.jboss.org/jbossas/guides/webguide/r2/en/html/ch02.html" class="bare">https://docs.jboss.org/jbossas/guides/webguide/r2/en/html/ch02.html</a>.</p>
+</div>
+<div class="paragraph">
+<p>You must ensure to add a parameter like <code>maxThreads="500"</code> into restcomm-ussdgateway/jboss-5.1.0.GA/server/default/deploy/jbossweb.sar/server.xml file into <code>Connector</code> element to increase a count of concurrent PUSH requests.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_logging"><a class="anchor" href="#_logging"></a>5. Configuring log4j Logging Service</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Restcomm USSD GateWay uses <code>Apache log4j</code> for logging.
@@ -23135,7 +23149,7 @@ We recommend that you set logging threshold to <code>WARN</code> and let the CDR
 </div>
 </div>
 <div class="sect1">
-<h2 id="_configuring_ss7"><a class="anchor" href="#_configuring_ss7"></a>5. Configuring the SS7 Stack</h2>
+<h2 id="_configuring_ss7"><a class="anchor" href="#_configuring_ss7"></a>6. Configuring the SS7 Stack</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>You must configure the SS7 Stack prior to configuring USSD.
@@ -23146,7 +23160,7 @@ In addition, help files are also available for every Shell command providing all
 </div>
 </div>
 <div class="sect1">
-<h2 id="_configuring_ussd_gw"><a class="anchor" href="#_configuring_ussd_gw"></a>6. Configuring the USSD Gateway</h2>
+<h2 id="_configuring_ussd_gw"><a class="anchor" href="#_configuring_ussd_gw"></a>7. Configuring the USSD Gateway</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Once you have configured the SS7 Stack you can continue with USSD configuration using the CLI tool or the GUI.
@@ -23220,9 +23234,9 @@ You can do these using the CLI tool or the GUI.</p>
 </dl>
 </div>
 <div class="sect2">
-<h3 id="_set_noroutingruleconfigerrmssg"><a class="anchor" href="#_set_noroutingruleconfigerrmssg"></a>6.1. No Routing Rule Configured Error Message</h3>
+<h3 id="_set_noroutingruleconfigerrmssg"><a class="anchor" href="#_set_noroutingruleconfigerrmssg"></a>7.1. No Routing Rule Configured Error Message</h3>
 <div class="sect3">
-<h4 id="_set_noroutingruleconfigerrmssg_cli"><a class="anchor" href="#_set_noroutingruleconfigerrmssg_cli"></a>6.1.1. Using CLI</h4>
+<h4 id="_set_noroutingruleconfigerrmssg_cli"><a class="anchor" href="#_set_noroutingruleconfigerrmssg_cli"></a>7.1.1. Using CLI</h4>
 <div class="paragraph">
 <p>You can set the 'No Routing Rule Configured Error Message' by issuing the command <code>ussd set noroutingruleconfigerrmssg</code> with appropriate parameters as described below:</p>
 </div>
@@ -23259,7 +23273,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect3">
-<h4 id="_set_noroutingruleconfigerrmssg_gui"><a class="anchor" href="#_set_noroutingruleconfigerrmssg_gui"></a>6.1.2. Using GUI</h4>
+<h4 id="_set_noroutingruleconfigerrmssg_gui"><a class="anchor" href="#_set_noroutingruleconfigerrmssg_gui"></a>7.1.2. Using GUI</h4>
 <div class="olist arabic">
 <div class="title">Procedure: Set No Routing Rule Configured Error Message using the GUI</div>
 <ol class="arabic">
@@ -23283,9 +23297,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_set_dialogtimeouterrmssg"><a class="anchor" href="#_set_dialogtimeouterrmssg"></a>6.2. Dialog Timeout Error Message</h3>
+<h3 id="_set_dialogtimeouterrmssg"><a class="anchor" href="#_set_dialogtimeouterrmssg"></a>7.2. Dialog Timeout Error Message</h3>
 <div class="sect3">
-<h4 id="_set_dialogtimeouterrmssg_cli"><a class="anchor" href="#_set_dialogtimeouterrmssg_cli"></a>6.2.1. Using CLI</h4>
+<h4 id="_set_dialogtimeouterrmssg_cli"><a class="anchor" href="#_set_dialogtimeouterrmssg_cli"></a>7.2.1. Using CLI</h4>
 <div class="paragraph">
 <p>You can set the 'Dialog Timeout Error Message' by issuing the command <code>ussd set dialogtimeouterrmssg</code> with appropriate parameters as described below:</p>
 </div>
@@ -23324,7 +23338,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect3">
-<h4 id="_set_dialogtimeouterrmssg_gui"><a class="anchor" href="#_set_dialogtimeouterrmssg_gui"></a>6.2.2. Using GUI</h4>
+<h4 id="_set_dialogtimeouterrmssg_gui"><a class="anchor" href="#_set_dialogtimeouterrmssg_gui"></a>7.2.2. Using GUI</h4>
 <div class="olist arabic">
 <div class="title">Procedure: Set Dialog Timeout Error Message using the GUI</div>
 <ol class="arabic">
@@ -23348,9 +23362,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_set_servererrmssg"><a class="anchor" href="#_set_servererrmssg"></a>6.3. Server Error Message</h3>
+<h3 id="_set_servererrmssg"><a class="anchor" href="#_set_servererrmssg"></a>7.3. Server Error Message</h3>
 <div class="sect3">
-<h4 id="_set_servererrmssg_cli"><a class="anchor" href="#_set_servererrmssg_cli"></a>6.3.1. Using CLI</h4>
+<h4 id="_set_servererrmssg_cli"><a class="anchor" href="#_set_servererrmssg_cli"></a>7.3.1. Using CLI</h4>
 <div class="paragraph">
 <p>You can set the 'Server Error Message' by issuing the command <code>ussd set servererrmssg</code> with appropriate parameters as described below:</p>
 </div>
@@ -23386,7 +23400,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect3">
-<h4 id="_set_servererrmssg_gui"><a class="anchor" href="#_set_servererrmssg_gui"></a>6.3.2. Using GUI</h4>
+<h4 id="_set_servererrmssg_gui"><a class="anchor" href="#_set_servererrmssg_gui"></a>7.3.2. Using GUI</h4>
 <div class="olist arabic">
 <div class="title">Procedure: Set Server Error Message using the GUI</div>
 <ol class="arabic">
@@ -23410,9 +23424,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_set_serveroverloadedmsg"><a class="anchor" href="#_set_serveroverloadedmsg"></a>6.4. Server Overload Message</h3>
+<h3 id="_set_serveroverloadedmsg"><a class="anchor" href="#_set_serveroverloadedmsg"></a>7.4. Server Overload Message</h3>
 <div class="sect3">
-<h4 id="_set_serveroverloadedmsg_cli"><a class="anchor" href="#_set_serveroverloadedmsg_cli"></a>6.4.1. Using CLI</h4>
+<h4 id="_set_serveroverloadedmsg_cli"><a class="anchor" href="#_set_serveroverloadedmsg_cli"></a>7.4.1. Using CLI</h4>
 <div class="paragraph">
 <p>You can set the 'Server Overload Message' by issuing the command <code>ussd set serveroverloadedmsg</code> with appropriate parameters as described below:</p>
 </div>
@@ -23434,7 +23448,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect3">
-<h4 id="_set_serveroverloadedmsg_gui"><a class="anchor" href="#_set_serveroverloadedmsg_gui"></a>6.4.2. Using GUI</h4>
+<h4 id="_set_serveroverloadedmsg_gui"><a class="anchor" href="#_set_serveroverloadedmsg_gui"></a>7.4.2. Using GUI</h4>
 <div class="olist arabic">
 <div class="title">Procedure: Set Server Overload Message using the GUI</div>
 <ol class="arabic">
@@ -23458,9 +23472,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_set_dialogtimeout"><a class="anchor" href="#_set_dialogtimeout"></a>6.5. Dialog Timeout</h3>
+<h3 id="_set_dialogtimeout"><a class="anchor" href="#_set_dialogtimeout"></a>7.5. Dialog Timeout</h3>
 <div class="sect3">
-<h4 id="_set_dialogtimeout_cli"><a class="anchor" href="#_set_dialogtimeout_cli"></a>6.5.1. Using CLI</h4>
+<h4 id="_set_dialogtimeout_cli"><a class="anchor" href="#_set_dialogtimeout_cli"></a>7.5.1. Using CLI</h4>
 <div class="paragraph">
 <p>You can set the 'Dialog Timeout' value by issuing the command <code>ussd set dialogtimeout</code> with appropriate parameters as described below:</p>
 </div>
@@ -23502,7 +23516,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect3">
-<h4 id="_set_dialogtimeout_gui"><a class="anchor" href="#_set_dialogtimeout_gui"></a>6.5.2. Using GUI</h4>
+<h4 id="_set_dialogtimeout_gui"><a class="anchor" href="#_set_dialogtimeout_gui"></a>7.5.2. Using GUI</h4>
 <div class="olist arabic">
 <div class="title">Procedure: Set Dialog Timeout using the GUI</div>
 <ol class="arabic">
@@ -23526,9 +23540,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_set_maxactivitycount"><a class="anchor" href="#_set_maxactivitycount"></a>6.6. Max activity count</h3>
+<h3 id="_set_maxactivitycount"><a class="anchor" href="#_set_maxactivitycount"></a>7.6. Max activity count</h3>
 <div class="sect3">
-<h4 id="_set_maxactivitycount_cli"><a class="anchor" href="#_set_maxactivitycount_cli"></a>6.6.1. Using CLI</h4>
+<h4 id="_set_maxactivitycount_cli"><a class="anchor" href="#_set_maxactivitycount_cli"></a>7.6.1. Using CLI</h4>
 <div class="paragraph">
 <p>You can set the 'Max activity count' value by issuing the command <code>ussd set maxactivitycount</code> with appropriate parameters as described below:</p>
 </div>
@@ -23553,7 +23567,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect3">
-<h4 id="_set_maxactivitycount_gui"><a class="anchor" href="#_set_maxactivitycount_gui"></a>6.6.2. Using GUI</h4>
+<h4 id="_set_maxactivitycount_gui"><a class="anchor" href="#_set_maxactivitycount_gui"></a>7.6.2. Using GUI</h4>
 <div class="olist arabic">
 <div class="title">Procedure: Set Max activity count using the GUI</div>
 <ol class="arabic">
@@ -23577,9 +23591,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_set_hrhlrnumber"><a class="anchor" href="#_set_hrhlrnumber"></a>6.7. Special HLR addressing</h3>
+<h3 id="_set_hrhlrnumber"><a class="anchor" href="#_set_hrhlrnumber"></a>7.7. Special HLR addressing</h3>
 <div class="sect3">
-<h4 id="_set_hrhlrnumber_cli"><a class="anchor" href="#_set_hrhlrnumber_cli"></a>6.7.1. Using CLI</h4>
+<h4 id="_set_hrhlrnumber_cli"><a class="anchor" href="#_set_hrhlrnumber_cli"></a>7.7.1. Using CLI</h4>
 <div class="paragraph">
 <p>You can set the 'HLR address' (for SRI) to be used if SMSC is also present and configured in Home Routing mode, by issuing the command <code>ussd set hrhlrnumber</code> with appropriate parameters as described below:</p>
 </div>
@@ -23608,7 +23622,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect3">
-<h4 id="_set_hrhlrnumber_gui"><a class="anchor" href="#_set_hrhlrnumber_gui"></a>6.7.2. Using GUI</h4>
+<h4 id="_set_hrhlrnumber_gui"><a class="anchor" href="#_set_hrhlrnumber_gui"></a>7.7.2. Using GUI</h4>
 <div class="olist arabic">
 <div class="title">Procedure: Set HLR (for SRI) using the GUI</div>
 <ol class="arabic">
@@ -23632,9 +23646,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_set_cdrlogging"><a class="anchor" href="#_set_cdrlogging"></a>6.8. CDR logging - Database / Textfile</h3>
+<h3 id="_set_cdrlogging"><a class="anchor" href="#_set_cdrlogging"></a>7.8. CDR logging - Database / Textfile</h3>
 <div class="sect3">
-<h4 id="_set_cdrlogging_cli"><a class="anchor" href="#_set_cdrlogging_cli"></a>6.8.1. Using CLI</h4>
+<h4 id="_set_cdrlogging_cli"><a class="anchor" href="#_set_cdrlogging_cli"></a>7.8.1. Using CLI</h4>
 <div class="paragraph">
 <p>You can switch between Database and Textfile for CDR logging, by setting the 'cdrloggingto' value issuing the command <code>ussd set cdrloggingto</code> with appropriate parameters as described below:</p>
 </div>
@@ -23654,7 +23668,7 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect3">
-<h4 id="_set_cdrlogging_gui"><a class="anchor" href="#_set_cdrlogging_gui"></a>6.8.2. Using GUI</h4>
+<h4 id="_set_cdrlogging_gui"><a class="anchor" href="#_set_cdrlogging_gui"></a>7.8.2. Using GUI</h4>
 <div class="olist arabic">
 <div class="title">Procedure: Set CDR logging using the GUI</div>
 <ol class="arabic">
@@ -23678,9 +23692,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_setting_ussd_gt"><a class="anchor" href="#_setting_ussd_gt"></a>6.9. USSD Global Title</h3>
+<h3 id="_setting_ussd_gt"><a class="anchor" href="#_setting_ussd_gt"></a>7.9. USSD Global Title</h3>
 <div class="sect3">
-<h4 id="_setting_ussd_gt_cli"><a class="anchor" href="#_setting_ussd_gt_cli"></a>6.9.1. Using CLI</h4>
+<h4 id="_setting_ussd_gt_cli"><a class="anchor" href="#_setting_ussd_gt_cli"></a>7.9.1. Using CLI</h4>
 <div class="paragraph">
 <p>You can set the 'USSD Global Title' by issuing the command <code>ussd set ussdgt</code> with appropriate parameters as described below:</p>
 </div>
@@ -23727,7 +23741,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect3">
-<h4 id="_setting_ussd_gt_gui"><a class="anchor" href="#_setting_ussd_gt_gui"></a>6.9.2. Using GUI</h4>
+<h4 id="_setting_ussd_gt_gui"><a class="anchor" href="#_setting_ussd_gt_gui"></a>7.9.2. Using GUI</h4>
 <div class="olist arabic">
 <div class="title">Procedure: Set USSD Gateway Global Title using the GUI</div>
 <ol class="arabic">
@@ -23752,9 +23766,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_setting_ussd_ssn"><a class="anchor" href="#_setting_ussd_ssn"></a>6.10. USSD Sub System Number</h3>
+<h3 id="_setting_ussd_ssn"><a class="anchor" href="#_setting_ussd_ssn"></a>7.10. USSD Sub System Number</h3>
 <div class="sect3">
-<h4 id="_setting_ussd_ssn_cli"><a class="anchor" href="#_setting_ussd_ssn_cli"></a>6.10.1. Using CLI</h4>
+<h4 id="_setting_ussd_ssn_cli"><a class="anchor" href="#_setting_ussd_ssn_cli"></a>7.10.1. Using CLI</h4>
 <div class="paragraph">
 <p>You can set the 'USSD Sub System Number' by issuing the command <code>ussd set ussdssn</code> with appropriate parameters as described below:</p>
 </div>
@@ -23789,7 +23803,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect3">
-<h4 id="_setting_ussd_ssn_gui"><a class="anchor" href="#_setting_ussd_ssn_gui"></a>6.10.2. Using GUI</h4>
+<h4 id="_setting_ussd_ssn_gui"><a class="anchor" href="#_setting_ussd_ssn_gui"></a>7.10.2. Using GUI</h4>
 <div class="olist arabic">
 <div class="title">Procedure: Set USSD Sub System Number (SSN) using the GUI</div>
 <ol class="arabic">
@@ -23813,9 +23827,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_setting_ussd_hlrssn"><a class="anchor" href="#_setting_ussd_hlrssn"></a>6.11. HLR Sub System Number</h3>
+<h3 id="_setting_ussd_hlrssn"><a class="anchor" href="#_setting_ussd_hlrssn"></a>7.11. HLR Sub System Number</h3>
 <div class="sect3">
-<h4 id="_setting_ussd_hlrssn_cli"><a class="anchor" href="#_setting_ussd_hlrssn_cli"></a>6.11.1. Using CLI</h4>
+<h4 id="_setting_ussd_hlrssn_cli"><a class="anchor" href="#_setting_ussd_hlrssn_cli"></a>7.11.1. Using CLI</h4>
 <div class="paragraph">
 <p>You can set the 'HLR Sub System Number' by issuing the command <code>ussd set hlrssn</code> with appropriate parameters as described below:</p>
 </div>
@@ -23846,7 +23860,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect3">
-<h4 id="_setting_ussd_hlrssn_gui"><a class="anchor" href="#_setting_ussd_hlrssn_gui"></a>6.11.2. Using GUI</h4>
+<h4 id="_setting_ussd_hlrssn_gui"><a class="anchor" href="#_setting_ussd_hlrssn_gui"></a>7.11.2. Using GUI</h4>
 <div class="olist arabic">
 <div class="title">Procedure: Set HLR Sub System Number (SSN) using the GUI</div>
 <ol class="arabic">
@@ -23869,9 +23883,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_setting_ussd_mscssn"><a class="anchor" href="#_setting_ussd_mscssn"></a>6.12. MSC Sub System Number</h3>
+<h3 id="_setting_ussd_mscssn"><a class="anchor" href="#_setting_ussd_mscssn"></a>7.12. MSC Sub System Number</h3>
 <div class="sect3">
-<h4 id="_setting_ussd_mscssn_cli"><a class="anchor" href="#_setting_ussd_mscssn_cli"></a>6.12.1. Using CLI</h4>
+<h4 id="_setting_ussd_mscssn_cli"><a class="anchor" href="#_setting_ussd_mscssn_cli"></a>7.12.1. Using CLI</h4>
 <div class="paragraph">
 <p>You can set the 'MSC Sub System Number' by issuing the command <code>ussd set mscssn</code> with appropriate parameters as described below:</p>
 </div>
@@ -23902,7 +23916,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect3">
-<h4 id="_setting_ussd_mscssn_gui"><a class="anchor" href="#_setting_ussd_mscssn_gui"></a>6.12.2. Using GUI</h4>
+<h4 id="_setting_ussd_mscssn_gui"><a class="anchor" href="#_setting_ussd_mscssn_gui"></a>7.12.2. Using GUI</h4>
 <div class="olist arabic">
 <div class="title">Procedure: Set MSC Sub System Number (SSN) using the GUI</div>
 <ol class="arabic">
@@ -23925,9 +23939,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_setting_ussd_maxmapv"><a class="anchor" href="#_setting_ussd_maxmapv"></a>6.13. MAP Application Context version</h3>
+<h3 id="_setting_ussd_maxmapv"><a class="anchor" href="#_setting_ussd_maxmapv"></a>7.13. MAP Application Context version</h3>
 <div class="sect3">
-<h4 id="_setting_ussd_maxmapv_cli"><a class="anchor" href="#_setting_ussd_maxmapv_cli"></a>6.13.1. Using CLI</h4>
+<h4 id="_setting_ussd_maxmapv_cli"><a class="anchor" href="#_setting_ussd_maxmapv_cli"></a>7.13.1. Using CLI</h4>
 <div class="paragraph">
 <p>You can set the 'MAP Application Context version' by issuing the command <code>ussd set maxmapv</code> with appropriate parameters as described below:</p>
 </div>
@@ -23964,7 +23978,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect3">
-<h4 id="_setting_ussd_maxmapv_gui"><a class="anchor" href="#_setting_ussd_maxmapv_gui"></a>6.13.2. Using GUI</h4>
+<h4 id="_setting_ussd_maxmapv_gui"><a class="anchor" href="#_setting_ussd_maxmapv_gui"></a>7.13.2. Using GUI</h4>
 <div class="olist arabic">
 <div class="title">Procedure: Set MAP Application Context version using the GUI</div>
 <ol class="arabic">
@@ -23989,9 +24003,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_setting_ussd_routing_rules_show"><a class="anchor" href="#_setting_ussd_routing_rules_show"></a>6.14. View USSD Rules</h3>
+<h3 id="_setting_ussd_routing_rules_show"><a class="anchor" href="#_setting_ussd_routing_rules_show"></a>7.14. View USSD Rules</h3>
 <div class="sect3">
-<h4 id="_setting_ussd_routing_rules_show_cli"><a class="anchor" href="#_setting_ussd_routing_rules_show_cli"></a>6.14.1. Using CLI</h4>
+<h4 id="_setting_ussd_routing_rules_show_cli"><a class="anchor" href="#_setting_ussd_routing_rules_show_cli"></a>7.14.1. Using CLI</h4>
 <div class="paragraph">
 <p>You can view the details of all or specified configured routing rules in the USSD Gateway by issuing the command <code>ussd scrule show</code> with appropriate parameters as described below:</p>
 </div>
@@ -24016,7 +24030,7 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect3">
-<h4 id="_setting_ussd_routing_rules_show_gui"><a class="anchor" href="#_setting_ussd_routing_rules_show_gui"></a>6.14.2. Using GUI</h4>
+<h4 id="_setting_ussd_routing_rules_show_gui"><a class="anchor" href="#_setting_ussd_routing_rules_show_gui"></a>7.14.2. Using GUI</h4>
 <div class="olist arabic">
 <div class="title">Procedure: View USSD Routing Rule</div>
 <ol class="arabic">
@@ -24032,9 +24046,9 @@ The main panel will display the existing Short Code Routing Rules (if any) in a 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_setting_ussd_routing_rules_create"><a class="anchor" href="#_setting_ussd_routing_rules_create"></a>6.15. Create new USSD Rule</h3>
+<h3 id="_setting_ussd_routing_rules_create"><a class="anchor" href="#_setting_ussd_routing_rules_create"></a>7.15. Create new USSD Rule</h3>
 <div class="sect3">
-<h4 id="_setting_ussd_routing_rules_create_cli"><a class="anchor" href="#_setting_ussd_routing_rules_create_cli"></a>6.15.1. Using CLI</h4>
+<h4 id="_setting_ussd_routing_rules_create_cli"><a class="anchor" href="#_setting_ussd_routing_rules_create_cli"></a>7.15.1. Using CLI</h4>
 <div class="paragraph">
 <p>You can create a new USSD Routing Rule for every possible short code by issuing the command <code>ussd scrule create</code> with appropriate parameters as described below:</p>
 </div>
@@ -24122,7 +24136,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect3">
-<h4 id="_setting_ussd_routing_rules_create_gui"><a class="anchor" href="#_setting_ussd_routing_rules_create_gui"></a>6.15.2. Using GUI</h4>
+<h4 id="_setting_ussd_routing_rules_create_gui"><a class="anchor" href="#_setting_ussd_routing_rules_create_gui"></a>7.15.2. Using GUI</h4>
 <div class="olist arabic">
 <div class="title">Procedure: Create new USSD Routing Rule</div>
 <ol class="arabic">
@@ -24146,9 +24160,9 @@ If there is an error in creating the Rule, then you will find the details of the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_setting_ussd_routing_rules_modify"><a class="anchor" href="#_setting_ussd_routing_rules_modify"></a>6.16. Modify an existing USSD Rule</h3>
+<h3 id="_setting_ussd_routing_rules_modify"><a class="anchor" href="#_setting_ussd_routing_rules_modify"></a>7.16. Modify an existing USSD Rule</h3>
 <div class="sect3">
-<h4 id="_setting_ussd_routing_rules_modify_cli"><a class="anchor" href="#_setting_ussd_routing_rules_modify_cli"></a>6.16.1. Using CLI</h4>
+<h4 id="_setting_ussd_routing_rules_modify_cli"><a class="anchor" href="#_setting_ussd_routing_rules_modify_cli"></a>7.16.1. Using CLI</h4>
 <div class="paragraph">
 <p>You can modify an existing USSD Routing Rule for by issuing the command <code>ussd scrule modify</code> with appropriate parameters as described below:</p>
 </div>
@@ -24228,7 +24242,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect3">
-<h4 id="_setting_ussd_routing_rules_modify_gui"><a class="anchor" href="#_setting_ussd_routing_rules_modify_gui"></a>6.16.2. Using GUI</h4>
+<h4 id="_setting_ussd_routing_rules_modify_gui"><a class="anchor" href="#_setting_ussd_routing_rules_modify_gui"></a>7.16.2. Using GUI</h4>
 <div class="olist arabic">
 <div class="title">Procedure: Modify an existing USSD Routing Rule</div>
 <ol class="arabic">
@@ -24252,9 +24266,9 @@ If there is an error in creating the Rule, then you will find the details of the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_setting_ussd_routing_rules_delete"><a class="anchor" href="#_setting_ussd_routing_rules_delete"></a>6.17. Delete USSD Rule</h3>
+<h3 id="_setting_ussd_routing_rules_delete"><a class="anchor" href="#_setting_ussd_routing_rules_delete"></a>7.17. Delete USSD Rule</h3>
 <div class="sect3">
-<h4 id="_setting_ussd_routing_rules_delete_cli"><a class="anchor" href="#_setting_ussd_routing_rules_delete_cli"></a>6.17.1. Using CLI</h4>
+<h4 id="_setting_ussd_routing_rules_delete_cli"><a class="anchor" href="#_setting_ussd_routing_rules_delete_cli"></a>7.17.1. Using CLI</h4>
 <div class="paragraph">
 <p>You can delete an existing USSD Routing Rule by issuing the command <code>ussd scrule delete</code> with appropriate parameters as described below:</p>
 </div>
@@ -24298,7 +24312,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect3">
-<h4 id="_setting_ussd_routing_rules_delete_gui"><a class="anchor" href="#_setting_ussd_routing_rules_delete_gui"></a>6.17.2. Using GUI</h4>
+<h4 id="_setting_ussd_routing_rules_delete_gui"><a class="anchor" href="#_setting_ussd_routing_rules_delete_gui"></a>7.17.2. Using GUI</h4>
 <div class="olist arabic">
 <div class="title">Procedure: Delete USSD Routing Rule</div>
 <ol class="arabic">
@@ -24320,7 +24334,7 @@ If there is an error in deleting the Rule, then you will find the details of the
 </div>
 </div>
 <div class="sect1">
-<h2 id="_configuring_ussd_simulator_profile"><a class="anchor" href="#_configuring_ussd_simulator_profile"></a>7. Simulator Profile</h2>
+<h2 id="_configuring_ussd_simulator_profile"><a class="anchor" href="#_configuring_ussd_simulator_profile"></a>8. Simulator Profile</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The Restcomm USSD GateWay offers you an option to run the Gateway with a "simulator" profile for testing purpose.
@@ -24364,7 +24378,7 @@ ussd scrule create *518# http://127.0.0.1:5080 true SIP</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-07-04 10:46:21 WEST
+Last updated 2017-07-05 15:49:25 WEST
 </div>
 </div>
 <footer>
