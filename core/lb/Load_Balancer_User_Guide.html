@@ -23801,6 +23801,8 @@ http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
   &lt;isSend5xxResponseReasonHeader&gt;Destination not available&lt;/isSend5xxResponseReasonHeader&gt;
   &lt;isSend5xxResponseSatusCode&gt;503&lt;/isSend5xxResponseSatusCode&gt;
   &lt;responsesStatusCodeNodeRemoval&gt;503,504&lt;/responseStatusCodeNodeRemoval&gt;
+  &lt;maxNumberResponsesWithError&gt;10&lt;/maxNumberResponsesWithError&gt;
+  &lt;maxErrorTime&gt;300000&lt;/maxErrorTime&gt;
   &lt;matchingHostnameForRoute&gt;restcomm.com&lt;/matchingHostnameForRoute&gt;
   &lt;isFilterSubdomain&gt;true&lt;/isFilterSubdomain&gt;
   &lt;internalTransport&gt;&lt;/internalTransport&gt;
@@ -24075,8 +24077,18 @@ response message</p>
 </dd>
 <dt class="hdlist1">responsesStatusCodeNodeRemoval</dt>
 <dd>
-<p>if LB gets response from the node with this status code more than three times,
-it removes this node from the node&#8217;s map until the node will be restarted</p>
+<p>if LB gets response from the node with this status code more than
+&lt;maxNumberResponsesWithError&gt; times, it removes this node from the node&#8217;s map until the node will be restarted</p>
+</dd>
+<dt class="hdlist1">maxNumberResponsesWithError</dt>
+<dd>
+<p>if &lt;responsesStatusCodeNodeRemoval&gt; is set, than LB after getting this number of
+errors from server will remove node</p>
+</dd>
+<dt class="hdlist1">maxErrorTime</dt>
+<dd>
+<p>works with &lt;responsesStatusCodeNodeRemoval&gt;. If duration in ms between responses with
+error is more than this parameter then LB will set counter of errors to 0.</p>
 </dd>
 <dt class="hdlist1">matchingHostnameForRoute</dt>
 <dd>
@@ -25691,7 +25703,7 @@ sip-node-1, sip-node-2 etc., then this tag should be &lt;nodeName&gt;sip-node&lt
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-07-04 10:47:43 WEST
+Last updated 2017-07-05 15:51:04 WEST
 </div>
 </div>
 <footer>
