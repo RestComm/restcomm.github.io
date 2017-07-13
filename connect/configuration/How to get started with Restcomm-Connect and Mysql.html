@@ -22809,13 +22809,13 @@ the following tutorial will show how to get started with Restcomm and Mysql.</em
 <p>Download mysql java connector as explained <a href="http://mvnrepository.com/artifact/mysql/mysql-connector-java">HERE</a></p>
 </li>
 <li>
-<p>Create the following folder stucture mkdir -p $RESTCOMM_HOME/modules/org/mariadb/jdbc/main</p>
+<p>Create the following folder stucture mkdir -p $RESTCOMM_HOME/modules/org/mysql/jdbc/main</p>
 </li>
 <li>
-<p>Download the myqls jar file into the main directory, cp mysql-connector-java-5.1.40.jar $RESTCOMM_HOME/modules/org/mariadb/jdbc/main</p>
+<p>Download the myqls jar file into the main directory, cp mysql-connector-java-5.1.40.jar $RESTCOMM_HOME/modules/org/mysql/jdbc/main</p>
 </li>
 <li>
-<p>create a the file module.xml  <strong>vi $RESTCOMM_HOME/modules/org/mariadb/jdbc/main/module.xml</strong> make sure the content of the module.xml looks like the one below with the appropriate mysql connector jar file name.</p>
+<p>create a the file module.xml  <strong>vi $RESTCOMM_HOME/modules/org/mysql/jdbc/main/module.xml</strong> make sure the content of the module.xml looks like the one below with the appropriate mysql connector jar file name.</p>
 </li>
 </ul>
 </div>
@@ -22939,8 +22939,7 @@ show tables;</pre>
 <pre>GRANT ALL PRIVILEGES ON *.* TO 'root'@'192.168.1.%' IDENTIFIED BY 'YourMysqlDBPwd' WITH GRANT OPTION;
 
 then save the changes as follows
-
-GRANT ALL PRIVILEGES;
+FLUSH PRIVILEGES;
 
 The above command will allow your use to be able to access the DB on 192.168.1.x subnet
 The is important if you have multiple Restcomm instances in the same subnet and they will need to Replicate DB on a MASTER-MASTER format
@@ -23091,7 +23090,7 @@ If you have changed the default password before, you should insert your own pass
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-07-12 10:35:10 WEST
+Last updated 2017-07-13 10:35:26 WEST
 </div>
 </div>
 <footer>
