@@ -22778,6 +22778,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#_routing_fundamentals_2">The procedure of routing messages to destinations inside subnetworks.</a></li>
 <li><a href="#_routing_fundamentals_3">Using of different routing procedures.</a></li>
 <li><a href="#_routing_fundamentals_4">Routing model examples.</a></li>
+<li><a href="#_failure_reasons">Temporary and permanent failure reasons.</a></li>
 </ul>
 </li>
 <li><a href="#_mproc_rules_fundamentals">Message processing rules (mproc rules)</a>
@@ -22805,6 +22806,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#_diameter_ocs_server_conig">Configuring</a></li>
 </ul>
 </li>
+<li><a href="#security-issues">Security issues</a></li>
 <li><a href="#cdr-logging-settings">CDR Logging Settings</a></li>
 </ul>
 </div>
@@ -22985,10 +22987,10 @@ For each networkId we can configure a separate SS7 GlobalTitle and for an extern
 <div class="ulist">
 <ul>
 <li>
-<p>if the option "Delivery receipts will be routed to the origination networkId" is set to true - networkId from ESME/SIP/SAP via what an original message has left SMSC GW will be assigned</p>
+<p>if the option "Delivery receipts will be routed to the origination networkId" is set to true - networkId from ESME/SIP/SAP via what an original message has come SMSC GW will be assigned</p>
 </li>
 <li>
-<p>if the option "Delivery receipts will be routed to the origination networkId" is set to false - networkId from ESME/SIP/SAP via what an original message has come to SMSC GW will be assigned</p>
+<p>if the option "Delivery receipts will be routed to the origination networkId" is set to false - networkId from ESME/SIP/SAP via what an original message has left to SMSC GW will be assigned</p>
 </li>
 </ul>
 </div>
@@ -23238,6 +23240,69 @@ CLI commabd can be like:</p>
 <div class="paragraph">
 <p>This rule will reroute a message to networkId==22 area for further delivering if IMSI from a SRI response matches the mask. You can use also other conditions here for proper filtering (networkidmask, destdigmask, nnndigitsmask, etc). If in the new networkId area a message will be delivered again to SS7 network then a new SRI will be performed.</p>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_failure_reasons"><a class="anchor" href="#_failure_reasons"></a>Temporary and permanent failure reasons.</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Permanent error reasons:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Internal System failures</p>
+</li>
+<li>
+<p>Bad destination address</p>
+</li>
+<li>
+<p>MT: ProviderDialogAbort, UserDialogAbort</p>
+</li>
+<li>
+<p>MT: RejectComponent / Dialog</p>
+</li>
+<li>
+<p>MT: Failure of MAP protocol ACN / version negotiation</p>
+</li>
+<li>
+<p>MT: SMDeliveryFailure MAP error message with causes except of "memoryCapacityExceeded" and "equipmentProtocolError"</p>
+</li>
+<li>
+<p>MT: MAP error messages of SubscriberBusyForMtSms, AbsentSubscriber, AbsentSubscriberSM, SMDeliveryFailure, SystemFailure</p>
+</li>
+<li>
+<p>SMPP: SMPP response error with error codes except of STATUS_THROTTLED (0x58), STATUS_X_T_APPN (0x64), STATUS_SYSERR (0x08), STATUS_INVBNDSTS (0x00000004), STATUS_MSGQFUL (0x14)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Temporary error reasons:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>DeliveryTimeout</p>
+</li>
+<li>
+<p>MT: MAP dialog timeout</p>
+</li>
+<li>
+<p>MT: SMDeliveryFailure MAP error message with causes "memoryCapacityExceeded" and "equipmentProtocolError"</p>
+</li>
+<li>
+<p>MT: MAP error messages SubscriberBusyForMtSms, AbsentSubscriber, AbsentSubscriberSM, SMDeliveryFailure, SystemFailure</p>
+</li>
+<li>
+<p>SMPP: SMPP response error with error codes STATUS_THROTTLED (0x58), STATUS_X_T_APPN (0x64), STATUS_SYSERR (0x08), STATUS_INVBNDSTS (0x00000004), STATUS_MSGQFUL (0x14)</p>
+</li>
+<li>
+<p>SMPP: PduRequestTimeout and other sending error</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -25004,15 +25069,14 @@ error:4,message ID not exists</pre>
 <p>SMSC GW can interoperate with an OCS server via Diameter protocol connection.</p>
 </div>
 <div class="paragraph">
-<p>For this case SMSC GW can be configured so any incoming SMPP, MO SS7, Home Routing SS7 and SIP originated messages before next processing will be sent to OCS server.
+<p>For this case SMSC GW can be configured so any incoming SMPP (only submit_sm and data_sm are supported), MO SS7 and Home Routing SS7 originated messages before next processing will be sent to OCS server.
 Then OCS server can check if SMSC GW must accept the message or not.
 If yes, SMSC GW will process the message, if not, the message will be dropped.
 OCS server can also make any charging operations as needed.</p>
 </div>
 <div class="paragraph">
-<p>For SMPP and MO SS7 originated messages SMSC GW will return error (reject) in the response back to the orgiginated message submit message.
-So MO and SMPP part will be informed if the message is rejected.
-(This functionality is not implemented now for Home Routing SS7 and SIP originated messages).</p>
+<p>For SMPP and MO and HR SS7 originated messages SMSC GW will return error (reject) in the response back to the originated submit message.
+So MO SS7, HR SS7 and SMPP part will be informed if the message is rejected.</p>
 </div>
 <div class="paragraph">
 <p>For interconnecting with OCS Server SMSC GW uses diameter CCR (Credit-Control Request) with following filled AVPs (all of them are located in AVP Service-Information (873)):</p>
@@ -25254,6 +25318,23 @@ You can assign for User Name any value (for example "telestax").</p>
 </div>
 </div>
 <div class="sect1">
+<h2 id="security-issues"><a class="anchor" href="#security-issues"></a>Security issues</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When you configure SMSC GW for the first usage you need to care for security to avoid of unauthorized usage. Here you can find some tips for this.</p>
+</div>
+<div class="paragraph">
+<p>If we do not accept messages from SS7 connection (and any other connection) - disable of all messages from all concrete type of connections. Find extra in <a href="#_dest_mocharging">[_dest_mocharging]</a>, <a href="#_dest_txsmppcharging">[_dest_txsmppcharging]</a>, <a href="#_dest_txsipcharging">[_dest_txsipcharging]</a>, <a href="#_dest_hrcharging">[_dest_hrcharging]</a>, <a href="#_dest_txhttpcharging">[_dest_txhttpcharging]</a>.</p>
+</div>
+<div class="paragraph">
+<p>if we accept MO messages from our subscribers we need to specify (via mproc rules) that we will reject incoming messages with "sourcedigmask" value is out of our subscriber&#8217;s range (a mproc rule)</p>
+</div>
+<div class="paragraph">
+<p>To be safe a good way to use diameter server requests for messages where we can implement logic of spam avoiding.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="cdr-logging-settings"><a class="anchor" href="#cdr-logging-settings"></a>CDR Logging Settings</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -25273,7 +25354,7 @@ The details of the format and the possible values for the fields recorded in the
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-07-20 10:45:33 WEST
+Last updated 2017-07-21 11:39:31 WEST
 </div>
 </div>
 <footer>

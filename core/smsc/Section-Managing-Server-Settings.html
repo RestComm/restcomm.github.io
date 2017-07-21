@@ -22848,7 +22848,10 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#_generatecdr">CDR generation</a></li>
 <li><a href="#_generatearchivetable">Archive table generation</a></li>
 <li><a href="#_generatereceiptcdr">Generate CDR for Receipt Messages</a></li>
+<li><a href="#_generaterejectioncdr">Generate CDR for Rejected Messages as a message sumbission step</a></li>
+<li><a href="#_generatedetailedcdr">Generate Detailed CDR for Messages</a></li>
 <li><a href="#_generatetempfailurecdr">Generate CDR for temporary failure case</a></li>
+<li><a href="#_generateprocessingerrorcdr">Generate CDR for Message Processing Errors</a></li>
 <li><a href="#_calculatemsgpartslencdr">Calculating of message parts and characters count per a CDR record</a></li>
 <li><a href="#_delayparametersincdr">Adding of delay parameters into a CDR record</a></li>
 </ul>
@@ -26093,6 +26096,106 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect2">
+<h3 id="_generaterejectioncdr"><a class="anchor" href="#_generaterejectioncdr"></a>Generate CDR for Rejected Messages as a message sumbission step</h3>
+<div class="sect3">
+<h4 id="_generaterejectioncdr_cli"><a class="anchor" href="#_generaterejectioncdr_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'generaterejectioncdr' value to true/false by issuing the command <code>smsc set generaterejectioncdr</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get generaterejectioncdr</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set generaterejectioncdr
+
+SYNOPSIS
+	smsc set generaterejectioncdr &lt;true | false&gt;
+
+DESCRIPTION
+	The SMSC can be configured to generate CDRs for rejections at submission step,
+	you must set the parameter 'generaterejectioncdr' to true.
+	Default value: false
+
+EXAMPLES
+	smsc set generaterejectioncdr false</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_generaterejectioncdr_gui"><a class="anchor" href="#_generaterejectioncdr_gui"></a>Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Set 'generate CDR for Rejected Messages as a message sumbission step'  using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'CDR' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify if the SMSC should generate CDR for receipt messages by choosing the value true for the field 'Generate CDR for message rejection'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_generatedetailedcdr"><a class="anchor" href="#_generatedetailedcdr"></a>Generate Detailed CDR for Messages</h3>
+<div class="sect3">
+<h4 id="_generatedetailedcdr_cli"><a class="anchor" href="#_generatedetailedcdr_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'generatedetailedcdr' value to true/false by issuing the command <code>smsc set generatedetailedcdr</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get generatedetailedcdr</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set generatedetailedcdr
+
+SYNOPSIS
+	smsc set generatedetailedcdr &lt;true | false&gt;
+
+DESCRIPTION
+	The SMSC can be configured to generate both regular and detailed CDR for messages
+	or to generate just regular CDR. By default the SMSC will only generate regular CDR.
+	However if you want the SMSC to also generate detailed CDR, you have to set the
+	parameter 'generatedetailedcdr' to true.
+	Default value: false
+
+EXAMPLES
+	smsc set generatedetailedcdr false</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_generatedetaileddr_gui"><a class="anchor" href="#_generatedetaileddr_gui"></a>Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Set 'generate detailed CDR for messages'  using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'CDR' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify if the SMSC should generate detailed CDR for messages by choosing the value true for the field 'Generate detailed CDR'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_generatetempfailurecdr"><a class="anchor" href="#_generatetempfailurecdr"></a>Generate CDR for temporary failure case</h3>
 <div class="sect3">
 <h4 id="_generatetempfailurecdr_cli"><a class="anchor" href="#_generatetempfailurecdr_cli"></a>Using CLI</h4>
@@ -26136,6 +26239,57 @@ Switch to the 'CDR' tab in the GUI.</p>
 </li>
 <li>
 <p>You can specify if the SMSC should generate CDR for for a temporary failure case by choosing the value true for the field 'Generate CDR for a temporary failure case'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_generateprocessingerrorcdr"><a class="anchor" href="#_generateprocessingerrorcdr"></a>Generate CDR for Message Processing Errors</h3>
+<div class="sect3">
+<h4 id="_generateprocessingerrorcdr_cli"><a class="anchor" href="#_generateprocessingerrorcdr_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'generateprocessingerrorcdr' value to true/false by issuing the command <code>smsc set generateprocessingerrorcdr</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get generateprocessingerrorcdr</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+  smsc set generateprocessingerrorcdr
+
+SYNOPSIS
+  smsc set generateprocessingerrorcdr &lt;true | false&gt;
+
+DESCRIPTION
+  The SMSC can be configured to generate CDR also for unsuccessful message
+  processing. This applies both to a variety of SMSC errors (unexpected
+  internal and/or external) as well as to intentional message rejection by
+  MProc rules.
+  Default value: false
+
+EXAMPLES
+  smsc set generateprocessingerrorcdr false</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_generateprocessingerrorcdr_gui"><a class="anchor" href="#_generateprocessingerrorcdr_gui"></a>Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Set 'generate CDR for message processing error'  using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'CDR' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify if the SMSC should generate CDR for message processing errors by choosing the value true for the field 'Generate CDR for an SMSC processing error case'. For more details of this parameter, please refer to the description of the CLI command in the preceding section.</p>
 </li>
 <li>
 <p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
@@ -26731,7 +26885,7 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-07-20 10:45:33 WEST
+Last updated 2017-07-21 11:39:31 WEST
 </div>
 </div>
 <footer>

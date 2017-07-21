@@ -22804,7 +22804,8 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#_smpp_interface_description">5.7. SMPP interface description</a></li>
 <li><a href="#_http_interface_description">5.8. HTTP interface description</a></li>
 <li><a href="#_diameter_ocs_server">5.9. Interworking with Diameter OCS server</a></li>
-<li><a href="#cdr-logging-settings">5.10. CDR Logging Settings</a></li>
+<li><a href="#security-issues">5.10. Security issues</a></li>
+<li><a href="#cdr-logging-settings">5.11. CDR Logging Settings</a></li>
 </ul>
 </li>
 <li><a href="#managing">6. Managing</a>
@@ -25017,10 +25018,10 @@ For each networkId we can configure a separate SS7 GlobalTitle and for an extern
 <div class="ulist">
 <ul>
 <li>
-<p>if the option "Delivery receipts will be routed to the origination networkId" is set to true - networkId from ESME/SIP/SAP via what an original message has left SMSC GW will be assigned</p>
+<p>if the option "Delivery receipts will be routed to the origination networkId" is set to true - networkId from ESME/SIP/SAP via what an original message has come SMSC GW will be assigned</p>
 </li>
 <li>
-<p>if the option "Delivery receipts will be routed to the origination networkId" is set to false - networkId from ESME/SIP/SAP via what an original message has come to SMSC GW will be assigned</p>
+<p>if the option "Delivery receipts will be routed to the origination networkId" is set to false - networkId from ESME/SIP/SAP via what an original message has left to SMSC GW will be assigned</p>
 </li>
 </ul>
 </div>
@@ -25270,6 +25271,69 @@ CLI commabd can be like:</p>
 <div class="paragraph">
 <p>This rule will reroute a message to networkId==22 area for further delivering if IMSI from a SRI response matches the mask. You can use also other conditions here for proper filtering (networkidmask, destdigmask, nnndigitsmask, etc). If in the new networkId area a message will be delivered again to SS7 network then a new SRI will be performed.</p>
 </div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_failure_reasons"><a class="anchor" href="#_failure_reasons"></a>5.4.5. Temporary and permanent failure reasons.</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Permanent error reasons:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Internal System failures</p>
+</li>
+<li>
+<p>Bad destination address</p>
+</li>
+<li>
+<p>MT: ProviderDialogAbort, UserDialogAbort</p>
+</li>
+<li>
+<p>MT: RejectComponent / Dialog</p>
+</li>
+<li>
+<p>MT: Failure of MAP protocol ACN / version negotiation</p>
+</li>
+<li>
+<p>MT: SMDeliveryFailure MAP error message with causes except of "memoryCapacityExceeded" and "equipmentProtocolError"</p>
+</li>
+<li>
+<p>MT: MAP error messages of SubscriberBusyForMtSms, AbsentSubscriber, AbsentSubscriberSM, SMDeliveryFailure, SystemFailure</p>
+</li>
+<li>
+<p>SMPP: SMPP response error with error codes except of STATUS_THROTTLED (0x58), STATUS_X_T_APPN (0x64), STATUS_SYSERR (0x08), STATUS_INVBNDSTS (0x00000004), STATUS_MSGQFUL (0x14)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Temporary error reasons:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>DeliveryTimeout</p>
+</li>
+<li>
+<p>MT: MAP dialog timeout</p>
+</li>
+<li>
+<p>MT: SMDeliveryFailure MAP error message with causes "memoryCapacityExceeded" and "equipmentProtocolError"</p>
+</li>
+<li>
+<p>MT: MAP error messages SubscriberBusyForMtSms, AbsentSubscriber, AbsentSubscriberSM, SMDeliveryFailure, SystemFailure</p>
+</li>
+<li>
+<p>SMPP: SMPP response error with error codes STATUS_THROTTLED (0x58), STATUS_X_T_APPN (0x64), STATUS_SYSERR (0x08), STATUS_INVBNDSTS (0x00000004), STATUS_MSGQFUL (0x14)</p>
+</li>
+<li>
+<p>SMPP: PduRequestTimeout and other sending error</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -27026,15 +27090,14 @@ error:4,message ID not exists</pre>
 <p>SMSC GW can interoperate with an OCS server via Diameter protocol connection.</p>
 </div>
 <div class="paragraph">
-<p>For this case SMSC GW can be configured so any incoming SMPP, MO SS7, Home Routing SS7 and SIP originated messages before next processing will be sent to OCS server.
+<p>For this case SMSC GW can be configured so any incoming SMPP (only submit_sm and data_sm are supported), MO SS7 and Home Routing SS7 originated messages before next processing will be sent to OCS server.
 Then OCS server can check if SMSC GW must accept the message or not.
 If yes, SMSC GW will process the message, if not, the message will be dropped.
 OCS server can also make any charging operations as needed.</p>
 </div>
 <div class="paragraph">
-<p>For SMPP and MO SS7 originated messages SMSC GW will return error (reject) in the response back to the orgiginated message submit message.
-So MO and SMPP part will be informed if the message is rejected.
-(This functionality is not implemented now for Home Routing SS7 and SIP originated messages).</p>
+<p>For SMPP and MO and HR SS7 originated messages SMSC GW will return error (reject) in the response back to the originated submit message.
+So MO SS7, HR SS7 and SMPP part will be informed if the message is rejected.</p>
 </div>
 <div class="paragraph">
 <p>For interconnecting with OCS Server SMSC GW uses diameter CCR (Credit-Control Request) with following filled AVPs (all of them are located in AVP Service-Information (873)):</p>
@@ -27275,7 +27338,22 @@ You can assign for User Name any value (for example "telestax").</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="cdr-logging-settings"><a class="anchor" href="#cdr-logging-settings"></a>5.10. CDR Logging Settings</h3>
+<h3 id="security-issues"><a class="anchor" href="#security-issues"></a>5.10. Security issues</h3>
+<div class="paragraph">
+<p>When you configure SMSC GW for the first usage you need to care for security to avoid of unauthorized usage. Here you can find some tips for this.</p>
+</div>
+<div class="paragraph">
+<p>If we do not accept messages from SS7 connection (and any other connection) - disable of all messages from all concrete type of connections. Find extra in <a href="#_dest_mocharging">MO accepting and charging settings</a>, <a href="#_dest_txsmppcharging">ESME Charge Settings</a>, <a href="#_dest_txsipcharging">SIP Charge Settings</a>, <a href="#_dest_hrcharging">Home routing Charge Settings</a>, <a href="#_dest_txhttpcharging">HTTP Charge Settings</a>.</p>
+</div>
+<div class="paragraph">
+<p>if we accept MO messages from our subscribers we need to specify (via mproc rules) that we will reject incoming messages with "sourcedigmask" value is out of our subscriber&#8217;s range (a mproc rule)</p>
+</div>
+<div class="paragraph">
+<p>To be safe a good way to use diameter server requests for messages where we can implement logic of spam avoiding.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="cdr-logging-settings"><a class="anchor" href="#cdr-logging-settings"></a>5.11. CDR Logging Settings</h3>
 <div class="paragraph">
 <p>Restcomm SMSC is configured to generate CDR in a plain text file located at <em class="path">restcomm-smscgateway-&lt;version&gt;/jboss-5.1.0.GA/server/&lt;profile&gt;/log/cdr.log</em> and also detailed CDR in Cassandra table <code>MESSAGES_yyyy_mm_dd</code>.</p>
 </div>
@@ -30521,9 +30599,109 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_generatetempfailurecdr"><a class="anchor" href="#_generatetempfailurecdr"></a>6.1.7.4. Generate CDR for temporary failure case</h5>
+<h5 id="_generaterejectioncdr"><a class="anchor" href="#_generaterejectioncdr"></a>6.1.7.4. Generate CDR for Rejected Messages as a message sumbission step</h5>
 <div class="sect5">
-<h6 id="_generatetempfailurecdr_cli"><a class="anchor" href="#_generatetempfailurecdr_cli"></a>6.1.7.4.1. Using CLI</h6>
+<h6 id="_generaterejectioncdr_cli"><a class="anchor" href="#_generaterejectioncdr_cli"></a>6.1.7.4.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'generaterejectioncdr' value to true/false by issuing the command <code>smsc set generaterejectioncdr</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get generaterejectioncdr</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set generaterejectioncdr
+
+SYNOPSIS
+	smsc set generaterejectioncdr &lt;true | false&gt;
+
+DESCRIPTION
+	The SMSC can be configured to generate CDRs for rejections at submission step,
+	you must set the parameter 'generaterejectioncdr' to true.
+	Default value: false
+
+EXAMPLES
+	smsc set generaterejectioncdr false</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_generaterejectioncdr_gui"><a class="anchor" href="#_generaterejectioncdr_gui"></a>6.1.7.4.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set 'generate CDR for Rejected Messages as a message sumbission step'  using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'CDR' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify if the SMSC should generate CDR for receipt messages by choosing the value true for the field 'Generate CDR for message rejection'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_generatedetailedcdr"><a class="anchor" href="#_generatedetailedcdr"></a>6.1.7.5. Generate Detailed CDR for Messages</h5>
+<div class="sect5">
+<h6 id="_generatedetailedcdr_cli"><a class="anchor" href="#_generatedetailedcdr_cli"></a>6.1.7.5.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'generatedetailedcdr' value to true/false by issuing the command <code>smsc set generatedetailedcdr</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get generatedetailedcdr</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set generatedetailedcdr
+
+SYNOPSIS
+	smsc set generatedetailedcdr &lt;true | false&gt;
+
+DESCRIPTION
+	The SMSC can be configured to generate both regular and detailed CDR for messages
+	or to generate just regular CDR. By default the SMSC will only generate regular CDR.
+	However if you want the SMSC to also generate detailed CDR, you have to set the
+	parameter 'generatedetailedcdr' to true.
+	Default value: false
+
+EXAMPLES
+	smsc set generatedetailedcdr false</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_generatedetaileddr_gui"><a class="anchor" href="#_generatedetaileddr_gui"></a>6.1.7.5.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set 'generate detailed CDR for messages'  using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'CDR' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify if the SMSC should generate detailed CDR for messages by choosing the value true for the field 'Generate detailed CDR'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_generatetempfailurecdr"><a class="anchor" href="#_generatetempfailurecdr"></a>6.1.7.6. Generate CDR for temporary failure case</h5>
+<div class="sect5">
+<h6 id="_generatetempfailurecdr_cli"><a class="anchor" href="#_generatetempfailurecdr_cli"></a>6.1.7.6.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'generatetempfailurecdr' value to true/false by issuing the command <code>smsc set generatetempfailurecdr</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get generatetempfailurecdr</code> which will display the value set for this property.</p>
@@ -30551,7 +30729,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_generatetempfailurecdr_gui"><a class="anchor" href="#_generatetempfailurecdr_gui"></a>6.1.7.4.2. Using GUI</h6>
+<h6 id="_generatetempfailurecdr_gui"><a class="anchor" href="#_generatetempfailurecdr_gui"></a>6.1.7.6.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set 'generate CDR for a temporary failure case'  using the GUI</div>
 <ol class="arabic">
@@ -30574,9 +30752,60 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_calculatemsgpartslencdr"><a class="anchor" href="#_calculatemsgpartslencdr"></a>6.1.7.5. Calculating of message parts and characters count per a CDR record</h5>
+<h5 id="_generateprocessingerrorcdr"><a class="anchor" href="#_generateprocessingerrorcdr"></a>6.1.7.7. Generate CDR for Message Processing Errors</h5>
 <div class="sect5">
-<h6 id="_calculatemsgpartslencdr_cli"><a class="anchor" href="#_calculatemsgpartslencdr_cli"></a>6.1.7.5.1. Using CLI</h6>
+<h6 id="_generateprocessingerrorcdr_cli"><a class="anchor" href="#_generateprocessingerrorcdr_cli"></a>6.1.7.7.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'generateprocessingerrorcdr' value to true/false by issuing the command <code>smsc set generateprocessingerrorcdr</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get generateprocessingerrorcdr</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+  smsc set generateprocessingerrorcdr
+
+SYNOPSIS
+  smsc set generateprocessingerrorcdr &lt;true | false&gt;
+
+DESCRIPTION
+  The SMSC can be configured to generate CDR also for unsuccessful message
+  processing. This applies both to a variety of SMSC errors (unexpected
+  internal and/or external) as well as to intentional message rejection by
+  MProc rules.
+  Default value: false
+
+EXAMPLES
+  smsc set generateprocessingerrorcdr false</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_generateprocessingerrorcdr_gui"><a class="anchor" href="#_generateprocessingerrorcdr_gui"></a>6.1.7.7.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set 'generate CDR for message processing error'  using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'CDR' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify if the SMSC should generate CDR for message processing errors by choosing the value true for the field 'Generate CDR for an SMSC processing error case'. For more details of this parameter, please refer to the description of the CLI command in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_calculatemsgpartslencdr"><a class="anchor" href="#_calculatemsgpartslencdr"></a>6.1.7.8. Calculating of message parts and characters count per a CDR record</h5>
+<div class="sect5">
+<h6 id="_calculatemsgpartslencdr_cli"><a class="anchor" href="#_calculatemsgpartslencdr_cli"></a>6.1.7.8.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'calculatemsgpartslencdr' value to true/false by issuing the command <code>smsc set calculatemsgpartslencdr</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get calculatemsgpartslencdr</code> which will display the value set for this property.</p>
@@ -30603,7 +30832,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_calculatemsgpartslencdr_gui"><a class="anchor" href="#_calculatemsgpartslencdr_gui"></a>6.1.7.5.2. Using GUI</h6>
+<h6 id="_calculatemsgpartslencdr_gui"><a class="anchor" href="#_calculatemsgpartslencdr_gui"></a>6.1.7.8.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set 'calculating of message parts and characters count per a CDR record'  using the GUI</div>
 <ol class="arabic">
@@ -30626,9 +30855,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_delayparametersincdr"><a class="anchor" href="#_delayparametersincdr"></a>6.1.7.6. Adding of delay parameters into a CDR record</h5>
+<h5 id="_delayparametersincdr"><a class="anchor" href="#_delayparametersincdr"></a>6.1.7.9. Adding of delay parameters into a CDR record</h5>
 <div class="sect5">
-<h6 id="_delayparametersincdr_cli"><a class="anchor" href="#_delayparametersincdr_cli"></a>6.1.7.6.1. Using CLI</h6>
+<h6 id="_delayparametersincdr_cli"><a class="anchor" href="#_delayparametersincdr_cli"></a>6.1.7.9.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'delayparametersincdr' value to true/false by issuing the command <code>smsc set delayparametersincdr</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get delayparametersincdr</code> which will display the value set for this property.</p>
@@ -30654,7 +30883,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_delayparametersincdr_gui"><a class="anchor" href="#_delayparametersincdr_gui"></a>6.1.7.6.2. Using GUI</h6>
+<h6 id="_delayparametersincdr_gui"><a class="anchor" href="#_delayparametersincdr_gui"></a>6.1.7.9.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set 'Adding of delay parameters into a CDR record'  using the GUI</div>
 <ol class="arabic">
@@ -35460,7 +35689,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-07-20 10:45:33 WEST
+Last updated 2017-07-21 11:39:31 WEST
 </div>
 </div>
 <footer>
