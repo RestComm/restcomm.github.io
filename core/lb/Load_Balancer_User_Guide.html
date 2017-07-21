@@ -23808,6 +23808,24 @@ http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
   &lt;internalTransport&gt;&lt;/internalTransport&gt;
   &lt;trafficRampupCyclePeriod&gt;&lt;/trafficRampupCyclePeriod&gt;
   &lt;trafficPercentageIncrease&gt;&lt;/trafficPercentageIncrease&gt;
+  &lt;cyclePeriod&gt;&lt;/cyclePeriod&gt;
+  &lt;maxWeightIndex&gt;&lt;/maxWeightIndex&gt;
+  &lt;routingRulesIpv4&gt;
+  &lt;rule&gt;
+    &lt;ipPattern&gt;10.0.0.*&lt;/ipPattern&gt;
+    &lt;patch&gt;false&lt;/patch&gt;
+  &lt;/rule&gt;
+  &lt;rule&gt;
+    &lt;ipPattern&gt;172.0.0.*&lt;/ipPattern&gt;
+    &lt;patch&gt;false&lt;/patch&gt;
+  &lt;/rule&gt;
+&lt;/routingRulesIpv4&gt;
+&lt;routingRulesIpv6&gt;
+  &lt;rule&gt;
+    &lt;ipPattern&gt;fd30:*&lt;/ipPattern&gt;
+    &lt;patch&gt;false&lt;/patch&gt;
+  &lt;/rule&gt;
+&lt;/routingRulesIpv6&gt;
   &lt;algorithm&gt;
     &lt;algorithmClass&gt;&lt;/algorithmClass&gt;
     &lt;sipHeaderAffinityKey&gt;&lt;/sipHeaderAffinityKey&gt;
@@ -24143,6 +24161,28 @@ You can put here alternative names of the application servers here and they will
 Names are important, because they might be used for direction-analysis.
 Requests coming from these server will go in the direction of the clients and will not be routed back to the cluster.</p>
 </dd>
+<dt class="hdlist1">routingRulesIpv4</dt>
+<dt class="hdlist1">routingRulesIpv6</dt>
+<dd>
+<p>Rules for detection from which network LB should not patch RecordRouter and Via
+headers. So for example if we have next rule :</p>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;rule&gt;
+  &lt;ipPattern&gt;10.0.0.*&lt;/ipPattern&gt;
+  &lt;patch&gt;false&lt;/patch&gt;
+&lt;/rule&gt;</pre>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The Load balancer will not patch headers for initial requests for IP which will
+be match regex <code>10.0.0.*</code> i.e. from 10.0.0.0-10.0.0.255</p>
+</div>
+<div class="dlist">
+<dl>
 <dt class="hdlist1">algorithmClass</dt>
 <dd>
 <p>The fully-qualified Java class name of the balancing algorithm to be used.
@@ -25703,7 +25743,7 @@ sip-node-1, sip-node-2 etc., then this tag should be &lt;nodeName&gt;sip-node&lt
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-07-20 10:47:16 WEST
+Last updated 2017-07-21 11:41:47 WEST
 </div>
 </div>
 <footer>
