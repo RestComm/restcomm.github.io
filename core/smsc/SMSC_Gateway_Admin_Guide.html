@@ -34968,8 +34968,226 @@ This is an abnormal case and implies MAP incompatibility.</p>
 <dt class="hdlist1">Other</dt>
 <dd>
 <p>Any other message that usually indicates some internal failure.</p>
+<div class="literalblock">
+<div class="content">
+<pre>  [[_monitoring_smsc_cdr_detailed_log]]
+== Detailed CDR Log</pre>
+</div>
+</div>
 </dd>
 </dl>
+</div>
+<div class="paragraph">
+<p>Restcomm SMSC is configured to generate detailed CDR logs in a plain text file located at <em class="path">restcomm-smscgateway-&lt;version&gt;/jboss-5.1.0.GA/server/&lt;profile&gt;/log/cdr_detailed.log</em>.
+Detailed CDR generated in the text file is of the below format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>CDR recording timestamp,Event type,ErrorCode (status),MessageType,Status code,CorrelationId,OrigCorrelationId,DlrStatus,mprocRuleId,ESME name,Timestamp A,Timestamp B,Timestamp C,Source IP,Source port,Dest IP,Dest port,Sequence Number,</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Detailed CDR once turned on, will only be generated for SMPP (IN and OUT) and HTTP (OUT only) messages.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<div class="title">CDR recording timestamp</div>
+<p>Time when CDR is created</p>
+</div>
+<div class="paragraph">
+<div class="title">Event type</div>
+<p>Event types can be of two categories - <code>IN</code> and <code>OUT</code>:
+<code>IN</code> event types (a result of message receiving). Only SMPP and HTTP events of this type will be recorded in detailed log.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>IN_SMPP_RECEIVED</code></dt>
+<dd>
+<p>a message is accepted from SMPP connector and is processed without error.</p>
+</dd>
+<dt class="hdlist1"><code>IN_SMPP_REJECT_FORBIDDEN</code></dt>
+<dd>
+<p>SMPP message is rejected for administrative reasons. For example, SMSC is stopped or paused, Cassandra database is not available, all messages from SMPP connector or specific ESME are forbidden.</p>
+</dd>
+<dt class="hdlist1"><code>IN_SMPP_REJECT_CONG</code></dt>
+<dd>
+<p>SMPP message is rejected for a following reason: congestion at SMSC GW level or customer&#8217;s limitation.</p>
+</dd>
+<dt class="hdlist1"><code>IN_SMPP_REJECT_DIAMETER</code></dt>
+<dd>
+<p>SMPP message is rejected for a reason: rejection by a diameter server.</p>
+</dd>
+<dt class="hdlist1"><code>IN_SMPP_REJECT_MPROC</code></dt>
+<dd>
+<p>SMPP message is rejected for a reason: rejection by mproc rules.</p>
+</dd>
+<dt class="hdlist1"><code>IN_SMPP_DROP_MPROC</code></dt>
+<dd>
+<p>SMPP message is dropped (OK result was sent to a sender but message was dropped) for a reason: drop by mproc rules</p>
+</dd>
+<dt class="hdlist1"><code>IN_SMPP_ERROR</code></dt>
+<dd>
+<p>SMPP message processing failed for other reasons.</p>
+</dd>
+<dt class="hdlist1"><code>IN_HTTP_RECEIVED</code></dt>
+<dd>
+<p>a message is accepted from HTTP connector and is processed without error.</p>
+</dd>
+<dt class="hdlist1"><code>IN_HTTP_REJECT_FORBIDDEN</code></dt>
+<dd>
+<p>HTTP message is rejected for administrative reasons, such as SMSC is stopped or paused, Cassandra database is not available, all messages from HTTP connector are forbidden.</p>
+</dd>
+<dt class="hdlist1"><code>IN_HTTP_REJECT_CONG</code></dt>
+<dd>
+<p>HTTP message is rejected for a reason: congestion at SMSC GW level or due to a customer&#8217;s limitation.</p>
+</dd>
+<dt class="hdlist1"><code>IN_HTTP_REJECT_DIAMETER</code></dt>
+<dd>
+<p>HTTP message is rejected for a reason: rejection by a diameter server.</p>
+</dd>
+<dt class="hdlist1"><code>IN_HTTP_REJECT_MPROC</code></dt>
+<dd>
+<p>HTTP message is rejected for a reason: rejection by mproc rules.</p>
+</dd>
+<dt class="hdlist1"><code>IN_HTTP_DROP_MPROC</code></dt>
+<dd>
+<p>HTTP message is dropped (OK result was sent to a sender but a message is dropped) for a reason: rejection by mproc rules.</p>
+</dd>
+<dt class="hdlist1"><code>IN_HTTP_ERROR</code></dt>
+<dd>
+<p>HTTP message processing failed for other reasons.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><code>OUT</code> event types (a result of message sending). Only SMPP events of this type will be recorded in detailed log.</p>
+</li>
+</ol>
+</div>
+</dd>
+<dt class="hdlist1"><code>OUT_SMPP_SENT</code></dt>
+<dd>
+<p>SMPP message has been successfully sent.</p>
+</dd>
+<dt class="hdlist1"><code>OUT_SMPP_REJECTED</code></dt>
+<dd>
+<p>received non zero SMPP response code after message was sent.</p>
+</dd>
+<dt class="hdlist1"><code>OUT_SMPP_ERROR</code></dt>
+<dd>
+<p>error while sending SMPP message, for example, a channel error.</p>
+</dd>
+<dt class="hdlist1"><code>OUT_SMPP_TIMEOUT</code></dt>
+<dd>
+<p>no response from a peer within time specified by SMSC GW settings. Possible reason might be because connection problems or peer malfunction, delivery timeout case included.</p>
+</dd>
+<dt class="hdlist1"><code>VALIDITY_PERIOD_TIMEOUT</code></dt>
+<dd>
+<p>SMPP message has not been sent due to a validity period timeout.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<div class="title">ErrorCode (status)</div>
+<p>Internal SMSC GW delivery error code value.</p>
+</div>
+<div class="paragraph">
+<div class="title">MessageType</div>
+<p>Either <code>SubmitSm</code>, <code>SubmitMulti</code>, <code>DeliverSm</code> or <code>DataSm</code> for SMPP message and <code>Http</code> for HTTP message</p>
+</div>
+<div class="olist loweralpha">
+<div class="title">Status code:</div>
+<ol class="loweralpha" type="a">
+<li>
+<p>For <code>OUT_SMPP_REJECTED</code> case: received non zero smpp response code when message sending, 0 for other cases)</p>
+</li>
+<li>
+<p>In SMPP response value (for in_smpp_reject_* cases - sent non zero smpp response code when message receiving, 0 for other cases)</p>
+</li>
+<li>
+<p>In HTTP response code (for in_http_reject_* cases - sent non zero http response code when a http response sending (code in the message body), 0 for other cases)</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<div class="title">CorrelationId</div>
+<p>messageId of a message.</p>
+</div>
+<div class="paragraph">
+<div class="title">OrigCorrelationId</div>
+<p>messageId of an original message if this a recognized delivery response and an original message is found, otherwise&#8201;&#8212;&#8201;empty value</p>
+</div>
+<div class="paragraph">
+<div class="title">DlrStatus</div>
+<p>If a message is recognized delivery response (DLR), then this field contains value of <code>stat</code> field of DLR, if it&#8217;s not a delivery response otherwise empty if it is not a DLR. If a message is recognized DLR, but the field is not parsed or have different values in text and TLV parts, then this field is <code>"err"</code>.</p>
+</div>
+<div class="paragraph">
+<div class="title">mprocRuleId</div>
+<p>Id of an mproc rule which led to a message drop/reject in <code>IN_SMPP_REJECT_MPROC</code>, <code>IN_SMPP_DROP_MPROC</code>, <code>IN_HTTP_REJECT_MPROC</code> or <code>IN_HTTP_DROP_MPROC</code> cases, otherwise&#8201;&#8212;&#8201;empty value.</p>
+</div>
+<div class="paragraph">
+<div class="title">ESME name</div>
+<p>Name of ESME through which a message has come to SMSC for an <code>IN</code> case or to which a message was sent from SMSC GW for an <code>OUT</code> case. This field will contain an empty value for other cases.</p>
+</div>
+<div class="ulist">
+<div class="title">Timestamp A</div>
+<ul>
+<li>
+<p><code>IN</code>: The time the message is successfully decoded</p>
+</li>
+<li>
+<p><code>OUT</code>: The time the message is received for sending</p>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<div class="title">Timestamp B</div>
+<ul>
+<li>
+<p><code>IN</code>: timestamp taken immediately after sending response</p>
+</li>
+<li>
+<p><code>OUT</code>: timestamp taken immediately after sending request</p>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<div class="title">Timestamp C</div>
+<ul>
+<li>
+<p><code>IN</code>: timestamp taken immediately after submission for further processing</p>
+</li>
+<li>
+<p><code>OUT</code>: timestamp when message response is successfully decoded</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Source IP</div>
+<p>IP of a source peer, if a value is available for a channel connection.</p>
+</div>
+<div class="paragraph">
+<div class="title">Source port</div>
+<p>Port from which message has come to SMSC GW if a value is available for a channel connection.</p>
+</div>
+<div class="paragraph">
+<div class="title">Dest IP</div>
+<p>IP of a destination peer, if a value is available for a channel connection.</p>
+</div>
+<div class="paragraph">
+<div class="title">Dest port</div>
+<p>Port to which message has been sent from SMSC GW if a value is available for a channel connection.</p>
+</div>
+<div class="paragraph">
+<div class="title">Sequence Number</div>
+<p>This value will be recorded for SMPP messages in both sending and receiving cases.</p>
 </div>
 </div>
 </div>
@@ -35689,7 +35907,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-07-24 10:45:30 WEST
+Last updated 2017-07-25 12:29:18 WEST
 </div>
 </div>
 <footer>
