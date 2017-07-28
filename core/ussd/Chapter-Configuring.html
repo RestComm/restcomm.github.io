@@ -23473,6 +23473,24 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 <div class="sect2">
 <h3 id="_set_dialogtimeout"><a class="anchor" href="#_set_dialogtimeout"></a>7.5. Dialog Timeout</h3>
+<div class="paragraph">
+<p>There is two possible timeout in USSD GW.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>SS7 part - a USSD application sent a message to a mobile subscriber no response from a mobile subscriber (or an error in SS7 network)</p>
+</li>
+<li>
+<p>application part - no response from an application for a request from a mobile subscriber (no response from SIP or HTTP)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>When no response from a SS7 part there will be a TCAP dialog timeout. This parameter is configurable in JSS7 management console - see "TCAP stack properties - Dialog Idle Timeout" chapter.
+When no response from an application part it will be triggered a timer that is described in this chapter.
+You need to be sure that the application timer is less that TCAP dialog timer.</p>
+</div>
 <div class="sect3">
 <h4 id="_set_dialogtimeout_cli"><a class="anchor" href="#_set_dialogtimeout_cli"></a>7.5.1. Using CLI</h4>
 <div class="paragraph">
@@ -24378,7 +24396,7 @@ ussd scrule create *518# http://127.0.0.1:5080 true SIP</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-07-27 09:40:49 WEST
+Last updated 2017-07-28 15:57:54 WEST
 </div>
 </div>
 <footer>
