@@ -26863,7 +26863,7 @@ For more details refer to <a href="#_smsc_gateway_server_hr">Home Routing Settin
 SMSC GW has two configurable parameters for decoding / encodoing, one for GSM 7 ancoding and another for UCS2 encoding (SMPP Encoding for GSM7 / SMPP Encoding for UCS2). See following chapter for configuring details: <a href="#_smpp_encoding_for_ucs2">SMPP Encoding for GSM7/UCS2</a>. A user schould configure these parameters before of SMSC GW usage depending on which encoding are used by user&#8217;s SMPP applications for message body encoding.</p>
 </div>
 <div class="paragraph">
-<p>One of indication that says that message encoding parameters are wrongly configured is messages in server.log like <code>Message length in bytes is too big for solid message: 268&gt;134</code>. This may mean that SMPP application sends messages to SMSC GW in UCS2 encoding and SMSC GW decodes them in UTF8 encodoing and a message bode becomes too big length after it.</p>
+<p>One of indication that says that message encoding parameters are wrongly configured is messages in server.log like <code>Message length in bytes is too big for solid message: 268&gt;134</code>. This may mean that SMPP application sends messages to SMSC GW in UCS2 encoding and SMSC GW decodes them in UTF8 encodoing and a message bode becomes too big length after it. Another reason for <code>Message length in bytes is too big</code> message may be that you are trying to use GSM7 encoding and your message contains characters from GSM7 extended table (like '[' or ']'). Such characters demands 2 septets for encdoning and so a message / message segment (if it contains such characters) must contain lower character count.</p>
 </div>
 </div>
 <div class="sect3">
@@ -35907,7 +35907,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-07-30 10:48:33 WEST
+Last updated 2017-07-31 10:45:53 WEST
 </div>
 </div>
 <footer>
