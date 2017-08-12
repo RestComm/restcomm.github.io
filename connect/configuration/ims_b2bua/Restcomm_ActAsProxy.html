@@ -22777,7 +22777,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Restcomm can be configured to act as B2BUA and proxy out incoming calls (that didn&#8217;t matched a registered application or a registered client) based on certain rules.</p>
+<p>Restcomm can be configured to act as B2BUA and proxy out irencoming calls (that didn&#8217;t matched a registered application or a registered client) based on certain rules.</p>
 </div>
 <div class="paragraph">
 <p>On incoming call, the feature will be executed after Restcomm-Connect finish checking:</p>
@@ -22807,7 +22807,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div class="content">
 <pre class="highlight"><code class="language-xml" data-lang="xml">		&lt;acting-as-proxy&gt;
 			&lt;enabled&gt;false&lt;/enabled&gt;
-			&lt;use-from-header&gt;true&lt;/use-from-header&gt;
+			&lt;use-contact-header&gt;false&lt;/use-contact-header&gt;
 			&lt;proxy-rules&gt;
 				&lt;rule&gt;
 					&lt;from-uri&gt;&lt;/from-uri&gt;
@@ -22815,6 +22815,8 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 					&lt;!-- Optionally provide username --&gt;
 					&lt;proxy-to-username&gt;&lt;/proxy-to-username&gt;
 					&lt;proxy-to-password&gt;&lt;/proxy-to-password&gt;
+					&lt;!-- Control whether or not to patch the SDP for this rule. Default value is true and Restcomm will patch SDP --&gt;
+                    &lt;patch-sdp&gt;true&lt;/patch-sdp&gt;
 				&lt;/rule&gt;
 				&lt;rule&gt;
 					&lt;from-uri&gt;&lt;/from-uri&gt;
@@ -22822,6 +22824,8 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 					&lt;!-- Optionally provide username --&gt;
 					&lt;proxy-to-username&gt;&lt;/proxy-to-username&gt;
 					&lt;proxy-to-password&gt;&lt;/proxy-to-password&gt;
+                    &lt;!-- Control whether or not to patch the SDP for this rule. Default value is true and Restcomm will patch SDP --&gt;
+                    &lt;patch-sdp&gt;true&lt;/patch-sdp&gt;
 				&lt;/rule&gt;
 			&lt;/proxy-rules&gt;
 		&lt;/acting-as-proxy&gt;</code></pre>
@@ -22835,7 +22839,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <p><code>enabled</code> set to <strong>true</strong> to enable the feature</p>
 </li>
 <li>
-<p><code>use-from-header</code> if set to <strong>true</strong>, From header will be used to determine the From URI. If set to <strong>false</strong> the Contact header will be used to determine the From URI. Default <strong>true</strong> (use From header)</p>
+<p><code>use-contact-header</code> if set to <strong>true</strong>, Contact header will be used to determine the From URI. Default <strong>false</strong> (do not use the Contact header)</p>
 </li>
 <li>
 <p><code>proxy-rules</code> Define the rules to match incoming traffic. You can define as many rules as you need</p>
@@ -22852,6 +22856,9 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </li>
 <li>
 <p><code>proxy-to-password</code> (Optional) Password for proxy</p>
+</li>
+<li>
+<p><code>patch-sdp</code> To control whether or not to patch the SDP with the external IP Address of the media server, for traffic in this rule. Default value is true and Restcomm will patch SDP</p>
 </li>
 </ul>
 </div>
@@ -22887,7 +22894,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div class="content">
 <pre class="highlight"><code class="language-xml" data-lang="xml">		&lt;acting-as-proxy&gt;
 			&lt;enabled&gt;true&lt;/enabled&gt;
-			&lt;use-from-header&gt;true&lt;/use-from-header&gt;
+            &lt;use-contact-header&gt;false&lt;/use-contact-header&gt;
 			&lt;proxy-rules&gt;
 				&lt;rule&gt;
 					&lt;from-uri&gt;192.168.100.10:5060&lt;/from-uri&gt;
@@ -22895,6 +22902,8 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 					&lt;!-- Optionally provide username --&gt;
 					&lt;proxy-to-username&gt;&lt;/proxy-to-username&gt;
 					&lt;proxy-to-password&gt;&lt;/proxy-to-password&gt;
+                    &lt;!-- Control whether or not to patch the SDP for this rule. Default value is true and Restcomm will patch SDP --&gt;
+                    &lt;patch-sdp&gt;false&lt;/patch-sdp&gt;
 				&lt;/rule&gt;
 				&lt;rule&gt;
 					&lt;from-uri&gt;192.168.200.11:5080&lt;/from-uri&gt;
@@ -22902,6 +22911,8 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 					&lt;!-- Optionally provide username --&gt;
 					&lt;proxy-to-username&gt;&lt;/proxy-to-username&gt;
 					&lt;proxy-to-password&gt;&lt;/proxy-to-password&gt;
+                    &lt;!-- Control whether or not to patch the SDP for this rule. Default value is true and Restcomm will patch SDP --&gt;
+                    &lt;patch-sdp&gt;false&lt;/patch-sdp&gt;
 				&lt;/rule&gt;
 			&lt;/proxy-rules&gt;
 		&lt;/acting-as-proxy&gt;</code></pre>
@@ -22918,11 +22929,13 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 					&lt;!-- Optionally provide username --&gt;
 					&lt;proxy-to-username&gt;&lt;/proxy-to-username&gt;
 					&lt;proxy-to-password&gt;&lt;/proxy-to-password&gt;
+                    &lt;!-- Control whether or not to patch the SDP for this rule. Default value is true and Restcomm will patch SDP --&gt;
+                    &lt;patch-sdp&gt;false&lt;/patch-sdp&gt;
 				&lt;/rule&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Will match traffic from <strong>192.168.100.10:5060</strong> (<strong>ClientA</strong>) and will proxy out to <strong>192.168.200.11:5080</strong> (<strong>Restcomm InstanceB</strong>)</p>
+<p>Will match traffic from <strong>192.168.100.10:5060</strong> (<strong>ClientA</strong>) and will proxy out to <strong>192.168.200.11:5080</strong> (<strong>Restcomm InstanceB</strong>). Also it will NOT patch the SDP with the external IP of media server</p>
 </div>
 <div class="paragraph">
 <p>The second rule:</p>
@@ -22935,11 +22948,13 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 					&lt;!-- Optionally provide username --&gt;
 					&lt;proxy-to-username&gt;&lt;/proxy-to-username&gt;
 					&lt;proxy-to-password&gt;&lt;/proxy-to-password&gt;
+                    &lt;!-- Control whether or not to patch the SDP for this rule. Default value is true and Restcomm will patch SDP --&gt;
+                    &lt;patch-sdp&gt;false&lt;/patch-sdp&gt;
 				&lt;/rule&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Will match traffic from <strong>192.168.200.11:5080</strong> (<strong>Restcomm InstanceB</strong>) and will proxy out to <strong>192.168.100.10:5060</strong> (<strong>ClientA</strong>)</p>
+<p>Will match traffic from <strong>192.168.200.11:5080</strong> (<strong>Restcomm InstanceB</strong>) and will proxy out to <strong>192.168.100.10:5060</strong> (<strong>ClientA</strong>). Also it will NOT patch the SDP with the external IP of media server</p>
 </div>
 </div>
 </div>
@@ -22960,7 +22975,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-11 10:35:03 WEST
+Last updated 2017-08-12 10:35:05 WEST
 </div>
 </div>
 <footer>
