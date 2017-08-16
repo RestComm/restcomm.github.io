@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Step 1</title>
+<title>Restcomm API – Multiprovider Extension</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22759,294 +22759,554 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </head>
 <body class="article">
 <div id="header">
+<h1>Restcomm API – Multiprovider Extension</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#step-1">Step 1</a></li>
-<li><a href="#step-2">Step 2</a></li>
-<li><a href="#step-3">Step 3</a>
-<ul class="sectlevel3">
-<li><a href="#send-email-module-steps">Send email module steps</a></li>
+<li><a href="#extensions-multiprovider">Multiprovider Extension</a>
+<ul class="sectlevel2">
+<li><a href="#high-level-operation">High Level Operation</a></li>
+<li><a href="#multiprovider-extension-resource-uri">Multiprovider Extension Resource URI</a></li>
+<li><a href="#resource-uri-properties">Resource URI Properties</a></li>
+<li><a href="#supported-operations">Supported Operations</a></li>
+<li><a href="#supported-operation-parameters">Supported Operation Parameters</a></li>
 </ul>
 </li>
-<li><a href="#step-4"> Step 4</a>
+<li><a href="#sms-enablement">SMS Enablement</a>
 <ul class="sectlevel2">
-<li><a href="#for-more-information">For more information</a></li>
+<li><a href="#configurationdata-parameter-outboundsms-object-properties">ConfigurationData Parameter OutboundSms Object Properties</a></li>
+<li><a href="#example-sms-enablement">Example SMS Enablement</a></li>
+</ul>
+</li>
+<li><a href="#voice-enablement">Voice Enablement</a>
+<ul class="sectlevel2">
+<li><a href="#configurationdata-parameter-outboundvoice-object-properties">ConfigurationData Parameter OutboundVoice Object Properties</a></li>
+<li><a href="#example-voice-enablement">Example Voice Enablement</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="paragraph">
-<p>Restcomm Visual Designer (RVD) is an intuitive web interface designed by Telestax to help developers build  communication applications rapidly. In this tutorial, you will learn how to create a voicemail application without writing a single line of programming language code. The voice message can then be emailed to your desired address.</p>
-</div>
-<div class="paragraph">
-<p>Use case scenarios:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Voicemail directly to your email,</p>
-</li>
-<li>
-<p>Voicemail to a third party (Assistant) for further processing</p>
-</li>
-<li>
-<p>Access email where voicemail server is not available.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><strong>Technical Requirements:</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Basic knowledge of Restcomm</p>
-</li>
-<li>
-<p>Basic knowledge of Zapier service (or alternatives web services integration tool such as IfTTT.com)</p>
-</li>
-</ul>
-</div>
 <div class="sect1">
-<h2 id="step-1"><a class="anchor" href="#step-1"></a>Step 1</h2>
+<h2 id="extensions-multiprovider"><a class="anchor" href="#extensions-multiprovider"></a>Multiprovider Extension</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="high-level-operation"><a class="anchor" href="#high-level-operation"></a>High Level Operation</h3>
 <div class="paragraph">
-<p>You must create an RVD project.</p>
+<p>The Multiprovider extension allows per account SMS and Voice routing.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Log into RVD on your Restcomm installation. <strong><a href="http://IP_ADDRESS:8080/" class="bare">http://IP_ADDRESS:8080/</a></strong> Please go to this link under step 4 and see how to link your RVD post to a Restcomm number. Then use a sip phone to call that number and an email will be sent to <a href="mailto:your_email@company.com">your_email@company.com</a> <a href="/?p=2486"><a href="http://www.telestax.com/telephone-survey-with-restcomm-visual-designer/" class="bare">http://www.telestax.com/telephone-survey-with-restcomm-visual-designer/</a></a></p>
-</li>
-<li>
-<p>Go to Restcomm Visual Designer, Voice and create new project. In this example we will name the project "Voicemail To Email".</p>
-</li>
-</ul>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+This REST API is only accessible by the super-admin.
+</td>
+</tr>
+</table>
 </div>
-<div class="paragraph">
-<p><span class="image"><img src="./images/NewProjectVoicemailTOEmail-845x674.png" alt="NewProjectVoicemailTOEmail" width="845" height="674"></span></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>You need to create two modules, <strong>Welcome</strong> module and <strong>Send email</strong> module.</p>
-</li>
-<li>
-<p>For the Welcome module, in the <strong>Say</strong> verb text area, enter your welcome message. In the screenshot below the text is "Welcome to record and email application. Please leave a message.".</p>
-</li>
-<li>
-<p>Drag and drop the  <strong>Record</strong>  verb into the Welcome module as show in the screenshot below.</p>
-</li>
-<li>
-<p>In the <strong>Continue To</strong> drop down menu field, choose the <strong>Send email</strong>,</p>
-</li>
-<li>
-<p>Check <strong>Play beep</strong>.</p>
-</li>
-<li>
-<p>Set the <strong>Timeout</strong> field to  10 seconds .</p>
-</li>
-<li>
-<p>Leave the rest of the fields as default.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="./images/WelcomeVoicemail2Email-845x604.png" alt="WelcomeVoicemail2Email" width="845" height="604"></span> </p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="step-2"><a class="anchor" href="#step-2"></a>Step 2</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Go to <a href="http://www.zapier.com" class="bare">http://www.zapier.com</a>, make a registration and then log in. Following screen will appear.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="./images/zapierDashboard-845x305.png" alt="zapierDashboard" width="845" height="305"></span></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Click on Make a Zap.</p>
-</li>
-<li>
-<p>Get Web Hook trigger and an Email action app from the drop down menus.</p>
-</li>
-<li>
-<p>Choose a trigger and an action to send an  outbound email.</p>
-</li>
-<li>
-<p>Press <strong>Continue</strong> and go to the next step, Web Hook.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="./images/emailVoicemail2Email-845x460.png" alt="emailVoicemail2Email" width="845" height="460"></span> </p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Copy the Webhook URL to clipboard and click on Continue</p>
-</li>
-<li>
-<p>Select an email account if not already done</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="./images/webhookZapier-845x453.png" alt="webhookZapier" width="845" height="453"></span></p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="step-3"><a class="anchor" href="#step-3"></a>Step 3</h2>
-<div class="sectionbody">
-<div class="sect3">
-<h4 id="send-email-module-steps"><a class="anchor" href="#send-email-module-steps"></a>Send email module steps</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Go back to RVD</p>
-</li>
-<li>
-<p>Go to <strong>Send email</strong> module and paste the WebHook URL in the <strong>Service Url</strong>  text area.</p>
-</li>
-<li>
-<p>Drag and drop <strong>Say</strong> module. In the text area enter the following text: "Thank you for calling. We will get back to you as soon as possible."</p>
-</li>
-<li>
-<p>The <strong>Send email</strong> module requires an External Service called Zapier. where the recorded message will be processed and a URL will the recorded message will be returned to Restcomm</p>
-</li>
-<li>
-<p>Restcomm will return the URL of the recorded message to the Destination email specified in the Send email module.</p>
-</li>
-<li>
-<p>The user can then listen to the voicemail message by accessing the  URL contained in the message email message.</p>
-</li>
-<li>
-<p>The recorded message will be available in the <strong>$core_PublicRecordingUrl</strong> variable.</p>
-</li>
-<li>
-<p>In older versions of Restcomm, the variable is $core_RecordingUrl.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Fill the following URL parameters as follows</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Name: recordingUrl</p>
-</li>
-<li>
-<p>Value:  $core_RecordingUrl</p>
-</li>
-<li>
-<p>Name: destination</p>
-</li>
-<li>
-<p>Value: DESTINATION_EMAIL_ADDRESS</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="./images/ExternalServiceVoicemail2email-845x529.png" alt="ExternalServiceVoicemail2email" width="845" height="529"></span></p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="step-4"><a class="anchor" href="#step-4"></a> Step 4</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Go back to Zapier. and enter the name of the Values: $core_RecordingUrl</p>
-</li>
-<li>
-<p>Enter the  email address to which the email will be sent.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="./images/filterwebhook.png" alt="filterwebhook" width="655" height="365"></span></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Match up the web hook to the outbound email.</p>
-</li>
-<li>
-<p>Enter the email, subject, body text etc.</p>
-</li>
-<li>
-<p>It is important to choose the appropriate type of attachments</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="./images/matchupWH-746x684.png" alt="matchupWH" width="746" height="684"></span></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Finally, test the Zap.</p>
-</li>
-<li>
-<p>Copy the <code>Webhook URL</code> to your web browser and add the following parameters:</p>
-<div class="paragraph">
-<p><a href="https://zapier.com/hooks/catch/ealwr/?recordingUrl=testurl&amp;destination=<a href="mailto:miss4eto@gmail.com">miss4eto@gmail.com</a>" class="bare">https://zapier.com/hooks/catch/ealwr/?recordingUrl=testurl&amp;destination=<a href="mailto:miss4eto@gmail.com">miss4eto@gmail.com</a></a></p>
-</div>
-</li>
-<li>
-<p>Your email will be different</p>
-</li>
-<li>
-<p>This will return a Json object as shown below</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="./images/voicemail2emailjson-845x66.png" alt="voicemail2emailjson" width="845" height="66"></span></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>You can now give your Zap a name and activate it.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="./images/zapname.png" alt="zapname" width="630" height="265"></span></p>
-</div>
-<div class="paragraph">
-<p>Application is finished. You can call your Restcomm number and test it.</p>
 </div>
 <div class="sect2">
-<h3 id="for-more-information"><a class="anchor" href="#for-more-information"></a>For more information</h3>
+<h3 id="multiprovider-extension-resource-uri"><a class="anchor" href="#multiprovider-extension-resource-uri"></a>Multiprovider Extension Resource URI</h3>
+<div class="paragraph">
+<p><strong>/2012-04-24/ExtensionsConfiguration.json/{MultiProviderExtensionId}</strong></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="resource-uri-properties"><a class="anchor" href="#resource-uri-properties"></a>Resource URI Properties</h3>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Valid Values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MultiProviderExtensionId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The unique MultiProvider Extension Id. This value will be different for each installation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Valid Extension Sid. eg.EX77f123cf07624366be8c0a9a2150f045</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="supported-operations"><a class="anchor" href="#supported-operations"></a>Supported Operations</h3>
+<div class="paragraph">
+<p><strong>HTTP GET.</strong> Returns the representation of the MultiProvider Extension resource.</p>
+</div>
+<div class="paragraph">
+<p><strong>HTTP POST/PUT</strong>. Adds or modifies MultiProvider configuration for specific Account and returns the representation. Below you will find a list of supported parameters.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="supported-operation-parameters"><a class="anchor" href="#supported-operation-parameters"></a>Supported Operation Parameters</h3>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Valid Values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ExtensionName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The unique MultiProvider Extension name. Currently is fixed to "multi_provider"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"multi_provider"</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable or disable the extension.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"true"|"false"</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ConfigurationData</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The MultiProvider configuration string.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Json string with correct schema</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AccountSid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Account this MultiProvider configuration is applied to.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Valid AccountSid</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="configurationdata-parameter-json-example-structure"><a class="anchor" href="#configurationdata-parameter-json-example-structure"></a>ConfigurationData Parameter Json Example Structure</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-JSON" data-lang="JSON">{
+    "outbound-voice": [
+        {
+            "proxy": [
+                {
+                    "uri":"Uri",
+                    "username":"String",
+                    "password":"String",
+                    "match":"Regex String",
+                    "headers":[
+                        {
+                            "headerName":"String",
+                            "key":"String",
+                            "value":"String"
+                        },
+                        {...}
+                    ]
+                },
+                {...}
+            ]
+        }
+    ],
+    "outbound-sms": [
+        {"destination_network_id":"Integer"}
+    ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="configurationdata-parameter-top-level-properties"><a class="anchor" href="#configurationdata-parameter-top-level-properties"></a>ConfigurationData Parameter Top Level Properties</h4>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Top Level</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Optional</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>outbound-sms</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Array</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Array with single OutboundSms object.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>outbound-voice</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Array</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Array with single OutboundVoice object.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sms-enablement"><a class="anchor" href="#sms-enablement"></a>SMS Enablement</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>MultiProvider Extension enables Account specific SMS routing by sending <code>destination_network_id</code> (1550) TLV to the Telestax SMPP server that is configured.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Configuration wise it is possible to inject other TLVs for other purposes aside from SMS routing but this is currently not enabled.
+In the future, injection of other arbitrary TLVs may be enabled.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="configurationdata-parameter-outboundsms-object-properties"><a class="anchor" href="#configurationdata-parameter-outboundsms-object-properties"></a>ConfigurationData Parameter OutboundSms Object Properties</h3>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 2. <code>outbound-sms</code> Properties</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Optional</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>destination_network_id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The destination_network_id TLV</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="code-outbound-sms-code-json-example"><a class="anchor" href="#code-outbound-sms-code-json-example"></a><code>outbound-sms</code> Json Example</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-JSON" data-lang="JSON">{
+    "outbound-sms": [
+        {"destination_network_id":"1000"}
+    ]
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="example-sms-enablement"><a class="anchor" href="#example-sms-enablement"></a>Example SMS Enablement</h3>
+<div class="listingblock">
+<div class="content">
+<pre>curl -X POST http://ACae6e420f425248d6a26948c17a9e2acg:77f8c12cc7b8f8423e5c38b035249166@10.0.0.4:8080/restcomm/2012-04-24/ExtensionsConfiguration.json \
+-d "ExtensionName=multi_provider" -d "Enabled=true"  \
+-d "AccountSid=ACae6e420f425248d6a26948c17a9e2acf" \
+-d "ConfigurationData={\"outbound-sms\": [{\"destination_network_id\": \"1000\"}]}"</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="voice-enablement"><a class="anchor" href="#voice-enablement"></a>Voice Enablement</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>MultiProvider Extension voice enablement works three ways</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>For more information what is Restcomm and how it works please read these documents: <a href="http://www.telestax.com/restcomm-7-1-4-getting-started-guide/" class="bare">http://www.telestax.com/restcomm-7-1-4-getting-started-guide/</a>, <a href="http://telestax.wpengine.netdna-cdn.com/wp-content/uploads/2013/08/RestComm_API_User_Guide.pdf" class="bare">http://telestax.wpengine.netdna-cdn.com/wp-content/uploads/2013/08/RestComm_API_User_Guide.pdf</a>, <a href="http://www.telestax.com/restcomm-sip-tutorial-basic-usage-and-voice-dtmf/" class="bare">http://www.telestax.com/restcomm-sip-tutorial-basic-usage-and-voice-dtmf/</a></p>
+<p>Mapping a specific SIP outbound proxy to a specific Account. This applies to PSTN, SIP and Client calls.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>MultiProvider Extension enables Account specific Voice routing to a specific outbound proxy by using the OutboundVoice <code>uri</code> property defined in the Account specific ConfigurationData.</p>
 </li>
 <li>
-<p>For more information what is Zapier and how it works please follow these links: <a href="https://zapier.com/help/what-is-zapier/" class="bare">https://zapier.com/help/what-is-zapier/</a> <a href="https://zapier.com/how-it-works/" class="bare">https://zapier.com/how-it-works/</a></p>
-<div class="literalblock">
-<div class="content">
-<pre> </pre>
+<p>Credentials of the outbound proxy are defined in <code>username</code> and <code>password</code> properties</p>
+</li>
+<li>
+<p>URI properties have to be defined inline in the URI string itself. eg <code>"uri":"192.168.0.1;uriprop=uri_prop_value1"</code></p>
+</li>
+</ul>
 </div>
+</li>
+<li>
+<p>Appending SIP Message headers with custom header properties and adding custom headers.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>SIP Message headers will be modified when the <code>headers</code> property is defined.</p>
+</li>
+<li>
+<p>If the header defined in <code>headerName</code> is not present in the SIP Message, it is added to the SIP Message.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Rewriting SIP Request URI when the initial Request URI matches configured regex pattern. This applies to SIP calls.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Request URI pattern matching is done when <code>match</code> property is defined.</p>
+</li>
+<li>
+<p>By default <code>match</code> property does not need to be defined. In a configuration where the <code>match</code> property is not defined it amounts to configuring the <code>match</code> as <code>"match":".*"</code></p>
+</li>
+<li>
+<p>Common regex may be used:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>"match" : "uri.com"</code>. Will only match URI <code>uri.com</code>.</p>
+</li>
+<li>
+<p><code>"match" : "uri[12]\.com"</code>. Will match URIs <code>uri1.com</code>, <code>uri2.com</code>. Will not match <code>uri3.com</code></p>
+</li>
+<li>
+<p><code>"match" : "^uri.*"</code>. Will match URIs <code>uri</code>, <code>uri.com</code>. Will not match <code>1uri.com</code></p>
+</li>
+</ul>
 </div>
 </li>
 </ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="configurationdata-parameter-outboundvoice-object-properties"><a class="anchor" href="#configurationdata-parameter-outboundvoice-object-properties"></a>ConfigurationData Parameter OutboundVoice Object Properties</h3>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 3. <code>outbound-voice</code> Properties</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Optional</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>proxy</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Array</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Array of proxies</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 4. <code>proxy</code> Array Element Properties</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Optional</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>uri</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Uri of outbound proxy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>username</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Username for outbound proxy login</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>password</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Password for outbound proxy login</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>match</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Regex string for sip uri string matching</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>headers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Array</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Array of headers to be replaced into Sip message</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 5. <code>headers</code> Array Element Properties</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Optional</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>headerName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Header name in message to append</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Key attribute to append to message</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value of attribute to append to message</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="code-outbound-voice-code-json-example"><a class="anchor" href="#code-outbound-voice-code-json-example"></a><code>outbound-voice</code> Json Example</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-JSON" data-lang="JSON">{
+    "outbound-voice": [
+        {
+            "proxy": [
+                {
+                    "uri":"192.168.0.1;uriprop1=uri_prop_value1;uriprop2=uri_prop_value2",
+                    "username":"someuser1",
+                    "password":"somepassword1",
+                    "match":"uri.com"
+                },
+                {
+                    "uri":"192.168.0.1",
+                    "username":"someuser1",
+                    "password":"somepassword1",
+                    "match":"uri[12]\.com",
+                    "headers":[
+                        {
+                            "headerName":"Request-URI",
+                            "key":"newkey1",
+                            "value":"newvalue1"
+                        },
+                        {
+                            "headerName":"Request-URI",
+                            "key":"newkey2",
+                            "value":"newvalue2"
+                        },
+                        {
+                            "headerName":"To",
+                            "key":"newkey3",
+                            "value":"newvalue3"
+                        },
+                        {
+                            "headerName":"X-CustomHeader",
+                            "key":"newkey4",
+                            "value":"newvalue4"
+                        }
+                    ]
+                },
+                {
+                    "uri":"192.168.0.2",
+                    "username":"someuser2",
+                    "password":"somepassword2",
+
+                    "headers":[
+                        {
+                            "headerName":"Request-URI",
+                            "key":"newkey5",
+                            "value":"newvalue5"
+                        },
+                        {
+                            "headerName":"Request-URI",
+                            "key":"newkey6",
+                            "value":"newvalue6"
+                        },
+                        {
+                            "headerName":"To",
+                            "key":"newkey7",
+                            "value":"newvalue7"
+                        },
+                        {
+                            "headerName":"X-CustomHeader",
+                            "key":"newkey8",
+                            "value":"newvalue8"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="example-voice-enablement"><a class="anchor" href="#example-voice-enablement"></a>Example Voice Enablement</h3>
+<div class="listingblock">
+<div class="content">
+<pre>curl -X POST http://ACae6e420f425248d6a26948c17a9e2acg:77f8c12cc7b8f8423e5c38b035249166@10.0.0.4:8080/restcomm/2012-04-24/ExtensionsConfiguration.json \
+-d "ExtensionName=multi_provider" -d "Enabled=true"  \
+-d "AccountSid=ACae6e420f425248d6a26948c17a9e2acf" \
+-d "ConfigurationData={\"outbound-voice\": [  {\"proxy\": [ \
+{\"uri\":\"192.168.0.1;uriprop1=uri_prop_value1;uriprop2=uri_prop_value2"\", \"username\":\"someuser1.com\", \"password\":\"somepassword1.com\", \"match\":\"uri.com\"}, \
+{\"uri\":\"192.168.0.1\", \"username\":\"someuser1.com\", \"password\":\"somepassword1.com\", \"match\":\"uri[12]\\.com\", \"headers\": [
+   {\"headerName\":\"Request-URI\", \"key\":\"newkey1\", \"value\":\"newvalue1\"}, \
+   {\"headerName\":\"Request-URI\", \"key\":\"newkey2\", \"value\":\"newvalue2\"}, \
+   {\"headerName\":\"To\",          \"key\":\"newkey3\", \"value\":\"newvalue3\"}, \
+   {\"headerName\":\"X-CustomHeader\", \"key\":\"newkey4\", \"value\":\"newvalue4\"}  \
+]} \
+{\"uri\":\"192.168.0.2\", \"username\":\"someuser2.com\", \"password\":\"somepassword2.com\", \"headers\": [
+   {\"headerName\":\"Request-URI\", \"key\":\"newkey5\", \"value\":\"newvalue5\"}, \
+   {\"headerName\":\"Request-URI\", \"key\":\"newkey6\", \"value\":\"newvalue6\"}, \
+   {\"headerName\":\"To\", \"key\":\"newkey\", \"value7\":\"newvalue7\"}, \
+   {\"headerName\":\"X-CustomHeader\", \"key\":\"newkey8\", \"value\":\"newvalue8\"}  \
+]} \
+] } ] }"</pre>
+</div>
 </div>
 </div>
 </div>
