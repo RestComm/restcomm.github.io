@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Restcomm API – Available Phone Numbers</title>
+<title>Restcomm Organizations</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22759,453 +22759,93 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </head>
 <body class="article">
 <div id="header">
-<h1>Restcomm API – Available Phone Numbers</h1>
+<h1>Restcomm Organizations</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#availablephonenumbers">AvailablePhoneNumbers</a>
-<ul class="sectlevel2">
-<li><a href="#resource-properties">Resource Properties</a></li>
-<li><a href="#address-requirement-values">Address Requirement Values</a></li>
-</ul>
-</li>
-<li><a href="#toll-free-instance">AvailablePhoneNumber Toll-Free Instance Resource</a>
-<ul class="sectlevel2">
-<li><a href="#toll-free-instance-uri">Resource URI</a></li>
-<li><a href="#toll-free-instance-properties">Resource Properties</a></li>
-</ul>
-</li>
-<li><a href="#mobile-instance">AvailablePhoneNumber Mobile Instance Resource</a>
-<ul class="sectlevel2">
-<li><a href="#toll-free-instance-uri">Resource URI</a></li>
-<li><a href="#mobile-instance-properties">Resource Properties</a></li>
-</ul>
-</li>
-<li><a href="#local">AvailablePhoneNumbers Local List Subresource</a>
-<ul class="sectlevel2">
-<li><a href="#local-uri">Resource URI</a></li>
-<li><a href="#local-get">HTTP GET</a></li>
-<li><a href="#local-get-basic-filters">Basic List Filters</a></li>
-<li><a href="#supported-operations">Supported Operations</a></li>
-</ul>
-</li>
-<li><a href="#querying-available-phone-numbers">Querying Available Phone Numbers</a>
-<ul class="sectlevel2">
-<li><a href="#supported-operations-2">Supported Operations</a></li>
-</ul>
-</li>
+<li><a href="#what-is-an-organization">What is an Organization</a></li>
+<li><a href="#high-level-routing">High Level Routing</a></li>
+<li><a href="#call-routing">Call Routing</a></li>
+<li><a href="#database">Database</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="availablephonenumbers"><a class="anchor" href="#availablephonenumbers"></a>AvailablePhoneNumbers</h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <strong>AvailablePhoneNumbers</strong> subresources let you search for incoming local and toll-free phone numbers that are available for you to purchase from a Telestax partner. <strong>AvailablePhoneNumbers</strong> List Resource URI. <strong>/2012-04-24/Accounts/{AccountSid}/AvailablePhoneNumbers/US/Local</strong> Searching For Numbers. When using RestComm the way to search for new phone numbers is by searching the <strong>AvailablePhoneNumbers</strong> list resource and providing the desired area code as a filter.</p>
-</div>
-<div class="sect2">
-<h3 id="resource-properties"><a class="anchor" href="#resource-properties"></a>Resource Properties</h3>
-<div class="paragraph">
-<p>The following properties are available for phone numbers from the US and Canada:</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">FriendlyName</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A nicely-formatted version of the phone number.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PhoneNumber</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The phone number, in E.164 (i.e. "+1") format.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Lata</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The LATA of this phone number.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">RateCenter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The rate center of this phone number.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Latitude</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The latitude coordinate of this phone number.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Longitude</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The longitude coordinate of this phone number.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Region</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The two-letter state or province abbreviation of this phone number.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PostalCode</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The postal (zip) code of this phone number.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">IsoCountry</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The <a href="http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO country code</a> of this phone number.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Capabilities</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This is a set of boolean properties that indicate whether a phone number can receive calls or messages. Possible capabilities are <code>Voice</code>, <code>SMS</code>, and <code>MMS</code> with each having a value of either <code>true</code> or <code>false</code>.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>The following properties are available for phone numbers outside the US and Canada:</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">FriendlyName</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A nicely-formatted version of the phone number.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PhoneNumber</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The phone number, in [E.164] (i.e. "+44") format.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">IsoCountry</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The <a href="http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO country code</a> of this phone number.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Capabilities</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This is a set of boolean properties that indicate whether a phone number can receive calls or messages. Possible capabilities are <code>Voice</code>, <code>SMS</code>, and <code>MMS</code> with each having a value of either <code>true</code> or <code>false</code>.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="address-requirement-values"><a class="anchor" href="#address-requirement-values"></a>Address Requirement Values</h3>
-<div class="paragraph">
-<p>The following are the possible values for the <code>address_required</code> property.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Status</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">none</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An Address is not required for this phone number.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">any</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Your account must have an Address, but it can be anywhere in the world.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">local</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Your account must have an Address within the phone number&#8217;s country.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">foreign</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Your account must have an Address outside the phone number&#8217;s country.</p></td>
-</tr>
-</tbody>
-</table>
+<p>Purpose of this document is to share the design for implementing the functionality around Organizations in Restcomm</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="toll-free-instance"><a class="anchor" href="#toll-free-instance"></a>AvailablePhoneNumber Toll-Free Instance Resource</h2>
+<h2 id="what-is-an-organization"><a class="anchor" href="#what-is-an-organization"></a>What is an Organization</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Some DID providers allow toll-free numbers from the US, Canada, and the UK.</p>
-</div>
-<div class="sect2">
-<h3 id="toll-free-instance-uri"><a class="anchor" href="#toll-free-instance-uri"></a>Resource URI</h3>
-<div class="paragraph">
-<p>An AvailablePhoneNumber toll-free instance resource has no URI. You cannot make requests directly to AvailablePhoneNumber instance resources. Instead, make a request to the toll-free list subresource and then choose a number from the list.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="toll-free-instance-properties"><a class="anchor" href="#toll-free-instance-properties"></a>Resource Properties</h3>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">FriendlyName</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A nicely-formatted version of the phone number.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PhoneNumber</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The phone number, in E.164 (i.e. "+1") format.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">IsoCountry</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The <a href="http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO country code</a> of this phone number.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Capabilities</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This is a set of boolean properties that indicate whether a phone number can receive calls or messages. Possible capabilities are <code>Voice</code>, <code>SMS</code>, and <code>MMS</code> with each having a value of either <code>true</code> or <code>false</code>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">AddressRequirements</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This indicates whether the phone number requires you or your customer to have an Address registered with Restcomm. Possible values are <code>none</code>, <code>any</code>, <code>local</code>, or <code>foreign</code>.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="mobile-instance"><a class="anchor" href="#mobile-instance"></a>AvailablePhoneNumber Mobile Instance Resource</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="toll-free-instance-uri"><a class="anchor" href="#toll-free-instance-uri"></a>Resource URI</h3>
-<div class="paragraph">
-<p>An AvailablePhoneNumber mobile instance resource has no URI. You cannot make requests directly to AvailablePhoneNumber instance resources. Instead, make a request to the mobile list subresource and then choose a number from the list.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="mobile-instance-properties"><a class="anchor" href="#mobile-instance-properties"></a>Resource Properties</h3>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">FriendlyName</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A nicely-formatted version of the phone number.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PhoneNumber</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The phone number, in E.164 (i.e. "+1") format.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">IsoCountry</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The <a href="http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO country code</a> of this phone number.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Capabilities</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This is a set of boolean properties that indicate whether a phone number can receive calls or messages. Possible capabilities are <code>Voice</code>, <code>SMS</code>, and <code>MMS</code> with each having a value of either <code>true</code> or <code>false</code>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">AddressRequirements</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This indicates whether the phone number requires you or your customer to have an Address registered with Restcomm. Possible values are <code>none</code>, <code>any</code>, <code>local</code>, or <code>foreign</code>.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="local"><a class="anchor" href="#local"></a>AvailablePhoneNumbers Local List Subresource</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="local-uri"><a class="anchor" href="#local-uri"></a>Resource URI</h3>
-<div class="listingblock">
-<div class="content">
-<pre>/2012-04-24//Accounts/{AccountSid}/AvailablePhoneNumbers/{IsoCountryCode}/Local</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>{IsoCountryCode} is a country code in ISO 3166-1 alpha-2 format. For example, the IsoCountryCode for Canada is <code>CA</code>. See Supported Countries for a full list of countries and IsoCountryCodes supported by Restcomm.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="local-get"><a class="anchor" href="#local-get"></a>HTTP GET</h3>
-<div class="paragraph">
-<p>Returns a list of local AvailablePhoneNumber resource representations that match the specified filters, each representing a phone number that is currently available for provisioning within your account.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="local-get-basic-filters"><a class="anchor" href="#local-get-basic-filters"></a>Basic List Filters</h3>
-<div class="paragraph">
-<p>The following basic GET query string parameters allow you to filter the list of numbers returned by Restcomm. Note, parameters are case-sensitive.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">AreaCode</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Find phone numbers in the specified area code. (US and Canada only)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Contains</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A pattern to match phone numbers on. Valid characters are <code>'<strong>'</code> and <code>[0-9a-zA-Z]</code>. The <code>'</strong>'</code> character will match any single digit.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SmsEnabled</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This indicates whether the phone numbers can receive text messages. Possible values are <code>true</code> or <code>false</code>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MmsEnabled</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This indicates whether the phone numbers can receive MMS messages. Possible values are <code>true</code> or <code>false</code>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">VoiceEnabled</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This indicates whether the phone numbers can receive calls. Possible values are <code>true</code> or <code>false</code>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ExcludeAllAddressRequired</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Indicates whether the response includes phone numbers which require any Address. Possible values are <code>true</code> or <code>false</code>. If not specified, the default is <code>false</code>, and results could include phone numbers with an Address required.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ExcludeLocalAddressRequired</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Indicates whether the response includes phone numbers which require a local Address. Possible values are <code>true</code> or <code>false</code>. If not specified, the default is <code>false</code>, and results could include phone numbers with a local Address required.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ExcludeForeignAddressRequired</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Indicates whether the response includes phone numbers which require a foreign Address. Possible values are <code>true</code> or <code>false</code>. If not specified, the default is <code>false</code>, and results could include phone numbers with a foreign Address required.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Beta</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Include phone numbers new to theRestcomm platform. Possible values are either <code>true</code> or <code>false</code>. Default is <code>true</code>.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="supported-operations"><a class="anchor" href="#supported-operations"></a>Supported Operations</h3>
-<div class="sect3">
-<h4 id="http-get"><a class="anchor" href="#http-get"></a>HTTP GET.</h4>
-<div class="paragraph">
-<p>Returns the representation of an <strong>AvailablePhoneNumber</strong> resource, including the properties above.</p>
-</div>
-<div class="sect4">
-<h5 id="request-parameters"><a class="anchor" href="#request-parameters"></a>Request Parameters</h5>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">AreaCode</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A three digit area code inside the U.S.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="querying-available-phone-numbers"><a class="anchor" href="#querying-available-phone-numbers"></a>Querying Available Phone Numbers</h2>
-<div class="sectionbody">
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-You need to be using Restcomm Cloud or setup the DID Provider in Restcomm in order to be able to use this feature. See the Tutorial section.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Here is an example, the <strong>AreaCode</strong> is any valid United States Code</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>curl -G http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@&lt;Elastic_IP&gt;:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/AvailablePhoneNumbers/US/Local -d "AreaCode=305"</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The <strong>AvailablePhoneNumbers</strong> subresources let you search for incoming local and toll-free phone numbers that are available for you to purchase from a Telestax partner.</p>
+<p>A virtual Restcomm plateform provided to a customer on a unique custom domain. e.g. customer1.restcomm.com</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>AvailablePhoneNumbers List Resource URI. /<strong>2012-04-24/Accounts/{AccountSid}/AvailablePhoneNumbers/US/Local</strong></p>
+<p>True multitenacy for numbers and clients. SIP numbers/clients are unique to a particular organization and not the entire plateform.</p>
+</li>
+<li>
+<p>Routing of Numbers so they don’t conflict under a given domain/organization but can exist under other domain/organizations.</p>
+</li>
+<li>
+<p>Provide account holders with the ability to have a custom sub-domain mydomain.restcomm.com and/or mysubdomain.mydomain.restcomm.com</p>
+</li>
+<li>
+<p>Whitelabeling: Provide the ability to have a customizable user experience for a service provider’s end customers (a skinnable dashboard and RVD, etc.)</p>
+</li>
+<li>
+<p>Custom URL for API calls <a href="https://mydomain.restcomm.com/%E2%80%A6">https://mydomain.restcomm.com/…</a></p>
+</li>
+<li>
+<p>Sharding of organizations/domain for scale, SLA, performance</p>
+</li>
+<li>
+<p>Consolidated billing for a given Organization</p>
 </li>
 </ul>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="high-level-routing"><a class="anchor" href="#high-level-routing"></a>High Level Routing</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Searching For Numbers. When using Restcomm the way to search for new phone numbers is by searching the <strong>AvailablePhoneNumbers</strong> list resource and providing the desired area code as a filter.</p>
+<p>Unresolved directive in index.adoc - include::organizations/uml/routing.adoc[]</p>
 </div>
-<div class="sect2">
-<h3 id="supported-operations-2"><a class="anchor" href="#supported-operations-2"></a>Supported Operations</h3>
-<div class="sect3">
-<h4 id="http-get-2"><a class="anchor" href="#http-get-2"></a>HTTP GET</h4>
+<div class="imageblock">
+<div class="content">
+<img src="./uml/routing.png" alt="routing">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="call-routing"><a class="anchor" href="#call-routing"></a>Call Routing</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Returns the representation of an <strong>AvailablePhoneNumber</strong> resource, including the properties above.</p>
+<p>Unresolved directive in index.adoc - include::organizations/uml/activitydiagram.adoc[]</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./uml/activitydiagram.png" alt="activitydiagram">
 </div>
 </div>
-<div class="sect3">
-<h4 id="request-parameters-2"><a class="anchor" href="#request-parameters-2"></a>Request Parameters</h4>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">AreaCode</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A three digit area code inside the U.S.</p></td>
-</tr>
-</tbody>
-</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="database"><a class="anchor" href="#database"></a>Database</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Unresolved directive in index.adoc - include::organizations/uml/datamodel.adoc[]</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./uml/datamodel.png" alt="datamodel">
 </div>
 </div>
 </div>
