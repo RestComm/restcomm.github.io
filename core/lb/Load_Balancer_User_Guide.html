@@ -22777,17 +22777,18 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#_sslb_sip_load_balancing_basics">1.1. SIP Load Balancing Basics</a></li>
 <li><a href="#http-load-balancing">1.2. HTTP Load Balancing</a></li>
 <li><a href="#smpp-multiplexing-basics">1.3. SMPP multiplexing basics</a></li>
-<li><a href="#pluggable-balancer-algorithms">1.4. Pluggable balancer algorithms</a></li>
-<li><a href="#distributed-load-balancing">1.5. Distributed load balancing</a></li>
-<li><a href="#_sslb_binary_sip_load_balancer_installing_configuring_and_running">1.6. Restcomm Load Balancer: Installing, Configuring andRunning</a></li>
-<li><a href="#sip-message-flow">1.7. SIP Message Flow</a></li>
-<li><a href="#using-the-load-balancer-with-third-party-sip-servers">1.8. Using the Load Balancer with Third-Party SIP Servers</a></li>
-<li><a href="#enabling-tls-wss-for-load-balancers">1.9. Enabling TLS/WSS for Load Balancers</a></li>
-<li><a href="#getting-statistic">1.10. Getting statistic</a></li>
-<li><a href="#configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine">1.11. Configuring Load-balancer and two Restcomm servers on the one local machine</a></li>
-<li><a href="#integration-load-balancer-smpp-with-restcomm-and-nexmo">1.12. Integration Load Balancer SMPP with Restcomm and Nexmo</a></li>
-<li><a href="#active-active-setup-and-graceful-upgrades-of-load-balancer">1.13. Active-Active setup and Graceful Upgrades of Load Balancer</a></li>
-<li><a href="#kubernetes-integration">1.14. Kubernetes integration</a></li>
+<li><a href="#mgcp-load-balancing">1.4. MGCP Load Balancing</a></li>
+<li><a href="#pluggable-balancer-algorithms">1.5. Pluggable balancer algorithms</a></li>
+<li><a href="#distributed-load-balancing">1.6. Distributed load balancing</a></li>
+<li><a href="#_sslb_binary_sip_load_balancer_installing_configuring_and_running">1.7. Restcomm Load Balancer: Installing, Configuring andRunning</a></li>
+<li><a href="#sip-message-flow">1.8. SIP Message Flow</a></li>
+<li><a href="#using-the-load-balancer-with-third-party-sip-servers">1.9. Using the Load Balancer with Third-Party SIP Servers</a></li>
+<li><a href="#enabling-tls-wss-for-load-balancers">1.10. Enabling TLS/WSS for Load Balancers</a></li>
+<li><a href="#getting-statistic">1.11. Getting statistic</a></li>
+<li><a href="#configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine">1.12. Configuring Load-balancer and two Restcomm servers on the one local machine</a></li>
+<li><a href="#integration-load-balancer-smpp-with-restcomm-and-nexmo">1.13. Integration Load Balancer SMPP with Restcomm and Nexmo</a></li>
+<li><a href="#active-active-setup-and-graceful-upgrades-of-load-balancer">1.14. Active-Active setup and Graceful Upgrades of Load Balancer</a></li>
+<li><a href="#kubernetes-integration">1.15. Kubernetes integration</a></li>
 </ul>
 </li>
 <li><a href="#revision-history">Appendix A: Revision History</a></li>
@@ -23572,7 +23573,61 @@ If reconnect fails, connection is closed;</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="pluggable-balancer-algorithms"><a class="anchor" href="#pluggable-balancer-algorithms"></a>1.4. Pluggable balancer algorithms</h3>
+<h3 id="mgcp-load-balancing"><a class="anchor" href="#mgcp-load-balancing"></a>1.4. MGCP Load Balancing</h3>
+<div class="paragraph">
+<p>Restcomm load balancer has MGCP load balancing module. MGCP load balancer allows
+balance MGCP traffic. For balancing it uses round robin algorithm. For correct
+balancing all Call Agents (CA) must use call identifiers from common namespace.
+From the gateway&#8217;s perspective, the Call identifier is thus unique.</p>
+</div>
+<div class="paragraph">
+<p>All MGCP commands related to same call go to same Media Gateway (MG).
+This is based on checking the Call identifier in CRCX commands.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/MGCP-lb-diagram.png" alt="MGCP lb diagram">
+</div>
+<div class="title">Figure 5. MGCP load balancer diagram</div>
+</div>
+<div class="paragraph">
+<p>MGCP load balancer can transfer commands from CA side:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>CRCX - create connection
+MDCX - modify connection
+DLCX - delete connection
+AUEP - audit endpoint
+AUCX - audit connection
+RQNT - notification request
+EPCF - endpoint configuration</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>from GW side:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>NTFY - notify
+RSIP - restart in progress
+DLCX - delete connection</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The MGCP load balancer uses ping from MG nodes for discovering them. This ping
+should have mgcpPort, then LB will know that this node can handle MGCP traffic.
+So GW nodes must send heartbeats to the LB. After getting ping from GW node,
+LB will add this node to the map of MGCP nodes. If MG node will removed in some
+way, LB will remove all calls which was related to this node.</p>
+</div>
+<div class="paragraph">
+<p>For enabling MGCP load balancer you should add tag <code>&lt;mgcp&gt;</code> in configuration.
+Example of mgcp configuration you can find <a href="#_sslb_binary_sip_load_balancer_configuring">Configuring</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pluggable-balancer-algorithms"><a class="anchor" href="#pluggable-balancer-algorithms"></a>1.5. Pluggable balancer algorithms</h3>
 <div class="paragraph">
 <p>The Restcomm Load Balancer exposes an interface to allow users to customize the routing decision making for special purposes.
 By default there are three built-in algorithms.
@@ -23697,7 +23752,7 @@ for sending SMPP requests to connected Nodes.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="distributed-load-balancing"><a class="anchor" href="#distributed-load-balancing"></a>1.5. Distributed load balancing</h3>
+<h3 id="distributed-load-balancing"><a class="anchor" href="#distributed-load-balancing"></a>1.6. Distributed load balancing</h3>
 <div class="paragraph">
 <p>When the capacity of a single load balancer is exceeded, multiple load balancers can be used.
 With the help of an IP load balancer the traffic can be distributed between all Restcomm load balancers based on some IP rules or round-robin.
@@ -23708,13 +23763,13 @@ With consistent hash algorithms there is no state to be preserved in the Restcom
 <div class="content">
 <img src="./images/WSS_Failover_Goal.png" alt="WSS Failover Goal">
 </div>
-<div class="title">Figure 5. Example deployment: IP load balancers serving both directions forincoming/outgoing requests in a cluster</div>
+<div class="title">Figure 6. Example deployment: IP load balancers serving both directions forincoming/outgoing requests in a cluster</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_sslb_binary_sip_load_balancer_installing_configuring_and_running"><a class="anchor" href="#_sslb_binary_sip_load_balancer_installing_configuring_and_running"></a>1.6. Restcomm Load Balancer: Installing, Configuring andRunning</h3>
+<h3 id="_sslb_binary_sip_load_balancer_installing_configuring_and_running"><a class="anchor" href="#_sslb_binary_sip_load_balancer_installing_configuring_and_running"></a>1.7. Restcomm Load Balancer: Installing, Configuring andRunning</h3>
 <div class="sect3">
-<h4 id="_sslb_binary_sip_load_balancer_preinstall_requirements_and_prerequisites"><a class="anchor" href="#_sslb_binary_sip_load_balancer_preinstall_requirements_and_prerequisites"></a>1.6.1. Pre-Install Requirements and Prerequisites</h4>
+<h4 id="_sslb_binary_sip_load_balancer_preinstall_requirements_and_prerequisites"><a class="anchor" href="#_sslb_binary_sip_load_balancer_preinstall_requirements_and_prerequisites"></a>1.7.1. Pre-Install Requirements and Prerequisites</h4>
 <div class="dlist">
 <div class="title">Software Prerequisites</div>
 <dl>
@@ -23728,7 +23783,7 @@ The Restcomm Restcomm Load Balancer will work with a SIP Servlets-enabled JBoss 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_sslb_binary_sip_load_balancer_downloading"><a class="anchor" href="#_sslb_binary_sip_load_balancer_downloading"></a>1.6.2. Downloading</h4>
+<h4 id="_sslb_binary_sip_load_balancer_downloading"><a class="anchor" href="#_sslb_binary_sip_load_balancer_downloading"></a>1.7.2. Downloading</h4>
 <div class="paragraph">
 <p>The load balancer is located in the <em class="path">sip-balancer</em> top-level directory of the Restcomm  distribution.
 You will find the following files in the directory:</p>
@@ -23747,14 +23802,14 @@ You will find the following files in the directory:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_sslb_binary_sip_load_balancer_installing"><a class="anchor" href="#_sslb_binary_sip_load_balancer_installing"></a>1.6.3. Installing</h4>
+<h4 id="_sslb_binary_sip_load_balancer_installing"><a class="anchor" href="#_sslb_binary_sip_load_balancer_installing"></a>1.7.3. Installing</h4>
 <div class="paragraph">
 <p>The Restcomm load balancer executable JAR file can be extracted anywhere in the file system.
 It is recommended that the file is placed in the directory containing other JAR executables, so it can be easily located in the future.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_sslb_binary_sip_load_balancer_configuring"><a class="anchor" href="#_sslb_binary_sip_load_balancer_configuring"></a>1.6.4. Configuring</h4>
+<h4 id="_sslb_binary_sip_load_balancer_configuring"><a class="anchor" href="#_sslb_binary_sip_load_balancer_configuring"></a>1.7.4. Configuring</h4>
 <div class="paragraph">
 <p>Configuring the Restcomm Load Balancer and the two SIP Servlets-enabled Server nodes is described in <a href="#_sslb_configuring_the_sip_load_balancer_and_servlet_server_nodes">Procedure: Configuring the Restcomm  Restcomm Load Balancer and SIPServer Nodes</a>      .</p>
 </div>
@@ -23764,11 +23819,11 @@ It is recommended that the file is placed in the directory containing other JAR 
 <li>
 <p>Configure lb-configuration.xml Configuration Properties File</p>
 <div class="paragraph">
-<p>Configure the Restcomm Load Balancer&#8217;s Configuration Properties file by substituting valid values for your personal setup. <a href="#_sslb_complete_sample_lb.properties_file">Complete Sample lb-configuration.xml File</a>          shows a sample <em class="path">lb-configuration.xml</em> file, with key element descriptions provided after the example.
+<p>Configure the Restcomm Load Balancer&#8217;s Configuration Properties file by substituting valid values for your personal setup. <a href="#sample_lb.properties_file">Sample of lb-configuration.xml file</a>          shows a sample <em class="path">lb-configuration.xml</em> file, with key element descriptions provided after the example.
 The lines beginning with the pound sign are comments.</p>
 </div>
-<div id="_sslb_complete_sample_lb.properties_file" class="exampleblock">
-<div class="title">Example 1. Complete Sample lb-configuration.xml File</div>
+<div id="sample_lb.properties_file" class="exampleblock">
+<div class="title">Example 1. Sample of lb-configuration.xml file</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -23911,6 +23966,12 @@ http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
   &lt;toProviderAlgorithmClass&gt;&lt;/toProviderAlgorithmClass&gt;
   &lt;muxMode&gt;true&lt;/muxMode&gt;
 &lt;/smpp&gt;
+&lt;mgcp&gt;
+  &lt;mgcpExternalHost&gt;50.17.127.170&lt;/mgcpExternalHost&gt;
+  &lt;mgcpInternalHost&gt;172.21.0.105&lt;/mgcpInternalHost&gt;
+  &lt;mgcpExternalPort&gt;2727&lt;/mgcpExternalPort&gt;
+  &lt;mgcpInternalPort&gt;2727&lt;/mgcpInternalPort&gt;
+&lt;/mgcp&gt;
 &lt;ssl&gt;
   &lt;terminateTLSTraffic&gt;true&lt;/terminateTLSTraffic&gt;
   &lt;keyStore&gt;/opt/loadbalancer/config/keystore&lt;/keyStore&gt;
@@ -24400,13 +24461,13 @@ If the desired behaviour group these requests, we can just make sure the affinit
 <div class="content">
 <img src="./images/converged-integrated-lb.png" alt="converged integrated lb">
 </div>
-<div class="title">Figure 6. Ensuring SIP and HTTP requests are being grouped by commonaffinity value.</div>
+<div class="title">Figure 7. Ensuring SIP and HTTP requests are being grouped by commonaffinity value.</div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_sslb_binary_sip_load_balancer_running"><a class="anchor" href="#_sslb_binary_sip_load_balancer_running"></a>1.6.5. Running</h4>
+<h4 id="_sslb_binary_sip_load_balancer_running"><a class="anchor" href="#_sslb_binary_sip_load_balancer_running"></a>1.7.5. Running</h4>
 <div class="olist arabic">
 <div class="title">Procedure: Running the Load Balancer and SIP Server Nodes</div>
 <ol class="arabic">
@@ -24466,7 +24527,7 @@ In the Linux terminal, or using the Windows Command Prompt, the Load Balancers a
 </div>
 </div>
 <div class="sect3">
-<h4 id="_sslb_binary_sip_load_balancer_testing"><a class="anchor" href="#_sslb_binary_sip_load_balancer_testing"></a>1.6.6. Testing</h4>
+<h4 id="_sslb_binary_sip_load_balancer_testing"><a class="anchor" href="#_sslb_binary_sip_load_balancer_testing"></a>1.7.6. Testing</h4>
 <div class="paragraph">
 <p>To test load balancing, the same application must be deployed manually on each node, and two SIP Softphones must be installed.</p>
 </div>
@@ -24526,7 +24587,7 @@ Notice that the call is handled by the second node.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_sslb_binary_sip_load_balancer_stopping"><a class="anchor" href="#_sslb_binary_sip_load_balancer_stopping"></a>1.6.7. Stopping</h4>
+<h4 id="_sslb_binary_sip_load_balancer_stopping"><a class="anchor" href="#_sslb_binary_sip_load_balancer_stopping"></a>1.7.7. Stopping</h4>
 <div class="paragraph">
 <p>Assuming that you started the JBoss Application Server as a foreground process
 in the Linux terminal, the easiest way to stop it is by pressing the  key combination
@@ -24597,14 +24658,14 @@ configuration file in &lt;common&gt; section:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_sslb_binary_sip_load_balancer_uninstalling"><a class="anchor" href="#_sslb_binary_sip_load_balancer_uninstalling"></a>1.6.8. Uninstalling</h4>
+<h4 id="_sslb_binary_sip_load_balancer_uninstalling"><a class="anchor" href="#_sslb_binary_sip_load_balancer_uninstalling"></a>1.7.8. Uninstalling</h4>
 <div class="paragraph">
 <p>To uninstall the SIP and SMPP load balancers, delete the JAR file you installed.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="sip-message-flow"><a class="anchor" href="#sip-message-flow"></a>1.7. SIP Message Flow</h3>
+<h3 id="sip-message-flow"><a class="anchor" href="#sip-message-flow"></a>1.8. SIP Message Flow</h3>
 <div class="paragraph">
 <p>The Restcomm Load Balancer appends itself to the <code>Via</code>    header of each request, so that returned responses are sent to the SIP Balancer before they are sent to the originating endpoint.</p>
 </div>
@@ -24641,11 +24702,11 @@ In the diagram, the Restcomm Load Balancer is the server with the IP address of 
 <div class="content">
 <img src="./images/mss-MSSSIPLoadBalancer-dia-ClusterIPsAndPorts.jpg" alt="mss MSSSIPLoadBalancer dia ClusterIPsAndPorts">
 </div>
-<div class="title">Figure 7. Basic IP and Port Cluster Configuration</div>
+<div class="title">Figure 8. Basic IP and Port Cluster Configuration</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="using-the-load-balancer-with-third-party-sip-servers"><a class="anchor" href="#using-the-load-balancer-with-third-party-sip-servers"></a>1.8. Using the Load Balancer with Third-Party SIP Servers</h3>
+<h3 id="using-the-load-balancer-with-third-party-sip-servers"><a class="anchor" href="#using-the-load-balancer-with-third-party-sip-servers"></a>1.9. Using the Load Balancer with Third-Party SIP Servers</h3>
 <div class="paragraph">
 <p>The load balancer only forwards requests to servers that send heartbeat signals.
 A third party server can send metadata using a SIP OPTIONS or SIP INFO message towards the internal port of the Restcomm Load Balancer.
@@ -24696,9 +24757,9 @@ If no response if received within a threshhold time then the third party SIP ser
 </div>
 </div>
 <div class="sect2">
-<h3 id="enabling-tls-wss-for-load-balancers"><a class="anchor" href="#enabling-tls-wss-for-load-balancers"></a>1.9. Enabling TLS/WSS for Load Balancers</h3>
+<h3 id="enabling-tls-wss-for-load-balancers"><a class="anchor" href="#enabling-tls-wss-for-load-balancers"></a>1.10. Enabling TLS/WSS for Load Balancers</h3>
 <div class="sect3">
-<h4 id="enabling-tls-wss-for-restcomm-load-balancer"><a class="anchor" href="#enabling-tls-wss-for-restcomm-load-balancer"></a>1.9.1. Enabling TLS/WSS for Restcomm Load Balancer</h4>
+<h4 id="enabling-tls-wss-for-restcomm-load-balancer"><a class="anchor" href="#enabling-tls-wss-for-restcomm-load-balancer"></a>1.10.1. Enabling TLS/WSS for Restcomm Load Balancer</h4>
 <div class="paragraph">
 <p>For enabling TLS/WSS support for Restcomm Load Balancer, you should correctly specify next property:</p>
 </div>
@@ -24732,7 +24793,7 @@ If no response if received within a threshhold time then the third party SIP ser
 </div>
 </div>
 <div class="sect3">
-<h4 id="enabling-https"><a class="anchor" href="#enabling-https"></a>1.9.2. Enabling HTTPS</h4>
+<h4 id="enabling-https"><a class="anchor" href="#enabling-https"></a>1.10.2. Enabling HTTPS</h4>
 <div class="paragraph">
 <p>For enabling HTTPS and Secure WebSockets support for HTTP load balancer, you should correctly specify next property (httpsPort property enables HTTPS support):</p>
 </div>
@@ -24763,7 +24824,7 @@ If no response if received within a threshhold time then the third party SIP ser
 </div>
 </div>
 <div class="sect3">
-<h4 id="enabling-tls-for-smpp-load-balancer"><a class="anchor" href="#enabling-tls-for-smpp-load-balancer"></a>1.9.3. Enabling TLS for SMPP load balancer</h4>
+<h4 id="enabling-tls-for-smpp-load-balancer"><a class="anchor" href="#enabling-tls-for-smpp-load-balancer"></a>1.10.3. Enabling TLS for SMPP load balancer</h4>
 <div class="paragraph">
 <p>For enabling TLS support for SMPP load balancer, you should correctly specify next property (smppSslPort property enables TLS suport):</p>
 </div>
@@ -24795,7 +24856,7 @@ If no response if received within a threshhold time then the third party SIP ser
 </div>
 </div>
 <div class="sect2">
-<h3 id="getting-statistic"><a class="anchor" href="#getting-statistic"></a>1.10. Getting statistic</h3>
+<h3 id="getting-statistic"><a class="anchor" href="#getting-statistic"></a>1.11. Getting statistic</h3>
 <div class="paragraph">
 <p>Load balancers provide some statistic by Java Management Extensions and JSON.
 You should use url <a href="http://host:statisticPort/lbstat" class="bare">http://host:statisticPort/lbstat</a> for getting JSON statistic data from load balancer.
@@ -24902,12 +24963,12 @@ You should use url <a href="http://host:statisticPort/lbinfo" class="bare">http:
 </div>
 </div>
 <div class="sect2">
-<h3 id="configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine"><a class="anchor" href="#configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine"></a>1.11. Configuring Load-balancer and two Restcomm servers on the one local machine</h3>
+<h3 id="configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine"><a class="anchor" href="#configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine"></a>1.12. Configuring Load-balancer and two Restcomm servers on the one local machine</h3>
 <div class="imageblock">
 <div class="content">
 <img src="./images/Restcomm_servers-LB.png" alt="Restcomm servers LB">
 </div>
-<div class="title">Figure 8. Load balancer and Restcomm servers diagram</div>
+<div class="title">Figure 9. Load balancer and Restcomm servers diagram</div>
 </div>
 <div class="paragraph">
 <p>This chapter will show you how to configure two Restcomm instances and Load Balancer instance on one machine with OS Ubuntu.</p>
@@ -25311,7 +25372,7 @@ Fill in form: Load Balancer&#8217;s ip adress (external.host) 172.21.0.104 and p
 </div>
 </div>
 <div class="sect2">
-<h3 id="integration-load-balancer-smpp-with-restcomm-and-nexmo"><a class="anchor" href="#integration-load-balancer-smpp-with-restcomm-and-nexmo"></a>1.12. Integration Load Balancer SMPP with Restcomm and Nexmo</h3>
+<h3 id="integration-load-balancer-smpp-with-restcomm-and-nexmo"><a class="anchor" href="#integration-load-balancer-smpp-with-restcomm-and-nexmo"></a>1.13. Integration Load Balancer SMPP with Restcomm and Nexmo</h3>
 <div class="paragraph">
 <div class="title">Configure Restcomm to Use SMPP</div>
 <p>First you need to configure the IP address and other features required
@@ -25387,7 +25448,7 @@ and you can see next line:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="active-active-setup-and-graceful-upgrades-of-load-balancer"><a class="anchor" href="#active-active-setup-and-graceful-upgrades-of-load-balancer"></a>1.13. Active-Active setup and Graceful Upgrades of Load Balancer</h3>
+<h3 id="active-active-setup-and-graceful-upgrades-of-load-balancer"><a class="anchor" href="#active-active-setup-and-graceful-upgrades-of-load-balancer"></a>1.14. Active-Active setup and Graceful Upgrades of Load Balancer</h3>
 <div class="paragraph">
 <p><a href="http://www.keepalived.org/">Keepalived service</a> provides possibility graceful
 shutdown of the Load balancer using health-checks and using virtual IP
@@ -25399,7 +25460,7 @@ time which controlled one keepalived service.</p>
 <div class="content">
 <img src="./images/Active-Active.png" alt="Active Active">
 </div>
-<div class="title">Figure 9. Active-Active Load balancer diagram</div>
+<div class="title">Figure 10. Active-Active Load balancer diagram</div>
 </div>
 <div class="paragraph">
 <p>If LB2 will be gracefully shutdown via http request
@@ -25412,7 +25473,7 @@ will be redirected to LB1.</p>
 <div class="content">
 <img src="./images/Active-Active-Graceful-Shutdown.png" alt="Active Active Graceful Shutdown">
 </div>
-<div class="title">Figure 10. The graceful shutdown of Load balancer diagram</div>
+<div class="title">Figure 11. The graceful shutdown of Load balancer diagram</div>
 </div>
 <div class="paragraph">
 <p>For configuring of Load balancer you need setup keepalived service and set
@@ -25646,7 +25707,7 @@ sip stack property gov.nist.javax.sip.NEVER_ADD_RECEIVED_RPORT=true</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kubernetes-integration"><a class="anchor" href="#kubernetes-integration"></a>1.14. Kubernetes integration</h3>
+<h3 id="kubernetes-integration"><a class="anchor" href="#kubernetes-integration"></a>1.15. Kubernetes integration</h3>
 <div class="paragraph">
 <p>With Kubernetes integration  the Load balancer can get info about running
 SIP Server Nodes from Pods and get data as IP, ports etc. When SIP Server Node
@@ -25743,7 +25804,7 @@ sip-node-1, sip-node-2 etc., then this tag should be &lt;nodeName&gt;sip-node&lt
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-09-07 15:46:04 WEST
+Last updated 2017-09-10 03:02:09 WEST
 </div>
 </div>
 <footer>

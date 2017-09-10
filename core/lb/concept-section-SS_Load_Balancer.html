@@ -22785,6 +22785,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#_sslb_smpp_load_balancer_implementation">Implementation of the SMPP Load Balancer</a></li>
 </ul>
 </li>
+<li><a href="#mgcp-load-balancing">MGCP Load Balancing</a></li>
 <li><a href="#pluggable-balancer-algorithms">Pluggable balancer algorithms</a></li>
 <li><a href="#distributed-load-balancing">Distributed load balancing</a></li>
 <li><a href="#_sslb_binary_sip_load_balancer_installing_configuring_and_running">Restcomm Load Balancer: Installing, Configuring andRunning</a>
@@ -23347,6 +23348,62 @@ If reconnect fails, connection is closed;</p>
 </div>
 </div>
 <div class="sect1">
+<h2 id="mgcp-load-balancing"><a class="anchor" href="#mgcp-load-balancing"></a>MGCP Load Balancing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Restcomm load balancer has MGCP load balancing module. MGCP load balancer allows
+balance MGCP traffic. For balancing it uses round robin algorithm. For correct
+balancing all Call Agents (CA) must use call identifiers from common namespace.
+From the gateway&#8217;s perspective, the Call identifier is thus unique.</p>
+</div>
+<div class="paragraph">
+<p>All MGCP commands related to same call go to same Media Gateway (MG).
+This is based on checking the Call identifier in CRCX commands.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/MGCP-lb-diagram.png" alt="MGCP lb diagram">
+</div>
+<div class="title">Figure 5. MGCP load balancer diagram</div>
+</div>
+<div class="paragraph">
+<p>MGCP load balancer can transfer commands from CA side:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>CRCX - create connection
+MDCX - modify connection
+DLCX - delete connection
+AUEP - audit endpoint
+AUCX - audit connection
+RQNT - notification request
+EPCF - endpoint configuration</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>from GW side:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>NTFY - notify
+RSIP - restart in progress
+DLCX - delete connection</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The MGCP load balancer uses ping from MG nodes for discovering them. This ping
+should have mgcpPort, then LB will know that this node can handle MGCP traffic.
+So GW nodes must send heartbeats to the LB. After getting ping from GW node,
+LB will add this node to the map of MGCP nodes. If MG node will removed in some
+way, LB will remove all calls which was related to this node.</p>
+</div>
+<div class="paragraph">
+<p>For enabling MGCP load balancer you should add tag <code>&lt;mgcp&gt;</code> in configuration.
+Example of mgcp configuration you can find <a href="#_sslb_binary_sip_load_balancer_configuring">Configuring</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="pluggable-balancer-algorithms"><a class="anchor" href="#pluggable-balancer-algorithms"></a>Pluggable balancer algorithms</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -23486,7 +23543,7 @@ With consistent hash algorithms there is no state to be preserved in the Restcom
 <div class="content">
 <img src="./images/WSS_Failover_Goal.png" alt="WSS Failover Goal">
 </div>
-<div class="title">Figure 5. Example deployment: IP load balancers serving both directions forincoming/outgoing requests in a cluster</div>
+<div class="title">Figure 6. Example deployment: IP load balancers serving both directions forincoming/outgoing requests in a cluster</div>
 </div>
 </div>
 </div>
@@ -23544,11 +23601,11 @@ It is recommended that the file is placed in the directory containing other JAR 
 <li>
 <p>Configure lb-configuration.xml Configuration Properties File</p>
 <div class="paragraph">
-<p>Configure the Restcomm Load Balancer&#8217;s Configuration Properties file by substituting valid values for your personal setup. <a href="#_sslb_complete_sample_lb.properties_file">Complete Sample lb-configuration.xml File</a>          shows a sample <em class="path">lb-configuration.xml</em> file, with key element descriptions provided after the example.
+<p>Configure the Restcomm Load Balancer&#8217;s Configuration Properties file by substituting valid values for your personal setup. <a href="#sample_lb.properties_file">Sample of lb-configuration.xml file</a>          shows a sample <em class="path">lb-configuration.xml</em> file, with key element descriptions provided after the example.
 The lines beginning with the pound sign are comments.</p>
 </div>
-<div id="_sslb_complete_sample_lb.properties_file" class="exampleblock">
-<div class="title">Example 1. Complete Sample lb-configuration.xml File</div>
+<div id="sample_lb.properties_file" class="exampleblock">
+<div class="title">Example 1. Sample of lb-configuration.xml file</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -23691,6 +23748,12 @@ http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
   &lt;toProviderAlgorithmClass&gt;&lt;/toProviderAlgorithmClass&gt;
   &lt;muxMode&gt;true&lt;/muxMode&gt;
 &lt;/smpp&gt;
+&lt;mgcp&gt;
+  &lt;mgcpExternalHost&gt;50.17.127.170&lt;/mgcpExternalHost&gt;
+  &lt;mgcpInternalHost&gt;172.21.0.105&lt;/mgcpInternalHost&gt;
+  &lt;mgcpExternalPort&gt;2727&lt;/mgcpExternalPort&gt;
+  &lt;mgcpInternalPort&gt;2727&lt;/mgcpInternalPort&gt;
+&lt;/mgcp&gt;
 &lt;ssl&gt;
   &lt;terminateTLSTraffic&gt;true&lt;/terminateTLSTraffic&gt;
   &lt;keyStore&gt;/opt/loadbalancer/config/keystore&lt;/keyStore&gt;
@@ -24180,7 +24243,7 @@ If the desired behaviour group these requests, we can just make sure the affinit
 <div class="content">
 <img src="./images/converged-integrated-lb.png" alt="converged integrated lb">
 </div>
-<div class="title">Figure 6. Ensuring SIP and HTTP requests are being grouped by commonaffinity value.</div>
+<div class="title">Figure 7. Ensuring SIP and HTTP requests are being grouped by commonaffinity value.</div>
 </div>
 </div>
 </div>
@@ -24423,7 +24486,7 @@ In the diagram, the Restcomm Load Balancer is the server with the IP address of 
 <div class="content">
 <img src="./images/mss-MSSSIPLoadBalancer-dia-ClusterIPsAndPorts.jpg" alt="mss MSSSIPLoadBalancer dia ClusterIPsAndPorts">
 </div>
-<div class="title">Figure 7. Basic IP and Port Cluster Configuration</div>
+<div class="title">Figure 8. Basic IP and Port Cluster Configuration</div>
 </div>
 </div>
 </div>
@@ -24697,7 +24760,7 @@ You should use url <a href="http://host:statisticPort/lbinfo" class="bare">http:
 <div class="content">
 <img src="./images/Restcomm_servers-LB.png" alt="Restcomm servers LB">
 </div>
-<div class="title">Figure 8. Load balancer and Restcomm servers diagram</div>
+<div class="title">Figure 9. Load balancer and Restcomm servers diagram</div>
 </div>
 <div class="paragraph">
 <p>This chapter will show you how to configure two Restcomm instances and Load Balancer instance on one machine with OS Ubuntu.</p>
@@ -25193,7 +25256,7 @@ time which controlled one keepalived service.</p>
 <div class="content">
 <img src="./images/Active-Active.png" alt="Active Active">
 </div>
-<div class="title">Figure 9. Active-Active Load balancer diagram</div>
+<div class="title">Figure 10. Active-Active Load balancer diagram</div>
 </div>
 <div class="paragraph">
 <p>If LB2 will be gracefully shutdown via http request
@@ -25206,7 +25269,7 @@ will be redirected to LB1.</p>
 <div class="content">
 <img src="./images/Active-Active-Graceful-Shutdown.png" alt="Active Active Graceful Shutdown">
 </div>
-<div class="title">Figure 10. The graceful shutdown of Load balancer diagram</div>
+<div class="title">Figure 11. The graceful shutdown of Load balancer diagram</div>
 </div>
 <div class="paragraph">
 <p>For configuring of Load balancer you need setup keepalived service and set
@@ -25532,7 +25595,7 @@ sip-node-1, sip-node-2 etc., then this tag should be &lt;nodeName&gt;sip-node&lt
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-09-07 15:46:04 WEST
+Last updated 2017-09-10 03:02:09 WEST
 </div>
 </div>
 <footer>
