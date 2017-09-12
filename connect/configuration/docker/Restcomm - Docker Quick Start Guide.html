@@ -22842,7 +22842,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">docker run  -i -d --name=restcomm-myInstance -v /var/log/restcomm/:/var/log/restcomm/ -e RCBCONF_STATIC_ADDRESS="YOUR_ETHERNET_IP" -e ENVCONFURL="https://raw.githubusercontent.com/RestComm/Restcomm-Docker/master/env_files/restcomm_env_locally.sh" -p 80:80 -p 443:443 -p 9990:9990 -p 5060:5060 -p 5061:5061 -p 5062:5062 -p 5063:5063 -p 5060:5060/udp -p 65000-65050:65000-65050/udp restcomm/restcomm:latest</code></pre>
+<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">docker run  -i -d --name=restcomm-myInstance -v /var/log/restcomm/:/var/log/restcomm/ -e RCBCONF_STATIC_ADDRESS="YOUR_ETHERNET_IP" -e ENVCONFURL="https://raw.githubusercontent.com/RestComm/Restcomm-Docker/master/env_files/restcomm_env_locally.sh" -p 8080:8080 -p 443:443 -p 9990:9990 -p 5060:5060 -p 5061:5061 -p 5062:5062 -p 5063:5063 -p 5060:5060/udp -p 65000-65050:65000-65050/udp restcomm/restcomm:latest</code></pre>
 </div>
 </div>
 </div>
@@ -23028,7 +23028,7 @@ Using the flag "INIT_PASSWORD" you can set administrator password when running R
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-09-11 10:34:44 WEST
+Last updated 2017-09-12 08:05:44 WEST
 </div>
 </div>
 <footer>
