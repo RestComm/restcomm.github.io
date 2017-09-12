@@ -22830,7 +22830,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <p>Get your "ETHERNET_IP" by running ifconfig</p>
 </li>
 <li>
-<p>Fill out the STATIC_ADDRESS variable as shown below</p>
+<p>Fill out the RCBCONF_STATIC_ADDRESS variable as shown below</p>
 </li>
 <li>
 <p>Start Restcomm as shown below:</p>
@@ -22861,17 +22861,10 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div class="sect3">
 <h4 id="quick-test"><a class="anchor" href="#quick-test"></a>Quick test</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Get the Docker IP address by running ifconfig command</p>
-</li>
-<li>
-<p>docker0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500 inet 172.17.42.1</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Go to <strong><a href="https://DOCKER_IP_ADDRESS:8443/olympus" class="bare">https://DOCKER_IP_ADDRESS:8443/olympus</a></strong></p>
+<p>Go to <strong><a href="https://RCBCONF_STATIC_ADDRESS:8443/olympus" class="bare">https://RCBCONF_STATIC_ADDRESS:8443/olympus</a></strong></p>
 </li>
 <li>
 <p>Press "Sign in" (username alice or bob and password 1234)</p>
@@ -22890,16 +22883,13 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </li>
 </ol>
 </div>
-</li>
-</ul>
-</div>
 </div>
 <div class="sect3">
 <h4 id="accessing-the-admin-ui"><a class="anchor" href="#accessing-the-admin-ui"></a>Accessing the Admin UI</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Go to <a href="https://DOCKER_IP_ADDRESS:8443" class="bare">https://DOCKER_IP_ADDRESS:8443</a></p>
+<p>Go to <a href="https://RCBCONF_STATIC_ADDRESS:8443" class="bare">https://RCBCONF_STATIC_ADDRESS:8443</a></p>
 </li>
 <li>
 <p>Username = <a href="mailto:administrator@company.com">administrator@company.com</a></p>
@@ -23028,7 +23018,7 @@ Using the flag "INIT_PASSWORD" you can set administrator password when running R
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-09-12 09:20:29 WEST
+Last updated 2017-09-12 09:36:25 WEST
 </div>
 </div>
 <footer>
