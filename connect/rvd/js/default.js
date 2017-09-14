@@ -272,10 +272,10 @@ function headerSize($scroll){
 
 	//take value from theme options
 	else {
-		sticky_amount = scroll_amount_for_sticky;
+		sticky_amount = 85;
 	}
 	
-	if($j('header').hasClass('regular')){
+	/*if($j('header').hasClass('regular')){
 //		$j('header .drop_down .second').css('top', header_height + header_bottom_border_weight +'px');
 		if(header_height - logo_height >= 10){
 			$j('.q_logo a').height(logo_height);
@@ -283,7 +283,7 @@ function headerSize($scroll){
 			$j('.q_logo a').height(header_height - 10);
 		}
         $j('.q_logo a img').css('height','100%');
-	}
+	}*/
 	
 	if($j('header.page_header').hasClass('fixed')){
 		if($j('header.page_header').hasClass('scroll_top')){
@@ -370,7 +370,7 @@ function headerSize($scroll){
         $j('.q_logo img').height('100%');
     }
 	
-	if($j('header.page_header').hasClass('stick') || $j('header.page_header').hasClass('stick_with_left_right_menu')){
+	/*if($j('header.page_header').hasClass('stick') || $j('header.page_header').hasClass('stick_with_left_right_menu')){
 		if($scroll > sticky_amount){
 			if(!$j('header.page_header').hasClass('sticky')){			
 				if($j('header.page_header').hasClass('has_top')){
@@ -434,7 +434,7 @@ function headerSize($scroll){
             $j('.q_logo a img').css('height','100%');
            // logo part - end //
         }
-	}
+	}*/
 }
 
 function setMargingsForLeftAndRightMenu(){
