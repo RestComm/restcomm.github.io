@@ -22845,6 +22845,18 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <pre class="highlight"><code class="language-lang:default" data-lang="lang:default">docker run  -i -d --name=restcomm-myInstance -v /var/log/restcomm/:/var/log/restcomm/ -e RCBCONF_STATIC_ADDRESS="YOUR_ETHERNET_IP" -e ENVCONFURL="https://raw.githubusercontent.com/RestComm/Restcomm-Docker/master/env_files/restcomm_env_locally.sh" -p 8080:8080 -p 8443:8443 -p 9990:9990 -p 5080:5080 -p 5081:5081 -p 5082:5082 -p 5083:5083 -p 5080:5080/udp -p 65000-65050:65000-65050/udp restcomm/restcomm:latest</code></pre>
 </div>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>OS X seems to have known for mount denied issue on <code>/var/log/restcomm</code> directory, in such case: mount logs with any directory under <code>/Users</code>. Here is an example:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">docker run  -i -d --name=restcomm-myInstance -v /Users/username/var/log/restcomm:/var/log/restcomm/ -e RCBCONF_STATIC_ADDRESS="YOUR_ETHERNET_IP" -e ENVCONFURL="https://raw.githubusercontent.com/RestComm/Restcomm-Docker/master/env_files/restcomm_env_locally.sh" -p 8080:8080 -p 8443:8443 -p 9990:9990 -p 5080:5080 -p 5081:5081 -p 5082:5082 -p 5083:5083 -p 5080:5080/udp -p 65000-65050:65000-65050/udp restcomm/restcomm:latest</code></pre>
+</div>
+</div>
 </div>
 <div class="sect3">
 <h4 id="text-to-speech-with-voicerss"><a class="anchor" href="#text-to-speech-with-voicerss"></a>Text-to-Speech with VoiceRSS</h4>
@@ -23018,7 +23030,7 @@ Using the flag "INIT_PASSWORD" you can set administrator password when running R
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-09-13 10:35:03 WEST
+Last updated 2017-09-14 09:17:17 WEST
 </div>
 </div>
 <footer>
