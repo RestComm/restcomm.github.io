@@ -22770,12 +22770,14 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#media-configuration">Media Configuration</a></li>
 <li><a href="#resources-configuration">Resources Configuration</a></li>
 <li><a href="#dtls-configuration">DTLS Configuration</a></li>
+<li><a href="#configure-speech-recognition-drivers">Configure Speech Recognition Drivers</a></li>
 </ul>
 </li>
 <li><a href="#_ctms_configuring_the_media_server_automatic">Automatic Configuration</a>
 <ul class="sectlevel2">
 <li><a href="#_ctms_configuring_the_media_server_automatic_dependencies">Requirements</a></li>
 <li><a href="#_ctms_configuring_the_media_server_automatic_file_structure">File Structure</a></li>
+<li><a href="#_ctms_configuring_the_media_server_automatic_asr">Configuring Speech Recognition Drivers</a></li>
 <li><a href="#_ctms_configuring_the_media_server_automatic_logger">Configuring the logger</a></li>
 <li><a href="#_ctms_configuring_the_media_server_automatic_ssl">Configuring Secure Sockets Layer (SSL)</a></li>
 <li><a href="#_ctms_configuring_the_media_server_automatic_running">Running</a></li>
@@ -23447,6 +23449,71 @@ The following examples show how to properly set up mediaserver according to the 
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="configure-speech-recognition-drivers"><a class="anchor" href="#configure-speech-recognition-drivers"></a>Configure Speech Recognition Drivers</h3>
+<div class="paragraph">
+<p>Media Server supports Automatic Speech Recognition functionality albeit depending on third party service providers such as Google Speech or IBM Watson.</p>
+</div>
+<div class="paragraph">
+<p>It features a <strong>pluggable</strong> architecture, allowing users to choose their favourite provider. To do so, the user only needs to provide and register a driver in the configuration file.
+To install a new driver users simply need to copy the driver’s jar file to the <code>MS_HOME/lib</code> directory and declare it in the configuration file.</p>
+</div>
+<div class="paragraph">
+<p>The <code>mediaserver.xml</code> configuration file contains a specific section to define list of supported drivers grouped by subsystem:</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 11. Configuration for drivers subsystem</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;subsystems&gt;
+        &lt;subsystem name="asr"&gt;
+            ...
+        &lt;/subsystem&gt;
+&lt;/subsystems&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Each driver must declare the attributes <code>name</code> and <code>class</code>. Furthermore, each driver can require a custom list of parameters. Each parameter is composed by a pair of <code>name</code> and <code>value</code> attributes.
+Example:</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 12. Example configuration for drivers subsystem</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;subsystems&gt;
+         &lt;subsystem name="asr"&gt;
+                &lt;driver name="some-driver" class="org.restcomm.media.drivers.asr.provider.ProviderAsrDriver"&gt;
+                        &lt;parameter name="param1"&gt;value1&lt;/parameter&gt;
+                        &lt;parameter name="param2"&gt;value2&lt;/parameter&gt;
+                &lt;/driver&gt;
+        &lt;/subsystem&gt;
+&lt;/subsystems&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Sometimes a driver will require system-wide configuration, such as environment variables to be defined.</p>
+</div>
+<div class="paragraph">
+<p>It’s responsibility of the user to consult with ASR Service Provider about configuration requirements for a given driver.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -23565,6 +23632,10 @@ Kills the active tmux session named <em>mediaserver</em>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Script responsible for configuring DTLS aspects of the Media Server.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">.autoconfig/autoconfig.d/config-asr.sh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Script responsible for configuring ASR drivers registered in the Media Server.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">.autoconfig/autoconfig.d/config-logger.sh</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Script responsible for configuring the Logger of the Media Server.</p></td>
 </tr>
@@ -23590,6 +23661,51 @@ Kills the active tmux session named <em>mediaserver</em>.</p></td>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="sect2">
+<h3 id="_ctms_configuring_the_media_server_automatic_asr"><a class="anchor" href="#_ctms_configuring_the_media_server_automatic_asr"></a>Configuring Speech Recognition Drivers</h3>
+<div class="paragraph">
+<p>To install an ASR driver, the user must simply copy the driver&#8217;s jar file to <code>MS_HOME/lib</code> directory and specify it in <code>mediaserver.conf</code>.</p>
+</div>
+<div class="paragraph">
+<p>Users can follow this template to register and configure an ASR Driver:</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 13. Configuration in mediaserver.conf</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">ASR_DRIVER_&lt;provider&gt;=&lt;driver-name&gt;
+ASR_DRIVER_&lt;provider&gt;_CLASS=&lt;driver-class&gt;
+ASR_DRIVER_&lt;provider&gt;_PROPERTY_&lt;property&gt;=&lt;property-name&gt;
+ASR_DRIVER_&lt;provider&gt;_PROPERTY_&lt;property&gt;_VALUE=&lt;property-value&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="exampleblock">
+<div class="title">Example 14. Example configuration in mediaserver.conf</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">ASR_DRIVER_SOMEPROVIDER=some-provider
+ASR_DRIVER_SOMEPROVIDER_CLASS=org.restcomm.media.drivers.asr.ProviderAsrDriver
+ASR_DRIVER_SOMEPROVIDER_PROPERTY_PARAM1=param1
+ASR_DRIVER_SOMEPROVIDER_PROPERTY_PARAM1_VALUE=value1
+ASR_DRIVER_SOMEPROVIDER_PROPERTY_PARAM2=param2
+ASR_DRIVER_SOMEPROVIDER_PROPERTY_PARAM2_VALUE=value2</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>If the ASR Driver depends on environment variables, then the user can define them in <code>mediaserver.conf</code> like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">export VARIABLE_NAME=variable_value</code></pre>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_ctms_configuring_the_media_server_automatic_logger"><a class="anchor" href="#_ctms_configuring_the_media_server_automatic_logger"></a>Configuring the logger</h3>
@@ -23618,7 +23734,7 @@ A logging Category follows the format <code>&lt;package_name&gt;:&lt;log_thresho
 </table>
 </div>
 <div class="exampleblock">
-<div class="title">Example 11. Configuration for Logger</div>
+<div class="title">Example 15. Configuration for Logger</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -23670,7 +23786,7 @@ LOG_CATEGORY_RTP='org.mobicents.media.server.impl.rtp:DEBUG'</code></pre>
 <p>To configure SSL, the user must edit the <em>ssl.conf</em> file. The changes will take effect during bootstrap.</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 12. Configuration for SSL</div>
+<div class="title">Example 16. Configuration for SSL</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -23704,7 +23820,7 @@ If SSL is enabled, then the user must assign the path of the KeyStore to the var
 <p>Support for SSL is enabled by appending a new set of parameters to the JAVA_OPTS of the Media Server process. These definitions are present in the script <code>MS_HOME/bin/run.sh</code>.</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 13. SSL configuration in JAVA_OPTS</div>
+<div class="title">Example 17. SSL configuration in JAVA_OPTS</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -23778,7 +23894,7 @@ no server running on /private/tmp/tmux-501/default</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-09-14 11:56:40 WEST
+Last updated 2017-09-15 10:39:16 WEST
 </div>
 </div>
 <footer>
