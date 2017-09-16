@@ -22781,7 +22781,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div class="ulist">
 <ul>
 <li>
-<p><strong>System requirements:</strong> There are not any particular minimum requirements to properly run RestComm. Mostly depends on the use-case scenario and needs in resources. For a local development environment (not production) a medium station (i3,4Gb) should be enough (<a href="#memissue">known issue</a>).</p>
+<p><strong>System requirements:</strong> Please, check RAM dedicated to your Docker container. Restcomm requires minimum <strong>3GB</strong> to start 2 java processes: Jboss with Restcomm services and standalone mediaserver</p>
 </li>
 <li>
 <p>Install docker on your sever : <a href="https://docs.docker.com/engine/installation/" class="bare">https://docs.docker.com/engine/installation/</a></p>
@@ -22806,9 +22806,6 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <p>Tag "latest". Points to the latest binary from the Continuous Delivery server. Uses the <a href="https://github.com/RestComm/Restcomm-Connect">master</a> development branch : restcomm/restcomm:latest. *We don&#8217;t advice to use "latest" tag for production as it is constantly changing, and as well new features and fixes may not be documented.</p>
 </li>
 <li>
-<p>Tag "stable". Points to the latest/current GA release (current: <a href="https://github.com/RestComm/Restcomm-Connect/releases/tag/7.6.0.879/">7.6.0.GA</a>) use tag :  restcomm/restcomm:stable</p>
-</li>
-<li>
 <p>Tag "7.7.0" pointing to current specific GA release (v770ga).</p>
 </li>
 </ul>
@@ -22827,10 +22824,10 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div class="ulist">
 <ul>
 <li>
-<p>Get your "ETHERNET_IP" by running ifconfig</p>
+<p>Get your "ETHERNET_IP" by running ifconfig. Use 127.0.0.1 as "ETHERNET_IP" if you are running container on Docker for Mac.</p>
 </li>
 <li>
-<p>Fill out the RCBCONF_STATIC_ADDRESS variable as shown below</p>
+<p>Fill out the RCBCONF_STATIC_ADDRESS variable as shown below.</p>
 </li>
 <li>
 <p>Start Restcomm as shown below:</p>
@@ -22891,7 +22888,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <p>You should hear the "Welcome to RestComm, a Telestax Sponsored project" announcement</p>
 </li>
 <li>
-<p>You can also make a calll to the "<strong>+1235</strong>" to test your Text-to-Speech configuration</p>
+<p>You can also make a call to the "<strong>+1235</strong>" to test your Text-to-Speech configuration</p>
 </li>
 </ol>
 </div>
@@ -23021,7 +23018,7 @@ Using the flag "INIT_PASSWORD" you can set administrator password when running R
 <div class="ulist">
 <ul>
 <li>
-<p>When you would try to open up wss say using wss://IP:5083, Firefox will keep on giving you error until you open up a separate Firefox tab and do try hitting URL [https]://IP:5083 and Confirm Security Exception (like you do on Firefox normally for any https based connection). This only happens in Firefox.</p>
+<p>When you would try to open up wss say using wss://RCBCONF_STATIC_ADDRESS:5083, Firefox will keep on giving you error until you open up a separate Firefox tab and do try hitting URL [https]://RCBCONF_STATIC_ADDRESS:5083 and Confirm Security Exception (like you do on Firefox normally for any https based connection). This only happens in Firefox.</p>
 </li>
 </ul>
 </div>
@@ -23030,7 +23027,7 @@ Using the flag "INIT_PASSWORD" you can set administrator password when running R
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-09-15 10:35:10 WEST
+Last updated 2017-09-16 10:35:35 WEST
 </div>
 </div>
 <footer>
