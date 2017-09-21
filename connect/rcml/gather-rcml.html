@@ -22767,6 +22767,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <ul class="sectlevel2">
 <li><a href="#gather-attributes">Gather Attributes</a></li>
 <li><a href="#request-parameters">Request Parameters</a></li>
+<li><a href="#request-parameters-2">Request Parameters</a></li>
 <li><a href="#nesting">Nesting</a></li>
 <li><a href="#examples">Examples</a></li>
 </ul>
@@ -22779,7 +22780,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <h2 id="gather"><a class="anchor" href="#gather"></a>Gather</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <strong>&lt;Gather&gt;</strong> verb "gathers" digits that a caller enters into his or her telephone keypad. When the caller is done entering digits, RestComm submits that digits to the provided 'action' URL in an HTTP GET or POST request. If no input is received before timeout, <strong>&lt;Gather&gt;</strong> falls through to the next verb in the RestComm document. You may optionally nest <strong>&lt;Say&gt;, &lt;Play&gt;</strong>, and <strong>&lt;Pause&gt;</strong> verbs within a <strong>&lt;Gather&gt;</strong> verb while waiting for input. This allows you to read menu options to the caller while letting her enter a menu selection at any time. After the first digit is received the audio will stop playing.</p>
+<p>The <strong>&lt;Gather&gt;</strong> verb supports two modes: <strong>DTMF</strong> and <strong>SPEECH</strong>. In DTMF mode it "gathers" digits that a caller enters into his or her telephone keypad. When the caller is done entering digits, RestComm submits that digits to the provided 'action' URL in an HTTP GET or POST request. In SPEECH mode it "gathers" recognized speech that a caller said. If no input is received before timeout, <strong>&lt;Gather&gt;</strong> falls through to the next verb in the RestComm document. You may optionally nest <strong>&lt;Say&gt;</strong>, <strong>&lt;Play&gt;</strong>, and <strong>&lt;Pause&gt;</strong> verbs within a <strong>&lt;Gather&gt;</strong> verb while waiting for input. This allows you to read menu options to the caller while letting her enter a menu selection at any time. After the first digit is received the audio will stop playing.</p>
 </div>
 <div class="sect2">
 <h3 id="gather-attributes"><a class="anchor" href="#gather-attributes"></a>Gather Attributes</h3>
@@ -22822,6 +22823,31 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <td class="tableblock halign-left valign-top"><p class="tableblock">integer &gt;= 1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">unlimited</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">input</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dtmf, speech</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dtmf</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">partialResultCallback</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">relative or absolute url</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">none</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">partialResultCallbackMethod</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GET, POST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POST</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">language</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">en-US, en-GB, es-ES, it-IT, fr-FR, pl-PL, pt-PT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">en-US</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hints</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"words, phrases that have many words"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">none</p></td>
+</tr>
 </tbody>
 </table>
 <div class="ulist">
@@ -22850,6 +22876,10 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <td class="tableblock halign-left valign-top"><p class="tableblock">Digits</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The digits the caller pressed, excluding the finishOnKey digit.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SpeechResult</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The transcribed result of the speech.</p></td>
+</tr>
 </tbody>
 </table>
 <div class="ulist">
@@ -22865,6 +22895,43 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </li>
 <li>
 <p><strong>numDigits.</strong> The 'numDigits' attribute lets you set the number of digits you are expecting, and submits the data to the 'action' URL once the caller enters that number of digits.</p>
+</li>
+<li>
+<p><strong>input</strong> A list of inputs that RestComm should accept for &lt;Gather&gt;. Can be "dtmf" or "speech". Defaults to "dtmf".</p>
+</li>
+<li>
+<p><strong>partialResultCallback</strong> A relative or fully qualified URL. Is a mandatory attribute for “speech” mode. RestComm will make requests to your partialResultCallback in real-time as speech is recognized.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="request-parameters-2"><a class="anchor" href="#request-parameters-2"></a>Request Parameters</h3>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UnstableSpeechResult</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Partially recognized speech the caller said.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>language</strong> The language RestComm should recognize. Defaults to en-US</p>
+</li>
+<li>
+<p><strong>hints</strong> A list of words or phrases that RestComm should expect during recognition. These are very useful for improving recognition of single words or phrases. Entries into hints should be separated by a comma.</p>
 </li>
 </ul>
 </div>
@@ -22901,7 +22968,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-09-20 10:35:13 WEST
+Last updated 2017-09-21 08:42:46 WEST
 </div>
 </div>
 <footer>
