@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Persist your work using shared filesystem</title>
+<title>Restcomm DNS Provisioning Provider Integration</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22757,61 +22757,89 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/1877839.js"></script>
 <!-- End of HubSpot Embed Code -->
 </head>
-<body class="article">
+<body id="intro" class="article">
 <div id="header">
+<h1>Restcomm DNS Provisioning Provider Integration</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
-<ul class="sectlevel3">
-<li><a href="#persist-your-work-using-shared-filesystem">Persist your work using shared filesystem</a></li>
+<ul class="sectlevel1">
+<li><a href="#amazon-route53-configuration">Amazon Route53 Configuration</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect3">
-<h4 id="persist-your-work-using-shared-filesystem"><a class="anchor" href="#persist-your-work-using-shared-filesystem"></a>Persist your work using shared filesystem</h4>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>You can persist the logs, database, recordings, text-to-speech cache and RVD workspace using shared filesystem, so even if you stop and remove your container, your work won&#8217;t be lost. Download the <a href="https://github.com/restcomm/Restcomm-Docker/blob/master/restcomm_workspace.zip?raw=true"><strong>restcomm_workspace</strong></a> that contains the default database, default RVD workspace and the required folders and unzip it to a folder in your filesystem. Next run Restcomm image using the following volume arguments:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Restcomm logs <code>-v $YOUR_FOLDER/restcomm_workspace/restcomm/log:/opt/Restcomm-JBoss-AS7/standalone/log</code></p>
-</li>
-<li>
-<p>Restcomm recordings <code>-v $YOUR_FOLDER/restcomm_workspace/restcomm/recordings:/opt/Restcomm-JBoss-AS7/standalone/deployments/restcomm.war/recordings</code></p>
-</li>
-<li>
-<p>Restcomm tts cache <code>-v $YOUR_FOLDER/restcomm_workspace/restcomm/cache:/opt/Restcomm-JBoss-AS7/standalone/deployments/restcomm.war/cache</code></p>
-</li>
-</ul>
+<p>Restcomm provides functionality to integrate with DNS hosting providers, this way you can create new organizations in restcomm on custom domains.</p>
 </div>
 <div class="paragraph">
-<p><strong>HSQL database persistant data</strong> In order to properly manage to persist data on a host directory, it is necessary to use <code>HSQL_PERSIST</code> option. Then need to mount the volume set at the <code>HSQL_PERSIST</code> option at a directory on the host. (e.g. <code>-v /$YOUR_FOLDER/restcomm_workspace/restcomm/data:/dir_to_HSQL_PERSIST</code>)</p>
-</div>
-<div class="paragraph">
-<p><em>RestComm logs additional information </em></p>
-</div>
-<div class="paragraph">
-<p>If you are using specific log paths (CORE_LOGS_LOCATION, MEDIASERVER_LOGS_LOCATION, RESTCOMM_TRACE_LOG) use them to mount volumes to host. <code>-V HOST_CORE_LOGS_LOCATION:CORE_LOGS_LOCATION -V HOST_MEDIASERVER_LOGS_LOCATION:MEDIASERVER_LOGS_LOCATION -V HOST_TRACE_LOGS_LOCATION:RESTCOMM_TRACE_LOG</code> Example if you unzip the <em>restcomm_workspace.zip</em> to /opt/restcomm_workspace/</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>docker run command will be:</p>
-</li>
-</ul>
+<p>Following configuration need to be provided in order to enable DNS provisioning when creating organizations</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">docker run --name=restcomm --restart=always -d -e RCBCONF_VOICERSS_KEY="YOUR_VOICERSS_KEY" -p 8080:8080 -p 5080:5080 -p 5080:5080/udp -p 65000-65050:65000-65050/udp -v /opt/restcomm_workspace/restcomm/log:/opt/Restcomm-JBoss-AS7/standalone/log -v /opt/restcomm_workspace/restcomm/recordings:/opt/Restcomm-JBoss-AS7/standalone/deployments/restcomm.war/recordings -v /opt/restcomm_workspace/restcomm/cache:/opt/Restcomm-JBoss-AS7/standalone/deployments/restcomm.war/cache -v /opt/restcomm_workspace/restcomm/data:/opt/Restcomm-JBoss-AS7/standalone/deployments/restcomm.war/WEB-INF/data/hsql -v /opt/restcomm_workspace/mms/log:/opt/Restcomm-JBoss-AS7/mediaserver/log -v /opt/restcomm_workspace/rvd/workspace:/opt/Restcomm-JBoss-AS7/standalone/deployments/restcomm-rvd.war/workspace restcomm/restcomm:latest</code></pre>
+<pre class="highlight"><code class="language-shell" data-lang="shell">DNS_PROVISIONING_ENABLED="TRUE"
+DNS_PROVISIONING_CLASS=""
+DNS_PROVISIONING_RESTCOMM_ADDRESS=""
+DNS_PROVISIONING_RR_TYPE=""</code></pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>For more Info on available configuration options <a href="http://documentation.telestax.com/connect/configuration/index.html#Configuration">HERE</a></p>
-</li>
-</ul>
+<div class="paragraph">
+<p><strong>DNS_PROVISIONING_ENABLED</strong>: By default dns provisioning is disabled which means during organization api CRUD operations, restcomm will not send any requests to DNS hosting server. If we set it to true we have to provide following configurations.
+<strong>DNS_PROVISIONING_CLASS</strong>: It represents the DNS provisioning manager class, the class that calls DNS hosting provider&#8217;s services to perform CRUD operations. Developers can provide customer Class for any DNS server as long as it implements <code>org.restcomm.connect.dns.DnsProvisioningManager</code>
+<strong>DNS_PROVISIONING_RESTCOMM_ADDRESS</strong>: is address to which DNS Server will route traffic In a cluster, it can be public ip of loadbalancer or alias/domainName of a DNS entity (AWS ELB etc).
+<strong>DNS_PROVISIONING_RR_TYPE</strong>: Valid DNS Resource Record (RR) Types.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="amazon-route53-configuration"><a class="anchor" href="#amazon-route53-configuration"></a>Amazon Route53 Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Following configuration are specific to amazon route 53.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">DNS_PROVISIONING_ENABLED="TRUE"
+DNS_PROVISIONING_CLASS="org.restcomm.connect.telscale.dns.route53.Route53DnsProvisioningManager"
+DNS_PROVISIONING_RESTCOMM_ADDRESS=""
+DNS_PROVISIONING_RR_TYPE="A"
+DNS_PROVISIONING_AWS_ROUTE53_ACCESS_KEY=""
+DNS_PROVISIONING_AWS_ROUTE53_SECRET_KEY=""
+DNS_PROVISIONING_AWS_ROUTE53_REGION=""
+DNS_PROVISIONING_AWS_ROUTE53_TTL=""
+DNS_PROVISIONING_AWS_ROUTE53_HOSTED_ZONE_ID=""
+DNS_PROVISIONING_AWS_ROUTE53_IS_ALIAS=""
+DNS_PROVISIONING_AWS_ROUTE53_ALIAS_EVALUATE_TARGET_HEALTH=""
+DNS_PROVISIONING_AWS_ROUTE53_ALIAS_HOSTED_ZONE_ID=""</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>DNS_PROVISIONING_AWS_ROUTE53_ACCESS_KEY</strong>: aws access key to call their APIs.
+<strong>DNS_PROVISIONING_AWS_ROUTE53_SECRET_KEY</strong>: aws secret key to call their APIs.
+<strong>DNS_PROVISIONING_AWS_ROUTE53_REGION</strong>: The region to be used by the client. This will be used to determine both the ervice endpoint (eg: <a href="https://sns.us-west-1.amazonaws.com" class="bare">https://sns.us-west-1.amazonaws.com</a>) and signing region (eg: us-west-1) for requests.
+<strong>DNS_PROVISIONING_AWS_ROUTE53_TTL</strong>: Time to live in seconds, default is 3600 seconds
+<strong>DNS_PROVISIONING_AWS_ROUTE53_HOSTED_ZONE_ID</strong>: The ID of the hosted zone that contains the resource record sets that you want to change. For example hosted zone id of domain <code>restcomm.com</code>, this can be get from aws management console.
+<strong>DNS_PROVISIONING_AWS_ROUTE53_IS_ALIAS</strong>: Set this configuration to true if above restcomm-address is an alias and not a IP-address/domain-name. Default value is false. Read more about aliases <a href="http://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resource-record-sets-choosing-alias-non-alias.html">here</a>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If DNS_PROVISIONING_RESTCOMM_ADDRESS is an alias and DNS_PROVISIONING_AWS_ROUTE53_IS_ALIAS is set to true: we need to provide further configuration for</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>DNS_PROVISIONING_AWS_ROUTE53_ALIAS_EVALUATE_TARGET_HEALTH</strong>: Boolean to either evaluate target health or not, default is false.
+<strong>DNS_PROVISIONING_AWS_ROUTE53_ALIAS_HOSTED_ZONE_ID</strong>: The ID of the hosted zone of the alias.</p>
+</div>
 </div>
 </div>
 </div>
