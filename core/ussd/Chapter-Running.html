@@ -22812,7 +22812,7 @@ The "default" profile is a clean profile where you start from scratch and config
 <div class="content">
 <pre>22:23:11,583 INFO  [DeploymentMBeanImpl] (main) Installed DeployableUnitID[url=file:/home/vinu/restcomm-ussdgateway-<version>/jboss-5.1.0.GA/server/default/deploy/restcomm-ussd-gateway/services-DU-6.1.5.GA.jar/]
 22:23:11,874 INFO  [ServiceManagementImpl] (main) Activated ServiceID[name=restcomm-ussdgateway-cdr,vendor=org.mobicents,version=1.0]
-22:23:11,976 ERROR [STDERR] (pool-28-thread-1) QUERRY: 000000 CREATE TABLE USSD_GW_CDRS (ID VARCHAR(150) NOT NULL, L_SPC INT, L_SSN SMALLINT, L_RI SMALLINT, L_GT_I SMALLINT, L_GT_DIGITS VARCHAR(18), R_SPC INT, R_SSN SMALLINT, R_RI SMALLINT, R_GT_I SMALLINT, R_GT_DIGITS VARCHAR(18), SERVICE_CODE VARCHAR(10), OR_NATURE SMALLINT, OR_PLAN SMALLINT, OR_DIGITS VARCHAR(18), DE_NATURE SMALLINT, DE_PLAN SMALLINT, DE_DIGITS VARCHAR(18), ISDN_NATURE SMALLINT, ISDN_PLAN SMALLINT, ISDN_DIGITS VARCHAR(18), VLR_NATURE SMALLINT, VLR_PLAN SMALLINT, VLR_DIGITS VARCHAR(18), IMSI VARCHAR(100), TERMINATE_REASON VARCHAR(60), TSTAMP TIMESTAMP  NOT NULL , DIALOG_ID BIGINT, PRIMARY KEY(ID,TSTAMP));
+22:23:11,976 ERROR [STDERR] (pool-28-thread-1) QUERRY: 000000 CREATE TABLE USSD_GW_CDRS (ID VARCHAR(150) NOT NULL, L_SPC INT, L_SSN SMALLINT, L_RI SMALLINT, L_GT_I SMALLINT, L_GT_DIGITS VARCHAR(18), R_SPC INT, R_SSN SMALLINT, R_RI SMALLINT, R_GT_I SMALLINT, R_GT_DIGITS VARCHAR(18), SERVICE_CODE VARCHAR(50), OR_NATURE SMALLINT, OR_PLAN SMALLINT, OR_DIGITS VARCHAR(18), DE_NATURE SMALLINT, DE_PLAN SMALLINT, DE_DIGITS VARCHAR(18), ISDN_NATURE SMALLINT, ISDN_PLAN SMALLINT, ISDN_DIGITS VARCHAR(18), VLR_NATURE SMALLINT, VLR_PLAN SMALLINT, VLR_DIGITS VARCHAR(18), IMSI VARCHAR(100), STATUS VARCHAR(30) NOT NULL , TYPE VARCHAR(30) NOT NULL , TSTAMP TIMESTAMP NOT NULL , LOCAL_DIALOG_ID BIGINT, REMOTE_DIALOG_ID BIGINT, DIALOG_DURATION BIGINT, USSD_STRING VARCHAR(255), PRIMARY KEY(ID,TSTAMP));
 22:23:12,135 INFO  [ServiceManagementImpl] (main) Activated ServiceID[name=restcomm-ussdgateway,vendor=org.mobicents,version=1.0]
 22:23:12,395 INFO  [UssdPropertiesManagement] (main) Loading USSD Properties from /home/vinu/restcomm-ussdgateway-6.1.5.GA/jboss-5.1.0.GA/server/default/data/UssdManagement_ussdproperties.xml
 22:23:12,395 WARN  [UssdPropertiesManagement] (main) Failed to load the USSD configuration file.
@@ -23244,7 +23244,7 @@ You can change the user-id and password in files  <em class="path">jmx-console-r
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-09-28 12:01:08 WEST
+Last updated 2017-09-29 10:47:11 WEST
 </div>
 </div>
 <footer>
