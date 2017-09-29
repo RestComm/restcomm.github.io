@@ -23629,6 +23629,18 @@ If a message fits to all conditions then the rule will be applied to the message
 <td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that source address of the message will not be changed.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">newmtgt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arrival trigger / &lt;mtgt value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">global title of the message will be changed to &lt;mtgt value&gt;. This means that MT message will be rerouted to GT different from what is specified by SMSC for current networkId.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that GT of the message will not be changed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">newmttt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arrival trigger / &lt;mttt value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">translation type of the message will be changed to &lt;mttt value&gt;. This means that desired TT of MT message will be used rather than what SMSC sets by default for current networkId.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-1. This means that TT of the message will not be changed.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">makecopy</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Arrival trigger / &lt;false | true&gt;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">If the makecopy action is present then SMSC GW makes a copy of a message and then post the copy for further message processing in addition to the original message. All other actions in the rule will be applied only to the copy. For example user wants to make copies of messages and send them to another destinations (by sending of copies into another networkId), then for this you can create a rule and set for the rule "makecopy true" and "newnetworkid &lt;new networkId value&gt;" parameters. This makes a copy of a message and set for the copy a new networkId value.</p></td>
@@ -25354,7 +25366,7 @@ The details of the format and the possible values for the fields recorded in the
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-09-28 12:00:33 WEST
+Last updated 2017-09-29 10:46:34 WEST
 </div>
 </div>
 <footer>
