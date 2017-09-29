@@ -22854,6 +22854,63 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </tr>
 </tbody>
 </table>
+<div class="exampleblock">
+<div class="title">Example 1. Add new organization with domain name "test" - Example</div>
+<div class="content">
+<div class="paragraph">
+<p>curl -X PUT "https://&lt;accountSid&gt;:&lt;authtoke&gt;@mycompany.restcomm.com/restcomm/2012-04-24/Organizations/test"</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;Organization&gt;
+  &lt;Sid&gt;OR905d1b4e9d3045acb268f8d0fdf259ac&lt;/Sid&gt;
+  &lt;DomainName&gt;test.restcomm.com.&lt;/DomainName&gt;
+  &lt;Status&gt;active&lt;/Status&gt;
+  &lt;DateCreated&gt;Thu, 28 Sep 2017 16:11:39 +0000&lt;/DateCreated&gt;
+  &lt;DateUpdated&gt;Thu, 28 Sep 2017 16:11:39 +0000&lt;/DateUpdated&gt;
+&lt;/Organization&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="optional-request-parameters"><a class="anchor" href="#optional-request-parameters"></a>Optional Request Parameters</h5>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Property</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HostedZoneId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ID of hosted zone on your DNS server, under which you want to create above domainName, if not provided system will use default configured one.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="exampleblock">
+<div class="title">Example 2. Add new organization with domain name "test" under a specific hosted zone - Example</div>
+<div class="content">
+<div class="paragraph">
+<p>curl -X PUT "https://&lt;accountSid&gt;:&lt;authToken&gt;@mycompany.restcomm.com/restcomm/2012-04-24/Organizations/test" -d "HostedZoneId=&lt;myHostedZoneId&gt;"</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;Organization&gt;
+  &lt;Sid&gt;OR905d1b4e9d3045acb268f8d0fdf259ac&lt;/Sid&gt;
+  &lt;DomainName&gt;test.restcomm.com.&lt;/DomainName&gt;
+  &lt;Status&gt;active&lt;/Status&gt;
+  &lt;DateCreated&gt;Thu, 28 Sep 2017 16:11:39 +0000&lt;/DateCreated&gt;
+  &lt;DateUpdated&gt;Thu, 28 Sep 2017 16:11:39 +0000&lt;/DateUpdated&gt;
+&lt;/Organization&gt;</pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -22871,7 +22928,34 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>/{Version}/Organizations/{OrganizationSid}(.json)</code></pre>
+<pre class="highlight"><code>/{Version}/Organizations(.json)/{OrganizationSid}</code></pre>
+</div>
+</div>
+<div class="exampleblock">
+<div class="title">Example 3. Read Organization Example</div>
+<div class="content">
+<div class="paragraph">
+<p>curl -X GET "https://{accountSid}:{authToken}@mycompany.restcomm.com/restcomm/2012-04-24/Organizations/{OrganizationSid}"</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;Organization&gt;
+  &lt;Sid&gt;OR905d1b4e9d3045acb268f8d0fdf259ac&lt;/Sid&gt;
+  &lt;DomainName&gt;test.restcomm.com.&lt;/DomainName&gt;
+  &lt;Status&gt;active&lt;/Status&gt;
+  &lt;DateCreated&gt;Thu, 28 Sep 2017 16:11:39 +0000&lt;/DateCreated&gt;
+  &lt;DateUpdated&gt;Thu, 28 Sep 2017 16:11:39 +0000&lt;/DateUpdated&gt;
+&lt;/Organization&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="exampleblock">
+<div class="title">Example 4. Read Organization Json Example</div>
+<div class="content">
+<div class="paragraph">
+<p>curl -X GET "https://{accountSid}:{authToken}@mycompany.restcomm.com/restcomm/2012-04-24/Organizations.json/{OrganizationSid}"</p>
+</div>
 </div>
 </div>
 </div>
@@ -22910,6 +22994,14 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </tr>
 </tbody>
 </table>
+<div class="exampleblock">
+<div class="title">Example 5. Read Organization List with filter Example</div>
+<div class="content">
+<div class="paragraph">
+<p>curl -X GET "https://{accountSid}:{authToken}@mycompany.restcomm.com/restcomm/2012-04-24/Organizations/{OrganizationSid}.json" -d "Status=active"</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -22918,7 +23010,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-09-28 11:51:21 WEST
+Last updated 2017-09-29 10:35:16 WEST
 </div>
 </div>
 <footer>
