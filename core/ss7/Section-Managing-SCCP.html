@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>SCCP Management</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
@@ -22486,7 +22486,7 @@ body.vertical_menu_outside_paspartu.vertical_menu_enabled.vertical_menu_hidden.v
 
 
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <head>
 	<meta charset="UTF-8" />
 
@@ -23711,6 +23711,7 @@ The last column 'Action' will allow you to delete the Service Access Point.</p>
 
 SYNOPSIS
 	sccp sap create &lt;id&gt; &lt;mtp3-id&gt; &lt;opc&gt; &lt;ni&gt; stackname &lt;stack-name&gt; networkid &lt;networkId&gt;
+	localgtdigits &lt;localGtDigits&gt;
 
 DESCRIPTION
 	This command is used to define a new Service Access Point.
@@ -23743,9 +23744,14 @@ PARAMETERS
                     skipped - networkId will be set to "0" when SAP creation.
                     Refer &lt;xref linkend="design_multitenancy"/&gt;.
 
+    &lt;localGtDigits&gt; - Local GT digits. An incoming message will be brought to this
+                    sap if GT digits of callePartyAddress matches to this value.
+                    "null" value matches to any incoming message. If this parameter
+                    is skipped - networkId will be set to "null" by default.
+
 
 EXAMPLES
-	sccp sap create 1 1 101 2
+	sccp sap create 1 1 101 2 networkid 2 localgtdigits 999888777
 
 	The above command will create a new Service Access Point identified by the
 	number '1'. The values for 'mtp3-id', 'opc' and 'ni' are 1, 101 and 2 respectively.</pre>
@@ -23793,6 +23799,7 @@ If there is an error in creating the SAP then you will find the details of the e
 
 SYNOPSIS
 	sccp sap modify &lt;id&gt; &lt;mtp3-id&gt; &lt;opc&gt; &lt;ni&gt; stackname &lt;stack-name&gt; networkid &lt;networkId&gt;
+	localgtdigits &lt;localGtDigits&gt;
 
 DESCRIPTION
 	This command is used to modify a previously defined Service Access Point.
@@ -23823,6 +23830,11 @@ PARAMETERS
                     belongs Service Access Point (SAP). If this parameter is
                     skipped - networkId will be set to "0" when SAP creation.
                     Refer &lt;xref linkend="design_multitenancy"/&gt;.
+
+    &lt;localGtDigits&gt; - Local GT digits. An incoming message will be brought to this
+                    sap if GT digits of callePartyAddress matches to this value.
+                    "null" value matches to any incoming message. If this parameter
+                    is skipped - networkId will be set to "null" by default.
 
 
 EXAMPLES
@@ -26559,7 +26571,7 @@ EXAMPLES
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-09 10:43:55 WEST
+Last updated 2017-10-14 09:22:22 UTC
 </div>
 </div>
 <footer>
