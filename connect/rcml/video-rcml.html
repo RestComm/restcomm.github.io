@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>Apply new JAR to an already running container</title>
+<title>Restcomm RCML – Video</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22759,99 +22759,219 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </head>
 <body class="article">
 <div id="header">
+<h1>Restcomm RCML – Video</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
-<ul class="sectlevel3">
-<li><a href="#apply-new-jar-to-an-already-running-container">Apply new JAR to an already running container</a></li>
+<ul class="sectlevel1">
+<li><a href="#video">Video</a>
+<ul class="sectlevel2">
+<li><a href="#attributes">Noun Attributes</a></li>
+</ul>
+</li>
+<li><a href="#examples">Examples</a>
+<ul class="sectlevel2">
+<li><a href="#examples-1">Example 1: Video call to Client</a></li>
+<li><a href="#examples-2">Example 2: Video call to Sip address</a></li>
+<li><a href="#examples-3">Example 3: Videoconference</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 <div id="content">
+<div class="sect1">
+<h2 id="video"><a class="anchor" href="#video"></a>Video</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>This guide deals with scenarios where Telestax provides you with a Jar file as a patch or as a sponsored feature that requires testing before using in a production environment.</p>
+<p>The <code>&lt;Video&gt;</code> noun allows to configure and enable video* for calls and conferences, therefore, it can be nested under <code>&lt;Client&gt;</code>, <code>&lt;Sip&gt;</code> and <code>&lt;Conference&gt;</code> nouns.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+* Video is supported only when Restcomm is configured to use Dialogic&#8217;s PowerMedia XMS media server.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+When <code>&lt;Video&gt;</code> noun is nested with other nouns, the client name, sip URI and the conference room should be informed as <code>name</code> attribute on each of their nouns.
+Example: <code>&lt;Client&gt;alice&lt;/Client&gt;</code> should be <code>&lt;Client name="alice"&gt;&lt;/Client&gt;</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="attributes"><a class="anchor" href="#attributes"></a>Noun Attributes</h3>
+<div class="paragraph">
+<p>Some of the attributes of <code>&lt;Video&gt;</code> noun can be used exclusively by <code>&lt;Conference&gt;</code> noun. The <code>&lt;Video&gt;</code> noun supports the following attributes:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute Name</th>
+<th class="tableblock halign-left valign-top">Allowed Values</th>
+<th class="tableblock halign-left valign-top">Default Value</th>
+<th class="tableblock halign-left valign-top">Allowed when nested under</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code>, <code>false</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;Client&gt;</code>, <code>&lt;Sip&gt;</code>, <code>&lt;Conference&gt;</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mcu</code>, <code>sfu</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mcu</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;Conference&gt;</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">resolution</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CIF</code>, <code>4CIF</code>, <code>16CIF</code>, <code>QCIF</code>, <code>VGA</code>, <code>720p</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>720p</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;Conference&gt;</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">layout</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tile</code>, <code>linear</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tile</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;Conference&gt;</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">overlay</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Empty</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;Client&gt;</code>, <code>&lt;Sip&gt;</code>, <code>&lt;Conference&gt;</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="enable"><a class="anchor" href="#enable"></a>enable</h4>
+<div class="paragraph">
+<p>The enable attribute specifies if the video is enabled or not. Accepts two values: <code>true</code> and <code>false</code>. Default value is <code>false</code>. If the value is set to <code>false</code>, it wont be video for the given call, the same way for when there is no <code>&lt;Video&gt;</code> noun informed.</p>
+</div>
 </div>
 <div class="sect3">
-<h4 id="apply-new-jar-to-an-already-running-container"><a class="anchor" href="#apply-new-jar-to-an-already-running-container"></a>Apply new JAR to an already running container</h4>
+<h4 id="mode"><a class="anchor" href="#mode"></a>mode</h4>
 <div class="paragraph">
-<p>The steps below will explain how to apply/overide specific jar on a running container. Default jar files are located in the directory below</p>
+<p>The mode attribute specifies the video conference mode. It allows you to choose between <code>mcu</code> and <code>sfu</code> mode. For <code>mcu</code>, all video received from participants of the conference is mixed on server side and streamed back to all participants equally. For <code>sfu</code>, the video from each participants is delivered to all participant separately (without mixing) and the video disposition relies on client side.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>/opt/Restcomm-JBoss-AS7/standalone/deployments/restcomm.war/WEB-INF/lib/</p>
-</li>
-</ul>
 </div>
+<div class="sect3">
+<h4 id="resolution"><a class="anchor" href="#resolution"></a>resolution</h4>
 <div class="paragraph">
-<p>To be able to change Restcomm jars in the WEB-INF/lib/ directory, you must :</p>
+<p>The resolution attribute lets you specify the resolution of the video. Accepted values are: <code>QCIF</code>, <code>CIF</code>, <code>4CIF</code>, <code>16CIF</code>, <code>VGA</code>, and <code>720p</code>. Default value is <code>720p</code>.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Mount a host directory as a data volume as explained here(<a href="https://docs.docker.com/engine/userguide/dockervolumes/" class="bare">https://docs.docker.com/engine/userguide/dockervolumes/</a>).</p>
-</li>
-</ul>
+</div>
+<div class="sect3">
+<h4 id="layout"><a class="anchor" href="#layout"></a>layout</h4>
+<div class="paragraph">
+<p>The layout attribute defines the video conference layout. It allows to choose between <code>linear</code>, and <code>tile</code>. The layout attribute can be applied only in MCU mode. The tiled layout depends on the number of participants. Both use an automatic setting where the tiles grow or shrink based on the number of conference participants.</p>
 </div>
 <div class="paragraph">
-<p>How to update the jar file:</p>
+<p>The <code>linear</code> layout organizes its objects into scrolling rows or columns.</p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Login to the server through ssh.</p>
-</li>
-<li>
-<p>Create a directory /tmp/lib/</p>
-</li>
-<li>
-<p>Get the Restcomm docker container ID : <strong>sudo docker ps</strong></p>
-</li>
-<li>
-<p>Launch an interactive bash shell inside running container (enter to the container running) using:</p>
-</li>
-<li>
-<p><strong>sudo docker exec -it container_ID bash</strong></p>
-</li>
-<li>
-<p>Go to the directory :  <strong>cd /opt/Restcomm-JBoss-AS7/standalone/deployments/restcomm.war/WEB-INF/lib/</strong></p>
-</li>
-<li>
-<p>copy all jars to the new directory.</p>
-</li>
-<li>
-<p><strong>cp * /tmp/lib/</strong></p>
-</li>
-<li>
-<p>Type <strong>exit</strong> to get out of the bash container</p>
-</li>
-<li>
-<p>stop the running container: <strong>sudo docker stop Restcomm_Container_ID</strong></p>
-</li>
-<li>
-<p>Copy the new jar provided by Telestax to the <strong>/tmp/lib</strong>/ directory</p>
-</li>
-<li>
-<p>The above step will replace one of the existing jar files</p>
-</li>
-<li>
-<p>Add the following option to the docker run startup command</p>
-</li>
-<li>
-<p><strong>-v  /tmp/lib/:/opt/Restcomm-JBoss-AS7/standalone/deployments/restcomm.war/WEB-INF/lib/</strong></p>
-</li>
-<li>
-<p>This will override the jars in the <strong>WEB-INF/lib/</strong> with the jars in the <strong>/tmp/lib/</strong> directory</p>
-</li>
-<li>
-<p>Start the container for the changes to take effect</p>
-</li>
-<li>
-<p><strong>sudo docker start Restcomm_container_ID</strong></p>
-</li>
-</ol>
+<div class="imageblock">
+<div class="content">
+<img src="./images/linearLayout.png" alt="Conference linear layout">
+</div>
 </div>
 <div class="paragraph">
-<p>This process can be repeated as required.</p>
+<p>The <code>tile</code> layout organizes its objects into four pre-defined tiled layouts.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/tileLayout.png" alt="Conference tile layout">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="overlay"><a class="anchor" href="#overlay"></a>overlay</h4>
+<div class="paragraph">
+<p>Text overlays on video can be used to embed a caption, a name or a watermark for copyright reasons. The text can also be used in advertisement banners with variable content.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="examples-1"><a class="anchor" href="#examples-1"></a>Example 1: Video call to Client</h3>
+<div class="paragraph">
+<p>The following RCML dials to alice enabling video with <code>text</code> as overlay.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Response&gt;
+    &lt;Dial&gt;
+	    &lt;Client name="alice"&gt;
+	        &lt;Video enable=”true” overlay=”text”&gt;
+    	    &lt;/Video&gt;
+	    &lt;/Client&gt;
+    &lt;/Dial&gt;
+&lt;/Response&gt;</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="examples-2"><a class="anchor" href="#examples-2"></a>Example 2: Video call to Sip address</h3>
+<div class="paragraph">
+<p>The following RCML dials to alice&#8217;s SIP URI enabling video with <code>text</code> as overlay.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Response&gt;
+    &lt;Dial&gt;
+	    &lt;Sip name="sip:alice@127.0.0.1:5080"&gt;
+	        &lt;Video enable=”true” overlay=”text”&gt;
+    	    &lt;/Video&gt;
+	    &lt;/Sip&gt;
+    &lt;/Dial&gt;
+&lt;/Response&gt;</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="examples-3"><a class="anchor" href="#examples-3"></a>Example 3: Videoconference</h3>
+<div class="paragraph">
+<p>The following RCML starts conference <code>1112</code> enabling video in MCU mode with resolution of 720p, tile layout and <code>text</code> as overlay.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Response&gt;
+	&lt;Dial&gt;
+		&lt;Conference startConferenceOnEnter="true" name="1112"&gt;
+			&lt;Video enable="true" mode="mcu" resolution="720p" layout="tile" overlay="text"&gt;
+			&lt;/Video&gt;
+		&lt;/Conference&gt;
+	&lt;/Dial&gt;
+&lt;/Response&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>

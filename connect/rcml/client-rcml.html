@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>Restcomm RCML – Client</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
@@ -22486,7 +22486,7 @@ body.vertical_menu_outside_paspartu.vertical_menu_enabled.vertical_menu_hidden.v
 
 
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <head>
 	<meta charset="UTF-8" />
 
@@ -22773,6 +22773,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#examples-1">Example 1: Dialing to a client</a></li>
 <li><a href="#examples-2">Example 2: Simultaneous Dialing</a></li>
 <li><a href="#examples-3">Example 3: Call Progress Events</a></li>
+<li><a href="#examples-4">Example 4: Video call to Client</a></li>
 </ul>
 </li>
 </ul>
@@ -22802,6 +22803,11 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </thead>
 <tbody>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">none</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">url</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">any url</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">none</p></td>
@@ -22828,6 +22834,31 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </tr>
 </tbody>
 </table>
+<div class="sect3">
+<h4 id="name"><a class="anchor" href="#name"></a>name</h4>
+<div class="paragraph">
+<p>The 'name' attribute allows you to inform the client who will answer to a video call. This attribute should be used only when <code>&lt;Video&gt;</code> noun is nested, otherwise client&#8217;s name should be informed as value of the tag <code>&lt;Client&gt;</code>.</p>
+</div>
+<div class="paragraph">
+<p>Client&#8217;s name without <code>&lt;Video&gt;</code> noun nesting.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;Client&gt;alice&lt;/Client&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Client&#8217;s name with <code>&lt;Video&gt;</code> noun nesting.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;Client name="alice"&gt;&lt;Video enable=”true”&gt;&lt;/Video&gt;&lt;/Client&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For more information, please read <a href="video-rcml.html#video">Video noun documentation</a>.</p>
+</div>
+</div>
 <div class="sect3">
 <h4 id="url"><a class="anchor" href="#url"></a>url</h4>
 <div class="paragraph">
@@ -23010,12 +23041,31 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="examples-4"><a class="anchor" href="#examples-4"></a>Example 4: Video call to Client</h3>
+<div class="paragraph">
+<p>The following RCML dials to alice enabling video.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Response&gt;
+    &lt;Dial&gt;
+	    &lt;Client name="alice"&gt;
+	        &lt;Video enable=”true”&gt;
+    	    &lt;/Video&gt;
+	    &lt;/Client&gt;
+    &lt;/Dial&gt;
+&lt;/Response&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-09 10:35:12 WEST
+Last updated 2017-10-14 08:52:36 UTC
 </div>
 </div>
 <footer>

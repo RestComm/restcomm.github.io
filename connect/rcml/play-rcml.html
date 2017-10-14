@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>Restcomm RCML – Play</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
@@ -22486,7 +22486,7 @@ body.vertical_menu_outside_paspartu.vertical_menu_enabled.vertical_menu_hidden.v
 
 
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <head>
 	<meta charset="UTF-8" />
 
@@ -22768,12 +22768,14 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#play-attributes">Play Attributes</a></li>
 <li><a href="#supported-audio-formats">Supported Audio Formats</a></li>
 <li><a href="#media-server-audio-file-format">Media Server Audio File Format</a></li>
+<li><a href="#supported-video-formats">Supported Video* Formats</a></li>
+<li><a href="#media-server-video-file-format">Media Server Video File Format</a></li>
 </ul>
 </li>
 <li><a href="#how-to-convert-a-wav-file-to-the-correct-bitrate">How to Convert a Wav File to the Correct Bitrate</a>
 <ul class="sectlevel2">
 <li><a href="#nesting">Nesting</a></li>
-<li><a href="#basic-example">Basic example</a></li>
+<li><a href="#basic-examples">Basic examples</a></li>
 </ul>
 </li>
 </ul>
@@ -22784,7 +22786,19 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <h2 id="play"><a class="anchor" href="#play"></a>Play</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <strong>Play</strong> verb is used to play an audio file to the remote party.</p>
+<p>The <strong>Play</strong> verb is used to play an audio or video* file to the remote party.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+* Video files are supported only when Restcomm is configured to use Dialogic&#8217;s PowerMedia XMS media server.
+</td>
+</tr>
+</table>
 </div>
 <div class="sect2">
 <h3 id="play-attributes"><a class="anchor" href="#play-attributes"></a>Play Attributes</h3>
@@ -22936,6 +22950,92 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </ul>
 </div>
 </div>
+<div class="sect2">
+<h3 id="supported-video-formats"><a class="anchor" href="#supported-video-formats"></a>Supported Video* Formats</h3>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+* Video files are supported only when Restcomm is configured to use Dialogic&#8217;s PowerMedia XMS media server.
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">MIME type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">video/mp4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mp4 format audio/video</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="media-server-video-file-format"><a class="anchor" href="#media-server-video-file-format"></a>Media Server Video File Format</h3>
+<div class="paragraph">
+<p>Technical Specification and Capacity</p>
+</div>
+<div class="paragraph">
+<p>Restcomm Connect along with Dialogic&#8217;s PowerMedia XMS is capable of</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Video Codecs :</p>
+<div class="literalblock">
+<div class="content">
+<pre>H.264</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Audio Codecs :</p>
+<div class="literalblock">
+<div class="content">
+<pre>AMR-NB</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>AMR-WB</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Multimedia File Formats :</p>
+<div class="literalblock">
+<div class="content">
+<pre>MP4 Container</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Signaling and control :</p>
+<div class="literalblock">
+<div class="content">
+<pre>Java Media Control API(JSR-309)</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Find more information about Dialogic&#8217;s PowerMedia XMS <a href="https://www.dialogic.com/en/products/media-server-software/xms.aspx">here.</a></p>
+</div>
+</div>
 </div>
 </div>
 <h1 id="how-to-convert-a-wav-file-to-the-correct-bitrate" class="sect0"><a class="anchor" href="#how-to-convert-a-wav-file-to-the-correct-bitrate"></a>How to Convert a Wav File to the Correct Bitrate</h1>
@@ -22954,9 +23054,9 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 </div>
 <div class="sect2">
-<h3 id="basic-example"><a class="anchor" href="#basic-example"></a>Basic example</h3>
+<h3 id="basic-examples"><a class="anchor" href="#basic-examples"></a>Basic examples</h3>
 <div class="paragraph">
-<p>For an example of how to use the <strong>&lt;Play&gt;</strong> verb see below.</p>
+<p>For examples of how to use the <strong>&lt;Play&gt;</strong> verb see below.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -22965,11 +23065,18 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 &lt;/Response&gt;</pre>
 </div>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;Response&gt;
+&lt;Play&gt;http://foobar.com/demo.mp4&lt;/Play&gt;
+&lt;/Response&gt;</pre>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-09 10:35:12 WEST
+Last updated 2017-10-14 08:52:36 UTC
 </div>
 </div>
 <footer>

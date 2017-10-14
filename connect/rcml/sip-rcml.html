@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>Restcomm RCML – SIP</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
@@ -22486,7 +22486,7 @@ body.vertical_menu_outside_paspartu.vertical_menu_enabled.vertical_menu_hidden.v
 
 
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <head>
 	<meta charset="UTF-8" />
 
@@ -22811,6 +22811,11 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </thead>
 <tbody>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">none</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">url</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">any url</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">none</p></td>
@@ -22837,6 +22842,31 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </tr>
 </tbody>
 </table>
+<div class="sect3">
+<h4 id="name"><a class="anchor" href="#name"></a>name</h4>
+<div class="paragraph">
+<p>The 'name' attribute allows you to inform the SIP URI who will answer to a video call. This attribute should be used only when <code>&lt;Video&gt;</code> noun is nested, otherwise the SIP URI should be informed as value of the tag <code>&lt;Sip&gt;</code>.</p>
+</div>
+<div class="paragraph">
+<p>Sip URI (name) without <code>&lt;Video&gt;</code> noun nesting.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;Sip&gt;sip:alice@127.0.0.1:5080&lt;/Sip&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Sip URI (name) with <code>&lt;Video&gt;</code> noun nesting.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;Sip name="sip:alice@127.0.0.1:5080"&gt;&lt;Video enable=”true”&gt;&lt;/Video&gt;&lt;/Sip&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For more information, please read <a href="video-rcml.html#video">Video noun documentation</a>.</p>
+</div>
+</div>
 <div class="sect3">
 <h4 id="url"><a class="anchor" href="#url"></a>url</h4>
 <div class="paragraph">
@@ -23197,7 +23227,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-09 10:35:12 WEST
+Last updated 2017-10-14 08:52:36 UTC
 </div>
 </div>
 <footer>
