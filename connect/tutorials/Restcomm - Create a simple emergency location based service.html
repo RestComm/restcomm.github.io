@@ -22784,7 +22784,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <p>Throughout this tutorial we will explain how to create an emergency location based service by developing a simple USSD RVD project. This RVD project makes use of either Restcomm <a href="http://documentation.telestax.com/connect/api/geolocation-api.html">Geolocation API</a> and <a href="http://documentation.telestax.com/core/gmlc/GMLC_Admin_Guide.html#gmlc">Restcomm GMLC</a> for retrieving the most basic location information from a GSM cellular network (i.e. Cell Global Identification or CGI) and <a href="http://documentation.telestax.com/connect/api/sms-api.html">SMS API</a> for sending such gathered location information -furtherly processed to the correspondent CGI&#8217;s geographic coordinates- via an SMS to a PSAP (Public Safety Access Point). USSD session ends with processed location information back to the service initiator via RestcommONE-Connect and RestommONE USSD Gateway.</p>
 </div>
 <div class="paragraph">
-<p>This tutorial is inspried on TechTeamCo TADHack Popayan 2017 co-winners, as can bee seen in <a href="http://blog.tadhack.com/2017/10/02/tadhack-global-2017-winners/">TADHack Global 2017 blog</a>.</p>
+<p>This tutorial is inspired on TechTeamCo TADHack Popayan 2017 co-winners, as can bee seen in <a href="http://blog.tadhack.com/2017/10/02/tadhack-global-2017-winners/">TADHack Global 2017 blog</a>.</p>
 </div>
 </div>
 <div class="sect2">
@@ -23229,7 +23229,7 @@ SIP_PORT_WSS='5063'             #LB WSS port. Default is 5083</code></pre>
 <p>Login to RestcommONE-Connect at <a href="http://127.0.0.1:8080" class="bare">http://127.0.0.1:8080</a> with default user <a href="mailto:administrator@company.com">administrator@company.com</a> and password "RestComm".</p>
 </li>
 <li>
-<p>Change default password to "FerM19711219" (if you wish to set it to a different value, take into considration the generated authentication token for setting it at the PHP scripts calls to Restcomm Geolocation and SMS APIs).</p>
+<p>Change default password to "FerM19711219" (if you wish to set it to a different value, take into consideration the generated authentication token for setting it at the PHP scripts calls to Restcomm Geolocation and SMS APIs).</p>
 </li>
 <li>
 <p>Once successfully logged in, go to <a href="http://127.0.0.1:8080/restcomm-rvd/#/login" class="bare">http://127.0.0.1:8080/restcomm-rvd/#/login</a> (you can do this by simply clicking in Visual Designer link once in the dashboard).</p>
@@ -23238,7 +23238,7 @@ SIP_PORT_WSS='5063'             #LB WSS port. Default is 5083</code></pre>
 <p>Start a USSD project (in this tutorial we will call it "USSD_Emergency_Geolocation").</p>
 </li>
 <li>
-<p>Rename the Welcome module to <strong>Retrieve_CGI</strong> and remove its default content. Drag and drop the "External Service" verb and set the Service Url <a href="http://127.0.0.1/Geolocation/geolocation.php" class="bare">http://127.0.0.1/Geolocation/geolocation.php</a>. Click on "add service parameter" and set "Name" to "target" and "Value" to "$core_From". Click on "Add assignment" as many times needed so you have the following parameters of scope "application": <strong>cid</strong>, <strong>lac</strong>, <strong>mcc</strong>, <strong>mnc</strong>, <strong>mscvlrOrSgsnOrMme</strong> and <strong>loc_age_mins</strong> whose values come from <strong>cell_id</strong>, <strong>location_area_code</strong>, <strong>mobile_country_code</strong>, <strong>mobile_network_code</strong>, <strong>network_entity_address</strong> and <strong>location_age</strong> respectively. On making a route decision, mark it as <strong>fixed</strong> to Continue to the <strong>Get_GCI_Coordinates</strong> module. Optionally, on "Remote error" set <strong>Loc_Error</strong> module and on "On timeout" set <strong>Loc_Timeout</strong> modules (recommended). At the end, the module should look like the following image:</p>
+<p>Rename the Welcome module to <strong>Retrieve_CGI</strong> and remove its default content. Drag and drop the "External Service" verb into the module&#8217;s palette and set the Service Url <a href="http://127.0.0.1/Geolocation/geolocation.php" class="bare">http://127.0.0.1/Geolocation/geolocation.php</a>. Click on "add service parameter" and set "Name" to "target" and "Value" to "$core_From". Click on "Add assignment" as many times needed so you have the following parameters of scope "application": <strong>cid</strong>, <strong>lac</strong>, <strong>mcc</strong>, <strong>mnc</strong>, <strong>mscvlrOrSgsnOrMme</strong> and <strong>loc_age_mins</strong> whose values come from <strong>cell_id</strong>, <strong>location_area_code</strong>, <strong>mobile_country_code</strong>, <strong>mobile_network_code</strong>, <strong>network_entity_address</strong> and <strong>location_age</strong> respectively. On making a route decision, mark it as <strong>fixed</strong> to Continue to the <strong>Get_GCI_Coordinates</strong> module. Optionally, on "Remote error" set <strong>Loc_Error</strong> module and on "On timeout" set <strong>Loc_Timeout</strong> modules (recommended). At the end, the module should look like in the following image:</p>
 </li>
 </ul>
 </div>
@@ -23248,7 +23248,7 @@ SIP_PORT_WSS='5063'             #LB WSS port. Default is 5083</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Add a new module named <strong>Get_CGI_Coordinates</strong>. Drag and drop the "External Service" verb and set the Service Url <a href="http://127.0.0.1/Geolocation/convertCGItoCoordinates.php" class="bare">http://127.0.0.1/Geolocation/convertCGItoCoordinates.php</a>. Click four times on "add service parameter" and set "Name" to "cid", "lac", "mcc" and "mnc", while "Value" respectively to "$cid", "$lac", "$mcc" and "$mnc". Click on "Add assignment" two times needed so you have the following parameters of scope "application": <strong>cell_lat</strong>, <strong>cell_long</strong> whose values come from <strong>cell_latitude</strong> and <strong>cell_longitude</strong> respectively. On making a route decision, mark it as <strong>fixed</strong> to Continue to the <strong>Menu</strong> module. Optionally, on "Remote error" set <strong>Loc_Error</strong> module and on "On timeout" set <strong>Loc_Timeout</strong> modules (recommended). At the end, the module should look like the following image:</p>
+<p>Add a new module named <strong>Get_CGI_Coordinates</strong>. Drag and drop the "External Service" verb into the module&#8217;s palette and set the Service Url <a href="http://127.0.0.1/Geolocation/convertCGItoCoordinates.php" class="bare">http://127.0.0.1/Geolocation/convertCGItoCoordinates.php</a>. Click four times on "add service parameter" and set "Name" to "cid", "lac", "mcc" and "mnc", while "Value" respectively to "$cid", "$lac", "$mcc" and "$mnc". Click on "Add assignment" two times needed so you have the following parameters of scope "application": <strong>cell_lat</strong>, <strong>cell_long</strong> whose values come from <strong>cell_latitude</strong> and <strong>cell_longitude</strong> respectively. On making a route decision, mark it as <strong>fixed</strong> to Continue to the <strong>Menu</strong> module. Optionally, on "Remote error" set <strong>Loc_Error</strong> module and on "On timeout" set <strong>Loc_Timeout</strong> modules (recommended). At the end, the module should look like in the following image:</p>
 </li>
 </ul>
 </div>
@@ -23258,10 +23258,10 @@ SIP_PORT_WSS='5063'             #LB WSS port. Default is 5083</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Add a new module named <strong>Menu</strong>. Drag and drop a "USSD Collect" verb. Place the following USSD messages in three different lines (so it appears like that in the user&#8217;s handset): "Welcome to Restcomm. We have detected your location.", "Are you in an emergency situation?" and "Press 1 for NO, press 2 for YES". Set Menu option "1" to Continue to <strong>Out</strong> module, while option "2" to Continue to <strong>Send_SMS</strong> module.</p>
+<p>Add a new module named <strong>Menu</strong>. Drag and drop a "USSD Collect" verb into the module&#8217;s palette. Place the following USSD messages in three different lines (so it appears like that in the user&#8217;s handset): "Welcome to Restcomm. We have detected your location.", "Are you in an emergency situation?" and "Press 1 for NO, press 2 for YES". Set Menu option "1" to Continue to <strong>Out</strong> module, while option "2" to Continue to <strong>Send_SMS</strong> module.</p>
 </li>
 <li>
-<p>Add a new module named <strong>Out</strong>. Drag and drop a "USSD Message" verb and insert the following ending session text "Great! You are fine, have a nice day!".</p>
+<p>Add a new module named <strong>Out</strong>. Drag and drop a "USSD Message" verb into the module&#8217;s palette and insert the following ending session text "Great! You are fine, have a nice day!".</p>
 </li>
 <li>
 <p>Add a new module named <strong>Send_SMS</strong>. Drag and drop the "External Service" verb and set the Service Url <a href="http://127.0.0.1/Geolocation/send_sms_thru_api.php" class="bare">http://127.0.0.1/Geolocation/send_sms_thru_api.php</a>. Click seven times on "add service parameter" and set "Name" to "sms_destination", "sms_origin", "originator", "cid", "lac", "c_lat" and "c_long" while "Value" respectively to "5555" (the PSAP number), "911", "$core_From" "$cid", "$lac", "$cell_lat" and "$cell_long". No "Add assignment" will be done, as the external service isn&#8217;t meant to return any value back to the application but send an SMS through the SMS API. On making a route decision, mark it as <strong>fixed</strong> to Continue to the <strong>USSD_End</strong> module. Optionally, on "Remote error" set <strong>SMS_Error</strong> module and on "On timeout" set <strong>SMS_Timeout</strong> modules (recommended). At the end, the module should look like the following image:</p>
@@ -23274,7 +23274,7 @@ SIP_PORT_WSS='5063'             #LB WSS port. Default is 5083</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Add four modules named <strong>Loc_Error</strong>, <strong>Loc_Timeout</strong>, <strong>SMS_Error</strong> and <strong>SMS_Timeout</strong>. You are free to choose either to send an ending message by drag and drop a "USSD Message" verb or let the user try again by drag and drop a "USSD Collect" verb giving the user the ability to start all over and attempt another location service, therefore you should Continue to the welcome module <strong>Retrieve_CGI</strong>. For example, if you chose the latter option, <strong>Loc_Error</strong> could look like the following image:</p>
+<p>Add four modules named <strong>Loc_Error</strong>, <strong>Loc_Timeout</strong>, <strong>SMS_Error</strong> and <strong>SMS_Timeout</strong>. You are free to choose either to send an ending message by drag and drop a "USSD Message" verb or let the user try again by drag and drop a "USSD Collect" verb, giving the user the ability to start all over and attempt another location service. Therefore, you should Continue to the welcome module <strong>Retrieve_CGI</strong>. For example, if you chose the latter option, <strong>Loc_Error</strong> could look like the following image:</p>
 </li>
 </ul>
 </div>
@@ -23282,7 +23282,7 @@ SIP_PORT_WSS='5063'             #LB WSS port. Default is 5083</code></pre>
 <p><span class="image"><img src="./images/911_RVD_Loc_Error_module.png" alt="USSD_RVD_Loc_Error" width="680" height="480"></span></p>
 </div>
 <div class="paragraph">
-<p>The RVD project is then built. A nice way to check how it&#8217;s setup is graphically by clicking on diagram. You should then see something similar to the following image:</p>
+<p>The RVD project is then built. You can graphically check how it is setup by clicking on <strong>Diagram</strong>. You should then see something similar to the following image:</p>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="./images/911_RVD_USSD_SOS_Geolocation_diagram.png" alt="USSD_RVD_SOS_Geolocation_diagram" width="8000" height="500"></span></p>
@@ -23339,7 +23339,7 @@ SIP_PORT_WSS='5063'             #LB WSS port. Default is 5083</code></pre>
 <p><span class="image"><img src="./images/911_call_phone-sim.png" alt="USSD_Phone_Sim_dial" width="280" height="380"></span></p>
 </div>
 <div class="paragraph">
-<p>After receiving the USSD request and started the correspondent RVD project logic, RestcommONE-Connect sent the MAP ATI request to the GMLC via the Restcomm Geolocation API, which reached the jSS7 simulator. The latter, responds with a GCI value, which in JSON is formatted to the following by the script <strong>geolocation.php</strong>: {"cell_id":"221","location_area_code":"32000","mobile_country_code":250,"mobile_network_code":"1","network_entity_address":5555555666,"location_age":5} and stored in the correspondent RVD application variables after the first external service execution. MAP ATI can be seen received and answered back in the jSS7 simulator like in the image snapshot:</p>
+<p>After receiving the USSD request and started the correspondent RVD project logic, RestcommONE-Connect sends the MAP ATI request to the GMLC via the Restcomm Geolocation API, which reached the jSS7 simulator. The latter responds with a GCI value, which in JSON is formatted to the following by the script <strong>geolocation.php</strong>: {"cell_id":"221","location_area_code":"32000","mobile_country_code":250,"mobile_network_code":"1","network_entity_address":5555555666,"location_age":5} and stored in the correspondent RVD application variables after the first external service execution. MAP ATI can be seen received and answered back in the jSS7 simulator like in the image snapshot:</p>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="./images/911_jSS7-sim-ATI-Server_ATI_resp.png" alt="jSS7-sim_MAP-ATI" width="680" height="729"></span></p>
@@ -23363,7 +23363,7 @@ SIP_PORT_WSS='5063'             #LB WSS port. Default is 5083</code></pre>
 <p>Set the answer to "2" and click on the buttom <strong>Enviar</strong>.</p>
 </li>
 <li>
-<p>At this point, the RVD project logic follows by sending an SMS to the PSAP via the SMS API (through the external service call to <strong>send_sms_thru_api.php</strong> in the *Send_SMS" RVD module), which results to be the registrarless SIP account 5555 residing in Jitsi. Then you will see the message arriving to Jitsi acting as PSAP, like in the image below:</p>
+<p>At this point, the RVD project logic follows by sending an SMS to the PSAP via the SMS API (through the external service call to <strong>send_sms_thru_api.php</strong> in the <strong>Send_SMS</strong> RVD module), which results to be the registrarless SIP account 5555 residing in Jitsi. Then you will see the message arriving at Jitsi (acting as PSAP), like in the image below:</p>
 </li>
 </ul>
 </div>
@@ -23387,7 +23387,7 @@ SIP_PORT_WSS='5063'             #LB WSS port. Default is 5083</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-21 02:18:23 UTC
+Last updated 2017-10-22 02:18:30 UTC
 </div>
 </div>
 <footer>
