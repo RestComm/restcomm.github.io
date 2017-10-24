@@ -22833,12 +22833,13 @@ SYNOPSIS
 	newdestnpi &lt;new destination numbering plan indicator&gt;
 	adddestdigprefix &lt;prefix value&gt; addsourcedigprefix &lt;prefix value&gt;
 	newsourceton &lt;new source type of number&gt; newsourcenpi
-	&lt;new source numbering plan indicator&gt; newsourceaddr &lt;new source address value&gt; newmtgt
-	&lt;new gt for mt message&gt; newmttt &lt;new tt for mt message&gt; hrbypass
-	&lt;false | true&gt; dropaftersri &lt;false | true&gt; newnetworkidaftersri &lt;networkId value&gt;
-	dropaftertempfail &lt;false | true&gt; newnetworkidaftertempfail &lt;networkId value&gt;
-	droponarrival &lt;false | true&gt; rejectonarrival &lt;NONE | DEFAULT | UNEXPECTED_DATA_VALUE
-	| SYSTEM_FAILURE |	THROTTLING | FACILITY_NOT_SUPPORTED&gt; remove_tlv &lt;tlv tag key&gt;
+	&lt;new source numbering plan indicator&gt; newsourceaddr &lt;new source address value&gt; mtlocalsccpgt
+	&lt;new gt of a local sccp address of an mt message&gt; mtremotesccptt
+	&lt;new tt for remote sccp address for mt message&gt; hrbypass &lt;false | true&gt; dropaftersri
+	&lt;false | true&gt; newnetworkidaftersri &lt;networkId value&gt; dropaftertempfail &lt;false | true&gt;
+	newnetworkidaftertempfail &lt;networkId value&gt; droponarrival &lt;false | true&gt; rejectonarrival
+	&lt;NONE | DEFAULT | UNEXPECTED_DATA_VALUE | SYSTEM_FAILURE |	THROTTLING | FACILITY_NOT_SUPPORTED&gt;
+	remove_tlv &lt;tlv tag key&gt;
 
 DESCRIPTION
 
@@ -22878,8 +22879,8 @@ PARAMETERS
 	newsourceton - an optional parameter.
 	newsourcenpi - an optional parameter.
 	newsourceaddr - an optional parameter.
-	newmtgt - an optional parameter.
-	newmttt - an optional parameter.
+	mtlocalsccpgt - an optional parameter.
+	mtremotesccptt - an optional parameter.
 	makecopy - an optional parameter.
 	hrbypass - an optional parameter.
 	dropaftersri - an optional parameter.
@@ -22962,11 +22963,12 @@ SYNOPSIS
 	adddestdigprefix &lt;prefix value&gt; addsourcedigprefix &lt;prefix value&gt;
 	newsourceton &lt;new source type of number&gt; newsourcenpi
 	&lt;new source numbering plan indicator&gt; newsourceaddr &lt;new source address value&gt;
-	newmtgt &lt;new gt for mt message&gt; newmttt &lt;new tt for mt message&gt; hrbypass
-	&lt;false | true&gt; dropaftersri &lt;false | true&gt; newnetworkidaftersri &lt;networkId value&gt;
-	dropaftertempfail &lt;false | true&gt; newnetworkidaftertempfail &lt;networkId value&gt;
-	droponarrival &lt;false | true&gt; rejectonarrival &lt;NONE | DEFAULT | UNEXPECTED_DATA_VALUE
-	| SYSTEM_FAILURE | THROTTLING | FACILITY_NOT_SUPPORTED&gt; remove_tlv &lt;tlv tag key&gt;
+	mtlocalsccpgt &lt;new gt of a local sccp address of an mt message&gt; mtremotesccptt
+	&lt;new tt for remote sccp address for mt message&gt; hrbypass &lt;false | true&gt; dropaftersri
+	&lt;false | true&gt; newnetworkidaftersri &lt;networkId value&gt; dropaftertempfail &lt;false | true&gt;
+	newnetworkidaftertempfail &lt;networkId value&gt; droponarrival &lt;false | true&gt; rejectonarrival
+	&lt;NONE | DEFAULT | UNEXPECTED_DATA_VALUE | SYSTEM_FAILURE | THROTTLING | FACILITY_NOT_SUPPORTED&gt;
+	remove_tlv &lt;tlv tag key&gt;
 
 DESCRIPTION
 
@@ -23004,8 +23006,8 @@ PARAMETERS
 	newsourceton - an optional parameter.
 	newsourcenpi - an optional parameter.
 	newsourceaddr - an optional parameter.
-	newmtgt - an optional parameter.
-	newmttt - an optional parameter.
+	mtlocalsccpgt - an optional parameter.
+	mtremotesccptt - an optional parameter.
 	makecopy - an optional parameter.
 	hrbypass - an optional parameter.
 	dropaftersri - an optional parameter.
@@ -23157,7 +23159,7 @@ Below this you will find the button 'Create Message Processing Rule'.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-23 02:51:31 UTC
+Last updated 2017-10-24 02:50:39 UTC
 </div>
 </div>
 <footer>

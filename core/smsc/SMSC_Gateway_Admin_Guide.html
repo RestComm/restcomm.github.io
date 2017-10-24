@@ -25659,15 +25659,15 @@ If a message fits to all conditions then the rule will be applied to the message
 <td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that source address of the message will not be changed.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">newmtgt</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Arrival trigger / &lt;mtgt value&gt;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">global title of the message will be changed to &lt;mtgt value&gt;. This means that MT message will be rerouted to GT different from what is specified by SMSC for current networkId.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that GT of the message will not be changed.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mtlocalsccpgt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arrival trigger / &lt;new gt value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">global title of a local SCCP address of an MT message will be changed to &lt;new gt value&gt;. This means that GT in originating SCCP address of an MT message will be changed from what is specified by SMSC for current networkId.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that GT of local address will not be changed.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">newmttt</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Arrival trigger / &lt;mttt value&gt;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">translation type of the message will be changed to &lt;mttt value&gt;. This means that desired TT of MT message will be used rather than what SMSC sets by default for current networkId.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mtremotesccptt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arrival trigger / &lt;new tt value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">translation type of a remote SCCP address for MT message will be changed to &lt;new tt value&gt;. This means that desired TT of remote SCCP address for an MT message will be used rather than what SMSC sets by default for current networkId.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-1. This means that TT of the message will not be changed.</p></td>
 </tr>
 <tr>
@@ -34051,12 +34051,13 @@ SYNOPSIS
 	newdestnpi &lt;new destination numbering plan indicator&gt;
 	adddestdigprefix &lt;prefix value&gt; addsourcedigprefix &lt;prefix value&gt;
 	newsourceton &lt;new source type of number&gt; newsourcenpi
-	&lt;new source numbering plan indicator&gt; newsourceaddr &lt;new source address value&gt; newmtgt
-	&lt;new gt for mt message&gt; newmttt &lt;new tt for mt message&gt; hrbypass
-	&lt;false | true&gt; dropaftersri &lt;false | true&gt; newnetworkidaftersri &lt;networkId value&gt;
-	dropaftertempfail &lt;false | true&gt; newnetworkidaftertempfail &lt;networkId value&gt;
-	droponarrival &lt;false | true&gt; rejectonarrival &lt;NONE | DEFAULT | UNEXPECTED_DATA_VALUE
-	| SYSTEM_FAILURE |	THROTTLING | FACILITY_NOT_SUPPORTED&gt; remove_tlv &lt;tlv tag key&gt;
+	&lt;new source numbering plan indicator&gt; newsourceaddr &lt;new source address value&gt; mtlocalsccpgt
+	&lt;new gt of a local sccp address of an mt message&gt; mtremotesccptt
+	&lt;new tt for remote sccp address for mt message&gt; hrbypass &lt;false | true&gt; dropaftersri
+	&lt;false | true&gt; newnetworkidaftersri &lt;networkId value&gt; dropaftertempfail &lt;false | true&gt;
+	newnetworkidaftertempfail &lt;networkId value&gt; droponarrival &lt;false | true&gt; rejectonarrival
+	&lt;NONE | DEFAULT | UNEXPECTED_DATA_VALUE | SYSTEM_FAILURE |	THROTTLING | FACILITY_NOT_SUPPORTED&gt;
+	remove_tlv &lt;tlv tag key&gt;
 
 DESCRIPTION
 
@@ -34096,8 +34097,8 @@ PARAMETERS
 	newsourceton - an optional parameter.
 	newsourcenpi - an optional parameter.
 	newsourceaddr - an optional parameter.
-	newmtgt - an optional parameter.
-	newmttt - an optional parameter.
+	mtlocalsccpgt - an optional parameter.
+	mtremotesccptt - an optional parameter.
 	makecopy - an optional parameter.
 	hrbypass - an optional parameter.
 	dropaftersri - an optional parameter.
@@ -34178,11 +34179,12 @@ SYNOPSIS
 	adddestdigprefix &lt;prefix value&gt; addsourcedigprefix &lt;prefix value&gt;
 	newsourceton &lt;new source type of number&gt; newsourcenpi
 	&lt;new source numbering plan indicator&gt; newsourceaddr &lt;new source address value&gt;
-	newmtgt &lt;new gt for mt message&gt; newmttt &lt;new tt for mt message&gt; hrbypass
-	&lt;false | true&gt; dropaftersri &lt;false | true&gt; newnetworkidaftersri &lt;networkId value&gt;
-	dropaftertempfail &lt;false | true&gt; newnetworkidaftertempfail &lt;networkId value&gt;
-	droponarrival &lt;false | true&gt; rejectonarrival &lt;NONE | DEFAULT | UNEXPECTED_DATA_VALUE
-	| SYSTEM_FAILURE | THROTTLING | FACILITY_NOT_SUPPORTED&gt; remove_tlv &lt;tlv tag key&gt;
+	mtlocalsccpgt &lt;new gt of a local sccp address of an mt message&gt; mtremotesccptt
+	&lt;new tt for remote sccp address for mt message&gt; hrbypass &lt;false | true&gt; dropaftersri
+	&lt;false | true&gt; newnetworkidaftersri &lt;networkId value&gt; dropaftertempfail &lt;false | true&gt;
+	newnetworkidaftertempfail &lt;networkId value&gt; droponarrival &lt;false | true&gt; rejectonarrival
+	&lt;NONE | DEFAULT | UNEXPECTED_DATA_VALUE | SYSTEM_FAILURE | THROTTLING | FACILITY_NOT_SUPPORTED&gt;
+	remove_tlv &lt;tlv tag key&gt;
 
 DESCRIPTION
 
@@ -34220,8 +34222,8 @@ PARAMETERS
 	newsourceton - an optional parameter.
 	newsourcenpi - an optional parameter.
 	newsourceaddr - an optional parameter.
-	newmtgt - an optional parameter.
-	newmttt - an optional parameter.
+	mtlocalsccpgt - an optional parameter.
+	mtremotesccptt - an optional parameter.
 	makecopy - an optional parameter.
 	hrbypass - an optional parameter.
 	dropaftersri - an optional parameter.
@@ -35940,7 +35942,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-23 02:51:31 UTC
+Last updated 2017-10-24 02:50:39 UTC
 </div>
 </div>
 <footer>
