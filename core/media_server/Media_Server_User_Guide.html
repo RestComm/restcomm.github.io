@@ -24795,6 +24795,552 @@ The Call Agent uses the MGCP to tell the Media Server:</p>
 <p>MGCP is, in essence, a master/slave protocol, where the gateways are expected to execute commands sent by the Call Agents.
 The general base architecture and programming interface is described in <a href="http://www.ietf.org/rfc/rfc2805.txt">RFC 2805</a>, and the current specific MGCP definition is located in <a href="http://www.ietf.org/rfc/rfc3435.txt">RFC 3435</a>.</p>
 </div>
+<div class="sect4">
+<h5 id="_captms_media_gateway_control_protocol_packages"><a class="anchor" href="#_captms_media_gateway_control_protocol_packages"></a>Supported MGCP Packages</h5>
+<div class="paragraph">
+<p>MGCP is a modular and extensible protocol, however with extensibility comes the need to manage, identify, and name the individual extensions.</p>
+</div>
+<div class="paragraph">
+<p>This is achieved by the concept of packages, which are simply well-defined groupings of extensions.<br>
+For example, one package may support a certain group of events and signals, e.g., off-hook and ringing, for analog access lines. Another package may support another group of events and signals for analog access lines or for another type of endpoint such as video.<br>
+One or more packages may be supported by a given endpoint.</p>
+</div>
+<div class="sect5">
+<h6 id="_captms_media_gateway_control_protocol_packages_au"><a class="anchor" href="#_captms_media_gateway_control_protocol_packages_au"></a>Advanced Audio Package (AU)</h6>
+<div class="paragraph">
+<p>The Advanced Audio Package, defined by <a href="https://tools.ietf.org/html/rfc2897">RFC 2897</a>, provides support for the standard Interactive Voice Response (IVR) operations of PlayAnnouncement, PlayCollect, and PlayRecord.</p>
+</div>
+<div class="paragraph">
+<p>It supports direct references to simple audio as well as indirect references to simple and complex audio.<br>
+It provides audio variables, control of audio interruptibility, digit buffer control, special key sequences, and support for reprompting during data collection.<br>
+It also provides an arbitrary number of user defined qualifiers to be used in resolving complex audio structures.<br>
+For example, the user could define qualifiers for any or all of the following: language, accent, audio file format, gender, speaker, or customer.</p>
+</div>
+<div class="paragraph">
+<p>The package was extended with a proprietary command to enable Automatic Speech Recognition (ASR) capabilities.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 5. MGCP AU Package</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Definition</th>
+<th class="tableblock halign-left valign-top">R</th>
+<th class="tableblock halign-left valign-top">S</th>
+<th class="tableblock halign-left valign-top">Duration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pa(params)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PlayAnnouncement</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">variable</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pc(params)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PlayCollect</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">variable</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pr(params)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PlayRecord</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">variable</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">asr(params)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AutomaticSpeechRecognition</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">variable</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">es(param)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EndSignal</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BR</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">oc(params)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OperationComplete</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">of(params)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OperationFailed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_captms_media_gateway_control_protocol_packages_au_pa"><a class="anchor" href="#_captms_media_gateway_control_protocol_packages_au_pa"></a>Play Announcement (pa)</h6>
+<div class="paragraph">
+<p>Plays an announcement in situations where there is no need for interaction with the user.<br>
+Because there is no need to monitor the incoming media stream this event is an efficient mechanism for treatments, informational announcements, etc.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 6. MGCP PlayAnnouncement Command</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">an</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">announcement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An announcement to be played.  Consists of one or more audio segments.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">it</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">iterations</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum number of times an announcement is to be played.<br>
+A value of minus one (-1) indicates the announcement is to be repeated forever.<br>
+Defaults to one (1).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">iv</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">interval</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The interval of silence to be inserted between iterative plays.<br>
+Specified in units of 100 milliseconds.<br>
+Defaults to 10 (1 second).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">du</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">duration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum amount of time to play and possibly replay an announcement.<br>
+Takes precedence over iteration and interval.<br>
+Specified in units of 100 milliseconds.<br>
+No default.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_captms_media_gateway_control_protocol_packages_au_pc"><a class="anchor" href="#_captms_media_gateway_control_protocol_packages_au_pc"></a>Play Collect (pc)</h6>
+<div class="paragraph">
+<p>Plays a prompt and collects DTMF digits entered by a user.<br>
+By default PlayCollect does not play an initial prompt, makes only one attempt to collect digits, and therefore functions as a simple Collect operation.<br></p>
+</div>
+<div class="paragraph">
+<p>If no digits are entered or an invalid digit pattern is entered, the user may be re-prompted and given another chance to enter a correct pattern of digits. The following digits are supported:  0-9, *, #, A, B, C, D.<br></p>
+</div>
+<div class="paragraph">
+<p>Various special purpose keys, key sequences, and key sets can be defined for use during the PlayCollect operation.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 7. MGCP PlayCollect Command</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ip</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">initial prompt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The initial announcement prompting the user to either enter DTMF digits or to speak.<br>
+Consists of one or more audio segments.<br>
+If not specified (the default), the event immediately begins digit collection or recording.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">reprompt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Played after the user has made an error such as entering an invalid digit pattern or not speaking.<br>
+Consists of one or more audio segments.<br>
+Defaults to the Initial Prompt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nd</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no digits reprompt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Played after the user has failed to enter a valid digit pattern during a PlayCollect event.<br>
+Consists of one or more audio segments.<br>
+Defaults to the Reprompt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fa</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">failure announcement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Played when all data entry attempts have failed.<br>
+Consists of one or more audio segments.<br>
+No default.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sa</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">success announcement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Played when data collection has succeeded.<br>
+Consists of one or more audio segments.<br>
+No default.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ni</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">non-interruptible play</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If set to true, initial prompt is not interruptible by either voice or digits.<br>
+Valid values are the text strings "true" and "false".<br>
+Defaults to false.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mx</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maximum digits</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum number of digits to collect.<br>
+Defaults to 1.<br>
+This parameter should not be specified if the Digit Pattern parameter is present.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mv</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">minimum digits</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The minimum number of digits to collect.<br>
+Defaults to 1.<br>
+This parameter should not be specified if the Digit Pattern parameter is present.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">digit pattern</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A legal digit map as described in section 7.1.14 of the Megaco protocol using DTMF mappings.<br>
+This parameter should not be specified if one or both of the Minimum Number Of Digits parameter and the Maximum Number Of Digits parameter is present.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fdt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">first digit timer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The amount of time allowed for the user to enter the first digit.<br>
+Specified in units of 100 milliseconds.<br>
+Defaults to 50 (5 seconds).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">idt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">inter digit timer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The amount of time allowed for the user to enter each subsequent digit.<br>
+Specified units of 100 milliseconds seconds.<br>
+Defaults to 30 (3 seconds).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rsk</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restart key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Discards any digits collected, replay the prompt, and resume digit collection.<br>
+No default.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rik</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">reinput key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Discards any digits collected and resume digit collection.<br>
+ No default.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sik</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">start input key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines a set of keys that are acceptable as the first digit collected.<br>
+This set of keys can be specified to interrupt a playing announcement or to not interrupt a playing announcement.<br>
+The default key set is 0-9.<br>
+The default behavior is to interrupt a playing announcement when a Start Input Key is pressed.<br>
+This behavior can be overridden for the initial prompt only by using the ni (Non-Interruptible Play) parameter.<br>
+Specification is a list of keys with no separators, e.g. 123456789#.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">eik</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">end input key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies a key that signals the end of digit collection or voice recording.<br>
+The default end input key is the # key.<br>
+To specify that no End Input Key be used the parameter is set to the string "null".<br>
+</p><p class="tableblock">The default behavior not to return the End Input Key in the digits returned to the call agent. This behavior can be overridden by the Include End Input Key (eik) parameter.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">iek</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">include end input key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">By default the End Input Key is not included in the collected digits returned to the call agent.<br>
+If this parameter is set to "true" then the End Input Key will be returned with the collected digits returned to the call agent.<br>
+Default is "false".</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">na</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number of attempts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The number of attempts the user needed to enter a valid digit pattern.<br>
+Defaults to 1.<br>
+Also used as a return parameter to indicate the number of attempts the user made.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_captms_media_gateway_control_protocol_packages_au_pr"><a class="anchor" href="#_captms_media_gateway_control_protocol_packages_au_pr"></a>Play Record (pr)</h6>
+<div class="paragraph">
+<p>Plays a prompt and records user speech.<br>
+If the user does not speak, the user may be re-prompted and given another chance to record.</p>
+</div>
+<div class="paragraph">
+<p>By default PlayRecord does not play an initial prompt, makes only one attempt to record, and therefore functions as a simple Record operation.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 8. MGCP PlayRecord Command</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ip</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">initial prompt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The initial announcement prompting the user to either enter DTMF digits or to speak.<br>
+Consists of one or more audio segments.<br>
+If not specified (the default), the event immediately begins digit collection or recording.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">reprompt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Played after the user has made an error such as entering an invalid digit pattern or not speaking.<br>
+Consists of one or more audio segments.<br>
+Defaults to the Initial Prompt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ns</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no speech reprompt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Played after the user has failed to speak during a PlayRecord event.<br>
+Consists of one or more audio segments.<br>
+Defaults to the Reprompt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fa</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">failure announcement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Played when all data entry attempts have failed.<br>
+Consists of one or more audio segments.<br>
+No default.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sa</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">success announcement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Played when data collection has succeeded.<br>
+Consists of one or more audio segments.<br>
+No default.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ni</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">non-interruptible play</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If set to true, initial prompt is not interruptible by either voice or digits.<br>
+Valid values are the text strings "true" and "false".<br>
+Defaults to false.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">prt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pre-speech timer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The amount of time to wait for the user to initially speak.<br>
+Specified in units of 100 milliseconds.<br>
+Defaults to 30 (3 seconds).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pst</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">post-speech timer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The amount of silence necessary after the end of the last speech segment for the recording to be considered complete.<br>
+Specified in units of 100 milliseconds.<br>
+Defaults to 20 (2 seconds).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rlt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">recording length timer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum allowable length of the recording, not including pre or post speech silence.<br>
+Specified in units of 100 milliseconds.<br>
+This parameter is mandatory.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rsk</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restart key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Discards any digits collected, replay the prompt, and resume digit collection.<br>
+No default.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rik</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">reinput key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Discards any digits collected and resume digit collection.<br>
+ No default.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">eik</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">end input key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies a key that signals the end of digit collection or voice recording.<br>
+The default end input key is the # key.<br>
+To specify that no End Input Key be used the parameter is set to the string "null".<br>
+</p><p class="tableblock">The default behavior not to return the End Input Key in the digits returned to the call agent. This behavior can be overridden by the Include End Input Key (eik) parameter.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">na</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number of attempts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The number of attempts the user needed to enter a valid digit pattern.<br>
+Defaults to 1.<br>
+Also used as a return parameter to indicate the number of attempts the user made.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_captms_media_gateway_control_protocol_packages_au_asr"><a class="anchor" href="#_captms_media_gateway_control_protocol_packages_au_asr"></a>Automatic Speech Recognition (asr)</h6>
+<div class="paragraph">
+<p>Gracefully terminates a Play, PlayCollect, or PlayRecord signal.</p>
+</div>
+<div class="paragraph">
+<p>For each of these signals, if the signal is terminated with the EndSignal signal the resulting OperationComplete event or OperationFailed event will contain all the parameters it would normally, including any collected digits or the recording id of the recording that was in progress when the EndSignal signal was received.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dr</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">driver</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The driver to be used to perform the transcription.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ip</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">initial prompt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The initial announcement prompting the user to either enter DTMF digits or to speak.<br>
+Consists of one or more audio segments.<br>
+If not specified (the default), the event immediately begins digit collection or recording.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fa</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">failure announcement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Played when all data entry attempts have failed.<br>
+Consists of one or more audio segments.<br>
+No default.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sa</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">success announcement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Played when data collection has succeeded.<br>
+Consists of one or more audio segments.<br>
+No default.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">eik</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">end input key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies a key that signals the end of digit or voice collection.<br>
+The default end input key is the # key.<br>
+To specify that no End Input Key be used the parameter is set to the string "null".<br>
+</p><p class="tableblock">The default behavior not to return the End Input Key in the digits returned to the call agent. This behavior can be overridden by the Include End Input Key (eik) parameter.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mrt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maximum recognition time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum allowable length of the voice recognition, not including pre or post speech silence.<br>
+ Specified in units of 100 milliseconds.<br>
+ This parameter is mandatory.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">wit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">waiting input time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The amount of time to wait between talk-spurts.<br>
+Specified in units of 100 milliseconds.<br>
+Defaults to 30 (3 seconds).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pst</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">post-speech timer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The amount of silence necessary after the end of the last speech segment for the operation to be considered complete.<br>
+Specified in units of 100 milliseconds.<br>
+Defaults to 20 (2 seconds).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pr</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">partial results</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines whether interim results are enabled.<br>
+Allowed values are "true" or "false".<br>
+Defaults to "false".</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hw</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hotwords</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A list of words or phrases, <strong>converted to octet String</strong>, that are expected during recognition.<br>
+Each word may contain up to 100 characters. Up to 50 may be provided.<br>
+These are very useful for improving recognition of single words or phrases.<br>
+Entries into hints should be separated by a comma, spaces separate words within a phrase.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ln</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">language</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The language Twilio should recognize as specified using a BCP-47 language tag.<br>
+Defaults to en-US.<br>
+The full list of supported languages depends on the underlying driver.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_captms_media_gateway_control_protocol_packages_au_es"><a class="anchor" href="#_captms_media_gateway_control_protocol_packages_au_es"></a>End Signal (es)</h6>
+<div class="paragraph">
+<p>Gracefully terminates a Play, PlayCollect, or PlayRecord signal.</p>
+</div>
+<div class="paragraph">
+<p>For each of these signals, if the signal is terminated with the EndSignal signal the resulting OperationComplete event or OperationFailed event will contain all the parameters it would normally, including any collected digits or the recording id of the recording that was in progress when the EndSignal signal was received.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">signal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The type of signal (pa,pc,pr) to be stopped.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div class="sect3">
 <h4 id="jsr-309-control-protocol-interface"><a class="anchor" href="#jsr-309-control-protocol-interface"></a>4.1.2. JSR-309 Control protocol Interface</h4>
@@ -24833,7 +25379,7 @@ To further understand the JSR-309 API, download specs from <a href="http://jcp.o
 <p>Announcement Package(A): <code>org.mobicents.media.server.mgcp.pkg.ann</code></p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 5. Announcement Package(A):</caption>
+<caption class="title">Table 9. Announcement Package(A):</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -24866,7 +25412,7 @@ To further understand the JSR-309 API, download specs from <a href="http://jcp.o
 <p><code>Advanced Audio Package(AU): org.mobicents.media.server.mgcp.pkg.au</code></p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 6. Advanced Audio Package(AU):</caption>
+<caption class="title">Table 10. Advanced Audio Package(AU):</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -24911,7 +25457,7 @@ To further understand the JSR-309 API, download specs from <a href="http://jcp.o
 <p><code>Trunk Package(T): org.mobicents.media.server.mgcp.pkg.trunk</code></p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 7. Trunk Package(T):</caption>
+<caption class="title">Table 11. Trunk Package(T):</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -24956,7 +25502,7 @@ To further understand the JSR-309 API, download specs from <a href="http://jcp.o
 <p>Dtmf Package(D): <code>org.mobicents.media.server.mgcp.pkg.dtmf</code></p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 8. Dtmf Package(D):</caption>
+<caption class="title">Table 12. Dtmf Package(D):</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -25049,7 +25595,7 @@ To further understand the JSR-309 API, download specs from <a href="http://jcp.o
 <p>`Signal List Package (SL): org.mobicents.media.server.mgcp.pkg.sl `</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 9. Signal List Package (SL):</caption>
+<caption class="title">Table 13. Signal List Package (SL):</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -25087,7 +25633,7 @@ To further understand the JSR-309 API, download specs from <a href="http://jcp.o
 <p>The table belows shows supported packages and the related enabled endpoints</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 10. List of Supported Packages per Endpoint</caption>
+<caption class="title">Table 14. List of Supported Packages per Endpoint</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -25144,7 +25690,7 @@ The examples below are included in the &amp;Restcomm Media Server_SHORT_NAME; so
 <p>To get Jain-Slee examples please see following examples that are part of mobicents / telestax jain Slee release :</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 11. Example for Jain-Slee</caption>
+<caption class="title">Table 15. Example for Jain-Slee</caption>
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -25172,7 +25718,7 @@ The examples below are included in the &amp;Restcomm Media Server_SHORT_NAME; so
 <p>The following examples use Restcomm Media Server with Restcomm SIP Servlets :</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 12. Examples for SIP Servlets</caption>
+<caption class="title">Table 16. Examples for SIP Servlets</caption>
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -25367,7 +25913,7 @@ The Figure 5 shows the RTP header format.</p>
 </div>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 13. Supported RTP Formats</caption>
+<caption class="title">Table 17. Supported RTP Formats</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -25878,7 +26424,7 @@ As another hint, this topmost directory contains a <em class="path">bin</em> sub
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-26 02:32:22 UTC
+Last updated 2017-10-27 02:32:00 UTC
 </div>
 </div>
 <footer>
