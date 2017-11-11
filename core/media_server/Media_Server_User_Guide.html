@@ -23167,6 +23167,9 @@ It also gives you the flexibility to create customized components and configurat
 <p>G729</p>
 </li>
 <li>
+<p>Opus</p>
+</li>
+<li>
 <p>DTMF(RFC 2833, INBAND)</p>
 </li>
 </ul>
@@ -23947,6 +23950,7 @@ That means that any SS7 channel data will be sent to any connection and signal d
 		&lt;codec name="pcmu" /&gt;
 		&lt;codec name="pcma" /&gt;
 		&lt;codec name="gsm" /&gt;
+		&lt;codec name="opus" /&gt;
 		&lt;codec name="g729" /&gt;
 	&lt;/codecs&gt;
 &lt;/media&gt;</code></pre>
@@ -24017,7 +24021,7 @@ Control Server ---&gt; 200 ----&gt; UA</code></pre>
 <div class="sect4">
 <h5 id="codecs"><a class="anchor" href="#codecs"></a>Codecs</h5>
 <div class="paragraph">
-<p>Currently media server supports five codecs : G711 A/U, Linear PCM Raw, GSM, ILBC and G.729.</p>
+<p>Currently media server supports six codecs : G711 A/U, Linear PCM Raw, GSM, ILBC, Opus and G.729.</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -24049,6 +24053,43 @@ It is not recommended to allow L16 codec for UA – server connections, this can
 </td>
 </tr>
 </table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Opus usage</div>
+Opus codec processes data internally at 8kHz as mono signal. This sample rate and number of channels are limiting factors for sound quality when this codec is used. Bitrate is around 20 kbps. Payload type is fixed to value 111. It won&#8217;t work with clients with other payload type values assigned to Opus codec.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="opus-codec-configuration"><a class="anchor" href="#opus-codec-configuration"></a>Opus Codec Configuration</h5>
+<div class="paragraph">
+<p><a href="http://opus-codec.org/">Opus Codec</a> is open, royalty-free, highly versatile audio codec.</p>
+</div>
+<div class="paragraph">
+<p>Prerequisite library for Opus codec is <code>libopus</code> (or <code>libopus-dev</code> if the project is compiled from sources).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell"># CentOS/RHEL
+yum install libopus
+
+# Ubuntu/Debian
+apt-get install libopus
+
+# macOS
+brew install opus</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The location of libopus library and name of compiled JNI library used by media server are specified by command line parameters. The values of the parameters are defined in file <code>bin/run.sh</code>.</p>
 </div>
 </div>
 </div>
@@ -26424,7 +26465,7 @@ As another hint, this topmost directory contains a <em class="path">bin</em> sub
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-10 02:32:17 UTC
+Last updated 2017-11-11 02:34:02 UTC
 </div>
 </div>
 <footer>
