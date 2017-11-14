@@ -29514,9 +29514,60 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_smsc_gateway_server_skip_diue_slot"><a class="anchor" href="#_smsc_gateway_server_skip_diue_slot"></a>6.1.4.7. Skipping of scheduled for the past and not yet sent messages ("In process" due_slot shifting).</h5>
+<h5 id="_deliverytimeoutdeltapermessage"><a class="anchor" href="#_deliverytimeoutdeltapermessage"></a>6.1.4.7. Delivery timeout delta per message</h5>
 <div class="sect5">
-<h6 id="_smsc_gateway_server_skip_diue_slot_cli"><a class="anchor" href="#_smsc_gateway_server_skip_diue_slot_cli"></a>6.1.4.7.1. Using CLI</h6>
+<h6 id="_deliverytimeoutdeltapermessage_cli"><a class="anchor" href="#_deliverytimeoutdeltapermessage_cli"></a>6.1.4.7.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'Delivery timeout delta per message' value by issuing the command <code>smsc set deliverytimeoutdeltapermessage</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get deliverytimeoutdeltapermessage</code> which will display the value set for this property.
+If unspecified, the default value for this parameter is 1 second.
+Generally, you may not have to modify this value.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set deliverytimeoutdeltapermessage
+
+SYNOPSIS
+	smsc set deliverytimeoutdeltapermessage &lt;delivery-timeout-delta-per-message&gt;
+
+DESCRIPTION
+	This command is used to increase a length of delivery process timeout based on
+	number of messages being currently delivered in a set. Time unit is seconds.
+	Default value: 1 second.
+
+EXAMPLES
+	smsc set deliverytimeoutdeltapermessage 120</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_deliverytimeoutdeltapermessage_gui"><a class="anchor" href="#_deliverytimeoutdeltapermessage_gui"></a>6.1.4.7.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set Delivery timeout delta per message using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into eight horizontal tabs: Properties, SS7 Settings, Cassandra, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Scheduler' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify the Delivery timeout delta per message in seconds by entering the value in the text field 'Delivery timeout delta per message (sec)'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_smsc_gateway_server_skip_diue_slot"><a class="anchor" href="#_smsc_gateway_server_skip_diue_slot"></a>6.1.4.8. Skipping of scheduled for the past and not yet sent messages ("In process" due_slot shifting).</h5>
+<div class="sect5">
+<h6 id="_smsc_gateway_server_skip_diue_slot_cli"><a class="anchor" href="#_smsc_gateway_server_skip_diue_slot_cli"></a>6.1.4.8.1. Using CLI</h6>
 <div class="paragraph">
 <p>This command will skip of processing / fetching of messages that was scheduled for delivering for the time in the past but have not yet delivered by SMSC GW because of SMSC GW was turned off or overloaded.
 &lt;time in seconds&gt; means the point of the time (actual current time - &lt;time in seconds&gt;) to which the point of processing / fetching of messages will be shifted.
@@ -29545,7 +29596,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_smsc_gateway_server_skip_diue_slot_gui"><a class="anchor" href="#_smsc_gateway_server_skip_diue_slot_gui"></a>6.1.4.7.2. Using GUI</h6>
+<h6 id="_smsc_gateway_server_skip_diue_slot_gui"><a class="anchor" href="#_smsc_gateway_server_skip_diue_slot_gui"></a>6.1.4.8.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Skipping of scheduled for the past and not yet sent messages ("In process" due_slot shifting) by the GUI</div>
 <ol class="arabic">
@@ -35942,7 +35993,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-13 02:52:16 UTC
+Last updated 2017-11-14 02:54:04 UTC
 </div>
 </div>
 <footer>
