@@ -22780,7 +22780,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <p>Restcomm Communications Platform</p>
 </li>
 <li>
-<p>Xcode 6 with at least iOS SDK 8.0 or higher</p>
+<p>Xcode 9.0 with at least iOS SDK 10.0 or higher</p>
 </li>
 </ul>
 </div>
@@ -22804,13 +22804,13 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div class="ulist">
 <ul>
 <li>
-<p>Grab the latest Restcomm iOS SDK release from <a href="https://github.com/RestComm/restcomm-ios-sdk/releases">GitHub</a>. At the time of this writing it is 1.0.0-beta.4.2.4 and the bundle you need to download is <a href="https://github.com/RestComm/restcomm-ios-sdk/releases/download/1.0.0-beta.4.2.4/restcomm-ios-sdk-1.0.0-beta.4.2.4.tar.bz2">restcomm-ios-sdk-1.0.0-beta.4.2.4.tar.bz2</a></p>
+<p>Grab the latest Restcomm iOS SDK release from <a href="https://github.com/RestComm/restcomm-ios-sdk/releases">GitHub</a>. At the time of this writing it is 1.0.0-beta.5 and the bundle you need to download is <a href="https://github.com/RestComm/restcomm-ios-sdk/releases/download/1.0.0-beta.5/restcomm-ios-sdk-1.0.0-beta.5.tar.bz2">restcomm-ios-sdk-1.0.0-beta.5.tar.bz2</a></p>
 </li>
 <li>
 <p>Extract it:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-theme:github" data-lang="theme:github">$ tar -jxvf restcomm-ios-sdk-1.0.0-beta.4.2.4.tar.bz2</code></pre>
+<pre class="highlight"><code class="language-theme:github" data-lang="theme:github">$ tar -jxvf restcomm-ios-sdk-1.0.0-beta.5.tar.bz2</code></pre>
 </div>
 </div>
 </li>
@@ -22832,9 +22832,9 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 Analyzing dependencies
 Fetching podspec for `restcomm-ios-sdk` from `../../`
 Downloading dependencies
-Installing restcomm-ios-sdk (1.0.0-beta.4.2.4)
-Installing sofia-sip-library (1.12.11.2)
-Installing webrtc-framework (14493.2)
+Installing restcomm-ios-sdk (1.0.0-beta.5)
+Installing sofia-sip-library (1.12.11.6)
+Installing webrtc-framework (14493.4)
 Generating Pods project
 Integrating client project
 Sending stats
@@ -22854,12 +22854,12 @@ Pod installation complete! There is 1 dependency from the Podfile and 3 total po
 {
     ....
     self.parameters = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                       @"bob", @"aor",
-                       @"1234", @"password",
+                       @"bob", RCAorKey,
+                       @"1234", RCPasswordKey,
                        nil];
 
     // CHANGEME: set the IP address of your RestComm instance in the URI below (or leave empty for registrar-less access)
-    [self.parameters setObject:@"&lt;docker ip address&gt;:5080" forKey:@"registrar"];
+    [self.parameters setObject:@"&lt;docker ip address&gt;:5080" forKey:RCRegistrarKey];
 
     // initialize RestComm SDK by setting up an RCDevice
     self.device = [[RCDevice alloc] initWithParams:self.parameters delegate:self];
@@ -22871,7 +22871,7 @@ Pod installation complete! There is 1 dependency from the Podfile and 3 total po
     ...
     // CHANGEME: set the number of the RestComm Application you wish to contact (currently we are using '1235',
     // which is the Hello World RestComm Application). Also set the ip address for your RestComm instance
-    [self.parameters setObject:@"+1235" forKey:@"username"];
+    [self.parameters setObject:@"+1235" forKey:RCUsername];
 
     // call the other party
     self.connection = [self.device connect:self.parameters delegate:self];
@@ -22894,7 +22894,7 @@ Pod installation complete! There is 1 dependency from the Podfile and 3 total po
     ...
     // CHANGEME: set the number of the RestComm Application you wish to contact (currently we are using '1235',
     // which is the Hello World RestComm Application). Also set the ip address for your RestComm instance
-    [self.parameters setObject:@"+1311" forKey:@"username"];
+    [self.parameters setObject:@"+1311" forKey:RCUsername];
 
     // call the other party
     self.connection = [self.device connect:self.parameters delegate:self];
@@ -22948,11 +22948,11 @@ Pod installation complete! There is 1 dependency from the Podfile and 3 total po
 <div class="listingblock">
 <div class="content">
 <pre># Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+# platform :ios, '10.0'
 
 target 'your-target' do
   # Pods for your-project
-  pod 'restcomm-ios-sdk', '&gt;= 1.0.0-beta.4.2.4'
+  pod 'restcomm-ios-sdk', '&gt;= 1.0.0-beta.5'
 
   ...
 end</pre>
@@ -23000,12 +23000,12 @@ end</pre>
     // Do any additional setup after loading the view, typically from a nib.
 
     self.parameters = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                       @"bob", @"aor",
-                       @"1234", @"password",
+                       @"bob", RCAorKey,
+                       @"1234", RCPasswordKey,
                        nil];
 
     // CHANGEME: set the IP address of your RestComm instance in the URI below (or leave empty for registrar-less access)
-    [self.parameters setObject:@"&lt;docker instance ip&gt;:5080" forKey:@"registrar"];
+    [self.parameters setObject:@"&lt;docker instance ip&gt;:5080" forKey:RCRegistrarKey];
 
     // initialize RestComm SDK by setting up an RCDevice
     self.device = [[RCDevice alloc] initWithParams:self.parameters delegate:self];
@@ -23032,7 +23032,7 @@ end</pre>
 <pre class="highlight"><code class="language-theme:github" data-lang="theme:github">- (IBAction)dialPressed:(id)sender {
     // CHANGEME: set the number of the RestComm Application you wish to contact (currently we are using '1235',
     // which is the Hello World RestComm Application). Also set the ip address for your RestComm instance
-    [self.parameters setObject:@"+1235" forKey:@"username"];
+    [self.parameters setObject:@"+1235" forKey:RCUsername];
 
     // do the call
     self.connection = [self.device connect:self.parameters delegate:self];
@@ -23155,7 +23155,7 @@ end</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-13 02:18:43 UTC
+Last updated 2017-11-14 02:19:04 UTC
 </div>
 </div>
 <footer>
