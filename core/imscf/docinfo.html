@@ -42,6 +42,34 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </script>
 <script type='text/javascript' src='http://telestax.com/wp-content/plugins/easy-digital-downloads/assets/js/edd-ajax.min.js?ver=2.5.9'></script>
 <script type='text/javascript' src='http://telestax.com/wp-content/plugins/easy-video-player/lib/flowplayer.min.js?ver=4.4.2'></script>
+<script type="text/javascript">
+	//some default pre init
+	var Countly = Countly || {};
+	Countly.q = Countly.q || [];
+	//provide your app key that you retrieved from Countly dashboard
+	Countly.app_key = "67fd66c9a32776094a0acddfb952adabf7b832c8";
+	//provide your server IP or name. Use try.count.ly for EE trial server.
+	//if you use your own server, make sure you have https enabled if you use
+	//https below.
+	Countly.url = "https://try.count.ly/";
+	//start pushing function calls to queue
+	//track sessions automatically
+	Countly.q.push(['track_sessions']);
+	//track sessions automatically
+	Countly.q.push(['track_pageview']);
+	Countly.q.push(['track_clicks']);
+	Countly.q.push(['track_links']);
+	Countly.q.push(['track_forms']);
+	//load countly script asynchronously
+	(function() {
+		var cly = document.createElement('script'); cly.type = 'text/javascript';
+		cly.async = true;
+		//enter url of script here (see below for other option)
+		cly.src = 'https://cdn.jsdelivr.net/npm/countly-sdk-web@latest/lib/countly.min.js';
+		cly.onload = function(){Countly.init()};
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(cly, s);
+	})();
+</script>
 <link rel='https://api.w.org/' href='http://telestax.com/wp-json/' />
 <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://telestax.com/xmlrpc.php?rsd" />
 <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://telestax.com/wp-includes/wlwmanifest.xml" /> 
