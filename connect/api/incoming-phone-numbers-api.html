@@ -22808,7 +22808,12 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </li>
 <li><a href="#delete-a-phone-number">Delete a phone number</a></li>
 <li><a href="#list-of-phone-numbers">List of phone numbers</a></li>
-<li><a href="#incoming-phone-number-regex-support">Incoming Phone Number Regex Support</a></li>
+<li><a href="#incoming-phone-number-regex-support">Incoming Phone Number Regex Support</a>
+<ul class="sectlevel2">
+<li><a href="#logic">Logic</a></li>
+<li><a href="#regular-expression-examples">Regular Expression examples</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -23761,6 +23766,74 @@ If you are trying to attach a number that you didn&#8217;t look up previously fr
 <div class="sect1">
 <h2 id="incoming-phone-number-regex-support"><a class="anchor" href="#incoming-phone-number-regex-support"></a>Incoming Phone Number Regex Support</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="logic"><a class="anchor" href="#logic"></a>Logic</h3>
+<div class="paragraph">
+<p>The following diagram depicts the main logic regarding incoming phone numbers,
+and regular expressions during an actual call:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./Regex Logic.png" alt="Regex Logic" width="680" height="529">
+</div>
+</div>
+<div class="paragraph">
+<p>As we can see, the perfect match against the incoming number will be attempted
+first. Then, if no matching is found the regular expressions associated to the
+Organization will be evaluated.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Watch out, Regex has been disabled for incoming SMPP/SMS messages because SMPP is not supporting Organizations.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="regular-expression-examples"><a class="anchor" href="#regular-expression-examples"></a>Regular Expression examples</h3>
+<div class="paragraph">
+<p>The following table provides examples on how the logic is exercised depending on current
+contents of DB.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>IncomingPhoneNumber</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>DB Table</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Description</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">16508251255</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"16508251255" "16.*"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Perfect match against "16508251255"</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">16508251255</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"16508251256" "16.*"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No Perfect match found. regex "16.*" applies</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">16508251255</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"16508251256" "16.*","16508.*"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No Perfect match found. longest regex "16508.*" applies</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The following table provides examples on  how a single regular expression may
+match different numbers.</p>
+</div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 50%;">
@@ -23797,17 +23870,17 @@ If you are trying to attach a number that you didn&#8217;t look up previously fr
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">999&#8230;&#8203;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Matches 999222, 999123, 999555 the dots matches any character
-</p><p class="tableblock">WARNING: Watch out, Regex has been disabled for incoming SMPP/SMS messages because SMPP is not supporting Organizations.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Matches 999222, 999123, 999555 the dots matches any character</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 </div>
+</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-27 02:16:05 UTC
+Last updated 2017-11-28 02:15:41 UTC
 </div>
 </div>
 <footer>

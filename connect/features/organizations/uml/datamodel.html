@@ -22789,72 +22789,15 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div id="header">
 </div>
 <div id="content">
-<div class="openblock plantuml">
+<div class="imageblock">
 <div class="content">
-<div class="paragraph">
-<p>!define table(x) class x &lt;&lt; (T,#FFAAAA) &gt;&gt;
-!define primary_key(x) &lt;u&gt;x&lt;/u&gt;
-!define foreign_key(x) &lt;b&gt;x&lt;/b&gt;
-hide methods
-hide stereotypes</p>
-</div>
-<div class="paragraph">
-<p>table(restcomm_organizations) {
-  +primary_key(sid)
-  domain_name [unique]
-  date_created
-  date_updated
-}</p>
-</div>
-<div class="paragraph">
-<p>table(restcomm_accounts) {
-  +primary_key(sid)
-  email
-  type
-  status
-  &#8230;&#8203;
-  +foreign_key(organization_sid)
-}</p>
-</div>
-<div class="paragraph">
-<p>table(restcomm_incoming_phone_numbers) {
-  +primary_key(sid)
-  +foreign_key(account_sid)
-  phone_number
-  &#8230;&#8203;
-  +foreign_key(organization_sid)
-}</p>
-</div>
-<div class="paragraph">
-<p>table(restcomm_clients) {
-  +primary_key(sid)
-  client
-  &#8230;&#8203;
-  +foreign_key(account_sid)
-}</p>
-</div>
-<div class="paragraph">
-<p>table(restcomm_registrations) {
-  +primary_key(sid)
-  user_name
-  &#8230;&#8203;
-  +foreign_key(organization_sid)
-}</p>
-</div>
-<div class="paragraph">
-<p>restcomm_accounts "*" --- "1" restcomm_organizations
-restcomm_incoming_phone_numbers  "1" --- "1" restcomm_organizations
-restcomm_incoming_phone_numbers  "1" --- "1" restcomm_accounts
-restcomm_clients  "1" --- "1" restcomm_organizations
-restcomm_clients  "1" --- "1" restcomm_accounts
-restcomm_registrations  "1" --- "1" restcomm_organizations</p>
-</div>
+<img src="./datamodel.png" alt="datamodel" width="632" height="573">
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-27 02:16:05 UTC
+Last updated 2017-11-28 02:15:41 UTC
 </div>
 </div>
 <footer>
