@@ -23434,13 +23434,6 @@ passive node. This algorithm works for SIP and HTTP protocols.</p>
 It extracts the hash value of specific headers from SIP and HTTP messages to decide which application server node will handle the request.
 Information about the options in this algorithms is available in the balancer configuration file comments.</p>
 </dd>
-<dt class="hdlist1">org.mobicents.tools.sip.balancer.PersistentConsistentHashBalancerAlgorithm</dt>
-<dd>
-<p>This algorithm is distributable and is similar to the previous algorithm,
-but it attempts to keep session affinity even when the cluster nodes are removed or
-added. It implemented by storing "header value" &lt;&#8594; "SIP Node" to cache. So this
-cache can be shared between LBs.</p>
-</dd>
 <dt class="hdlist1">org.mobicents.tools.sip.balancer.ClusterSubdomainAffinityAlgorithm</dt>
 <dd>
 <p>This algorithm is not distributable, but supports grouping server nodes to act as a subcluster.
@@ -23640,7 +23633,6 @@ http://docs.google.com/present/view?id=dc5jp5vx_89cxdvtxcm--&gt;
     &lt;callIdAffinityGroupFailover&gt;false&lt;/callIdAffinityGroupFailover&gt;
     &lt;callIdAffinityMaxTimeInCache&gt;0&lt;/callIdAffinityMaxTimeInCache&gt;
     &lt;httpAffinityKey&gt;&lt;/httpAffinityKey&gt;
-    &lt;persistentConsistentHashCacheConfiguration&gt;&lt;/persistentConsistentHashCacheConfiguration&gt;
     &lt;earlyDialogWorstCase&gt;false&lt;/earlyDialogWorstCase&gt;
   &lt;/algorithm&gt;
   &lt;external&gt;
@@ -25560,7 +25552,7 @@ sip-node-1, sip-node-2 etc., then this tag should be &lt;nodeName&gt;sip-node&lt
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-27 02:28:07 UTC
+Last updated 2017-11-28 02:28:00 UTC
 </div>
 </div>
 <footer>
