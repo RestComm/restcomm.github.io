@@ -22796,13 +22796,13 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#account-resource-uri">Account Resource URI</a></li>
 <li><a href="#resource-properties">Resource Properties</a></li>
 <li><a href="#supported-operations">Supported Operations</a></li>
-<li><a href="#request-parameters">Request Parameters</a></li>
+<li><a href="#account-migration-to-new-organization">Account Migration to new Organization</a></li>
 </ul>
 </li>
 <li><a href="#Accounts_List">Account List Resource</a>
 <ul class="sectlevel2">
 <li><a href="#supported-operations-2">Supported Operations</a></li>
-<li><a href="#request-parameters-2">Request Parameters</a></li>
+<li><a href="#request-parameters-3">Request Parameters</a></li>
 </ul>
 </li>
 <li><a href="#sub-accounts">Sub-Accounts</a>
@@ -22889,9 +22889,8 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <div class="paragraph">
 <p><strong>HTTP POST/PUT</strong>. Modifies an Account resource and returns the representation, including the properties above. Below you will find a list of optional parameters.</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="request-parameters"><a class="anchor" href="#request-parameters"></a>Request Parameters</h3>
+<div class="sect3">
+<h4 id="request-parameters"><a class="anchor" href="#request-parameters"></a>Request Parameters</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 50%;">
@@ -22915,6 +22914,87 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Password</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A password that will be used to generate the AuthToken for the new Account resource.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="account-migration-to-new-organization"><a class="anchor" href="#account-migration-to-new-organization"></a>Account Migration to new Organization</h3>
+<div class="paragraph">
+<p>Account Migration operation can be used to migrate a top level account to a new organization.
+In the process, all child accounts will also be migrated.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Account Migration Resource URI <strong>/2012-04-24/Accounts/migrate/{AccountSid}</strong></p>
+</li>
+<li>
+<p>Method <strong>HTTP POST</strong></p>
+</li>
+<li>
+<p>The operation is allowed for Super Admin only</p>
+</li>
+<li>
+<p>The account to migrate must be a top level account (child of Super Admin)</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="request-parameters-2"><a class="anchor" href="#request-parameters-2"></a>Request Parameters</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Organization</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The new Organization SID or Domain Name to move the account. <strong>Required</strong></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="response-status"><a class="anchor" href="#response-status"></a>Response Status</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Status</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">200 OK</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Migration operation completed successfully</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">403 Forbidden</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only Super Admin is allowed for the migrate operation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">412 Precondition Failed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Target Organization SID or Domain Name is missing</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">404 Not Found</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Target Account SID is missing</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">400 Bad Request</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Target Account is not a top level account or target account is already in the new organization</p></td>
 </tr>
 </tbody>
 </table>
@@ -22998,6 +23078,7 @@ The above command uses the Account SID of the requestor, and the one below uses 
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
 <h2 id="Accounts_List"><a class="anchor" href="#Accounts_List"></a>Account List Resource</h2>
 <div class="sectionbody">
@@ -23018,7 +23099,7 @@ The above command uses the Account SID of the requestor, and the one below uses 
 </div>
 </div>
 <div class="sect2">
-<h3 id="request-parameters-2"><a class="anchor" href="#request-parameters-2"></a>Request Parameters</h3>
+<h3 id="request-parameters-3"><a class="anchor" href="#request-parameters-3"></a>Request Parameters</h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 50%;">
@@ -23175,7 +23256,7 @@ Account deletion has been deprecated from the REST API. Both of these methods wi
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-30 02:15:22 UTC
+Last updated 2017-12-01 02:17:27 UTC
 </div>
 </div>
 <footer>
