@@ -22897,6 +22897,9 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <li><a href="#_smsc_gateway_server_routing_dlv">Routing of delivery receipts</a></li>
 <li><a href="#_smsc_gateway_min_messageid">Minimum MessageId value</a></li>
 <li><a href="#_smsc_gateway_max_messageid">Maximum MessageId value</a></li>
+<li><a href="#_smsc_gateway_smdeliveryfailure">SM Delivery Failure value</a></li>
+<li><a href="#_smsc_gateway_smdeliveryfailure_tpfailurecause">SM Delivery Failure TP Failure Cause value</a></li>
+<li><a href="#_smsc_gateway_smdeliveryfailure_dlr_withtpuserdata">SM Delivery Failure Dlr With TP User Data value</a></li>
 </ul>
 </li>
 </ul>
@@ -26960,12 +26963,110 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_smsc_gateway_smdeliveryfailure"><a class="anchor" href="#_smsc_gateway_smdeliveryfailure"></a>SM Delivery Failure value</h3>
+<div class="sect3">
+<h4 id="_smsc_gateway_smdeliveryfailure_cli"><a class="anchor" href="#_smsc_gateway_smdeliveryfailure_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'smdeliveryfailure value' value by issuing the command <code>smsc set smdeliveryfailure</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get smdeliveryfailure</code> which will display the value sets for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set smdeliveryfailure
+
+SYNOPSIS
+	smsc set smdeliveryfailure &lt;cause-code&gt; &lt;permanent | temporary | clear&gt;
+
+DESCRIPTION
+	When SMSC GW gets a SMDeliveryFailure MAP error message
+	and this message does not contain SMS-DELIVER Report tpdu with
+	TP-Failure-Cause on board then SMSC GW will decide of if this failure is
+	temporary or permanent depending of a value of DeliveryFailureCause of
+	MAP error message. By default value 0 (memoryCapacityExceeded) is treated
+	as temporary and all other values are threated as permanent. We can set by this
+	option a need behavior for any type of DeliveryFailureCause as needed.
+	- If it set to 'permanent' for a received DeliveryFailureCause then SMSC will treat
+	  the error with code as permanent (with no more delivery attempts)
+	- If it set to 'temporary' for a received DeliveryFailureCause then SMSC will treat
+	  the error with code as temporary (with more delivery attempts)
+	Value 'clear' drops a setting and SMSC GW will treat it as default.</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_smsc_gateway_smdeliveryfailure_tpfailurecause"><a class="anchor" href="#_smsc_gateway_smdeliveryfailure_tpfailurecause"></a>SM Delivery Failure TP Failure Cause value</h3>
+<div class="sect3">
+<h4 id="_smsc_gateway_smdeliveryfailure_tpfailurecause_cli"><a class="anchor" href="#_smsc_gateway_smdeliveryfailure_tpfailurecause_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'smdeliveryfailure value' value by issuing the command <code>smsc set smdeliveryfailure_tpfailurecause</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get smdeliveryfailure_tpfailurecause</code> which will display the value sets for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set smdeliveryfailure_tpfailurecause
+
+SYNOPSIS
+	smsc set smdeliveryfailure_tpfailurecause &lt;cause-code&gt; &lt;permanent | temporary | clear&gt;
+
+DESCRIPTION
+	This command is used to set the code of smdeliveryfailure_tpfailurecause
+	with SMS-DELIVERY-REPORT to	needed values. When SMSC GW gets a SMDeliveryFailure
+	MAP error message and this message contains SMS-DELIVER Report tpdu with
+	TP-Failure-Cause on board then SMSC GW will treat this delivery failure as
+	temporary or permanent depending of parameters set by this CLI option.
+	- If it set to 'permanent' for a received TP-Failure-Cause then SMSC will treat
+	  the error with code as permanent (with no more delivery attempts)
+	- If it set to 'temporary' for a received TP-Failure-Cause then SMSC will treat
+	  the error with code as temporary (with more delivery attempts)
+	Value 'clear' drops a setting and SMSC GW will treat it as default as permanent
+	Default value is 'clear' (no special value is set).</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_smsc_gateway_smdeliveryfailure_dlr_withtpuserdata"><a class="anchor" href="#_smsc_gateway_smdeliveryfailure_dlr_withtpuserdata"></a>SM Delivery Failure Dlr With TP User Data value</h3>
+<div class="sect3">
+<h4 id="_smsc_gateway_smdeliveryfailure_dlr_withtpuserdata_cli"><a class="anchor" href="#_smsc_gateway_smdeliveryfailure_dlr_withtpuserdata_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'smdeliveryfailure value' value by issuing the command <code>smsc set smdeliveryfailure_dlr_withtpuserdata</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get smdeliveryfailure_dlr_withtpuserdata</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set smdeliveryfailure_dlr_withtpuserdata
+
+SYNOPSIS
+	smsc set smdeliveryfailure_dlr_withtpuserdata &lt;false | short | full&gt;
+
+DESCRIPTION
+	This command is used to set the value of smdeliveryfailure_dlr_withtpuserdata
+	When SMSC GW gets a SMDeliveryFailure MAP error message and this message contains
+	SMS-DELIVER Report tpdu with TP-User-Data on board then SMSC GW may put into
+	a generated DLR text field a value a hex encoded context of TP-User-Data depending
+	of parameters set by this CLI option.
+	When SMSC received errorReturn with SMS-DELIVERY-REPORT:
+	    - If it set to 'false' then Delivery Receipts will be generated as usual
+	    - If it set to 'short' then Delivery Receipts will carry 20 first characters
+	      of hex encoded TP-User-Data
+	    - If it set to 'full' then Delivery Receipts will carry full text
+	      of hex encoded TP-User-Data
+	This value is set to 'false' by default.</pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-12-08 02:26:05 UTC
+Last updated 2017-12-09 02:26:12 UTC
 </div>
 </div>
 <footer>
