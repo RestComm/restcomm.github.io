@@ -23168,7 +23168,7 @@ can be placed within the BSC for triggering more precise location procedures, bu
 </div>
 </div>
 <div class="paragraph">
-<p>Finally, Restcomm GMLC supports the following MAP and Diameter-based operations for LCS (Location Services) within Mobile Network Operators:</p>
+<p>Finally, Restcomm GMLC supports the following MAP and Diameter-based operations for LCS (Location Services) within Mobile Network Operators (some of them are under development, check next sections for further details):</p>
 </div>
 <div class="ulist">
 <ul>
@@ -23528,6 +23528,10 @@ ReturnError: 34 : MAPErrorMessageSystemFailure [networkResource=hlr]</pre>
 <div class="sect3">
 <h4 id="http-and-map-messages-flow-for-umts-location-services"><a class="anchor" href="#http-and-map-messages-flow-for-umts-location-services"></a>2.2.2. HTTP and MAP messages flow for UMTS Location Services</h4>
 <div class="paragraph">
+<p>UMTS Location Services under SS7 MAP Location Services Management (LSM) set of operations are currently under final stages of implementation and deployment.
+Every trace or log described next are taken from the work already done, including stress tests from MAP Stub for the aforementioned set of operations.</p>
+</div>
+<div class="paragraph">
 <p>Following figure displays the signaling call flow between an application, RestComm Geolocation API and Restcomm GMLC within an UMTS Core Network. The term RAN (Radio Access Network) might involve the RNC (Radio Network Controller), a Stand-Alone SMLC (Serving Mobile Location Centre), the NB (Node B -base station-) and the UE (User Equipment).</p>
 </div>
 <div class="imageblock">
@@ -23549,6 +23553,10 @@ ReturnError: 34 : MAPErrorMessageSystemFailure [networkResource=hlr]</pre>
 </div>
 <div class="sect3">
 <h4 id="http-and-diameter-based-messages-flow-for-lte-location-services"><a class="anchor" href="#http-and-diameter-based-messages-flow-for-lte-location-services"></a>2.2.3. HTTP and Diameter-based messages flow for LTE Location Services</h4>
+<div class="paragraph">
+<p>As for UMTS Location Services under SS7 MAP Location Services Management (LSM) set of operations, LTE location services are also under final stages of implementation and deployment.
+Every trace or log described next are taken from the work already done, which includes already developed SLh and SLg interfaces in jDiameter, while JAIN SLEE resource adaptors for these interfaces are in a very advanced state of development (peer reviewing and QA).</p>
+</div>
 <div class="paragraph">
 <p>Next figure shows an example signaling call flow exclusively between Restcomm GMLC within an Evolved Packet Core Network for location retrieval by means of Diameter based procedures as for 3GPP TS 29.172 and 29.173 (i.e. SLg and SLh interfaces). These Diameter requests are destined to a Packet-Switched Core Network like LTE&#8217;s EPC, where an Evolved-SMLC is operational and positioning methods are available at the Radio Access Network (e.g. OTDOA). Then, LTE&#8217;s Radio Access Network (EUTRAN) involves positioning procedures comprising the E-SMLC (Evolved SMLC), eNB (evolved NB), and the UE. The example considers a location report sent back to Restcomm GMLC, triggered by an event previously armed at the Radio Access Network (e.g. a UE entering a geofence).</p>
 </div>
@@ -24395,7 +24403,7 @@ In addition, help files are also available for every Shell command providing all
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-12-08 02:27:08 UTC
+Last updated 2017-12-09 02:27:17 UTC
 </div>
 </div>
 <footer>
