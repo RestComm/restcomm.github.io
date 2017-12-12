@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>Prerequisites</title>
+<title>Quick Start Guide: RestComm on Docker</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22787,117 +22787,97 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 </head>
 <body class="article">
 <div id="header">
+<h1>Quick Start Guide: RestComm on Docker</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel3">
 <li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#run-restcomm">Run RestComm</a></li>
 <li><a href="#supported-tags">Supported Tags</a></li>
-<li><a href="#install-and-run-restcomm-docker">Install and Run Restcomm Docker</a></li>
-<li><a href="#text-to-speech-with-voicerss">Text-to-Speech with VoiceRSS</a></li>
-<li><a href="#quick-test">Quick test</a></li>
+<li><a href="#quick-test">Quick test: Verify it works!</a></li>
 <li><a href="#accessing-the-admin-ui">Accessing the Admin UI</a></li>
 <li><a href="#basic-docker-commands">Basic Docker commands</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>This is a quick user guide for Restcomm - Docker. You will learn how to install and start using Restcomm in a docker container.</p>
+<p>This is a quick user guide for running Restcomm on Docker. You will learn how to install and start using Restcomm in a docker container.</p>
+</div>
+</div>
 </div>
 <div class="sect3">
 <h4 id="prerequisites"><a class="anchor" href="#prerequisites"></a>Prerequisites</h4>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>System requirements:</strong> Please, check RAM dedicated to your Docker container. Restcomm requires minimum <strong>3GB</strong> to start 2 java processes: Jboss with Restcomm services and standalone mediaserver</p>
+<p><strong>Docker:</strong> Just in case you don&#8217;t have Docker installed already: <a href="https://docs.docker.com/engine/installation/" class="bare">https://docs.docker.com/engine/installation/</a></p>
 </li>
 <li>
-<p>Install docker on your sever : <a href="https://docs.docker.com/engine/installation/" class="bare">https://docs.docker.com/engine/installation/</a></p>
+<p><strong>Docker-Compose</strong>: Make sure you follow the official installation guide for your platform: <a href="https://docs.docker.com/compose/install/" class="bare">https://docs.docker.com/compose/install/</a></p>
 </li>
 <li>
-<p>Get a free API KEY VoiceRss account as explained  <a href="http://www.voicerss.org/">HERE</a></p>
+<p><strong>System requirements:</strong> Please ensure you have allowed Docker to run with enough memory. Restcomm requires minimum <strong>3GB</strong> to start 2 java processes: Jboss with Restcomm services and standalone mediaserver.</p>
 </li>
 <li>
-<p>Ensure firewall is correctly configured (<strong>SELinux can be a problem on some systems</strong>)</p>
+<p><strong>Enabling Text-to-Speech:</strong> Get a free API KEY VoiceRss account as explained  <a href="http://www.voicerss.org/">HERE</a></p>
 </li>
 <li>
-<p><strong>SELinux has been known to cause "permission denied" issues on some Linux system, you might want to disable or set SELinux to permissive mode.</strong> (some basic commands : getenforce, will show the type of permission you currently have )</p>
+<p><strong>Firewall:</strong> RestComm is a system that relies heavily on network. Ensure there is no firewall blocking any ports that RestComm relies on (you can find them in <code>docker-compose.yml</code>). If in doubt, temporarily disable your firewall to ensure that is not the cause of your problems.</p>
+</li>
+<li>
+<p><strong>SELinux:</strong> This has been known to cause "permission denied" issues on some Linux system, you might want to disable or set SELinux to permissive mode.* (<em>hint</em>: getenforce, will show the type of permission you currently have )</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect3">
+<h4 id="run-restcomm"><a class="anchor" href="#run-restcomm"></a>Run RestComm</h4>
+<div class="paragraph">
+<p>RestComm-Connect includes a single <code>docker-compose.yml</code> file, which is meant to document how the RestComm Docker image should be deployed.</p>
+</div>
+<div class="paragraph">
+<p>It comes with sane defaults for a standalone development environment, so it should pretty much work out of the box.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Make sure you set your the local ethernet/wifi IP address on your laptop as the value for <code>RCBCONF_STATIC_ADDRESS</code>.</p>
+</li>
+<li>
+<p>Get an API key for Text-to-Speech and set it as the value for <code>RCBCONF_VOICERSS_KEY</code>.</p>
+</li>
+<li>
+<p>To try it all out, change to the folder where <code>docker-compose.yml</code> is located and run:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ docker-compose up</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
 <h4 id="supported-tags"><a class="anchor" href="#supported-tags"></a>Supported Tags</h4>
+<div class="paragraph">
+<p>A note on the docker image tags:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
 <p>Tag "latest". Points to the latest binary from the Continuous Delivery server. Uses the <a href="https://github.com/RestComm/Restcomm-Connect">master</a> development branch : restcomm/restcomm:latest. *We don&#8217;t advice to use "latest" tag for production as it is constantly changing, and as well new features and fixes may not be documented.</p>
 </li>
 <li>
-<p>Tag "7.7.0" pointing to current specific GA release (v770ga).</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>To pull the "<strong>latest</strong>" image from the RestComm docker hub repository please use:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">docker pull restcomm/restcomm:latest</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="install-and-run-restcomm-docker"><a class="anchor" href="#install-and-run-restcomm-docker"></a>Install and Run Restcomm Docker</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Get your "ETHERNET_IP" by running ifconfig. Use 127.0.0.1 as "ETHERNET_IP" if you are running container on Docker for Mac.</p>
-</li>
-<li>
-<p>Fill out the RCBCONF_STATIC_ADDRESS variable as shown below.</p>
-</li>
-<li>
-<p>Start Restcomm as shown below:</p>
-</li>
-<li>
-<p>This will start Restcomm in secure mode (https)</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">docker run  -i -d --name=restcomm-myInstance -v /var/log/restcomm/:/var/log/restcomm/ -e RCBCONF_STATIC_ADDRESS="YOUR_ETHERNET_IP" -e ENVCONFURL="https://raw.githubusercontent.com/RestComm/Restcomm-Docker/master/env_files/restcomm_env_locally.sh" -p 8080:8080 -p 8443:8443 -p 9990:9990 -p 5080:5080 -p 5081:5081 -p 5082:5082 -p 5083:5083 -p 5080:5080/udp -p 65000-65050:65000-65050/udp restcomm/restcomm:latest</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>OS X seems to have known for mount denied issue on <code>/var/log/restcomm</code> directory, in such case: mount logs with any directory under <code>/Users</code>. Here is an example:</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">docker run  -i -d --name=restcomm-myInstance -v /Users/username/var/log/restcomm:/var/log/restcomm/ -e RCBCONF_STATIC_ADDRESS="YOUR_ETHERNET_IP" -e ENVCONFURL="https://raw.githubusercontent.com/RestComm/Restcomm-Docker/master/env_files/restcomm_env_locally.sh" -p 8080:8080 -p 8443:8443 -p 9990:9990 -p 5080:5080 -p 5081:5081 -p 5082:5082 -p 5083:5083 -p 5080:5080/udp -p 65000-65050:65000-65050/udp restcomm/restcomm:latest</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="text-to-speech-with-voicerss"><a class="anchor" href="#text-to-speech-with-voicerss"></a>Text-to-Speech with VoiceRSS</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>The above command comes with a community version of VoiceRSS key. This version has limited features. You may get a free VoiceRSS API key from <a href="http://www.voicerss.org/from" class="bare">http://www.voicerss.org/from</a></p>
-</li>
-<li>
-<p>See the documentation about adding your own VoiceRSS API Key <a href="http://documentation.telestax.com/connect/configuration/docker/Restcomm%20-%20Docker%20Environment%20Variables.html">RestComm-Docker Documentation</a>.</p>
+<p>We provide specific tags for GA releases (e.g. v770ga). Prefer to use release tags over <code>latest</code>, to avoid accidental updates.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect3">
-<h4 id="quick-test"><a class="anchor" href="#quick-test"></a>Quick test</h4>
+<h4 id="quick-test"><a class="anchor" href="#quick-test"></a>Quick test: Verify it works!</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -22916,7 +22896,7 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 <p>You should hear the "Welcome to RestComm, a Telestax Sponsored project" announcement</p>
 </li>
 <li>
-<p>You can also make a call to the "<strong>+1235</strong>" to test your Text-to-Speech configuration</p>
+<p>You can also make a call to the "<strong>+1235</strong>" to test your Text-to-Speech configuration. (Remember to ensure you provided a correct VoiceRSS key!)</p>
 </li>
 </ol>
 </div>
@@ -22955,45 +22935,6 @@ Using the flag "INIT_PASSWORD" you can set administrator password when running R
 </div>
 <div class="sect3">
 <h4 id="basic-docker-commands"><a class="anchor" href="#basic-docker-commands"></a>Basic Docker commands</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>To Get a list of running containers: sudo docker ps</p>
-</li>
-<li>
-<p>To stop container: sudo docker stop RESTCOMM_Container_ID</p>
-</li>
-<li>
-<p>To start container: sudo docker start RESTCOMM_Container_ID</p>
-</li>
-<li>
-<p>To remove container: sudo docker rm RESTCOMM_Container_ID</p>
-</li>
-</ul>
-</div>
-<div class="sect4">
-<h5 id="to-execute-a-command-at-the-container"><a class="anchor" href="#to-execute-a-command-at-the-container"></a>To execute a command at the container</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>docker exec RESTCOMM_Container_ID [command]</p>
-</li>
-<li>
-<p>Example : docker exec RESTCOMM_Container_ID ps -ef | grep java</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="to-get-bash-console-for-debugging-only"><a class="anchor" href="#to-get-bash-console-for-debugging-only"></a>To get bash console (for debugging only)</h5>
-<div class="paragraph">
-<p>You can start the container and get a bash console to manually setup Restcomm and test it using the following command:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">docker run --name=restcomm-myInstance --entrypoint=/bin/bash -it -p 8080:8080 -p 8443:8443 -p 9990:9990 -p 5080:5080 -p 5081:5081 -p 5082:5082 -p 5083:5083 -p 5080:5080/udp -p 65000-65050:65000-65050/udp restcomm/restcomm:latest</code></pre>
-</div>
-</div>
 <div class="paragraph">
 <p>Get a bash console for a running RestComm container:</p>
 </div>
@@ -23003,39 +22944,28 @@ Using the flag "INIT_PASSWORD" you can set administrator password when running R
 </div>
 </div>
 <hr>
+<div class="sect4">
+<h5 id="troubleshooting"><a class="anchor" href="#troubleshooting"></a>Troubleshooting</h5>
+<div class="paragraph">
+<p><strong>Ubuntu 17.10 Docker Compose version</strong></p>
+</div>
+<div class="paragraph">
+<p>Please ensure you follow the official [docker](<a href="https://docs.docker.com/engine/installation/" class="bare">https://docs.docker.com/engine/installation/</a>) and [docker-compose](<a href="https://docs.docker.com/compose/install/" class="bare">https://docs.docker.com/compose/install/</a>) installation guides, to ensure you are on a compatible docker version.</p>
+</div>
 <div class="paragraph">
 <p><strong>Excessive demand on memory when exposing a big range of ports.</strong></p>
 </div>
 <div class="paragraph">
-<p>Due to a known <a href="https://github.com/docker/docker/issues/11185">issue</a> on Docker, exposing a big range of ports produce a big need in RAM. On RestComm the issue arises when a big range of RTP ports is exposed. For a system with 4Gb of RAM a range of 50 ports is a good approach (e.g -p 65000-65050:65000-65050/udp). *We are expecting that this issue will be solved soon from Docker team.</p>
+<p>Due to a known <a href="https://github.com/docker/docker/issues/11185">issue</a> on Docker, exposing a big range of ports produce a big need in RAM. On RestComm the issue arises when a big range of RTP ports is exposed. For a system with 4Gb of RAM a range of 50 ports is a good approach (e.g -p 65000-65050:65000-65050/udp). <strong>We are expecting that this issue will be solved soon from Docker team.</strong></p>
 </div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<strong>As a workaround and if a bigger range of port please use host mode for docker RUN command: "docker run –– net host&#8230;&#8203;"</strong> More information <a href="https://docs.docker.com/engine/userguide/networking/dockernetworks/">HERE</a>
-</td>
-</tr>
-</table>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">docker run  --net  host -i -d --name=restcomm-myInstance -v /var/log/restcomm/:/var/log/restcomm/ -e RCBCONF_STATIC_ADDRESS="YOUR_ETHERNET_IP" -e ENVCONFURL="https://raw.githubusercontent.com/RestComm/Restcomm-Docker/master/scripts/restcomm_env_locally.sh" restcomm/restcomm:latest</code></pre>
-</div>
+<div class="paragraph">
+<p>Consider using the Docker Host network as a workaround for this: <a href="https://docs.docker.com/engine/reference/run/#network-settings" class="bare">https://docs.docker.com/engine/reference/run/#network-settings</a></p>
 </div>
 <div class="paragraph">
 <p><strong>Important Notice for RestComm networking</strong></p>
 </div>
 <div class="paragraph">
-<p>When using a SIP client that is not running on the same local machine as the RestComm docker container, call-setup through SIP/SDP/RTP will fail as the docker container runs on a different network segment. You must set the STATIC_ADDRESS environment variable to address this issue as shown below:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">docker run  -i -d --name=restcomm-myInstance -v /var/log/restcomm/:/var/log/restcomm/ -e RCBCONF_STATIC_ADDRESS="YOUR_ETHERNET_IP" -e ENVCONFURL="https://raw.githubusercontent.com/RestComm/Restcomm-Docker/master/scripts/restcomm_env_locally.sh" -p 8080:8080 -p 8443:8443 -p 9990:9990 -p 5080:5080 -p 5081:5081 -p 5082:5082 -p 5083:5083 -p 5080:5080/udp -p 65000-65050:65000-65050/udp restcomm/restcomm:latest</code></pre>
-</div>
+<p>When using a SIP client that is not running on the same local machine as the RestComm docker container, call-setup through SIP/SDP/RTP will fail as the docker container runs on a different network segment. You must set the <code>RCBCONF_STATIC_ADDRESS</code> environment variable to address this.</p>
 </div>
 <div class="paragraph">
 <p><strong>Known Issue on Firefox when running RestComm Olympus</strong></p>
@@ -23055,7 +22985,7 @@ Using the flag "INIT_PASSWORD" you can set administrator password when running R
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-12-11 02:15:52 UTC
+Last updated 2017-12-12 02:15:47 UTC
 </div>
 </div>
 <footer>
