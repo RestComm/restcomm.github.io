@@ -22571,19 +22571,15 @@ var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","
 				<div class="ajax_loader"><div class="ajax_loader_1"><div class="cube"></div></div></div>
 					<div class="wrapper">
 	<div class="wrapper_inner">
-	<!-- Google Analytics start -->
-			<script>
-			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', 'UA-26513010-1']);
-			_gaq.push(['_trackPageview']);
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-26513010-2"></script>
+		<script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-			(function() {
-				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-			})();
+      gtag('config', 'UA-26513010-2');
 		</script>
-		<!-- Google Analytics end -->
 <header class=" has_top scroll_header_top_area dark stick scrolled_not_transparent page_header">
     <div class="header_inner clearfix">
 
@@ -22921,7 +22917,7 @@ For more details on configuring <code class="class">M3UAManagement</code>, pleas
 The name is prepended to the name of the XML file created by the SCTP stack for persisting the state of SCTP resources.
 This XML file is stored in the path specified by the property <code>persistDir</code>.
 For example, in the above case, when Restcomm  SS7 Service is started, a file named <em class="path">SCTPManagement_sctp.xml</em> will be created at <em class="path">$JBOSS_HOME/server/profile_name/data</em> directory.
-The other properties of the Stack are defined below:</p>
+You can disable of using persistent configuration via using <code>org.mobicents.protocols.sctp.netty.NonPersistentNettySctpManagementImpl</code> class. The other properties of the Stack are defined below:</p>
 </div>
 <div class="paragraph">
 <div class="title"><code class="class">org.mobicents.protocols.ss7.m3ua.impl.M3UAManagementImpl</code></div>
@@ -22932,6 +22928,7 @@ The second constructor argument of M3UA Management Bean is also a <code class="c
 <div class="paragraph">
 <p>This XML file is stored in the path specified by the property <code>persistDir</code>.
 For example, in the above case, when Restcomm  SS7 Service is started, a file named <em class="path">Mtp3UserPart_m3ua1.xml</em> will be created at <em class="path">$JBOSS_HOME/server/profile_name/data</em> directory.
+You can disable of using persistent configuration via using <code>org.mobicents.protocols.ss7.m3ua.impl.NonPersistentM3UAManagementImpl</code> class.
 The other properties of the Stack are defined below:</p>
 </div>
 <div class="dlist">
@@ -23242,10 +23239,9 @@ The name is prepend to <code>xml</code> file created by SCCP stack for persistin
 The <code>xml</code> is stored in path specified by <code>persistDir</code> property above.</p>
 </div>
 <div class="paragraph">
-<p>For example in above case, when Restcomm SS7 Service is started 3 file&#8217;s <em class="path">SccpStack_management2.xml</em>, <em class="path">SccpStack_sccpresource2.xml</em>  and <em class="path">SccpStack_sccprouter2.xml</em> will be created at <em class="path">$JBOSS_HOME/server/profile_name/data</em> directory</p>
-</div>
-<div class="paragraph">
-<p>Stack has following properties:</p>
+<p>For example in above case, when Restcomm SS7 Service is started 3 file&#8217;s <em class="path">SccpStack_management2.xml</em>, <em class="path">SccpStack_sccpresource2.xml</em>  and <em class="path">SccpStack_sccprouter2.xml</em> will be created at <em class="path">$JBOSS_HOME/server/profile_name/data</em> directory
+You can disable of using persistent configuration via using <code>org.mobicents.protocols.ss7.sccp.impl.NonPersistentSccpStackImpl</code> class.
+Stack has following properties:</p>
 </div>
 <div class="dlist">
 <dl>
@@ -23345,10 +23341,9 @@ The <code>xml</code> is stored in path specified by <code>persistDir</code> prop
 </div>
 <div class="paragraph">
 <p>For example in above case, when Restcomm SS7 Service is started 3 file&#8217;s <em class="path">TcapStack_management.xml</em>, <em class="path">TcapStack_managementMap.xml</em>  and <em class="path">TcapStack_managementCap.xml</em> will be created at <em class="path">$JBOSS_HOME/server/profile_name/data</em> directory. Then <code class="class">org.mobicents.protocols.ss7.tcap.TCAPStackImpl</code> takes <code class="class">SccpStack</code> as second constructor argument.
-TCAP uses passed SCCP stack. Constructor also takes the sub system number (SSN) which is registered with passed SCCP stack (this is the third parameter).</p>
-</div>
-<div class="paragraph">
-<p>TCAP Stack has following configurable properties:</p>
+TCAP uses passed SCCP stack. Constructor also takes the sub system number (SSN) which is registered with passed SCCP stack (this is the third parameter).
+You can disable of using persistent configuration via using <code>org.mobicents.protocols.ss7.tcap.NonPersistentTCAPStackImpl</code> class.
+TCAP Stack has following configurable properties:</p>
 </div>
 <div class="dlist">
 <dl>
@@ -23981,7 +23976,7 @@ The shell commands are exchanged over TCP/IP.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-12-12 02:25:40 UTC
+Last updated 2017-12-13 02:25:33 UTC
 </div>
 </div>
 <footer>
