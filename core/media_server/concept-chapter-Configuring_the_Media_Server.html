@@ -22905,6 +22905,7 @@ This is similar to when <strong>sbc</strong> is set to false.</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;controller protocol="mgcp"&gt;
 	&lt;address&gt;127.0.0.1&lt;/address&gt;
 	&lt;port&gt;2427&lt;/port&gt;
+	&lt;channelBuffer&gt;5000&lt;/channelBuffer&gt;
 	&lt;endpoints&gt;
 		&lt;endpoint name="mobicents/bridge/" class="org.mobicents.media.server.mgcp.endpoint.BridgeEndpoint" poolSize="50" /&gt;
 		&lt;endpoint name="mobicents/ivr/" class="org.mobicents.media.server.mgcp.endpoint.IvrEndpoint" poolSize="50" /&gt;
@@ -22927,6 +22928,9 @@ This is similar to when <strong>sbc</strong> is set to false.</p>
 </div>
 <div class="paragraph">
 <p>The <strong>PoolSize</strong> parameter defines the number of MGCP requests that Media Server can handle concurrently.</p>
+</div>
+<div class="paragraph">
+<p>The <strong>channelBuffer</strong> parameter defines the MGCP channel buffer size which limits the size of incoming MGCP messages that are received by the MGCP channel. By default it is set to 5000.</p>
 </div>
 </div>
 <div class="sect3">
@@ -23956,7 +23960,7 @@ no server running on /private/tmp/tmux-501/default</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-12-19 02:20:56 UTC
+Last updated 2017-12-20 02:22:13 UTC
 </div>
 </div>
 <footer>
