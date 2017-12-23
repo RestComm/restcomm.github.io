@@ -25754,6 +25754,12 @@ If a message fits to all conditions then the rule will be applied to the message
 <td class="tableblock halign-left valign-top"><p class="tableblock">Optional parameter with the tag value in the message will be removed.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that no optional parameter will be removed.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">removedestdigprefix</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arrival trigger / &lt;value&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">First &lt;value&gt; digits of destination address will be removed.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"0". This means that no action will be taken.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -34230,7 +34236,7 @@ SYNOPSIS
 	&lt;false | true&gt; newnetworkidaftersri &lt;networkId value&gt; dropaftertempfail &lt;false | true&gt;
 	newnetworkidaftertempfail &lt;networkId value&gt; droponarrival &lt;false | true&gt; rejectonarrival
 	&lt;NONE | DEFAULT | UNEXPECTED_DATA_VALUE | SYSTEM_FAILURE |	THROTTLING | FACILITY_NOT_SUPPORTED&gt;
-	remove_tlv &lt;tlv tag key&gt;
+	remove_tlv &lt;tlv tag key&gt; | removedestdigprefix &lt;value&gt;
 
 DESCRIPTION
 
@@ -34282,6 +34288,7 @@ PARAMETERS
 	droponarrival - an optional parameter.
 	rejectonarrival - an optional parameter.
 	remove_tlv - an optional parameter.
+	removedestdigprefix - an optional parameter.
 
 EXAMPLES
 	smsc mproc add mproc 1 networkidmask 11 newnetworkid 12
@@ -34357,7 +34364,7 @@ SYNOPSIS
 	&lt;false | true&gt; newnetworkidaftersri &lt;networkId value&gt; dropaftertempfail &lt;false | true&gt;
 	newnetworkidaftertempfail &lt;networkId value&gt; droponarrival &lt;false | true&gt; rejectonarrival
 	&lt;NONE | DEFAULT | UNEXPECTED_DATA_VALUE | SYSTEM_FAILURE | THROTTLING | FACILITY_NOT_SUPPORTED&gt;
-	remove_tlv &lt;tlv tag key&gt;
+	remove_tlv &lt;tlv tag key&gt; | removedestdigprefix &lt;value&gt;
 
 DESCRIPTION
 
@@ -34407,6 +34414,7 @@ PARAMETERS
 	droponarrival - an optional parameter.
 	rejectonarrival - an optional parameter.
 	remove_tlv - an optional parameter.
+	removedestdigprefix - an optional parameter.
 
 EXAMPLES
 	smsc mproc modify 1 newnetworkid 13</pre>
@@ -36115,7 +36123,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-12-22 02:26:15 UTC
+Last updated 2017-12-23 02:26:43 UTC
 </div>
 </div>
 <footer>
