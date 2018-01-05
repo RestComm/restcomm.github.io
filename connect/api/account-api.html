@@ -23128,6 +23128,10 @@ The above command uses the Account SID of the requestor, and the one below uses 
 <td class="tableblock halign-left valign-top"><p class="tableblock">Role(Required)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The security role that this Account resource will use. If no role is provided then the role of the account resource creating this will be inherited to the new Account resource and may compromise the system.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OrganizationSid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sid of organization, in case you want to create this account under a different account than its parent account. By default each new account will inherit its parent&#8217;s organization. Please note only Super Admins have right to create an account under a different organization.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -23152,11 +23156,19 @@ The above command uses the Account SID of the requestor, and the one below uses 
 </div>
 </div>
 <div class="paragraph">
-<p>Here is an example of how to createa a <strong>sub-account</strong>. The sub-account will inherit the same permissions has the Administrator&#8217;s account.</p>
+<p>Here is an example of how to create a <strong>sub-account</strong>. The sub-account will inherit the same permissions has the Administrator&#8217;s account.</p>
 </div>
 <div class="literalblock">
 <div class="content">
 <pre>curl -X POST https://administrator%40company.com:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ -d "FriendlyName=MySubAccount" -d "EmailAddress=test@telestax.com" -d "Password=restcomm"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is an example of creating an account under a specific organization.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -X POST https://&lt;Sid&gt;:&lt;authToken&gt;@&lt;restcommAdress&gt;/restcomm/2012-04-24/Accounts/ -d "FriendlyName=MySubAccount" -d "EmailAddress=test@telestax.com" -d "Password=restcomm" -d "OrganizationSid=&lt;OrganizationSid&gt;"</pre>
 </div>
 </div>
 </div>
@@ -23252,7 +23264,7 @@ Account deletion has been deprecated from the REST API. Both of these methods wi
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-12-31 02:15:34 UTC
+Last updated 2018-01-05 12:11:26 UTC
 </div>
 </div>
 <footer>
