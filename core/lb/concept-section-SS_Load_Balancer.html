@@ -22664,7 +22664,7 @@ body.vertical_menu_outside_paspartu.vertical_menu_enabled.vertical_menu_hidden.v
                       <div class="second"><div class="inner"><ul>
                         <li id="nav-menu-item-17475" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/sip_servlets/SIP_Servlets_Server_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>SIP SERVLETS</span><span class="plus"></span></a></li>
                         <li id="nav-menu-item-17474" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/media_server/Media_Server_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>MEDIA SERVER</span><span class="plus"></span></a></li>
-                        <li id="nav-menu-item-17475" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/smsc/SMSC_Gateway_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>SMSC</span><span class="plus"></span></a>
+                        <li id="nav-menu-item-17475" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/smsc/SMSC_Gateway_Admin_Guide.html" class=""><i class="menu_icon blank fa"></i><span>SMSC</span><span class="plus"></span></a>
                           <ul>
                             <li id="nav-menu-item-18015" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/smsc/SMSC_Gateway_Installation_Guide.html" class=""><i class="menu_icon blank fa"></i><span>INSTALLATION GUIDE</span><span class="plus"></span></a></li>
                             <li id="nav-menu-item-17999" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="http://documentation.telestax.com/core/smsc/SMSC_Gateway_Admin_Guide.html" class=""><i class="menu_icon blank fa"></i><span>USER GUIDE</span><span class="plus"></span></a></li>
@@ -22816,6 +22816,8 @@ body.vertical_menu_outside_paspartu.vertical_menu_enabled.vertical_menu_hidden.v
 <li><a href="#_sslb_smpp_load_balancer_implementation">Implementation of the SMPP Load Balancer</a></li>
 </ul>
 </li>
+<li><a href="#mgcp-load-balancing">MGCP Load Balancing</a></li>
+<li><a href="#ss7-load-balancing">SS7 Load Balancing</a></li>
 <li><a href="#pluggable-balancer-algorithms">Pluggable balancer algorithms</a></li>
 <li><a href="#distributed-load-balancing">Distributed load balancing</a></li>
 <li><a href="#_sslb_binary_sip_load_balancer_installing_configuring_and_running">Restcomm Load Balancer: Installing, Configuring andRunning</a>
@@ -23076,7 +23078,7 @@ are exceeded, LB considers the server is dead and stops sending messages to the 
 <div class="sect2">
 <h3 id="restcomm-load-balancer-supports-sip-over-websockets"><a class="anchor" href="#restcomm-load-balancer-supports-sip-over-websockets"></a>Restcomm Load Balancer supports SIP Over Websockets</h3>
 <div class="paragraph">
-<p>The websocket client (e.g. TelScale Olympus) can connect to Load balancer
+<p>The websocket client (e.g. RestcommONE Olympus) can connect to Load balancer
 on port which should be set in lb-configuration.properties externalWsPort and
 internal.wsPort if needed. To work with secure websocket it is necessary to set
 external.wssPort and internal.wssPort. When websocket client connects to the
@@ -23378,6 +23380,472 @@ If reconnect fails, connection is closed;</p>
 </div>
 </div>
 <div class="sect1">
+<h2 id="mgcp-load-balancing"><a class="anchor" href="#mgcp-load-balancing"></a>MGCP Load Balancing</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+MGCP Load Balancing is a <a href="https://www.restcomm.com/on-premise/">RestcommONE</a> feature, available only in our commercial version.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Restcomm load balancer has MGCP load balancing module. MGCP load balancer allows
+balance MGCP traffic. For balancing it uses round robin algorithm. For correct
+balancing all Call Agents (CA) must use call identifiers from common namespace.
+From the gateway&#8217;s perspective, the Call identifier is thus unique.</p>
+</div>
+<div class="paragraph">
+<p>All MGCP commands related to same call go to same Media Gateway (MG).
+This is based on checking the Call identifier in CRCX commands.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/MGCP-lb-diagram.png" alt="MGCP lb diagram">
+</div>
+<div class="title">Figure 5. MGCP load balancer diagram</div>
+</div>
+<div class="paragraph">
+<p>MGCP load balancer can transfer commands from CA side:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>CRCX - create connection
+MDCX - modify connection
+DLCX - delete connection
+AUEP - audit endpoint
+AUCX - audit connection
+RQNT - notification request
+EPCF - endpoint configuration</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>from GW side:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>NTFY - notify
+RSIP - restart in progress
+DLCX - delete connection</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The MGCP load balancer uses ping from MG nodes for discovering them. This ping
+should have mgcpPort, then LB will know that this node can handle MGCP traffic.
+So GW nodes must send heartbeats to the LB. After getting ping from GW node,
+LB will add this node to the map of MGCP nodes. If MG node will removed in some
+way, LB will remove all calls which was related to this node.</p>
+</div>
+<div class="paragraph">
+<p>For enabling MGCP load balancer you should add tag <code>&lt;mgcp&gt;</code> in configuration.
+Example of mgcp configuration you can find <a href="#_sslb_binary_sip_load_balancer_configuring">Configuring</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ss7-load-balancing"><a class="anchor" href="#ss7-load-balancing"></a>SS7 Load Balancing</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+SS7 Load Balancing is a <a href="https://www.restcomm.com/on-premise/">RestcommONE</a> feature, available only in our commercial version.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The Load balancer has SS7 load balancing module. SS7 load balancer allows
+balance SS7 traffic on level the level of SCCP protocol. For balancing it uses
+round robin algorithm. For routing on internal side the Load balancer use routing
+based on the point code, for routing on external side global title. After getting
+very first SCCP request (BEGIN) LB gets dialogId and global title from request, choose point code
+of available internal nodes via algorithm and stores it in map (or infinispan cache)
+&lt; dialogId,GT &#8594; PointCode &gt;. Each entity of map has time stamp, this stamp updates
+after gating subsequence request. So the next sub requests which will be belong to
+same dialog will be send to same node. All requests from internal side will be send
+accordingly to the global title. All entity of the map will be removed after getting
+ABORT/END request or after expiration time.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/SS7-lb-diagram.png" alt="SS7 lb diagram">
+</div>
+<div class="title">Figure 6. SS7 load balancer diagram</div>
+</div>
+<div class="paragraph">
+<p>Configuration of the SS7 Balancer can be split on three main parts:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>common part</p>
+<div class="ulist">
+<ul>
+<li>
+<p>nodeExpirationTaskInterval - period in msec in which LB checks is node alive.</p>
+</li>
+<li>
+<p>nodeExpiration - max period in msec in which LB may not get ping from the Node
+and not remove it from available</p>
+</li>
+<li>
+<p>periodCheckAlgoMap - period in msec in which LB checks old entity in map
+&lt; dialogId,GT &#8594; PointCode &gt;.</p>
+</li>
+<li>
+<p>maxIdleTime - max expiration time in sec in which entity can be stored in map without update
+of time stamp.</p>
+</li>
+<li>
+<p>ss7AlgorithmClass - by default it is round robin.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>external configuration - it is static configuration of SS7 external stack
+and will not change during all work of the Load balancer</p>
+</li>
+<li>
+<p>internal cinfiguration - has some basic configuration for starting SS7 internal stack.
+After start and getting ping from internal SS7 Nodes LB modifies configuration of internal stack.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Here is example of configuration of the Load Balancer with SS7 module:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>  &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+  &lt;load-balancer-properties&gt;
+	&lt;noderegistermodule	moduleclass="org.mobicents.tools.balancer.register.NodeRegisterRunner"
+	configclass="org.mobicents.tools.heartbeat.rmi.HeartbeatConfigRmi"&gt;
+		&lt;heartbeatConfig&gt;
+			&lt;ProtocolClassName&gt;org.mobicents.tools.heartbeat.rmi.ServerControllerRmi&lt;/ProtocolClassName&gt;
+        &lt;heartbeatHost&gt;127.0.0.1&lt;/heartbeatHost&gt;
+       	&lt;rmiRegistryPort&gt;2000&lt;/rmiRegistryPort&gt;
+       	&lt;rmiRemoteObjectPort&gt;2001&lt;/rmiRemoteObjectPort&gt;
+		&lt;/heartbeatConfig&gt;
+	&lt;/noderegistermodule&gt;
+	&lt;statisticmodule moduleclass="org.mobicents.tools.balancer.statistic.StatisticRunner"
+  configclass="org.mobicents.tools.balancer.statistic.StatisticConfig"&gt;
+        &lt;statisticConfig&gt;
+            &lt;statisticPort&gt;2006&lt;/statisticPort&gt;
+        &lt;/statisticConfig&gt;
+    &lt;/statisticmodule&gt;
+	&lt;module moduleclass="org.mobicents.tools.balancer.protocols.ss7.Ss7BalancerRunner"
+		configclass="org.mobicents.tools.balancer.protocols.ss7.config.Ss7BalancerConfig"&gt;
+		&lt;balancerConfig&gt;
+		&lt;nodeExpirationTaskInterval&gt;1000&lt;/nodeExpirationTaskInterval&gt;
+		&lt;nodeExpiration&gt;5100&lt;/nodeExpiration&gt;
+    &lt;cacheConfig&gt;src/test/resources/infinispan-cache.xml&lt;/cacheConfig&gt;
+			&lt;external&gt;
+				&lt;sctpConfig&gt;
+					&lt;connectdelay value="5000" /&gt;
+					&lt;servers&gt;
+						&lt;server name="serv1" started="true" hostAddress="127.0.0.1"	hostPort="2347" ipChannelType="0"
+            acceptAnonymousConnections="false" maxConcurrentConnectionsCount="0" extraHostAddresseSize="0"&gt;
+							&lt;associations&gt;
+								&lt;string value="ass1" /&gt;
+								&lt;string value="ass2" /&gt;
+							&lt;/associations&gt;
+						&lt;/server&gt;
+					&lt;/servers&gt;
+					&lt;associations&gt;
+						&lt;name value="ass1" /&gt;
+						&lt;association name="ass1" assoctype="CLIENT"
+							hostAddress="127.0.0.1" hostPort="11111" peerAddress="127.0.0.1"
+              peerPort="2348" serverName="serv1" ipChannelType="0" extraHostAddresseSize="0" /&gt;
+						&lt;name value="ass2" /&gt;
+						&lt;association name="ass2" assoctype="CLIENT"
+							hostAddress="127.0.0.1" hostPort="11112" peerAddress="127.0.0.1"
+              peerPort="2358" serverName="serv2" ipChannelType="0" extraHostAddresseSize="0" /&gt;
+					&lt;/associations&gt;
+				&lt;/sctpConfig&gt;
+				&lt;m3uaConfig&gt;
+					&lt;heartbeattime value="10000" /&gt;
+					&lt;aspFactoryList&gt;
+						&lt;aspFactory name="asp1" assocName="ass1" started="true"
+            maxseqnumber="256" aspid="2" heartbeat="false" /&gt;
+						&lt;aspFactory name="asp2" assocName="ass2" started="true"
+            maxseqnumber="256" aspid="3" heartbeat="false" /&gt;
+					&lt;/aspFactoryList&gt;
+					&lt;asList&gt;
+						&lt;as name="as1" minAspActiveForLb="1" functionality="IPSP"
+            exchangeType="SE" ipspType="CLIENT"&gt;
+							&lt;routingContext size="1"&gt;
+								&lt;rc value="101" /&gt;
+							&lt;/routingContext&gt;
+							&lt;networkAppearance value="102" /&gt;
+							&lt;trafficMode mode="2" /&gt;
+							&lt;defTrafficMode mode="2" /&gt;
+							&lt;asps&gt;
+								&lt;asp name="asp1" /&gt;
+							&lt;/asps&gt;
+						&lt;/as&gt;
+						&lt;as name="as2" minAspActiveForLb="1" functionality="IPSP"
+            exchangeType="SE" ipspType="CLIENT"&gt;
+							&lt;routingContext size="1"&gt;
+								&lt;rc value="101" /&gt;
+							&lt;/routingContext&gt;
+							&lt;networkAppearance value="102" /&gt;
+							&lt;trafficMode mode="2" /&gt;
+							&lt;defTrafficMode mode="2" /&gt;
+							&lt;asps&gt;
+								&lt;asp name="asp2" /&gt;
+							&lt;/asps&gt;
+						&lt;/as&gt;
+					&lt;/asList&gt;
+					&lt;route&gt;
+						&lt;key value="20:10:3" /&gt;
+						&lt;routeAs trafficModeType="2" as="as1" /&gt;
+						&lt;key value="30:10:3" /&gt;
+						&lt;routeAs trafficModeType="2" as="as2" /&gt;
+					&lt;/route&gt;
+				&lt;/m3uaConfig&gt;
+				&lt;sccpManagement&gt;
+					&lt;zmarginxudtmessage value="240" /&gt;
+					&lt;reassemblytimerdelay value="15000" /&gt;
+					&lt;maxdatamessage value="2560" /&gt;
+					&lt;removespc value="true" /&gt;
+					&lt;previewMode value="false" /&gt;
+					&lt;sccpProtocolVersion value="ITU" /&gt;
+					&lt;ssttimerduration_min value="10000" /&gt;
+					&lt;ssttimerduration_max value="600000" /&gt;
+					&lt;ssttimerduration_increasefactor
+						value="1.5" /&gt;
+				&lt;/sccpManagement&gt;
+				&lt;sccpResource&gt;
+					&lt;remoteSsns&gt;
+						&lt;id value="1" /&gt;
+						&lt;value remoteSpc="20" remoteSsn="8" remoteSsnFlag="0"
+            markProhibitedWhenSpcResuming="false" /&gt;
+						&lt;id value="2" /&gt;
+						&lt;value remoteSpc="30" remoteSsn="8" remoteSsnFlag="0"
+            markProhibitedWhenSpcResuming="false" /&gt;
+					&lt;/remoteSsns&gt;
+					&lt;remoteSpcs&gt;
+						&lt;id value="1" /&gt;
+						&lt;value remoteSpc="20" remoteSpcFlag="0" mask="0" /&gt;
+						&lt;id value="2" /&gt;
+						&lt;value remoteSpc="30" remoteSpcFlag="0" mask="0" /&gt;
+					&lt;/remoteSpcs&gt;
+					&lt;concernedSpcs /&gt;
+				&lt;/sccpResource&gt;
+				&lt;sccpRouter&gt;
+					&lt;rule&gt;
+						&lt;id value="1" /&gt;
+						&lt;value ruleType="Solitary" loadSharingAlgo="Undefined"
+            originatingType="LocalOriginated" mask="K" paddress="1" saddress="-1" networkId="0"&gt;
+							&lt;patternSccpAddress pc="-1" ssn="-1"&gt;
+								&lt;ai value="16" /&gt;
+								&lt;gt type="GT0100" tt="0" es="1" np="1" nai="4" digits="100000" /&gt;
+							&lt;/patternSccpAddress&gt;
+						&lt;/value&gt;
+						&lt;id value="2" /&gt;
+						&lt;value ruleType="Solitary" loadSharingAlgo="Undefined"
+            originatingType="RemoteOriginated" mask="K" paddress="1" saddress="-1" networkId="0"&gt;
+							&lt;patternSccpAddress pc="-1" ssn="-1"&gt;
+								&lt;ai value="16" /&gt;
+								&lt;gt type="GT0100" tt="0" es="1" np="1" nai="4" digits="100000" /&gt;
+							&lt;/patternSccpAddress&gt;
+						&lt;/value&gt;
+						&lt;id value="3" /&gt;
+						&lt;value ruleType="Solitary" loadSharingAlgo="Undefined"
+            originatingType="LocalOriginated" mask="K" paddress="2"	saddress="-1" networkId="0"&gt;
+							&lt;patternSccpAddress pc="-1" ssn="-1"&gt;
+								&lt;ai value="16" /&gt;
+								&lt;gt type="GT0100" tt="0" es="1" np="1" nai="4" digits="200000" /&gt;
+							&lt;/patternSccpAddress&gt;
+						&lt;/value&gt;
+						&lt;id value="4" /&gt;
+						&lt;value ruleType="Solitary" loadSharingAlgo="Undefined"
+            originatingType="RemoteOriginated" mask="K" paddress="2"	saddress="-1" networkId="0"&gt;
+							&lt;patternSccpAddress pc="-1" ssn="-1"&gt;
+								&lt;ai value="16" /&gt;
+								&lt;gt type="GT0100" tt="0" es="1" np="1" nai="4" digits="200000" /&gt;
+							&lt;/patternSccpAddress&gt;
+						&lt;/value&gt;
+						&lt;id value="5" /&gt;
+						&lt;value ruleType="Solitary" loadSharingAlgo="Undefined"
+            originatingType="LocalOriginated" mask="K" paddress="3"	saddress="-1" networkId="0"&gt;
+							&lt;patternSccpAddress pc="-1" ssn="-1"&gt;
+								&lt;ai value="16" /&gt;
+								&lt;gt type="GT0100" tt="0" es="1" np="1" nai="4" digits="300000" /&gt;
+							&lt;/patternSccpAddress&gt;
+						&lt;/value&gt;
+						&lt;id value="6" /&gt;
+						&lt;value ruleType="Solitary" loadSharingAlgo="Undefined"
+            originatingType="RemoteOriginated" mask="K" paddress="3"	saddress="-1" networkId="0"&gt;
+							&lt;patternSccpAddress pc="-1" ssn="-1"&gt;
+								&lt;ai value="16" /&gt;
+								&lt;gt type="GT0100" tt="0" es="1" np="1" nai="4" digits="300000" /&gt;
+							&lt;/patternSccpAddress&gt;
+						&lt;/value&gt;
+					&lt;/rule&gt;
+					&lt;routingAddress&gt;
+						&lt;id value="1" /&gt;
+						&lt;sccpAddress pc="10" ssn="8"&gt;
+							&lt;ai value="83" /&gt;
+							&lt;gt type="GT0100" tt="0" es="1" np="1" nai="4" digits="100000" /&gt;
+						&lt;/sccpAddress&gt;
+						&lt;id value="2" /&gt;
+						&lt;sccpAddress pc="20" ssn="8"&gt;
+							&lt;ai value="83" /&gt;
+							&lt;gt type="GT0100" tt="0" es="1" np="1" nai="4" digits="200000" /&gt;
+						&lt;/sccpAddress&gt;
+						&lt;id value="3" /&gt;
+						&lt;sccpAddress pc="30" ssn="8"&gt;
+							&lt;ai value="83" /&gt;
+							&lt;gt type="GT0100" tt="0" es="1" np="1" nai="4" digits="300000" /&gt;
+						&lt;/sccpAddress&gt;
+					&lt;/routingAddress&gt;
+					&lt;longMessageRule /&gt;
+					&lt;sap&gt;
+						&lt;id value="1" /&gt;
+						&lt;value mtp3Id="1" opc="10" ni="2" networkId="0"&gt;
+							&lt;mtp3DestinationMap&gt;
+								&lt;id value="1" /&gt;
+								&lt;value firstDpc="20" lastDpc="20" firstSls="0" lastSls="255" slsMask="255" /&gt;
+								&lt;id value="2" /&gt;
+								&lt;value firstDpc="30" lastDpc="30" firstSls="0" lastSls="255" slsMask="255" /&gt;
+							&lt;/mtp3DestinationMap&gt;
+						&lt;/value&gt;
+					&lt;/sap&gt;
+				&lt;/sccpRouter&gt;
+				&lt;tcapConfig&gt;
+					&lt;dialogidletimeout value="60000" /&gt;
+					&lt;invoketimeout value="30000" /&gt;
+					&lt;maxdialogs value="5000" /&gt;
+					&lt;dialogidrangestart value="1" /&gt;
+					&lt;dialogidrangeend value="2147483647" /&gt;
+					&lt;donotsendprotocolversion value="false" /&gt;
+					&lt;slsrange value="All" /&gt;
+					&lt;statisticsenabled value="false" /&gt;
+				&lt;/tcapConfig&gt;
+				&lt;tcapFixedParams&gt;
+					&lt;ssn&gt;8&lt;/ssn&gt;
+				&lt;/tcapFixedParams&gt;
+			&lt;/external&gt;
+			&lt;internal&gt;
+				&lt;pointCode&gt;1&lt;/pointCode&gt;
+				&lt;sctpFixedParams&gt;
+					&lt;ipChannelType&gt;0&lt;/ipChannelType&gt;
+					&lt;extraHostAddresseSize&gt;0&lt;/extraHostAddresseSize&gt;
+				&lt;/sctpFixedParams&gt;
+				&lt;sctpConfig&gt;
+					&lt;connectdelay value="5000" /&gt;
+					&lt;servers&gt;
+						&lt;server&gt;
+							&lt;associations /&gt;
+						&lt;/server&gt;
+					&lt;/servers&gt;
+					&lt;associations /&gt;
+				&lt;/sctpConfig&gt;
+				&lt;m3uaFixedParams&gt;
+					&lt;maxseqnumber&gt;256&lt;/maxseqnumber&gt;
+					&lt;aspid&gt;2&lt;/aspid&gt;
+					&lt;heartbeat&gt;false&lt;/heartbeat&gt;
+					&lt;minAspActiveForLb&gt;1&lt;/minAspActiveForLb&gt;
+					&lt;functionality&gt;IPSP&lt;/functionality&gt;
+					&lt;exchangeType&gt;SE&lt;/exchangeType&gt;
+					&lt;ipspType&gt;CLIENT&lt;/ipspType&gt;
+					&lt;networkAppearance&gt;104&lt;/networkAppearance&gt;
+					&lt;trafficMode&gt;2&lt;/trafficMode&gt;
+					&lt;defTrafficMode&gt;2&lt;/defTrafficMode&gt;
+					&lt;si&gt;3&lt;/si&gt;
+				&lt;/m3uaFixedParams&gt;
+				&lt;m3uaConfig&gt;
+					&lt;heartbeattime value="10000" /&gt;
+					&lt;aspFactoryList /&gt;
+					&lt;asList /&gt;
+					&lt;route /&gt;
+				&lt;/m3uaConfig&gt;
+				&lt;sccpManagement&gt;
+					&lt;zmarginxudtmessage value="240" /&gt;
+					&lt;reassemblytimerdelay value="15000" /&gt;
+					&lt;maxdatamessage value="2560" /&gt;
+					&lt;removespc value="true" /&gt;
+					&lt;previewMode value="false" /&gt;
+					&lt;sccpProtocolVersion value="ITU" /&gt;
+					&lt;ssttimerduration_min value="10000" /&gt;
+					&lt;ssttimerduration_max value="600000" /&gt;
+					&lt;ssttimerduration_increasefactor
+						value="1.5" /&gt;
+				&lt;/sccpManagement&gt;
+				&lt;sccpResourceFixedParams&gt;
+					&lt;remoteSsns&gt;
+						&lt;ssn&gt;8&lt;/ssn&gt;
+					&lt;/remoteSsns&gt;
+					&lt;remoteSsnFlag&gt;0&lt;/remoteSsnFlag&gt;
+					&lt;markProhibitedWhenSpcResuming&gt;false
+					&lt;/markProhibitedWhenSpcResuming&gt;
+					&lt;remoteSpcFlag&gt;0&lt;/remoteSpcFlag&gt;
+					&lt;mask&gt;0&lt;/mask&gt;
+				&lt;/sccpResourceFixedParams&gt;
+				&lt;sccpResource&gt;
+					&lt;remoteSsns /&gt;
+					&lt;remoteSpcs /&gt;
+					&lt;concernedSpcs /&gt;
+				&lt;/sccpResource&gt;
+				&lt;sccpRouterFixedParams&gt;
+					&lt;ruleType&gt;Solitary&lt;/ruleType&gt;
+					&lt;loadSharingAlgo&gt;Bit0&lt;/loadSharingAlgo&gt;
+					&lt;mask&gt;K&lt;/mask&gt;
+					&lt;routingNetworkId&gt;0&lt;/routingNetworkId&gt;
+					&lt;tt&gt;0&lt;/tt&gt;
+					&lt;np&gt;1&lt;/np&gt;
+					&lt;nai&gt;4&lt;/nai&gt;
+					&lt;ssns&gt;
+						&lt;ssn&gt;6&lt;/ssn&gt;
+						&lt;ssn&gt;8&lt;/ssn&gt;
+					&lt;/ssns&gt;
+					&lt;mtp3Id&gt;1&lt;/mtp3Id&gt;
+					&lt;ni&gt;2&lt;/ni&gt;
+					&lt;sapNetworkId&gt;0&lt;/sapNetworkId&gt;
+					&lt;firstSls&gt;0&lt;/firstSls&gt;
+					&lt;lastSls&gt;255&lt;/lastSls&gt;
+					&lt;slsMask&gt;255&lt;/slsMask&gt;
+					&lt;opc&gt;1&lt;/opc&gt;
+				&lt;/sccpRouterFixedParams&gt;
+				&lt;sccpRouter&gt;
+					&lt;rule /&gt;
+					&lt;routingAddress /&gt;
+					&lt;longMessageRule /&gt;
+					&lt;sap /&gt;
+				&lt;/sccpRouter&gt;
+				&lt;tcapConfig&gt;
+					&lt;dialogidletimeout value="60000" /&gt;
+					&lt;invoketimeout value="30000" /&gt;
+					&lt;maxdialogs value="5000" /&gt;
+					&lt;dialogidrangestart value="1" /&gt;
+					&lt;dialogidrangeend value="2147483647" /&gt;
+					&lt;donotsendprotocolversion value="false" /&gt;
+					&lt;slsrange value="All" /&gt;
+					&lt;statisticsenabled value="false" /&gt;
+				&lt;/tcapConfig&gt;
+				&lt;tcapFixedParams&gt;
+					&lt;ssn&gt;0&lt;/ssn&gt;
+				&lt;/tcapFixedParams&gt;
+			&lt;/internal&gt;
+		&lt;/balancerConfig&gt;
+	&lt;/module&gt;
+&lt;/load-balancer-properties&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="pluggable-balancer-algorithms"><a class="anchor" href="#pluggable-balancer-algorithms"></a>Pluggable balancer algorithms</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -23510,7 +23978,7 @@ With consistent hash algorithms there is no state to be preserved in the Restcom
 <div class="content">
 <img src="./images/WSS_Failover_Goal.png" alt="WSS Failover Goal">
 </div>
-<div class="title">Figure 5. Example deployment: IP load balancers serving both directions forincoming/outgoing requests in a cluster</div>
+<div class="title">Figure 7. Example deployment: IP load balancers serving both directions forincoming/outgoing requests in a cluster</div>
 </div>
 </div>
 </div>
@@ -24203,7 +24671,7 @@ If the desired behaviour group these requests, we can just make sure the affinit
 <div class="content">
 <img src="./images/converged-integrated-lb.png" alt="converged integrated lb">
 </div>
-<div class="title">Figure 6. Ensuring SIP and HTTP requests are being grouped by commonaffinity value.</div>
+<div class="title">Figure 8. Ensuring SIP and HTTP requests are being grouped by commonaffinity value.</div>
 </div>
 </div>
 </div>
@@ -24446,7 +24914,7 @@ In the diagram, the Restcomm Load Balancer is the server with the IP address of 
 <div class="content">
 <img src="./images/mss-MSSSIPLoadBalancer-dia-ClusterIPsAndPorts.jpg" alt="mss MSSSIPLoadBalancer dia ClusterIPsAndPorts">
 </div>
-<div class="title">Figure 7. Basic IP and Port Cluster Configuration</div>
+<div class="title">Figure 9. Basic IP and Port Cluster Configuration</div>
 </div>
 </div>
 </div>
@@ -24720,7 +25188,7 @@ You should use url <a href="http://host:statisticPort/lbinfo" class="bare">http:
 <div class="content">
 <img src="./images/Restcomm_servers-LB.png" alt="Restcomm servers LB">
 </div>
-<div class="title">Figure 8. Load balancer and Restcomm servers diagram</div>
+<div class="title">Figure 10. Load balancer and Restcomm servers diagram</div>
 </div>
 <div class="paragraph">
 <p>This chapter will show you how to configure two Restcomm instances and Load Balancer instance on one machine with OS Ubuntu.</p>
@@ -25216,7 +25684,7 @@ time which controlled one keepalived service.</p>
 <div class="content">
 <img src="./images/Active-Active.png" alt="Active Active">
 </div>
-<div class="title">Figure 9. Active-Active Load balancer diagram</div>
+<div class="title">Figure 11. Active-Active Load balancer diagram</div>
 </div>
 <div class="paragraph">
 <p>If LB2 will be gracefully shutdown via http request
@@ -25229,7 +25697,7 @@ will be redirected to LB1.</p>
 <div class="content">
 <img src="./images/Active-Active-Graceful-Shutdown.png" alt="Active Active Graceful Shutdown">
 </div>
-<div class="title">Figure 10. The graceful shutdown of Load balancer diagram</div>
+<div class="title">Figure 12. The graceful shutdown of Load balancer diagram</div>
 </div>
 <div class="paragraph">
 <p>For configuring of Load balancer you need setup keepalived service and set
@@ -25555,7 +26023,7 @@ sip-node-1, sip-node-2 etc., then this tag should be &lt;nodeName&gt;sip-node&lt
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-01-21 02:30:11 UTC
+Last updated 2018-01-25 17:10:32 UTC
 </div>
 </div>
 <footer>
