@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>Running</title>
+<title>Monitoring (Wildfly)</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22788,23 +22788,17 @@ body.vertical_menu_outside_paspartu.vertical_menu_enabled.vertical_menu_hidden.v
     <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/1877839.js"></script>
     <!-- End of HubSpot Embed Code -->
 </head>
-<body class="book">
+<body id="_logging_traces_and_alarms-wildfly" class="book">
 <div id="header">
-<h1>Running</h1>
+<h1>Monitoring (Wildfly)</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#running-the-gateway">1. Running the Gateway</a></li>
-<li><a href="#_running_the_gateway_simulator">2. Running the Gateway - Simulator Profile</a>
+<li><a href="#tracers">1. Tracers</a></li>
+<li><a href="#statistics">2. Statistics</a>
 <ul class="sectlevel2">
-<li><a href="#_simulator_ussd_example">2.1. Running USSD Examples in Simulator</a></li>
-</ul>
-</li>
-<li><a href="#_running_shell">3. Running the Shell</a></li>
-<li><a href="#_using_gui">4. Running the Graphical User Interface</a>
-<ul class="sectlevel2">
-<li><a href="#_connect_gui">4.1. Connect to a new Instance</a></li>
-<li><a href="#_gui_security">4.2. Authentication</a></li>
+<li><a href="#_view_stats">2.1. View USSD Statistics using the GUI</a></li>
+<li><a href="#ussd-counters">2.2. USSD Counters</a></li>
 </ul>
 </li>
 </ul>
@@ -22812,463 +22806,304 @@ body.vertical_menu_outside_paspartu.vertical_menu_enabled.vertical_menu_hidden.v
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="running-the-gateway"><a class="anchor" href="#running-the-gateway"></a>1. Running the Gateway</h2>
-<div class="sectionbody">
-<div class="olist arabic">
-<div class="title">Procedure: Run Restcomm USSD GateWay</div>
-<ol class="arabic">
-<li>
-<p>Pre-requisite:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>You must have Restcomm USSD GateWay installed as explained in the Installation Guide.</p>
-</li>
-<li>
-<p>If you are using the SS7 board on server, you must ensure that the <code>java.library.path</code> variable is set to point to the directory containing the native component.
-Alternatively you can copy it to the JBoss native library path manually.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>All you have to do to start the Gateway is start the JBoss Application Server.
-To start the JBoss Server you must execute the <em class="path">run.sh</em> (Unix) or <em class="path">run.bat</em> (Microsoft Windows) startup script in the installation directory <em class="path">restcomm-ussdgateway/jboss-5.1.0.GA/bin</em>.
-Note that this will start the server in the default profile.
-The "default" profile is a clean profile where you start from scratch and configure the entire SS7 Stack and USSD Gateway to suit your requirements.</p>
-</li>
-<li>
-<p>Result: If the service started properly you should see the following last few output lines in the Unix terminal or Command Prompt depending on your environment:</p>
-<div class="listingblock">
-<div class="content">
-<pre>22:23:11,583 INFO  [DeploymentMBeanImpl] (main) Installed DeployableUnitID[url=file:/home/vinu/restcomm-ussdgateway-<version>/jboss-5.1.0.GA/server/default/deploy/restcomm-ussd-gateway/services-DU-6.1.5.GA.jar/]
-22:23:11,874 INFO  [ServiceManagementImpl] (main) Activated ServiceID[name=restcomm-ussdgateway-cdr,vendor=org.mobicents,version=1.0]
-22:23:11,976 ERROR [STDERR] (pool-28-thread-1) QUERRY: 000000 CREATE TABLE USSD_GW_CDRS (ID VARCHAR(150) NOT NULL, L_SPC INT, L_SSN SMALLINT, L_RI SMALLINT, L_GT_I SMALLINT, L_GT_DIGITS VARCHAR(18), R_SPC INT, R_SSN SMALLINT, R_RI SMALLINT, R_GT_I SMALLINT, R_GT_DIGITS VARCHAR(18), SERVICE_CODE VARCHAR(50), OR_NATURE SMALLINT, OR_PLAN SMALLINT, OR_DIGITS VARCHAR(18), DE_NATURE SMALLINT, DE_PLAN SMALLINT, DE_DIGITS VARCHAR(18), ISDN_NATURE SMALLINT, ISDN_PLAN SMALLINT, ISDN_DIGITS VARCHAR(18), VLR_NATURE SMALLINT, VLR_PLAN SMALLINT, VLR_DIGITS VARCHAR(18), IMSI VARCHAR(100), STATUS VARCHAR(30) NOT NULL , TYPE VARCHAR(30) NOT NULL , TSTAMP TIMESTAMP NOT NULL , LOCAL_DIALOG_ID BIGINT, REMOTE_DIALOG_ID BIGINT, DIALOG_DURATION BIGINT, USSD_STRING VARCHAR(255), PRIMARY KEY(ID,TSTAMP));
-22:23:12,135 INFO  [ServiceManagementImpl] (main) Activated ServiceID[name=restcomm-ussdgateway,vendor=org.mobicents,version=1.0]
-22:23:12,395 INFO  [UssdPropertiesManagement] (main) Loading USSD Properties from /home/vinu/restcomm-ussdgateway-6.1.5.GA/jboss-5.1.0.GA/server/default/data/UssdManagement_ussdproperties.xml
-22:23:12,395 WARN  [UssdPropertiesManagement] (main) Failed to load the USSD configuration file.
-/home/vinu/restcomm-ussdgateway-6.1.5.GA/jboss-5.1.0.GA/server/default/data/UssdManagement_ussdproperties.xml (No such file or directory)
-22:23:12,396 INFO  [ShortCodeRoutingRuleManagement] (main) Loading short code routig rule configuration from /home/vinu/restcomm-ussdgateway-6.1.5.GA/jboss-5.1.0.GA/server/default/data/UssdManagement_scroutingrule.xml
-22:23:12,397 WARN  [ShortCodeRoutingRuleManagement] (main) Failed to load the short code routig rule configuration file.
-/home/vinu/restcomm-ussdgateway-6.1.5.GA/jboss-5.1.0.GA/server/default/data/UssdManagement_scroutingrule.xml (No such file or directory)
-22:23:12,400 INFO  [UssdManagement] (main) Started UssdManagement
-22:23:12,419 INFO  [ShellServer] (main) Starting SS7 management shell environment
-22:23:12,430 INFO  [ShellServer] (main) ShellExecutor listening at /127.0.0.1:3435
-22:23:12,498 INFO  [Http11Protocol] (main) Starting Coyote HTTP/1.1 on http-127.0.0.1-8080
-22:23:12,529 INFO  [AjpProtocol] (main) Starting Coyote AJP/1.3 on ajp-127.0.0.1-8009
-22:23:12,541 INFO  [ServerImpl] (main) JBoss (Microcontainer) [5.1.0.GA (build: SVNTag=JBoss_5_1_0_GA date=200905221634)] Started in 1m:11s:118ms</pre>
-</div>
-</div>
-</li>
-<li>
-<p>If you are starting Restcomm-7.1.0-SNAPSHOT for the first time, SS7 is not configured.
-You can use either the Shell Client or the GUI to connect to Restcomm-7.1.0-SNAPSHOT and configure the SS7 Stack, USSD parameters and Routing Rules.
-Once configured, the state and configuration of SS7 and USSD are both persisted which stands a server re-start operation.
-The next chapter will discuss in detail about configuring SS7 and the USSD Gateway.</p>
-</li>
-</ol>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure: Stop the Gateway</div>
-<ol class="arabic">
-<li>
-<p>To stop the Restcomm USSD GateWay , you must shut down the JBoss Application Server.
-To shut down the server(s) you must execute the <code>shutdown.sh -s</code> (Unix) or  <code>shutdown.bat -s</code> (Microsoft Windows) script in the installation directory <em class="path">restcomm-ussdgateway-/jboss-5.1.0.GA/bin</em>.</p>
-</li>
-<li>
-<p>If the server stopped properly, you will see the following three lines as the  last output in the Unix terminal or Command Prompt:</p>
-<div class="listingblock">
-<div class="content">
-<pre>[Server] Shutdown complete
-Halting VM</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_running_the_gateway_simulator"><a class="anchor" href="#_running_the_gateway_simulator"></a>2. Running the Gateway - Simulator Profile</h2>
+<h2 id="tracers"><a class="anchor" href="#tracers"></a>1. Tracers</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Restcomm USSD GateWay offers you an option to run the Gateway with a "simulator" profile for testing purpose.
-The "simulator" profile is a pre-configured profile to work with the jss7-simulator.
-Starting the Gateway with the "simulator" profile is similar to the steps explained for the "default" profile except that you must pass the string value "simulator" to the -c command line option when invoking the run script.</p>
+<p>USSD GateWay USSD GateWay Application creates following tracers:</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre>[bin]$ ./run.sh -c simulator</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>By default, the USSD Simulator profile is configured for use in Linux systems.
-For using it in Microsoft Windows systems, you must configure the parameters as explained below.</p>
-</div>
-<div class="paragraph">
-<p>Open the file  <em class="path">restcomm-ussdgateway-&lt;version&gt;/jboss-5.1.0.GA/server/simulator/data/SCTPManagement_sctp.xml</em> and replace in two places, the parameter <code>ipChannelType="0"</code> with <code>ipChannelType="1"</code> to enable TCP connection instead of SCTP since Windows does not support SCTP.
-If you are using in a Linux system, there is no modification required to the settings.</p>
-</div>
-<div class="sect2">
-<h3 id="_simulator_ussd_example"><a class="anchor" href="#_simulator_ussd_example"></a>2.1. Running USSD Examples in Simulator</h3>
-<div class="paragraph">
-<p>If you are not familiar with the Restcomm jss7 Simulator, you can find instructions about using the jss7-simulator in the Restcomm jSS7 User Guide.
-You will also find example test cases explained in detail in the jSS7 User Guide.
-In this section you will find a sample USSD Pull and USSD Push examples explained using the jSS7 Simulator.</p>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure: Running Restcomm jSS7 Simulator - USSD Pull Example</div>
-<ol class="arabic">
-<li>
-<p>Change the working directory to the bin folder in the Simulator&#8217;s installation directory.</p>
-<div class="listingblock">
-<div class="content">
-<pre>[vinu@vinu-neha ~]$ cd restcomm-ussd-<version>/tools/Restcomm-ss7-simulator/bin</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Ensure that the <em class="path">run.sh</em> start script is executable.</p>
-<div class="listingblock">
-<div class="content">
-<pre>bin$ chmod +x run.sh</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Execute the <em class="path">run.sh</em> Bourne shell script with the command <code>./run.sh gui</code>.</p>
-<div class="listingblock">
-<div class="content">
-<pre>bin$ ./run.sh gui</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>This will launch the Simulator GUI Application.</pre>
-</div>
-</div>
-</li>
-<li>
-<p>When the GUI shows up, select "main" (default) as host name [or type "win" as host name under Windows] and press the 'Start' button.
-The Simulator is already pre-configured to connect to the USSD Gateway (running in simulator profile). Press 'Run test' and again click on 'Start' in the next screen.
-The Simulator will connect to USSD (via m3ua protocol). The Low level part is configured to SCTP (not TCP) protocol and hence you can test the USSD in a Linux environment.
-To test under Windows OS, you must change the SS7 simulator settings to TCP.</p>
-</li>
-<li>
-<p>After approximately 30 seconds you will see the state of the Simulator change to "M3UA connection is active" as in figure below:</p>
-<div class="imageblock">
-<div class="content">
-<img src="./images/USSD_SS7_Simulator_ACTIVE.png" alt="USSD SS7 Simulator ACTIVE">
-</div>
-<div class="title">Figure 1. USSD SS7 Simulator - Active</div>
-</div>
-</li>
-<li>
-<p>Restcomm USSD GateWay is configured with a routing rule for *519#. Dial *519# in your Simulator GUI and press 'Send ProcessUnstructuredRequest'. The example will respond to you with the message "Hello World 1.
-Balance 2.
-Texts Remaining".</p>
-<div class="imageblock">
-<div class="content">
-<img src="./images/USSD_SS7_Simulator_Process_Unst_request.png" alt="USSD SS7 Simulator Process Unst request">
-</div>
-<div class="title">Figure 2. USSD SS7 Simulator - Process Unstructured Request</div>
-</div>
-</li>
-<li>
-<p>Now Dial 1 in your Simulator GUI and press 'Send UnstructuredResponse'. You should get a response "Thank you!".</p>
-<div class="imageblock">
-<div class="content">
-<img src="./images/USSD_SS7_Simulator_Unstruc_request.png" alt="USSD SS7 Simulator Unstruc request">
-</div>
-<div class="title">Figure 3. USSD SS7 Simulator - Unstructured Request</div>
-</div>
-</li>
-</ol>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure: Running Restcomm USSD Simulator (HLR) - USSD Push Example</div>
-<ol class="arabic">
-<li>
-<p>You must first start the Restcomm USSD GateWay in simulator profile.</p>
-<div class="listingblock">
-<div class="content">
-<pre>[vinu@vinu-neha ~]$ cd restcomm-ussdgateway-<version>/jboss-5.1.0.GA/bin
-[vinu@vinu-neha bin]$./run.sh -b 127.0.0.1 -c simulator</pre>
-</div>
-</div>
-</li>
-<li>
-<p>To send a PUSH request go to <a href="http://localhost:8080/jmx-console/" class="bare">http://localhost:8080/jmx-console/</a> and click the link <code>org.mobicents.ussdgateway.example</code> in the left menu.
-Then open the MBean <code>'name=HttpPush'</code>.</p>
-</li>
-<li>
-<p>MBean provides two operations: 1) <code>sendNotify</code> to push Notification and 2) <code>sendRequest</code> to push USSD menu based tree.
-The parameter <code>Isdn</code> is the MSISDN to which Notify or Request is to be sent.</p>
-<div class="imageblock">
-<div class="content">
-<img src="./images/Restcomm-ussd-simulator_Notify.png" alt="Restcomm ussd simulator Notify">
-</div>
-<div class="title">Figure 4. Restcomm USSD Simulator - Notify</div>
-</div>
-<div class="paragraph">
-<p>You can simulate a simple Notify dialog by following the below steps:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Fill the ISDN field with a preferred ISDN number, for example "1111" is good for SS7 Simulator.
-Now press "Apply changes".</p>
-</li>
-<li>
-<p>Perform "reset" operation.
-Perform "sendNotify" operation with parameters: String=&lt;Text of your notification&gt;, boolean=false, int=60000 and String=&lt;any random string&gt;. Parameters definition is as below</p>
-</li>
-<li>
-<p>1st String is USSD message that you want to push to mobile</p>
-</li>
-<li>
-<p>2nd Boolean if set to true means USSD Gw will send empty TCAP Begin and try to establish dialog before sending actual message.</p>
-</li>
-<li>
-<p>3rd Int is custom invoke timeout.
-User must respond within this period else USSD Gw will terminate Dialog and Application will get appropriate error message</p>
-</li>
-<li>
-<p>4th String is random string that is stored at USSD Gw side as custom object.</p>
-</li>
-<li>
-<p>When ever response comes back, USSD Gw will include this custom string in XML Payload.</p>
-</li>
-<li>
-<p>Perform "close" operation.
-You will now find a notification at the SS7 Simulator.</p>
-<div class="paragraph">
-<p>You can also simulate more complicated scenarios like pushing the tree based menu to user and expecting some input from users by calling <code>sendRequest</code>.
-The below Class provides more explanation for attributes and operations of HttpPush.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">/**
- * Simple MBean interface. This MBean is front end of simple example for ussd
- * push via HTTP.
- *
- */
-public interface HTTPPushMBean {
-
-	/**
-	 * The URI where HTTP Post request is to be submitted. This should point the
-	 * USSD Gateway. Basically http://USSD-IP:8080/mobicents
-	 *
-	 * @param uri
-	 */
-	public void setTargetUri(String uri);
-
-	/**
-	 * Get the URI pointing to USSD Gateway for push
-	 *
-	 * @return
-	 */
-	public String getTargetUri();
-
-	/**
-	 * Set the MSISDN where USSD Push is to be sent
-	 *
-	 * @param isdn
-	 */
-	public void setIsdn(String isdn);
-
-	/**
-	 * Get the MSISDN where USSD request is to be pushed
-	 *
-	 * @return
-	 */
-	public String getIsdn();
-
-	/**
-	 * Reset( remove local dialog ) in case something goes wrong
-	 */
-	public void reset();
-
-	/**
-	 * Starts dialog if not already started. Sends Unstructured Request. It can
-	 * be sent multiple times in the same dialog
-	 *
-	 * @param ussdRequest
-	 *            The actual USSD String request
-	 * @param emptyDialogHandshake
-	 *            If true, USSD Gateway will first establish Dialog by doing
-	 *            handshake before sending USSD request. If false the USSD
-	 *            request will be added in Dialog begin message
-	 * @param invokeTimeout
-	 *            Time in milliseconds USSD gateway will wait for user to
-	 *            respond, if user doesn't respond back within specified time,
-	 *            USSD Gateway will abort the dialog and send back Abort error
-	 *            to HTTP App
-	 * @param userData
-	 * 			  User Data to be sent with every request to USSD Gateway which will be
-	 * 			  returned back with response from USSD Gw. This is just in case if
-	 * 			  application wants to keep some data at Dialog level, for example MSISDN
-	 *
-	 *
-	 * @throws Exception
-	 */
-	public void sendRequest(String ussdRequest, boolean emptyDialogHandshake, int invokeTimeout, String userData) throws Exception;
-
-	/**
-	 * Starts dialog if not already started. Sends Notify Request. It can be
-	 * sent multiple times in the same dialog
-	 *
-	 * @param ussdRequest
-	 *            The actual USSD String request
-	 * @param emptyDialogHandshake
-	 *            If true, USSD Gateway will first establish Dialog by doing
-	 *            handshake before sending USSD request. If false the USSD
-	 *            request will be added in Dialog begin message
-	 * @param invokeTimeout
-	 *            Time in milliseconds USSD gateway will wait for user to
-	 *            respond, if user doesn't respond back within specified time,
-	 *            USSD Gateway will abort the dialog and send back Abort error
-	 *            to HTTP App
-	 * @param userData
-	 * 			  User Data to be sent with every request to USSD Gateway which will be
-	 * 			  returned back with response from USSD Gw. This is just in case if
-	 * 			  application wants to keep some data at Dialog level, for example MSISDN
-	 * @throws Exception
-	 */
-	public void sendNotify(String ussdRequest, boolean emptyDialogHandshake, int invokeTimeout, String userData) throws Exception;
-
-	/**
-	 * USER Abort the underlying MAP Dialog
-	 *
-	 * @throws Exception
-	 */
-	public void abort() throws Exception;
-
-	/**
-	 * Close the underlying MAP Dialog. This will send TCAP End to peer
-	 *
-	 * @throws Exeption
-	 */
-	public void close() throws Exception;
-
-	/**
-	 * Return current status of service - what has been sent, what has been
-	 * received etc.
-	 *
-	 * @return
-	 */
-	public String getStatus();
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_running_shell"><a class="anchor" href="#_running_shell"></a>3. Running the Shell</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>You must start the Shell client and connect to the managed instance prior to executing commands to configure the Gateway.
-Shell can be started by issuing the following command from <em class="path">restcomm-ussdgateway/jboss-5.1.0.GA/bin</em> directory:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>[$] ./ss7-cli.sh</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Once console starts, it will print following information and await further commands:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>version=6.2.8.493,name=Restcomm CLI,prefix=restcomm,vendor=TeleStax
-restcomm></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Before issuing further commands you must connect to a managed instance.
-For more details on connecting to an instance and for a list of all supported commands and details on configuring the SS7 stack refer to the Restcomm SS7 Stack User Guide.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_using_gui"><a class="anchor" href="#_using_gui"></a>4. Running the Graphical User Interface</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Open a Web Browser and navigate to <a href="http://localhost:8080/restcomm-management/" class="bare">http://localhost:8080/restcomm-management/</a>. This will launch the Restcomm GUI Management Console which is horizontally segregated into multiple tabs, one tab for each product in the Restcomm Suite.
-You will notice that only the tabs of products whose binaries are installed already will be shown enabled and active in the GUI.
-If you have successfully installed the Restcomm USSD GateWay you will find the tabs for JAIN-SLEE, JMX, SS7 and USSD GW active and enabled.
-For more details on using the GUI for SS7 or JAIN-SLEE please refer to their respective user guides.
-This document only provides instructions for using the GUI to configure the USSD Gateway.</p>
-</div>
-<div class="paragraph">
-<p>Switch to the USSD GW tab and you will find that the window will look similar to the figure below.
-The GUI is divided into three sections:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>A left panel listing the management and monitoring units (Server Settings, Routing Rules, Metrics). You can click on any of these to select and navigate to the specific management unit.</p>
-</li>
-<li>
-<p>A main panel displaying the currently selected management unit. The main view is categorized into multiple tabs to manage different aspects of the selected layer.</p>
-</li>
-<li>
-<p>A bottom panel displaying the log data.
-You can clear the log anytime by clicking on the trash icon at the top right corner of this panel.
-You can also minimize or maximize this panel to suit your needs.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="./images/GUI-USSD-GW-main.png" alt="GUI USSD GW main">
-</div>
-<div class="title">Figure 5. GUI - Restcomm USSD GateWay</div>
-</div>
-<div class="sect2">
-<h3 id="_connect_gui"><a class="anchor" href="#_connect_gui"></a>4.1. Connect to a new Instance</h3>
-<div class="paragraph">
-<p>You can connect to a new instance by entering the IP:Port values and the login credentials in the top left corner of the GUI.
-However please note that this feature is not available in this release but will be fully functional in the next release.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_gui_security"><a class="anchor" href="#_gui_security"></a>4.2. Authentication</h3>
-<div class="paragraph">
-<p>Restcomm USSD GateWay GUI Management Security is based on the JBoss Security Framework.
-However please note that the feature is not fully functional yet and you will not be able to sign-out or sign-in using the login panel at the top right corner of the GUI.
-Future releases will offer a full implementation.</p>
-</div>
-<div class="paragraph">
-<p>As of now, there is basic authentication offered (which is based on the JBoss Security framework). When you try to start the Web Console, you will be prompted to enter login credentials.
-These credentials can be configured in the files <em class="path">jmx-console-roles.properties</em> and <em class="path">jmx-console-users.properties</em> located at <em class="path">restcomm-ussdgateway-&lt;version&gt;/jboss-5.1.0.GA/server/&lt;profile&gt;/conf/props/</em>.</p>
-</div>
-<div class="paragraph">
-<p>You can also change the authentication from flat file system to database by making necessary configurations in the file <em class="path">restcomm-ussdgateway-&lt;version&gt;/jboss-5.1.0.GA/server/&lt;profile&gt;/conf/login-config.xml</em>.</p>
-</div>
-<div class="paragraph">
-<p>For detailed instructions and to know more about JBoss Security Framework please refer to the JBoss Installation Guide  <a href="http://docs.jboss.org/jbossas/docs/Installation_And_Getting_Started_Guide/5/html_single/index.html#Basic_Configuration_Issues-Security_Service">here</a>.</p>
-</div>
-<div class="admonitionblock note">
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. USSD GateWay  Application Tracer and Log Categories</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Sbb</th>
+<th class="tableblock halign-left valign-top">Tracer name</th>
+<th class="tableblock halign-left valign-top">LOG4J category</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ParentSbb</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">USSD-Parent</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">javax.slee.SbbNotification [service=ServiceID[name=mobicents-ussdgateway,vendor=org.mobicents, version=1.0],sbb=SbbID[name=ParentSbb, vendor=org.mobicents,version=1.0]].USSD-Parent</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SipSbb</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">USSD-CHILD-SipSbb</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">javax.slee.SbbNotification [service=ServiceID[name=mobicents-ussdgateway,vendor=org.mobicents, version=1.0],sbb=SbbID[name=SipSbb, vendor=org.mobicents,version=1.0]].USSD-CHILD-SipSbb</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HttpClientSbb</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">USSD-CHILD-HttpClientSbb</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">javax.slee.SbbNotification [service=ServiceID[name=mobicents-ussdgateway,vendor=org.mobicents, version=1.0],sbb=SbbID[name=HttpClientSbb,vendor=org.mobicents,version=1.0]].USSD-CHILD-HttpClientSbb</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock important">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-Deafult user-id and password for GUI Management Console is admin and admin.
-You can change the user-id and password in files  <em class="path">jmx-console-roles.properties</em> and <em class="path">jmx-console-users.properties</em>  located at <em class="path">restcomm-ussdgateway-&lt;version&gt;/jboss-5.1.0.GA/server/&lt;profile&gt;/conf/props/</em>
+Spaces where introduced in <code>LOG4J category</code>  column values, to correctly render the table.
+Please remove them when using copy/paste.
 </td>
 </tr>
 </table>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="statistics"><a class="anchor" href="#statistics"></a>2. Statistics</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_view_stats"><a class="anchor" href="#_view_stats"></a>2.1. View USSD Statistics using the GUI</h3>
+<div class="paragraph">
+<p>You can view USSD statistics in the GUI Management Console by following the procedure below.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure: View USSD Statistics in the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for USSD Gateway, click on 'Manage Campaigns' in the left panel.</p>
+</li>
+<li>
+<p>If there are no statistics campaigns created yet, press the "Create Statistics Campaign" button.</p>
+</li>
+<li>
+<p>Set the value of "Counter Definition Set Name" to "USSD GW-USSD-Main". You can set the 'Duration' value to any desired statistic interval as required.
+USSD Gateway will collect statistics for selected duration and then reset all to zero and start over again.
+However stats of type cumulative will not be reset to 0.
+Enter any unique name for "Campaign Name" (eg.
+"camp1").</p>
+</li>
+<li>
+<p>Open the newly created campaign and click on the tag "Counter value". You will now be able to observe the current set of counter values.
+Whenever you wish to see the current counter values set, you can view them here by clicking on the tag "Counter value".</p>
+</li>
+<li>
+<p>For multiple counters, you can also view in the form of time histograms.
+To view this, you must click on "Metrics" in the left panel of the GUI.</p>
+</li>
+<li>
+<p>The main panel will display the current statistics and the details of the parameters.
+This page get auto-refreshed for every "Refresh Rate" seconds and therefore the statistics are refreshed automatically.
+It makes sense to select refresh rate same as duration value for which USSD Gateway is collecting stats.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Statistics info is also written by default into the log file (<em class="path">restcomm-ussdgateway/wildfly-10.1.0.Final/standalone/log/stats.log</em>). File format is plain text and easy to understand.
+This log file can achieve a big size if your statistic duration is short.
+If you do not need that statistic data will be written into stats.log file, you can remove the section from <em class="path">restcomm-ussdgateway/wildfly-10.1.0.Final/standalone/configuration/standalone.xml</em>	 | That contains the appender:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>	&lt;periodic-rotating-file-handler xmlns="" autoflush="true" name="STATS"&gt;
+    .....
+    .....
+    .....
+	&lt;/periodic-rotating-file-handler&gt;</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ussd-counters"><a class="anchor" href="#ussd-counters"></a>2.2. USSD Counters</h3>
+<div class="paragraph">
+<p>The table below lists the USSD counters along with their description.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 2. USSD Counters</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MinDialogsInProcess</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A minimal count of dialogs that are in progress during a statistic period.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MaxDialogsInProcess</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A maximum count of dialogs that are in progress during a statistic period.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DialogsAllEstablished</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of successfully established Dialogs for all dialog cases. A PULL Dialog is established if ProcessUnstructuredSSRequest has come to the USSD Gateway and a Short Code from the request is configured as USSD GW side and USSD request has routed to a HTTP or SIP application. A PUSH Dialog is established if the USSD Gateway has sent an UnstructuredSSRequest or UnstructuredSSNotifyRequest to the SS7 network and a non-error response from a mobile station has been received.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DialogsAllFailed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of the Dialogs failed at establishing or established phases for all dialog cases. The most common case of failure at establishing phases is in the PUSH case when a USSD request has failed due to bad subscriber number, absent or busy subscriber. If there is an incoming ProcessUnstructuredSSRequest with a wrong short code, this Dialog is not registerd into the DialogsAllFailed counter. Instead it is registered into the UssdPullNoRoutingRule counter. A Dialog can be registered in the DialogsAllFailed counter only if it failed at establishing phase. It can be registered in both DialogsAllEstablished and DialogsAllFailed counters if it failed in the established phase.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DialogsPullEstablished</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of successfully established PULL Dialogs. It is similar to the counter DialogsAllEstablished but used only for PULL dialogs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DialogsPullFailed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of the PULL Dialogs failed at establishing or established phases. It is similar to the counter DialogsAllFailed but used only for PULL dialogs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DialogsPushEstablished</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of successfully established PUSH Dialogs. It is similar to the counter DialogsAllEstablished but used only for PUSH dialogs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DialogsPushFailed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of the PUSH Dialogs failed at establishing or established phases. It is similar to the counter DialogsAllFailed but used only for PUSH dialogs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DialogsHttpEstablished</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of successfully established HTTP Dialogs. It is similar to the counter DialogsAllEstablished but used only for HTTP dialogs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DialogsHttpFailed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of the HTTP Dialogs failed at establishing or established phases. It is similar to the counter DialogsAllFailed but used only for HTTP dialogs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DialogsSipEstablished</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of successfully established SIP Dialogs. It is similar to the counter DialogsAllEstablished but used only for SIP dialogs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DialogsSipFailed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of the SIP Dialogs failed at establishing or established phases. It is similar to the counter DialogsAllFailed but used only for SIP dialogs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DialogsAllEstablishedCumulative</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This counter contains a cumulative value of DialogsAllEstablished counter from the time the USSD GW was started.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DialogsAllFailedCumulative</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This counter contains a cumulative value of DialogsAllFailed counter from the time the USSD GW was started.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DialogsAllEstablishedPerSec</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of the successfully established Dialogs per second, for all dialog cases.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DialogsAllFailedPerSec</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of the Dialogs failed per second at establishing or established phases, for all dialog cases.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ProcessUssdRequestOperations</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of all requested ProcessUnstructuredSSRequest.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ProcessUssdRequestOperationsCumulative</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This counter contains a cumulative value of ProcessUssdRequestOperations counter from the time the USSD GW was started.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UssdRequestOperations</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of all requested UnstructuredSSRequest.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UssdRequestOperationsCumulative</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This counter contains a cumulative value of UssdRequestOperations counter from the time the USSD GW was started.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UssdNotifyOperations</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of all requested UnstructuredSSNotifyRequest.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UssdNotifyOperationsCumulative</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This counter contains a cumulative value of UssdNotifyOperations counter from the time the USSD GW was started.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UssdPullNoRoutingRule</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of incoming PULL requests for Short Codes that are not configured in the USSD GW and are therefore rejected.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UssdPullNoRoutingRuleCumulative</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This counter contains a cumulative value of UssdPullNoRoutingRule counter from the time the USSD GW was started.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MapErrorAbsentSubscribers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of MAP error message AbsentSubscribers received from the HLR/MSC (PUSH case).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MapErrorAbsentSubscribersCumulative</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This counter contains a cumulative value of MapErrorAbsentSubscribers counter from the time the USSD GW was started.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MapErrorCallBarred</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of MAP error message CallBarred received from the HLR (PUSH case).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MapErrorCallBarredCumulative</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This counter contains a cumulative value of MapErrorCallBarred counter from the time the USSD GW was started.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MapErrorTeleserviceNotProvisioned</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of MAP error message TeleserviceNotProvisioned received from the HLR (PUSH case).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MapErrorTeleserviceNotProvisionedCumulative</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This counter contains a cumulative value of MapErrorTeleserviceNotProvisioned counter from the time the USSD GW was started.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MapErrorUnknownSubscriber</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of MAP error message UnknownSubscriber received from the HLR (PUSH case).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MapErrorUnknownSubscriberCumulative</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This counter contains a cumulative value of MapErrorUnknownSubscriber counter from the time the USSD GW was started.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MapErrorUssdBusy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of MAP error message UssdBusy received from the MSC (PUSH case).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MapErrorUssdBusyCumulative</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This counter contains a cumulative value of MapErrorUssdBusy counter from the time the USSD GW was started.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MapErrorComponentOther</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of all other MAP error messages received from the HRL/MSC (PUSH case).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MapErrorComponentOtherCumulative</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This counter contains a cumulative value of MapErrorComponentOther counter from the time the USSD GW was started.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MapDialogTimeouts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of all MAP Dialog timeouts. This is the case when a mobile subscriber does not respond for a long time after the MAP Dialog is established.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MapDialogTimeoutsCumulative</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This counter contains a cumulative value of MapDialogTimeouts counter from the time the USSD GW was started.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MapInvokeTimeouts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of all MAP Invoke timeouts. This is the case when a mobile subscriber does not respond for a long time for the Invoke from USSD GW.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MapInvokeTimeoutsCumulative</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This counter contains a cumulative value of MapInvokeTimeouts counter from the time the USSD GW was started.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AppTimeouts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of all HTTP / SIP Application timeouts. This is the case when a HTTP / SIP application does not respond for a long time (PULL cases only).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AppTimeoutsCumulative</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This counter contains a cumulative value of AppTimeouts counter from the time the USSD GW was started.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RequestsPerUssdCode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A count of ProcessUnstructuredSSRequest requests per Short Code. This value is a complex value and there may be several values for several Short Codes inside the counter. Only the Short Codes for which there were requests during this time interval are present.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>

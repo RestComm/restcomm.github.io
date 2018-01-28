@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>Running</title>
+<title>Running (Wildfly)</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22790,7 +22790,7 @@ body.vertical_menu_outside_paspartu.vertical_menu_enabled.vertical_menu_hidden.v
 </head>
 <body class="book">
 <div id="header">
-<h1>Running</h1>
+<h1>Running (Wildfly)</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -22825,15 +22825,14 @@ body.vertical_menu_outside_paspartu.vertical_menu_enabled.vertical_menu_hidden.v
 <p>You must have Restcomm USSD GateWay installed as explained in the Installation Guide.</p>
 </li>
 <li>
-<p>If you are using the SS7 board on server, you must ensure that the <code>java.library.path</code> variable is set to point to the directory containing the native component.
-Alternatively you can copy it to the JBoss native library path manually.</p>
+<p>If you are using the SS7 board on server, you must ensure that the <code>java.library.path</code> variable is set to point to the directory containing the native component.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>All you have to do to start the Gateway is start the JBoss Application Server.
-To start the JBoss Server you must execute the <em class="path">run.sh</em> (Unix) or <em class="path">run.bat</em> (Microsoft Windows) startup script in the installation directory <em class="path">restcomm-ussdgateway/jboss-5.1.0.GA/bin</em>.
+<p>All you have to do to start the Gateway is start the Wildfly Server.
+To start the Wildfly Server you must execute the <em class="path">standalone.sh</em> (Unix) or <em class="path">standalone.bat</em> (Microsoft Windows) startup script in the installation directory <em class="path">restcomm-ussdgateway/wildfly-10.1.0.Final/bin</em>.
 Note that this will start the server in the default profile.
 The "default" profile is a clean profile where you start from scratch and configure the entire SS7 Stack and USSD Gateway to suit your requirements.</p>
 </li>
@@ -22841,22 +22840,14 @@ The "default" profile is a clean profile where you start from scratch and config
 <p>Result: If the service started properly you should see the following last few output lines in the Unix terminal or Command Prompt depending on your environment:</p>
 <div class="listingblock">
 <div class="content">
-<pre>22:23:11,583 INFO  [DeploymentMBeanImpl] (main) Installed DeployableUnitID[url=file:/home/vinu/restcomm-ussdgateway-<version>/jboss-5.1.0.GA/server/default/deploy/restcomm-ussd-gateway/services-DU-6.1.5.GA.jar/]
-22:23:11,874 INFO  [ServiceManagementImpl] (main) Activated ServiceID[name=restcomm-ussdgateway-cdr,vendor=org.mobicents,version=1.0]
-22:23:11,976 ERROR [STDERR] (pool-28-thread-1) QUERRY: 000000 CREATE TABLE USSD_GW_CDRS (ID VARCHAR(150) NOT NULL, L_SPC INT, L_SSN SMALLINT, L_RI SMALLINT, L_GT_I SMALLINT, L_GT_DIGITS VARCHAR(18), R_SPC INT, R_SSN SMALLINT, R_RI SMALLINT, R_GT_I SMALLINT, R_GT_DIGITS VARCHAR(18), SERVICE_CODE VARCHAR(50), OR_NATURE SMALLINT, OR_PLAN SMALLINT, OR_DIGITS VARCHAR(18), DE_NATURE SMALLINT, DE_PLAN SMALLINT, DE_DIGITS VARCHAR(18), ISDN_NATURE SMALLINT, ISDN_PLAN SMALLINT, ISDN_DIGITS VARCHAR(18), VLR_NATURE SMALLINT, VLR_PLAN SMALLINT, VLR_DIGITS VARCHAR(18), IMSI VARCHAR(100), STATUS VARCHAR(30) NOT NULL , TYPE VARCHAR(30) NOT NULL , TSTAMP TIMESTAMP NOT NULL , LOCAL_DIALOG_ID BIGINT, REMOTE_DIALOG_ID BIGINT, DIALOG_DURATION BIGINT, USSD_STRING VARCHAR(255), PRIMARY KEY(ID,TSTAMP));
-22:23:12,135 INFO  [ServiceManagementImpl] (main) Activated ServiceID[name=restcomm-ussdgateway,vendor=org.mobicents,version=1.0]
-22:23:12,395 INFO  [UssdPropertiesManagement] (main) Loading USSD Properties from /home/vinu/restcomm-ussdgateway-6.1.5.GA/jboss-5.1.0.GA/server/default/data/UssdManagement_ussdproperties.xml
-22:23:12,395 WARN  [UssdPropertiesManagement] (main) Failed to load the USSD configuration file.
-/home/vinu/restcomm-ussdgateway-6.1.5.GA/jboss-5.1.0.GA/server/default/data/UssdManagement_ussdproperties.xml (No such file or directory)
-22:23:12,396 INFO  [ShortCodeRoutingRuleManagement] (main) Loading short code routig rule configuration from /home/vinu/restcomm-ussdgateway-6.1.5.GA/jboss-5.1.0.GA/server/default/data/UssdManagement_scroutingrule.xml
-22:23:12,397 WARN  [ShortCodeRoutingRuleManagement] (main) Failed to load the short code routig rule configuration file.
-/home/vinu/restcomm-ussdgateway-6.1.5.GA/jboss-5.1.0.GA/server/default/data/UssdManagement_scroutingrule.xml (No such file or directory)
-22:23:12,400 INFO  [UssdManagement] (main) Started UssdManagement
-22:23:12,419 INFO  [ShellServer] (main) Starting SS7 management shell environment
-22:23:12,430 INFO  [ShellServer] (main) ShellExecutor listening at /127.0.0.1:3435
-22:23:12,498 INFO  [Http11Protocol] (main) Starting Coyote HTTP/1.1 on http-127.0.0.1-8080
-22:23:12,529 INFO  [AjpProtocol] (main) Starting Coyote AJP/1.3 on ajp-127.0.0.1-8009
-22:23:12,541 INFO  [ServerImpl] (main) JBoss (Microcontainer) [5.1.0.GA (build: SVNTag=JBoss_5_1_0_GA date=200905221634)] Started in 1m:11s:118ms</pre>
+<pre>11:18:33,353 INFO  [org.mobicents.slee.container.management.ServiceManagementImpl] (Timer-2) Activated ServiceID[name=mobicents-ussdgateway-cdr,vendor=org.mobicents,version=1.0]
+11:18:33,362 INFO  [org.mobicents.slee.runtime.sbbentity.SbbEntityLockFacility] (SLEE-EventRouterExecutor-3-thread-1) Thread[SLEE-EventRouterExecutor-3-thread-1,5,main] put of lock java.util.concurrent.locks.ReentrantLock@c22ea54[Unlocked] for /ServiceID[name=mobicents-ussdgateway-cdr,vendor=org.mobicents,version=1.0]/5bed54de:160356b1f77:-7ffd____
+11:18:33,605 INFO  [org.mobicents.slee.container.management.ServiceManagementImpl] (Timer-2) Activated ServiceID[name=mobicents-ussdgateway-cdr-plain,vendor=org.mobicents,version=1.0]
+11:18:33,605 INFO  [org.mobicents.slee.runtime.sbbentity.SbbEntityLockFacility] (SLEE-EventRouterExecutor-3-thread-1) Thread[SLEE-EventRouterExecutor-3-thread-1,5,main] put of lock java.util.concurrent.locks.ReentrantLock@58c8105a[Unlocked] for /ServiceID[name=mobicents-ussdgateway-cdr-plain,vendor=org.mobicents,version=1.0]/5bed54de:160356b1f77:-7ffb____
+11:18:33,607 INFO  [javax.slee.SbbNotification[service=ServiceID[name=mobicents-ussdgateway-cdr-plain,vendor=org.mobicents,version=1.0],sbb=SbbID[name=CDRSbbPlain,vendor=org.mobicents,version=1.0]].Charger] (SLEE-EventRouterExecutor-3-thread-1) Setting CDR_GENERATED_TO to Textfile
+11:18:33,857 INFO  [org.mobicents.slee.container.management.ServiceManagementImpl] (Timer-2) Activated ServiceID[name=mobicents-ussdgateway,vendor=org.mobicents,version=1.0]
+11:18:34,109 INFO  [org.mobicents.slee.container.management.ServiceManagementImpl] (Timer-2) Activated ServiceID[name=mobicents-ussdgateway-server-http,vendor=org.mobicents,version=1.0]
+11:18:34,360 INFO  [org.mobicents.slee.container.management.ServiceManagementImpl] (Timer-2) Activated ServiceID[name=mobicents-ussdgateway-server-sip,vendor=org.mobicents,version=1.0]</pre>
 </div>
 </div>
 </li>
@@ -22872,15 +22863,14 @@ The next chapter will discuss in detail about configuring SS7 and the USSD Gatew
 <div class="title">Procedure: Stop the Gateway</div>
 <ol class="arabic">
 <li>
-<p>To stop the Restcomm USSD GateWay , you must shut down the JBoss Application Server.
-To shut down the server(s) you must execute the <code>shutdown.sh -s</code> (Unix) or  <code>shutdown.bat -s</code> (Microsoft Windows) script in the installation directory <em class="path">restcomm-ussdgateway-/jboss-5.1.0.GA/bin</em>.</p>
+<p>To stop the Restcomm USSD GateWay , you must shut down the Wildfly Server.
+To shut down the server(s) you must execute the <code>jboss-cli.sh --connect command=:shutdown</code> (Unix) or  <code>jboss-cli.bat --connect command=:shutdown</code> (Microsoft Windows) script in the installation directory <em class="path">restcomm-ussdgateway-/wildfly-10.1.0.Final/bin</em>.</p>
 </li>
 <li>
 <p>If the server stopped properly, you will see the following three lines as the  last output in the Unix terminal or Command Prompt:</p>
 <div class="listingblock">
 <div class="content">
-<pre>[Server] Shutdown complete
-Halting VM</pre>
+<pre>INFO  [org.jboss.as] (MSC service thread 1-2) WFLYSRV0050: WildFly Full 10.1.0.Final (WildFly Core 2.2.0.Final) stopped</pre>
 </div>
 </div>
 </li>
@@ -22898,7 +22888,7 @@ Starting the Gateway with the "simulator" profile is similar to the steps explai
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>[bin]$ ./run.sh -c simulator</pre>
+<pre>[bin]$ ./standalone.sh -Djboss.server.base.dir=$JBOSS_HOME/simulator</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -22906,7 +22896,7 @@ Starting the Gateway with the "simulator" profile is similar to the steps explai
 For using it in Microsoft Windows systems, you must configure the parameters as explained below.</p>
 </div>
 <div class="paragraph">
-<p>Open the file  <em class="path">restcomm-ussdgateway-&lt;version&gt;/jboss-5.1.0.GA/server/simulator/data/SCTPManagement_sctp.xml</em> and replace in two places, the parameter <code>ipChannelType="0"</code> with <code>ipChannelType="1"</code> to enable TCP connection instead of SCTP since Windows does not support SCTP.
+<p>Open the file  <em class="path">restcomm-ussdgateway-&lt;version&gt;/wildfly-10.1.0.Final/standalone/configuration/standalone.xml</em> and replace in two places, the parameter <code>ipChannelType="0"</code> with <code>ipChannelType="1"</code> to enable TCP connection instead of SCTP since Windows does not support SCTP.
 If you are using in a Linux system, there is no modification required to the settings.</p>
 </div>
 <div class="sect2">
@@ -22992,8 +22982,8 @@ Texts Remaining".</p>
 <p>You must first start the Restcomm USSD GateWay in simulator profile.</p>
 <div class="listingblock">
 <div class="content">
-<pre>[vinu@vinu-neha ~]$ cd restcomm-ussdgateway-<version>/jboss-5.1.0.GA/bin
-[vinu@vinu-neha bin]$./run.sh -b 127.0.0.1 -c simulator</pre>
+<pre>[vinu@vinu-neha ~]$ cd restcomm-ussdgateway-<version>/wildfly-10.1.0.Final/bin
+[vinu@vinu-neha bin]$./standalone.sh -Djboss.server.base.dir=restcomm-ussdgateway-<version>/simulator</pre>
 </div>
 </div>
 </li>
@@ -23175,7 +23165,7 @@ public interface HTTPPushMBean {
 <div class="sectionbody">
 <div class="paragraph">
 <p>You must start the Shell client and connect to the managed instance prior to executing commands to configure the Gateway.
-Shell can be started by issuing the following command from <em class="path">restcomm-ussdgateway/jboss-5.1.0.GA/bin</em> directory:</p>
+Shell can be started by issuing the following command from <em class="path">restcomm-ussdgateway/wildfly-10.1.0.Final/bin</em> directory:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23248,10 +23238,7 @@ Future releases will offer a full implementation.</p>
 </div>
 <div class="paragraph">
 <p>As of now, there is basic authentication offered (which is based on the JBoss Security framework). When you try to start the Web Console, you will be prompted to enter login credentials.
-These credentials can be configured in the files <em class="path">jmx-console-roles.properties</em> and <em class="path">jmx-console-users.properties</em> located at <em class="path">restcomm-ussdgateway-&lt;version&gt;/jboss-5.1.0.GA/server/&lt;profile&gt;/conf/props/</em>.</p>
-</div>
-<div class="paragraph">
-<p>You can also change the authentication from flat file system to database by making necessary configurations in the file <em class="path">restcomm-ussdgateway-&lt;version&gt;/jboss-5.1.0.GA/server/&lt;profile&gt;/conf/login-config.xml</em>.</p>
+These credentials can be configured in the files <em class="path">jmx-console-roles.properties</em> and <em class="path">jmx-users.properties</em> located at <em class="path">restcomm-ussdgateway-&lt;version&gt;/wildfly-10.1.0.Final/standalone/configuration/</em>.</p>
 </div>
 <div class="paragraph">
 <p>For detailed instructions and to know more about JBoss Security Framework please refer to the JBoss Installation Guide  <a href="http://docs.jboss.org/jbossas/docs/Installation_And_Getting_Started_Guide/5/html_single/index.html#Basic_Configuration_Issues-Security_Service">here</a>.</p>
@@ -23264,7 +23251,7 @@ These credentials can be configured in the files <em class="path">jmx-console-ro
 </td>
 <td class="content">
 Deafult user-id and password for GUI Management Console is admin and admin.
-You can change the user-id and password in files  <em class="path">jmx-console-roles.properties</em> and <em class="path">jmx-console-users.properties</em>  located at <em class="path">restcomm-ussdgateway-&lt;version&gt;/jboss-5.1.0.GA/server/&lt;profile&gt;/conf/props/</em>
+You can change the user-id and password in files  <em class="path">jmx-users.properties located at [path]</em>restcomm-ussdgateway-&lt;version&gt;/wildfly-10.1.0.Final/standalone/configuration/_
 </td>
 </tr>
 </table>

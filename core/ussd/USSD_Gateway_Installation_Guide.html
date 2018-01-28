@@ -22814,8 +22814,15 @@ body.vertical_menu_outside_paspartu.vertical_menu_enabled.vertical_menu_hidden.v
 <li><a href="#_source_code">4.4. Setup from Source</a></li>
 </ul>
 </li>
-<li><a href="#_setup_configuration">5. Post Installation Configuration</a></li>
-<li><a href="#_setup_uninstalling">6. Uninstalling</a></li>
+<li><a href="#_setup_downloading">5. Downloading and Installing (Wildfly)</a>
+<ul class="sectlevel2">
+<li><a href="#_downloading_binary">5.1. Binary Download and Installation</a></li>
+<li><a href="#_dir_structure">5.2. Directory Structure</a></li>
+<li><a href="#_source_code">5.3. Setup from Source</a></li>
+</ul>
+</li>
+<li><a href="#_setup_configuration">6. Post Installation Configuration</a></li>
+<li><a href="#_setup_uninstalling">7. Uninstalling</a></li>
 <li><a href="#_jdk_installing_configuring_and_running">Appendix A: Java Development Kit (): Installing, Configuring and Running</a></li>
 <li><a href="#_jboss_home_setup">Appendix B: Setting the JBOSS_HOME Environment Variable</a></li>
 </ul>
@@ -23391,7 +23398,165 @@ You must ensure that <code>JAVA_HOME</code> environment variable is set properly
 </div>
 </div>
 <div class="sect1">
-<h2 id="_setup_configuration"><a class="anchor" href="#_setup_configuration"></a>5. Post Installation Configuration</h2>
+<h2 id="_setup_downloading"><a class="anchor" href="#_setup_downloading"></a>5. Downloading and Installing (Wildfly)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Installing Restcomm USSD GateWay is easy and quick with the binary download.
+You can either download the binary release or download the source code and set up from source.</p>
+</div>
+<div class="sect2">
+<h3 id="_downloading_binary"><a class="anchor" href="#_downloading_binary"></a>5.1. Binary Download and Installation</h3>
+<div class="paragraph">
+<p>The binary release is available for download at the following link: <a href="https://github.com/RestComm/ussdgateway/releases/latest" class="bare">https://github.com/RestComm/ussdgateway/releases/latest</a></p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure: Binary Download and Installation</div>
+<ol class="arabic">
+<li>
+<p>Download the zip file <code>&lt;filename&gt;</code> to any folder of your choice.</p>
+</li>
+<li>
+<p>Extract the contents of the zip file.</p>
+<div class="listingblock">
+<div class="content">
+<pre>Downloads]$ unzip &lt;filename&gt;</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Verify the newly created directory and ensure the contents are as explained below.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_dir_structure"><a class="anchor" href="#_dir_structure"></a>5.2. Directory Structure</h3>
+<div class="paragraph">
+<p>When you download the binary release, you will notice that the top level directory is named <code>restcomm-ussdgateway-&lt;version&gt;</code> and immediately below this are five sub-directories as explained below:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>docs: Contains all relevant documentation in respective subfolders for JSLEE, jSS7, Management-HQ and USSD.</p>
+</li>
+<li>
+<p>wildfly-10.1.0.Final: The core server with two profiles "standalone" and "simulator". The "standalone" profile is a clean profile where you will have to start from scratch and configure the entire SS7 Stack and USSD Gateway.
+The "simulator" profile is a pre-configured profile to work with jss7-simulator.
+Refer to the Admin Guide for instructions on how to start the server in either of the profiles.</p>
+</li>
+<li>
+<p>resources: Contains SLEE MAP, JDBC, http-client, http-servlet and SIP RA jars.</p>
+</li>
+<li>
+<p>tools: Contains SLEE tools and jss7-simulator.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>|- restcomm-ussdgateway-<version>
+		|- docs
+				|+ jss7
+				|+ slee
+				|+ ussd
+				|+ management-hq
+		|- wildfly-10.1.0.Final
+				|+ appclient
+				|+ bin    //contains start up and shutdown scripts for the Server and the start up script for Shell.
+				|+ docs
+				|+ domain
+				|+ lib
+				|+ log
+				|+ modules  //contains module binaries (including slee modules)
+				|+ standalone //clean profile to set up from scratch
+				|+ simulator	//pre-configured profile to work with the jss7-simulator
+		|- resources
+				|+ http-client
+				|+ http-servlet
+				|+ jdbc
+				|+ map
+		|- tools
+				|+ eclipslee
+				|+ jopr-plugin
+				|+ remote-slee-connection
+				|+ snmp
+				|+ restcomm-jss7-simulator
+				|+ restcomm-ussd-simulator
+				|+ twiddle
+		|- template
+				|+ META-INF-dialogic
+				|+ META-INF-m3ua-dialogic</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_source_code"><a class="anchor" href="#_source_code"></a>5.3. Setup from Source</h3>
+<div class="paragraph">
+<p>Restcomm USSD GateWay is an open source project and you have the freedom to build from source.
+Building from source means you can stay on top with the latest features.
+Whilst aspects of Restcomm USSD GateWay are quite  complicated, you may find ways to become contributors.</p>
+</div>
+<div class="paragraph">
+<p>Restcomm USSD GateWay works with JDK1.7 or above.
+In addition you must have the following tools installed.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Git Client</code> : Instructions for using GIT, including install, can be found at <a href="http://git-scm.com/book" class="bare">http://git-scm.com/book</a></p>
+</li>
+<li>
+<p><code>Maven 3.2.X</code> : Instructions for using Maven, including install, can be found at <a href="http://maven.apache.org/" class="bare">http://maven.apache.org/</a></p>
+</li>
+<li>
+<p><code>Ant 1.7.0</code> : Instructions for using Ant, including install, can be found at <a href="http://ant.apache.org" class="bare">http://ant.apache.org</a></p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_source_building"><a class="anchor" href="#_source_building"></a>5.3.1. Release Source Code Building</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Downloading the source code</p>
+<div class="paragraph">
+<p>Use GIT to checkout a specific release source, the base URL is <a href="https://github.com/Restcomm/ussdgateway" class="bare">https://github.com/Restcomm/ussdgateway</a>, then add the specific release version.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>[usr]$ git clone https://github.com/Restcomm/ussdgateway.git
+[usr]$ cd ussdgateway
+[usr]$ git checkout <version></code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Building the source code</p>
+<div class="paragraph">
+<p>Now that we have the source the next step is to build and install the source.
+ Restcomm USSD GateWay uses Maven 2 to build the system.
+You must ensure that <code>JAVA_HOME</code> environment variable is set properly prior to building the source.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>[usr]$ mvn clean install</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_trunk_source_building"><a class="anchor" href="#_trunk_source_building"></a>5.3.2. Development Trunk Source Building</h4>
+<div class="paragraph">
+<p>Similar process as for <a href="#_source_building">Release Source Code Building</a>, the only change is don&#8217;t switch to specific tag.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_setup_configuration"><a class="anchor" href="#_setup_configuration"></a>6. Post Installation Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>You must perform post-installation configuration of the Gateway according to instructions in the Restcomm USSD GateWay Admin Guide.
@@ -23419,7 +23584,7 @@ Failure to configure memory, database, logging and other settings as per the ins
 </div>
 </div>
 <div class="sect1">
-<h2 id="_setup_uninstalling"><a class="anchor" href="#_setup_uninstalling"></a>6. Uninstalling</h2>
+<h2 id="_setup_uninstalling"><a class="anchor" href="#_setup_uninstalling"></a>7. Uninstalling</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>If you wish to remove Restcomm USSD GateWay you can do so by deleting the installation directory.</p>
@@ -23727,7 +23892,7 @@ As another hint, this topmost directory contains a <em class="path">bin</em> sub
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-01-25 17:09:05 UTC
+Last updated 2018-01-28 02:28:16 UTC
 </div>
 </div>
 <footer>
