@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>Setting the JBOSS_HOME Environment Variable</title>
+<title>Restcomm API – Profile</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22788,151 +22788,428 @@ body.vertical_menu_outside_paspartu.vertical_menu_enabled.vertical_menu_hidden.v
     <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/1877839.js"></script>
     <!-- End of HubSpot Embed Code -->
 </head>
-<body id="_jboss_home_setup" class="article">
+<body class="article">
 <div id="header">
-<h1>Setting the JBOSS_HOME Environment Variable</h1>
+<h1>Restcomm API – Profile</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#Profiles">Profiles</a>
+<ul class="sectlevel2">
+<li><a href="#profile-resource-uri">Profile Resource URI</a></li>
+<li><a href="#resource-schema">Resource Schema</a></li>
+<li><a href="#supported-operations">Supported Operations</a></li>
+</ul>
+</li>
+<li><a href="#Profiles_List">Profile List Resource</a>
+<ul class="sectlevel2">
+<li><a href="#supported-operations-2">Supported Operations</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 <div id="content">
+<div class="sect1">
+<h2 id="Profiles"><a class="anchor" href="#Profiles"></a>Profiles</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>The [app]` Platform` (<code class="app">) is built on top of the [app]</code>.
-You do not need to set the <code class="var">JBOSS_HOME</code> environment variable to run any of the [app]` Platform` servers <em>unless</em> <code class="var">JBOSS_HOME</code> is <em>already</em> set.</p>
-</div>
-<div class="paragraph">
-<p>The best way to know for sure whether <code class="var">JBOSS_HOME</code> was set previously or not is to perform a simple check which may save you time and frustration.</p>
-</div>
-<div class="paragraph">
-<div class="title">Checking to See If JBOSS_HOME is Set on Unix</div>
-<p>At the command line, <code>echo</code>			<code>$JBOSS_HOME</code> to see if it is currently defined in your environment:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>~]$ echo $JBOSS_HOME</pre>
-</div>
+<p>Profiles allow to associate behavior configuration  to specific Accounts or Organizations. Once a Profile
+is associated with such Entity, the next session (USSD/Voice/SMS) attempt related to that
+Entity will use the Profile configuration to tweak the service logic behavior.</p>
 </div>
 <div class="paragraph">
-<p>The [app]` Platform` and most &amp;THIS.PLATFORM; servers are built on top of the <code class="app"> ([app]</code>). When the [app]` Platform` or &amp;THIS.PLATFORM; servers are built <em>from source</em>, then <code class="var">JBOSS_HOME</code> <em>must</em> be set, because the &amp;THIS.PLATFORM; files are installed into (or &#8220;over top of&#8221; if you prefer) a clean <code class="app"> installation, and the build process assumes that the location pointed to by the <code class="var">JBOSS_HOME</code> environment variable at the time of building is the [app]</code> installation into which you want it to install the &amp;THIS.PLATFORM; files.</p>
-</div>
-<div class="paragraph">
-<p>This guide does not detail building the [app]` Platform` or any &amp;THIS.PLATFORM; servers from source.
-It is nevertheless useful to understand the role played by <code class="app">JBoss AS</code> and <code class="var">JBOSS_HOME</code> in the &amp;THIS.PLATFORM; ecosystem.</p>
-</div>
-<div class="paragraph">
-<p>The immediately-following section considers whether you need to set <code class="var">JBOSS_HOME</code> at all and, if so, when.
-The subsequent sections detail how to set <code class="var">JBOSS_HOME</code> on Unix and Windows</p>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-Even if you fall into the category below of <em>not needing</em> to set <code class="var">JBOSS_HOME</code>, you may want to for various reasons anyway.
-Also, even if you are instructed that you do <em>not need</em> to set <code class="var">JBOSS_HOME</code>, it is good practice nonetheless to check and make sure that <code class="var">JBOSS_HOME</code> actually <em>isn&#8217;t</em> set or defined on your system for some reason.
-This can save you both time and frustration.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>You <em>DO NOT NEED</em> to set <code class="var">JBOSS_HOME</code> if&#8230;&#8203;</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>&#8230;&#8203;you have installed the [app]` Platform` binary distribution.</p>
-</li>
-<li>
-<p>&#8230;&#8203;you have installed a &amp;THIS.PLATFORM;server binary distribution <em>which bundles [app]``.</em></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>You <em>MUST</em> set <code class="var">JBOSS_HOME</code> if&#8230;&#8203;</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>&#8230;&#8203;you are installing the [app]` Platform` or any of the &amp;THIS.PLATFORM; servers <em>from source</em>.</p>
-</li>
-<li>
-<p>&#8230;&#8203;you are installing the [app]` Platform` binary distribution, or one of the &amp;THIS.PLATFORM; server binary distributions, which <em>do not</em> bundle [app]``.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Naturally, if you installed the [app]` Platform` or one of the &amp;THIS.PLATFORM; server binary releases which <em>do not</em> bundle <code class="app">`, yet requires it to run, then you should install before setting [var]`JBOSS_HOME</code> or proceeding with anything else.</p>
-</div>
-<div class="paragraph">
-<div class="title">Setting the JBOSS_HOME Environment Variable on Unix</div>
-<p>The <code class="var">JBOSS_HOME</code> environment variable must point to the directory which contains all of the files for the [app]` Platform` or individual &amp;THIS.PLATFORM; server that you installed.
-As another hint, this topmost directory contains a <em class="path">bin</em> subdirectory.</p>
-</div>
-<div class="paragraph">
-<p>Setting <code class="var">JBOSS_HOME</code> in your personal <em class="path">~/.bashrc</em> startup script carries the advantage of retaining effect over reboots.
-Each time you log in, the environment variable is sure to be set for you, as a user.
-On Unix, it is possible to set <code class="var">JBOSS_HOME</code> as a system-wide environment variable, by defining it in <em class="path">/etc/bashrc</em>, but this method is neither recommended nor detailed in these instructions.</p>
+<p>During session creation the service logic will try to find the associated Profile
+based on this criteria, until a Profile is found:</p>
 </div>
 <div class="olist arabic">
-<div class="title">Procedure: To Set JBOSS_HOME on Unix&#8230;&#8203;</div>
 <ol class="arabic">
 <li>
-<p>Open the <em class="path">~/.bashrc</em> startup script, which is a hidden file in your home directory, in a text editor, and insert the following line on its own line while substituting for the actual install location on your system:</p>
-<div class="listingblock">
-<div class="content">
-<pre>export JBOSS_HOME="/home/&lt;username&gt;/&lt;path&gt;/&lt;to&gt;/&lt;install_directory&gt;"</pre>
-</div>
-</div>
+<p>Profile associated to current Account</p>
 </li>
 <li>
-<p>Save and close the <em class="path">.bashrc</em> startup script.</p>
+<p>Profile associated to parent Account</p>
 </li>
 <li>
-<p>You should <code>source</code> the <em class="path">.bashrc</em> script to force your change to take effect, so that <code class="var">JBOSS_HOME</code> becomes set for the current session<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup>.</p>
-<div class="listingblock">
-<div class="content">
-<pre>~]$ source ~/.bashrc</pre>
-</div>
-</div>
+<p>Profile associated to related Organization</p>
 </li>
 <li>
-<p>Finally, ensure that <code class="var">JBOSS_HOME</code> is set in the current session, and actually points to the correct location:</p>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The command line usage below is based upon a binary installation of the [app]` Platform`.
-In this sample output, <code class="var">JBOSS_HOME</code> has been set correctly to the <code class="replaceable">topmost_directory</code> of the <code class="app"> installation.
-Note that if you are installing one of the standalone [app]</code> servers (with <code class="app">JBoss AS</code> bundled!), then <code class="var">JBOSS_HOME</code> would point to the <code class="replaceable">topmost_directory</code> of your server installation.
-</td>
-</tr>
-</table>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>~]$ echo $JBOSS_HOME
-/home/silas/&lt;path&gt;/&lt;to&gt;/&lt;install_directory&gt;</pre>
-</div>
-</div>
+<p>Default Profile</p>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<div class="title">Setting the JBOSS_HOME Environment Variable on Windows</div>
-<p>The <code class="var">JBOSS_HOME</code> environment variable must point to the directory which contains all of the files for the &amp;THIS.PLATFORM;Platform or individual &amp;THIS.PLATFORM;server that you installed.
-As another hint, this topmost directory contains a <em class="path">bin</em> subdirectory.</p>
+<p>The Default Profile is pre-provisioned in the system, and can&#8217;t be modified from the
+REST API. The Default Profile Sid is "PRae6e420f425248d6a26948c17a9e2acf"</p>
 </div>
 <div class="paragraph">
-<p>For information on how to set environment variables in recent versions of Windows, refer to <a href="http://support.microsoft.com/kb/931715" class="bare">http://support.microsoft.com/kb/931715</a>.</p>
+<p>Since the Profile configuration is expected to grow as required, the Profile entity
+is defined by a JSON schema, rather than regular properties, representing a
+document used as generic container.</p>
+</div>
+<div class="sect2">
+<h3 id="profile-resource-uri"><a class="anchor" href="#profile-resource-uri"></a>Profile Resource URI</h3>
+<div class="paragraph">
+<p><strong>/2012-04-24/Profiles/{ProfileSid}</strong></p>
 </div>
 </div>
-<div id="footnotes">
-<hr>
-<div class="footnote" id="_footnote_1">
-<a href="#_footnoteref_1">1</a>. Note that any other terminals which were opened prior to your having altered .bashrc will need to source ~/.bashrc as well should they require access to JBOSS_HOME.
+<div class="sect2">
+<h3 id="resource-schema"><a class="anchor" href="#resource-schema"></a>Resource Schema</h3>
+<div class="literalblock">
+<div class="content">
+<pre>{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "resource:/org/restcomm/connect/http/schemas/rc-profile-schema.json#",
+    "additionalProperties": false,
+    "type": "object",
+    "properties": {
+        "featureEnablement": {
+            "$ref": "rc-feature-enablement-schema.json#/definitions/featureEnablement"
+        }
+    }
+}</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="supported-operations"><a class="anchor" href="#supported-operations"></a>Supported Operations</h3>
+<div class="paragraph">
+<p><strong>HTTP GET.</strong> Returns the representation of a Profile resource.</p>
+</div>
+<div class="sect3">
+<h4 id="response-status"><a class="anchor" href="#response-status"></a>Response Status</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Status</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">200 OK</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Body contains Profile JSon document</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">403 Forbidden</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only Super Admin is allowed to query Profiles</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">404 Not Found</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Target Profile SID is missing</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="response-headers"><a class="anchor" href="#response-headers"></a>Response Headers</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Header</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Link</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a link to the Profile schema with "rel" "describedBy"</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Modified-Since</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Date of last modification of the profile.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>HTTP PUT</strong>.
+Modifies a Profile resource and returns the representation.
+The body of the request is expected to contain a JSON document compliant to the Profile
+schema.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="response-status-2"><a class="anchor" href="#response-status-2"></a>Response Status</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Status</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">200 OK</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Modification performed. Body contains Profile JSon document</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">403 Forbidden</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only Super Admin is allowed to modify a Profile. DefaultProfile can&#8217;t be modified</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">404 Not Found</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Target Profile SID is missing</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">400 Bad Request</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Body contains a Profile not compliant with schema</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>HTTP DELETE</strong></p>
+</div>
+<div class="paragraph">
+<p>Removes an existing Profile, removing any existing association with Accounts/Organizations.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="response-status-3"><a class="anchor" href="#response-status-3"></a>Response Status</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Status</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">200 OK</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Profile removed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">403 Forbidden</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only Super Admin is allowed to remove. DefaultProfile can&#8217;t be deleted</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">404 Not Found</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Target Profile SID is missing or Link is not found</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>HTTP LINK/UNLINK</strong></p>
+</div>
+<div class="paragraph">
+<p>Profile association operation maybe performed against a particular Account or Organization.
+This operation will use HTTP 1.1 LINK/UNLINK methods, and target resource should be populated
+in a Link header, using "related" as "rel" attribute. Only one Link header is supported.
+To associate a single Profile with multiple Accounts/Organizations, multiple requests will be required.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="request-headers"><a class="anchor" href="#request-headers"></a>Request Headers</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Header</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Link</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contains an full URL to the Account/Organization that should be associated to the Profile</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="response-status-4"><a class="anchor" href="#response-status-4"></a>Response Status</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Status</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">200 OK</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Association established</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">403 Forbidden</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only Super Admin is allowed for the association operation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">404 Not Found</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Target Profile SID is missing or Link is not found</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">400 Bad Request</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None or multiple Link header provided. Link with unsupported "rel".</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Get information about the default profile.</strong></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -X GET  https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2acf</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Modify a Profile.</strong></p>
+</div>
+<div class="paragraph">
+<p>To update a Profile you need to provide the SID</p>
+</div>
+<div class="paragraph">
+<p>For example, update Proile using sid:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -H 'Content-Type: application/instance+json' --data "@/path/to/filename" -X PUT https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -X GET  https://administrator%40company.com:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above command will print an output similar to the one below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>{
+    "featureEnablement": {
+        "DIDPurchase": {
+            "allowedCountries": ["US",
+                "CA"]
+        },
+        "destinations": {
+            "allowedPrefixes": ["+1"]
+        },
+        "outboundPSTN": {
+        },
+        "inboundPSTN": {
+        },
+        "outboundSMS": {
+        },
+        "inboundSMS": {
+        }
+
+    }
+}</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Profiles_List"><a class="anchor" href="#Profiles_List"></a>Profile List Resource</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Profile List Resource URI. <strong>/2012-04-24/Profiles</strong></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="supported-operations-2"><a class="anchor" href="#supported-operations-2"></a>Supported Operations</h3>
+<div class="paragraph">
+<p><strong>HTTP GET</strong>. Returns the list representation of all the <strong>Profile</strong> resources.</p>
+</div>
+<div class="paragraph">
+<p>The response will include a JSON document in the response body with this
+format</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[{
+	"uri": "http://127.0.0.1:8080/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2acf",
+	"sid": "PRae6e420f425248d6a26948c17a9e2acf",
+	"dateUpdated": 1516745449949,
+	"dateCreated": 1516745449949
+}]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>HTTP POST</strong>.
+Creates a new Profile.The body of the request is expected to contain a JSON document compliant to the Profile
+schema.</p>
+</div>
+<div class="sect3">
+<h4 id="response-status-5"><a class="anchor" href="#response-status-5"></a>Response Status</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Status</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">201 Created</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Profile created. Body contains Profile JSon document</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">403 Forbidden</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only Super Admin is allowed to modify/create a Profile</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">400 Bad Request</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Body contains a Profile not compliant with schema</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="response-headers-2"><a class="anchor" href="#response-headers-2"></a>Response Headers</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Header</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Location</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URL to new Profile created</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
