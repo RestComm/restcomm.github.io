@@ -22795,7 +22795,8 @@ body.vertical_menu_outside_paspartu.vertical_menu_enabled.vertical_menu_hidden.v
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_downloading_binary">Binary Download and Installation</a></li>
-<li><a href="#_dir_structure">Directory Structure</a></li>
+<li><a href="#_dir_structure">Directory Structure (JBOSS 5)</a></li>
+<li><a href="#_dir_structure_wildfly">Directory Structure (Wildfly)</a></li>
 <li><a href="#_dialogic_setup">Extra setup when usage of Dialogic cards</a></li>
 <li><a href="#_source_code">Setup from Source</a>
 <ul class="sectlevel2">
@@ -22843,7 +22844,7 @@ You can either download the binary release or download the source code and set u
 </div>
 </div>
 <div class="sect1">
-<h2 id="_dir_structure"><a class="anchor" href="#_dir_structure"></a>Directory Structure</h2>
+<h2 id="_dir_structure"><a class="anchor" href="#_dir_structure"></a>Directory Structure (JBOSS 5)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>When you download the binary release, you will notice that the top level directory is named <code>restcomm-ussdgateway-&lt;version&gt;</code> and immediately below this are five sub-directories as explained below:</p>
@@ -22883,6 +22884,68 @@ Refer to the Admin Guide for instructions on how to start the server in either o
 				|- server
 					|+ default	//clean profile to set up from scratch
 					|+ simulator	//pre-configured profile to work with the jss7-simulator
+		|- resources
+				|+ http-client
+				|+ http-servlet
+				|+ jdbc
+				|+ map
+		|- tools
+				|+ eclipslee
+				|+ jopr-plugin
+				|+ remote-slee-connection
+				|+ snmp
+				|+ restcomm-jss7-simulator
+				|+ restcomm-ussd-simulator
+				|+ twiddle
+		|- template
+				|+ META-INF-dialogic
+				|+ META-INF-m3ua-dialogic</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dir_structure_wildfly"><a class="anchor" href="#_dir_structure_wildfly"></a>Directory Structure (Wildfly)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When you download the binary release, you will notice that the top level directory is named <code>restcomm-ussdgateway-&lt;version&gt;</code> and immediately below this are five sub-directories as explained below:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>docs: Contains all relevant documentation in respective subfolders for JSLEE, jSS7, Management-HQ and USSD.</p>
+</li>
+<li>
+<p>wildfly-10.1.0.Final: The core server with two profiles "standalone" and "simulator". The "standalone" profile is a clean profile where you will have to start from scratch and configure the entire SS7 Stack and USSD Gateway.
+The "simulator" profile is a pre-configured profile to work with jss7-simulator.
+Refer to the Admin Guide for instructions on how to start the server in either of the profiles.</p>
+</li>
+<li>
+<p>resources: Contains SLEE MAP, JDBC, http-client, http-servlet and SIP RA jars.</p>
+</li>
+<li>
+<p>tools: Contains SLEE tools and jss7-simulator.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>|- restcomm-ussdgateway-<version>
+		|- docs
+				|+ jss7
+				|+ slee
+				|+ ussd
+				|+ management-hq
+		|- wildfly-10.1.0.Final
+				|+ appclient
+				|+ bin    //contains start up and shutdown scripts for the Server and the start up script for Shell.
+				|+ docs
+				|+ domain
+				|+ lib
+				|+ log
+				|+ modules  //contains module binaries (including slee modules)
+				|+ standalone //clean profile to set up from scratch
+				|+ simulator	//pre-configured profile to work with the jss7-simulator
 		|- resources
 				|+ http-client
 				|+ http-servlet
@@ -22997,7 +23060,7 @@ You must ensure that <code>JAVA_HOME</code> environment variable is set properly
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-02-04 02:28:39 UTC
+Last updated 2018-02-11 02:28:18 UTC
 </div>
 </div>
 <footer>

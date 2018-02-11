@@ -22897,6 +22897,8 @@ It makes sense to select refresh rate same as duration value for which USSD Gate
 </li>
 </ol>
 </div>
+<div class="sect3">
+<h4 id="jboss-5-server-settings"><a class="anchor" href="#jboss-5-server-settings"></a>2.1.1. JBOSS 5 server settings</h4>
 <div class="paragraph">
 <p>Statistics info is also written by default into the log file (<em class="path">restcomm-ussdgateway/jboss-5.1.0.GA/server/default/log/stats.log</em>). File format is plain text and easy to understand.
 This log file can achieve a big size if your statistic duration is short.
@@ -22909,6 +22911,24 @@ If you do not need that statistic data will be written into stats.log file, you 
 		......
 		......
 	&lt;/appender&gt;</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="wildfly-server-settings"><a class="anchor" href="#wildfly-server-settings"></a>2.1.2. Wildfly server settings</h4>
+<div class="paragraph">
+<p>Statistics info is also written by default into the log file (<em class="path">restcomm-ussdgateway/wildfly-10.1.0.Final/standalone/log/stats.log</em>). File format is plain text and easy to understand.
+This log file can achieve a big size if your statistic duration is short.
+If you do not need that statistic data will be written into stats.log file, you can remove the section from <em class="path">restcomm-ussdgateway/wildfly-10.1.0.Final/standalone/configuration/standalone.xml</em>	 | That contains the appender:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>	&lt;periodic-rotating-file-handler xmlns="" autoflush="true" name="STATS"&gt;
+    .....
+    .....
+    .....
+	&lt;/periodic-rotating-file-handler&gt;</pre>
+</div>
 </div>
 </div>
 </div>
@@ -23110,7 +23130,7 @@ If you do not need that statistic data will be written into stats.log file, you 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-02-04 02:28:39 UTC
+Last updated 2018-02-11 02:28:18 UTC
 </div>
 </div>
 <footer>
