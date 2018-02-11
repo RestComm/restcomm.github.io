@@ -22808,7 +22808,8 @@ body.vertical_menu_outside_paspartu.vertical_menu_enabled.vertical_menu_hidden.v
 <ul class="sectlevel2">
 <li><a href="#_ctms_configuring_the_media_server_automatic_dependencies">Requirements</a></li>
 <li><a href="#_ctms_configuring_the_media_server_automatic_file_structure">File Structure</a></li>
-<li><a href="#_ctms_configuring_the_media_server_automatic_asr">Configuring Speech Recognition Drivers</a></li>
+<li><a href="#configuring-media-resources">Configuring Media Resources</a></li>
+<li><a href="#configuring-speech-recognition-drivers">Configuring Speech Recognition Drivers</a></li>
 <li><a href="#_ctms_configuring_the_media_server_automatic_logger">Configuring the logger</a></li>
 <li><a href="#_ctms_configuring_the_media_server_automatic_ssl">Configuring Secure Sockets Layer (SSL)</a></li>
 <li><a href="#_ctms_configuring_the_media_server_automatic_running">Running</a></li>
@@ -23106,6 +23107,7 @@ That means that any SS7 channel data will be sent to any connection and signal d
 <div class="content">
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;media&gt;
 	&lt;timeout&gt;30&lt;/timeout&gt;
+	&lt;halfOpenDuration&gt;300&lt;/halfOpenDuration&gt;
 	&lt;maxDuration&gt;14400&lt;/maxDuration&gt;
 	&lt;lowPort&gt;34534&lt;/lowPort&gt;
 	&lt;highPort&gt;65534&lt;/highPort&gt;
@@ -23130,7 +23132,8 @@ That means that any SS7 channel data will be sent to any connection and signal d
 These values should be an even number, since odd ports are reserved for RTCP channels.</p>
 </div>
 <div class="paragraph">
-<p>The <strong>MaxDuration</strong> value defines the maximum duration an RTP channel can remain open, thus limiting the lifetime of calls. If set to zero, the connection will stay open forever.</p>
+<p>The <strong>HalfOpenDuration</strong> value define the maximum duration an RTP channel can remain half-open, that is, in a state were is waiting for a response from the remote peer in order to fully establish the connection. If set to zero, the connection will stay half-open indeterminately.
+The <strong>MaxDuration</strong> value defines the maximum duration an RTP channel can remain open, thus limiting the lifetime of calls. If set to zero, the connection will stay open forever.</p>
 </div>
 <div class="paragraph">
 <p>The <strong>JitterBuffer</strong> size parameter sets the maximum capacity of the jitter buffer, in milliseconds.
@@ -23271,7 +23274,9 @@ brew install opus</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;resources&gt;
 	&lt;localConnection poolSize="100" /&gt;
 	&lt;remoteConnection poolSize="50" /&gt;
-	&lt;player poolSize="50" /&gt;
+	&lt;player poolSize="50"&gt;
+		&lt;connectionTimeout&gt;2000&lt;/connectionTimeout&gt;
+	&lt;/player&gt;
 	&lt;recorder poolSize="50" /&gt;
 	&lt;dtmfDetector poolSize="50" dbi="-35" /&gt;
 	&lt;dtmfGenerator poolSize="50" toneVolume="-20" toneDuration="80" /&gt;
@@ -23736,7 +23741,26 @@ Kills the active tmux session named <em>mediaserver</em>.</p></td>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_ctms_configuring_the_media_server_automatic_asr"><a class="anchor" href="#_ctms_configuring_the_media_server_automatic_asr"></a>Configuring Speech Recognition Drivers</h3>
+<h3 id="configuring-media-resources"><a class="anchor" href="#configuring-media-resources"></a>Configuring Media Resources</h3>
+<div class="paragraph">
+<p>Media resource components are configured by difining the values in <code>mediaserver.conf</code>.</p>
+</div>
+<div class="paragraph">
+<p>The following values could be specified in configuration file.</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 13. Configuration in mediaserver.conf</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">PLAYER_CONNECTION_TIMEOUT=2000</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configuring-speech-recognition-drivers"><a class="anchor" href="#configuring-speech-recognition-drivers"></a>Configuring Speech Recognition Drivers</h3>
 <div class="paragraph">
 <p>To install an ASR driver, the user must simply copy the driver&#8217;s jar file to <code>MS_HOME/lib</code> directory and specify it in <code>mediaserver.conf</code>.</p>
 </div>
@@ -23744,7 +23768,7 @@ Kills the active tmux session named <em>mediaserver</em>.</p></td>
 <p>Users can follow this template to register and configure an ASR Driver:</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 13. Configuration in mediaserver.conf</div>
+<div class="title">Example 14. Configuration in mediaserver.conf</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -23757,7 +23781,7 @@ ASR_DRIVER_&lt;provider&gt;_PROPERTY_&lt;property&gt;_VALUE=&lt;property-value&g
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 14. Example configuration in mediaserver.conf</div>
+<div class="title">Example 15. Example configuration in mediaserver.conf</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -23807,7 +23831,7 @@ A logging Category follows the format <code>&lt;package_name&gt;:&lt;log_thresho
 </table>
 </div>
 <div class="exampleblock">
-<div class="title">Example 15. Configuration for Logger</div>
+<div class="title">Example 16. Configuration for Logger</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -23858,7 +23882,7 @@ LOG_CATEGORY_RTP='org.restcomm.media.rtp:DEBUG'</code></pre>
 <p>To configure SSL, the user must edit the <em>ssl.conf</em> file. The changes will take effect during bootstrap.</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 16. Configuration for SSL</div>
+<div class="title">Example 17. Configuration for SSL</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -23892,7 +23916,7 @@ If SSL is enabled, then the user must assign the path of the KeyStore to the var
 <p>Support for SSL is enabled by appending a new set of parameters to the JAVA_OPTS of the Media Server process. These definitions are present in the script <code>MS_HOME/bin/run.sh</code>.</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 17. SSL configuration in JAVA_OPTS</div>
+<div class="title">Example 18. SSL configuration in JAVA_OPTS</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -23919,6 +23943,7 @@ Configuring Media Codecs [pcmu,pcma,telephone-event]
 Configuring Network [BindAddress=192.168.0.182, ExternalAddress=5.158.17.91, Network=192.168.0.254, Subnet=192.168.0.255, Use SBC=false]
 Configuring Resource Pools [Local Connections=400, Remote Connections=200, Players=200, Recorders=200, DTMF Detectors=200, DTMF Generators=200]
 Configuring Audio Cache [Enabled=true, Size=50]
+Configuring Audio Player [Connection Timeout=2000]
 Configuring DTMF Detector [Dbi=-25]
 Media Server automatic configuration finished!
 Starting RestComm Media Server...
@@ -23966,7 +23991,7 @@ no server running on /private/tmp/tmux-501/default</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-02-04 02:21:35 UTC
+Last updated 2018-02-11 02:21:17 UTC
 </div>
 </div>
 <footer>
