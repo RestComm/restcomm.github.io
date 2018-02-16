@@ -22800,7 +22800,8 @@ body.vertical_menu_outside_paspartu.vertical_menu_enabled.vertical_menu_hidden.v
 </ul>
 </li>
 <li><a href="#_sccp_design">SCCP Usage</a></li>
-<li><a href="#_sccp_complete_example">SCCP User Part Example</a></li>
+<li><a href="#_sccp_complete_example">SCCP User Part Example #1 (connectionless protocol class)</a></li>
+<li><a href="#_sccp_complete_example">SCCP User Part Example #2 (connection-oriented protocol class)</a></li>
 </ul>
 </div>
 </div>
@@ -22947,11 +22948,14 @@ The term SCCP User Part refers to the applications that use SCCP&#8217;s service
 </div>
 <div class="paragraph">
 <p><code class="class">SccpStack</code> exposes <code class="class">org.mobicents.protocols.ss7.sccp.SccpProvider</code>  that interacts directly with SccpStack.
-This interface defines the methods that will be used by SCCP User Part to send  <code class="class">org.mobicents.protocols.ss7.sccp.message.SccpMessage</code> and register  [class]`org.mobicents.protocols.ss7.sccp.SccpListener&#8217;s to listen for incoming SCCP messages.</p>
+This interface defines the methods that will be used by SCCP User Part to send connectionless <code class="class">org.mobicents.protocols.ss7.sccp.message.SccpMessage</code>, create new connections and register  [class]`org.mobicents.protocols.ss7.sccp.SccpListener&#8217;s to listen for incoming SCCP messages and connection events.</p>
 </div>
 <div class="paragraph">
 <p>SCCP User Part registers SccpListener for specific local subsystem number.
-For every incoming SccpMessage, if the called subsystem matches with this local subsystem, the corresponding SccpListner is called.</p>
+For every incoming SccpMessage or connection event, if the called subsystem matches with this local subsystem, the corresponding SccpListner is called.</p>
+</div>
+<div class="paragraph">
+<p><code class="class">SccpProvider</code> exposes <code class="class">SccpConnection</code> which allows to perform common connection actions such as establishing, resetting, confirming/refusing and disconnecting SCCP connections.</p>
 </div>
 <div class="paragraph">
 <p>SccpProvider also exposes <code class="class">org.mobicents.protocols.ss7.sccp.message.MessageFactory</code> and <code class="class">org.mobicents.protocols.ss7.sccp.parameter.ParameterFactory</code> to create new SccpMessage.
@@ -22961,10 +22965,10 @@ For transfer data via connectionless service <code class="class">org.mobicents.p
 </div>
 </div>
 <div class="sect1">
-<h2 id="_sccp_complete_example"><a class="anchor" href="#_sccp_complete_example"></a>SCCP User Part Example</h2>
+<h2 id="_sccp_complete_example"><a class="anchor" href="#_sccp_complete_example"></a>SCCP User Part Example #1 (connectionless protocol class)</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Below is SCCP User Part example listening for incoming SCCP message and sending back new message</p>
+<p>Below is SCCP User Part example listening for incoming connectionless SCCP message and sending back new message</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23048,10 +23052,218 @@ public class Test implements SccpListener {
         }
 
         @Override
-        public void onPcState(int dpc, SignallingPointStatus status, int restrictedImportanceLevel,
+        public void onPcState(int dpc, SignallingPointStatus status, Integer restrictedImportanceLevel,
                         RemoteSccpStatus remoteSccpStatus) {
         }
 
+        @Override
+        public void onNetworkIdState(int networkId, NetworkIdState networkIdState) {
+        }
+
+        @Override
+        public void onConnectIndication(SccpConnection conn, SccpAddress calledAddress,
+                        SccpAddress callingAddress, ProtocolClass clazz, Credit credit, byte[] data,
+                        Importance importance) throws Exception {
+        }
+
+        @Override
+        public void onConnectConfirm(SccpConnection conn, byte[] data) {
+        }
+
+        @Override
+        public void onDisconnectIndication(SccpConnection conn, ReleaseCause reason, byte[] data) {
+        }
+
+        @Override
+        public void onDisconnectIndication(SccpConnection conn, RefusalCause reason, byte[] data) {
+        }
+
+        @Override
+        public void onDisconnectIndication(SccpConnection conn, ErrorCause errorCause) {
+        }
+
+        @Override
+        public void onResetIndication(SccpConnection conn, ResetCause reason) {
+        }
+
+        @Override
+        public void onResetConfirm(SccpConnection conn) {
+        }
+
+        @Override
+        public void onData(SccpConnection conn, byte[] data) {
+        }
+
+        @Override
+        public void onDisconnectConfirm(SccpConnection conn) {
+        }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_sccp_complete_example"><a class="anchor" href="#_sccp_complete_example"></a>SCCP User Part Example #2 (connection-oriented protocol class)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Below is SCCP User Part example listening for incoming connection-oriented SCCP data message and sending back
+new data message via already established protocol class 2 connection</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.protocols.ss7.sccp.impl;
+
+import org.mobicents.protocols.ss7.indicator.RoutingIndicator;
+import org.mobicents.protocols.ss7.sccp.NetworkIdState;
+import org.mobicents.protocols.ss7.sccp.RemoteSccpStatus;
+import org.mobicents.protocols.ss7.sccp.SccpConnection;
+import org.mobicents.protocols.ss7.sccp.SccpListener;
+import org.mobicents.protocols.ss7.sccp.SccpProvider;
+import org.mobicents.protocols.ss7.sccp.SignallingPointStatus;
+import org.mobicents.protocols.ss7.sccp.impl.parameter.ImportanceImpl;
+import org.mobicents.protocols.ss7.sccp.impl.parameter.LocalReferenceImpl;
+import org.mobicents.protocols.ss7.sccp.impl.parameter.ProtocolClassImpl;
+import org.mobicents.protocols.ss7.sccp.impl.parameter.ReleaseCauseImpl;
+import org.mobicents.protocols.ss7.sccp.message.SccpConnCrMessage;
+import org.mobicents.protocols.ss7.sccp.message.SccpDataMessage;
+import org.mobicents.protocols.ss7.sccp.message.SccpNoticeMessage;
+import org.mobicents.protocols.ss7.sccp.parameter.Credit;
+import org.mobicents.protocols.ss7.sccp.parameter.ErrorCause;
+import org.mobicents.protocols.ss7.sccp.parameter.Importance;
+import org.mobicents.protocols.ss7.sccp.parameter.ProtocolClass;
+import org.mobicents.protocols.ss7.sccp.parameter.RefusalCause;
+import org.mobicents.protocols.ss7.sccp.parameter.ReleaseCause;
+import org.mobicents.protocols.ss7.sccp.parameter.ReleaseCauseValue;
+import org.mobicents.protocols.ss7.sccp.parameter.ResetCause;
+import org.mobicents.protocols.ss7.sccp.parameter.SccpAddress;
+import org.mobicents.protocols.ss7.scheduler.Clock;
+import org.mobicents.protocols.ss7.scheduler.DefaultClock;
+import org.mobicents.protocols.ss7.scheduler.Scheduler;
+
+public class Test2 implements SccpListener {
+    private SccpProvider sccpProvider;
+    private SccpConnection conn;
+    private int localSsn = 8;
+
+    private static SccpProvider getSccpProvider() {
+        Clock clock = new DefaultClock();
+        Scheduler scheduler = new Scheduler();
+        scheduler.setClock(clock);
+
+        Mtp3UserPartImpl mtp3UserPart1 = null;
+        SccpStackImpl sccpStack1 = new SccpStackImpl(scheduler, "testSccpStack");
+        sccpStack1.setMtp3UserPart(1, mtp3UserPart1);
+
+        scheduler.start();
+        sccpStack1.start();
+
+        return sccpStack1.getSccpProvider();
+    }
+
+    public void start() throws Exception {
+        this.sccpProvider = getSccpProvider();
+        this.sccpProvider.registerSccpListener(this.localSsn, this);
+    }
+
+    public void stop() {
+        this.sccpProvider.deregisterSccpListener(this.localSsn);
+    }
+
+    public void connect() throws Exception {
+        // assumed that local DPC is 1 and remote DPC is 2, will differ in real life scenario
+        SccpAddress localAddress = this.sccpProvider.getParameterFactory().createSccpAddress(RoutingIndicator.ROUTING_BASED_ON_DPC_AND_SSN, null, 1, localSsn);
+        SccpAddress remoteAddress = this.sccpProvider.getParameterFactory().createSccpAddress(RoutingIndicator.ROUTING_BASED_ON_DPC_AND_SSN, null, 2, localSsn);
+
+        SccpConnCrMessage crMsg = this.sccpProvider.getMessageFactory().createConnectMessageClass2(8, remoteAddress, localAddress, new byte[] {}, new ImportanceImpl((byte)1));
+        crMsg.setSourceLocalReferenceNumber(new LocalReferenceImpl(1));
+        crMsg.setProtocolClass(new ProtocolClassImpl(2));
+
+        conn = this.sccpProvider.newConnection(8, new ProtocolClassImpl(2));
+        conn.establish(crMsg);
+    }
+
+    public void disconnect() throws Exception {
+        conn.disconnect(new ReleaseCauseImpl(ReleaseCauseValue.UNQUALIFIED), new byte[] {});
+    }
+
+    @Override
+    public void onConnectIndication(SccpConnection conn, SccpAddress calledAddress, SccpAddress callingAddress, ProtocolClass clazz, Credit credit, byte[] data, Importance importance) throws Exception {
+        this.conn = conn;
+        conn.confirm(null, null, new byte[] {});
+    }
+
+    @Override
+    public void onData(SccpConnection conn, byte[] data) {
+        // decoding of content in byte[] data
+        // processing a request
+        byte[] answerData = new byte[10];
+        // put custom executing code here and fill answerData
+        try {
+            conn.send(answerData);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onMessage(SccpDataMessage message) {
+    }
+
+    @Override
+    public void onNotice(SccpNoticeMessage message) {
+    }
+
+    @Override
+    public void onCoordResponse(int ssn, int multiplicityIndicator) {
+
+    }
+
+    public void onCoordRequest(int dpc, int ssn, int multiplicityIndicator) {
+    }
+
+    public void onCoordResponse(int dpc, int ssn, int multiplicityIndicator) {
+    }
+
+    public void onState(int dpc, int ssn, boolean inService, int multiplicityIndicator) {
+    }
+
+    @Override
+    public void onPcState(int dpc, SignallingPointStatus status, Integer restrictedImportanceLevel,
+                          RemoteSccpStatus remoteSccpStatus) {
+    }
+
+    @Override
+    public void onNetworkIdState(int networkId, NetworkIdState networkIdState) {
+    }
+
+    @Override
+    public void onConnectConfirm(SccpConnection conn, byte[] data) {
+    }
+
+    @Override
+    public void onDisconnectIndication(SccpConnection conn, ReleaseCause reason, byte[] data) {
+    }
+
+    @Override
+    public void onDisconnectIndication(SccpConnection conn, RefusalCause reason, byte[] data) {
+    }
+
+    @Override
+    public void onDisconnectIndication(SccpConnection conn, ErrorCause errorCause) {
+    }
+
+    @Override
+    public void onResetIndication(SccpConnection conn, ResetCause reason) {
+    }
+
+    @Override
+    public void onResetConfirm(SccpConnection conn) {
+    }
+
+    @Override
+    public void onDisconnectConfirm(SccpConnection conn) {
+    }
 }</code></pre>
 </div>
 </div>
@@ -23060,78 +23272,68 @@ public class Test implements SccpListener {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-02-13 14:25:10 UTC
+Last updated 2018-02-16 11:39:25 UTC
 </div>
 </div>
 <footer>
-		<div class="footer_inner clearfix">
-				<div class="footer_top_holder">
-            			<div class="footer_top">
-								<div class="container">
+	<div class="footer_inner clearfix">
+		<div class="footer_top_holder">
+			<div class="footer_top">
+				<div class="container">
 					<div class="container_inner">
-																	<div class="three_columns clearfix">
-								<div class="column1 footer_col1">
-									<div class="column_inner">
-										<div id="text-10" class="widget widget_text"><h5>CONTACT US</h5>			<div class="textwidget"><div class="separator  transparent center  " style="margin-top: 32px;margin-bottom: 0px;height: 0px;"></div>
+						<div class="three_columns clearfix">
+							<div class="column1 footer_col1">
+								<div class="column_inner">
+									<div id="text-10" class="widget widget_text"><h5>CONTACT US</h5>			<div class="textwidget"><div class="separator  transparent center  " style="margin-top: 32px;margin-bottom: 0px;height: 0px;"></div>
+
+										Please fill in our <a href="https://www.restcomm.com/contact/" style="text-decoration: underline;">contact form</a> or dial <a href="tel:+1 (650) 263 6146">+1 (650) 263 6146</a>
+
+										<div class="separator  transparent center  " style="margin-top: 20px;margin-bottom: 0px;height: 0px;"></div>
+									</div>
+									</div><div id="nav_menu-4" class="widget widget_nav_menu"><h5>ADDITIONAL LINKS</h5><div class="menu-footer_menu-container"><ul id="menu-footer_menu" class="menu"><li id="menu-item-17285" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17285"><a href="https://telestax.com/about/">About</a></li>
+									<li id="menu-item-17289" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17289"><a href="https://telestax.com/faqs/">FAQ&#8217;s</a></li>
+									<li id="menu-item-18624" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18624"><a href="https://telestax.com/jobs/">Careers</a></li>
+									<li id="menu-item-17893" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17893"><a href="https://www.restcomm.com/contact/">Contact</a></li>
+								</ul></div></div><div id="text-6" class="widget widget_text"><h5>FOLLOW US</h5>			<div class="textwidget"><div class="separator  transparent center  " style="margin-top: 20px;margin-bottom: 0px;height: 0px;"></div>
 
 
-<a href="tel:+1 (650) 263 6146">+1 (650) 263 6146</a>
+									<div id="social"><p class="social_icon_textlink"><a href="https://twitter.com/telestax"><span class='q_social_icon_holder normal_social' data-hover-color=#f25f33><i class="qode_icon_font_awesome fa fa-twitter fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
 
-<div class="separator  transparent center  " style="margin-top: 20px;margin-bottom: 0px;height: 0px;"></div>
+										<a href="https://www.linkedin.com/company/telestax"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-linkedin fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
 
+										<a href="https://www.facebook.com/Telestax"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-facebook fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
 
-For general inquiries and media
-<a href="mailto:info@telestax.com">info@telestax.com</a>
-<div class="separator  transparent center  " style="margin-top: 20px;margin-bottom: 0px;height: 0px;"></div>
+										<a href="https://www.youtube.com/c/TeleStax"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-youtube fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
 
-For customer support
-<a href="mailto:support@telestax.com">support@telestax.com</a>
-<div class="separator  transparent center  " style="margin-top: 20px;margin-bottom: 0px;height: 0px;"></div>
-</div>
-		</div><div id="nav_menu-4" class="widget widget_nav_menu"><h5>ADDITIONAL LINKS</h5><div class="menu-footer_menu-container"><ul id="menu-footer_menu" class="menu"><li id="menu-item-17285" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17285"><a href="https://telestax.com/about/">About</a></li>
-<li id="menu-item-17289" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17289"><a href="https://telestax.com/faqs/">FAQ&#8217;s</a></li>
-<li id="menu-item-18624" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18624"><a href="https://telestax.com/jobs/">Careers</a></li>
-<li id="menu-item-17893" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17893"><a href="https://telestax.com/contact/">Contact</a></li>
-</ul></div></div><div id="text-6" class="widget widget_text"><h5>FOLLOW US</h5>			<div class="textwidget"><div class="separator  transparent center  " style="margin-top: 20px;margin-bottom: 0px;height: 0px;"></div>
+										<a href="https://plus.google.com/+TeleStax/posts"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-google-plus fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
 
+										<a href="https://weibo.com/mobicents"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-weibo fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
 
-<div id="social"><p class="social_icon_textlink"><a href="https://twitter.com/telestax"><span class='q_social_icon_holder normal_social' data-hover-color=#f25f33><i class="qode_icon_font_awesome fa fa-twitter fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
-
-<a href="https://www.linkedin.com/company/telestax"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-linkedin fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
-
-<a href="https://www.facebook.com/Telestax"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-facebook fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
-
-<a href="https://www.youtube.com/c/TeleStax"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-youtube fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
-
-<a href="https://plus.google.com/+TeleStax/posts"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-google-plus fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
-
-<a href="https://weibo.com/mobicents"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-weibo fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
-
-<a href="https://restcomm.com/blog/"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-rss fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a></p></div></div>
-		</div>									</div>
-								</div>
-								<div class="column2 footer_col2">
-									<div class="column_inner">
-										<div id="text-2" class="widget widget_text"><h5>Latest Posts</h5>			<div class="textwidget"><div class="separator  transparent center  " style="margin-top: 35px;margin-bottom: 0px;height: 0px;"></div>
-
-
-<div class='latest_post_holder image_in_box  '><ul><li class="clearfix"><div class="latest_post"><div class="latest_post_image clearfix"><img src="" alt="" /></div><div class="latest_post_text"><div class="latest_post_inner"><div class="latest_post_text_inner"><h5 class="latest_post_title "><a href="https://telestax.com/which-open-source-platform-has-active-community/">Which Open Source Communications Platform Has The Most Active Community?</a></h5><p class="excerpt">Last week, we blogged about the impressive milestone reached by Restco...</p><span class="post_infos"></span></div></div></div></div><li class="clearfix"><div class="latest_post"><div class="latest_post_image clearfix"><img src="" alt="" /></div><div class="latest_post_text"><div class="latest_post_inner"><div class="latest_post_text_inner"><h5 class="latest_post_title "><a href="https://telestax.com/restcomm-client-ios-sdk-beta-4/">Restcomm Client iOS SDK Beta 4 is out</a></h5><p class="excerpt">We are proud to announce 1.0.0 BETA 4 release of Restcomm Client iOS S...</p><span class="post_infos"></span></div></div></div></div><li class="clearfix"><div class="latest_post"><div class="latest_post_image clearfix"><img src="" alt="" /></div><div class="latest_post_text"><div class="latest_post_inner"><div class="latest_post_text_inner"><h5 class="latest_post_title "><a href="https://telestax.com/restcomm-7-6-1-release/">Telscale Restcomm 7.6.1.GA patch release</a></h5><p class="excerpt">Today we are happy to announce the patch release for Telscale Restcomm...</p><span class="post_infos"></span></div></div></div></div></ul></div></div>
-		</div>									</div>
-								</div>
-								<div class="column3 footer_col3">
-									<div class="column_inner">
-										<div id="text-11" class="widget widget_text"><h5>Subscribe to Our Blog</h5>			<div class="textwidget">
-
-</div>
-		</div>									</div>
-								</div>
+										<a href="https://restcomm.com/blog/"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-rss fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a></p></div></div>
+								</div>									</div>
 							</div>
-															</div>
-				</div>
+							<div class="column2 footer_col2">
+								<div class="column_inner">
+									<div id="text-2" class="widget widget_text"><h5>Latest Posts</h5>			<div class="textwidget"><div class="separator  transparent center  " style="margin-top: 35px;margin-bottom: 0px;height: 0px;"></div>
+
+
+										<div class='latest_post_holder image_in_box  '><ul><li class="clearfix"><div class="latest_post"><div class="latest_post_image clearfix"><img src="" alt="" /></div><div class="latest_post_text"><div class="latest_post_inner"><div class="latest_post_text_inner"><h5 class="latest_post_title "><a href="https://telestax.com/which-open-source-platform-has-active-community/">Which Open Source Communications Platform Has The Most Active Community?</a></h5><p class="excerpt">Last week, we blogged about the impressive milestone reached by Restco...</p><span class="post_infos"></span></div></div></div></div><li class="clearfix"><div class="latest_post"><div class="latest_post_image clearfix"><img src="" alt="" /></div><div class="latest_post_text"><div class="latest_post_inner"><div class="latest_post_text_inner"><h5 class="latest_post_title "><a href="https://telestax.com/restcomm-client-ios-sdk-beta-4/">Restcomm Client iOS SDK Beta 4 is out</a></h5><p class="excerpt">We are proud to announce 1.0.0 BETA 4 release of Restcomm Client iOS S...</p><span class="post_infos"></span></div></div></div></div><li class="clearfix"><div class="latest_post"><div class="latest_post_image clearfix"><img src="" alt="" /></div><div class="latest_post_text"><div class="latest_post_inner"><div class="latest_post_text_inner"><h5 class="latest_post_title "><a href="https://telestax.com/restcomm-7-6-1-release/">Telscale Restcomm 7.6.1.GA patch release</a></h5><p class="excerpt">Today we are happy to announce the patch release for Telscale Restcomm...</p><span class="post_infos"></span></div></div></div></div></ul></div></div>
+									</div>									</div>
 							</div>
-					</div>
+							<div class="column3 footer_col3">
+								<div class="column_inner">
+									<div id="text-11" class="widget widget_text"><h5>Subscribe to Our Blog</h5>			<div class="textwidget">
+
+									</div>
+									</div>									</div>
+							</div>
 						</div>
-	</footer>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
 
 </div>
 </div>
@@ -23157,26 +23359,26 @@ var qodeLike = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php"};
 <!-- This site is converting visitors into subscribers and customers with OptinMonster - https://optinmonster.com --><script>var om57ac9561a4ac3,om57ac9561a4ac3_poll=function(){var r=0;return function(n,l){clearInterval(r),r=setInterval(n,l)}}();!function(e,t,n){if(e.getElementById(n)){om57ac9561a4ac3_poll(function(){if(window['om_loaded']){if(!om57ac9561a4ac3){om57ac9561a4ac3=new OptinMonsterApp();return om57ac9561a4ac3.init({"s":"6742.57ac9561a4ac3","staging":0,"dev":0,"beta":0});}}},25);return;}var d=false,o=e.createElement(t);o.id=n,o.src="https://a.optnmstr.com/app/js/api.min.js",o.async=true,o.onload=o.onreadystatechange=function(){if(!d){if(!this.readyState||this.readyState==="loaded"||this.readyState==="complete"){try{d=om_loaded=true;om57ac9561a4ac3=new OptinMonsterApp();om57ac9561a4ac3.init({"s":"6742.57ac9561a4ac3","staging":0,"dev":0,"beta":0});o.onload=o.onreadystatechange=null;}catch(t){}}}};(document.getElementsByTagName("head")[0]||document.documentElement).appendChild(o)}(document,"script","omapi-script");</script><!-- / OptinMonster -->
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/59eabdf54854b82732ff6cd3/default';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/59eabdf54854b82732ff6cd3/default';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+  })();
 
-Tawk_API = Tawk_API || {};
-Tawk_API.onChatStarted = function(){
-   Countly.q.push(['add_event',{
-	"key": "Livechat",
-  "count": 1,
-	"segmentation": {
-    "livechat": "documentation.telestax.com",
-	}
-}]);
-};
+  Tawk_API = Tawk_API || {};
+  Tawk_API.onChatStarted = function(){
+    Countly.q.push(['add_event',{
+      "key": "Livechat",
+      "count": 1,
+      "segmentation": {
+        "livechat": "documentation.telestax.com",
+      }
+    }]);
+  };
 </script>
 <!--End of Tawk.to Script-->
 </body>

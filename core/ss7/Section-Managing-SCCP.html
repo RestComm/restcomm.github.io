@@ -22810,6 +22810,16 @@ body.vertical_menu_outside_paspartu.vertical_menu_enabled.vertical_menu_hidden.v
 <li><a href="#_sccp_property_zmarginxudtmessage">ZMargin XUDT Message</a></li>
 <li><a href="#_sccp_property_cc_timer_a">Timer A value for the congestion control</a></li>
 <li><a href="#_sccp_property_cc_timer_d">Timer D value for the congestion control</a></li>
+<li><a href="#can-relay-value">Can relay value</a></li>
+<li><a href="#connection-establishing-timer-delay-value">Connection establishing timer delay value</a></li>
+<li><a href="#connection-it-send-timer-delay-value">Connection IT send timer delay value</a></li>
+<li><a href="#connection-message-receive-timer-delay-value">Connection message receive timer delay value</a></li>
+<li><a href="#connection-release-complete-message-timer-delay-value">Connection release complete message timer delay value</a></li>
+<li><a href="#connection-released-message-repeat-timer-delay-value">Connection released message repeat timer delay value</a></li>
+<li><a href="#connection-resources-release-timer-delay-value">Connection resources release timer delay value</a></li>
+<li><a href="#connection-work-resume-after-restart-time-delay-value">Connection work resume after restart time delay value</a></li>
+<li><a href="#connection-release-after-reset-delay-value">Connection release after reset delay value</a></li>
+<li><a href="#thread-count-in-connections-timers-thread-pool-value">Thread count in connections timers thread pool value</a></li>
 <li><a href="#_sccp_property_cc_algo">Algorithm of the congestion control at SCCP level</a></li>
 <li><a href="#_sccp_property_cc_blockingoutgoungsccpmessages">Blocking of outgoing messages in case of the congestion</a></li>
 </ul>
@@ -23618,6 +23628,410 @@ EXAMPLES
 <div class="paragraph">
 <p>On SCCP management page, click on pencil against the 'Congestion control: Timer A' property and text box becomes editable.
 Change value and save.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="can-relay-value"><a class="anchor" href="#can-relay-value"></a>Can relay value</h3>
+<div class="sect3">
+<h4 id="_sccp_property_canrelay_cli"><a class="anchor" href="#_sccp_property_canrelay_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'canrelay' by issuing the command <code>sccp set canrelay</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>sccp get canrelay</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	sccp set canrelay
+
+SYNOPSIS
+	sccp set canrelay &lt;canrelay&gt;
+	stackname &lt;stack-name&gt;
+
+DESCRIPTION
+    Enable (true) or disable (false) ability to be relay node with coupling
+
+PARAMETERS
+
+	Standard Parameters
+
+	&lt;canrelay&gt;	-	boolean values true or false.
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	sccp set canrelay true</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="connection-establishing-timer-delay-value"><a class="anchor" href="#connection-establishing-timer-delay-value"></a>Connection establishing timer delay value</h3>
+<div class="sect3">
+<h4 id="_sccp_property_connesttimerdelay_cli"><a class="anchor" href="#_sccp_property_connesttimerdelay_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'connesttimerdelay' by issuing the command <code>sccp set connesttimerdelay</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>sccp get connesttimerdelay</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	sccp set connesttimerdelay
+
+SYNOPSIS
+	sccp set connesttimerdelay &lt;connesttimerdelay&gt;
+	stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	Set T(conn est) timer delay (for how long connection waits for connection
+	confirm message). Range is 60000 to 120000. If passed value is less than
+	60000, it sets to 60000 and if passed value is greater than 120000,
+	it sets to 120000
+
+PARAMETERS
+
+	Standard Parameters
+
+	&lt;connesttimerdelay&gt;	-	values from 60000 to 120000 for timer delay.
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	sccp set connesttimerdelay 60000</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="connection-it-send-timer-delay-value"><a class="anchor" href="#connection-it-send-timer-delay-value"></a>Connection IT send timer delay value</h3>
+<div class="sect3">
+<h4 id="_sccp_property_iastimerdelay_cli"><a class="anchor" href="#_sccp_property_iastimerdelay_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'iastimerdelay' by issuing the command <code>sccp set iastimerdelay</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>sccp get iastimerdelay</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	sccp set iastimerdelay
+
+SYNOPSIS
+	sccp set iastimerdelay &lt;iastimerdelay&gt;
+	stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	Set T(ias) timer delay (after what period of time IT message will be sent
+	if no messages was sent). Range is 300000 to 600000. If passed value is less
+	than 300000, it sets to 300000 and if passed value is greater than 600000,
+	it sets to 600000
+
+PARAMETERS
+
+	Standard Parameters
+
+	&lt;iastimerdelay&gt;	-	values from 300000 to 600000 for timer delay.
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	sccp set iastimerdelay 300000</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="connection-message-receive-timer-delay-value"><a class="anchor" href="#connection-message-receive-timer-delay-value"></a>Connection message receive timer delay value</h3>
+<div class="sect3">
+<h4 id="_sccp_property_iartimerdelay_cli"><a class="anchor" href="#_sccp_property_iartimerdelay_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'iartimerdelay' by issuing the command <code>sccp set iartimerdelay</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>sccp get iartimerdelay</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	sccp set iartimerdelay
+
+SYNOPSIS
+	sccp set iartimerdelay &lt;iartimerdelay&gt;
+	stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	Set T(iar) timer delay (for how long connection waits to receive a message).
+	Range is 660000 to 1260000. If passed value is less than 660000, it sets to
+	660000 and if passed value is greater than 1260000, it sets to 1260000
+
+PARAMETERS
+
+	Standard Parameters
+
+	&lt;iartimerdelay&gt;	-	values from 660000 to 1260000 for timer delay.
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	sccp set iartimerdelay 660000</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="connection-release-complete-message-timer-delay-value"><a class="anchor" href="#connection-release-complete-message-timer-delay-value"></a>Connection release complete message timer delay value</h3>
+<div class="sect3">
+<h4 id="_sccp_property_reltimerdelay_cli"><a class="anchor" href="#_sccp_property_reltimerdelay_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'reltimerdelay' by issuing the command <code>sccp set reltimerdelay</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>sccp get reltimerdelay</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	sccp set reltimerdelay
+
+SYNOPSIS
+	sccp set reltimerdelay &lt;iartimerdelay&gt;
+	stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	Set T(rel) timer delay (for how long connection waits for release complete
+	message). Range is 10000 to 20000. If passed value is less than 10000, it
+	sets to 10000 and if passed value is greater than 20000, it sets to 20000
+
+PARAMETERS
+
+	Standard Parameters
+
+	&lt;reltimerdelay&gt;	-	values from 10000 to 20000 for timer delay.
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	sccp set reltimerdelay 10000</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="connection-released-message-repeat-timer-delay-value"><a class="anchor" href="#connection-released-message-repeat-timer-delay-value"></a>Connection released message repeat timer delay value</h3>
+<div class="sect3">
+<h4 id="_sccp_property_repeatreltimerdelay_cli"><a class="anchor" href="#_sccp_property_repeatreltimerdelay_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'repeatreltimerdelay' by issuing the command <code>sccp set repeatreltimerdelay</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>sccp get repeatreltimerdelay</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	sccp set repeatreltimerdelay
+
+SYNOPSIS
+	sccp set repeatreltimerdelay &lt;repeatreltimerdelay&gt;
+	stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	Set T(repeat rel) timer delay (for how long connection waits for release complete
+	message or to repeat sending release message after T(rel) timer fire). Range is
+	10000 to 20000. If passed value is less than 10000, it sets to 10000 and if passed
+	value is greater than 20000, it sets to 20000
+
+PARAMETERS
+
+	Standard Parameters
+
+	&lt;repeatreltimerdelay&gt;	-	values from 10000 to 20000 for timer delay.
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	sccp set repeatreltimerdelay 10000</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="connection-resources-release-timer-delay-value"><a class="anchor" href="#connection-resources-release-timer-delay-value"></a>Connection resources release timer delay value</h3>
+<div class="sect3">
+<h4 id="_sccp_property_inttimerdelay_cli"><a class="anchor" href="#_sccp_property_inttimerdelay_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'inttimerdelay' by issuing the command <code>sccp set inttimerdelay</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>sccp get inttimerdelay</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	sccp set inttimerdelay
+
+SYNOPSIS
+	sccp set inttimerdelay &lt;inttimerdelay&gt;
+	stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	Set T(int) timer delay (for how long connection waits for release complete
+	message or to release connection resources). Range is 0 to 60000. If passed
+	value is less than 0, it sets to 0 and if passed value is greater than
+	60000, it sets to 60000
+
+PARAMETERS
+
+	Standard Parameters
+
+	&lt;inttimerdelay&gt;	-	values from 0 to 60000 for timer delay.
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	sccp set inttimerdelay 0</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="connection-work-resume-after-restart-time-delay-value"><a class="anchor" href="#connection-work-resume-after-restart-time-delay-value"></a>Connection work resume after restart time delay value</h3>
+<div class="sect3">
+<h4 id="_sccp_property_guardtimerdelay_cli"><a class="anchor" href="#_sccp_property_guardtimerdelay_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'guardtimerdelay' by issuing the command <code>sccp set guardtimerdelay</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>sccp get guardtimerdelay</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	sccp set guardtimerdelay
+
+SYNOPSIS
+	sccp set guardtimerdelay &lt;guardtimerdelay&gt;
+	stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	Set T(guard) timer delay (for how long connection waits to resume work
+	after restart). Range is 1380000 to 1500000. If passed value is less
+	than 1380000, it sets to 1380000 and if passed value is greater than
+	1500000, it sets to 1500000
+
+PARAMETERS
+
+	Standard Parameters
+
+	&lt;guardtimerdelay&gt;	-	values from 1380000 to 1500000 for timer delay.
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	sccp set guardtimerdelay 1380000</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="connection-release-after-reset-delay-value"><a class="anchor" href="#connection-release-after-reset-delay-value"></a>Connection release after reset delay value</h3>
+<div class="sect3">
+<h4 id="_sccp_property_resettimerdelay_cli"><a class="anchor" href="#_sccp_property_resettimerdelay_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'resettimerdelay' by issuing the command <code>sccp set resettimerdelay</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>sccp get resettimerdelay</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	sccp set resettimerdelay
+
+SYNOPSIS
+	sccp set resettimerdelay &lt;resettimerdelay&gt;
+	stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	Set T(reset) timer delay (for how long connection waits to release after
+	sending reset message). Range is 10000 to 20000. If passed value is less
+	than 10000, it sets to 10000 and if passed value is greater than 20000,
+	it sets to 20000
+
+PARAMETERS
+
+	Standard Parameters
+
+	&lt;resettimerdelay&gt;	-	values from 10000 to 20000 for timer delay.
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	sccp set resettimerdelay 10000</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="thread-count-in-connections-timers-thread-pool-value"><a class="anchor" href="#thread-count-in-connections-timers-thread-pool-value"></a>Thread count in connections timers thread pool value</h3>
+<div class="sect3">
+<h4 id="_sccp_property_timerexecutors_threadcount_cli"><a class="anchor" href="#_sccp_property_timerexecutors_threadcount_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'timerexecutors_threadcount' by issuing the command <code>sccp set timerexecutors_threadcount</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>sccp get timerexecutors_threadcount</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	sccp set timerexecutors_threadcount
+
+SYNOPSIS
+	sccp set timerexecutors_threadcount &lt;timerexecutors_threadcount&gt;
+	stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	Set number of threads in thread pool for connections timers. Range is from 1
+	to 100. If passed value is less than 1, it sets to 1 and if passed
+	value is greater than 1000, it sets to 1000
+
+PARAMETERS
+
+	Standard Parameters
+
+	&lt;timerexecutors_threadcount&gt;	-	values from 1 to 1000.
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	sccp set timerexecutors_threadcount 10</pre>
+</div>
 </div>
 </div>
 </div>
@@ -26647,78 +27061,68 @@ EXAMPLES
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-02-13 14:25:10 UTC
+Last updated 2018-02-16 11:39:25 UTC
 </div>
 </div>
 <footer>
-		<div class="footer_inner clearfix">
-				<div class="footer_top_holder">
-            			<div class="footer_top">
-								<div class="container">
+	<div class="footer_inner clearfix">
+		<div class="footer_top_holder">
+			<div class="footer_top">
+				<div class="container">
 					<div class="container_inner">
-																	<div class="three_columns clearfix">
-								<div class="column1 footer_col1">
-									<div class="column_inner">
-										<div id="text-10" class="widget widget_text"><h5>CONTACT US</h5>			<div class="textwidget"><div class="separator  transparent center  " style="margin-top: 32px;margin-bottom: 0px;height: 0px;"></div>
+						<div class="three_columns clearfix">
+							<div class="column1 footer_col1">
+								<div class="column_inner">
+									<div id="text-10" class="widget widget_text"><h5>CONTACT US</h5>			<div class="textwidget"><div class="separator  transparent center  " style="margin-top: 32px;margin-bottom: 0px;height: 0px;"></div>
+
+										Please fill in our <a href="https://www.restcomm.com/contact/" style="text-decoration: underline;">contact form</a> or dial <a href="tel:+1 (650) 263 6146">+1 (650) 263 6146</a>
+
+										<div class="separator  transparent center  " style="margin-top: 20px;margin-bottom: 0px;height: 0px;"></div>
+									</div>
+									</div><div id="nav_menu-4" class="widget widget_nav_menu"><h5>ADDITIONAL LINKS</h5><div class="menu-footer_menu-container"><ul id="menu-footer_menu" class="menu"><li id="menu-item-17285" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17285"><a href="https://telestax.com/about/">About</a></li>
+									<li id="menu-item-17289" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17289"><a href="https://telestax.com/faqs/">FAQ&#8217;s</a></li>
+									<li id="menu-item-18624" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18624"><a href="https://telestax.com/jobs/">Careers</a></li>
+									<li id="menu-item-17893" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17893"><a href="https://www.restcomm.com/contact/">Contact</a></li>
+								</ul></div></div><div id="text-6" class="widget widget_text"><h5>FOLLOW US</h5>			<div class="textwidget"><div class="separator  transparent center  " style="margin-top: 20px;margin-bottom: 0px;height: 0px;"></div>
 
 
-<a href="tel:+1 (650) 263 6146">+1 (650) 263 6146</a>
+									<div id="social"><p class="social_icon_textlink"><a href="https://twitter.com/telestax"><span class='q_social_icon_holder normal_social' data-hover-color=#f25f33><i class="qode_icon_font_awesome fa fa-twitter fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
 
-<div class="separator  transparent center  " style="margin-top: 20px;margin-bottom: 0px;height: 0px;"></div>
+										<a href="https://www.linkedin.com/company/telestax"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-linkedin fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
 
+										<a href="https://www.facebook.com/Telestax"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-facebook fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
 
-For general inquiries and media
-<a href="mailto:info@telestax.com">info@telestax.com</a>
-<div class="separator  transparent center  " style="margin-top: 20px;margin-bottom: 0px;height: 0px;"></div>
+										<a href="https://www.youtube.com/c/TeleStax"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-youtube fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
 
-For customer support
-<a href="mailto:support@telestax.com">support@telestax.com</a>
-<div class="separator  transparent center  " style="margin-top: 20px;margin-bottom: 0px;height: 0px;"></div>
-</div>
-		</div><div id="nav_menu-4" class="widget widget_nav_menu"><h5>ADDITIONAL LINKS</h5><div class="menu-footer_menu-container"><ul id="menu-footer_menu" class="menu"><li id="menu-item-17285" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17285"><a href="https://telestax.com/about/">About</a></li>
-<li id="menu-item-17289" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17289"><a href="https://telestax.com/faqs/">FAQ&#8217;s</a></li>
-<li id="menu-item-18624" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18624"><a href="https://telestax.com/jobs/">Careers</a></li>
-<li id="menu-item-17893" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17893"><a href="https://telestax.com/contact/">Contact</a></li>
-</ul></div></div><div id="text-6" class="widget widget_text"><h5>FOLLOW US</h5>			<div class="textwidget"><div class="separator  transparent center  " style="margin-top: 20px;margin-bottom: 0px;height: 0px;"></div>
+										<a href="https://plus.google.com/+TeleStax/posts"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-google-plus fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
 
+										<a href="https://weibo.com/mobicents"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-weibo fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
 
-<div id="social"><p class="social_icon_textlink"><a href="https://twitter.com/telestax"><span class='q_social_icon_holder normal_social' data-hover-color=#f25f33><i class="qode_icon_font_awesome fa fa-twitter fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
-
-<a href="https://www.linkedin.com/company/telestax"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-linkedin fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
-
-<a href="https://www.facebook.com/Telestax"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-facebook fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
-
-<a href="https://www.youtube.com/c/TeleStax"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-youtube fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
-
-<a href="https://plus.google.com/+TeleStax/posts"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-google-plus fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
-
-<a href="https://weibo.com/mobicents"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-weibo fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
-
-<a href="https://restcomm.com/blog/"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-rss fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a></p></div></div>
-		</div>									</div>
-								</div>
-								<div class="column2 footer_col2">
-									<div class="column_inner">
-										<div id="text-2" class="widget widget_text"><h5>Latest Posts</h5>			<div class="textwidget"><div class="separator  transparent center  " style="margin-top: 35px;margin-bottom: 0px;height: 0px;"></div>
-
-
-<div class='latest_post_holder image_in_box  '><ul><li class="clearfix"><div class="latest_post"><div class="latest_post_image clearfix"><img src="" alt="" /></div><div class="latest_post_text"><div class="latest_post_inner"><div class="latest_post_text_inner"><h5 class="latest_post_title "><a href="https://telestax.com/which-open-source-platform-has-active-community/">Which Open Source Communications Platform Has The Most Active Community?</a></h5><p class="excerpt">Last week, we blogged about the impressive milestone reached by Restco...</p><span class="post_infos"></span></div></div></div></div><li class="clearfix"><div class="latest_post"><div class="latest_post_image clearfix"><img src="" alt="" /></div><div class="latest_post_text"><div class="latest_post_inner"><div class="latest_post_text_inner"><h5 class="latest_post_title "><a href="https://telestax.com/restcomm-client-ios-sdk-beta-4/">Restcomm Client iOS SDK Beta 4 is out</a></h5><p class="excerpt">We are proud to announce 1.0.0 BETA 4 release of Restcomm Client iOS S...</p><span class="post_infos"></span></div></div></div></div><li class="clearfix"><div class="latest_post"><div class="latest_post_image clearfix"><img src="" alt="" /></div><div class="latest_post_text"><div class="latest_post_inner"><div class="latest_post_text_inner"><h5 class="latest_post_title "><a href="https://telestax.com/restcomm-7-6-1-release/">Telscale Restcomm 7.6.1.GA patch release</a></h5><p class="excerpt">Today we are happy to announce the patch release for Telscale Restcomm...</p><span class="post_infos"></span></div></div></div></div></ul></div></div>
-		</div>									</div>
-								</div>
-								<div class="column3 footer_col3">
-									<div class="column_inner">
-										<div id="text-11" class="widget widget_text"><h5>Subscribe to Our Blog</h5>			<div class="textwidget">
-
-</div>
-		</div>									</div>
-								</div>
+										<a href="https://restcomm.com/blog/"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-rss fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a></p></div></div>
+								</div>									</div>
 							</div>
-															</div>
-				</div>
+							<div class="column2 footer_col2">
+								<div class="column_inner">
+									<div id="text-2" class="widget widget_text"><h5>Latest Posts</h5>			<div class="textwidget"><div class="separator  transparent center  " style="margin-top: 35px;margin-bottom: 0px;height: 0px;"></div>
+
+
+										<div class='latest_post_holder image_in_box  '><ul><li class="clearfix"><div class="latest_post"><div class="latest_post_image clearfix"><img src="" alt="" /></div><div class="latest_post_text"><div class="latest_post_inner"><div class="latest_post_text_inner"><h5 class="latest_post_title "><a href="https://telestax.com/which-open-source-platform-has-active-community/">Which Open Source Communications Platform Has The Most Active Community?</a></h5><p class="excerpt">Last week, we blogged about the impressive milestone reached by Restco...</p><span class="post_infos"></span></div></div></div></div><li class="clearfix"><div class="latest_post"><div class="latest_post_image clearfix"><img src="" alt="" /></div><div class="latest_post_text"><div class="latest_post_inner"><div class="latest_post_text_inner"><h5 class="latest_post_title "><a href="https://telestax.com/restcomm-client-ios-sdk-beta-4/">Restcomm Client iOS SDK Beta 4 is out</a></h5><p class="excerpt">We are proud to announce 1.0.0 BETA 4 release of Restcomm Client iOS S...</p><span class="post_infos"></span></div></div></div></div><li class="clearfix"><div class="latest_post"><div class="latest_post_image clearfix"><img src="" alt="" /></div><div class="latest_post_text"><div class="latest_post_inner"><div class="latest_post_text_inner"><h5 class="latest_post_title "><a href="https://telestax.com/restcomm-7-6-1-release/">Telscale Restcomm 7.6.1.GA patch release</a></h5><p class="excerpt">Today we are happy to announce the patch release for Telscale Restcomm...</p><span class="post_infos"></span></div></div></div></div></ul></div></div>
+									</div>									</div>
 							</div>
-					</div>
+							<div class="column3 footer_col3">
+								<div class="column_inner">
+									<div id="text-11" class="widget widget_text"><h5>Subscribe to Our Blog</h5>			<div class="textwidget">
+
+									</div>
+									</div>									</div>
+							</div>
 						</div>
-	</footer>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
 
 </div>
 </div>
@@ -26744,26 +27148,26 @@ var qodeLike = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php"};
 <!-- This site is converting visitors into subscribers and customers with OptinMonster - https://optinmonster.com --><script>var om57ac9561a4ac3,om57ac9561a4ac3_poll=function(){var r=0;return function(n,l){clearInterval(r),r=setInterval(n,l)}}();!function(e,t,n){if(e.getElementById(n)){om57ac9561a4ac3_poll(function(){if(window['om_loaded']){if(!om57ac9561a4ac3){om57ac9561a4ac3=new OptinMonsterApp();return om57ac9561a4ac3.init({"s":"6742.57ac9561a4ac3","staging":0,"dev":0,"beta":0});}}},25);return;}var d=false,o=e.createElement(t);o.id=n,o.src="https://a.optnmstr.com/app/js/api.min.js",o.async=true,o.onload=o.onreadystatechange=function(){if(!d){if(!this.readyState||this.readyState==="loaded"||this.readyState==="complete"){try{d=om_loaded=true;om57ac9561a4ac3=new OptinMonsterApp();om57ac9561a4ac3.init({"s":"6742.57ac9561a4ac3","staging":0,"dev":0,"beta":0});o.onload=o.onreadystatechange=null;}catch(t){}}}};(document.getElementsByTagName("head")[0]||document.documentElement).appendChild(o)}(document,"script","omapi-script");</script><!-- / OptinMonster -->
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/59eabdf54854b82732ff6cd3/default';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/59eabdf54854b82732ff6cd3/default';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+  })();
 
-Tawk_API = Tawk_API || {};
-Tawk_API.onChatStarted = function(){
-   Countly.q.push(['add_event',{
-	"key": "Livechat",
-  "count": 1,
-	"segmentation": {
-    "livechat": "documentation.telestax.com",
-	}
-}]);
-};
+  Tawk_API = Tawk_API || {};
+  Tawk_API.onChatStarted = function(){
+    Countly.q.push(['add_event',{
+      "key": "Livechat",
+      "count": 1,
+      "segmentation": {
+        "livechat": "documentation.telestax.com",
+      }
+    }]);
+  };
 </script>
 <!--End of Tawk.to Script-->
 </body>
