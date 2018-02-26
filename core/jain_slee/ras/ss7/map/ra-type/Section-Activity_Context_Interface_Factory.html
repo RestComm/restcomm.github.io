@@ -199,7 +199,7 @@ p { font-family: inherit; font-weight: normal; font-size: 1em; line-height: 1.5;
 p aside { font-size: 0.875em; line-height: 1.35; font-style: italic; }
 
 /* Default header styles */
-h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 { font-family: "Varela Round", sans-serif; font-weight: 400; font-style: normal; color: #f25f33; text-rendering: optimizeLegibility; margin-top: 0.8em; margin-bottom: 0.5em; line-height: 1.0625em; }
+h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 { font-family: "Varela Round", sans-serif; font-weight: 400; font-style: normal; color: #1ea5db; text-rendering: optimizeLegibility; margin-top: 0.8em; margin-bottom: 0.5em; line-height: 1.0625em; }
 h1 small, h2 small, h3 small, #toctitle small, .sidebarblock > .content > .title small, h4 small, h5 small, h6 small {color: #f36f47; line-height: 0; }
 
 h1 { font-size: 2.125em; }
@@ -843,7 +843,7 @@ img{
 }
 
 h1,h2,h3,h4,h5,h6{
-    color: #f25f33;
+    color: #1ea5db;
 }
 
 h1{
@@ -904,20 +904,20 @@ h3 a:hover,
 h4 a:hover,
 h5 a:hover,
 h6 a:hover{
-	color: #f25f33;
+	color: #1ea5db;
 }
 
 a,
 p a{
 	color: #303030;
-	text-decoration: none;
+	text-decoration: underline;
 	cursor: pointer;
 }
 
 a:hover,
 p a:hover {
-	color: #f25f33;
-	text-decoration: none;
+	color: #1ea5db;
+	text-decoration: underline;
 }
 
 input[type='submit'],
@@ -2241,7 +2241,6 @@ nav.main_menu > ul > li > a {
 	position: relative;
 	padding: 0 17px;
     color: #9d9d9d;
-    text-transform: uppercase;
     font-weight: 600;
     font-size: 13px;
     letter-spacing: 1px;
@@ -2332,7 +2331,7 @@ nav.main_menu > ul > li:hover > .second{
 li.narrow .second .inner ul {
 	display:inline-block;
 	position: relative;
-	background-color: #262626;
+	background-color: #f1f1f1;
 	border-color:#3d3d3d;
 }
 
@@ -2363,7 +2362,7 @@ li.narrow .second .inner ul li:last-child {
 .drop_down .second .inner ul li h5 {
     display: block;
     font-weight: 600;
-    color: #9d9d9d;
+    color: #141d33;
     height: auto;
     line-height: 16px;
     margin: 0;
@@ -2390,7 +2389,7 @@ li.narrow .second .inner ul li:last-child {
 
 .drop_down .second .inner > ul > li > a:hover,
 .drop_down .second .inner ul li.sub ul li a:hover{
-	color: #fff;
+	color: #1ea5db;
     /*background-color: #474747;*/
 }
 
@@ -2527,7 +2526,6 @@ li.narrow .second .inner ul li:last-child {
 .drop_down .wide .second .inner > ul > li > a{
     color: #fff;
     border-bottom: 0;
-    text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: 600;
 }
@@ -22485,28 +22483,383 @@ body.vertical_menu_outside_paspartu.vertical_menu_enabled.vertical_menu_hidden.v
 ============================================================================ */
 
 
+/* ==========================================================================
+   What was previously `custom_css-css` from http://telestax.com/wp-content/themes/bridge/css/custom_css.css?ver=1457115435
+============================================================================ */
+
+
+.dark:not(.sticky):not(.scrolled) nav.main_menu>ul>li>a,
+.dark:not(.sticky):not(.scrolled) nav.main_menu>ul>li.active>a,
+.dark:not(.sticky):not(.scrolled) nav.main_menu>ul>li:not(:first-child):before,
+.dark.header_style_on_scroll nav.main_menu>ul>li>a,
+.dark.header_style_on_scroll nav.main_menu>ul>li.active>a,
+.dark.header_style_on_scroll nav.main_menu>ul>li:not(:first-child):before {
+    color: #141d33;
+}
+
+.dark:not(.sticky):not(.scrolled) nav.main_menu>ul>li>a:hover,
+.dark:not(.sticky):not(.scrolled) nav.main_menu>ul>li.active>a:hover,
+.dark:not(.sticky):not(.scrolled) nav.main_menu>ul>li:not(:first-child):before,
+.dark.header_style_on_scroll nav.main_menu>ul>li>a:hover,
+.dark.header_style_on_scroll nav.main_menu>ul>li.active>a:hover,
+.dark.header_style_on_scroll nav.main_menu>ul>li:not(:first-child):before {
+    color: #1ea5db;
+}
+
+.image_with_text img {
+    display: inline-table;
+    margin: 0 0 10px 0;
+}
+
+.q_counter_holder.center {
+    text-align: center;
+    padding: 230px 40px;
+}
+
+#home_parallax, section.parallax_section_holder {
+    background-color: #272d4f;
+}
+
+.th, td {
+line-height: inherit;
+   border: 2px solid #234691;
+}
+
+/* start service table */
+
+.service_table_title_inner {
+    text-align: left;
+    padding: 0 15px 0 0;
+}
+
+.service_table_inner li {
+    text-align: left;
+    padding: 0 15px 15px 15px;
+}
+
+.service_table_inner li.service_table_title_holder {
+    padding: 31px 0 10px 10px;
+}
+
+/* end service table */
+
+/* start accordion */
+
+.q_accordion_holder.accordion .ui-accordion-header .accordion_mark_icon {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-image: url(img/plus.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.q_accordion_holder.accordion .ui-accordion-header .accordion_mark {
+    display: block;
+    width: 25px;
+    height: 25px;
+    border: 2px solid #378aca;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -o-border-radius: 3px;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+    background-color: transparent;
+    transition: background-color .3s ease-in-out;
+    box-sizing: border-box;
+}
+
+.q_accordion_holder.accordion .ui-accordion-header .accordion_mark.left_mark {
+    position: absolute;
+    top: 12px;
+    left: 0;
+}
+
+.q_accordion_holder.accordion.without_icon .ui-accordion-header span.tab-title {
+    padding: 0 0 0 38px;
+    display: block;
+    color: #6d6e71;
+}
+
+.q_accordion_holder.accordion div.accordion_content {
+    padding: 0 0 0 38px;
+    margin: 0;
+}
+
+.q_accordion_holder.accordion .ui-accordion-header.ui-state-active .accordion_mark {
+    background-color: #378aca;
+}
+/* end accordion */
+
+.drop_down .second {
+    top: 70%;
+    }
+
+.q_list.circle ul>li {
+color: #6d6e71;
+}
+
+.q_list.circle ul>li:before {
+    background-color: #378aca;
+}
+
+div.header_bottom.clearfix {
+    height: 80px;
+}
+
+.social_icon_textlink a:hover .q_social_icon_holder .simple_social {
+    color: #f25f33 !important;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+.q_counter_holder .counter {
+width: 250px !important;
+font-size: 70px !important;
+}
+}
+
+.flexslider .slides img, .portfolio_slider .portfolio_slides img, .qode_carousels .slides img {
+    width: 85%;
+    display: block;
+}
+
+/* start latest posts widget */
+
+.latest_post_image {
+   display: none;
+}
+
+.latest_post_holder.image_in_box .latest_post_text {
+    padding: 0 0 0 0px;
+}
+
+/* start latest posts widget */
+
+.blog_holder.blog_small_image article .post_image, .blog_holder.blog_small_image article .post_text {
+    width: 100%;
+}
+
+.title.has_background {
+    background-position: center center !important;
+}
+
+.contact_section {
+    padding: 0 0 22px;
+}
+
+@media only screen and (min-width: 1000px)
+.content .container .container_inner.default_template_holder, .content .container .container_inner.page_container_inner {
+    padding-top: 0 !important;
+}
+h1, h2, h3, h4, h5, h6 {
+text-transform: none;
+}
+
+/***[BEGIN] TSG 12-04-2017***/
+.text-white * {
+    color: #fff;
+}
+.max-width-500 {
+    max-width: 500px;
+}
+.text-over-2 {
+    max-width: 500px;
+    padding: 25px;
+    background-color: rgba( 221, 65, 38, .8);
+}
+.text-over-2 h1 {
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.text-over-2 p {
+  font-size: 20px;
+  line-height: 1.2;
+}
+@media all and ( min-width: 600px ) {
+   .text-over-2 {
+      min-width: 520px;
+   }
+}
+
+.equal-height-columns .full_section_inner,
+.equal-height-columns .section_inner {
+    display: flex;
+    align-items: center;
+}
+
+.equal-height-columns .full_section_inner .vc_column_container {
+    align-items: center;
+}
+
+@media all and ( max-width: 767px ) {
+  .equal-height-columns .full_section_inner,
+ .equal-height-columns .section_inner {
+    display: block;
+ }
+}
+
+.side_menu_button_wrapper {
+    display: none;
+}
+
+.min-height-200 {
+    min-height: 200px;
+}
+
+.partner-description ul {
+    list-style: none;
+    margin-top: 20px;
+}
+.partner-description ul li {
+    display: inline;
+    padding-right: 20px;
+}
+
+.partner-description ul li a {
+    color: #f25f33;
+    text-transform: uppercase;
+}
+/***[END] TSG 12-04-2017***/
+
+
+
+
+/***[BEGIN TSG 12-18-2017]***/
+
+	.blog_single .category-news .post_image,
+	.blog_single .category-press-releases .post_image {
+		max-width: 350px;
+	}
+        .blog_single .category-news .post_image img,
+	.blog_single .category-press-releases .post_image img {
+           width: auto; max-width: 100%;
+       }
+
+
+	.blog_single .category-news .post_text h2 .date,
+	.blog_single .category-press-releases .post_text h2 .date {
+		display: none;
+	}
+
+	.blog_single .category-news .post_text h2,
+	.blog_single .category-press-releases .post_text h2 {
+		font-family: Roboto Condensed;
+                color: #272D50;
+                text-transform: none;
+	}
+
+
+	.blog_single .category-news .post_text .post_info,
+	.blog_single .category-press-releases .post_text .post_info {
+		display: none;
+	}
+
+
+	.job_description h3 {
+		font-size: 24px;
+		color: #272D50;
+	}
+
+
+.blog_single .category-press-releases a:visited,
+.blog_single .category-news a:visited,
+.blog_single .category-press-releases a,
+.blog_single .category-news a { color: #f25f33; }
+
+.blog_single .category-press-releases a:focus,
+.blog_single .category-news a:focus,
+.blog_single .category-press-releases a:hover,
+.blog_single .category-news a:hover { color: #e23400; }
+
+
+	.blog_single .job_listing .post_text h2 {
+		font-family: Roboto;
+		font-size: 30px;
+		font-weight: 400;
+		color: #272D50;
+               text-transform: none;
+	}
+
+
+	.blog_single .job_listing .post_text h2 .date {
+		display: none;
+	}
+
+
+	.application_button {
+		background-color: #f25f33;
+		color: #fff;
+		border: 1px solid #f25f33;
+	}
+
+
+	.application_button:hover {
+		background-color: #fff;
+		color: #f25f33;
+	}
+
+/*
+.single .title {
+display: none;
+}
+*/
+
+/*
+.single .blog_holder {
+   margin-top: 60px;
+}
+*/
+.qode_client_image_holder a{
+	cursor:default !important;
+}
+/***[END TSG 12-18-2017]***/
+
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
 
   <title>Telestax | Real-Time Communication Unleashed</title>
 
 
-
   <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 
-  <link rel="profile" href="https://gmpg.org/xfn/11" />
-  <link rel="pingback" href="https://telestax.com/xmlrpc.php" />
+  <link rel="profile" href="https://gmpg.org/xfn/11"/>
+  <link rel="pingback" href="https://telestax.com/xmlrpc.php"/>
   <link rel="shortcut icon" type="image/x-icon" href="https://www.telestax.com/wp-content/uploads/2016/02/favicon.ico">
   <link rel="apple-touch-icon" href="https://www.telestax.com/wp-content/uploads/2016/02/favicon.ico"/>
-  <link href='//fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900,300italic,400italic|Questrial:100,200,300,400,500,600,700,800,900,300italic,400italic|Roboto+Condensed:100,200,300,400,500,600,700,800,900,300italic,400italic|Roboto:100,200,300,400,500,600,700,800,900,300italic,400italic|Montserrat:100,200,300,400,500,600,700,800,900,300italic,400italic|Lato:100,200,300,400,500,600,700,800,900,300italic,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="Telestax &raquo; Feed" href="https://telestax.com/feed/" />
-  <link rel="alternate" type="application/rss+xml" title="Telestax &raquo; Comments Feed" href="https://telestax.com/comments/feed/" />
-  <link rel="alternate" type="application/rss+xml" title="Telestax &raquo; Home Comments Feed" href="https://telestax.com/home/feed/" />
+  <link
+    href='//fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900,300italic,400italic|Questrial:100,200,300,400,500,600,700,800,900,300italic,400italic|Roboto+Condensed:100,200,300,400,500,600,700,800,900,300italic,400italic|Roboto:100,200,300,400,500,600,700,800,900,300italic,400italic|Montserrat:100,200,300,400,500,600,700,800,900,300italic,400italic|Lato:100,200,300,400,500,600,700,800,900,300italic,400italic&subset=latin,latin-ext'
+    rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="Telestax &raquo; Feed" href="https://telestax.com/feed/"/>
+  <link rel="alternate" type="application/rss+xml" title="Telestax &raquo; Comments Feed" href="https://telestax.com/comments/feed/"/>
+  <link rel="alternate" type="application/rss+xml" title="Telestax &raquo; Home Comments Feed" href="https://telestax.com/home/feed/"/>
   <script type="text/javascript">
-    window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/telestax.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4.2"}};
-    !function(a,b,c){function d(a){var c,d=b.createElement("canvas"),e=d.getContext&&d.getContext("2d"),f=String.fromCharCode;return e&&e.fillText?(e.textBaseline="top",e.font="600 32px Arial","flag"===a?(e.fillText(f(55356,56806,55356,56826),0,0),d.toDataURL().length>3e3):"diversity"===a?(e.fillText(f(55356,57221),0,0),c=e.getImageData(16,16,1,1).data.toString(),e.fillText(f(55356,57221,55356,57343),0,0),c!==e.getImageData(16,16,1,1).data.toString()):("simple"===a?e.fillText(f(55357,56835),0,0):e.fillText(f(55356,57135),0,0),0!==e.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8"),diversity:d("diversity")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8&&c.supports.diversity||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+    window._wpemojiSettings = {
+      "baseUrl": "https:\/\/s.w.org\/images\/core\/emoji\/72x72\/",
+      "ext": ".png",
+      "source": {"concatemoji": "http:\/\/telestax.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4.2"}
+    };
+    !function (a, b, c) {
+      function d(a) {
+        var c, d = b.createElement("canvas"), e = d.getContext && d.getContext("2d"), f = String.fromCharCode;
+        return e && e.fillText ? (e.textBaseline = "top", e.font = "600 32px Arial", "flag" === a ? (e.fillText(f(55356, 56806, 55356, 56826), 0, 0), d.toDataURL().length > 3e3) : "diversity" === a ? (e.fillText(f(55356, 57221), 0, 0), c = e.getImageData(16, 16, 1, 1).data.toString(), e.fillText(f(55356, 57221, 55356, 57343), 0, 0), c !== e.getImageData(16, 16, 1, 1).data.toString()) : ("simple" === a ? e.fillText(f(55357, 56835), 0, 0) : e.fillText(f(55356, 57135), 0, 0), 0 !== e.getImageData(16, 16, 1, 1).data[0])) : !1
+      }
+
+      function e(a) {
+        var c = b.createElement("script");
+        c.src = a, c.type = "text/javascript", b.getElementsByTagName("head")[0].appendChild(c)
+      }
+
+      var f, g;
+      c.supports = {simple: d("simple"), flag: d("flag"), unicode8: d("unicode8"), diversity: d("diversity")}, c.DOMReady = !1, c.readyCallback = function () {
+        c.DOMReady = !0
+      }, c.supports.simple && c.supports.flag && c.supports.unicode8 && c.supports.diversity || (g = function () {
+        c.readyCallback()
+      }, b.addEventListener ? (b.addEventListener("DOMContentLoaded", g, !1), a.addEventListener("load", g, !1)) : (a.attachEvent("onload", g), b.attachEvent("onreadystatechange", function () {
+        "complete" === b.readyState && c.readyCallback()
+      })), f = c.source || {}, f.concatemoji ? e(f.concatemoji) : f.wpemoji && f.twemoji && (e(f.twemoji), e(f.wpemoji)))
+    }(window, document, window._wpemojiSettings);
   </script>
   <!--link rel='stylesheet' id='layerslider-css'  href='http://telestax.com/wp-content/plugins/LayerSlider/static/css/layerslider.css?ver=5.6.2' type='text/css' media='all' /-->
   <!--link rel='stylesheet' id='chosen-css'  href='http://telestax.com/wp-content/plugins/wp-job-manager/assets/css/chosen.css?ver=4.4.2' type='text/css' media='all' /-->
@@ -22518,7 +22871,6 @@ body.vertical_menu_outside_paspartu.vertical_menu_enabled.vertical_menu_hidden.v
   <link rel='stylesheet' id='default_style-css'  href='http://telestax.com/wp-content/themes/bridge/style.css?ver=4.4.2' type='text/css' media='all' />
   <link rel='stylesheet' id='stylesheetss-css'  href='http://telestax.com/wp-content/themes/bridge/css/stylesheet.min.css?ver=4.4.2' type='text/css' media='all' />
   <link rel='stylesheet' id='style_dynamic-css'  href='http://telestax.com/wp-content/themes/bridge/css/style_dynamic.css?ver=1457115435' type='text/css' media='all' /-->
-  <link rel='stylesheet' id='custom_css-css'  href='https://telestax.com/wp-content/themes/bridge/css/custom_css.css?ver=1457115435' type='text/css' media='all' />
   <script type='text/javascript' src='https://telestax.com/wp-content/plugins/LayerSlider/static/js/greensock.js?ver=1.11.8'></script>
   <script type='text/javascript' src='https://telestax.com/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
   <script type='text/javascript' src='https://telestax.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
@@ -22526,7 +22878,22 @@ body.vertical_menu_outside_paspartu.vertical_menu_enabled.vertical_menu_hidden.v
   <script type='text/javascript' src='https://telestax.com/wp-content/plugins/LayerSlider/static/js/layerslider.transitions.js?ver=5.6.2'></script>
   <script type='text/javascript'>
     /* <![CDATA[ */
-    var edd_scripts = {"ajaxurl":"http:\/\/telestax.com\/wp-admin\/admin-ajax.php","position_in_cart":"","already_in_cart_message":"You have already added this item to your cart","empty_cart_message":"Your cart is empty","loading":"Loading","select_option":"Please select an option","ajax_loader":"\/wp-content\/plugins\/easy-digital-downloads\/assets\/images\/loading.gif","is_checkout":"0","default_gateway":"","redirect_to_checkout":"0","checkout_page":"","permalinks":"1","quantities_enabled":"","taxes_enabled":"0"};
+    var edd_scripts = {
+      "ajaxurl": "http:\/\/telestax.com\/wp-admin\/admin-ajax.php",
+      "position_in_cart": "",
+      "already_in_cart_message": "You have already added this item to your cart",
+      "empty_cart_message": "Your cart is empty",
+      "loading": "Loading",
+      "select_option": "Please select an option",
+      "ajax_loader": "\/wp-content\/plugins\/easy-digital-downloads\/assets\/images\/loading.gif",
+      "is_checkout": "0",
+      "default_gateway": "",
+      "redirect_to_checkout": "0",
+      "checkout_page": "",
+      "permalinks": "1",
+      "quantities_enabled": "",
+      "taxes_enabled": "0"
+    };
     /* ]]> */
   </script>
   <script type='text/javascript' src='https://telestax.com/wp-content/plugins/easy-digital-downloads/assets/js/edd-ajax.min.js?ver=2.5.9'></script>
@@ -22551,32 +22918,44 @@ body.vertical_menu_outside_paspartu.vertical_menu_enabled.vertical_menu_hidden.v
     Countly.q.push(['track_forms']);
     Countly.q.push(['report_conversion']);
     //load countly script asynchronously
-    (function() {
-      var cly = document.createElement('script'); cly.type = 'text/javascript';
+    (function () {
+      var cly = document.createElement('script');
+      cly.type = 'text/javascript';
       cly.async = true;
       //enter url of script here (see below for other option)
       cly.src = 'https://cdn.jsdelivr.net/npm/countly-sdk-web@latest/lib/countly.min.js';
-      cly.onload = function(){Countly.init()};
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(cly, s);
+      cly.onload = function () {
+        Countly.init()
+      };
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(cly, s);
     })();
   </script>
-  <link rel='https://api.w.org/' href='https://telestax.com/wp-json/' />
-  <link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://telestax.com/xmlrpc.php?rsd" />
-  <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://telestax.com/wp-includes/wlwmanifest.xml" />
-  <link rel="canonical" href="https://telestax.com/" />
-  <link rel='shortlink' href='https://telestax.com/' />
-  <meta name="generator" content="Easy Digital Downloads v2.5.9" />
+  <link rel='https://api.w.org/' href='https://telestax.com/wp-json/'/>
+  <link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://telestax.com/xmlrpc.php?rsd"/>
+  <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://telestax.com/wp-includes/wlwmanifest.xml"/>
+  <link rel="canonical" href="https://telestax.com/"/>
+  <link rel='shortlink' href='https://telestax.com/'/>
+  <meta name="generator" content="Easy Digital Downloads v2.5.9"/>
   </noscript></head>
 
 
-<div class="ajax_loader"><div class="ajax_loader_1"><div class="cube"></div></div></div>
+<div class="ajax_loader">
+  <div class="ajax_loader_1">
+    <div class="cube"></div>
+  </div>
+</div>
 <div class="wrapper">
   <div class="wrapper_inner">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-26513010-2"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+
       gtag('js', new Date());
 
       gtag('config', 'UA-26513010-2');
@@ -22585,51 +22964,45 @@ body.vertical_menu_outside_paspartu.vertical_menu_enabled.vertical_menu_hidden.v
       <div class="header_inner clearfix">
 
         <div class="header_top_bottom_holder">
-          <div class="header_top clearfix" style='background-color:rgba(255, 255, 255, 1);' >
+          <div class="header_top clearfix" style='background-color:rgba(255, 255, 255, 1);'>
             <div class="container">
               <div class="container_inner clearfix">
                 <div class="left">
                   <div class="inner">
-                    <div class="header-widget widget_text header-left-widget">			<div class="textwidget"><span data-type="normal"  class="qode_icon_shortcode  q_font_awsome_icon fa-lg  " style="margin: 0 3px 5px 0; "><a  href="tel:+1 (650) 263 6146" target="_blank"><i class="qode_icon_font_awesome fa fa-phone qode_icon_element" style="font-size: 14px;color: #6d6e71;" ></i></a></span> Tel: +1 (650) 263 6146</div>
-                    </div>						</div>
+                    <div class="header-widget widget_text header-left-widget">
+                      <div class="textwidget">
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="right">
                   <div class="inner">
-                    <div class="header-widget widget_text header-right-widget">			<div class="textwidget"><div id="social"><p class="social_icon_textlink"><a href="https://twitter.com/telestax"><span class='q_social_icon_holder normal_social' data-hover-color=#f25f33><i class="qode_icon_font_awesome fa fa-twitter fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
-
-                      <a href="https://www.linkedin.com/company/telestax"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-linkedin fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
-
-                      <a href="https://www.facebook.com/Telestax"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-facebook fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
-
-                      <a href="https://www.youtube.com/c/TeleStax"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-youtube fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
-
-                      <a href="https://plus.google.com/+TeleStax/posts"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-google-plus fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
-
-                      <a href="https://weibo.com/mobicents"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-weibo fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a>
-
-                      <a href="https://restcomm.com/blog/"><span class='q_social_icon_holder normal_social' ><i class="qode_icon_font_awesome fa fa-rss fa-lg simple_social" style="color: #ffffff;margin: 0 10px 10px 0;font-size: 14px;" ></i></span></a></p></div></div>
-                    </div>						</div>
+                    <div class="header-widget widget_text header-right-widget">
+                      <div class="textwidget">
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="header_bottom clearfix" style=' background-color:rgba(39, 45, 80, 1);' >
+          <div class="header_bottom clearfix" style=' background-color:#f1f1f1;'>
             <div class="container">
               <div class="container_inner clearfix">
                 <div class="header_inner_left">
                   <div class="mobile_menu_button">
                                 <span>
-                                    <i class="qode_icon_font_awesome fa fa-bars " ></i>                                </span>
+                                    <i class="qode_icon_font_awesome fa fa-bars "></i>                                </span>
 
                   </div>
                   <div class="logo_wrapper">
                     <div class="q_logo">
-                      <a href="https://telestax.com/">
-                        <img class="normal" src="https://www.telestax.com/wp-content/uploads/2016/02/Logo_color_1-e1456315001566.png" alt="Logo"/>
-                        <img class="light" src="https://www.telestax.com/wp-content/uploads/2016/02/Logo_color_1-e1456315001566.png" alt="Logo"/>
-                        <img class="dark" src="https://www.telestax.com/wp-content/uploads/2016/02/logo_white_1-e1456314935157.png" alt="Logo"/>
-                        <img class="sticky" src="https://www.telestax.com/wp-content/uploads/2016/02/Logo_color_1-e1456315001566.png" alt="Logo"/>
-                        <img class="mobile" src="https://www.telestax.com/wp-content/uploads/2016/02/logo_white_1-e1456314935157.png" alt="Logo"/>
+                      <a href="https://restcomm.com">
+                        <img class="normal" src="./images/RestComm_Platform.png" alt="Logo"/>
+                        <img class="light" src="./images/RestComm_Platform.png" alt="Logo"/>
+                        <img class="dark" src="./images/RestComm_Platform.png" alt="Logo"/>
+                        <img class="sticky" src="./images/RestComm_Platform.png" alt="Logo"/>
+                        <img class="mobile" src="./images/RestComm_Platform.png" alt="Logo"/>
                       </a>
                     </div>
                   </div>
@@ -22644,139 +23017,314 @@ body.vertical_menu_outside_paspartu.vertical_menu_enabled.vertical_menu_hidden.v
 
 
                 <nav class="main_menu drop_down right">
-                  <ul id="menu-fullscreen-menu" class=""><li id="nav-menu-item-17151" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-15254 current_page_item active narrow"></li>
-                    <li id="nav-menu-item-17183" style="list-style-type: none;" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub narrow"><a href="https://telestax.com/" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub narrow"><i class="menu_icon blank fa"></i><img class="dark" src="https://www.telestax.com/wp-content/uploads/2016/02/logo_white_1-e1456314935157.png" alt="Logo"/><a/></span><span class="plus"></span></a>
+                  <ul id="menu-fullscreen-menu" class="">
+                    <li
+                      id="nav-menu-item-17151"
+                      class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-15254 current_page_item active narrow"></li>
+                    <li
+                      id="nav-menu-item-17183" style="list-style-type: none;"
+                      class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub narrow">
+                      <a href="https://telestax.com/" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub narrow"><i
+                        class="menu_icon blank fa"></i>
+                        <img class="dark" src="https://www.telestax.com/wp-content/uploads/2016/02/logo_white_1-e1456314935157.png" alt="Logo"/>
+                        <a/>
+                        </span><span class="plus"></span></a>
                     </li>
-                    <li id="nav-menu-item-17183" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub narrow"><a href="https://restcomm.com/trynow" class=""><i class="menu_icon blank fa"></i><span>Restcomm Cloud</span><span class="plus"></span></a>
+                    <li id="nav-menu-item-17183" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub narrow">
+                      <a href="/docs/index.html" class=""><i class="menu_icon blank fa"></i><span>Home</span><span class="plus"></span></a>
                     </li>
-                    <li id="nav-menu-item-17284" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub narrow"><a href="/docs/connect/index.html" class=""><i class="menu_icon blank fa"></i><span>Restcomm Connect</span><span class="plus"></span></a>
-                      <div class="second"><div class="inner"><ul>
-                        <li id="nav-menu-item-17427" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/connect/rvd/index.html" class=""><i class="menu_icon blank fa"></i><span>RVD</span><span class="plus"></span></a></li>
-                        <li id="nav-menu-item-17426" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/connect/admin/index.html" class=""><i class="menu_icon blank fa"></i><span>ADMIN UI</span><span class="plus"></span></a></li>
-                        <li id="nav-menu-item-17425" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/connect/api/index.html" class=""><i class="menu_icon blank fa"></i><span>API</span><span class="plus"></span></a></li>
-                        <li id="nav-menu-item-17424" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/connect/rcml/index.html" class=""><i class="menu_icon blank fa"></i><span>RCML</span><span class="plus"></span></a></li>
-                        <li id="nav-menu-item-17424" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/connect/sdks/index.html" class=""><i class="menu_icon blank fa"></i><span>SDKs</span><span class="plus"></span></a></li>
-                        <li id="nav-menu-item-17423" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/connect/tutorials/index.html" class=""><i class="menu_icon blank fa"></i><span>TUTORIALS</span><span class="plus"></span></a></li>
-                        <li id="nav-menu-item-17422" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/connect/configuration/index.html" class=""><i class="menu_icon blank fa"></i><span>CONFIGURATION</span><span class="plus"></span></a></li>
-                      </ul></div></div>
+                    <li id="nav-menu-item-17284" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub narrow">
+                      <a href="/docs/connect/index.html" class=""><i class="menu_icon blank fa"></i><span>Restcomm Connect</span><span class="plus"></span></a>
+                      <div class="second">
+                        <div class="inner">
+                          <ul>
+                            <li id="nav-menu-item-17427" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="/docs/connect/rvd/index.html" class=""><i class="menu_icon blank fa"></i><span>RVD</span><span class="plus"></span></a>
+                            </li>
+                            <li id="nav-menu-item-17426" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="/docs/connect/admin/index.html" class=""><i class="menu_icon blank fa"></i><span>Admin UI</span><span
+                                class="plus"></span></a>
+                            </li>
+                            <li id="nav-menu-item-17425" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="/docs/connect/api/index.html" class=""><i class="menu_icon blank fa"></i><span>API</span><span class="plus"></span></a>
+                            </li>
+                            <li id="nav-menu-item-17424" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="/docs/connect/rcml/index.html" class=""><i class="menu_icon blank fa"></i><span>RCML</span><span class="plus"></span></a>
+                            </li>
+                            <li id="nav-menu-item-17424" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="/docs/connect/sdks/index.html" class=""><i class="menu_icon blank fa"></i><span>SDKs</span><span class="plus"></span></a>
+                            </li>
+                            <li id="nav-menu-item-17423" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="/docs/connect/tutorials/index.html" class=""><i class="menu_icon blank fa"></i><span>Tutorials</span><span
+                                class="plus"></span></a>
+                            </li>
+                            <li id="nav-menu-item-17422" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="/docs/connect/configuration/index.html" class=""><i class="menu_icon blank fa"></i><span>Configuration</span><span
+                                class="plus"></span></a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
                     </li>
-                    <li id="nav-menu-item-17355" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub narrow"><a href="/docs/core/index.html" class=""><i class="menu_icon blank fa"></i><span>Restcomm Core</span><span class="plus"></span></a>
-                      <div class="second"><div class="inner"><ul>
-                        <li id="nav-menu-item-17475" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/sip_servlets/SIP_Servlets_Server_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>SIP SERVLETS</span><span class="plus"></span></a></li>
-                        <li id="nav-menu-item-17474" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/media_server/Media_Server_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>MEDIA SERVER</span><span class="plus"></span></a></li>
-                        <li id="nav-menu-item-17475" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/smsc/SMSC_Gateway_Admin_Guide.html" class=""><i class="menu_icon blank fa"></i><span>SMSC</span><span class="plus"></span></a>
+                    <li id="nav-menu-item-17355" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub narrow">
+                      <a href="/docs/core/index.html" class=""><i class="menu_icon blank fa"></i><span>Restcomm Telecom</span><span class="plus"></span></a>
+                      <div class="second">
+                        <div class="inner">
                           <ul>
-                            <li id="nav-menu-item-18015" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/smsc/SMSC_Gateway_Installation_Guide.html" class=""><i class="menu_icon blank fa"></i><span>INSTALLATION GUIDE</span><span class="plus"></span></a></li>
-                            <li id="nav-menu-item-17999" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/smsc/SMSC_Gateway_Admin_Guide.html" class=""><i class="menu_icon blank fa"></i><span>USER GUIDE</span><span class="plus"></span></a></li>
-                          </ul>
-                        </li>
-                        <li id="nav-menu-item-19085" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/smpp-extensions/SMPP_Extensions_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>SMPP Extensions</span><span class="plus"></span></a>
-                          <ul>
-                            <li id="nav-menu-item-19086" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/smpp-extensions/SMPP_Extensions_Installation_Guide.html" class=""><i class="menu_icon blank fa"></i><span>INSTALLATION	GUIDE</span><span class="plus"></span></a></li>
-                            <li id="nav-menu-item-19087" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/smpp-extensions/SMPP_Extensions_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>USER	GUIDE</span><span class="plus"></span></a></li>
-                          </ul>
-                        </li>
-                        <li id="nav-menu-item-17476" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/ussd/USSD_Gateway_Admin_Guide.html" class=""><i class="menu_icon blank fa"></i><span>USSD GATEWAY</span><span class="plus"></span></a>
-                          <ul>
-                            <li id="nav-menu-item-18015" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/ussd/USSD_Gateway_Installation_Guide.html" class=""><i class="menu_icon blank fa"></i><span>INSTALLATION GUIDE</span><span class="plus"></span></a></li>
-                            <li id="nav-menu-item-17999" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/ussd/USSD_Gateway_Admin_Guide.html" class=""><i class="menu_icon blank fa"></i><span>USER GUIDE</span><span class="plus"></span></a></li>
-                          </ul>
-                        </li>
-                        <li id="nav-menu-item-17477" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/gmlc/GMLC_Admin_Guide.html" class=""><i class="menu_icon blank fa"></i><span>GMLC</span><span class="plus"></span></a>
-                          <ul>
-                            <li id="nav-menu-item-18015" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/gmlc/GMLC_Installation_Guide.html" class=""><i class="menu_icon blank fa"></i><span>INSTALLATION GUIDE</span><span class="plus"></span></a></li>
-                            <li id="nav-menu-item-17999" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/gmlc/GMLC_Admin_Guide.html" class=""><i class="menu_icon blank fa"></i><span>USER GUIDE</span><span class="plus"></span></a></li>
-                          </ul>
-                        </li>
-                        <li id="nav-menu-item-17478" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/camelgw/CAMEL_Gateway_Admin_Guide.html" class=""><i class="menu_icon blank fa"></i><span>CAMEL GATEWAY</span><span class="plus"></span></a>
-                          <ul>
-                            <li id="nav-menu-item-18015" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/camelgw/CAMEL_Gateway_Installation_Guide.html" class=""><i class="menu_icon blank fa"></i><span>INSTALLATION GUIDE</span><span class="plus"></span></a></li>
-                            <li id="nav-menu-item-17999" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/camelgw/CAMEL_Gateway_Admin_Guide.html" class=""><i class="menu_icon blank fa"></i><span>USER GUIDE</span><span class="plus"></span></a></li>
-                          </ul>
-                        </li>
+                            <li id="nav-menu-item-17475" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="/docs/core/sip_servlets/SIP_Servlets_Server_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>SIP Servlets</span><span
+                                class="plus"></span></a>
+                            </li>
+                            <li id="nav-menu-item-17474" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="/docs/core/media_server/Media_Server_User_Guide.html" class=""><i
+                                class="menu_icon blank fa"></i><span>Media Server</span><span class="plus"></span></a>
+                            </li>
+                            <li id="nav-menu-item-17475" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="/docs/core/smsc/SMSC_Gateway_Admin_Guide.html" class=""><i class="menu_icon blank fa"></i><span>SMSC</span><span
+                                class="plus"></span></a>
+                              <ul>
+                                <li id="nav-menu-item-18015" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                                  <a href="/docs/core/smsc/SMSC_Gateway_Installation_Guide.html" class=""><i class="menu_icon blank fa"></i><span>Installation Guide</span><span
+                                    class="plus"></span></a>
+                                </li>
+                                <li id="nav-menu-item-17999" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                                  <a href="/docs/core/smsc/SMSC_Gateway_Admin_Guide.html" class=""><i
+                                    class="menu_icon blank fa"></i><span>User Guide</span><span class="plus"></span></a>
+                                </li>
+                              </ul>
+                            </li>
+                            <li id="nav-menu-item-19085" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="/docs/core/smpp-extensions/SMPP_Extensions_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>SMPP Extensions</span><span
+                                class="plus"></span></a>
+                              <ul>
+                                <li id="nav-menu-item-19086" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                                  <a href="/docs/core/smpp-extensions/SMPP_Extensions_Installation_Guide.html" class=""><i class="menu_icon blank fa"></i><span>Installation Guide</span><span
+                                    class="plus"></span></a>
+                                </li>
+                                <li id="nav-menu-item-19087" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                                  <a href="/docs/core/smpp-extensions/SMPP_Extensions_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>User Guide</span><span
+                                    class="plus"></span></a>
+                                </li>
+                              </ul>
+                            </li>
+                            <li id="nav-menu-item-17476" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="/docs/core/ussd/USSD_Gateway_Admin_Guide.html" class=""><i class="menu_icon blank fa"></i><span>USSD Gateway</span><span
+                                class="plus"></span></a>
+                              <ul>
+                                <li id="nav-menu-item-18015" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                                  <a href="/docs/core/ussd/USSD_Gateway_Installation_Guide.html" class=""><i class="menu_icon blank fa"></i><span>Installation Guide</span><span
+                                    class="plus"></span></a>
+                                </li>
+                                <li id="nav-menu-item-17999" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                                  <a href="/docs/core/ussd/USSD_Gateway_Admin_Guide.html" class=""><i
+                                    class="menu_icon blank fa"></i><span>User Guide</span><span class="plus"></span></a>
+                                </li>
+                              </ul>
+                            </li>
+                            <li id="nav-menu-item-17477" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="/docs/core/gmlc/GMLC_Admin_Guide.html" class=""><i class="menu_icon blank fa"></i><span>GMLC</span><span
+                                class="plus"></span></a>
+                              <ul>
+                                <li id="nav-menu-item-18015" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                                  <a href="/docs/core/gmlc/GMLC_Installation_Guide.html" class=""><i
+                                    class="menu_icon blank fa"></i><span>Installation Guide</span><span class="plus"></span></a>
+                                </li>
+                                <li id="nav-menu-item-17999" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                                  <a href="/docs/core/gmlc/GMLC_Admin_Guide.html" class=""><i class="menu_icon blank fa"></i><span>User Guide</span><span
+                                    class="plus"></span></a>
+                                </li>
+                              </ul>
+                            </li>
+                            <li id="nav-menu-item-17478" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="/docs/core/camelgw/CAMEL_Gateway_Admin_Guide.html" class=""><i
+                                class="menu_icon blank fa"></i><span>CAMEL Gateway</span><span class="plus"></span></a>
+                              <ul>
+                                <li id="nav-menu-item-18015" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                                  <a href="/docs/core/camelgw/CAMEL_Gateway_Installation_Guide.html" class=""><i class="menu_icon blank fa"></i><span>Installation Guide</span><span
+                                    class="plus"></span></a>
+                                </li>
+                                <li id="nav-menu-item-17999" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                                  <a href="/docs/core/camelgw/CAMEL_Gateway_Admin_Guide.html" class=""><i class="menu_icon blank fa"></i><span>User Guide</span><span
+                                    class="plus"></span></a>
+                                </li>
+                              </ul>
+                            </li>
 
-                        <li id="nav-menu-item-17479" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/ss7/SS7_Stack_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>JSS7</span><span class="plus"></span></a>
-                          <ul>
-                            <li id="nav-menu-item-18015" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/ss7/SS7_Stack_Installation_Guide.html" class=""><i class="menu_icon blank fa"></i><span>INSTALLATION GUIDE</span><span class="plus"></span></a></li>
-                            <li id="nav-menu-item-17999" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/ss7/SS7_Stack_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>USER GUIDE</span><span class="plus"></span></a></li>
-                          </ul>
-                        </li>
-                        <li id="nav-menu-item-17480" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/jain_slee/index.html" class=""><i class="menu_icon blank fa"></i><span>JAIN-SLEE</span><span class="plus"></span></a>
-                          <ul>
-                            <li id="nav-menu-item-18015" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/jain_slee/ras/index.html" class=""><i class="menu_icon blank fa"></i><span>RESOURCE ADAPTORS</span><span class="plus"></span></a>
+                            <li id="nav-menu-item-17479" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="/docs/core/ss7/SS7_Stack_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>JSS7</span><span
+                                class="plus"></span></a>
+                              <ul>
+                                <li id="nav-menu-item-18015" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                                  <a href="/docs/core/ss7/SS7_Stack_Installation_Guide.html" class=""><i
+                                    class="menu_icon blank fa"></i><span>Installation Guide</span><span class="plus"></span></a>
+                                </li>
+                                <li id="nav-menu-item-17999" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                                  <a href="/docs/core/ss7/SS7_Stack_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>User Guide</span><span
+                                    class="plus"></span></a>
+                                </li>
+                              </ul>
                             </li>
-                            <li id="nav-menu-item-18015" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/jain_slee/tools/index.html" class=""><i class="menu_icon blank fa"></i><span>TOOLS</span><span class="plus"></span></a></li>
-                            <li id="nav-menu-item-17999" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/jain_slee/JAIN_SLEE_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>ENABLERS</span><span class="plus"></span></a></li>
+                            <li id="nav-menu-item-17480" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="/docs/core/jain_slee/index.html" class=""><i class="menu_icon blank fa"></i><span>JAIN-SLEE</span><span
+                                class="plus"></span></a>
+                              <ul>
+                                <li id="nav-menu-item-18015" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                                  <a href="/docs/core/jain_slee/ras/index.html" class=""><i class="menu_icon blank fa"></i><span>Resource Adaptors</span><span
+                                    class="plus"></span></a>
+                                </li>
+                                <li id="nav-menu-item-18015" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                                  <a href="/docs/core/jain_slee/tools/index.html" class=""><i class="menu_icon blank fa"></i><span>Tools</span><span
+                                    class="plus"></span></a>
+                                </li>
+                                <li id="nav-menu-item-17999" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                                  <a href="/docs/core/jain_slee/JAIN_SLEE_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>Enablers</span><span
+                                    class="plus"></span></a>
+                                </li>
+                              </ul>
+                            </li>
+                            <li id="nav-menu-item-17481" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="/docs/core/diameter/Diameter_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>JDiameter</span><span
+                                class="plus"></span></a>
+                            </li>
+                            <li id="nav-menu-item-17482" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="/docs/core/lb/Load_Balancer_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>Load Balancer</span><span
+                                class="plus"></span></a>
+                            </li>
+                            <li id="nav-menu-item-17483" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="/docs/core/jasn/ASN_Stack_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>JASN</span><span
+                                class="plus"></span></a>
+                            </li>
+                            <li id="nav-menu-item-17484" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="/docs/core/imscf/IM_SCF.html" class=""><i class="menu_icon blank fa"></i><span>IM-SCF</span><span class="plus"></span>
+                              </a>
+                              <ul>
+                                <li id="nav-menu-item-18484" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                                  <a href="/docs/core/imscf/IM_SCF_OAM.html" class=""><i class="menu_icon blank fa"></i><span>OAM</span><span
+                                    class="plus"></span></a>
+                                </li>
+                              </ul>
+                            </li>
+                            <li id="nav-menu-item-17485" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="/docs/core/tutorials/index.html" class=""><i class="menu_icon blank fa"></i><span>Tutorials</span><span
+                                class="plus"></span></a>
+                            </li>
+                            <!--li id="nav-menu-item-17482" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/core/sip/SIP_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>SIP</span><span class="plus"></span></a></li>
+                            <li id="nav-menu-item-17483" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/core/charging_server/SIP_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>Charging Server</span><span class="plus"></span></a></li-->
                           </ul>
-                        </li>
-                        <li id="nav-menu-item-17481" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/diameter/Diameter_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>JDIAMETER</span><span class="plus"></span></a></li>
-                        <li id="nav-menu-item-17482" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/lb/Load_Balancer_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>LOAD-BALANCER</span><span class="plus"></span></a></li>
-                        <li id="nav-menu-item-17483" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/jasn/ASN_Stack_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>JASN</span><span class="plus"></span></a></li>
-                        <li id="nav-menu-item-17484" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/imscf/IM_SCF.html" class=""><i class="menu_icon blank fa"></i><span>IM-SCF</span><span class="plus"></span></a>
+                        </div>
+                      </div>
+                    </li>
+                    <li id="nav-menu-item-17998" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub narrow">
+                      <a href="https://telestax.com/resources/" class=" no_link" style="cursor: default;" onclick="JavaScript: return false;"><i
+                        class="menu_icon blank fa"></i><span>Resources</span><span class="plus"></span></a>
+                      <div class="second">
+                        <div class="inner">
                           <ul>
-                            <li id="nav-menu-item-18484" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/imscf/IM_SCF_OAM.html" class=""><i class="menu_icon blank fa"></i><span>OAM</span><span class="plus"></span></a>
+                            <li id="nav-menu-item-17997" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="https://www.restcomm.com/downloads" class=""><i class="menu_icon blank fa"></i><span>Downloads</span><span class="plus"></span></a>
+                            </li>
+                            <li id="nav-menu-item-17155" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="https://restcomm.com/blog/" class=""><i class="menu_icon blank fa"></i><span>Blog</span><span class="plus"></span></a>
+                            </li>
+                            <li id="nav-menu-item-18134" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="https://telestax.com/support/" class=""><i class="menu_icon blank fa"></i><span>Support</span><span class="plus"></span>
+                              </a>
+                            </li>
+                            <li id="nav-menu-item-17473" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children sub">
+                              <a href="https://restcomm.com/acknowledgements/" class=""><i class="menu_icon blank fa"></i><span>Contributors</span><span
+                                class="plus"></span><i class="q_menu_arrow fa fa-angle-right"></i></a>
+                            </li>
+                            <li id="nav-menu-item-18653" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="https://telestax.com/jobs/" class=""><i class="menu_icon blank fa"></i><span>Careers</span><span class="plus"></span></a>
                             </li>
                           </ul>
-                        </li>
-                        <li id="nav-menu-item-17485" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/docs/core/tutorials/index.html" class=""><i class="menu_icon blank fa"></i><span>TUTORIALS</span><span class="plus"></span></a></li>
-                        <!--li id="nav-menu-item-17482" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/core/sip/SIP_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>SIP</span><span class="plus"></span></a></li>
-                        <li id="nav-menu-item-17483" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="/core/charging_server/SIP_User_Guide.html" class=""><i class="menu_icon blank fa"></i><span>Charging Server</span><span class="plus"></span></a></li-->
-                      </ul></div></div>
+                        </div>
+                      </div>
                     </li>
-                    <li id="nav-menu-item-17591" class="menu-item menu-item-type-post_type menu-item-object-page  narrow"><a href="https://telestax.com/success-stories/" class=""><i class="menu_icon blank fa"></i><span>Success Stories</span><span class="plus"></span></a></li>
-                    <li id="nav-menu-item-17998" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub narrow"><a href="https://telestax.com/resources/" class=" no_link" style="cursor: default;" onclick="JavaScript: return false;"><i class="menu_icon blank fa"></i><span>Resources</span><span class="plus"></span></a>
-                      <div class="second"><div class="inner"><ul>
-                        <li id="nav-menu-item-17997" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://telestax.com/press/" class=""><i class="menu_icon blank fa"></i><span>PRESS</span><span class="plus"></span></a></li>
-                        <li id="nav-menu-item-17155" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://restcomm.com/blog/" class=""><i class="menu_icon blank fa"></i><span>BLOG</span><span class="plus"></span></a></li>
-                        <li id="nav-menu-item-18134" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://telestax.com/support/" class=""><i class="menu_icon blank fa"></i><span>SUPPORT</span><span class="plus"></span></a></li>
-                        <li id="nav-menu-item-17473" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children sub"><a href="https://telestax.com/developers/" class=""><i class="menu_icon blank fa"></i><span>DEVELOPERS</span><span class="plus"></span><i class="q_menu_arrow fa fa-angle-right"></i></a>
-                          <ul>
-                            <li id="nav-menu-item-18015" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://telestax.com/open-source/" class=""><i class="menu_icon blank fa"></i><span>OPEN SOURCE</span><span class="plus"></span></a></li>
-                            <li id="nav-menu-item-17999" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://restcomm.com/acknowledgements/" class=""><i class="menu_icon blank fa"></i><span>ACKNOWLEDGEMENTS</span><span class="plus"></span></a></li>
-                          </ul>
-                        </li>
-                        <li id="nav-menu-item-18653" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://telestax.com/jobs/" class=""><i class="menu_icon blank fa"></i><span>CAREERS</span><span class="plus"></span></a></li>
-                        <li id="nav-menu-item-18286" class="menu-item menu-item-type-custom menu-item-object-custom "><a href="https://telestax.zendesk.com/home" class=""><i class="menu_icon blank fa"></i><span>CUSTOMER LOGIN</span><span class="plus"></span></a></li>
-                        <li id="nav-menu-item-18287" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://telestax.com/contact/" class=""><span>Contact</span></a><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
-                      </ul></div></div>
+                    <li id="nav-menu-item-19187" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub narrow">
+                      <a href="https://restcomm.com/trynow" class=""><i class="menu_icon blank fa"></i><span>Free Trial</span><span class="plus"></span></a>
                     </li>
-                  </ul>						</nav>
+                  </ul>
+                </nav>
                 <nav class="mobile_menu">
-                  <ul id="menu-fullscreen-menu-1" class=""><li id="mobile-menu-item-17151" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-15254 current_page_item active"></li>
-                    <li id="mobile-menu-item-17284" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub"><a href="https://telestax.com/solutions/" class=""><span>Solutions</span></a><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span>
+                  <ul id="menu-fullscreen-menu-1" class="">
+                    <li
+                      id="mobile-menu-item-17151"
+                      class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-15254 current_page_item active"></li>
+                    <li id="mobile-menu-item-17284" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub">
+                      <a href="https://telestax.com/solutions/" class=""><span>Solutions</span></a>
+                      <span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span>
                       <ul class="sub_menu">
-                        <li id="mobile-menu-item-17425" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://telestax.com/voice/" class=""><span>VOICE</span></a><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
-                        <li id="mobile-menu-item-17424" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://telestax.com/video/" class=""><span>VIDEO</span></a><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
-                        <li id="mobile-menu-item-17423" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://telestax.com/messaging/" class=""><span>MESSAGING</span></a><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
-                        <li id="mobile-menu-item-17422" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://telestax.com/iot/" class=""><span>IoT</span></a><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
+                        <li id="mobile-menu-item-17425" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                          <a href="https://telestax.com/voice/" class=""><span>VOICE</span></a>
+                          <span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
+                        <li id="mobile-menu-item-17424" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                          <a href="https://telestax.com/video/" class=""><span>VIDEO</span></a>
+                          <span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
+                        <li id="mobile-menu-item-17423" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                          <a href="https://telestax.com/messaging/" class=""><span>MESSAGING</span></a>
+                          <span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
+                        <li id="mobile-menu-item-17422" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                          <a href="https://telestax.com/iot/" class=""><span>IoT</span></a>
+                          <span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
                       </ul>
                     </li>
-                    <li id="mobile-menu-item-17355" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub"><a href="https://telestax.com/markets/" class=""><span>Markets</span></a><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span>
+                    <li id="mobile-menu-item-17355" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub">
+                      <a href="https://telestax.com/markets/" class=""><span>Markets</span></a>
+                      <span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span>
                       <ul class="sub_menu">
-                        <li id="mobile-menu-item-17475" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://telestax.com/enterprise/" class=""><span>ENTERPRISE</span></a><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
-                        <li id="mobile-menu-item-17474" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://telestax.com/telecom/" class=""><span>TELECOM</span></a><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
+                        <li id="mobile-menu-item-17475" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                          <a href="https://telestax.com/enterprise/" class=""><span>ENTERPRISE</span></a>
+                          <span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
+                        <li id="mobile-menu-item-17474" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                          <a href="https://telestax.com/telecom/" class=""><span>TELECOM</span></a>
+                          <span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
                       </ul>
                     </li>
-                    <li id="mobile-menu-item-17591" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://telestax.com/success-stories/" class=""><span>Success Stories</span></a><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
-                    <li id="mobile-menu-item-17282" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://telestax.com/partners/" class=""><span>Partners</span></a><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
-                    <li id="mobile-menu-item-17998" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub"><h3><span>Resources</span></h3><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span>
+                    <li id="mobile-menu-item-17591" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                      <a href="https://telestax.com/success-stories/" class=""><span>Success Stories</span></a>
+                      <span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
+                    <li id="mobile-menu-item-17282" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                      <a href="https://telestax.com/partners/" class=""><span>Partners</span></a>
+                      <span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
+                    <li id="mobile-menu-item-17998" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub"><h3><span>Resources</span>
+                    </h3><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span>
                       <ul class="sub_menu">
-                        <li id="mobile-menu-item-17997" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://telestax.com/press/" class=""><span>PRESS</span></a><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
-                        <li id="mobile-menu-item-17155" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://restcomm.com/blog/" class=""><span>BLOG</span></a><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
-                        <li id="mobile-menu-item-18134" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://telestax.com/support/" class=""><span>SUPPORT</span></a><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
-                        <li id="mobile-menu-item-17473" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub"><a href="https://telestax.com/developers/" class=""><span>DEVELOPERS</span></a><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span>
+                        <li id="mobile-menu-item-17997" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                          <a href="https://telestax.com/press/" class=""><span>PRESS</span></a>
+                          <span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
+                        <li id="mobile-menu-item-17155" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                          <a href="https://restcomm.com/blog/" class=""><span>BLOG</span></a>
+                          <span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
+                        <li id="mobile-menu-item-18134" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                          <a href="https://telestax.com/support/" class=""><span>SUPPORT</span></a>
+                          <span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
+                        <li id="mobile-menu-item-17473" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub">
+                          <a href="https://telestax.com/developers/" class=""><span>DEVELOPERS</span></a>
+                          <span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span>
                           <ul class="sub_menu">
-                            <li id="mobile-menu-item-18015" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://restcomm.com/open-source/" class=""><span>OPEN SOURCE</span></a><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
-                            <li id="mobile-menu-item-17999" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://telestax.com/acknowledgements/" class=""><span>ACKNOWLEDGEMENTS</span></a><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
+                            <li id="mobile-menu-item-18015" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="https://restcomm.com/open-source/" class=""><span>OPEN SOURCE</span></a>
+                              <span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
+                            <li id="mobile-menu-item-17999" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="https://telestax.com/acknowledgements/" class=""><span>ACKNOWLEDGEMENTS</span></a>
+                              <span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
                           </ul>
                         </li>
-                        <li id="mobile-menu-item-18653" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://telestax.com/careers/" class=""><span>CAREERS</span></a><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
-                        <li id="mobile-menu-item-18286" class="menu-item menu-item-type-custom menu-item-object-custom "><a href="https://telestax.zendesk.com/home" class=""><span>CUSTOMER LOGIN</span></a><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
-                        <li id="mobile-menu-item-18287" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://telestax.com/contact/" class=""><span>Contact</span></a><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
+                        <li id="mobile-menu-item-18653" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                          <a href="https://telestax.com/careers/" class=""><span>CAREERS</span></a>
+                          <span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
+                        <li id="mobile-menu-item-18286" class="menu-item menu-item-type-custom menu-item-object-custom ">
+                          <a href="https://telestax.zendesk.com/home" class=""><span>CUSTOMER LOGIN</span></a>
+                          <span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
+                        <li id="mobile-menu-item-18287" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                          <a href="https://telestax.com/contact/" class=""><span>Contact</span></a>
+                          <span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></li>
 
                       </ul>
                     </li>
-                  </ul>					</nav>
+                  </ul>
+                </nav>
               </div>
             </div>
           </div>
@@ -22817,7 +23365,7 @@ public interface MAPContextInterfaceFactory {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-02-25 02:25:22 UTC
+Last updated 2018-02-26 10:48:48 UTC
 </div>
 </div>
 <footer>
