@@ -23386,6 +23386,16 @@ display: none;
 <li><a href="#_db_removingarchivetablesdays">Cassandra Configuration - Removing Live Tables Days</a></li>
 </ul>
 </li>
+<li><a href="#_smsc_clustering_settings">Clustering Settings</a>
+<ul class="sectlevel2">
+<li><a href="#_in_cluster">Clustering Configuration</a></li>
+<li><a href="#_shared_db_host">Shared Database Configuration - Host Addresses</a></li>
+<li><a href="#_shared_db_port">Shared Database Configuration - Port</a></li>
+<li><a href="#_shared_db_keyspace">Shared Database Configuration - Keyspace Name</a></li>
+<li><a href="#shared_db_user">Shared Database Configuration - User Name</a></li>
+<li><a href="#shared_db_pass">Shared Database Configuration - Password</a></li>
+</ul>
+</li>
 <li><a href="#_smsc_scheduler_settings">Scheduler Settings</a>
 <ul class="sectlevel2">
 <li><a href="#_fetch_period">Fetch Period (in ms)</a></li>
@@ -25248,6 +25258,322 @@ Switch to the 'Cassandra' tab in the GUI.</p>
 </li>
 <li>
 <p>You can specify the Removing Archive Tables Days by entering the value in the text field 'Removing Archive Tables Days'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_smsc_clustering_settings"><a class="anchor" href="#_smsc_clustering_settings"></a>Clustering Settings</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Note</div>
+<div class="paragraph">
+<p>SS7 Active-Active mode is a Telscale feature, available only in our commercial version.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>You can manage Clustering settings using the CLI or GUI.
+Note that the some of functionality requires SMSC is restart.</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_in_cluster"><a class="anchor" href="#_in_cluster"></a>Clustering Configuration</h3>
+<div class="sect3">
+<h4 id="_in_cluster_cli"><a class="anchor" href="#_in_cluster_cli"></a>Using CLI</h4>
+<div class="literalblock">
+<div class="content">
+<pre>You can set the 'in cluster' value for Clustering settings by issuing the command `smsc set incluster` with appropriate parameters as described below. Enabling this property will take effect only if Shared Cassandra Database exists. Shared database name can be checked by issuing command `smsc get shareddbkeyspace`. If 'in cluster' property has been enabled, full clustering functionality will still require SMSC restart.
+You can verify this by issuing the command `smsc get incluster` which will display the value set for this property.</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>	Name
+		smsc set incluster
+
+	SYNOPSIS
+		smsc set incluster &lt;true | false&gt;
+
+	DESCRIPTION
+		This command is used to set flag indicating whether SMSC is in cluster.
+
+	EXAMPLES
+		smsc set incluster true</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_in_cluster_gui"><a class="anchor" href="#_in_cluster_gui"></a>Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Set Clustering Configuration using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing settings, segregated into nine horizontal tabs: Properties, SS7 Settings, Cassandra, Clustering, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Clustering' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify the 'incluster' flag by choosing appropriate value from the drop down menu. For more details of these parameters, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_shared_db_host"><a class="anchor" href="#_shared_db_host"></a>Shared Database Configuration - Host Addresses</h3>
+<div class="sect3">
+<h4 id="_shared_db_hosts_cli"><a class="anchor" href="#_shared_db_hosts_cli"></a>Using CLI</h4>
+<div class="literalblock">
+<div class="content">
+<pre>You can set the 'host addresses' value for Shared Database settings by issuing the command `smsc set shareddbhosts` with appropriate parameters as described below.
+You can verify this by issuing the command `smsc get shareddbhosts` which will display the value set for this property.</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>	Name
+		smsc set shareddbhosts
+
+	SYNOPSIS
+		smsc set shareddbhosts &lt;host-ip&gt;
+
+	DESCRIPTION
+		This command is used to set the host-ip addresses for Shared Database access.
+
+	EXAMPLES
+		smsc set shareddbhosts 127.0.0.1</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_shared_db_host_gui"><a class="anchor" href="#_shared_db_host_gui"></a>Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Set Shared Database Configuration - Host Addresses using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into nine horizontal tabs: Properties, SS7 Settings, Cassandra, Clustering, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Clustering' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify the host-ip address by entering appropriate values in the text field 'Host Address'. For more details of these parameters, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_shared_db_port"><a class="anchor" href="#_shared_db_port"></a>Shared Database Configuration - Port</h3>
+<div class="sect3">
+<h4 id="_shared_db_port_cli"><a class="anchor" href="#_shared_db_port_cli"></a>Using CLI</h4>
+<div class="literalblock">
+<div class="content">
+<pre>You can set the 'port' value for Shared Database settings by issuing the command `smsc set shareddbport` with appropriate parameters as described below.
+You can verify this by issuing the command `smsc get shareddbport` which will display the value set for this property.</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>	Name
+	    smsc set shareddbport
+
+	SYNOPSIS
+	    smsc set shareddbport &lt;port&gt;
+
+	DESCRIPTION
+		This command is used to set the password for Shared Database
+		access.
+
+	EXAMPLES
+	    smsc set shareddbport 9042</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_db_port_gui"><a class="anchor" href="#_db_port_gui"></a>Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Set Shared Database Configuration - Port using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into nine horizontal tabs: Properties, SS7 Settings, Cassandra, Clustering, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Clustering' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify the port by entering appropriate values in the text field 'Port'. For more details of these parameters, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_shared_db_keyspace"><a class="anchor" href="#_shared_db_keyspace"></a>Shared Database Configuration - Keyspace Name</h3>
+<div class="sect3">
+<h4 id="_shared_db_keyspace_cli"><a class="anchor" href="#_shared_db_keyspace_cli"></a>Using CLI</h4>
+<div class="literalblock">
+<div class="content">
+<pre>You can set the 'Shared DB Keyspace' by issuing the command `smsc set shareddbkeyspace` with appropriate parameters as described below.
+You can verify this by issuing the command `smsc get shareddbkeyspace` which will display the value set for this property.</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>	Name
+		smsc set shareddbkeyspace
+
+	SYNOPSIS
+		smsc set shareddbkeyspace &lt;keyspacename&gt;
+
+	DESCRIPTION
+		This command is used to set the Keyspace name for Shared Database. If you use
+		the script available in the distributive the name will be set to 'Shared' by
+		default.</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_shared_db_keyspace_gui"><a class="anchor" href="#_shared_db_keyspace_gui"></a>Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Set Shared Database Configuration - Keyspace Name using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into nine horizontal tabs: Properties, SS7 Settings, Cassandra, Clustering, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Clustering' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify the Shared Db Keyspace Name by entering the value in the text field 'Keyspace Name'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="shared_db_user"><a class="anchor" href="#shared_db_user"></a>Shared Database Configuration - User Name</h3>
+<div class="sect3">
+<h4 id="_shared_db_user_cli"><a class="anchor" href="#_shared_db_user_cli"></a>Using CLI</h4>
+<div class="literalblock">
+<div class="content">
+<pre>You can set the 'Shared Db User Name' by issuing the command `smsc set shareddbuser` with appropriate parameters as described below.
+You can verify this by issuing the command `smsc get shareddbuser` which will display the value set for this property.</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>	Name
+		smsc set shareddbuser
+
+	SYNOPSIS
+		smsc set shareddbuser &lt;username&gt;
+
+	DESCRIPTION
+		This command is used to set the user name for Shared Database. Default user is `cassandra`
+		You must restart SMSC GW to take effect.</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_shared_db_user_gui"><a class="anchor" href="#_shared_db_user_gui"></a>Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Set Shared Database Configuration - User Name using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into nine horizontal tabs: Properties, SS7 Settings, Cassandra, Clustering, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Clustering' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify the User Name by entering the value in the text field 'User Name'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="shared_db_pass"><a class="anchor" href="#shared_db_pass"></a>Shared Database Configuration - Password</h3>
+<div class="sect3">
+<h4 id="_shared_db_pass_cli"><a class="anchor" href="#_shared_db_pass_cli"></a>Using CLI</h4>
+<div class="literalblock">
+<div class="content">
+<pre>You can set the 'Shared Db Password' by issuing the command `smsc set shareddbpass` with appropriate parameters as described below.
+You can verify this by issuing the command `smsc get shareddbpass` which will display the value set for this property.</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>	Name
+		smsc set shareddbpass
+
+	SYNOPSIS
+		smsc set shareddbpass &lt;password&gt;
+
+	DESCRIPTION
+		This command is used to set the password for Shared Database. Default password is `cassandra`
+		You must restart SMSC GW to take effect.</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_shared_db_pass_gui"><a class="anchor" href="#_shared_db_pass_gui"></a>Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Set Shared Database Configuration - Password using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into nine horizontal tabs: Properties, SS7 Settings, Cassandra, Clustering, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Clustering' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify the Shared Db Password by entering the value in the text field 'Password'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
 </li>
 <li>
 <p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
@@ -27616,7 +27942,7 @@ DESCRIPTION
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-02-26 14:32:14 UTC
+Last updated 2018-02-26 16:21:26 UTC
 </div>
 </div>
 <footer>
@@ -27635,7 +27961,7 @@ Last updated 2018-02-26 14:32:14 UTC
                           <a href="https://www.restcomm.com/solutions">Solutions</a>
                         </li>
                         <li id="menu-item-17289" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17289">
-                          <a href="https://telestax.com/faqs/">Documentation</a>
+                          <a href="https://www.restcomm.com/product/">Products</a>
                         </li>
                         <li id="menu-item-18624" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18624">
                           <a href="https://www.restcomm.com/events/">Events</a>
@@ -27652,6 +27978,7 @@ Last updated 2018-02-26 14:32:14 UTC
                       </ul>
                     </div>
                   </div>
+                </div>
 
               </div>
               <div class="column2 footer_col2">
@@ -27665,15 +27992,16 @@ Last updated 2018-02-26 14:32:14 UTC
                       <p></p>
 
                       <p>
-                        <input type="submit" value="Sign up" style="
-                            color: rgb(255, 255, 255);
-                            border-color: rgb(30, 165, 219);
-                            background-color: rgb(30, 165, 219);
-                            height: 58px;
-                            line-height: 58px;
-                            font-size: 20px;
-                            padding: 0 22px;
-                            margin-top: 25px;"
+                        <input
+                          type="submit" value="Sign up" style="
+                                          color: rgb(255, 255, 255);
+                                          border-color: rgb(30, 165, 219);
+                                          background-color: rgb(30, 165, 219);
+                                          height: 58px;
+                                          line-height: 58px;
+                                          font-size: 20px;
+                                          padding: 0 22px;
+                                          margin-top: 25px;"
                         >
                       </p><label style="display: none !important;">Leave this field empty if you're human: <input
                         type="text" name="_mc4wp_honeypot" value="" tabindex="-1" autocomplete="off"></label><input
@@ -27692,24 +28020,24 @@ Last updated 2018-02-26 14:32:14 UTC
 
                       <input
                         type="submit" value="Contact Us" style="
-                                                color: rgb(255, 255, 255);
-                                                border-color: rgb(30, 165, 219);
-                                                background-color: rgb(30, 165, 219);
-                                                height: 58px;
-                                                line-height: 58px;
-                                                font-size: 20px;
-                                                padding: 0 22px;
-                                                margin-top: 25px;">
+                                                              color: rgb(255, 255, 255);
+                                                              border-color: rgb(30, 165, 219);
+                                                              background-color: rgb(30, 165, 219);
+                                                              height: 58px;
+                                                              line-height: 58px;
+                                                              font-size: 20px;
+                                                              padding: 0 22px;
+                                                              margin-top: 25px;">
                     </form>
 
                   </div>
 
                 </div>
               </div>
+
             </div>
           </div>
         </div>
-      </div>
       </div>
       <div class="footer_bottom_holder">
         <div class="container">
@@ -27779,7 +28107,7 @@ Last updated 2018-02-26 14:32:14 UTC
           </div>
         </div>
       </div>
-  </div>
+    </div>
 </footer>
 
 </div>

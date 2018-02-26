@@ -23379,14 +23379,15 @@ display: none;
 <li><a href="#_starting_background">5.2. Starting of the SMSC GW process</a></li>
 <li><a href="#_logging">5.3. Configuring log4j Logging Service (JBOSS 5)</a></li>
 <li><a href="#_logging_wildfly">5.4. Configuring log4j Logging Service (Wildfly 10)</a></li>
-<li><a href="#_routing_fundamentals">5.5. SMSC GW routing fundamentals</a></li>
-<li><a href="#_mproc_rules_fundamentals">5.6. Message processing rules (mproc rules)</a></li>
-<li><a href="#sms-home-routing">5.7. SMS Home Routing</a></li>
-<li><a href="#_smpp_interface_description">5.8. SMPP interface description</a></li>
-<li><a href="#_http_interface_description">5.9. HTTP interface description</a></li>
-<li><a href="#_diameter_ocs_server">5.10. Interworking with Diameter OCS server</a></li>
-<li><a href="#security-issues">5.11. Security issues</a></li>
-<li><a href="#cdr-logging-settings">5.12. CDR Logging Settings</a></li>
+<li><a href="#_active_active">5.5. Configuring of SS7 Active-Active mode with Restcomm SS7 FEP before SS7 network</a></li>
+<li><a href="#_routing_fundamentals">5.6. SMSC GW routing fundamentals</a></li>
+<li><a href="#_mproc_rules_fundamentals">5.7. Message processing rules (mproc rules)</a></li>
+<li><a href="#sms-home-routing">5.8. SMS Home Routing</a></li>
+<li><a href="#_smpp_interface_description">5.9. SMPP interface description</a></li>
+<li><a href="#_http_interface_description">5.10. HTTP interface description</a></li>
+<li><a href="#_diameter_ocs_server">5.11. Interworking with Diameter OCS server</a></li>
+<li><a href="#security-issues">5.12. Security issues</a></li>
+<li><a href="#cdr-logging-settings">5.13. CDR Logging Settings</a></li>
 </ul>
 </li>
 <li><a href="#managing">6. Managing</a>
@@ -23400,7 +23401,8 @@ display: none;
 <li><a href="#_mapcache">6.7. MAP Version Cache</a></li>
 <li><a href="#_db_routing_rule_settings">6.8. Database Routing Rules</a></li>
 <li><a href="#_mproc_rule_settings">6.9. Message processing rules (mproc rules)</a></li>
-<li><a href="#_managing_statistics">6.10. Statistics</a></li>
+<li><a href="#_gsd_settings">6.10. Graceful shutdown</a></li>
+<li><a href="#_managing_statistics">6.11. Statistics</a></li>
 </ul>
 </li>
 <li><a href="#maintenance">7. Maintenance</a>
@@ -25828,7 +25830,51 @@ We recommend that you set logging threshold to <code>WARN</code> and let the CDR
 </div>
 </div>
 <div class="sect2">
-<h3 id="_routing_fundamentals"><a class="anchor" href="#_routing_fundamentals"></a>5.5. SMSC GW routing fundamentals</h3>
+<h3 id="_active_active"><a class="anchor" href="#_active_active"></a>5.5. Configuring of SS7 Active-Active mode with Restcomm SS7 FEP before SS7 network</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Note</div>
+<div class="paragraph">
+<p>SS7 Active-Active mode is a Telscale feature, available only in our commercial version.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This chapter introduces a description how Telestax SMSC GW Active-Active can be configured. See below an example of a configuration with 2 FEP and 2 SMSC GW nodes.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/SMSC-FEP-schema.png" alt="SMSC FEP schema">
+</div>
+</div>
+<div class="paragraph">
+<p>Two SMSC GWs ("SMSC 1" and "SMSC 2") can be deployed at different physical servers (server 1 and server 2). Front-End-Processors ("FEP 1" and "FEP 2") plays a role of SS7 load balancers. "FEP 1" and "FEP 2" can be deployed to same physical servers as "SMSC 1" and "SMSC 2" (server 1 and server 2). "FEP 1" and "FEP 2" are connected by SS7 links to remote STP node(s).</p>
+</div>
+<div class="paragraph">
+<p>A remote originated TCAP dialogs are loadshared by FEP nodes between existing SMSC nodes. Then FEP nodes are responsible for resending of TCAP dialog messages to a proper SMSC node. This guarantees that all SS7 dialogs will be processed by a same SMSC GW node and SMSC GW nodes does not demand processing of SS7 dialogs from another node. This means that SMSC GW nodes still process messages independently. FEP nodes are needed to delivery of SS7 messages to a proper SMSC GW node.</p>
+</div>
+<div class="paragraph">
+<p>When you use several FEP / SMSC GW nodes in a way that is described at a picture you can turn off any of FEP / SMSC GW node for maintanance or for other reasons. All traffic then will be processed by alive nodes. Each SMSC GW stores all pending messages (for storeAndForward and forwardAndStore modes) in it&#8217;s own cassandra KeySpace. Another SMSC GW node does not have access to such stored messages. This means that we will need to turn a SMSC GW node on in order to pending messages will be delivered.</p>
+</div>
+<div class="paragraph">
+<p>SMSC GW supports of a graceful shutdown procedure. See more in a chapter <a href="#_gsd_settings">Graceful shutdown</a>. A graceful shutdown procedure is initiated by a GUI / CLI interface. SMSC GW will stop of loading new messages from a database and will make a server shutdown when all message delivering processes have completed. FEP nodes will prevent of sending new external dialogs to a SS7 node that is gracefully shutting down. SMSC GW node even after a graceful shutdown start will aceept and process of incoming messages from other interfaces (SMPP, SIP, HTTP). A user must stop of sending of messages via these interfeces before of a graceful shutdown start.</p>
+</div>
+<div class="paragraph">
+<p>For a smooth support of HR (Home Routing) and AlertCerviceCenter operations between SMSC GW nodes an extra cassandra KeySpace is introduced. This new clustering KeySpace is used for cache of correlationId values and data for HR procedure and exchanging of AlertCerviceCenter requests between SMSC GW servers (for MT SS7 procedure). If you use several SMSC GW nodes then you need to turn on an option <code>In cluster</code>, prepare a new empty cassandra KeySpace (a single instance for both/all SMSC GW nodes) and configure this KeySpace in <code>Shared Database Configuration</code> section. See more info in the chapter <a href="#_smsc_clustering_settings">Clustering Settings</a>.</p>
+</div>
+<div class="paragraph">
+<p>We need to make special configuring procedures of SS7 part before SMSC GW / FEP will be able to work in a load-balancing mode. This configuring is described in a manual "Restcomm Load Balancer User Guide", check a chapter "Integration Load Balancer SS7 (FEP) with USSD and SMSC servers".</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_routing_fundamentals"><a class="anchor" href="#_routing_fundamentals"></a>5.6. SMSC GW routing fundamentals</h3>
 <div class="paragraph">
 <p>SMSC GW needs clear info to where it must route messages that have come to SMSC GW from SMPP / SS7 / SIP / HTTP connectors or created inside SMSC GW receipts.
 Routing procedures gives the answer to this questions, that a user must configure before SMSC GW can properly work.</p>
@@ -25847,7 +25893,7 @@ Routing procedures gives the answer to this questions, that a user must configur
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_routing_fundamentals_1"><a class="anchor" href="#_routing_fundamentals_1"></a>5.5.1. The procedure based on dividing of separated routing area into several areas ("subnetworks").</h4>
+<h4 id="_routing_fundamentals_1"><a class="anchor" href="#_routing_fundamentals_1"></a>5.6.1. The procedure based on dividing of separated routing area into several areas ("subnetworks").</h4>
 <div class="paragraph">
 <p>Each area has its unique digital "networkId" value.
 Each SMPP connection (ESME), SS7 SCCP service access point (SAP), SIP connector and a database routing rule (if you use them instead of default ESME routing rules) belongs to one of network (to each of the a networkId value is assigned). For messages that come via HTTP connector a networkId is assigned depending on a value in HTTP payload or with a default configured value. Default networkId value is "0". If a user does not specify a networkId value when ESME, SAP, SIP or a database routing rule creation, networkId=0 will be assigned.</p>
@@ -25913,7 +25959,7 @@ Create a new SCCP Rule" chapters of "JSS7 stack User Guide".</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_routing_fundamentals_2"><a class="anchor" href="#_routing_fundamentals_2"></a>5.5.2. The procedure of routing messages to destinations inside subnetworks.</h4>
+<h4 id="_routing_fundamentals_2"><a class="anchor" href="#_routing_fundamentals_2"></a>5.6.2. The procedure of routing messages to destinations inside subnetworks.</h4>
 <div class="paragraph">
 <p>Inside each subnetwork there may be several ESME, SAP or SIP configured.
 If we use default routing rules, then for routing SMSC GW makes following steps:</p>
@@ -25950,7 +25996,7 @@ For configuring of database routing rules see the chapter <a href="#_mproc_rule_
 </div>
 </div>
 <div class="sect3">
-<h4 id="_routing_fundamentals_3"><a class="anchor" href="#_routing_fundamentals_3"></a>5.5.3. Using of different routing procedures.</h4>
+<h4 id="_routing_fundamentals_3"><a class="anchor" href="#_routing_fundamentals_3"></a>5.6.3. Using of different routing procedures.</h4>
 <div class="paragraph">
 <p>You can use only the procedure based on subnetworks (networkId) areas, only the procedure of routing messages inside subnetworks or both.</p>
 </div>
@@ -25992,9 +26038,9 @@ Messages will be routed between subnetworks (networkIds) by mproc rules and insi
 </div>
 </div>
 <div class="sect3">
-<h4 id="_routing_fundamentals_4"><a class="anchor" href="#_routing_fundamentals_4"></a>5.5.4. Routing model examples.</h4>
+<h4 id="_routing_fundamentals_4"><a class="anchor" href="#_routing_fundamentals_4"></a>5.6.4. Routing model examples.</h4>
 <div class="sect4">
-<h5 id="routing-all-messages-from-one-esme-to-ss7"><a class="anchor" href="#routing-all-messages-from-one-esme-to-ss7"></a>5.5.4.1. Routing all messages from one ESME to SS7</h5>
+<h5 id="routing-all-messages-from-one-esme-to-ss7"><a class="anchor" href="#routing-all-messages-from-one-esme-to-ss7"></a>5.6.4.1. Routing all messages from one ESME to SS7</h5>
 <div class="paragraph">
 <p>If you have one ESME and JSS7 connector, and the only traffic is ESME &#8594; JSS7</p>
 </div>
@@ -26010,7 +26056,7 @@ Messages will be routed between subnetworks (networkIds) by mproc rules and insi
 </div>
 </div>
 <div class="sect4">
-<h5 id="all-jss7-originated-messages-must-be-routed-to-esme-and-all-esme-originated-messages-must-be-routed-to-jss7"><a class="anchor" href="#all-jss7-originated-messages-must-be-routed-to-esme-and-all-esme-originated-messages-must-be-routed-to-jss7"></a>5.5.4.2. All JSS7 originated messages must be routed to ESME and all ESME originated messages must be routed to JSS7</h5>
+<h5 id="all-jss7-originated-messages-must-be-routed-to-esme-and-all-esme-originated-messages-must-be-routed-to-jss7"><a class="anchor" href="#all-jss7-originated-messages-must-be-routed-to-esme-and-all-esme-originated-messages-must-be-routed-to-jss7"></a>5.6.4.2. All JSS7 originated messages must be routed to ESME and all ESME originated messages must be routed to JSS7</h5>
 <div class="paragraph">
 <p>If you use the model "all JSS7 originated messages must be routed to ESME and all ESME originated messages must be routed to JSS7", you can:</p>
 </div>
@@ -26035,7 +26081,7 @@ Messages will be routed between subnetworks (networkIds) by mproc rules and insi
 </div>
 </div>
 <div class="sect4">
-<h5 id="several-esmes-send-message-to-one-ss7-connection-and-delivery-receipts-come-back-to-an-originator-esme"><a class="anchor" href="#several-esmes-send-message-to-one-ss7-connection-and-delivery-receipts-come-back-to-an-originator-esme"></a>5.5.4.3. Several ESMEs send message to one SS7 connection and delivery receipts come back to an originator ESME</h5>
+<h5 id="several-esmes-send-message-to-one-ss7-connection-and-delivery-receipts-come-back-to-an-originator-esme"><a class="anchor" href="#several-esmes-send-message-to-one-ss7-connection-and-delivery-receipts-come-back-to-an-originator-esme"></a>5.6.4.3. Several ESMEs send message to one SS7 connection and delivery receipts come back to an originator ESME</h5>
 <div class="paragraph">
 <p>If you have several ESMEs that send message to one SS7 connection and you need that delivery receipts come back to an originator ESME (and no more traffic), you can:</p>
 </div>
@@ -26067,7 +26113,7 @@ CLI commabd can be like:</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="routing-desision-based-on-sri-request-results"><a class="anchor" href="#routing-desision-based-on-sri-request-results"></a>5.5.4.4. Routing desision based on SRI request results</h5>
+<h5 id="routing-desision-based-on-sri-request-results"><a class="anchor" href="#routing-desision-based-on-sri-request-results"></a>5.6.4.4. Routing desision based on SRI request results</h5>
 <div class="paragraph">
 <p>Sometimes we need to decide where to route messages depending on SendRoutingRequest (SRI) to HLR results. To achieve it we may use two approaches</p>
 </div>
@@ -26126,7 +26172,7 @@ CLI commabd can be like:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_failure_reasons"><a class="anchor" href="#_failure_reasons"></a>5.5.5. Temporary and permanent failure reasons.</h4>
+<h4 id="_failure_reasons"><a class="anchor" href="#_failure_reasons"></a>5.6.5. Temporary and permanent failure reasons.</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -26190,7 +26236,7 @@ CLI commabd can be like:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_mproc_rules_fundamentals"><a class="anchor" href="#_mproc_rules_fundamentals"></a>5.6. Message processing rules (mproc rules)</h3>
+<h3 id="_mproc_rules_fundamentals"><a class="anchor" href="#_mproc_rules_fundamentals"></a>5.7. Message processing rules (mproc rules)</h3>
 <div class="paragraph">
 <p>Message processing rules (mproc rules) is a tool for processing messages and changing properties of message, for example source/destination TON, NPI, NetworkId etc.
 MProc rules are only applied if they match pre configured criterian.</p>
@@ -26301,7 +26347,7 @@ SMSC appliec mproc rules to a message in ascending order,  that is mproc rule wi
 For example if a message destination address has been changed by rule 1, then rule 2 will check if this updated destination address matches to rules 2 or not.</p>
 </div>
 <div class="sect3">
-<h4 id="_mproc_rules_default"><a class="anchor" href="#_mproc_rules_default"></a>5.6.1. Default message processing rules implementation</h4>
+<h4 id="_mproc_rules_default"><a class="anchor" href="#_mproc_rules_default"></a>5.7.1. Default message processing rules implementation</h4>
 <div class="paragraph">
 <p>SMSC GW contains a default implementation of mproc rules that cover some requirenments.
 Information how to manage rules can be found in chapter <a href="#_mproc_rule_settings">Message processing rules (mproc rules)</a>.
@@ -26591,7 +26637,7 @@ If a message fits to all conditions then the rule will be applied to the message
 </table>
 </div>
 <div class="sect3">
-<h4 id="_mproc_rules_customized"><a class="anchor" href="#_mproc_rules_customized"></a>5.6.2. Customized message processing rules</h4>
+<h4 id="_mproc_rules_customized"><a class="anchor" href="#_mproc_rules_customized"></a>5.7.2. Customized message processing rules</h4>
 <div class="paragraph">
 <p>Default mproc rules allows to change the properties of a message in pre defined way, however if a user wants to achieve more, SMSC allows users to implement their own  custom logic.
 Below steps describes how to implement custom mproc rules.</p>
@@ -27675,7 +27721,7 @@ Let&#8217;s create a rule with id=1 that will be applied for messages which dest
 </div>
 </div>
 <div class="sect2">
-<h3 id="sms-home-routing"><a class="anchor" href="#sms-home-routing"></a>5.7. SMS Home Routing</h3>
+<h3 id="sms-home-routing"><a class="anchor" href="#sms-home-routing"></a>5.8. SMS Home Routing</h3>
 <div class="paragraph">
 <p>According to traditional GSM specifications, all outbound messages pass through an SMSC in the sending network.
 This allows the SMSC to convert the Mobile Originated (MO) messages into Mobile Terminated (MT) messages and deliver them directly to the destination devices, regardless of what network they are on.
@@ -27749,9 +27795,9 @@ For more details refer to <a href="#_smsc_gateway_server_hr">Home Routing Settin
 </div>
 </div>
 <div class="sect2">
-<h3 id="_smpp_interface_description"><a class="anchor" href="#_smpp_interface_description"></a>5.8. SMPP interface description</h3>
+<h3 id="_smpp_interface_description"><a class="anchor" href="#_smpp_interface_description"></a>5.9. SMPP interface description</h3>
 <div class="sect3">
-<h4 id="_smpp_interface_encoding"><a class="anchor" href="#_smpp_interface_encoding"></a>5.8.1. Encoding at SMPP interface</h4>
+<h4 id="_smpp_interface_encoding"><a class="anchor" href="#_smpp_interface_encoding"></a>5.9.1. Encoding at SMPP interface</h4>
 <div class="paragraph">
 <p>When message sending and recieveing via SMPP interface of SMSC GW we need to care of message body encoding and assigning of a parameter DCS (data coding schema).</p>
 </div>
@@ -27780,7 +27826,7 @@ SMSC GW has two configurable parameters for decoding / encodoing, one for GSM 7 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_smpp_dlivery_receipt_transit"><a class="anchor" href="#_smpp_dlivery_receipt_transit"></a>5.8.2. Delivery receipts transit at SMPP interface</h4>
+<h4 id="_smpp_dlivery_receipt_transit"><a class="anchor" href="#_smpp_dlivery_receipt_transit"></a>5.9.2. Delivery receipts transit at SMPP interface</h4>
 <div class="paragraph">
 <p>SMSC GW can generate delivery receipts after a message is delivered / failed to some destination. For this a SMPP application must set suitable values in the <code>registered_delivery</code> field. After a message is delivered / failed to some destionation, then SMSC GW will generate a delivery receipt. For simple routing such receipts back to an original ESME we can just assign to each ESME a separate networkId value and turn on the following option: <a href="#_smsc_gateway_server_routing_dlv">Routing of delivery receipts</a>.</p>
 </div>
@@ -27809,9 +27855,9 @@ SMSC GW has two configurable parameters for decoding / encodoing, one for GSM 7 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_http_interface_description"><a class="anchor" href="#_http_interface_description"></a>5.9. HTTP interface description</h3>
+<h3 id="_http_interface_description"><a class="anchor" href="#_http_interface_description"></a>5.10. HTTP interface description</h3>
 <div class="sect3">
-<h4 id="_http_interface_description_send_sms"><a class="anchor" href="#_http_interface_description_send_sms"></a>5.9.1. Send SMS</h4>
+<h4 id="_http_interface_description_send_sms"><a class="anchor" href="#_http_interface_description_send_sms"></a>5.10.1. Send SMS</h4>
 <div class="paragraph">
 <p>Send message API is responsible for sending SMS messages. To send message we should
 create and send HTTP request in proper format. Supported HTTP methods
@@ -27919,7 +27965,7 @@ error:6,request not accepted</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_http_interface_description_get_message_status"><a class="anchor" href="#_http_interface_description_get_message_status"></a>5.9.2. Get message status</h4>
+<h4 id="_http_interface_description_get_message_status"><a class="anchor" href="#_http_interface_description_get_message_status"></a>5.10.2. Get message status</h4>
 <div class="paragraph">
 <p>Get message status API is responsible for checking sent messages status. To check message
 status we should create and send HTTP request in proper format. Supported HTTP methods are GET and POST. Request URL must have "msgQuery" context and contain all of mandatory parameters.</p>
@@ -27996,9 +28042,9 @@ error:4,message ID not exists</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_diameter_ocs_server"><a class="anchor" href="#_diameter_ocs_server"></a>5.10. Interworking with Diameter OCS server</h3>
+<h3 id="_diameter_ocs_server"><a class="anchor" href="#_diameter_ocs_server"></a>5.11. Interworking with Diameter OCS server</h3>
 <div class="sect3">
-<h4 id="_diameter_ocs_server_general"><a class="anchor" href="#_diameter_ocs_server_general"></a>5.10.1. General information</h4>
+<h4 id="_diameter_ocs_server_general"><a class="anchor" href="#_diameter_ocs_server_general"></a>5.11.1. General information</h4>
 <div class="paragraph">
 <p>SMSC GW can interoperate with an OCS server via Diameter protocol connection.</p>
 </div>
@@ -28146,7 +28192,7 @@ So MO SS7, HR SS7 and SMPP part will be informed if the message is rejected.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_diameter_ocs_server_conig"><a class="anchor" href="#_diameter_ocs_server_conig"></a>5.10.2. Configuring</h4>
+<h4 id="_diameter_ocs_server_conig"><a class="anchor" href="#_diameter_ocs_server_conig"></a>5.11.2. Configuring</h4>
 <div class="paragraph">
 <p>You can use Telestax OCS server or any third party OCS server as you wish.
 SMSC GW party configuring is the same for both.
@@ -28248,7 +28294,7 @@ You can assign for User Name any value (for example "telestax").</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="security-issues"><a class="anchor" href="#security-issues"></a>5.11. Security issues</h3>
+<h3 id="security-issues"><a class="anchor" href="#security-issues"></a>5.12. Security issues</h3>
 <div class="paragraph">
 <p>When you configure SMSC GW for the first usage you need to care for security to avoid of unauthorized usage. Here you can find some tips for this.</p>
 </div>
@@ -28263,7 +28309,7 @@ You can assign for User Name any value (for example "telestax").</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="cdr-logging-settings"><a class="anchor" href="#cdr-logging-settings"></a>5.12. CDR Logging Settings</h3>
+<h3 id="cdr-logging-settings"><a class="anchor" href="#cdr-logging-settings"></a>5.13. CDR Logging Settings</h3>
 <div class="paragraph">
 <p>Restcomm SMSC is configured to generate CDR in a plain text files <code>cdr.log</code> and <code>cdr_detailed.log</code> located at <em class="path">restcomm-smscgateway-&lt;version&gt;/jboss-5.1.0.GA/server/&lt;profile&gt;/log/cdr.log</em> for JBOSS 5 server and [path]_restcomm-smscgateway-&lt;version&gt;/wildfly-10.1.0.Final/standalone/log for Wildfly 10 server and also detailed CDR in Cassandra tables <code>MESSAGES_yyyy_mm_dd</code>.</p>
 </div>
@@ -30098,16 +30144,330 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_smsc_scheduler_settings"><a class="anchor" href="#_smsc_scheduler_settings"></a>6.1.4. Scheduler Settings</h4>
+<h4 id="_smsc_clustering_settings"><a class="anchor" href="#_smsc_clustering_settings"></a>6.1.4. Clustering Settings</h4>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Note</div>
+<div class="paragraph">
+<p>SS7 Active-Active mode is a Telscale feature, available only in our commercial version.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>You can manage Clustering settings using the CLI or GUI.
+Note that the some of functionality requires SMSC is restart.</pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_in_cluster"><a class="anchor" href="#_in_cluster"></a>6.1.4.1. Clustering Configuration</h5>
+<div class="sect5">
+<h6 id="_in_cluster_cli"><a class="anchor" href="#_in_cluster_cli"></a>6.1.4.1.1. Using CLI</h6>
+<div class="literalblock">
+<div class="content">
+<pre>You can set the 'in cluster' value for Clustering settings by issuing the command `smsc set incluster` with appropriate parameters as described below. Enabling this property will take effect only if Shared Cassandra Database exists. Shared database name can be checked by issuing command `smsc get shareddbkeyspace`. If 'in cluster' property has been enabled, full clustering functionality will still require SMSC restart.
+You can verify this by issuing the command `smsc get incluster` which will display the value set for this property.</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>	Name
+		smsc set incluster
+
+	SYNOPSIS
+		smsc set incluster &lt;true | false&gt;
+
+	DESCRIPTION
+		This command is used to set flag indicating whether SMSC is in cluster.
+
+	EXAMPLES
+		smsc set incluster true</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_in_cluster_gui"><a class="anchor" href="#_in_cluster_gui"></a>6.1.4.1.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set Clustering Configuration using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing settings, segregated into nine horizontal tabs: Properties, SS7 Settings, Cassandra, Clustering, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Clustering' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify the 'incluster' flag by choosing appropriate value from the drop down menu. For more details of these parameters, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_shared_db_host"><a class="anchor" href="#_shared_db_host"></a>6.1.4.2. Shared Database Configuration - Host Addresses</h5>
+<div class="sect5">
+<h6 id="_shared_db_hosts_cli"><a class="anchor" href="#_shared_db_hosts_cli"></a>6.1.4.2.1. Using CLI</h6>
+<div class="literalblock">
+<div class="content">
+<pre>You can set the 'host addresses' value for Shared Database settings by issuing the command `smsc set shareddbhosts` with appropriate parameters as described below.
+You can verify this by issuing the command `smsc get shareddbhosts` which will display the value set for this property.</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>	Name
+		smsc set shareddbhosts
+
+	SYNOPSIS
+		smsc set shareddbhosts &lt;host-ip&gt;
+
+	DESCRIPTION
+		This command is used to set the host-ip addresses for Shared Database access.
+
+	EXAMPLES
+		smsc set shareddbhosts 127.0.0.1</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_shared_db_host_gui"><a class="anchor" href="#_shared_db_host_gui"></a>6.1.4.2.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set Shared Database Configuration - Host Addresses using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into nine horizontal tabs: Properties, SS7 Settings, Cassandra, Clustering, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Clustering' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify the host-ip address by entering appropriate values in the text field 'Host Address'. For more details of these parameters, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_shared_db_port"><a class="anchor" href="#_shared_db_port"></a>6.1.4.3. Shared Database Configuration - Port</h5>
+<div class="sect5">
+<h6 id="_shared_db_port_cli"><a class="anchor" href="#_shared_db_port_cli"></a>6.1.4.3.1. Using CLI</h6>
+<div class="literalblock">
+<div class="content">
+<pre>You can set the 'port' value for Shared Database settings by issuing the command `smsc set shareddbport` with appropriate parameters as described below.
+You can verify this by issuing the command `smsc get shareddbport` which will display the value set for this property.</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>	Name
+	    smsc set shareddbport
+
+	SYNOPSIS
+	    smsc set shareddbport &lt;port&gt;
+
+	DESCRIPTION
+		This command is used to set the password for Shared Database
+		access.
+
+	EXAMPLES
+	    smsc set shareddbport 9042</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_db_port_gui"><a class="anchor" href="#_db_port_gui"></a>6.1.4.3.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set Shared Database Configuration - Port using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into nine horizontal tabs: Properties, SS7 Settings, Cassandra, Clustering, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Clustering' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify the port by entering appropriate values in the text field 'Port'. For more details of these parameters, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_shared_db_keyspace"><a class="anchor" href="#_shared_db_keyspace"></a>6.1.4.4. Shared Database Configuration - Keyspace Name</h5>
+<div class="sect5">
+<h6 id="_shared_db_keyspace_cli"><a class="anchor" href="#_shared_db_keyspace_cli"></a>6.1.4.4.1. Using CLI</h6>
+<div class="literalblock">
+<div class="content">
+<pre>You can set the 'Shared DB Keyspace' by issuing the command `smsc set shareddbkeyspace` with appropriate parameters as described below.
+You can verify this by issuing the command `smsc get shareddbkeyspace` which will display the value set for this property.</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>	Name
+		smsc set shareddbkeyspace
+
+	SYNOPSIS
+		smsc set shareddbkeyspace &lt;keyspacename&gt;
+
+	DESCRIPTION
+		This command is used to set the Keyspace name for Shared Database. If you use
+		the script available in the distributive the name will be set to 'Shared' by
+		default.</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_shared_db_keyspace_gui"><a class="anchor" href="#_shared_db_keyspace_gui"></a>6.1.4.4.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set Shared Database Configuration - Keyspace Name using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into nine horizontal tabs: Properties, SS7 Settings, Cassandra, Clustering, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Clustering' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify the Shared Db Keyspace Name by entering the value in the text field 'Keyspace Name'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="shared_db_user"><a class="anchor" href="#shared_db_user"></a>6.1.4.5. Shared Database Configuration - User Name</h5>
+<div class="sect5">
+<h6 id="_shared_db_user_cli"><a class="anchor" href="#_shared_db_user_cli"></a>6.1.4.5.1. Using CLI</h6>
+<div class="literalblock">
+<div class="content">
+<pre>You can set the 'Shared Db User Name' by issuing the command `smsc set shareddbuser` with appropriate parameters as described below.
+You can verify this by issuing the command `smsc get shareddbuser` which will display the value set for this property.</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>	Name
+		smsc set shareddbuser
+
+	SYNOPSIS
+		smsc set shareddbuser &lt;username&gt;
+
+	DESCRIPTION
+		This command is used to set the user name for Shared Database. Default user is `cassandra`
+		You must restart SMSC GW to take effect.</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_shared_db_user_gui"><a class="anchor" href="#_shared_db_user_gui"></a>6.1.4.5.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set Shared Database Configuration - User Name using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into nine horizontal tabs: Properties, SS7 Settings, Cassandra, Clustering, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Clustering' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify the User Name by entering the value in the text field 'User Name'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="shared_db_pass"><a class="anchor" href="#shared_db_pass"></a>6.1.4.6. Shared Database Configuration - Password</h5>
+<div class="sect5">
+<h6 id="_shared_db_pass_cli"><a class="anchor" href="#_shared_db_pass_cli"></a>6.1.4.6.1. Using CLI</h6>
+<div class="literalblock">
+<div class="content">
+<pre>You can set the 'Shared Db Password' by issuing the command `smsc set shareddbpass` with appropriate parameters as described below.
+You can verify this by issuing the command `smsc get shareddbpass` which will display the value set for this property.</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>	Name
+		smsc set shareddbpass
+
+	SYNOPSIS
+		smsc set shareddbpass &lt;password&gt;
+
+	DESCRIPTION
+		This command is used to set the password for Shared Database. Default password is `cassandra`
+		You must restart SMSC GW to take effect.</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_shared_db_pass_gui"><a class="anchor" href="#_shared_db_pass_gui"></a>6.1.4.6.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set Shared Database Configuration - Password using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into nine horizontal tabs: Properties, SS7 Settings, Cassandra, Clustering, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Clustering' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify the Shared Db Password by entering the value in the text field 'Password'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_smsc_scheduler_settings"><a class="anchor" href="#_smsc_scheduler_settings"></a>6.1.5. Scheduler Settings</h4>
 <div class="paragraph">
 <p>You can modify Scheduler settings using the CLI or GUI.
 The modified settings for Fetch Period will become effective only when the SMSC is re-started.
 However modified settings for Max Rows and Max Activity Count will take effect immediately.</p>
 </div>
 <div class="sect4">
-<h5 id="_fetch_period"><a class="anchor" href="#_fetch_period"></a>6.1.4.1. Fetch Period (in ms)</h5>
+<h5 id="_fetch_period"><a class="anchor" href="#_fetch_period"></a>6.1.5.1. Fetch Period (in ms)</h5>
 <div class="sect5">
-<h6 id="_fetch_period_cli"><a class="anchor" href="#_fetch_period_cli"></a>6.1.4.1.1. Using CLI</h6>
+<h6 id="_fetch_period_cli"><a class="anchor" href="#_fetch_period_cli"></a>6.1.5.1.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'Fetch Period' value by issuing the command <code>smsc set fetchperiod</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get fetchperiod</code> which will display the value set for this property.</p>
@@ -30132,7 +30492,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_fetch_period_gui"><a class="anchor" href="#_fetch_period_gui"></a>6.1.4.1.2. Using GUI</h6>
+<h6 id="_fetch_period_gui"><a class="anchor" href="#_fetch_period_gui"></a>6.1.5.1.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set Cassandra Configuration - Cluster Name using the GUI</div>
 <ol class="arabic">
@@ -30155,9 +30515,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_max_rows"><a class="anchor" href="#_max_rows"></a>6.1.4.2. Max Rows</h5>
+<h5 id="_max_rows"><a class="anchor" href="#_max_rows"></a>6.1.5.2. Max Rows</h5>
 <div class="sect5">
-<h6 id="_max_rows_cli"><a class="anchor" href="#_max_rows_cli"></a>6.1.4.2.1. Using CLI</h6>
+<h6 id="_max_rows_cli"><a class="anchor" href="#_max_rows_cli"></a>6.1.5.2.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'Max Rows' value by issuing the command <code>smsc set fetchmaxrows</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get fetchmaxrows</code> which will display the value set for this property.</p>
@@ -30181,7 +30541,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_max_rows_gui"><a class="anchor" href="#_max_rows_gui"></a>6.1.4.2.2. Using GUI</h6>
+<h6 id="_max_rows_gui"><a class="anchor" href="#_max_rows_gui"></a>6.1.5.2.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set Max Rows using the GUI</div>
 <ol class="arabic">
@@ -30204,9 +30564,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_max_activity_count"><a class="anchor" href="#_max_activity_count"></a>6.1.4.3. Max Activity Count</h5>
+<h5 id="_max_activity_count"><a class="anchor" href="#_max_activity_count"></a>6.1.5.3. Max Activity Count</h5>
 <div class="sect5">
-<h6 id="_max_activity_count_cli"><a class="anchor" href="#_max_activity_count_cli"></a>6.1.4.3.1. Using CLI</h6>
+<h6 id="_max_activity_count_cli"><a class="anchor" href="#_max_activity_count_cli"></a>6.1.5.3.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'Max Activity Count' value by issuing the command <code>smsc set maxactivitycount</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get maxactivitycount</code> which will display the value set for this property.</p>
@@ -30233,7 +30593,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_max_activity_count_gui"><a class="anchor" href="#_max_activity_count_gui"></a>6.1.4.3.2. Using GUI</h6>
+<h6 id="_max_activity_count_gui"><a class="anchor" href="#_max_activity_count_gui"></a>6.1.5.3.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set Max Activity Count using the GUI</div>
 <ol class="arabic">
@@ -30256,9 +30616,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_revisesecondsonsmscstart"><a class="anchor" href="#_revisesecondsonsmscstart"></a>6.1.4.4. Revise period after SMSC restart</h5>
+<h5 id="_revisesecondsonsmscstart"><a class="anchor" href="#_revisesecondsonsmscstart"></a>6.1.5.4. Revise period after SMSC restart</h5>
 <div class="sect5">
-<h6 id="_revisesecondsonsmscstart_cli"><a class="anchor" href="#_revisesecondsonsmscstart_cli"></a>6.1.4.4.1. Using CLI</h6>
+<h6 id="_revisesecondsonsmscstart_cli"><a class="anchor" href="#_revisesecondsonsmscstart_cli"></a>6.1.5.4.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'Revise period (in seconds) after SMSC restart' value by issuing the command <code>smsc set revisesecondsonsmscstart</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get revisesecondsonsmscstart</code> which will display the value set for this property.
@@ -30283,7 +30643,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_revisesecondsonsmscstart_gui"><a class="anchor" href="#_revisesecondsonsmscstart_gui"></a>6.1.4.4.2. Using GUI</h6>
+<h6 id="_revisesecondsonsmscstart_gui"><a class="anchor" href="#_revisesecondsonsmscstart_gui"></a>6.1.5.4.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set Revise Period using the GUI</div>
 <ol class="arabic">
@@ -30306,9 +30666,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_processingsmssettimeout"><a class="anchor" href="#_processingsmssettimeout"></a>6.1.4.5. Cache timeout period</h5>
+<h5 id="_processingsmssettimeout"><a class="anchor" href="#_processingsmssettimeout"></a>6.1.5.5. Cache timeout period</h5>
 <div class="sect5">
-<h6 id="_processingsmssettimeout_cli"><a class="anchor" href="#_processingsmssettimeout_cli"></a>6.1.4.5.1. Using CLI</h6>
+<h6 id="_processingsmssettimeout_cli"><a class="anchor" href="#_processingsmssettimeout_cli"></a>6.1.5.5.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'Cache timeout period' value by issuing the command <code>smsc set processingsmssettimeout</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get processingsmssettimeout</code> which will display the value set for this property.
@@ -30335,7 +30695,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_processingsmssettimeout_gui"><a class="anchor" href="#_processingsmssettimeout_gui"></a>6.1.4.5.2. Using GUI</h6>
+<h6 id="_processingsmssettimeout_gui"><a class="anchor" href="#_processingsmssettimeout_gui"></a>6.1.5.5.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set Cache timeout Period using the GUI</div>
 <ol class="arabic">
@@ -30358,9 +30718,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_deliverytimeout"><a class="anchor" href="#_deliverytimeout"></a>6.1.4.6. Delivery timeout</h5>
+<h5 id="_deliverytimeout"><a class="anchor" href="#_deliverytimeout"></a>6.1.5.6. Delivery timeout</h5>
 <div class="sect5">
-<h6 id="_deliverytimeout_cli"><a class="anchor" href="#_deliverytimeout_cli"></a>6.1.4.6.1. Using CLI</h6>
+<h6 id="_deliverytimeout_cli"><a class="anchor" href="#_deliverytimeout_cli"></a>6.1.5.6.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'Delivery timeout' value by issuing the command <code>smsc set deliverytimeout</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get deliverytimeout</code> which will display the value set for this property.
@@ -30388,7 +30748,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_deliverytimeout_gui"><a class="anchor" href="#_deliverytimeout_gui"></a>6.1.4.6.2. Using GUI</h6>
+<h6 id="_deliverytimeout_gui"><a class="anchor" href="#_deliverytimeout_gui"></a>6.1.5.6.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set Delivery timeout using the GUI</div>
 <ol class="arabic">
@@ -30411,9 +30771,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_deliverytimeoutdeltapermessage"><a class="anchor" href="#_deliverytimeoutdeltapermessage"></a>6.1.4.7. Delivery timeout delta per message</h5>
+<h5 id="_deliverytimeoutdeltapermessage"><a class="anchor" href="#_deliverytimeoutdeltapermessage"></a>6.1.5.7. Delivery timeout delta per message</h5>
 <div class="sect5">
-<h6 id="_deliverytimeoutdeltapermessage_cli"><a class="anchor" href="#_deliverytimeoutdeltapermessage_cli"></a>6.1.4.7.1. Using CLI</h6>
+<h6 id="_deliverytimeoutdeltapermessage_cli"><a class="anchor" href="#_deliverytimeoutdeltapermessage_cli"></a>6.1.5.7.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'Delivery timeout delta per message' value by issuing the command <code>smsc set deliverytimeoutdeltapermessage</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get deliverytimeoutdeltapermessage</code> which will display the value set for this property.
@@ -30439,7 +30799,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_deliverytimeoutdeltapermessage_gui"><a class="anchor" href="#_deliverytimeoutdeltapermessage_gui"></a>6.1.4.7.2. Using GUI</h6>
+<h6 id="_deliverytimeoutdeltapermessage_gui"><a class="anchor" href="#_deliverytimeoutdeltapermessage_gui"></a>6.1.5.7.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set Delivery timeout delta per message using the GUI</div>
 <ol class="arabic">
@@ -30462,9 +30822,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_smsc_gateway_server_skip_diue_slot"><a class="anchor" href="#_smsc_gateway_server_skip_diue_slot"></a>6.1.4.8. Skipping of scheduled for the past and not yet sent messages ("In process" due_slot shifting).</h5>
+<h5 id="_smsc_gateway_server_skip_diue_slot"><a class="anchor" href="#_smsc_gateway_server_skip_diue_slot"></a>6.1.5.8. Skipping of scheduled for the past and not yet sent messages ("In process" due_slot shifting).</h5>
 <div class="sect5">
-<h6 id="_smsc_gateway_server_skip_diue_slot_cli"><a class="anchor" href="#_smsc_gateway_server_skip_diue_slot_cli"></a>6.1.4.8.1. Using CLI</h6>
+<h6 id="_smsc_gateway_server_skip_diue_slot_cli"><a class="anchor" href="#_smsc_gateway_server_skip_diue_slot_cli"></a>6.1.5.8.1. Using CLI</h6>
 <div class="paragraph">
 <p>This command will skip of processing / fetching of messages that was scheduled for delivering for the time in the past but have not yet delivered by SMSC GW because of SMSC GW was turned off or overloaded.
 &lt;time in seconds&gt; means the point of the time (actual current time - &lt;time in seconds&gt;) to which the point of processing / fetching of messages will be shifted.
@@ -30493,7 +30853,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_smsc_gateway_server_skip_diue_slot_gui"><a class="anchor" href="#_smsc_gateway_server_skip_diue_slot_gui"></a>6.1.4.8.2. Using GUI</h6>
+<h6 id="_smsc_gateway_server_skip_diue_slot_gui"><a class="anchor" href="#_smsc_gateway_server_skip_diue_slot_gui"></a>6.1.5.8.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Skipping of scheduled for the past and not yet sent messages ("In process" due_slot shifting) by the GUI</div>
 <ol class="arabic">
@@ -30517,14 +30877,14 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_smsc_diameter_settings"><a class="anchor" href="#_smsc_diameter_settings"></a>6.1.5. Diameter Settings</h4>
+<h4 id="_smsc_diameter_settings"><a class="anchor" href="#_smsc_diameter_settings"></a>6.1.6. Diameter Settings</h4>
 <div class="paragraph">
 <p>You can modify Diameter settings using the CLI or GUI.</p>
 </div>
 <div class="sect4">
-<h5 id="_dest_realm"><a class="anchor" href="#_dest_realm"></a>6.1.5.1. Destination Realm</h5>
+<h5 id="_dest_realm"><a class="anchor" href="#_dest_realm"></a>6.1.6.1. Destination Realm</h5>
 <div class="sect5">
-<h6 id="_dest_realm_cli"><a class="anchor" href="#_dest_realm_cli"></a>6.1.5.1.1. Using CLI</h6>
+<h6 id="_dest_realm_cli"><a class="anchor" href="#_dest_realm_cli"></a>6.1.6.1.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'Destination Realm' value by issuing the command <code>smsc set diameterdestrealm</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get diameterdestrealm</code> which will display the value set for this property.</p>
@@ -30547,7 +30907,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_dest_realm_gui"><a class="anchor" href="#_dest_realm_gui"></a>6.1.5.1.2. Using GUI</h6>
+<h6 id="_dest_realm_gui"><a class="anchor" href="#_dest_realm_gui"></a>6.1.6.1.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set Diameter Destination Realm using the GUI</div>
 <ol class="arabic">
@@ -30571,9 +30931,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_dest_host"><a class="anchor" href="#_dest_host"></a>6.1.5.2. Destination Host</h5>
+<h5 id="_dest_host"><a class="anchor" href="#_dest_host"></a>6.1.6.2. Destination Host</h5>
 <div class="sect5">
-<h6 id="_dest_host_cli"><a class="anchor" href="#_dest_host_cli"></a>6.1.5.2.1. Using CLI</h6>
+<h6 id="_dest_host_cli"><a class="anchor" href="#_dest_host_cli"></a>6.1.6.2.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'Destination Host' value by issuing the command <code>smsc set diameterdesthost</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get diameterdesthost</code> which will display the value set for this property.</p>
@@ -30596,7 +30956,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_dest_host_gui"><a class="anchor" href="#_dest_host_gui"></a>6.1.5.2.2. Using GUI</h6>
+<h6 id="_dest_host_gui"><a class="anchor" href="#_dest_host_gui"></a>6.1.6.2.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set Diameter Host using the GUI</div>
 <ol class="arabic">
@@ -30620,9 +30980,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_dest_port"><a class="anchor" href="#_dest_port"></a>6.1.5.3. Destination Port</h5>
+<h5 id="_dest_port"><a class="anchor" href="#_dest_port"></a>6.1.6.3. Destination Port</h5>
 <div class="sect5">
-<h6 id="_dest_port_cli"><a class="anchor" href="#_dest_port_cli"></a>6.1.5.3.1. Using CLI</h6>
+<h6 id="_dest_port_cli"><a class="anchor" href="#_dest_port_cli"></a>6.1.6.3.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'Destination Port' value by issuing the command <code>smsc set diameterdestport</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get diameterdestport</code> which will display the value set for this property.</p>
@@ -30645,7 +31005,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_dest_port_gui"><a class="anchor" href="#_dest_port_gui"></a>6.1.5.3.2. Using GUI</h6>
+<h6 id="_dest_port_gui"><a class="anchor" href="#_dest_port_gui"></a>6.1.6.3.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set Diameter Port using the GUI</div>
 <ol class="arabic">
@@ -30669,9 +31029,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_dest_username"><a class="anchor" href="#_dest_username"></a>6.1.5.4. Destination Username</h5>
+<h5 id="_dest_username"><a class="anchor" href="#_dest_username"></a>6.1.6.4. Destination Username</h5>
 <div class="sect5">
-<h6 id="_dest_username_cli"><a class="anchor" href="#_dest_username_cli"></a>6.1.5.4.1. Using CLI</h6>
+<h6 id="_dest_username_cli"><a class="anchor" href="#_dest_username_cli"></a>6.1.6.4.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'Destination Username' value by issuing the command <code>smsc set diameterusername</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get diameterusername</code> which will display the value set for this property.</p>
@@ -30693,7 +31053,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_dest_username_gui"><a class="anchor" href="#_dest_username_gui"></a>6.1.5.4.2. Using GUI</h6>
+<h6 id="_dest_username_gui"><a class="anchor" href="#_dest_username_gui"></a>6.1.6.4.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set Diameter Username using the GUI</div>
 <ol class="arabic">
@@ -30717,9 +31077,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_dest_mocharging"><a class="anchor" href="#_dest_mocharging"></a>6.1.5.5. MO accepting and charging settings</h5>
+<h5 id="_dest_mocharging"><a class="anchor" href="#_dest_mocharging"></a>6.1.6.5. MO accepting and charging settings</h5>
 <div class="sect5">
-<h6 id="_dest_mocharging_cli"><a class="anchor" href="#_dest_mocharging_cli"></a>6.1.5.5.1. Using CLI</h6>
+<h6 id="_dest_mocharging_cli"><a class="anchor" href="#_dest_mocharging_cli"></a>6.1.6.5.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'MO (mobile originated) Charging' value by issuing the command <code>smsc set mocharging</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get mocharging</code> which will display the value set for this property.</p>
@@ -30746,7 +31106,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_dest_mocharging_gui"><a class="anchor" href="#_dest_mocharging_gui"></a>6.1.5.5.2. Using GUI</h6>
+<h6 id="_dest_mocharging_gui"><a class="anchor" href="#_dest_mocharging_gui"></a>6.1.6.5.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set MO Charge using the GUI</div>
 <ol class="arabic">
@@ -30770,9 +31130,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_dest_txsmppcharging"><a class="anchor" href="#_dest_txsmppcharging"></a>6.1.5.6. ESME Charge Settings</h5>
+<h5 id="_dest_txsmppcharging"><a class="anchor" href="#_dest_txsmppcharging"></a>6.1.6.6. ESME Charge Settings</h5>
 <div class="sect5">
-<h6 id="_dest_txsmppcharging_cli"><a class="anchor" href="#_dest_txsmppcharging_cli"></a>6.1.5.6.1. Using CLI</h6>
+<h6 id="_dest_txsmppcharging_cli"><a class="anchor" href="#_dest_txsmppcharging_cli"></a>6.1.6.6.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'ESME Originated SMS Charged' value by issuing the command <code>smsc set txsmppcharging</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get txsmppcharging</code> which will display the value set for this property.</p>
@@ -30807,7 +31167,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_dest_txsmppcharging_gui"><a class="anchor" href="#_dest_txsmppcharging_gui"></a>6.1.5.6.2. Using GUI</h6>
+<h6 id="_dest_txsmppcharging_gui"><a class="anchor" href="#_dest_txsmppcharging_gui"></a>6.1.6.6.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set ESME Charge using the GUI</div>
 <ol class="arabic">
@@ -30831,9 +31191,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_dest_txsipcharging"><a class="anchor" href="#_dest_txsipcharging"></a>6.1.5.7. SIP Charge Settings</h5>
+<h5 id="_dest_txsipcharging"><a class="anchor" href="#_dest_txsipcharging"></a>6.1.6.7. SIP Charge Settings</h5>
 <div class="sect5">
-<h6 id="_dest_txsipcharging_cli"><a class="anchor" href="#_dest_txsipcharging_cli"></a>6.1.5.7.1. Using CLI</h6>
+<h6 id="_dest_txsipcharging_cli"><a class="anchor" href="#_dest_txsipcharging_cli"></a>6.1.6.7.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'SIP Originated SMS Charged' value by issuing the command <code>smsc set txsipcharging</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get txsipcharging</code> which will display the value set for this property.</p>
@@ -30863,7 +31223,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_dest_txsipcharging_gui"><a class="anchor" href="#_dest_txsipcharging_gui"></a>6.1.5.7.2. Using GUI</h6>
+<h6 id="_dest_txsipcharging_gui"><a class="anchor" href="#_dest_txsipcharging_gui"></a>6.1.6.7.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set SIP Charge using the GUI</div>
 <ol class="arabic">
@@ -30887,9 +31247,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_dest_hrcharging"><a class="anchor" href="#_dest_hrcharging"></a>6.1.5.8. Home routing Charge Settings</h5>
+<h5 id="_dest_hrcharging"><a class="anchor" href="#_dest_hrcharging"></a>6.1.6.8. Home routing Charge Settings</h5>
 <div class="sect5">
-<h6 id="_dest_hrcharging_cli"><a class="anchor" href="#_dest_hrcharging_cli"></a>6.1.5.8.1. Using CLI</h6>
+<h6 id="_dest_hrcharging_cli"><a class="anchor" href="#_dest_hrcharging_cli"></a>6.1.6.8.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'Home routing Originated SMS Charged' value by issuing the command <code>smsc set hrcharging</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get hrcharging</code> which will display the value set for this property.</p>
@@ -30919,7 +31279,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_dest_hrcharging_gui"><a class="anchor" href="#_dest_hrcharging_gui"></a>6.1.5.8.2. Using GUI</h6>
+<h6 id="_dest_hrcharging_gui"><a class="anchor" href="#_dest_hrcharging_gui"></a>6.1.6.8.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set Home Routing Charge using the GUI</div>
 <ol class="arabic">
@@ -30943,9 +31303,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_dest_txhttpcharging"><a class="anchor" href="#_dest_txhttpcharging"></a>6.1.5.9. HTTP Charge Settings</h5>
+<h5 id="_dest_txhttpcharging"><a class="anchor" href="#_dest_txhttpcharging"></a>6.1.6.9. HTTP Charge Settings</h5>
 <div class="sect5">
-<h6 id="_dest_txhttpcharging_cli"><a class="anchor" href="#_dest_txhttpcharging_cli"></a>6.1.5.9.1. Using CLI</h6>
+<h6 id="_dest_txhttpcharging_cli"><a class="anchor" href="#_dest_txhttpcharging_cli"></a>6.1.6.9.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'HTTP Originated SMS Charged' value by issuing the command <code>smsc set txhttpcharging</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get txhttpcharging</code> which will display the value set for this property.</p>
@@ -30975,7 +31335,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_dest_txhttpcharging_gui"><a class="anchor" href="#_dest_txhttpcharging_gui"></a>6.1.5.9.2. Using GUI</h6>
+<h6 id="_dest_txhttpcharging_gui"><a class="anchor" href="#_dest_txhttpcharging_gui"></a>6.1.6.9.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set HTTP originated Charge using the GUI</div>
 <ol class="arabic">
@@ -31000,14 +31360,14 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_smsc_gateway_server_hr"><a class="anchor" href="#_smsc_gateway_server_hr"></a>6.1.6. Home Routing Settings</h4>
+<h4 id="_smsc_gateway_server_hr"><a class="anchor" href="#_smsc_gateway_server_hr"></a>6.1.7. Home Routing Settings</h4>
 <div class="paragraph">
 <p>Restcomm SMSC Gateway supports Non Transparent Home Routing as explained in 3GPP 23.840 5.2.3.
 This option can be disabled by setting "hrcharging" option to "reject" (see <a href="#_dest_hrcharging">Home routing Charge Settings</a>). SMSC GW will accept SendRoutinInfo requests from a remote SMSC, then create a unique "correlationId" value for a requested MSISDN, then send SendRoutinInfo request to HLR, store received by HLR info into a cache and sends back to the remote SMSC SendRoutinInfo response with "correlationId" value in IMSI field and SMSC GlobalTytle (or another special configured GlobalTytle value) in LocationInfo field.
 Then SMSC GW will accept MtForwardSM messages from the remote SMSC, seaches in the cache for "correlationId" and HLR subscriber&#8217;s and use this data for processing a message further.</p>
 </div>
 <div class="sect4">
-<h5 id="_smsc_gateway_server_hr_corrtable"><a class="anchor" href="#_smsc_gateway_server_hr_corrtable"></a>6.1.6.1. Correlation table CC and MCC-MNC for home routing mode managing.</h5>
+<h5 id="_smsc_gateway_server_hr_corrtable"><a class="anchor" href="#_smsc_gateway_server_hr_corrtable"></a>6.1.7.1. Correlation table CC and MCC-MNC for home routing mode managing.</h5>
 <div class="paragraph">
 <p>For home routing mode we may need to fill a special table for correlation between CC (CountryCodes) of incoming MSISDN address and MCC-MNC prefix of a generated correlationId value.
 CorrelationId value will be returned as IMSI in SRI response to an upper SMSC GW.
@@ -31040,9 +31400,9 @@ This value will be used as LocationInfo field in SendRoutinInfo response.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_correlationidlivetime"><a class="anchor" href="#_correlationidlivetime"></a>6.1.6.2. Living time of elements in correlation cache</h5>
+<h5 id="_correlationidlivetime"><a class="anchor" href="#_correlationidlivetime"></a>6.1.7.2. Living time of elements in correlation cache</h5>
 <div class="sect5">
-<h6 id="_correlationidlivetime_cli"><a class="anchor" href="#_correlationidlivetime_cli"></a>6.1.6.2.1. Using CLI</h6>
+<h6 id="_correlationidlivetime_cli"><a class="anchor" href="#_correlationidlivetime_cli"></a>6.1.7.2.1. Using CLI</h6>
 <div class="paragraph">
 <p>In home routing mode SMSC GW specifies correlationId for any recieved SRI requests from upper SMSC.
 After it this correlationId value and corresponded to MSISDN data are stored into internal cache and will be used for processing of next coming MtForwardSM messages from other SMSC.
@@ -31081,7 +31441,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_correlationidlivetime_gui"><a class="anchor" href="#_correlationidlivetime_gui"></a>6.1.6.2.2. Using GUI</h6>
+<h6 id="_correlationidlivetime_gui"><a class="anchor" href="#_correlationidlivetime_gui"></a>6.1.7.2.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Setting of living time of elements in correlation cache using the GUI</div>
 <ol class="arabic">
@@ -31104,9 +31464,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_hrsribypass"><a class="anchor" href="#_hrsribypass"></a>6.1.6.3. Bypassing of SRI request to a local HLR</h5>
+<h5 id="_hrsribypass"><a class="anchor" href="#_hrsribypass"></a>6.1.7.3. Bypassing of SRI request to a local HLR</h5>
 <div class="sect5">
-<h6 id="_hrsribypass_cli"><a class="anchor" href="#_hrsribypass_cli"></a>6.1.6.3.1. Using CLI</h6>
+<h6 id="_hrsribypass_cli"><a class="anchor" href="#_hrsribypass_cli"></a>6.1.7.3.1. Using CLI</h6>
 <div class="paragraph">
 <p>SMSC GW home routing procedure for each networkId area can be configured to send or do not send SendRoutinInfo request to a local HLR.
 This is configured by parameter "hrsribypass". Default value is "false" - this means that SMSC GW will send SRI requests to local HLR before sending back SRI response.</p>
@@ -31192,7 +31552,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_hrsribypass_gui"><a class="anchor" href="#_hrsribypass_gui"></a>6.1.6.3.2. Using GUI</h6>
+<h6 id="_hrsribypass_gui"><a class="anchor" href="#_hrsribypass_gui"></a>6.1.7.3.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Setting of living time of elements in correlation cache using the GUI</div>
 <ol class="arabic">
@@ -31216,9 +31576,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_hrccmccmnc_add"><a class="anchor" href="#_hrccmccmnc_add"></a>6.1.6.4. Create an entry for correlation table CC and MCC-MNC</h5>
+<h5 id="_hrccmccmnc_add"><a class="anchor" href="#_hrccmccmnc_add"></a>6.1.7.4. Create an entry for correlation table CC and MCC-MNC</h5>
 <div class="sect5">
-<h6 id="_hrccmccmnc_add_cli"><a class="anchor" href="#_hrccmccmnc_add_cli"></a>6.1.6.4.1. Using CLI</h6>
+<h6 id="_hrccmccmnc_add_cli"><a class="anchor" href="#_hrccmccmnc_add_cli"></a>6.1.7.4.1. Using CLI</h6>
 <div class="paragraph">
 <p>In home routing mode SMSC GW we may need to specify the correlation table CC and MCC-MNC (<a href="#_smsc_gateway_server_hr_corrtable">Correlation table CC and MCC-MNC for home routing mode managing.</a>). You can add an entry of this table by issuing the command <code>smsc hrccmccmnc add</code> with appropriate parameters as described below.</p>
 </div>
@@ -31243,7 +31603,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_hrccmccmnc_add_gui"><a class="anchor" href="#_hrccmccmnc_add_gui"></a>6.1.6.4.2. Using GUI</h6>
+<h6 id="_hrccmccmnc_add_gui"><a class="anchor" href="#_hrccmccmnc_add_gui"></a>6.1.7.4.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Creation an entry for correlation table CC and MCC-MNC using the GUI</div>
 <ol class="arabic">
@@ -31259,9 +31619,9 @@ For more details of this parameter, please refer to the description of the CLI c
 </div>
 </div>
 <div class="sect4">
-<h5 id="_hrccmccmnc_modify"><a class="anchor" href="#_hrccmccmnc_modify"></a>6.1.6.5. Modification of an entry for correlation table CC and MCC-MNC</h5>
+<h5 id="_hrccmccmnc_modify"><a class="anchor" href="#_hrccmccmnc_modify"></a>6.1.7.5. Modification of an entry for correlation table CC and MCC-MNC</h5>
 <div class="sect5">
-<h6 id="_hrccmccmnc_modify_cli"><a class="anchor" href="#_hrccmccmnc_modify_cli"></a>6.1.6.5.1. Using CLI</h6>
+<h6 id="_hrccmccmnc_modify_cli"><a class="anchor" href="#_hrccmccmnc_modify_cli"></a>6.1.7.5.1. Using CLI</h6>
 <div class="paragraph">
 <p>In home routing mode SMSC GW we may need to specify the correlation table CC and MCC-MNC (<a href="#_smsc_gateway_server_hr_corrtable">Correlation table CC and MCC-MNC for home routing mode managing.</a>). You can modify an entry of this table by issuing the command <code>smsc hrccmccmnc modify</code> with appropriate parameters as described below.</p>
 </div>
@@ -31286,7 +31646,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_hrccmccmnc_modify_gui"><a class="anchor" href="#_hrccmccmnc_modify_gui"></a>6.1.6.5.2. Using GUI</h6>
+<h6 id="_hrccmccmnc_modify_gui"><a class="anchor" href="#_hrccmccmnc_modify_gui"></a>6.1.7.5.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Modification of an entry for correlation table CC and MCC-MNC using the GUI</div>
 <ol class="arabic">
@@ -31302,9 +31662,9 @@ For more details of this parameter, please refer to the description of the CLI c
 </div>
 </div>
 <div class="sect4">
-<h5 id="_hrccmccmnc_remove"><a class="anchor" href="#_hrccmccmnc_remove"></a>6.1.6.6. Removing of an entry for correlation table CC and MCC-MNC</h5>
+<h5 id="_hrccmccmnc_remove"><a class="anchor" href="#_hrccmccmnc_remove"></a>6.1.7.6. Removing of an entry for correlation table CC and MCC-MNC</h5>
 <div class="sect5">
-<h6 id="_hrccmccmnc_remove_cli"><a class="anchor" href="#_hrccmccmnc_remove_cli"></a>6.1.6.6.1. Using CLI</h6>
+<h6 id="_hrccmccmnc_remove_cli"><a class="anchor" href="#_hrccmccmnc_remove_cli"></a>6.1.7.6.1. Using CLI</h6>
 <div class="paragraph">
 <p>In home routing mode SMSC GW we may need to specify the correlation table CC and MCC-MNC (<a href="#_smsc_gateway_server_hr_corrtable">Correlation table CC and MCC-MNC for home routing mode managing.</a>). You can remove an entry of this table by issuing the command <code>smsc hrccmccmnc remove</code> with appropriate parameters as described below.</p>
 </div>
@@ -31326,7 +31686,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_hrccmccmnc_remove_gui"><a class="anchor" href="#_hrccmccmnc_remove_gui"></a>6.1.6.6.2. Using GUI</h6>
+<h6 id="_hrccmccmnc_remove_gui"><a class="anchor" href="#_hrccmccmnc_remove_gui"></a>6.1.7.6.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Removing of an entry for correlation table CC and MCC-MNC using the GUI</div>
 <ol class="arabic">
@@ -31342,9 +31702,9 @@ For more details of this parameter, please refer to the description of the CLI c
 </div>
 </div>
 <div class="sect4">
-<h5 id="_hrccmccmnc_show"><a class="anchor" href="#_hrccmccmnc_show"></a>6.1.6.7. Displaying of an entry / full list of correlation table CC and MCC-MNC</h5>
+<h5 id="_hrccmccmnc_show"><a class="anchor" href="#_hrccmccmnc_show"></a>6.1.7.7. Displaying of an entry / full list of correlation table CC and MCC-MNC</h5>
 <div class="sect5">
-<h6 id="_hrccmccmnc_show_cli"><a class="anchor" href="#_hrccmccmnc_show_cli"></a>6.1.6.7.1. Using CLI</h6>
+<h6 id="_hrccmccmnc_show_cli"><a class="anchor" href="#_hrccmccmnc_show_cli"></a>6.1.7.7.1. Using CLI</h6>
 <div class="paragraph">
 <p>In home routing mode SMSC GW we may need to specify the correlation table CC and MCC-MNC (<a href="#_smsc_gateway_server_hr_corrtable">Correlation table CC and MCC-MNC for home routing mode managing.</a>). You can observe an entry or a full list of this table by issuing the command <code>smsc hrccmccmnc show</code> with appropriate parameters as described below.</p>
 </div>
@@ -31369,7 +31729,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_hrccmccmnc_show_gui"><a class="anchor" href="#_hrccmccmnc_show_gui"></a>6.1.6.7.2. Using GUI</h6>
+<h6 id="_hrccmccmnc_show_gui"><a class="anchor" href="#_hrccmccmnc_show_gui"></a>6.1.7.7.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Displaying of an entry for correlation table CC and MCC-MNC using the GUI</div>
 <ol class="arabic">
@@ -31387,11 +31747,11 @@ Results will be shown in the bottom of the screen For more details of this param
 </div>
 </div>
 <div class="sect3">
-<h4 id="_smsc_gateway_server_cdr"><a class="anchor" href="#_smsc_gateway_server_cdr"></a>6.1.7. CDRs and archive tables</h4>
+<h4 id="_smsc_gateway_server_cdr"><a class="anchor" href="#_smsc_gateway_server_cdr"></a>6.1.8. CDRs and archive tables</h4>
 <div class="sect4">
-<h5 id="_generatecdr"><a class="anchor" href="#_generatecdr"></a>6.1.7.1. CDR generation</h5>
+<h5 id="_generatecdr"><a class="anchor" href="#_generatecdr"></a>6.1.8.1. CDR generation</h5>
 <div class="sect5">
-<h6 id="_generatecdr_cli"><a class="anchor" href="#_generatecdr_cli"></a>6.1.7.1.1. Using CLI</h6>
+<h6 id="_generatecdr_cli"><a class="anchor" href="#_generatecdr_cli"></a>6.1.8.1.1. Using CLI</h6>
 <div class="paragraph">
 <p>SMSC GW can store CDR records for each delivered or failed for delivering messages into log file (see <a href="#_cdr_logging_settings">[_cdr_logging_settings]</a>). Which records will be stored is defined by 'generatecdr' SMSC option.
 You can set the 'generatecdr' option by issuing the command <code>smsc set generatecdr</code> with appropriate parameters as described below.
@@ -31427,7 +31787,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_generatecdr_gui"><a class="anchor" href="#_generatecdr_gui"></a>6.1.7.1.2. Using GUI</h6>
+<h6 id="_generatecdr_gui"><a class="anchor" href="#_generatecdr_gui"></a>6.1.8.1.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set CDRs generation SMSC option using the GUI</div>
 <ol class="arabic">
@@ -31450,9 +31810,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_generatearchivetable"><a class="anchor" href="#_generatearchivetable"></a>6.1.7.2. Archive table generation</h5>
+<h5 id="_generatearchivetable"><a class="anchor" href="#_generatearchivetable"></a>6.1.8.2. Archive table generation</h5>
 <div class="sect5">
-<h6 id="_generatearchivetable_cli"><a class="anchor" href="#_generatearchivetable_cli"></a>6.1.7.2.1. Using CLI</h6>
+<h6 id="_generatearchivetable_cli"><a class="anchor" href="#_generatearchivetable_cli"></a>6.1.8.2.1. Using CLI</h6>
 <div class="paragraph">
 <p>SMSC GW can store CDR records for each delivered or failed for delivering messages into special archive tables of cassandra database.
 Names of such tables have the following format: MESSAGES_yyyy_mm_dd.
@@ -31486,7 +31846,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_generatearchivetable_gui"><a class="anchor" href="#_generatearchivetable_gui"></a>6.1.7.2.2. Using GUI</h6>
+<h6 id="_generatearchivetable_gui"><a class="anchor" href="#_generatearchivetable_gui"></a>6.1.8.2.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set archive table CDRs generation SMSC option using the GUI</div>
 <ol class="arabic">
@@ -31509,9 +31869,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_generatereceiptcdr"><a class="anchor" href="#_generatereceiptcdr"></a>6.1.7.3. Generate CDR for Receipt Messages</h5>
+<h5 id="_generatereceiptcdr"><a class="anchor" href="#_generatereceiptcdr"></a>6.1.8.3. Generate CDR for Receipt Messages</h5>
 <div class="sect5">
-<h6 id="_generatereceiptcdr_cli"><a class="anchor" href="#_generatereceiptcdr_cli"></a>6.1.7.3.1. Using CLI</h6>
+<h6 id="_generatereceiptcdr_cli"><a class="anchor" href="#_generatereceiptcdr_cli"></a>6.1.8.3.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'generatereceiptcdr' value to true/false by issuing the command <code>smsc set generatereceiptcdr</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get generatereceiptcdr</code> which will display the value set for this property.</p>
@@ -31537,7 +31897,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_generatereceiptcdr_gui"><a class="anchor" href="#_generatereceiptcdr_gui"></a>6.1.7.3.2. Using GUI</h6>
+<h6 id="_generatereceiptcdr_gui"><a class="anchor" href="#_generatereceiptcdr_gui"></a>6.1.8.3.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set 'generate CDR for receipt messages'  using the GUI</div>
 <ol class="arabic">
@@ -31560,9 +31920,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_generaterejectioncdr"><a class="anchor" href="#_generaterejectioncdr"></a>6.1.7.4. Generate CDR for Rejected Messages as a message sumbission step</h5>
+<h5 id="_generaterejectioncdr"><a class="anchor" href="#_generaterejectioncdr"></a>6.1.8.4. Generate CDR for Rejected Messages as a message sumbission step</h5>
 <div class="sect5">
-<h6 id="_generaterejectioncdr_cli"><a class="anchor" href="#_generaterejectioncdr_cli"></a>6.1.7.4.1. Using CLI</h6>
+<h6 id="_generaterejectioncdr_cli"><a class="anchor" href="#_generaterejectioncdr_cli"></a>6.1.8.4.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'generaterejectioncdr' value to true/false by issuing the command <code>smsc set generaterejectioncdr</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get generaterejectioncdr</code> which will display the value set for this property.</p>
@@ -31586,7 +31946,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_generaterejectioncdr_gui"><a class="anchor" href="#_generaterejectioncdr_gui"></a>6.1.7.4.2. Using GUI</h6>
+<h6 id="_generaterejectioncdr_gui"><a class="anchor" href="#_generaterejectioncdr_gui"></a>6.1.8.4.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set 'generate CDR for Rejected Messages as a message sumbission step'  using the GUI</div>
 <ol class="arabic">
@@ -31609,9 +31969,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_generatedetailedcdr"><a class="anchor" href="#_generatedetailedcdr"></a>6.1.7.5. Generate Detailed CDR for Messages</h5>
+<h5 id="_generatedetailedcdr"><a class="anchor" href="#_generatedetailedcdr"></a>6.1.8.5. Generate Detailed CDR for Messages</h5>
 <div class="sect5">
-<h6 id="_generatedetailedcdr_cli"><a class="anchor" href="#_generatedetailedcdr_cli"></a>6.1.7.5.1. Using CLI</h6>
+<h6 id="_generatedetailedcdr_cli"><a class="anchor" href="#_generatedetailedcdr_cli"></a>6.1.8.5.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'generatedetailedcdr' value to true/false by issuing the command <code>smsc set generatedetailedcdr</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get generatedetailedcdr</code> which will display the value set for this property.</p>
@@ -31637,7 +31997,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_generatedetaileddr_gui"><a class="anchor" href="#_generatedetaileddr_gui"></a>6.1.7.5.2. Using GUI</h6>
+<h6 id="_generatedetaileddr_gui"><a class="anchor" href="#_generatedetaileddr_gui"></a>6.1.8.5.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set 'generate detailed CDR for messages'  using the GUI</div>
 <ol class="arabic">
@@ -31660,9 +32020,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_generatetempfailurecdr"><a class="anchor" href="#_generatetempfailurecdr"></a>6.1.7.6. Generate CDR for temporary failure case</h5>
+<h5 id="_generatetempfailurecdr"><a class="anchor" href="#_generatetempfailurecdr"></a>6.1.8.6. Generate CDR for temporary failure case</h5>
 <div class="sect5">
-<h6 id="_generatetempfailurecdr_cli"><a class="anchor" href="#_generatetempfailurecdr_cli"></a>6.1.7.6.1. Using CLI</h6>
+<h6 id="_generatetempfailurecdr_cli"><a class="anchor" href="#_generatetempfailurecdr_cli"></a>6.1.8.6.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'generatetempfailurecdr' value to true/false by issuing the command <code>smsc set generatetempfailurecdr</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get generatetempfailurecdr</code> which will display the value set for this property.</p>
@@ -31690,7 +32050,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_generatetempfailurecdr_gui"><a class="anchor" href="#_generatetempfailurecdr_gui"></a>6.1.7.6.2. Using GUI</h6>
+<h6 id="_generatetempfailurecdr_gui"><a class="anchor" href="#_generatetempfailurecdr_gui"></a>6.1.8.6.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set 'generate CDR for a temporary failure case'  using the GUI</div>
 <ol class="arabic">
@@ -31713,9 +32073,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_generateprocessingerrorcdr"><a class="anchor" href="#_generateprocessingerrorcdr"></a>6.1.7.7. Generate CDR for Message Processing Errors</h5>
+<h5 id="_generateprocessingerrorcdr"><a class="anchor" href="#_generateprocessingerrorcdr"></a>6.1.8.7. Generate CDR for Message Processing Errors</h5>
 <div class="sect5">
-<h6 id="_generateprocessingerrorcdr_cli"><a class="anchor" href="#_generateprocessingerrorcdr_cli"></a>6.1.7.7.1. Using CLI</h6>
+<h6 id="_generateprocessingerrorcdr_cli"><a class="anchor" href="#_generateprocessingerrorcdr_cli"></a>6.1.8.7.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'generateprocessingerrorcdr' value to true/false by issuing the command <code>smsc set generateprocessingerrorcdr</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get generateprocessingerrorcdr</code> which will display the value set for this property.</p>
@@ -31741,7 +32101,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_generateprocessingerrorcdr_gui"><a class="anchor" href="#_generateprocessingerrorcdr_gui"></a>6.1.7.7.2. Using GUI</h6>
+<h6 id="_generateprocessingerrorcdr_gui"><a class="anchor" href="#_generateprocessingerrorcdr_gui"></a>6.1.8.7.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set 'generate CDR for message processing error'  using the GUI</div>
 <ol class="arabic">
@@ -31764,9 +32124,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_calculatemsgpartslencdr"><a class="anchor" href="#_calculatemsgpartslencdr"></a>6.1.7.8. Calculating of message parts and characters count per a CDR record</h5>
+<h5 id="_calculatemsgpartslencdr"><a class="anchor" href="#_calculatemsgpartslencdr"></a>6.1.8.8. Calculating of message parts and characters count per a CDR record</h5>
 <div class="sect5">
-<h6 id="_calculatemsgpartslencdr_cli"><a class="anchor" href="#_calculatemsgpartslencdr_cli"></a>6.1.7.8.1. Using CLI</h6>
+<h6 id="_calculatemsgpartslencdr_cli"><a class="anchor" href="#_calculatemsgpartslencdr_cli"></a>6.1.8.8.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'calculatemsgpartslencdr' value to true/false by issuing the command <code>smsc set calculatemsgpartslencdr</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get calculatemsgpartslencdr</code> which will display the value set for this property.</p>
@@ -31793,7 +32153,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_calculatemsgpartslencdr_gui"><a class="anchor" href="#_calculatemsgpartslencdr_gui"></a>6.1.7.8.2. Using GUI</h6>
+<h6 id="_calculatemsgpartslencdr_gui"><a class="anchor" href="#_calculatemsgpartslencdr_gui"></a>6.1.8.8.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set 'calculating of message parts and characters count per a CDR record'  using the GUI</div>
 <ol class="arabic">
@@ -31816,9 +32176,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_delayparametersincdr"><a class="anchor" href="#_delayparametersincdr"></a>6.1.7.9. Adding of delay parameters into a CDR record</h5>
+<h5 id="_delayparametersincdr"><a class="anchor" href="#_delayparametersincdr"></a>6.1.8.9. Adding of delay parameters into a CDR record</h5>
 <div class="sect5">
-<h6 id="_delayparametersincdr_cli"><a class="anchor" href="#_delayparametersincdr_cli"></a>6.1.7.9.1. Using CLI</h6>
+<h6 id="_delayparametersincdr_cli"><a class="anchor" href="#_delayparametersincdr_cli"></a>6.1.8.9.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'delayparametersincdr' value to true/false by issuing the command <code>smsc set delayparametersincdr</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get delayparametersincdr</code> which will display the value set for this property.</p>
@@ -31844,7 +32204,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_delayparametersincdr_gui"><a class="anchor" href="#_delayparametersincdr_gui"></a>6.1.7.9.2. Using GUI</h6>
+<h6 id="_delayparametersincdr_gui"><a class="anchor" href="#_delayparametersincdr_gui"></a>6.1.8.9.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set 'Adding of delay parameters into a CDR record'  using the GUI</div>
 <ol class="arabic">
@@ -31868,11 +32228,11 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect3">
-<h4 id="_smsc_gateway_server_processing"><a class="anchor" href="#_smsc_gateway_server_processing"></a>6.1.8. Processing</h4>
+<h4 id="_smsc_gateway_server_processing"><a class="anchor" href="#_smsc_gateway_server_processing"></a>6.1.9. Processing</h4>
 <div class="sect4">
-<h5 id="_modefaultmessagingmode"><a class="anchor" href="#_modefaultmessagingmode"></a>6.1.8.1. Messaging mode for MO messages</h5>
+<h5 id="_modefaultmessagingmode"><a class="anchor" href="#_modefaultmessagingmode"></a>6.1.9.1. Messaging mode for MO messages</h5>
 <div class="sect5">
-<h6 id="_modefaultmessagingmode_cli"><a class="anchor" href="#_modefaultmessagingmode_cli"></a>6.1.8.1.1. Using CLI</h6>
+<h6 id="_modefaultmessagingmode_cli"><a class="anchor" href="#_modefaultmessagingmode_cli"></a>6.1.9.1.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the messaging mode for MO originated messages value by issuing the command <code>smsc set modefaultmessagingmode</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get modefaultmessagingmode</code> which will display the value set for this property.</p>
@@ -31898,7 +32258,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_modefaultmessagingmode_gui"><a class="anchor" href="#_modefaultmessagingmode_gui"></a>6.1.8.1.2. Using GUI</h6>
+<h6 id="_modefaultmessagingmode_gui"><a class="anchor" href="#_modefaultmessagingmode_gui"></a>6.1.9.1.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set the messaging mode for MO originated messages option using the GUI</div>
 <ol class="arabic">
@@ -31921,9 +32281,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_hrdefaultmessagingmode"><a class="anchor" href="#_hrdefaultmessagingmode"></a>6.1.8.2. Messaging mode for HR messages</h5>
+<h5 id="_hrdefaultmessagingmode"><a class="anchor" href="#_hrdefaultmessagingmode"></a>6.1.9.2. Messaging mode for HR messages</h5>
 <div class="sect5">
-<h6 id="_hrdefaultmessagingmode_cli"><a class="anchor" href="#_hrdefaultmessagingmode_cli"></a>6.1.8.2.1. Using CLI</h6>
+<h6 id="_hrdefaultmessagingmode_cli"><a class="anchor" href="#_hrdefaultmessagingmode_cli"></a>6.1.9.2.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the messaging mode for HR originated messages value by issuing the command <code>smsc set hrdefaultmessagingmode</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get hrdefaultmessagingmode</code> which will display the value set for this property.</p>
@@ -31949,7 +32309,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_hrdefaultmessagingmode_gui"><a class="anchor" href="#_hrdefaultmessagingmode_gui"></a>6.1.8.2.2. Using GUI</h6>
+<h6 id="_hrdefaultmessagingmode_gui"><a class="anchor" href="#_hrdefaultmessagingmode_gui"></a>6.1.9.2.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set the messaging mode for HR originated messages option using the GUI</div>
 <ol class="arabic">
@@ -31972,9 +32332,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_sipdefaultmessagingmode"><a class="anchor" href="#_sipdefaultmessagingmode"></a>6.1.8.3. Messaging mode for SIP messages</h5>
+<h5 id="_sipdefaultmessagingmode"><a class="anchor" href="#_sipdefaultmessagingmode"></a>6.1.9.3. Messaging mode for SIP messages</h5>
 <div class="sect5">
-<h6 id="_sipdefaultmessagingmode_cli"><a class="anchor" href="#_sipdefaultmessagingmode_cli"></a>6.1.8.3.1. Using CLI</h6>
+<h6 id="_sipdefaultmessagingmode_cli"><a class="anchor" href="#_sipdefaultmessagingmode_cli"></a>6.1.9.3.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the messaging mode for SIP originated messages value by issuing the command <code>smsc set sipdefaultmessagingmode</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get sipdefaultmessagingmode</code> which will display the value set for this property.</p>
@@ -32000,7 +32360,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sipdefaultmessagingmode_gui"><a class="anchor" href="#_sipdefaultmessagingmode_gui"></a>6.1.8.3.2. Using GUI</h6>
+<h6 id="_sipdefaultmessagingmode_gui"><a class="anchor" href="#_sipdefaultmessagingmode_gui"></a>6.1.9.3.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set the messaging mode for SIP originated messages option using the GUI</div>
 <ol class="arabic">
@@ -32023,9 +32383,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="smsc-pausing"><a class="anchor" href="#smsc-pausing"></a>6.1.8.4. SMSC pausing</h5>
+<h5 id="smsc-pausing"><a class="anchor" href="#smsc-pausing"></a>6.1.9.4. SMSC pausing</h5>
 <div class="sect5">
-<h6 id="_smsc_pausing_cli"><a class="anchor" href="#_smsc_pausing_cli"></a>6.1.8.4.1. Using CLI</h6>
+<h6 id="_smsc_pausing_cli"><a class="anchor" href="#_smsc_pausing_cli"></a>6.1.9.4.1. Using CLI</h6>
 <div class="paragraph">
 <p>A user can pause SMSC for message delivering by issuing the command <code>smsc set deliverypause</code> with appropriate parameters as described below.
 When SMSC delivery is paused no more messages are scheduled for delivering.
@@ -32050,7 +32410,7 @@ Use this option with extreme caution.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_smsc_pausing_gui"><a class="anchor" href="#_smsc_pausing_gui"></a>6.1.8.4.2. Using GUI</h6>
+<h6 id="_smsc_pausing_gui"><a class="anchor" href="#_smsc_pausing_gui"></a>6.1.9.4.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Pause SMSC using the GUI</div>
 <ol class="arabic">
@@ -32070,9 +32430,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_receiptsdisabling"><a class="anchor" href="#_receiptsdisabling"></a>6.1.8.5. Disabling of Reciepts generating</h5>
+<h5 id="_receiptsdisabling"><a class="anchor" href="#_receiptsdisabling"></a>6.1.9.5. Disabling of Reciepts generating</h5>
 <div class="sect5">
-<h6 id="_receiptsdisabling_cli"><a class="anchor" href="#_receiptsdisabling_cli"></a>6.1.8.5.1. Using CLI</h6>
+<h6 id="_receiptsdisabling_cli"><a class="anchor" href="#_receiptsdisabling_cli"></a>6.1.9.5.1. Using CLI</h6>
 <div class="paragraph">
 <p>SMCS can generate receipts of messages delivering results (success / error). See chapter "Appendix B.
 Delivery Receipt Format" of "Short Message Peer to Peer.
@@ -32096,7 +32456,7 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect5">
-<h6 id="_receiptsdisabling_gui"><a class="anchor" href="#_receiptsdisabling_gui"></a>6.1.8.5.2. Using GUI</h6>
+<h6 id="_receiptsdisabling_gui"><a class="anchor" href="#_receiptsdisabling_gui"></a>6.1.9.5.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Disabling of Reciepts generating using the GUI</div>
 <ol class="arabic">
@@ -32120,9 +32480,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_enableintermediatereceipts"><a class="anchor" href="#_enableintermediatereceipts"></a>6.1.8.6. Allowing of generating of intermediate receipts</h5>
+<h5 id="_enableintermediatereceipts"><a class="anchor" href="#_enableintermediatereceipts"></a>6.1.9.6. Allowing of generating of intermediate receipts</h5>
 <div class="sect5">
-<h6 id="_enableintermediatereceipts_cli"><a class="anchor" href="#_enableintermediatereceipts_cli"></a>6.1.8.6.1. Using CLI</h6>
+<h6 id="_enableintermediatereceipts_cli"><a class="anchor" href="#_enableintermediatereceipts_cli"></a>6.1.9.6.1. Using CLI</h6>
 <div class="paragraph">
 <p>SMCS can generate intermediate receipts (for temporary failures). You can set the 'enableintermediatereceipts' value to true/false by issuing the command <code>smsc set enableintermediatereceipts</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get enableintermediatereceipts</code> which will display the value set for this property.</p>
@@ -32144,9 +32504,9 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect4">
-<h5 id="_incomereceiptsprocessing"><a class="anchor" href="#_incomereceiptsprocessing"></a>6.1.8.7. Income receipts processing</h5>
+<h5 id="_incomereceiptsprocessing"><a class="anchor" href="#_incomereceiptsprocessing"></a>6.1.9.7. Income receipts processing</h5>
 <div class="sect5">
-<h6 id="_incomereceiptsprocessing_cli"><a class="anchor" href="#_incomereceiptsprocessing_cli"></a>6.1.8.7.1. Using CLI</h6>
+<h6 id="_incomereceiptsprocessing_cli"><a class="anchor" href="#_incomereceiptsprocessing_cli"></a>6.1.9.7.1. Using CLI</h6>
 <div class="paragraph">
 <p>SMCS can processing of incoming delivery receipts from remote SMSC GW (replacing of messageId in the receipt by a local messageId). You can set the 'incomereceiptsprocessing' value to true/false by issuing the command <code>smsc set incomereceiptsprocessing</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get incomereceiptsprocessing</code> which will display the value set for this property.</p>
@@ -32170,7 +32530,7 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect5">
-<h6 id="_incomereceiptsprocessing_gui"><a class="anchor" href="#_incomereceiptsprocessing_gui"></a>6.1.8.7.2. Using GUI</h6>
+<h6 id="_incomereceiptsprocessing_gui"><a class="anchor" href="#_incomereceiptsprocessing_gui"></a>6.1.9.7.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Allowing of generating of intermediate receipts using the GUI</div>
 <ol class="arabic">
@@ -32194,9 +32554,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_smsc_gateway_server_routing_dlv"><a class="anchor" href="#_smsc_gateway_server_routing_dlv"></a>6.1.8.8. Routing of delivery receipts</h5>
+<h5 id="_smsc_gateway_server_routing_dlv"><a class="anchor" href="#_smsc_gateway_server_routing_dlv"></a>6.1.9.8. Routing of delivery receipts</h5>
 <div class="sect5">
-<h6 id="_smsc_gateway_server_routing_dlv_cli"><a class="anchor" href="#_smsc_gateway_server_routing_dlv_cli"></a>6.1.8.8.1. Using CLI</h6>
+<h6 id="_smsc_gateway_server_routing_dlv_cli"><a class="anchor" href="#_smsc_gateway_server_routing_dlv_cli"></a>6.1.9.8.1. Using CLI</h6>
 <div class="paragraph">
 <p>If this option is turned on for each generated delivery receipts and SMS-STATUS-REPORTs networkId will be assigned to the value of networkId of an ESME via which the original message has come to SMSC.
 This can help for routing of receipts back to the originated ESME.
@@ -32223,7 +32583,7 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect5">
-<h6 id="_smsc_gateway_server_routing_dlv_gui"><a class="anchor" href="#_smsc_gateway_server_routing_dlv_gui"></a>6.1.8.8.2. Using GUI</h6>
+<h6 id="_smsc_gateway_server_routing_dlv_gui"><a class="anchor" href="#_smsc_gateway_server_routing_dlv_gui"></a>6.1.9.8.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Routing of delivery receipts option update by the GUI</div>
 <ol class="arabic">
@@ -32247,9 +32607,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_smsc_gateway_min_messageid"><a class="anchor" href="#_smsc_gateway_min_messageid"></a>6.1.8.9. Minimum MessageId value</h5>
+<h5 id="_smsc_gateway_min_messageid"><a class="anchor" href="#_smsc_gateway_min_messageid"></a>6.1.9.9. Minimum MessageId value</h5>
 <div class="sect5">
-<h6 id="_smsc_gateway_min_messageid_cli"><a class="anchor" href="#_smsc_gateway_min_messageid_cli"></a>6.1.8.9.1. Using CLI</h6>
+<h6 id="_smsc_gateway_min_messageid_cli"><a class="anchor" href="#_smsc_gateway_min_messageid_cli"></a>6.1.9.9.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'Minimum MessageId value' value by issuing the command <code>smsc set minmessageid</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get minmessageid</code> which will display the value set for this property.</p>
@@ -32271,7 +32631,7 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect5">
-<h6 id="_smsc_gateway_max_messageid_gui"><a class="anchor" href="#_smsc_gateway_max_messageid_gui"></a>6.1.8.9.2. Using GUI</h6>
+<h6 id="_smsc_gateway_max_messageid_gui"><a class="anchor" href="#_smsc_gateway_max_messageid_gui"></a>6.1.9.9.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Minimum MessageId value option update by the GUI</div>
 <ol class="arabic">
@@ -32295,9 +32655,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_smsc_gateway_max_messageid"><a class="anchor" href="#_smsc_gateway_max_messageid"></a>6.1.8.10. Maximum MessageId value</h5>
+<h5 id="_smsc_gateway_max_messageid"><a class="anchor" href="#_smsc_gateway_max_messageid"></a>6.1.9.10. Maximum MessageId value</h5>
 <div class="sect5">
-<h6 id="_smsc_gateway_max_messageid_cli"><a class="anchor" href="#_smsc_gateway_max_messageid_cli"></a>6.1.8.10.1. Using CLI</h6>
+<h6 id="_smsc_gateway_max_messageid_cli"><a class="anchor" href="#_smsc_gateway_max_messageid_cli"></a>6.1.9.10.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'Maximum MessageId value' value by issuing the command <code>smsc set maxmessageid</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get maxmessageid</code> which will display the value set for this property.</p>
@@ -32319,7 +32679,7 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect5">
-<h6 id="_smsc_gateway_max_messageid_gui"><a class="anchor" href="#_smsc_gateway_max_messageid_gui"></a>6.1.8.10.2. Using GUI</h6>
+<h6 id="_smsc_gateway_max_messageid_gui"><a class="anchor" href="#_smsc_gateway_max_messageid_gui"></a>6.1.9.10.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Maximum MessageId value option update by the GUI</div>
 <ol class="arabic">
@@ -32343,9 +32703,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_smsc_gateway_smdeliveryfailure"><a class="anchor" href="#_smsc_gateway_smdeliveryfailure"></a>6.1.8.11. SM Delivery Failure value</h5>
+<h5 id="_smsc_gateway_smdeliveryfailure"><a class="anchor" href="#_smsc_gateway_smdeliveryfailure"></a>6.1.9.11. SM Delivery Failure value</h5>
 <div class="sect5">
-<h6 id="_smsc_gateway_smdeliveryfailure_cli"><a class="anchor" href="#_smsc_gateway_smdeliveryfailure_cli"></a>6.1.8.11.1. Using CLI</h6>
+<h6 id="_smsc_gateway_smdeliveryfailure_cli"><a class="anchor" href="#_smsc_gateway_smdeliveryfailure_cli"></a>6.1.9.11.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'smdeliveryfailure value' value by issuing the command <code>smsc set smdeliveryfailure</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get smdeliveryfailure</code> which will display the value sets for this property.</p>
@@ -32376,9 +32736,9 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect4">
-<h5 id="_smsc_gateway_smdeliveryfailure_tpfailurecause"><a class="anchor" href="#_smsc_gateway_smdeliveryfailure_tpfailurecause"></a>6.1.8.12. SM Delivery Failure TP Failure Cause value</h5>
+<h5 id="_smsc_gateway_smdeliveryfailure_tpfailurecause"><a class="anchor" href="#_smsc_gateway_smdeliveryfailure_tpfailurecause"></a>6.1.9.12. SM Delivery Failure TP Failure Cause value</h5>
 <div class="sect5">
-<h6 id="_smsc_gateway_smdeliveryfailure_tpfailurecause_cli"><a class="anchor" href="#_smsc_gateway_smdeliveryfailure_tpfailurecause_cli"></a>6.1.8.12.1. Using CLI</h6>
+<h6 id="_smsc_gateway_smdeliveryfailure_tpfailurecause_cli"><a class="anchor" href="#_smsc_gateway_smdeliveryfailure_tpfailurecause_cli"></a>6.1.9.12.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'smdeliveryfailure value' value by issuing the command <code>smsc set smdeliveryfailure_tpfailurecause</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get smdeliveryfailure_tpfailurecause</code> which will display the value sets for this property.</p>
@@ -32408,9 +32768,9 @@ DESCRIPTION
 </div>
 </div>
 <div class="sect4">
-<h5 id="_smsc_gateway_smdeliveryfailure_dlr_withtpuserdata"><a class="anchor" href="#_smsc_gateway_smdeliveryfailure_dlr_withtpuserdata"></a>6.1.8.13. SM Delivery Failure Dlr With TP User Data value</h5>
+<h5 id="_smsc_gateway_smdeliveryfailure_dlr_withtpuserdata"><a class="anchor" href="#_smsc_gateway_smdeliveryfailure_dlr_withtpuserdata"></a>6.1.9.13. SM Delivery Failure Dlr With TP User Data value</h5>
 <div class="sect5">
-<h6 id="_smsc_gateway_smdeliveryfailure_dlr_withtpuserdata_cli"><a class="anchor" href="#_smsc_gateway_smdeliveryfailure_dlr_withtpuserdata_cli"></a>6.1.8.13.1. Using CLI</h6>
+<h6 id="_smsc_gateway_smdeliveryfailure_dlr_withtpuserdata_cli"><a class="anchor" href="#_smsc_gateway_smdeliveryfailure_dlr_withtpuserdata_cli"></a>6.1.9.13.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'smdeliveryfailure value' value by issuing the command <code>smsc set smdeliveryfailure_dlr_withtpuserdata</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get smdeliveryfailure_dlr_withtpuserdata</code> which will display the value set for this property.</p>
@@ -35470,15 +35830,180 @@ Below this you will find the button 'Create Message Processing Rule'.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_managing_statistics"><a class="anchor" href="#_managing_statistics"></a>6.10. Statistics</h3>
+<h3 id="_gsd_settings"><a class="anchor" href="#_gsd_settings"></a>6.10. Graceful shutdown</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Note</div>
+<div class="paragraph">
+<p>Graceful shutdown mode is a Telscale feature, available only in our commercial version.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A graceful shutdown is a functionality for shutting down of a server after all messages delivery processes are finished. After a graceful shutdown initiating SMSC GW stops of getting new messages from a cassandra database for delivering. But the server continue of messages receiveing from existing connectors (SMPP, SS7, SIP, HTTP) and continue of processing and delivering of incoming messages. This means that a user needs to stop of uploading of new messages to the server, then the server will finish all existing delivery processes and force a server shutdown after it.</p>
+</div>
+<div class="paragraph">
+<p>A graceful shutdown procedure has parameters <code>Minimum graceful shutdown time</code> and <code>Maximum graceful shutdown time</code>. The first parameter specifies the time  during at least this time a server will wait before as server shutdown start even no pending dialogs more. The second parameter specifies the time duration after which a server will make shutdown even if even there are still pending dialogs. Shortly: actual shutdown will be performed from <code>Minimum graceful shutdown time</code> to <code>Maximum graceful shutdown time</code> after a procedure initiating time.</p>
+</div>
+<div class="sect3">
+<h4 id="_gsd_force"><a class="anchor" href="#_gsd_force"></a>6.10.1. Force a graceful shutdown</h4>
+<div class="sect4">
+<h5 id="_gsd_force_cli"><a class="anchor" href="#_gsd_force_cli"></a>6.10.1.1. Using CLI</h5>
+<div class="paragraph">
+<p>You can force a server graceful shutdown by issuing the command smsc gsd as described below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc gsd
+
+SYNOPSIS
+	smsc gsd
+
+DESCRIPTION
+	This command is used to start a graceful shutdown procedure
+	for a server. This procedure means that a server will continue
+	the work till all existing dialogs are completed. At the graceful
+	shutdown procedure start the server sends announsements to
+	a load-balancer server that the node is going to shutdown soon.
+
+EXAMPLES
+	smsc gsd</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_gsd_force_gui"><a class="anchor" href="#_gsd_force_gui"></a>6.10.1.2. Using GUI</h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Graceful shutdown' in the left panel.</p>
+</li>
+<li>
+<p>Press a button "Force graceful shutdown".</p>
+</li>
+<li>
+<p>A graceful shutdown sever procedure will be started.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_gsd_min_time"><a class="anchor" href="#_gsd_min_time"></a>6.10.2. Minimum graceful shutdown time.</h4>
+<div class="sect4">
+<h5 id="_gsd_min_time_cli"><a class="anchor" href="#_gsd_min_time_cli"></a>6.10.2.1. Using CLI</h5>
+<div class="paragraph">
+<p>You can set the 'Minimum graceful shutdown time' by issuing the command <code>smsc set mingracefulshutdowntime</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get mingracefulshutdowntime</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>SYNOPSIS
+	smsc set mingracefulshutdowntime &lt;minGracefulShutDownTime-value&gt;
+
+DESCRIPTION
+	This command is used to set the mingracefulshutdowntime value.
+	When a graceful shutdown procedure has started the server will
+	wait before shutdown start at least minGracefulShutDownTime time
+	(in seconds).
+	Default value is 20 (seconds).
+
+EXAMPLES
+	smsc set mingracefulshutdowntime 20</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_gsd_min_time_gui"><a class="anchor" href="#_gsd_min_time_gui"></a>6.10.2.2. Using GUI</h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Graceful shutdown' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings.</p>
+</li>
+<li>
+<p>You can specify the Minimum graceful shutdown time (in seconds) by entering the value in the text field 'Minimum graceful shutdown time (in seconds)'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the right of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_gsd_max_time"><a class="anchor" href="#_gsd_max_time"></a>6.10.3. Maximum graceful shutdown time.</h4>
+<div class="sect4">
+<h5 id="_gsd_max_time_cli"><a class="anchor" href="#_gsd_max_time_cli"></a>6.10.3.1. Using CLI</h5>
+<div class="paragraph">
+<p>You can set the 'Maximum graceful shutdown time' by issuing the command <code>smsc set maxngracefulshutdowntime</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get maxngracefulshutdowntime</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set maxngracefulshutdowntime
+
+SYNOPSIS
+	smsc set maxngracefulshutdowntime &lt;maxGracefulShutDownTime-value&gt;
+
+DESCRIPTION
+	This command is used to set the maxngracefulshutdowntime value.
+	When a graceful shutdown procedure has started the server will
+	wait before all dialogs are completed. This waiting will not
+	more then maxGracefulShutDownTime time (in seconds). When
+	maxGracefulShutDownTime from a graceful shutdown begin
+	the server will be brought down even there are pending dialogs.
+	Default value is 90 (seconds).
+
+EXAMPLES
+	smsc set maxngracefulshutdowntime 90</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_gsd_max_time_gui"><a class="anchor" href="#_gsd_max_time_gui"></a>6.10.3.2. Using GUI</h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Graceful shutdown' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings.</p>
+</li>
+<li>
+<p>You can specify the Maximum graceful shutdown time (in seconds) by entering the value in the text field 'Maximum graceful shutdown time (in seconds)'. For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Save' at the right of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_managing_statistics"><a class="anchor" href="#_managing_statistics"></a>6.11. Statistics</h3>
 <div class="paragraph">
 <p>The GUI will allow you to create campaigns of fixed duration for gathering statistics data.
 Campaign allows to select time period over which these statistics have been gathered (in hours, minutes and seconds). Once Campaign is defined, the statistics can be observed by clicking on the newly created campaign name or you can also navigate to Metrics (click Metrics on left panel) to get graph of statistics.</p>
 </div>
 <div class="sect3">
-<h4 id="_managing_statistics_create"><a class="anchor" href="#_managing_statistics_create"></a>6.10.1. Create new Campaign</h4>
+<h4 id="_managing_statistics_create"><a class="anchor" href="#_managing_statistics_create"></a>6.11.1. Create new Campaign</h4>
 <div class="sect4">
-<h5 id="_managing_statistics_create_gui"><a class="anchor" href="#_managing_statistics_create_gui"></a>6.10.1.1. Using GUI</h5>
+<h5 id="_managing_statistics_create_gui"><a class="anchor" href="#_managing_statistics_create_gui"></a>6.11.1.1. Using GUI</h5>
 <div class="olist arabic">
 <div class="title">Procedure: Create new Campaign using GUI</div>
 <ol class="arabic">
@@ -35519,9 +36044,9 @@ For SMSC, select 'SMSC GW-SMSC-Main'.
 </div>
 </div>
 <div class="sect3">
-<h4 id="_managing_statistics_view"><a class="anchor" href="#_managing_statistics_view"></a>6.10.2. View Campaigns</h4>
+<h4 id="_managing_statistics_view"><a class="anchor" href="#_managing_statistics_view"></a>6.11.2. View Campaigns</h4>
 <div class="sect4">
-<h5 id="_managing_statistics_view_gui"><a class="anchor" href="#_managing_statistics_view_gui"></a>6.10.2.1. Using GUI</h5>
+<h5 id="_managing_statistics_view_gui"><a class="anchor" href="#_managing_statistics_view_gui"></a>6.11.2.1. Using GUI</h5>
 <div class="paragraph">
 <p>You can view all existing campaigns in the GUI.
 On the main panel, click on the Campaign name.
@@ -37043,7 +37568,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-02-26 14:32:14 UTC
+Last updated 2018-02-26 16:21:26 UTC
 </div>
 </div>
 <footer>
@@ -37062,7 +37587,7 @@ Last updated 2018-02-26 14:32:14 UTC
                           <a href="https://www.restcomm.com/solutions">Solutions</a>
                         </li>
                         <li id="menu-item-17289" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17289">
-                          <a href="https://telestax.com/faqs/">Documentation</a>
+                          <a href="https://www.restcomm.com/product/">Products</a>
                         </li>
                         <li id="menu-item-18624" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18624">
                           <a href="https://www.restcomm.com/events/">Events</a>
@@ -37079,6 +37604,7 @@ Last updated 2018-02-26 14:32:14 UTC
                       </ul>
                     </div>
                   </div>
+                </div>
 
               </div>
               <div class="column2 footer_col2">
@@ -37092,15 +37618,16 @@ Last updated 2018-02-26 14:32:14 UTC
                       <p></p>
 
                       <p>
-                        <input type="submit" value="Sign up" style="
-                            color: rgb(255, 255, 255);
-                            border-color: rgb(30, 165, 219);
-                            background-color: rgb(30, 165, 219);
-                            height: 58px;
-                            line-height: 58px;
-                            font-size: 20px;
-                            padding: 0 22px;
-                            margin-top: 25px;"
+                        <input
+                          type="submit" value="Sign up" style="
+                                          color: rgb(255, 255, 255);
+                                          border-color: rgb(30, 165, 219);
+                                          background-color: rgb(30, 165, 219);
+                                          height: 58px;
+                                          line-height: 58px;
+                                          font-size: 20px;
+                                          padding: 0 22px;
+                                          margin-top: 25px;"
                         >
                       </p><label style="display: none !important;">Leave this field empty if you're human: <input
                         type="text" name="_mc4wp_honeypot" value="" tabindex="-1" autocomplete="off"></label><input
@@ -37119,24 +37646,24 @@ Last updated 2018-02-26 14:32:14 UTC
 
                       <input
                         type="submit" value="Contact Us" style="
-                                                color: rgb(255, 255, 255);
-                                                border-color: rgb(30, 165, 219);
-                                                background-color: rgb(30, 165, 219);
-                                                height: 58px;
-                                                line-height: 58px;
-                                                font-size: 20px;
-                                                padding: 0 22px;
-                                                margin-top: 25px;">
+                                                              color: rgb(255, 255, 255);
+                                                              border-color: rgb(30, 165, 219);
+                                                              background-color: rgb(30, 165, 219);
+                                                              height: 58px;
+                                                              line-height: 58px;
+                                                              font-size: 20px;
+                                                              padding: 0 22px;
+                                                              margin-top: 25px;">
                     </form>
 
                   </div>
 
                 </div>
               </div>
+
             </div>
           </div>
         </div>
-      </div>
       </div>
       <div class="footer_bottom_holder">
         <div class="container">
@@ -37206,7 +37733,7 @@ Last updated 2018-02-26 14:32:14 UTC
           </div>
         </div>
       </div>
-  </div>
+    </div>
 </footer>
 
 </div>

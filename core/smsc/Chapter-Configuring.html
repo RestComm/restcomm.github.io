@@ -23352,6 +23352,7 @@ display: none;
 <li><a href="#_starting_background">Starting of the SMSC GW process</a></li>
 <li><a href="#_logging">Configuring log4j Logging Service (JBOSS 5)</a></li>
 <li><a href="#_logging_wildfly">Configuring log4j Logging Service (Wildfly 10)</a></li>
+<li><a href="#_active_active">Configuring of SS7 Active-Active mode with Restcomm SS7 FEP before SS7 network</a></li>
 <li><a href="#_routing_fundamentals">SMSC GW routing fundamentals</a>
 <ul class="sectlevel2">
 <li><a href="#_routing_fundamentals_1">The procedure based on dividing of separated routing area into several areas ("subnetworks").</a></li>
@@ -23572,6 +23573,52 @@ For more details, please refer to Wildfly 10 "Logging Configuration" guide <a hr
 <div class="paragraph">
 <p>You must make sure <code>log4j</code> is fine tuned for optimal performance in production.
 We recommend that you set logging threshold to <code>WARN</code> and let the CDR appender be <code>DEBUG</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_active_active"><a class="anchor" href="#_active_active"></a>Configuring of SS7 Active-Active mode with Restcomm SS7 FEP before SS7 network</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Note</div>
+<div class="paragraph">
+<p>SS7 Active-Active mode is a Telscale feature, available only in our commercial version.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This chapter introduces a description how Telestax SMSC GW Active-Active can be configured. See below an example of a configuration with 2 FEP and 2 SMSC GW nodes.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/SMSC-FEP-schema.png" alt="SMSC FEP schema">
+</div>
+</div>
+<div class="paragraph">
+<p>Two SMSC GWs ("SMSC 1" and "SMSC 2") can be deployed at different physical servers (server 1 and server 2). Front-End-Processors ("FEP 1" and "FEP 2") plays a role of SS7 load balancers. "FEP 1" and "FEP 2" can be deployed to same physical servers as "SMSC 1" and "SMSC 2" (server 1 and server 2). "FEP 1" and "FEP 2" are connected by SS7 links to remote STP node(s).</p>
+</div>
+<div class="paragraph">
+<p>A remote originated TCAP dialogs are loadshared by FEP nodes between existing SMSC nodes. Then FEP nodes are responsible for resending of TCAP dialog messages to a proper SMSC node. This guarantees that all SS7 dialogs will be processed by a same SMSC GW node and SMSC GW nodes does not demand processing of SS7 dialogs from another node. This means that SMSC GW nodes still process messages independently. FEP nodes are needed to delivery of SS7 messages to a proper SMSC GW node.</p>
+</div>
+<div class="paragraph">
+<p>When you use several FEP / SMSC GW nodes in a way that is described at a picture you can turn off any of FEP / SMSC GW node for maintanance or for other reasons. All traffic then will be processed by alive nodes. Each SMSC GW stores all pending messages (for storeAndForward and forwardAndStore modes) in it&#8217;s own cassandra KeySpace. Another SMSC GW node does not have access to such stored messages. This means that we will need to turn a SMSC GW node on in order to pending messages will be delivered.</p>
+</div>
+<div class="paragraph">
+<p>SMSC GW supports of a graceful shutdown procedure. See more in a chapter <a href="#_gsd_settings">[_gsd_settings]</a>. A graceful shutdown procedure is initiated by a GUI / CLI interface. SMSC GW will stop of loading new messages from a database and will make a server shutdown when all message delivering processes have completed. FEP nodes will prevent of sending new external dialogs to a SS7 node that is gracefully shutting down. SMSC GW node even after a graceful shutdown start will aceept and process of incoming messages from other interfaces (SMPP, SIP, HTTP). A user must stop of sending of messages via these interfeces before of a graceful shutdown start.</p>
+</div>
+<div class="paragraph">
+<p>For a smooth support of HR (Home Routing) and AlertCerviceCenter operations between SMSC GW nodes an extra cassandra KeySpace is introduced. This new clustering KeySpace is used for cache of correlationId values and data for HR procedure and exchanging of AlertCerviceCenter requests between SMSC GW servers (for MT SS7 procedure). If you use several SMSC GW nodes then you need to turn on an option <code>In cluster</code>, prepare a new empty cassandra KeySpace (a single instance for both/all SMSC GW nodes) and configure this KeySpace in <code>Shared Database Configuration</code> section. See more info in the chapter <a href="#_smsc_clustering_settings">[_smsc_clustering_settings]</a>.</p>
+</div>
+<div class="paragraph">
+<p>We need to make special configuring procedures of SS7 part before SMSC GW / FEP will be able to work in a load-balancing mode. This configuring is described in a manual "Restcomm Load Balancer User Guide", check a chapter "Integration Load Balancer SS7 (FEP) with USSD and SMSC servers".</p>
 </div>
 </div>
 </div>
@@ -26044,7 +26091,7 @@ The details of the format and the possible values for the fields recorded in the
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-02-26 14:32:14 UTC
+Last updated 2018-02-26 16:21:26 UTC
 </div>
 </div>
 <footer>
@@ -26063,7 +26110,7 @@ Last updated 2018-02-26 14:32:14 UTC
                           <a href="https://www.restcomm.com/solutions">Solutions</a>
                         </li>
                         <li id="menu-item-17289" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17289">
-                          <a href="https://telestax.com/faqs/">Documentation</a>
+                          <a href="https://www.restcomm.com/product/">Products</a>
                         </li>
                         <li id="menu-item-18624" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18624">
                           <a href="https://www.restcomm.com/events/">Events</a>
@@ -26080,6 +26127,7 @@ Last updated 2018-02-26 14:32:14 UTC
                       </ul>
                     </div>
                   </div>
+                </div>
 
               </div>
               <div class="column2 footer_col2">
@@ -26093,15 +26141,16 @@ Last updated 2018-02-26 14:32:14 UTC
                       <p></p>
 
                       <p>
-                        <input type="submit" value="Sign up" style="
-                            color: rgb(255, 255, 255);
-                            border-color: rgb(30, 165, 219);
-                            background-color: rgb(30, 165, 219);
-                            height: 58px;
-                            line-height: 58px;
-                            font-size: 20px;
-                            padding: 0 22px;
-                            margin-top: 25px;"
+                        <input
+                          type="submit" value="Sign up" style="
+                                          color: rgb(255, 255, 255);
+                                          border-color: rgb(30, 165, 219);
+                                          background-color: rgb(30, 165, 219);
+                                          height: 58px;
+                                          line-height: 58px;
+                                          font-size: 20px;
+                                          padding: 0 22px;
+                                          margin-top: 25px;"
                         >
                       </p><label style="display: none !important;">Leave this field empty if you're human: <input
                         type="text" name="_mc4wp_honeypot" value="" tabindex="-1" autocomplete="off"></label><input
@@ -26120,24 +26169,24 @@ Last updated 2018-02-26 14:32:14 UTC
 
                       <input
                         type="submit" value="Contact Us" style="
-                                                color: rgb(255, 255, 255);
-                                                border-color: rgb(30, 165, 219);
-                                                background-color: rgb(30, 165, 219);
-                                                height: 58px;
-                                                line-height: 58px;
-                                                font-size: 20px;
-                                                padding: 0 22px;
-                                                margin-top: 25px;">
+                                                              color: rgb(255, 255, 255);
+                                                              border-color: rgb(30, 165, 219);
+                                                              background-color: rgb(30, 165, 219);
+                                                              height: 58px;
+                                                              line-height: 58px;
+                                                              font-size: 20px;
+                                                              padding: 0 22px;
+                                                              margin-top: 25px;">
                     </form>
 
                   </div>
 
                 </div>
               </div>
+
             </div>
           </div>
         </div>
-      </div>
       </div>
       <div class="footer_bottom_holder">
         <div class="container">
@@ -26207,7 +26256,7 @@ Last updated 2018-02-26 14:32:14 UTC
           </div>
         </div>
       </div>
-  </div>
+    </div>
 </footer>
 
 </div>
