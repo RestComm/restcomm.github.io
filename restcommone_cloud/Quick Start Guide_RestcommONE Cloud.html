@@ -23034,12 +23034,12 @@ display: none;
                       <a href="/docs/index.html" class=""><i class="menu_icon blank fa"></i><span>Home</span><span class="plus"></span></a>
                     </li>
                     <li id="nav-menu-item-21284" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub narrow">
-                      <a href="/docs/restcommone_cloud/index.html" class=""><i class="menu_icon blank fa"></i><span>RestcommONE Cloud</span><span class="plus"></span></a>
+                      <a href="/docs/restcommone_cloud/Quick%20Start%20Guide_RestcommONE%20Cloud.html," class=""><i class="menu_icon blank fa"></i><span>RestcommONE Cloud</span><span class="plus"></span></a>
                       <div class="second">
                         <div class="inner">
                           <ul>
                             <li id="nav-menu-item-17427" class="menu-item menu-item-type-post_type menu-item-object-page ">
-                              <a href="/docs/restcommone_cloud/Quick_Start_Guide_RestcommONE_Cloud.html" class=""><i class="menu_icon blank fa"></i><span>Quick Start Guide</span><span class="plus"></span></a>
+                              <a href="/docs/restcommone_cloud/Quick%20Start%20Guide_RestcommONE%20Cloud.html," class=""><i class="menu_icon blank fa"></i><span>Quick Start Guide</span><span class="plus"></span></a>
                             </li>
                           </ul>
                         </div>
@@ -23389,10 +23389,20 @@ display: none;
 <p>There are numbers that only allow incoming <strong>calls</strong>. There are also numbers that support <strong>SMS</strong> messaging. The latter are called “SMS Enabled” numbers. Please keep this in mind when searching for numbers in your local area, so you can find numbers that support your required functionality.</p>
 </div>
 <div class="paragraph">
-<p>There are also some special, convenience-only short code numbers, to enable you to easily test some functionality:
-	* The number 1235 is attached to the hello-world.xml application. You must have configured VoiceRSS text-to-speech to use this application
-	* The number 1236 is attached to a the Gather verb. It will ask you to enter a number and you can hear the number you enter. You must have configured VoiceRSS text-to-speech to use this application.
-	* The number 1234 plays a pre-recorded file.</p>
+<p>There are also some special, convenience-only short code numbers, to enable you to easily test some functionality:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The number 1235 is attached to the hello-world.xml application. You must have configured VoiceRSS text-to-speech to use this application</p>
+</li>
+<li>
+<p>The number 1236 is attached to a the Gather verb. It will ask you to enter a number and you can hear the number you enter. You must have configured VoiceRSS text-to-speech to use this application.</p>
+</li>
+<li>
+<p>The number 1234 plays a pre-recorded file.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -23400,37 +23410,83 @@ display: none;
 <h2 id="applications">Applications</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>An application must be bound to a number. The application can be either:
-	* Voice-triggered
-	* SMS-triggered
-	* USSD-triggered</p>
+<p>An application must be bound to a number. The application can be either:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Voice-triggered</p>
+</li>
+<li>
+<p>SMS-triggered</p>
+</li>
+<li>
+<p>USSD-triggered</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Depending on its type, the application is <strong>triggered</strong> when the corresponding event happens:
-	* a Voice application will be triggered when a call is made to the phone;
-	* an SMS application is triggered when an SMS is sent to the phone,
-	* and so on…</p>
+<p>Depending on its type, the application is <strong>triggered</strong> when the corresponding event happens:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a Voice application will be triggered when a call is made to the phone;</p>
+</li>
+<li>
+<p>an SMS application is triggered when an SMS is sent to the phone,</p>
+</li>
+<li>
+<p>and so on…</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>After this initial trigger, the application contains some business logic, in the form of a series of steps, that define how the interaction continues.</p>
 </div>
 <div class="paragraph">
-<p>Depending on the application type, these steps can include:
-	* Interactive Voice Response (<strong>IVR</strong>) menus (Playing audio, Text-to-speech, Collecting caller’s dial pad input, Dialling numbers / joining conference rooms, recording audio, etc.)
-	* Sending <strong>SMS</strong> messages
-	* Sending an <strong>email</strong>
-	* Sending a <strong>fax</strong>
-	* Calling an <strong>external web service</strong> (for integration with 3rd party solutions)
-	* … and many far more complex scenarios!</p>
+<p>Depending on the application type, these steps can include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Interactive Voice Response (<strong>IVR</strong>) menus (Playing audio, Text-to-speech, Collecting caller’s dial pad input, Dialling numbers / joining conference rooms, recording audio, etc.)</p>
+</li>
+<li>
+<p>Sending <strong>SMS</strong> messages</p>
+</li>
+<li>
+<p>Sending an <strong>email</strong></p>
+</li>
+<li>
+<p>Sending a <strong>fax</strong></p>
+</li>
+<li>
+<p>Calling an <strong>external web service</strong> (for integration with 3rd party solutions)</p>
+</li>
+<li>
+<p>… and many far more complex scenarios!</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>To combine all these into your specific application, RestcommONE cloud incorporates a web-based Visual Designer that allows you to drag &amp; drop the different steps into your own flow.</p>
 </div>
 <div class="paragraph">
-<p>You have 3 options about how to register an Application under your account:
-	* Create it with the Visual Designer
-	* Import a previously created Visual Designer App
-	* Register an externally hosted App</p>
+<p>You have 3 options about how to register an Application under your account:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Create it with the Visual Designer</p>
+</li>
+<li>
+<p>Import a previously created Visual Designer App</p>
+</li>
+<li>
+<p>Register an externally hosted App</p>
+</li>
+</ul>
 </div>
 <div class="sect2">
 <h3 id="creating-an-app-with-the-visual-designer">Creating an App with the Visual Designer</h3>
@@ -23438,11 +23494,23 @@ display: none;
 <p>After you click to create a new App, you are taken to the Template Gallery.</p>
 </div>
 <div class="paragraph">
-<p>This Gallery includes some examples of the kinds of applications you can build. They are very simple examples, to get you started, so please choose one, depending on the scenario of the App you want to build:
-	* <strong>Empty</strong>: Allows you to start with an empty canvas.
-	* <strong>SMS Echo</strong>: When you send an SMS to the Number, you will receive the same SMS back as an auto-reply.
-	* <strong>IVR Menu</strong>: Build the kind of interactive menu you would encounter in a typical call-centre scenario.
-	* <strong>USSD Menu</strong>: You might have experienced USSD if you have typed numbers like <code>*101#</code> into your mobile phone. These are also called “Quick Codes” or “Feature Codes” and this template shows you how to use them.</p>
+<p>This Gallery includes some examples of the kinds of applications you can build. They are very simple examples, to get you started, so please choose one, depending on the scenario of the App you want to build:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Empty</strong>: Allows you to start with an empty canvas.</p>
+</li>
+<li>
+<p><strong>SMS Echo</strong>: When you send an SMS to the Number, you will receive the same SMS back as an auto-reply.</p>
+</li>
+<li>
+<p><strong>IVR Menu</strong>: Build the kind of interactive menu you would encounter in a typical call-centre scenario.</p>
+</li>
+<li>
+<p><strong>USSD Menu</strong>: You might have experienced USSD if you have typed numbers like <code>*101#</code> into your mobile phone. These are also called “Quick Codes” or “Feature Codes” and this template shows you how to use them.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>For more details on how to use the Visual Designer itself, to create your own scenarios, please <a href="https://www.restcomm.com/docs/connect/rvd/index.html">click here</a>.</p>
@@ -23483,12 +23551,26 @@ display: none;
 <h2 id="logs">Logs</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This is the reports section, where you can see a separate report for each of the below event types:
-	* calls,
-	* SMS messages,
-	* audio recordings
-	* transcriptions (using the Transcribe parameters of the Record Verb)
-	* notifications</p>
+<p>This is the reports section, where you can see a separate report for each of the below event types:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>calls,</p>
+</li>
+<li>
+<p>SMS messages,</p>
+</li>
+<li>
+<p>audio recordings</p>
+</li>
+<li>
+<p>transcriptions (using the Transcribe parameters of the Record Verb)</p>
+</li>
+<li>
+<p>notifications</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -23521,7 +23603,7 @@ display: none;
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-02-28 10:38:36 UTC
+Last updated 2018-02-28 11:06:36 UTC
 </div>
 </div>
 <footer>
