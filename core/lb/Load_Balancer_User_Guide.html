@@ -23032,6 +23032,18 @@ display: none;
                     <li id="nav-menu-item-17183" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub narrow">
                       <a href="/docs/index.html" class=""><i class="menu_icon blank fa"></i><span>Home</span><span class="plus"></span></a>
                     </li>
+                    <li id="nav-menu-item-21284" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub narrow">
+                      <a href="/docs/restcommone_cloud/index.html" class=""><i class="menu_icon blank fa"></i><span>RestcommONE Cloud</span><span class="plus"></span></a>
+                      <div class="second">
+                        <div class="inner">
+                          <ul>
+                            <li id="nav-menu-item-17427" class="menu-item menu-item-type-post_type menu-item-object-page ">
+                              <a href="/docs/restcommone_cloud/Quick_Start_Guide_RestcommONE_Cloud.html" class=""><i class="menu_icon blank fa"></i><span>Quick Start Guide</span><span class="plus"></span></a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
                     <li id="nav-menu-item-17284" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub narrow">
                       <a href="/docs/connect/index.html" class=""><i class="menu_icon blank fa"></i><span>Restcomm Connect</span><span class="plus"></span></a>
                       <div class="second">
@@ -23357,17 +23369,18 @@ display: none;
 <li><a href="#smpp-multiplexing-basics">1.3. SMPP multiplexing basics</a></li>
 <li><a href="#mgcp-load-balancing">1.4. MGCP Load Balancing</a></li>
 <li><a href="#ss7-load-balancing">1.5. SS7 Load Balancing</a></li>
-<li><a href="#pluggable-balancer-algorithms">1.6. Pluggable balancer algorithms</a></li>
-<li><a href="#distributed-load-balancing">1.7. Distributed load balancing</a></li>
-<li><a href="#_sslb_binary_sip_load_balancer_installing_configuring_and_running">1.8. Restcomm Load Balancer: Installing, Configuring andRunning</a></li>
-<li><a href="#sip-message-flow">1.9. SIP Message Flow</a></li>
-<li><a href="#using-the-load-balancer-with-third-party-sip-servers">1.10. Using the Load Balancer with Third-Party SIP Servers</a></li>
-<li><a href="#enabling-tls-wss-for-load-balancers">1.11. Enabling TLS/WSS for Load Balancers</a></li>
-<li><a href="#getting-statistic">1.12. Getting statistic</a></li>
-<li><a href="#configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine">1.13. Configuring Load-balancer and two Restcomm servers on the one local machine</a></li>
-<li><a href="#integration-load-balancer-smpp-with-restcomm-and-nexmo">1.14. Integration Load Balancer SMPP with Restcomm and Nexmo</a></li>
-<li><a href="#active-active-setup-and-graceful-upgrades-of-load-balancer">1.15. Active-Active setup and Graceful Upgrades of Load Balancer</a></li>
-<li><a href="#kubernetes-integration">1.16. Kubernetes integration</a></li>
+<li><a href="#_fep_ussd_smsc">1.6. Integration of Load Balancer SS7 (FEP) with USSD and SMSC servers</a></li>
+<li><a href="#pluggable-balancer-algorithms">1.7. Pluggable balancer algorithms</a></li>
+<li><a href="#distributed-load-balancing">1.8. Distributed load balancing</a></li>
+<li><a href="#_sslb_binary_sip_load_balancer_installing_configuring_and_running">1.9. Restcomm Load Balancer: Installing, Configuring andRunning</a></li>
+<li><a href="#sip-message-flow">1.10. SIP Message Flow</a></li>
+<li><a href="#using-the-load-balancer-with-third-party-sip-servers">1.11. Using the Load Balancer with Third-Party SIP Servers</a></li>
+<li><a href="#enabling-tls-wss-for-load-balancers">1.12. Enabling TLS/WSS for Load Balancers</a></li>
+<li><a href="#getting-statistic">1.13. Getting statistic</a></li>
+<li><a href="#configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine">1.14. Configuring Load-balancer and two Restcomm servers on the one local machine</a></li>
+<li><a href="#integration-load-balancer-smpp-with-restcomm-and-nexmo">1.15. Integration Load Balancer SMPP with Restcomm and Nexmo</a></li>
+<li><a href="#active-active-setup-and-graceful-upgrades-of-load-balancer">1.16. Active-Active setup and Graceful Upgrades of Load Balancer</a></li>
+<li><a href="#kubernetes-integration">1.17. Kubernetes integration</a></li>
 </ul>
 </li>
 <li><a href="#revision-history">Appendix A: Revision History</a></li>
@@ -24606,7 +24619,519 @@ accordingly to the corresponding GT. Every entity of the Map will be removed aft
 </div>
 </div>
 <div class="sect2">
-<h3 id="pluggable-balancer-algorithms"><a class="anchor" href="#pluggable-balancer-algorithms"></a>1.6. Pluggable balancer algorithms</h3>
+<h3 id="_fep_ussd_smsc"><a class="anchor" href="#_fep_ussd_smsc"></a>1.6. Integration of Load Balancer SS7 (FEP) with USSD and SMSC servers</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Note</div>
+<div class="paragraph">
+<p>SS7 Active-Active mode is a RestcommONE feature, available only in our commercial version.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>USSD GW and SMSC GW servers can use FEP instances (Front-End-Processors that play a role of SS7 load-balancing before FEP) as intermediate nodes with connecting to SS7 network.</p>
+</div>
+<div class="paragraph">
+<p>You can see below configuring examples of USSD / SMSC usage with a FEP.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/USSD-FEP-schema.png" alt="USSD FEP schema">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/SMSC-FEP-schema.png" alt="SMSC FEP schema">
+</div>
+</div>
+<div class="paragraph">
+<p>We will describe configuring details for a case when FEP1 and SMSC / USSD 1 are deployed to a physical server 1 (with IP address <code>IP1</code>) and FEP2 and SMSC / USSD 2 are deployed to a physical server 2 (with IP address <code>IP2</code>). <code>IP1</code> and <code>IP2</code> will be of cause different for different deployments. We will use in our  example follownf IP values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>IP1</code> - 172.30.1.8</p>
+</li>
+<li>
+<p><code>IP2</code> - 172.30.1.180</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You need to replace the mentioned IP values in configs to your actual values. You can reuse point codes at a leg between FEP and USSD/SMSC GW from an example because this part point codes are not exposed to a SS7 network provider. Point codes, IPs, ports between FEP and a remote SS7 node must be replaced to provided by a SS7 provider values.</p>
+</div>
+<div class="paragraph">
+<p>Point codes that are used in our example:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>USSD/SMSC GW 1 - 10</p>
+</li>
+<li>
+<p>USSD/SMSC GW 2 - 40</p>
+</li>
+<li>
+<p>FEP 1 internal side - 11</p>
+</li>
+<li>
+<p>FEP 2 internal side - 41</p>
+</li>
+<li>
+<p>FEP 1 external side - 111</p>
+</li>
+<li>
+<p>FEP 2 external side - 411</p>
+</li>
+<li>
+<p>SS7 Simulator - 110</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Configuring of servers includes configuring of several layers:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>MAP RA (MAP protocol Resource Adaptor) configuring</p>
+</li>
+<li>
+<p>SMSC GW / USSD SS7 part configuring</p>
+</li>
+<li>
+<p>FEP SS7 internal part configuring</p>
+</li>
+<li>
+<p>FEP SS7 external part configuring</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If you just want to make end-to-end testing with SS7 Simulator at a place of an external SS7 node (external STP) we provide a config example of SS7 Simulator that allows to deploy one SS7 Simulator instance that will connect to both FEP nodes.</p>
+</div>
+<div class="sect3">
+<h4 id="_fep_ussd_smsc_map_ra"><a class="anchor" href="#_fep_ussd_smsc_map_ra"></a>1.6.1. MAP RA configuring</h4>
+<div class="paragraph">
+<p>MAP RA is deployed at a USSD/SMSC GW side and contains configuring of connection(s) to FEP(s) that are deployed between USSD/SMSC GWs and a SS7 network. MAP RA config is responsible for a functionality when a USSD/SMSC GW informs FEP side that a GW has started / stopped or a graceful shutdown has initiated. This is needed in order to a FEP node will create a SS7 connection to a started USSD/SMSC GW node and stop of sending of new dialogs to a shutting down USSD/SMSC GW node.</p>
+</div>
+<div class="paragraph">
+<p>For configuring of MAP RA we need to perform follow steps:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>MAP RA file has a name like <code>restcomm-slee-ra-map-du-jboss-7.4.1-30.jar</code> (for jboss 5 server) and <code>restcomm-slee-ra-map-du-7.4.1-30.jar</code> (for wildfly server). We can find this file in a folder <code>&lt;jboss&gt;/server/default/deploy</code> (for jboss 5 server) or in a folder <code>&lt;jboss&gt;/standalone/deployments</code> (for wildfly server). This file is actually a zip archive, we need to unzip it.</p>
+</li>
+<li>
+<p>An unzipped folder contains a file like <code>jars/restcomm-slee-ra-map-ra-7.4.1-30.jar</code>, this is also a zip archive, we need to unzip it too.</p>
+</li>
+<li>
+<p>New unzipped folder contains <code>META-INF/resource-adaptor-jar.xml</code> file that contains several <code>config-property</code> entries that we need to update</p>
+</li>
+<li>
+<p>Then we need to zip <code>restcomm-slee-ra-map-ra-7.4.1-30.jar</code> and <code>restcomm-slee-ra-map-du-7.4.1-30.jar</code> files and deploy them into an original jboss / wildfly folder.</p>
+</li>
+</ul>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. The list of configurable properties</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">config-property-name</th>
+<th class="tableblock halign-left valign-top">config-property-type</th>
+<th class="tableblock halign-left valign-top">config-property-value</th>
+<th class="tableblock halign-left valign-top">value in a configuring example for FEP1</th>
+<th class="tableblock halign-left valign-top">value in a configuring example for FEP2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.resources.restcomm-slee-ra-map-ra.POINTCODE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Point code of USSD/SMSC GW at connection to FEP (must fit to a local sccp point code)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">40</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.resources.restcomm-slee-ra-map-ra.SCTP_PORT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Port of ss7 m3ua association at a USSD/SMSC side</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8071</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8061</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.resources.restcomm-slee-ra-map-ra.SCTP_LB_PORT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Port of ss7 m3ua association at a FEP side</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8070</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8060</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.resources.restcomm-slee-ra-map-ra.LOCAL_ADDRESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Local IP address of a USSD/SMSC side</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">172.30.1.8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">172.30.1.180</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.resources.restcomm-slee-ra-map-ra.BALANCERS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A list of FEP side <code>IP:port</code> with a delimiter between FEP nodes - <code>;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">172.30.1.8:2000;172.30.1.180:2000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">172.30.1.8:2000;172.30.1.180:2000</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.resources.restcomm-slee-ra-map-ra.LoadBalancerHeartBeatingServiceClassName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A class name of a LoadBalancer HeartBeatingService</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.slee.resource.map.heartbeat.MAPLoadBalancerHeartBeatingServiceImpl</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.slee.resource.map.heartbeat.MAPLoadBalancerHeartBeatingServiceImpl</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.resources.restcomm-slee-ra-map-ra.HEARTBEAT_INTERVAL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interval of sending of heartbeat requests in milliseconds</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5000</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>In the case when USSD/SMSC GW does not communicate with a FEP you need to configure <code>BALANCERS</code> value to an empty value. MAP RA in USSD/SMSC GW is provided originally with no support for FEP and such RA may be safety used for a no FEP case.</p>
+</div>
+<div class="paragraph">
+<p>You can find example extraction from <code>resource-adaptor-jar.xml</code> in a folder <code>config-examples/configSS7-ussd-smsc/MAP_RA_1-conf-files</code> for USSD/SMSC GW 1 and in a folder <code>config-examples/configSS7-ussd-smsc/MAP_RA_2-conf-files</code> for USSD/SMSC GW 2. You can take these files, update IP addresses and copy-paste of config extractions into MAP RAs.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_fep_ussd_smsc_smsc_ussd"><a class="anchor" href="#_fep_ussd_smsc_smsc_ussd"></a>1.6.2. SMSC GW / USSD SS7 part configuring</h4>
+<div class="paragraph">
+<p>You can configure of USSD/SMSC GW SS7 part via JSS7 CLI or GUI console.</p>
+</div>
+<div class="paragraph">
+<p>SS7 setting of must match FEP internal side SS7 setting (we will describe them below). We will describe here needed settings that match to FEP settings in the described confiuring example.</p>
+</div>
+<div class="paragraph">
+<p>We need to configure at USSD/SMSC GW side following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>FEP always uses m3ua connection between FEP and USSD/SMSC GW node</p>
+</li>
+<li>
+<p>FEP initiates an SCTP connection so USSD/SMSC GW part must configure SCTP server(s) and server association(s) (one association per a FEP)</p>
+</li>
+<li>
+<p>FEP prepares m3ua links with follow options: functionality=IPSP, exchangeType=SE, ipspType=CLIENT, networkAppearance=102, RoutingContext=100.</p>
+</li>
+<li>
+<p>Local PointCode (PC), sctp associations ports, local IP address must match to MAP RA config (as described above)</p>
+</li>
+<li>
+<p>FEP side PointCode (PC) must match to FEP config <code>&lt;internal&gt;</code> - <code>&lt;pointCode&gt;</code></p>
+</li>
+<li>
+<p>SCCP settings must allows loadsharing to both configured FEPs with corresponded point codes</p>
+</li>
+<li>
+<p>TCAP config for both USSD/SMSC GW nodes must contain unintersected ranges of <code>dialogidrangestart</code> - <code>dialogidrangeend</code>. This is needed for FEP will be able to make of proper dialog delivering between USSD/SMSC GW nodes based on TCAP dialogID value. We can assign for USSD/SMSC GW node 1 a range 1 - 999999999 and for node 2 a range 1000000000 - 1999999999.</p>
+</li>
+<li>
+<p>You need to update clustering settings for SMSC GW only, check SMSC GW User guide chapter "Managing - SMSC Gateway Server Settings - Clustering Settings".</p>
+</li>
+<li>
+<p>You need to configure server level parameters of USSD/SMSC GW like GT, SSNs and others as usual.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Find CLI commands for configuring of USSD/SMSC GW node 1 SS7 part below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>sctp server create serv1 172.30.1.8 8071 sockettype SCTP
+sctp server start serv1
+sctp association create ass1 SERVER serv1 172.30.1.8 8070 sockettype SCTP
+sctp association create ass2 SERVER serv2 172.30.1.180 8070 sockettype SCTP
+
+m3ua as create as1 IPSP mode SE ipspType server rc 100 traffic-mode loadsharing network-appearance 102
+m3ua as create as2 IPSP mode SE ipspType server rc 100 traffic-mode loadsharing network-appearance 102
+m3ua asp create asp1 ass1
+m3ua asp create asp2 ass2
+m3ua as add as1 asp1
+m3ua as add as2 asp2
+m3ua asp start asp1
+m3ua asp start asp2
+m3ua route add as1 11 10 3
+m3ua route add as1 41 10 3
+
+sccp sap create 1 1 10 2
+sccp dest create 1 1 11 41 0 255 255
+sccp address create 1 83 11 0 0 1 4 000
+sccp address create 2 83 41 0 0 1 4 000
+sccp address create 21 83 10 0 0 1 4 000
+sccp rule create 1 K 82 0 0 0 1 4 * loadshared 1 backup-addressid 2 loadsharing-algo bit0 origination-type localOriginated
+sccp rule create 2 K 82 0 0 0 1 4 * solitary 21 origination-type remoteOriginated
+sccp rsp create 1 11 0 0
+sccp rsp create 2 41 0 0
+sccp rss create 1 11 8 0
+sccp rss create 2 11 6 0
+sccp rss create 3 41 8 0
+sccp rss create 4 41 6 0
+
+tcap set dialogidrangestart 1
+tcap set dialogidrangeend 999999999</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Find CLI commands for configuring of USSD/SMSC GW node 2 SS7 part below</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>sctp server create serv1 172.30.1.180 8061 sockettype SCTP
+sctp server start serv1
+sctp association create ass1 SERVER serv1 172.30.1.180 8060 sockettype SCTP
+sctp association create ass2 SERVER serv2 172.30.1.8 8060 sockettype SCTP
+
+m3ua as create as1 IPSP mode SE ipspType server rc 100 traffic-mode loadsharing network-appearance 102
+m3ua as create as2 IPSP mode SE ipspType server rc 100 traffic-mode loadsharing network-appearance 102
+m3ua asp create asp1 ass1
+m3ua asp create asp2 ass2
+m3ua as add as1 asp1
+m3ua as add as2 asp2
+m3ua asp start asp1
+m3ua asp start asp2
+m3ua route add as1 11 40 3
+m3ua route add as1 41 40 3
+
+sccp sap create 1 1 40 2
+sccp dest create 1 1 11 41 0 255 255
+sccp address create 1 83 11 0 0 1 4 000
+sccp address create 2 83 41 0 0 1 4 000
+sccp address create 21 83 40 0 0 1 4 000
+sccp rule create 1 K 82 0 0 0 1 4 * loadshared 1 backup-addressid 2 loadsharing-algo bit0 origination-type localOriginated
+sccp rule create 2 K 82 0 0 0 1 4 * solitary 21 origination-type remoteOriginated
+sccp rsp create 1 11 0 0
+sccp rsp create 2 41 0 0
+sccp rss create 1 11 8 0
+sccp rss create 2 11 6 0
+sccp rss create 3 41 8 0
+sccp rss create 4 41 6 0
+
+tcap set dialogidrangestart 1000000000
+tcap set dialogidrangeend 1999999999</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can find extracted info from <code>data</code> folder of USSD/SMSC GW in a folder  <code>config-examples/configSS7-ussd-smsc/USSD_SMSC_1/data</code> for configuring of USSD/SMSC GW 1 and in a folder <code>config-examples/configSS7-ussd-smsc/USSD_SMSC_2/data</code> for USSD/SMSC GW 2. You can take these files, update IP addresses and copy them into <code>data</code> folders of USSD/SMSC GWs.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_fep_ussd_smsc_fep_internal"><a class="anchor" href="#_fep_ussd_smsc_fep_internal"></a>1.6.3. FEP SS7 internal part configuring</h4>
+<div class="paragraph">
+<p>We can configure FEP SS7 internal part in <code>lb-configuration.xml</code> in a section <code>&lt;load-balancer-properties&gt;</code> - <code>&lt;module moduleclass="org.mobicents.tools.balancer.protocols.ss7.Ss7BalancerRunner"</code> - <code>&lt;balancerConfig&gt;</code> - <code>&lt;internal&gt;</code></p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 2. The list of properties for FEP internal part configuring</caption>
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 50%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6668%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">value in a configuring example for FEP1</th>
+<th class="tableblock halign-left valign-top">value in a configuring example for FEP2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pointCode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Local point code of FEP for internal part</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">41</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sctpFixedParams</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Parameters for configuing of SCTP associations. Main parameter is <code>internalIp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">172.30.1.8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">172.30.1.180</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">m3uaFixedParams</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configurable parameters for m3ua connections</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">We can leave default parameters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">We can leave default parameters</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sccpManagement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configurable general parameters for sccp stack</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">We can leave default parameters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">We can leave default parameters</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sccpResourceFixedParams</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configurable parameters for sccp stack resources. We may need to configure <code>remoteSsns</code> subparameter that means SSNs that USSD/SMSC listens</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">remoteSsns parameter by default may have 2 values <code>8</code> and <code>6</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Same as FEP1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sccpRouterFixedParams</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configurable parameters for sccp stack routing control. We need to update <code>opc</code> parameter to a point code of FEP internal side</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">41</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tcapFixedParams</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configurable parameters for tcap stack. We need to update <code>ssns</code> parameter to a list of SSNs that USSD/SMSC GW listens and that a remote SS7 node listens</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ssns parameter by default may have 2 values <code>8</code> and <code>6</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Same as FEP1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tcapConfig</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Parameters for TCAP stack. We do not need to update it usually</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">We can leave default parameters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">We can leave default parameters</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>You can find extracted info from <code>&lt;internal&gt;</code> section in a folder  <code>config-examples/configSS7-ussd-smsc/FEP1_internal</code> for configuring of FEP 1 and in a folder <code>config-examples/configSS7-ussd-smsc/FEP2_internal</code> for FEP 2. You can take these files, update IP addresses and may be other needed parameters and copy them into <code>lb-configuration.xml</code> of FEP.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_fep_ussd_smsc_fep_external"><a class="anchor" href="#_fep_ussd_smsc_fep_external"></a>1.6.4. FEP SS7 external part configuring</h4>
+<div class="paragraph">
+<p>We can configure FEP SS7 internal part in <code>lb-configuration.xml</code> in a section <code>&lt;load-balancer-properties&gt;</code> - <code>&lt;module moduleclass="org.mobicents.tools.balancer.protocols.ss7.Ss7BalancerRunner"</code> - <code>&lt;balancerConfig&gt;</code> - <code>&lt;external&gt;</code></p>
+</div>
+<div class="paragraph">
+<p>This config contains data from JSS7 stack config <code>data</code> folder for all JSS7 stacks assembled into one section. A set of these parameters must match to parameters that a SS7 network operator provided.</p>
+</div>
+<div class="paragraph">
+<p>There is no CLI or GUI interface of configuring of JSS7 external part so far. You can use two options:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>update config values directly in <code>lb-configuration.xml</code></p>
+</li>
+<li>
+<p>if a USSD/SMSC GW is located at a same physical server as FEP you can stop FEP, configure USSD/SMSC GW SS7 part by CLI / GUI in a way USSD/SMSC GW connects directly to a remore SS7 node without FEP, test SS7 connects from USSD/SMSC GW and then copy generated by USSD/SMSC GW config files from <code>data</code> folder (a list is in a table below) into <code>lb-configuration.xml</code>.</p>
+</li>
+</ul>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 3. The list of sections for FEP external part configuring</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">FEP config subsection</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Corresponded file in <code>data</code> folder</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sctpConfig</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuring of SCTP stack</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SCTPManagement_sctp.xml</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">m3uaConfig</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuring of M3UA stack</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mtp3UserPart_m3ua1.xml</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sccpManagement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuring of SCCP stack general parameters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SccpStack_management2.xml</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sccpResource</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuring of SCCP stack resource parameters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SccpStack_sccpresource2.xml</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sccpRouter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuring of SCCP stack routing control parameters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SccpStack_sccprouter2.xml</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tcapConfig</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuring of TCAP stack</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TcapStack_management.xml</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tcapFixedParams</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuring of TCAP stack extra parameters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">There is no configuring file. We must put here a list of SSNs that USSD/SMSC GW listens</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>You can find extracted info from <code>&lt;external&gt;</code> section in a folder  <code>config-examples/configSS7-ussd-smsc/FEP1_external</code> for configuring of FEP 1 and in a folder <code>config-examples/configSS7-ussd-smsc/FEP2_external</code> for FEP 2. These files demand significant updates manually or by getting of config files from ss7 stack before of putting into <code>lb-configuration.xml</code> of FEP. If a target is to make end-to-end testing with SS7 Simulator you can reuse of these configs and make only IP address changing.</p>
+</div>
+<div class="paragraph">
+<p>A full <code>lb-configuration.xml</code> config for FEP1 can be found in <code>config-examples/configSS7-ussd-smsc/FEP1</code> folder. A full <code>lb-configuration.xml</code> config for FEP2 can be found in <code>config-examples/configSS7-ussd-smsc/FEP2</code> folder.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_fep_ussd_smsc_ss7_sim"><a class="anchor" href="#_fep_ussd_smsc_ss7_sim"></a>1.6.5. Confiruging of SS7 Simulator for local testing</h4>
+<div class="paragraph">
+<p>If we want to make end-to-end testing with SS7 Simulator at a place of an external SS7 node (external STP) we provide confid examples for USSD and SMSC GW cases in a folder <code>config-examples/configSS7-ussd-smsc/SS7_Simulator</code>.</p>
+</div>
+<div class="paragraph">
+<p>We need for testing:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>download of a last version from github master (that contains needed updates)</p>
+</li>
+<li>
+<p>deploy files <code>ussd_simulator2.xml</code> and <code>smsc_simulator2.xml</code> into SS7 Simulator <code>data</code> folder</p>
+</li>
+<li>
+<p>run SS7 Simulator with "Host name" <code>ussd</code> or <code>smsc</code> (depending of what we want to test)</p>
+</li>
+<li>
+<p>update <code>m3ua</code> config for proper IP addresses</p>
+</li>
+<li>
+<p>start tests (FEP and USSD/SMSC GW must be already run)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You can send SS7 message from SS7 Simualtor to FEP - USSD/SMSC GW and terminate USSD dialogs to HTTP Simulator and SMSs to SMPP Simualtors for example.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pluggable-balancer-algorithms"><a class="anchor" href="#pluggable-balancer-algorithms"></a>1.7. Pluggable balancer algorithms</h3>
 <div class="paragraph">
 <p>The Restcomm Load Balancer exposes an interface to allow users to customize the routing decision making for special purposes.
 By default there are three built-in algorithms.
@@ -24724,7 +25249,7 @@ for sending SMPP requests to connected Nodes.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="distributed-load-balancing"><a class="anchor" href="#distributed-load-balancing"></a>1.7. Distributed load balancing</h3>
+<h3 id="distributed-load-balancing"><a class="anchor" href="#distributed-load-balancing"></a>1.8. Distributed load balancing</h3>
 <div class="paragraph">
 <p>When the capacity of a single load balancer is exceeded, multiple load balancers can be used.
 With the help of an IP load balancer the traffic can be distributed between all Restcomm load balancers based on some IP rules or round-robin.
@@ -24739,9 +25264,9 @@ With consistent hash algorithms there is no state to be preserved in the Restcom
 </div>
 </div>
 <div class="sect2">
-<h3 id="_sslb_binary_sip_load_balancer_installing_configuring_and_running"><a class="anchor" href="#_sslb_binary_sip_load_balancer_installing_configuring_and_running"></a>1.8. Restcomm Load Balancer: Installing, Configuring andRunning</h3>
+<h3 id="_sslb_binary_sip_load_balancer_installing_configuring_and_running"><a class="anchor" href="#_sslb_binary_sip_load_balancer_installing_configuring_and_running"></a>1.9. Restcomm Load Balancer: Installing, Configuring andRunning</h3>
 <div class="sect3">
-<h4 id="_sslb_binary_sip_load_balancer_preinstall_requirements_and_prerequisites"><a class="anchor" href="#_sslb_binary_sip_load_balancer_preinstall_requirements_and_prerequisites"></a>1.8.1. Pre-Install Requirements and Prerequisites</h4>
+<h4 id="_sslb_binary_sip_load_balancer_preinstall_requirements_and_prerequisites"><a class="anchor" href="#_sslb_binary_sip_load_balancer_preinstall_requirements_and_prerequisites"></a>1.9.1. Pre-Install Requirements and Prerequisites</h4>
 <div class="dlist">
 <div class="title">Software Prerequisites</div>
 <dl>
@@ -24755,7 +25280,7 @@ The Restcomm Restcomm Load Balancer will work with a SIP Servlets-enabled JBoss 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_sslb_binary_sip_load_balancer_downloading"><a class="anchor" href="#_sslb_binary_sip_load_balancer_downloading"></a>1.8.2. Downloading</h4>
+<h4 id="_sslb_binary_sip_load_balancer_downloading"><a class="anchor" href="#_sslb_binary_sip_load_balancer_downloading"></a>1.9.2. Downloading</h4>
 <div class="paragraph">
 <p>The load balancer is located in the <em class="path">sip-balancer</em> top-level directory of the Restcomm  distribution.
 You will find the following files in the directory:</p>
@@ -24774,14 +25299,14 @@ You will find the following files in the directory:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_sslb_binary_sip_load_balancer_installing"><a class="anchor" href="#_sslb_binary_sip_load_balancer_installing"></a>1.8.3. Installing</h4>
+<h4 id="_sslb_binary_sip_load_balancer_installing"><a class="anchor" href="#_sslb_binary_sip_load_balancer_installing"></a>1.9.3. Installing</h4>
 <div class="paragraph">
 <p>The Restcomm load balancer executable JAR file can be extracted anywhere in the file system.
 It is recommended that the file is placed in the directory containing other JAR executables, so it can be easily located in the future.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_sslb_binary_sip_load_balancer_configuring"><a class="anchor" href="#_sslb_binary_sip_load_balancer_configuring"></a>1.8.4. Configuring</h4>
+<h4 id="_sslb_binary_sip_load_balancer_configuring"><a class="anchor" href="#_sslb_binary_sip_load_balancer_configuring"></a>1.9.4. Configuring</h4>
 <div class="paragraph">
 <p>Configuring the Restcomm Load Balancer and the two SIP Servlets-enabled Server nodes is described in <a href="#_sslb_configuring_the_sip_load_balancer_and_servlet_server_nodes">Procedure: Configuring the Restcomm  Restcomm Load Balancer and SIPServer Nodes</a>      .</p>
 </div>
@@ -25432,7 +25957,7 @@ If the desired behaviour group these requests, we can just make sure the affinit
 </div>
 </div>
 <div class="sect3">
-<h4 id="_sslb_binary_sip_load_balancer_running"><a class="anchor" href="#_sslb_binary_sip_load_balancer_running"></a>1.8.5. Running</h4>
+<h4 id="_sslb_binary_sip_load_balancer_running"><a class="anchor" href="#_sslb_binary_sip_load_balancer_running"></a>1.9.5. Running</h4>
 <div class="olist arabic">
 <div class="title">Procedure: Running the Load Balancer and SIP Server Nodes</div>
 <ol class="arabic">
@@ -25492,7 +26017,7 @@ In the Linux terminal, or using the Windows Command Prompt, the Load Balancers a
 </div>
 </div>
 <div class="sect3">
-<h4 id="_sslb_binary_sip_load_balancer_testing"><a class="anchor" href="#_sslb_binary_sip_load_balancer_testing"></a>1.8.6. Testing</h4>
+<h4 id="_sslb_binary_sip_load_balancer_testing"><a class="anchor" href="#_sslb_binary_sip_load_balancer_testing"></a>1.9.6. Testing</h4>
 <div class="paragraph">
 <p>To test load balancing, the same application must be deployed manually on each node, and two SIP Softphones must be installed.</p>
 </div>
@@ -25552,7 +26077,7 @@ Notice that the call is handled by the second node.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_sslb_binary_sip_load_balancer_stopping"><a class="anchor" href="#_sslb_binary_sip_load_balancer_stopping"></a>1.8.7. Stopping</h4>
+<h4 id="_sslb_binary_sip_load_balancer_stopping"><a class="anchor" href="#_sslb_binary_sip_load_balancer_stopping"></a>1.9.7. Stopping</h4>
 <div class="paragraph">
 <p>Assuming that you started the JBoss Application Server as a foreground process
 in the Linux terminal, the easiest way to stop it is by pressing the  key combination
@@ -25623,14 +26148,14 @@ configuration file in &lt;common&gt; section:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_sslb_binary_sip_load_balancer_uninstalling"><a class="anchor" href="#_sslb_binary_sip_load_balancer_uninstalling"></a>1.8.8. Uninstalling</h4>
+<h4 id="_sslb_binary_sip_load_balancer_uninstalling"><a class="anchor" href="#_sslb_binary_sip_load_balancer_uninstalling"></a>1.9.8. Uninstalling</h4>
 <div class="paragraph">
 <p>To uninstall the SIP and SMPP load balancers, delete the JAR file you installed.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="sip-message-flow"><a class="anchor" href="#sip-message-flow"></a>1.9. SIP Message Flow</h3>
+<h3 id="sip-message-flow"><a class="anchor" href="#sip-message-flow"></a>1.10. SIP Message Flow</h3>
 <div class="paragraph">
 <p>The Restcomm Load Balancer appends itself to the <code>Via</code>    header of each request, so that returned responses are sent to the SIP Balancer before they are sent to the originating endpoint.</p>
 </div>
@@ -25671,7 +26196,7 @@ In the diagram, the Restcomm Load Balancer is the server with the IP address of 
 </div>
 </div>
 <div class="sect2">
-<h3 id="using-the-load-balancer-with-third-party-sip-servers"><a class="anchor" href="#using-the-load-balancer-with-third-party-sip-servers"></a>1.10. Using the Load Balancer with Third-Party SIP Servers</h3>
+<h3 id="using-the-load-balancer-with-third-party-sip-servers"><a class="anchor" href="#using-the-load-balancer-with-third-party-sip-servers"></a>1.11. Using the Load Balancer with Third-Party SIP Servers</h3>
 <div class="paragraph">
 <p>The load balancer only forwards requests to servers that send heartbeat signals.
 A third party server can send metadata using a SIP OPTIONS or SIP INFO message towards the internal port of the Restcomm Load Balancer.
@@ -25722,9 +26247,9 @@ If no response if received within a threshhold time then the third party SIP ser
 </div>
 </div>
 <div class="sect2">
-<h3 id="enabling-tls-wss-for-load-balancers"><a class="anchor" href="#enabling-tls-wss-for-load-balancers"></a>1.11. Enabling TLS/WSS for Load Balancers</h3>
+<h3 id="enabling-tls-wss-for-load-balancers"><a class="anchor" href="#enabling-tls-wss-for-load-balancers"></a>1.12. Enabling TLS/WSS for Load Balancers</h3>
 <div class="sect3">
-<h4 id="enabling-tls-wss-for-restcomm-load-balancer"><a class="anchor" href="#enabling-tls-wss-for-restcomm-load-balancer"></a>1.11.1. Enabling TLS/WSS for Restcomm Load Balancer</h4>
+<h4 id="enabling-tls-wss-for-restcomm-load-balancer"><a class="anchor" href="#enabling-tls-wss-for-restcomm-load-balancer"></a>1.12.1. Enabling TLS/WSS for Restcomm Load Balancer</h4>
 <div class="paragraph">
 <p>For enabling TLS/WSS support for Restcomm Load Balancer, you should correctly specify next property:</p>
 </div>
@@ -25758,7 +26283,7 @@ If no response if received within a threshhold time then the third party SIP ser
 </div>
 </div>
 <div class="sect3">
-<h4 id="enabling-https"><a class="anchor" href="#enabling-https"></a>1.11.2. Enabling HTTPS</h4>
+<h4 id="enabling-https"><a class="anchor" href="#enabling-https"></a>1.12.2. Enabling HTTPS</h4>
 <div class="paragraph">
 <p>For enabling HTTPS and Secure WebSockets support for HTTP load balancer, you should correctly specify next property (httpsPort property enables HTTPS support):</p>
 </div>
@@ -25789,7 +26314,7 @@ If no response if received within a threshhold time then the third party SIP ser
 </div>
 </div>
 <div class="sect3">
-<h4 id="enabling-tls-for-smpp-load-balancer"><a class="anchor" href="#enabling-tls-for-smpp-load-balancer"></a>1.11.3. Enabling TLS for SMPP load balancer</h4>
+<h4 id="enabling-tls-for-smpp-load-balancer"><a class="anchor" href="#enabling-tls-for-smpp-load-balancer"></a>1.12.3. Enabling TLS for SMPP load balancer</h4>
 <div class="paragraph">
 <p>For enabling TLS support for SMPP load balancer, you should correctly specify next property (smppSslPort property enables TLS suport):</p>
 </div>
@@ -25821,7 +26346,7 @@ If no response if received within a threshhold time then the third party SIP ser
 </div>
 </div>
 <div class="sect2">
-<h3 id="getting-statistic"><a class="anchor" href="#getting-statistic"></a>1.12. Getting statistic</h3>
+<h3 id="getting-statistic"><a class="anchor" href="#getting-statistic"></a>1.13. Getting statistic</h3>
 <div class="paragraph">
 <p>Load balancers provide some statistic by Java Management Extensions and JSON.
 You should use url <a href="http://host:statisticPort/lbstat" class="bare">http://host:statisticPort/lbstat</a> for getting JSON statistic data from load balancer.
@@ -25928,7 +26453,7 @@ You should use url <a href="http://host:statisticPort/lbinfo" class="bare">http:
 </div>
 </div>
 <div class="sect2">
-<h3 id="configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine"><a class="anchor" href="#configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine"></a>1.13. Configuring Load-balancer and two Restcomm servers on the one local machine</h3>
+<h3 id="configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine"><a class="anchor" href="#configuring-load-balancer-and-two-restcomm-servers-on-the-one-local-machine"></a>1.14. Configuring Load-balancer and two Restcomm servers on the one local machine</h3>
 <div class="imageblock">
 <div class="content">
 <img src="./images/Restcomm_servers-LB.png" alt="Restcomm servers LB">
@@ -26337,7 +26862,7 @@ Fill in form: Load Balancer&#8217;s ip adress (external.host) 172.21.0.104 and p
 </div>
 </div>
 <div class="sect2">
-<h3 id="integration-load-balancer-smpp-with-restcomm-and-nexmo"><a class="anchor" href="#integration-load-balancer-smpp-with-restcomm-and-nexmo"></a>1.14. Integration Load Balancer SMPP with Restcomm and Nexmo</h3>
+<h3 id="integration-load-balancer-smpp-with-restcomm-and-nexmo"><a class="anchor" href="#integration-load-balancer-smpp-with-restcomm-and-nexmo"></a>1.15. Integration Load Balancer SMPP with Restcomm and Nexmo</h3>
 <div class="paragraph">
 <div class="title">Configure Restcomm to Use SMPP</div>
 <p>First you need to configure the IP address and other features required
@@ -26413,7 +26938,7 @@ and you can see next line:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="active-active-setup-and-graceful-upgrades-of-load-balancer"><a class="anchor" href="#active-active-setup-and-graceful-upgrades-of-load-balancer"></a>1.15. Active-Active setup and Graceful Upgrades of Load Balancer</h3>
+<h3 id="active-active-setup-and-graceful-upgrades-of-load-balancer"><a class="anchor" href="#active-active-setup-and-graceful-upgrades-of-load-balancer"></a>1.16. Active-Active setup and Graceful Upgrades of Load Balancer</h3>
 <div class="paragraph">
 <p><a href="http://www.keepalived.org/">Keepalived service</a> provides possibility graceful
 shutdown of the Load balancer using health-checks and using virtual IP
@@ -26672,7 +27197,7 @@ sip stack property gov.nist.javax.sip.NEVER_ADD_RECEIVED_RPORT=true</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kubernetes-integration"><a class="anchor" href="#kubernetes-integration"></a>1.16. Kubernetes integration</h3>
+<h3 id="kubernetes-integration"><a class="anchor" href="#kubernetes-integration"></a>1.17. Kubernetes integration</h3>
 <div class="paragraph">
 <p>With Kubernetes integration  the Load balancer can get info about running
 SIP Server Nodes from Pods and get data as IP, ports etc. When SIP Server Node
@@ -26769,7 +27294,7 @@ sip-node-1, sip-node-2 etc., then this tag should be &lt;nodeName&gt;sip-node&lt
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-02-26 16:23:54 UTC
+Last updated 2018-02-28 10:53:26 UTC
 </div>
 </div>
 <footer>
