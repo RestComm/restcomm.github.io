@@ -30894,9 +30894,61 @@ If there is an error in setting the value, then you will find the details of the
 <p>You can modify Diameter settings using the CLI or GUI.</p>
 </div>
 <div class="sect4">
-<h5 id="_dest_realm"><a class="anchor" href="#_dest_realm"></a>6.1.6.1. Destination Realm</h5>
+<h5 id="_ocs_type"><a class="anchor" href="#_ocs_type"></a>6.1.6.1. Diameter OCS type</h5>
 <div class="sect5">
-<h6 id="_dest_realm_cli"><a class="anchor" href="#_dest_realm_cli"></a>6.1.6.1.1. Using CLI</h6>
+<h6 id="_ocs_type_cli"><a class="anchor" href="#_ocs_type_cli"></a>6.1.6.1.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'Diameter OCS type' value by issuing the command <code>smsc set diameterocstype</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get diameterocstype</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set diameterocstype
+
+SYNOPSIS
+	smsc set diameterocstype &lt;value&gt;
+
+DESCRIPTION
+	This command is used to set the OCS type to SMSC GW will send diameter requests.
+	We support now following types:
+	- SmsInformation - usage of SMS-Information (2000) diameter AVP, vendor TGPP (10415)
+	- OcsHuawei      - usage of P2PSMS-Information (20400) diameter AVP, vendor Huawei (2011)
+	Default value: SmsInformation
+
+EXAMPLES
+	smsc set diameterocstype SmsInformation</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_ocs_type_gui"><a class="anchor" href="#_ocs_type_gui"></a>6.1.6.1.2. Using GUI</h6>
+<div class="olist arabic">
+<div class="title">Procedure: Set Diameter OCS type using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into nine horizontal tabs: Properties, SS7 Settings, Cassandra, Clustering, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Diameter' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify the Diameter OCS type by entering the value in the corresponding text field.
+For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_dest_realm"><a class="anchor" href="#_dest_realm"></a>6.1.6.2. Destination Realm</h5>
+<div class="sect5">
+<h6 id="_dest_realm_cli"><a class="anchor" href="#_dest_realm_cli"></a>6.1.6.2.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'Destination Realm' value by issuing the command <code>smsc set diameterdestrealm</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get diameterdestrealm</code> which will display the value set for this property.</p>
@@ -30919,7 +30971,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_dest_realm_gui"><a class="anchor" href="#_dest_realm_gui"></a>6.1.6.1.2. Using GUI</h6>
+<h6 id="_dest_realm_gui"><a class="anchor" href="#_dest_realm_gui"></a>6.1.6.2.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set Diameter Destination Realm using the GUI</div>
 <ol class="arabic">
@@ -30943,9 +30995,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_dest_host"><a class="anchor" href="#_dest_host"></a>6.1.6.2. Destination Host</h5>
+<h5 id="_dest_host"><a class="anchor" href="#_dest_host"></a>6.1.6.3. Destination Host</h5>
 <div class="sect5">
-<h6 id="_dest_host_cli"><a class="anchor" href="#_dest_host_cli"></a>6.1.6.2.1. Using CLI</h6>
+<h6 id="_dest_host_cli"><a class="anchor" href="#_dest_host_cli"></a>6.1.6.3.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'Destination Host' value by issuing the command <code>smsc set diameterdesthost</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get diameterdesthost</code> which will display the value set for this property.</p>
@@ -30968,7 +31020,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_dest_host_gui"><a class="anchor" href="#_dest_host_gui"></a>6.1.6.2.2. Using GUI</h6>
+<h6 id="_dest_host_gui"><a class="anchor" href="#_dest_host_gui"></a>6.1.6.3.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set Diameter Host using the GUI</div>
 <ol class="arabic">
@@ -30992,9 +31044,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_dest_port"><a class="anchor" href="#_dest_port"></a>6.1.6.3. Destination Port</h5>
+<h5 id="_dest_port"><a class="anchor" href="#_dest_port"></a>6.1.6.4. Destination Port</h5>
 <div class="sect5">
-<h6 id="_dest_port_cli"><a class="anchor" href="#_dest_port_cli"></a>6.1.6.3.1. Using CLI</h6>
+<h6 id="_dest_port_cli"><a class="anchor" href="#_dest_port_cli"></a>6.1.6.4.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'Destination Port' value by issuing the command <code>smsc set diameterdestport</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get diameterdestport</code> which will display the value set for this property.</p>
@@ -31017,7 +31069,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_dest_port_gui"><a class="anchor" href="#_dest_port_gui"></a>6.1.6.3.2. Using GUI</h6>
+<h6 id="_dest_port_gui"><a class="anchor" href="#_dest_port_gui"></a>6.1.6.4.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set Diameter Port using the GUI</div>
 <ol class="arabic">
@@ -31041,9 +31093,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_dest_username"><a class="anchor" href="#_dest_username"></a>6.1.6.4. Destination Username</h5>
+<h5 id="_dest_username"><a class="anchor" href="#_dest_username"></a>6.1.6.5. Destination Username</h5>
 <div class="sect5">
-<h6 id="_dest_username_cli"><a class="anchor" href="#_dest_username_cli"></a>6.1.6.4.1. Using CLI</h6>
+<h6 id="_dest_username_cli"><a class="anchor" href="#_dest_username_cli"></a>6.1.6.5.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'Destination Username' value by issuing the command <code>smsc set diameterusername</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get diameterusername</code> which will display the value set for this property.</p>
@@ -31065,7 +31117,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_dest_username_gui"><a class="anchor" href="#_dest_username_gui"></a>6.1.6.4.2. Using GUI</h6>
+<h6 id="_dest_username_gui"><a class="anchor" href="#_dest_username_gui"></a>6.1.6.5.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set Diameter Username using the GUI</div>
 <ol class="arabic">
@@ -31089,9 +31141,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_dest_mocharging"><a class="anchor" href="#_dest_mocharging"></a>6.1.6.5. MO accepting and charging settings</h5>
+<h5 id="_dest_mocharging"><a class="anchor" href="#_dest_mocharging"></a>6.1.6.6. MO accepting and charging settings</h5>
 <div class="sect5">
-<h6 id="_dest_mocharging_cli"><a class="anchor" href="#_dest_mocharging_cli"></a>6.1.6.5.1. Using CLI</h6>
+<h6 id="_dest_mocharging_cli"><a class="anchor" href="#_dest_mocharging_cli"></a>6.1.6.6.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'MO (mobile originated) Charging' value by issuing the command <code>smsc set mocharging</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get mocharging</code> which will display the value set for this property.</p>
@@ -31118,7 +31170,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_dest_mocharging_gui"><a class="anchor" href="#_dest_mocharging_gui"></a>6.1.6.5.2. Using GUI</h6>
+<h6 id="_dest_mocharging_gui"><a class="anchor" href="#_dest_mocharging_gui"></a>6.1.6.6.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set MO Charge using the GUI</div>
 <ol class="arabic">
@@ -31142,9 +31194,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_dest_txsmppcharging"><a class="anchor" href="#_dest_txsmppcharging"></a>6.1.6.6. ESME Charge Settings</h5>
+<h5 id="_dest_txsmppcharging"><a class="anchor" href="#_dest_txsmppcharging"></a>6.1.6.7. ESME Charge Settings</h5>
 <div class="sect5">
-<h6 id="_dest_txsmppcharging_cli"><a class="anchor" href="#_dest_txsmppcharging_cli"></a>6.1.6.6.1. Using CLI</h6>
+<h6 id="_dest_txsmppcharging_cli"><a class="anchor" href="#_dest_txsmppcharging_cli"></a>6.1.6.7.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'ESME Originated SMS Charged' value by issuing the command <code>smsc set txsmppcharging</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get txsmppcharging</code> which will display the value set for this property.</p>
@@ -31179,7 +31231,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_dest_txsmppcharging_gui"><a class="anchor" href="#_dest_txsmppcharging_gui"></a>6.1.6.6.2. Using GUI</h6>
+<h6 id="_dest_txsmppcharging_gui"><a class="anchor" href="#_dest_txsmppcharging_gui"></a>6.1.6.7.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set ESME Charge using the GUI</div>
 <ol class="arabic">
@@ -31203,9 +31255,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_dest_txsipcharging"><a class="anchor" href="#_dest_txsipcharging"></a>6.1.6.7. SIP Charge Settings</h5>
+<h5 id="_dest_txsipcharging"><a class="anchor" href="#_dest_txsipcharging"></a>6.1.6.8. SIP Charge Settings</h5>
 <div class="sect5">
-<h6 id="_dest_txsipcharging_cli"><a class="anchor" href="#_dest_txsipcharging_cli"></a>6.1.6.7.1. Using CLI</h6>
+<h6 id="_dest_txsipcharging_cli"><a class="anchor" href="#_dest_txsipcharging_cli"></a>6.1.6.8.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'SIP Originated SMS Charged' value by issuing the command <code>smsc set txsipcharging</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get txsipcharging</code> which will display the value set for this property.</p>
@@ -31235,7 +31287,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_dest_txsipcharging_gui"><a class="anchor" href="#_dest_txsipcharging_gui"></a>6.1.6.7.2. Using GUI</h6>
+<h6 id="_dest_txsipcharging_gui"><a class="anchor" href="#_dest_txsipcharging_gui"></a>6.1.6.8.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set SIP Charge using the GUI</div>
 <ol class="arabic">
@@ -31259,9 +31311,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_dest_hrcharging"><a class="anchor" href="#_dest_hrcharging"></a>6.1.6.8. Home routing Charge Settings</h5>
+<h5 id="_dest_hrcharging"><a class="anchor" href="#_dest_hrcharging"></a>6.1.6.9. Home routing Charge Settings</h5>
 <div class="sect5">
-<h6 id="_dest_hrcharging_cli"><a class="anchor" href="#_dest_hrcharging_cli"></a>6.1.6.8.1. Using CLI</h6>
+<h6 id="_dest_hrcharging_cli"><a class="anchor" href="#_dest_hrcharging_cli"></a>6.1.6.9.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'Home routing Originated SMS Charged' value by issuing the command <code>smsc set hrcharging</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get hrcharging</code> which will display the value set for this property.</p>
@@ -31291,7 +31343,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_dest_hrcharging_gui"><a class="anchor" href="#_dest_hrcharging_gui"></a>6.1.6.8.2. Using GUI</h6>
+<h6 id="_dest_hrcharging_gui"><a class="anchor" href="#_dest_hrcharging_gui"></a>6.1.6.9.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set Home Routing Charge using the GUI</div>
 <ol class="arabic">
@@ -31315,9 +31367,9 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_dest_txhttpcharging"><a class="anchor" href="#_dest_txhttpcharging"></a>6.1.6.9. HTTP Charge Settings</h5>
+<h5 id="_dest_txhttpcharging"><a class="anchor" href="#_dest_txhttpcharging"></a>6.1.6.10. HTTP Charge Settings</h5>
 <div class="sect5">
-<h6 id="_dest_txhttpcharging_cli"><a class="anchor" href="#_dest_txhttpcharging_cli"></a>6.1.6.9.1. Using CLI</h6>
+<h6 id="_dest_txhttpcharging_cli"><a class="anchor" href="#_dest_txhttpcharging_cli"></a>6.1.6.10.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'HTTP Originated SMS Charged' value by issuing the command <code>smsc set txhttpcharging</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>smsc get txhttpcharging</code> which will display the value set for this property.</p>
@@ -31347,7 +31399,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_dest_txhttpcharging_gui"><a class="anchor" href="#_dest_txhttpcharging_gui"></a>6.1.6.9.2. Using GUI</h6>
+<h6 id="_dest_txhttpcharging_gui"><a class="anchor" href="#_dest_txhttpcharging_gui"></a>6.1.6.10.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Set HTTP originated Charge using the GUI</div>
 <ol class="arabic">
@@ -37580,7 +37632,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-02-28 15:22:10 UTC
+Last updated 2018-03-04 02:29:09 UTC
 </div>
 </div>
 <footer>

@@ -23422,6 +23422,7 @@ display: none;
 </li>
 <li><a href="#_smsc_diameter_settings">Diameter Settings</a>
 <ul class="sectlevel2">
+<li><a href="#_ocs_type">Diameter OCS type</a></li>
 <li><a href="#_dest_realm">Destination Realm</a></li>
 <li><a href="#_dest_host">Destination Host</a></li>
 <li><a href="#_dest_port">Destination Port</a></li>
@@ -26025,6 +26026,58 @@ If there is an error in setting the value, then you will find the details of the
 <p>You can modify Diameter settings using the CLI or GUI.</p>
 </div>
 <div class="sect2">
+<h3 id="_ocs_type"><a class="anchor" href="#_ocs_type"></a>Diameter OCS type</h3>
+<div class="sect3">
+<h4 id="_ocs_type_cli"><a class="anchor" href="#_ocs_type_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'Diameter OCS type' value by issuing the command <code>smsc set diameterocstype</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get diameterocstype</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	smsc set diameterocstype
+
+SYNOPSIS
+	smsc set diameterocstype &lt;value&gt;
+
+DESCRIPTION
+	This command is used to set the OCS type to SMSC GW will send diameter requests.
+	We support now following types:
+	- SmsInformation - usage of SMS-Information (2000) diameter AVP, vendor TGPP (10415)
+	- OcsHuawei      - usage of P2PSMS-Information (20400) diameter AVP, vendor Huawei (2011)
+	Default value: SmsInformation
+
+EXAMPLES
+	smsc set diameterocstype SmsInformation</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ocs_type_gui"><a class="anchor" href="#_ocs_type_gui"></a>Using GUI</h4>
+<div class="olist arabic">
+<div class="title">Procedure: Set Diameter OCS type using the GUI</div>
+<ol class="arabic">
+<li>
+<p>In the GUI Management Console for SMSC Gateway, click on 'Server Settings' in the left panel.</p>
+</li>
+<li>
+<p>The main panel will display the existing Settings, segregated into nine horizontal tabs: Properties, SS7 Settings, Cassandra, Clustering, Scheduler, Diameter, Processing, CDR and Home Routing.
+Switch to the 'Diameter' tab in the GUI.</p>
+</li>
+<li>
+<p>You can specify the Diameter OCS type by entering the value in the corresponding text field.
+For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
+</li>
+<li>
+<p>You must click on the button 'Apply Changes' at the top of the window to save your settings.
+If there is an error in setting the value, then you will find the details of the error in the Management Console Log section below.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_dest_realm"><a class="anchor" href="#_dest_realm"></a>Destination Realm</h3>
 <div class="sect3">
 <h4 id="_dest_realm_cli"><a class="anchor" href="#_dest_realm_cli"></a>Using CLI</h4>
@@ -27954,7 +28007,7 @@ DESCRIPTION
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-02-28 15:22:10 UTC
+Last updated 2018-03-04 02:29:09 UTC
 </div>
 </div>
 <footer>
