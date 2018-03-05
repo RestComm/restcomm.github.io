@@ -24560,7 +24560,7 @@ To start the JBoss Server you must execute the <em class="path">run.sh</em> (Uni
 14:07:50,671 INFO  [SccpStackImpl-SccpStack] Starting MSU handler...
 14:07:50,696 INFO  [ShellExecutor] Starting SS7 management shell environment
 14:07:50,714 INFO  [ShellExecutor] ShellExecutor listening at /127.0.0.1:3435
-14:07:50,776 INFO  [TCAPStackImpl] Starting ...org.mobicents.protocols.ss7.tcap.TCAPProviderImpl@14d18a1
+14:07:50,776 INFO  [TCAPStackImpl] Starting ...org.restcomm.protocols.ss7.tcap.TCAPProviderImpl@14d18a1
 14:07:50,776 INFO  [TCAPProviderImpl] Starting TCAP Provider
 14:07:50,776 INFO  [TCAPProviderImpl] Registered SCCP listener with address 8
 14:07:51,012 INFO  [SS7Service]  [[[[[[[[[ Mobicents jSS7 3.0.0 service started ]]]]]]]]]
@@ -25485,7 +25485,7 @@ For more details on configuring <code class="class">M3UAManagement</code>, pleas
         &lt;/bean&gt;
 
         &lt;bean name="SCTPShellExecutor"
-                class="org.mobicents.protocols.ss7.m3ua.impl.oam.SCTPShellExecutor"&gt;
+                class="org.restcomm.protocols.ss7.m3ua.impl.oam.SCTPShellExecutor"&gt;
             &lt;property name="sctpManagements"&gt;
                 &lt;map keyClass="java.lang.String" valueClass="org.mobicents.protocols.sctp.netty.NettySctpManagementImpl"&gt;
                     &lt;entry&gt;
@@ -25503,7 +25503,7 @@ For more details on configuring <code class="class">M3UAManagement</code>, pleas
         &lt;!-- M3UAManagement is managing the m3ua side commands --&gt;
         &lt;!-- ==================================================================== --&gt;
         &lt;!-- --&gt;
-        &lt;bean name="Mtp3UserPart" class="org.mobicents.protocols.ss7.m3ua.impl.M3UAManagementImpl"&gt;
+        &lt;bean name="Mtp3UserPart" class="org.restcomm.protocols.ss7.m3ua.impl.M3UAManagementImpl"&gt;
             &lt;constructor&gt;
                 &lt;parameter&gt;Mtp3UserPart&lt;/parameter&gt;
                 &lt;parameter&gt;{this-platform}-jSS7&lt;/parameter&gt;
@@ -25521,9 +25521,9 @@ For more details on configuring <code class="class">M3UAManagement</code>, pleas
         &lt;/bean&gt;
 
         &lt;bean name="M3UAShellExecutor"
-                class="org.mobicents.protocols.ss7.m3ua.impl.oam.M3UAShellExecutor"&gt;
+                class="org.restcomm.protocols.ss7.m3ua.impl.oam.M3UAShellExecutor"&gt;
             &lt;property name="m3uaManagements"&gt;
-                &lt;map keyClass="java.lang.String" valueClass="org.mobicents.protocols.ss7.m3ua.impl.M3UAManagementImpl"&gt;
+                &lt;map keyClass="java.lang.String" valueClass="org.restcomm.protocols.ss7.m3ua.impl.M3UAManagementImpl"&gt;
                     &lt;entry&gt;
                         &lt;key&gt;Mtp3UserPart&lt;/key&gt;
                         &lt;value&gt;
@@ -25544,7 +25544,7 @@ For example, in the above case, when Restcomm  SS7 Service is started, a file na
 You can disable of using persistent configuration via using <code>org.mobicents.protocols.sctp.netty.NonPersistentNettySctpManagementImpl</code> class. The other properties of the Stack are defined below:</p>
 </div>
 <div class="paragraph">
-<div class="title"><code class="class">org.mobicents.protocols.ss7.m3ua.impl.M3UAManagementImpl</code></div>
+<div class="title"><code class="class">org.restcomm.protocols.ss7.m3ua.impl.M3UAManagementImpl</code></div>
 <p>This M3UA Management Bean takes a <code class="class">String</code> as a first constructor argument.
 The name is prepended to the name of the XML file created by the M3UA stack for persisting the state of M3UA resources.
 The second constructor argument of M3UA Management Bean is also a <code class="class">String</code>. This is a productName parameter.</p>
@@ -25552,7 +25552,7 @@ The second constructor argument of M3UA Management Bean is also a <code class="c
 <div class="paragraph">
 <p>This XML file is stored in the path specified by the property <code>persistDir</code>.
 For example, in the above case, when Restcomm  SS7 Service is started, a file named <em class="path">Mtp3UserPart_m3ua1.xml</em> will be created at <em class="path">$JBOSS_HOME/server/profile_name/data</em> directory.
-You can disable of using persistent configuration via using <code>org.mobicents.protocols.ss7.m3ua.impl.NonPersistentM3UAManagementImpl</code> class.
+You can disable of using persistent configuration via using <code>org.restcomm.protocols.ss7.m3ua.impl.NonPersistentM3UAManagementImpl</code> class.
 The other properties of the Stack are defined below:</p>
 </div>
 <div class="dlist">
@@ -25605,7 +25605,7 @@ See <a href="#_configuring_routing_label_format">Configuring MTP3 routing label<
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">    &lt;bean name="DahdiLinksetFactory" class="org.mobicents.ss7.hardware.dahdi.oam.DahdiLinksetFactory"&gt;
+<pre class="highlight"><code class="language-xml" data-lang="xml">    &lt;bean name="DahdiLinksetFactory" class="org.restcomm.ss7.hardware.dahdi.oam.DahdiLinksetFactory"&gt;
     &lt;/bean&gt;</code></pre>
 </div>
 </div>
@@ -25621,15 +25621,15 @@ It maintains a Map of available 'factory name' vs 'factory'. You should never to
 <pre class="highlight"><code class="language-xml" data-lang="xml">    &lt;!-- ================================================ --&gt;
     &lt;!-- Linkset manager Service                          --&gt;
     &lt;!-- ================================================ --&gt;
-    &lt;bean name="LinksetFactoryFactory" class="org.mobicents.ss7.linkset.oam.LinksetFactoryFactory"&gt;
+    &lt;bean name="LinksetFactoryFactory" class="org.restcomm.ss7.linkset.oam.LinksetFactoryFactory"&gt;
             &lt;incallback method="addFactory" /&gt;
             &lt;uncallback method="removeFactory" /&gt;
     &lt;/bean&gt;
 
-    &lt;bean name="DahdiLinksetFactory" class="org.mobicents.ss7.hardware.dahdi.oam.DahdiLinksetFactory"&gt;
+    &lt;bean name="DahdiLinksetFactory" class="org.restcomm.ss7.hardware.dahdi.oam.DahdiLinksetFactory"&gt;
     &lt;/bean&gt;
 
-    &lt;bean name="LinksetManager" class="org.mobicents.ss7.linkset.oam.LinksetManagerImpl"&gt;
+    &lt;bean name="LinksetManager" class="org.restcomm.ss7.linkset.oam.LinksetManagerImpl"&gt;
         &lt;constructor&gt;
             &lt;parameter&gt;LinksetManager&lt;/parameter&gt;
         &lt;/constructor&gt;
@@ -25642,7 +25642,7 @@ It maintains a Map of available 'factory name' vs 'factory'. You should never to
         &lt;property name="persistDir"&gt;${jboss.server.data.dir}&lt;/property&gt;
     &lt;/bean&gt;
 
-    &lt;bean name="LinksetExecutor" class="org.mobicents.ss7.linkset.oam.LinksetExecutor"&gt;
+    &lt;bean name="LinksetExecutor" class="org.restcomm.ss7.linkset.oam.LinksetExecutor"&gt;
         &lt;property name="linksetManager"&gt;
             &lt;inject bean="LinksetManager" /&gt;
         &lt;/property&gt;
@@ -25702,7 +25702,7 @@ It is assumed here that MTP3 and MTP2 is leveraged from the Dialogic Stack eithe
     &lt;!-- Dialogic Mtp3UserPart --&gt;
     &lt;!-- ==================================================================== --&gt;
     &lt;!----&gt;
-    &lt;bean name="Mtp3UserPart" class="org.mobicents.ss7.hardware.dialogic.DialogicMtp3UserPart"&gt;
+    &lt;bean name="Mtp3UserPart" class="org.restcomm.ss7.hardware.dialogic.DialogicMtp3UserPart"&gt;
 		&lt;constructor&gt;
 			&lt;parameter&gt;{this-platform}-jSS7&lt;/parameter&gt;
 		&lt;/constructor&gt;
@@ -25757,8 +25757,8 @@ For example An ANSI routing label uses 7 octets; an ITU-T routing label uses 4 o
         &lt;!-- MTP3 Properties --&gt;
         &lt;!-- Define MTP3 routing label Format --&gt;
         &lt;!-- ==================================================================== --&gt;
-        &lt;bean name="RoutingLabelFormat" class="org.mobicents.protocols.ss7.mtp.RoutingLabelFormat"&gt;
-                &lt;constructor factoryClass="org.mobicents.protocols.ss7.mtp.RoutingLabelFormat"
+        &lt;bean name="RoutingLabelFormat" class="org.restcomm.protocols.ss7.mtp.RoutingLabelFormat"&gt;
+                &lt;constructor factoryClass="org.restcomm.protocols.ss7.mtp.RoutingLabelFormat"
                         factoryMethod="getInstance"&gt;
                         &lt;parameter&gt;ITU&lt;/parameter&gt;
                 &lt;/constructor&gt;
@@ -25826,10 +25826,10 @@ For example An ANSI routing label uses 7 octets; an ITU-T routing label uses 4 o
 <pre class="highlight"><code class="language-xml" data-lang="xml">    &lt;!-- ==================================================================== --&gt;
     &lt;!-- SCCP Service --&gt;
     &lt;!-- ==================================================================== --&gt;
-    &lt;!--&lt;bean name="RuleComparator" class="org.mobicents.protocols.ss7.sccp.impl.router.RuleByIdComparator"/&gt;--&gt;
-	  &lt;bean name="RuleComparator" class="org.mobicents.protocols.ss7.sccp.impl.router.RuleComparator"/&gt;
-	  &lt;bean name="RuleComparatorFactory" class="org.mobicents.protocols.ss7.sccp.impl.router.RuleComparatorFactory"&gt;
-		    &lt;constructor factoryClass="org.mobicents.protocols.ss7.sccp.impl.router.RuleComparatorFactory"
+    &lt;!--&lt;bean name="RuleComparator" class="org.restcomm.protocols.ss7.sccp.impl.router.RuleByIdComparator"/&gt;--&gt;
+	  &lt;bean name="RuleComparator" class="org.restcomm.protocols.ss7.sccp.impl.router.RuleComparator"/&gt;
+	  &lt;bean name="RuleComparatorFactory" class="org.restcomm.protocols.ss7.sccp.impl.router.RuleComparatorFactory"&gt;
+		    &lt;constructor factoryClass="org.restcomm.protocols.ss7.sccp.impl.router.RuleComparatorFactory"
 					   factoryMethod="getInstance"&gt;
 			        &lt;parameter&gt;RuleComparatorFactory&lt;/parameter&gt;
 		    &lt;/constructor&gt;
@@ -25837,7 +25837,7 @@ For example An ANSI routing label uses 7 octets; an ITU-T routing label uses 4 o
 			     &lt;inject bean="RuleComparator"/&gt;
 		    &lt;/property&gt;
 	  &lt;/bean&gt;
-    &lt;bean name="SccpStack" class="org.mobicents.protocols.ss7.sccp.impl.SccpStackImpl"&gt;
+    &lt;bean name="SccpStack" class="org.restcomm.protocols.ss7.sccp.impl.SccpStackImpl"&gt;
         &lt;constructor&gt;
             &lt;parameter&gt;
                 &lt;inject bean="SS7Scheduler" /&gt;
@@ -25846,7 +25846,7 @@ For example An ANSI routing label uses 7 octets; an ITU-T routing label uses 4 o
         &lt;/constructor&gt;
         &lt;property name="persistDir"&gt;${jboss.server.data.dir}&lt;/property&gt;
         &lt;property name="mtp3UserParts"&gt;
-            &lt;map keyClass="java.lang.Integer" valueClass="org.mobicents.protocols.ss7.mtp.Mtp3UserPart"&gt;
+            &lt;map keyClass="java.lang.Integer" valueClass="org.restcomm.protocols.ss7.mtp.Mtp3UserPart"&gt;
                 &lt;entry&gt;
                     &lt;key&gt;1&lt;/key&gt;
                         &lt;value&gt;
@@ -25857,9 +25857,9 @@ For example An ANSI routing label uses 7 octets; an ITU-T routing label uses 4 o
         &lt;/property&gt;
     &lt;/bean&gt;
 
-    &lt;bean name="SccpExecutor" class="org.mobicents.protocols.ss7.sccp.impl.oam.SccpExecutor"&gt;
+    &lt;bean name="SccpExecutor" class="org.restcomm.protocols.ss7.sccp.impl.oam.SccpExecutor"&gt;
 		&lt;property name="sccpStacks"&gt;
-			&lt;map keyClass="java.lang.String" valueClass="org.mobicents.protocols.ss7.sccp.impl.SccpStackImpl"&gt;
+			&lt;map keyClass="java.lang.String" valueClass="org.restcomm.protocols.ss7.sccp.impl.SccpStackImpl"&gt;
 				&lt;entry&gt;
 					&lt;key&gt;SccpStack&lt;/key&gt;
 					&lt;value&gt;
@@ -25872,13 +25872,13 @@ For example An ANSI routing label uses 7 octets; an ITU-T routing label uses 4 o
 </div>
 </div>
 <div class="paragraph">
-<p><code class="class">org.mobicents.protocols.ss7.sccp.impl.SccpStackImpl</code> takes <code class="class">String</code> as constructor argument.
+<p><code class="class">org.restcomm.protocols.ss7.sccp.impl.SccpStackImpl</code> takes <code class="class">String</code> as constructor argument.
 The name is prepend to <code>xml</code> file created by SCCP stack for persisting state of SCCP resources.
 The <code>xml</code> is stored in path specified by <code>persistDir</code> property above.</p>
 </div>
 <div class="paragraph">
 <p>For example in above case, when Restcomm SS7 Service is started 3 file&#8217;s <em class="path">SccpStack_management2.xml</em>, <em class="path">SccpStack_sccpresource2.xml</em>  and <em class="path">SccpStack_sccprouter2.xml</em> will be created at <em class="path">$JBOSS_HOME/server/profile_name/data</em> directory
-You can disable of using persistent configuration via using <code>org.mobicents.protocols.ss7.sccp.impl.NonPersistentSccpStackImpl</code> class.
+You can disable of using persistent configuration via using <code>org.restcomm.protocols.ss7.sccp.impl.NonPersistentSccpStackImpl</code> class.
 Stack has following properties:</p>
 </div>
 <div class="dlist">
@@ -25898,7 +25898,7 @@ This allows to have multiple local point-code and connecting to various networks
 <p><code>SccpExecutor</code> accepts <code>sccp</code> commands and executes necessary operations</p>
 </div>
 <div class="paragraph">
-<p>For sorting SCCP rules by ID we need to set  <code>RuleComparator</code> to <code>org.mobicents.protocols.ss7.sccp.impl.router.RuleByIdComparator</code>. By default it sorts by calledDigits and callingDigits patterns.</p>
+<p>For sorting SCCP rules by ID we need to set  <code>RuleComparator</code> to <code>org.restcomm.protocols.ss7.sccp.impl.router.RuleByIdComparator</code>. By default it sorts by calledDigits and callingDigits patterns.</p>
 </div>
 </div>
 <div class="sect3">
@@ -25913,7 +25913,7 @@ If you are using either one, feel free to delete the other.</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">    &lt;!-- ==================================================================== --&gt;
     &lt;!-- TCAP Service --&gt;
     &lt;!-- ==================================================================== --&gt;
-    &lt;bean name="TcapStackMap" class="org.mobicents.protocols.ss7.tcap.TCAPStackImpl"&gt;
+    &lt;bean name="TcapStackMap" class="org.restcomm.protocols.ss7.tcap.TCAPStackImpl"&gt;
         &lt;constructor&gt;
 			&lt;parameter&gt;TcapStackMap&lt;/parameter&gt;
             &lt;parameter&gt;
@@ -25925,7 +25925,7 @@ If you are using either one, feel free to delete the other.</p>
 		&lt;property name="previewMode"&gt;false&lt;/property&gt;
     &lt;/bean&gt;
 
-    &lt;bean name="TcapStackCap" class="org.mobicents.protocols.ss7.tcap.TCAPStackImpl"&gt;
+    &lt;bean name="TcapStackCap" class="org.restcomm.protocols.ss7.tcap.TCAPStackImpl"&gt;
         &lt;constructor&gt;
 			&lt;parameter&gt;TcapStackCap&lt;/parameter&gt;
                 &lt;parameter&gt;
@@ -25937,7 +25937,7 @@ If you are using either one, feel free to delete the other.</p>
 		&lt;property name="previewMode"&gt;false&lt;/property&gt;
     &lt;/bean&gt;
 
-    &lt;bean name="TcapStack" class="org.mobicents.protocols.ss7.tcap.TCAPStackImpl"&gt;
+    &lt;bean name="TcapStack" class="org.restcomm.protocols.ss7.tcap.TCAPStackImpl"&gt;
         &lt;constructor&gt;
             &lt;parameter&gt;TcapStack&lt;/parameter&gt;
             &lt;parameter&gt;
@@ -25949,9 +25949,9 @@ If you are using either one, feel free to delete the other.</p>
 		&lt;property name="previewMode"&gt;false&lt;/property&gt;
     &lt;/bean&gt;
 
-	&lt;bean name="TcapExecutor" class="org.mobicents.protocols.ss7.tcap.oam.TCAPExecutor"&gt;
+	&lt;bean name="TcapExecutor" class="org.restcomm.protocols.ss7.tcap.oam.TCAPExecutor"&gt;
 		&lt;property name="tcapStacks"&gt;
-			&lt;map keyClass="java.lang.String" valueClass="org.mobicents.protocols.ss7.tcap.TCAPStackImpl"&gt;
+			&lt;map keyClass="java.lang.String" valueClass="org.restcomm.protocols.ss7.tcap.TCAPStackImpl"&gt;
 				&lt;entry&gt;
 					&lt;key&gt;TcapStackMap&lt;/key&gt;
 					&lt;value&gt;
@@ -25976,14 +25976,14 @@ If you are using either one, feel free to delete the other.</p>
 </div>
 </div>
 <div class="paragraph">
-<p><code class="class">org.mobicents.protocols.ss7.tcap.TCAPStackImpl</code> takes <code class="class">String</code> as a first constructor argument.
+<p><code class="class">org.restcomm.protocols.ss7.tcap.TCAPStackImpl</code> takes <code class="class">String</code> as a first constructor argument.
 The name is prepend to <code>xml</code> file created by TCAP stack for persisting state of TCAP resources.
 The <code>xml</code> is stored in path specified by <code>persistDir</code> property above.</p>
 </div>
 <div class="paragraph">
-<p>For example in above case, when Restcomm SS7 Service is started 3 file&#8217;s <em class="path">TcapStack_management.xml</em>, <em class="path">TcapStack_managementMap.xml</em>  and <em class="path">TcapStack_managementCap.xml</em> will be created at <em class="path">$JBOSS_HOME/server/profile_name/data</em> directory. Then <code class="class">org.mobicents.protocols.ss7.tcap.TCAPStackImpl</code> takes <code class="class">SccpStack</code> as second constructor argument.
+<p>For example in above case, when Restcomm SS7 Service is started 3 file&#8217;s <em class="path">TcapStack_management.xml</em>, <em class="path">TcapStack_managementMap.xml</em>  and <em class="path">TcapStack_managementCap.xml</em> will be created at <em class="path">$JBOSS_HOME/server/profile_name/data</em> directory. Then <code class="class">org.restcomm.protocols.ss7.tcap.TCAPStackImpl</code> takes <code class="class">SccpStack</code> as second constructor argument.
 TCAP uses passed SCCP stack. Constructor also takes the sub system number (SSN) which is registered with passed SCCP stack (this is the third parameter).
-You can disable of using persistent configuration via using <code>org.mobicents.protocols.ss7.tcap.NonPersistentTCAPStackImpl</code> class.
+You can disable of using persistent configuration via using <code>org.restcomm.protocols.ss7.tcap.NonPersistentTCAPStackImpl</code> class.
 TCAP Stack has following configurable properties:</p>
 </div>
 <div class="dlist">
@@ -26040,7 +26040,7 @@ Received commands are executed on local resources to  perform actions like creat
 				&lt;inject bean="SS7Scheduler" /&gt;
 			&lt;/parameter&gt;
 			&lt;parameter&gt;
-				&lt;list class="javolution.util.FastList" elementClass="org.mobicents.ss7.management.console.ShellExecutor"&gt;
+				&lt;list class="javolution.util.FastList" elementClass="org.restcomm.ss7.management.console.ShellExecutor"&gt;
 					&lt;inject bean="SccpExecutor" /&gt;
 					&lt;inject bean="M3UAShellExecutor" /&gt;
 					&lt;inject bean="SCTPShellExecutor" /&gt;
@@ -26088,7 +26088,7 @@ For <code>dahdi</code> need to declare <code>LinksetExecutor</code> bean and add
 <pre class="highlight"><code class="language-xml" data-lang="xml">    &lt;!-- ==================================================================== --&gt;
     &lt;!-- MAP Service --&gt;
     &lt;!-- ==================================================================== --&gt;
-    &lt;bean name="MapStack" class="org.mobicents.protocols.ss7.map.MAPStackImpl"&gt;
+    &lt;bean name="MapStack" class="org.restcomm.protocols.ss7.map.MAPStackImpl"&gt;
         &lt;constructor&gt;
             &lt;parameter&gt;MapStack&lt;/parameter&gt;
             &lt;parameter&gt;
@@ -26099,7 +26099,7 @@ For <code>dahdi</code> need to declare <code>LinksetExecutor</code> bean and add
 </div>
 </div>
 <div class="paragraph">
-<p><code class="class">org.mobicents.protocols.ss7.tcap.MAPStackImpl</code> takes <code class="class">String</code> as a first constructor argument.
+<p><code class="class">org.restcomm.protocols.ss7.tcap.MAPStackImpl</code> takes <code class="class">String</code> as a first constructor argument.
 The name is prepend to <code>xml</code> file created by MAP stack for persisting state of MAP resources.
 The <code>xml</code> is stored in path specified by <code>persistDir</code> property above. As for now MAP stack does not store any XML files.
 The second constructor argument is <code class="class">TcapStack</code>. MAP uses passed TCAP stack.</p>
@@ -26118,7 +26118,7 @@ The second constructor argument is <code class="class">TcapStack</code>. MAP use
 <pre class="highlight"><code class="language-xml" data-lang="xml">    &lt;!-- ==================================================================== --&gt;
     &lt;!-- CAP Service --&gt;
     &lt;!-- ==================================================================== --&gt;
-    &lt;bean name="CapStack" class="org.mobicents.protocols.ss7.cap.CAPStackImpl"&gt;
+    &lt;bean name="CapStack" class="org.restcomm.protocols.ss7.cap.CAPStackImpl"&gt;
         &lt;constructor&gt;
             &lt;parameter&gt;CapStack&lt;/parameter&gt;
             &lt;parameter&gt;
@@ -26129,7 +26129,7 @@ The second constructor argument is <code class="class">TcapStack</code>. MAP use
 </div>
 </div>
 <div class="paragraph">
-<p><code class="class">org.mobicents.protocols.ss7.tcap.CAPStackImpl</code> takes <code class="class">String</code> as a first constructor argument.
+<p><code class="class">org.restcomm.protocols.ss7.tcap.CAPStackImpl</code> takes <code class="class">String</code> as a first constructor argument.
 The name is prepend to <code>xml</code> file created by CAP stack for persisting state of CAP resources.
 The <code>xml</code> is stored in path specified by <code>persistDir</code> property above. As for now CAP stack does not store any XML files.
 The second constructor argument is <code class="class">TcapStack</code>. CAP uses passed TCAP stack.</p>
@@ -26148,10 +26148,10 @@ The second constructor argument is <code class="class">TcapStack</code>. CAP use
 <pre class="highlight"><code class="language-xml" data-lang="xml">    &lt;!-- ==================================================================== --&gt;
     &lt;!-- ISUP Service --&gt;
     &lt;!-- ==================================================================== --&gt;
-    &lt;bean name="CircuitManager" class="org.mobicents.protocols.ss7.isup.impl.CircuitManagerImpl"&gt;
+    &lt;bean name="CircuitManager" class="org.restcomm.protocols.ss7.isup.impl.CircuitManagerImpl"&gt;
     &lt;/bean&gt;
 
-    &lt;bean name="IsupStack" class="org.mobicents.protocols.ss7.isup.impl.ISUPStackImpl"&gt;
+    &lt;bean name="IsupStack" class="org.restcomm.protocols.ss7.isup.impl.ISUPStackImpl"&gt;
         &lt;constructor&gt;
             &lt;parameter&gt;
                 &lt;inject bean="SS7Scheduler" /&gt;
@@ -26169,7 +26169,7 @@ The second constructor argument is <code class="class">TcapStack</code>. CAP use
 </div>
 </div>
 <div class="paragraph">
-<p><code class="class">org.mobicents.protocols.ss7.isup.impl.ISUPStackImpl</code> takes <code class="class">SS7Scheduler</code>, local signaling pointcode and network indicator as constructor argument.</p>
+<p><code class="class">org.restcomm.protocols.ss7.isup.impl.ISUPStackImpl</code> takes <code class="class">SS7Scheduler</code>, local signaling pointcode and network indicator as constructor argument.</p>
 </div>
 <div class="paragraph">
 <p>Stack has following properties:</p>
@@ -26200,36 +26200,36 @@ The second constructor argument is <code class="class">TcapStack</code>. CAP use
 <pre class="highlight"><code class="language-xml" data-lang="xml">    &lt;!-- ==================================================================== --&gt;
     &lt;!-- RestComm SS7 Service --&gt;
     &lt;!-- ==================================================================== --&gt;
-    &lt;bean name="TCAPSS7Service" class="org.mobicents.ss7.SS7Service"&gt;
+    &lt;bean name="TCAPSS7Service" class="org.restcomm.ss7.SS7Service"&gt;
         &lt;constructor&gt;&lt;parameter&gt;TCAP&lt;/parameter&gt;&lt;/constructor&gt;
-        &lt;annotation&gt;@org.jboss.aop.microcontainer.aspects.jmx.JMX(name="org.mobicents.ss7:service=TCAPSS7Service",exposedInterface=org.mobicents.ss7.SS7ServiceMBean.class,registerDirectly=true)
+        &lt;annotation&gt;@org.jboss.aop.microcontainer.aspects.jmx.JMX(name="org.restcomm.ss7:service=TCAPSS7Service",exposedInterface=org.restcomm.ss7.SS7ServiceMBean.class,registerDirectly=true)
         &lt;/annotation&gt;
         &lt;property name="jndiName"&gt;java:/restcomm/ss7/tcap&lt;/property&gt;
         &lt;property name="stack"&gt;
             &lt;inject bean="TcapStack" property="provider" /&gt;
         &lt;/property&gt;
     &lt;/bean&gt;
-    &lt;bean name="MAPSS7Service" class="org.mobicents.ss7.SS7Service"&gt;
+    &lt;bean name="MAPSS7Service" class="org.restcomm.ss7.SS7Service"&gt;
         &lt;constructor&gt;&lt;parameter&gt;MAP&lt;/parameter&gt;&lt;/constructor&gt;
-        &lt;annotation&gt;@org.jboss.aop.microcontainer.aspects.jmx.JMX(name="org.mobicents.ss7:service=MAPSS7Service",exposedInterface=org.mobicents.ss7.SS7ServiceMBean.class,registerDirectly=true)
+        &lt;annotation&gt;@org.jboss.aop.microcontainer.aspects.jmx.JMX(name="org.restcomm.ss7:service=MAPSS7Service",exposedInterface=org.restcomm.ss7.SS7ServiceMBean.class,registerDirectly=true)
         &lt;/annotation&gt;
         &lt;property name="jndiName"&gt;java:/restcomm/ss7/map&lt;/property&gt;
         &lt;property name="stack"&gt;
             &lt;inject bean="MapStack" property="MAPProvider" /&gt;
         &lt;/property&gt;
     &lt;/bean&gt;
-    &lt;bean name="CAPSS7Service" class="org.mobicents.ss7.SS7Service"&gt;
+    &lt;bean name="CAPSS7Service" class="org.restcomm.ss7.SS7Service"&gt;
         &lt;constructor&gt;&lt;parameter&gt;CAP&lt;/parameter&gt;&lt;/constructor&gt;
-        &lt;annotation&gt;@org.jboss.aop.microcontainer.aspects.jmx.JMX(name="org.mobicents.ss7:service=CAPSS7Service",exposedInterface=org.mobicents.ss7.SS7ServiceMBean.class,registerDirectly=true)
+        &lt;annotation&gt;@org.jboss.aop.microcontainer.aspects.jmx.JMX(name="org.restcomm.ss7:service=CAPSS7Service",exposedInterface=org.restcomm.ss7.SS7ServiceMBean.class,registerDirectly=true)
         &lt;/annotation&gt;
         &lt;property name="jndiName"&gt;java:/restcomm/ss7/cap&lt;/property&gt;
         &lt;property name="stack"&gt;
             &lt;inject bean="CapStack" property="CAPProvider" /&gt;
         &lt;/property&gt;
     &lt;/bean&gt;
-    &lt;bean name="ISUPSS7Service" class="org.mobicents.ss7.SS7Service"&gt;
+    &lt;bean name="ISUPSS7Service" class="org.restcomm.ss7.SS7Service"&gt;
         &lt;constructor&gt;&lt;parameter&gt;ISUP&lt;/parameter&gt;&lt;/constructor&gt;
-        &lt;annotation&gt;@org.jboss.aop.microcontainer.aspects.jmx.JMX(name="org.mobicents.ss7:service=ISUPSS7Service",exposedInterface=org.mobicents.ss7.SS7ServiceMBean.class,registerDirectly=true)
+        &lt;annotation&gt;@org.jboss.aop.microcontainer.aspects.jmx.JMX(name="org.restcomm.ss7:service=ISUPSS7Service",exposedInterface=org.restcomm.ss7.SS7ServiceMBean.class,registerDirectly=true)
         &lt;/annotation&gt;
         &lt;property name="jndiName"&gt;java:/restcomm/ss7/isup&lt;/property&gt;
         &lt;property name="stack"&gt;
@@ -26265,13 +26265,13 @@ The second constructor argument is <code class="class">TcapStack</code>. CAP use
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-xml" data-lang="xml">	&lt;bean name="Ss7Management"
-		class="org.mobicents.protocols.ss7.oam.common.jmxss7.Ss7Management"&gt;
-		&lt;annotation&gt;@org.jboss.aop.microcontainer.aspects.jmx.JMX(name="org.mobicents.ss7:service=Ss7Management",exposedInterface=org.mobicents.protocols.ss7.oam.common.jmxss7.Ss7ManagementMBean.class,registerDirectly=true)&lt;/annotation&gt;
+		class="org.restcomm.protocols.ss7.oam.common.jmxss7.Ss7Management"&gt;
+		&lt;annotation&gt;@org.jboss.aop.microcontainer.aspects.jmx.JMX(name="org.restcomm.ss7:service=Ss7Management",exposedInterface=org.restcomm.protocols.ss7.oam.common.jmxss7.Ss7ManagementMBean.class,registerDirectly=true)&lt;/annotation&gt;
 		&lt;property name="agentId"&gt;jboss&lt;/property&gt;
 	&lt;/bean&gt;
 
 	&lt;bean name="RestcommAlarmManagement"
-		class="org.mobicents.protocols.ss7.oam.common.alarm.AlarmProvider"&gt;
+		class="org.restcomm.protocols.ss7.oam.common.alarm.AlarmProvider"&gt;
 		&lt;constructor&gt;
 			&lt;parameter&gt;
 				&lt;inject bean="Ss7Management" /&gt;
@@ -26283,7 +26283,7 @@ The second constructor argument is <code class="class">TcapStack</code>. CAP use
 	&lt;/bean&gt;
 
 	&lt;bean name="RestcommStatisticManagement"
-		class="org.mobicents.protocols.ss7.oam.common.statistics.CounterProviderManagement"&gt;
+		class="org.restcomm.protocols.ss7.oam.common.statistics.CounterProviderManagement"&gt;
 		&lt;constructor&gt;
 			&lt;parameter&gt;
 				&lt;inject bean="Ss7Management" /&gt;
@@ -26293,7 +26293,7 @@ The second constructor argument is <code class="class">TcapStack</code>. CAP use
 	&lt;/bean&gt;
 
 	&lt;bean name="RestcommSctpManagement"
-		class="org.mobicents.protocols.ss7.oam.common.sctp.SctpManagementJmx"&gt;
+		class="org.restcomm.protocols.ss7.oam.common.sctp.SctpManagementJmx"&gt;
 		&lt;constructor&gt;
 			&lt;parameter&gt;
 				&lt;inject bean="Ss7Management" /&gt;
@@ -26305,7 +26305,7 @@ The second constructor argument is <code class="class">TcapStack</code>. CAP use
 	&lt;/bean&gt;
 
 	&lt;bean name="RestcommM3uaManagement"
-		class="org.mobicents.protocols.ss7.oam.common.m3ua.M3uaManagementJmx"&gt;
+		class="org.restcomm.protocols.ss7.oam.common.m3ua.M3uaManagementJmx"&gt;
 		&lt;constructor&gt;
 			&lt;parameter&gt;
 				&lt;inject bean="Ss7Management" /&gt;
@@ -26317,7 +26317,7 @@ The second constructor argument is <code class="class">TcapStack</code>. CAP use
 	&lt;/bean&gt;
 
 	&lt;bean name="RestcommSccpManagement"
-		class="org.mobicents.protocols.ss7.oam.common.sccp.SccpManagementJmx"&gt;
+		class="org.restcomm.protocols.ss7.oam.common.sccp.SccpManagementJmx"&gt;
 		&lt;constructor&gt;
 			&lt;parameter&gt;
 				&lt;inject bean="Ss7Management" /&gt;
@@ -26329,7 +26329,7 @@ The second constructor argument is <code class="class">TcapStack</code>. CAP use
 	&lt;/bean&gt;
 
 	&lt;bean name="RestcommTcapManagement"
-		class="org.mobicents.protocols.ss7.oam.common.tcap.TcapManagementJmx"&gt;
+		class="org.restcomm.protocols.ss7.oam.common.tcap.TcapManagementJmx"&gt;
 		&lt;constructor&gt;
 			&lt;parameter&gt;
 				&lt;inject bean="Ss7Management" /&gt;
@@ -26341,7 +26341,7 @@ The second constructor argument is <code class="class">TcapStack</code>. CAP use
 	&lt;/bean&gt;
 
 	&lt;bean name="RestcommTcapMapManagement"
-		class="org.mobicents.protocols.ss7.oam.common.tcap.TcapManagementJmx"&gt;
+		class="org.restcomm.protocols.ss7.oam.common.tcap.TcapManagementJmx"&gt;
 		&lt;constructor&gt;
 			&lt;parameter&gt;
 				&lt;inject bean="Ss7Management" /&gt;
@@ -26353,7 +26353,7 @@ The second constructor argument is <code class="class">TcapStack</code>. CAP use
 	&lt;/bean&gt;
 
 	&lt;bean name="RestcommTcapCapManagement"
-		class="org.mobicents.protocols.ss7.oam.common.tcap.TcapManagementJmx"&gt;
+		class="org.restcomm.protocols.ss7.oam.common.tcap.TcapManagementJmx"&gt;
 		&lt;constructor&gt;
 			&lt;parameter&gt;
 				&lt;inject bean="Ss7Management" /&gt;
@@ -26366,7 +26366,7 @@ The second constructor argument is <code class="class">TcapStack</code>. CAP use
 
 &lt;!--
 	&lt;bean name="RestcommLinksetManagement"
-		class="org.mobicents.protocols.ss7.oam.common.linkset.LinksetManagerJmx"&gt;
+		class="org.restcomm.protocols.ss7.oam.common.linkset.LinksetManagerJmx"&gt;
 		&lt;constructor&gt;
 			&lt;parameter&gt;
 				&lt;inject bean="Ss7Management" /&gt;
@@ -26414,7 +26414,7 @@ The second constructor argument is <code class="class">TcapStack</code>. CAP use
         &lt;property name="persistDir"&gt;${sgw.home.dir}/ss7&lt;/property&gt;
     &lt;/bean&gt;
 
-	&lt;bean name="SCTPShellExecutor" class="org.mobicents.protocols.ss7.m3ua.impl.oam.SCTPShellExecutor"&gt;
+	&lt;bean name="SCTPShellExecutor" class="org.restcomm.protocols.ss7.m3ua.impl.oam.SCTPShellExecutor"&gt;
 		&lt;property name="sctpManagements"&gt;
 			&lt;map keyClass="java.lang.String" valueClass="org.mobicents.protocols.sctp.ManagementImpl"&gt;
 				&lt;entry&gt;
@@ -26427,7 +26427,7 @@ The second constructor argument is <code class="class">TcapStack</code>. CAP use
 		&lt;/property&gt;
 	&lt;/bean&gt;
 
-	&lt;bean name="Mtp3UserPart" class="org.mobicents.protocols.ss7.m3ua.impl.M3UAManagementImpl"&gt;
+	&lt;bean name="Mtp3UserPart" class="org.restcomm.protocols.ss7.m3ua.impl.M3UAManagementImpl"&gt;
 		&lt;constructor&gt;
 			&lt;parameter&gt;Mtp3UserPart&lt;/parameter&gt;
 			&lt;parameter&gt;Restcomm-jSS7&lt;/parameter&gt;
@@ -26438,9 +26438,9 @@ The second constructor argument is <code class="class">TcapStack</code>. CAP use
 		&lt;/property&gt;
 	&lt;/bean&gt;
 
-	&lt;bean name="M3UAShellExecutor" class="org.mobicents.protocols.ss7.m3ua.impl.oam.M3UAShellExecutor"&gt;
+	&lt;bean name="M3UAShellExecutor" class="org.restcomm.protocols.ss7.m3ua.impl.oam.M3UAShellExecutor"&gt;
 		&lt;property name="m3uaManagements"&gt;
-			&lt;map keyClass="java.lang.String" valueClass="org.mobicents.protocols.ss7.m3ua.impl.M3UAManagementImpl"&gt;
+			&lt;map keyClass="java.lang.String" valueClass="org.restcomm.protocols.ss7.m3ua.impl.M3UAManagementImpl"&gt;
 				&lt;entry&gt;
 					&lt;key&gt;Mtp3UserPart&lt;/key&gt;
 					&lt;value&gt;
@@ -26466,7 +26466,7 @@ Restcomm  Signaling Gateway defines two linkset factories :</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-xml" data-lang="xml">	&lt;bean name="DahdiLinksetFactory"
-		class="org.mobicents.ss7.hardware.dahdi.oam.DahdiLinksetFactory"&gt;
+		class="org.restcomm.ss7.hardware.dahdi.oam.DahdiLinksetFactory"&gt;
 		&lt;property name="scheduler"&gt;
 			&lt;inject bean="Scheduler" /&gt;
 		&lt;/property&gt;
@@ -26479,7 +26479,7 @@ Restcomm  Signaling Gateway defines two linkset factories :</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-xml" data-lang="xml">	&lt;bean name="DialogicLinksetFactory"
-		class="org.mobicents.ss7.hardware.dialogic.oam.DialogicLinksetFactory"&gt;
+		class="org.restcomm.ss7.hardware.dialogic.oam.DialogicLinksetFactory"&gt;
 	&lt;/bean&gt;</code></pre>
 </div>
 </div>
@@ -26506,7 +26506,7 @@ You should never touch this bean.</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">    &lt;!-- ================================================ --&gt;
     &lt;!-- Linkset manager Service                                              --&gt;
     &lt;!-- ================================================ --&gt;
-	&lt;bean name="LinksetManager" class="org.mobicents.ss7.linkset.oam.LinksetManagerImpl"&gt;
+	&lt;bean name="LinksetManager" class="org.restcomm.ss7.linkset.oam.LinksetManagerImpl"&gt;
 		&lt;constructor&gt;
 			&lt;parameter&gt;LinksetManager&lt;/parameter&gt;
 		&lt;/constructor&gt;
@@ -26520,7 +26520,7 @@ You should never touch this bean.</p>
 		&lt;property name="persistDir"&gt;${sgw.home.dir}/ss7&lt;/property&gt;
 	&lt;/bean&gt;
 
-	&lt;bean name="LinksetExecutor" class="org.mobicents.ss7.linkset.oam.LinksetExecutor"&gt;
+	&lt;bean name="LinksetExecutor" class="org.restcomm.ss7.linkset.oam.LinksetExecutor"&gt;
 		&lt;property name="linksetManager"&gt;
 			&lt;inject bean="LinksetManager" /&gt;
 		&lt;/property&gt;
@@ -26559,13 +26559,13 @@ Received commands are executed on local resources to  perform actions like creat
 <pre class="highlight"><code class="language-xml" data-lang="xml">    &lt;!-- ================================================ --&gt;
     &lt;!-- Shell Service                                                        --&gt;
     &lt;!-- ================================================ --&gt;
-	&lt;bean name="ShellExecutor" class="org.mobicents.ss7.management.console.ShellServer"&gt;
+	&lt;bean name="ShellExecutor" class="org.restcomm.ss7.management.console.ShellServer"&gt;
 		&lt;constructor&gt;
 			&lt;parameter&gt;
 				&lt;inject bean="Scheduler" /&gt;
 			&lt;/parameter&gt;
 			&lt;parameter&gt;
-				&lt;list class="javolution.util.FastList" elementClass="org.mobicents.ss7.management.console.ShellExecutor"&gt;
+				&lt;list class="javolution.util.FastList" elementClass="org.restcomm.ss7.management.console.ShellExecutor"&gt;
 					&lt;inject bean="M3UAShellExecutor" /&gt;
 					&lt;inject bean="SCTPShellExecutor" /&gt;
 					&lt;inject bean="LinksetExecutor" /&gt;
@@ -26594,7 +26594,7 @@ The shell commands are exchanged over TCP/IP.</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">    &lt;!-- ================================================ --&gt;
     &lt;!-- mobicents Signaling Gateway                                      --&gt;
     &lt;!-- ================================================ --&gt;
-	&lt;bean name="SignalingGateway" class="org.mobicents.ss7.sgw.SignalingGateway"&gt;
+	&lt;bean name="SignalingGateway" class="org.restcomm.ss7.sgw.SignalingGateway"&gt;
 		&lt;property name="scheduler"&gt;
 			&lt;inject bean="Scheduler" /&gt;
 		&lt;/property&gt;
@@ -26705,7 +26705,7 @@ Association will be started automatically when layer above M3UA&#8217;s ASP is s
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>    org.mobicents.protocols.ss7.m3ua.impl clientM3UAMgmt = null;
+<pre class="highlight"><code>    org.restcomm.protocols.ss7.m3ua.impl clientM3UAMgmt = null;
     clientM3UAMgmt = new M3UAManagement("Client", null);
     clientM3UAMgmt.setPersistDir("&lt;your directory path&gt;");
     clientM3UAMgmt.setTransportManagement(sctpManagement);
@@ -26763,7 +26763,7 @@ Once M3UA is configured depending on whether you are trying to build voice appli
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>    org.mobicents.protocols.ss7.sccp.SccpStack sccpStack = null;
+<pre class="highlight"><code>    org.restcomm.protocols.ss7.sccp.SccpStack sccpStack = null;
     sccpStack = new SccpStackImpl("MapLoadClientSccpStack");
     clientM3UAMgmt.setPersistDir("&lt;your directory path&gt;");
     sccpStack.setMtp3UserPart(1, this.clientM3UAMgmt);
@@ -26776,11 +26776,11 @@ Once M3UA is configured depending on whether you are trying to build voice appli
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>    org.mobicents.protocols.ss7.scheduler.Clock clock = new DefaultClock();
-    org.mobicents.protocols.ss7.scheduler.Scheduler scheduler = new Scheduler();
+<pre class="highlight"><code>    org.restcomm.protocols.ss7.scheduler.Clock clock = new DefaultClock();
+    org.restcomm.protocols.ss7.scheduler.Scheduler scheduler = new Scheduler();
     scheduler.setClock(clock);
 
-    org.mobicents.protocols.ss7.sccp.SccpStack sccpStack = null;
+    org.restcomm.protocols.ss7.sccp.SccpStack sccpStack = null;
     sccpStack = new SccpStackImpl(scheduler, "MapLoadClientSccpStack");
     clientM3UAMgmt.setPersistDir("&lt;your directory path&gt;");
     sccpStack.setMtp3UserPart(1, this.clientM3UAMgmt);
@@ -26818,14 +26818,14 @@ Above sections explained building SCTP and M3UA,  however if you are using Dialo
 
     ParameterFactoryImpl fact = new ParameterFactoryImpl();
     EncodingScheme ec = new BCDEvenEncodingScheme();
-    GlobalTitle gt1 = fact.createGlobalTitle("-", 0, org.mobicents.protocols.ss7.indicator.NumberingPlan.ISDN_TELEPHONY, ec, NatureOfAddress.INTERNATIONAL);
-    GlobalTitle gt2 = fact.createGlobalTitle("-", 0, org.mobicents.protocols.ss7.indicator.NumberingPlan.ISDN_TELEPHONY, ec, NatureOfAddress.INTERNATIONAL);
+    GlobalTitle gt1 = fact.createGlobalTitle("-", 0, org.restcomm.protocols.ss7.indicator.NumberingPlan.ISDN_TELEPHONY, ec, NatureOfAddress.INTERNATIONAL);
+    GlobalTitle gt2 = fact.createGlobalTitle("-", 0, org.restcomm.protocols.ss7.indicator.NumberingPlan.ISDN_TELEPHONY, ec, NatureOfAddress.INTERNATIONAL);
     SccpAddress localAddress = new SccpAddressImpl(RoutingIndicator.ROUTING_BASED_ON_GLOBAL_TITLE, gt1, CLIENT_SPC, 0);
     sccpStack.getRouter().addRoutingAddress(1, localAddress);
     SccpAddress remoteAddress = new SccpAddressImpl(RoutingIndicator.ROUTING_BASED_ON_GLOBAL_TITLE, gt2, SERVET_SPC, 0);
     sccpStack.getRouter().addRoutingAddress(2, remoteAddress);
 
-    GlobalTitle gt = fact.createGlobalTitle("*", 0, org.mobicents.protocols.ss7.indicator.NumberingPlan.ISDN_TELEPHONY, ec, NatureOfAddress.INTERNATIONAL);
+    GlobalTitle gt = fact.createGlobalTitle("*", 0, org.restcomm.protocols.ss7.indicator.NumberingPlan.ISDN_TELEPHONY, ec, NatureOfAddress.INTERNATIONAL);
     SccpAddress pattern = new SccpAddressImpl(RoutingIndicator.ROUTING_BASED_ON_GLOBAL_TITLE, gt, 0, 0);
     sccpStack.getRouter().addRule(1, RuleType.SOLITARY, LoadSharingAlgorithm.Bit0, OriginationType.REMOTE, pattern, "K", 1, -1, null, 0);
     sccpStack.getRouter().addRule(2, RuleType.SOLITARY, LoadSharingAlgorithm.Bit0, OriginationType.LOCAL, pattern, "K", 2, -1, null, 0);</code></pre>
@@ -26842,7 +26842,7 @@ Above sections explained building SCTP and M3UA,  however if you are using Dialo
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>    org.mobicents.protocols.ss7.tcap.api tcapStack = null;
+<pre class="highlight"><code>    org.restcomm.protocols.ss7.tcap.api tcapStack = null;
     tcapStack = new TCAPStackImpl("Client", this.sccpStack.getSccpProvider(), SSN);
 
     tcapStack.start();
@@ -26974,7 +26974,7 @@ The GUI will look similar to the figure below and is divided into two tabs.</p>
 </div>
 <div class="paragraph">
 <p>The first tab will display the properties of the Linkset Management unit.
-These details displayed here are fetched from the XML descriptor file <em class="path">jboss-beans.xml</em>, which is  located at <em class="path">$JBOSS_HOME/server/profile_name/deploy/mobicents-ss7-service/META-INF</em>, where  <code class="app">profile_name</code> is the server profile name.
+These details displayed here are fetched from the XML descriptor file <em class="path">jboss-beans.xml</em>, which is  located at <em class="path">$JBOSS_HOME/server/profile_name/deploy/restcomm-ss7-service/META-INF</em>, where  <code class="app">profile_name</code> is the server profile name.
 These properties cannot be modified here in the GUI.
 To modify them you must modifiy the <em class="path">jboss-beans.xml</em> and restart the Server.
 The GUI will then display the modified values.</p>
@@ -27503,7 +27503,7 @@ The GUI will look similar to the figure below and is divided into three tabs.</p
 </div>
 <div class="paragraph">
 <p>The first tab will display the properties of the SCTP Management unit.
-These details displayed here are fetched from the XML descriptor file <em class="path">jboss-beans.xml</em>, which is  located at <em class="path">$JBOSS_HOME/server/profile_name/deploy/mobicents-ss7-service/META-INF</em>, where  <code class="app">profile_name</code> is the server profile name.
+These details displayed here are fetched from the XML descriptor file <em class="path">jboss-beans.xml</em>, which is  located at <em class="path">$JBOSS_HOME/server/profile_name/deploy/restcomm-ss7-service/META-INF</em>, where  <code class="app">profile_name</code> is the server profile name.
 These properties can be modified here in the GUI.
 To modify them you must click the pencil, change the value and save.
 The GUI will then display the modified values.</p>
@@ -28435,7 +28435,7 @@ The GUI will look similar to the figure below and is divided into four tabs.</p>
 </div>
 <div class="paragraph">
 <p>The first tab will display the properties of the M3UA Management unit.
-These details displayed here are fetched from the XML descriptor file <em class="path">jboss-beans.xml</em>, which is  located at <em class="path">$JBOSS_HOME/server/profile_name/deploy/mobicents-ss7-service/META-INF</em>, where  <code class="app">profile_name</code> is the server profile name.
+These details displayed here are fetched from the XML descriptor file <em class="path">jboss-beans.xml</em>, which is  located at <em class="path">$JBOSS_HOME/server/profile_name/deploy/restcomm-ss7-service/META-INF</em>, where  <code class="app">profile_name</code> is the server profile name.
 These properties can be modified here in the GUI.
 To modify them you must click the pencil, change value and save.
 The GUI will then display the modified values.</p>
@@ -28454,7 +28454,7 @@ In addition, this parameter cannot be modified through the CLI or GUI.
 You will have to invoke the setter function directly from the source code.</p>
 </div>
 <div class="paragraph">
-<p>If you are using the JBoss Application Server, then you can set this parameter by adding a property (as shown below) to the XML descriptor file <em class="path">jboss-beans.xml</em>, which is located at <em class="path">$JBOSS_HOME/server/profile_name/deploy/mobicents-ss7-service/META-INF</em>, where <code class="app">profile_name</code> is the server profile name.</p>
+<p>If you are using the JBoss Application Server, then you can set this parameter by adding a property (as shown below) to the XML descriptor file <em class="path">jboss-beans.xml</em>, which is located at <em class="path">$JBOSS_HOME/server/profile_name/deploy/restcomm-ss7-service/META-INF</em>, where <code class="app">profile_name</code> is the server profile name.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -28684,8 +28684,8 @@ You will have to invoke the setter function directly from the source code.</p>
 <div class="listingblock">
 <div class="content">
 <pre>/*Extra bean for RoutingLabelFormat Enum*/
-	&lt;bean name="RoutingLabelFormat" class="org.mobicents.protocols.ss7.mtp.RoutingLabelFormat"&gt;
-		&lt;constructor factoryClass="org.mobicents.protocols.ss7.mtp.RoutingLabelFormat"
+	&lt;bean name="RoutingLabelFormat" class="org.restcomm.protocols.ss7.mtp.RoutingLabelFormat"&gt;
+		&lt;constructor factoryClass="org.restcomm.protocols.ss7.mtp.RoutingLabelFormat"
 			factoryMethod="getInstance"&gt;
 			&lt;parameter&gt;ITU&lt;/parameter&gt;
 		&lt;/constructor&gt;
@@ -29717,7 +29717,7 @@ The GUI will look similar to the figure below and is divided into tabs.</p>
 </div>
 <div class="paragraph">
 <p>The first tab will display the properties of the SCCP Management unit.
-These details displayed here are fetched from the XML descriptor file <em class="path">jboss-beans.xml</em>, which is  located at <em class="path">$JBOSS_HOME/server/profile_name/deploy/mobicents-ss7-service/META-INF</em>, where <code class="app">profile_name</code> is the server profile name.
+These details displayed here are fetched from the XML descriptor file <em class="path">jboss-beans.xml</em>, which is  located at <em class="path">$JBOSS_HOME/server/profile_name/deploy/restcomm-ss7-service/META-INF</em>, where <code class="app">profile_name</code> is the server profile name.
 These properties can be modified here in the GUI.
 To modify them you must click on pencil, make changes and save.
 The GUI will then display the modified values.</p>
@@ -33675,7 +33675,7 @@ The GUI will look similar to the figure below.</p>
 </div>
 <div class="paragraph">
 <p>The first tab will display the properties of the TCAP Management unit.
-These details displayed here are fetched from the XML descriptor file <em class="path">jboss-beans.xml</em>, which is  located at <em class="path">$JBOSS_HOME/server/profile_name/deploy/mobicents-ss7-service/META-INF</em>, where  <code class="app">profile_name</code> is the server profile name.
+These details displayed here are fetched from the XML descriptor file <em class="path">jboss-beans.xml</em>, which is  located at <em class="path">$JBOSS_HOME/server/profile_name/deploy/restcomm-ss7-service/META-INF</em>, where  <code class="app">profile_name</code> is the server profile name.
 These properties can be modified here in the GUI.
 To modify them you must click the pencil, change value and save.
 The GUI will then display the modified values.</p>
@@ -33986,7 +33986,7 @@ In addition, this parameter cannot be modified through the CLI or GUI.
 You will have to invoke the setter function directly from the source code.</p>
 </div>
 <div class="paragraph">
-<p>If you are using the JBoss Application Server, then you can set this parameter by adding a property (as shown below) to the XML descriptor file <em class="path">jboss-beans.xml</em>, which is located at <em class="path">$JBOSS_HOME/server/profile_name/deploy/mobicents-ss7-service/META-INF</em>, where <code class="app">profile_name</code> is the server profile name.</p>
+<p>If you are using the JBoss Application Server, then you can set this parameter by adding a property (as shown below) to the XML descriptor file <em class="path">jboss-beans.xml</em>, which is located at <em class="path">$JBOSS_HOME/server/profile_name/deploy/restcomm-ss7-service/META-INF</em>, where <code class="app">profile_name</code> is the server profile name.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -34430,7 +34430,7 @@ If you are running the platform as standalone, then you should configure in <em 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&lt;category name="org.mobicents.protocols.ss7.oam.common.statistics.StatsPrinter" additivity="false"&gt;
+<pre>&lt;category name="org.restcomm.protocols.ss7.oam.common.statistics.StatsPrinter" additivity="false"&gt;
 	    &lt;priority value="DEBUG" /&gt;
 &lt;/category&gt;</pre>
 </div>
@@ -34440,7 +34440,7 @@ If you are running the platform as standalone, then you should configure in <em 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&lt;category name="org.mobicents.protocols.ss7.oam.common.statistics.CsvStatsPrinter" additivity="false"&gt;
+<pre>&lt;category name="org.restcomm.protocols.ss7.oam.common.statistics.CsvStatsPrinter" additivity="false"&gt;
 	    &lt;priority value="DEBUG" /&gt;
 &lt;/category&gt;</pre>
 </div>
@@ -34470,7 +34470,7 @@ You must set the priority value to "DEBUG".</p>
 &lt;param name="ConversionPattern" value="%d %-5p [%c] %m%n"/&gt;
 &lt;/layout&gt;
 &lt;/appender&gt;
-&lt;category name="org.mobicents.protocols.ss7.oam.common.statistics.StatsPrinter" additivity="false"&gt;
+&lt;category name="org.restcomm.protocols.ss7.oam.common.statistics.StatsPrinter" additivity="false"&gt;
 &lt;priority value="DEBUG" /&gt;
 &lt;appender-ref ref="STATS"/&gt;
 &lt;/category&gt;
@@ -34489,7 +34489,7 @@ You must set the priority value to "DEBUG".</p>
 &lt;param name="ConversionPattern" value="%d %-5p [%c] %m%n"/&gt;
 &lt;/layout&gt;
 &lt;/appender&gt;
-&lt;category name="org.mobicents.protocols.ss7.oam.common.statistics.CsvStatsPrinter" additivity="false"&gt;
+&lt;category name="org.restcomm.protocols.ss7.oam.common.statistics.CsvStatsPrinter" additivity="false"&gt;
 &lt;priority value="DEBUG" /&gt;
 &lt;appender-ref ref="CSVSTATS"/&gt;
 &lt;/category&gt;</pre>
@@ -34946,9 +34946,9 @@ This interface stores information on mapping between <code>CIC</code>(Circuit Id
 <div class="sect2">
 <h3 id="isup-usage"><a class="anchor" href="#isup-usage"></a>9.2. ISUP Usage</h3>
 <div class="paragraph">
-<p>The <code>org.mobicents.protocols.ss7.isup.ISUPStack</code> interface defines the methods required to represent ISUP Protocol Stack.
-ISUPStack exposes <code>org.mobicents.protocols.ss7.isup.ISUPProvider</code>.
-This interface defines the methods that will be used by any registered ISUP User application implementing the <code>org.mobicents.protocols.ss7.isup.ISUPListener</code> to listen ISUP events(messages and timeouts).</p>
+<p>The <code>org.restcomm.protocols.ss7.isup.ISUPStack</code> interface defines the methods required to represent ISUP Protocol Stack.
+ISUPStack exposes <code>org.restcomm.protocols.ss7.isup.ISUPProvider</code>.
+This interface defines the methods that will be used by any registered ISUP User application implementing the <code>org.restcomm.protocols.ss7.isup.ISUPListener</code> to listen ISUP events(messages and timeouts).</p>
 </div>
 </div>
 <div class="sect2">
@@ -34964,17 +34964,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.mobicents.protocols.ss7.isup.ISUPEvent;
-import org.mobicents.protocols.ss7.isup.ISUPListener;
-import org.mobicents.protocols.ss7.isup.ISUPProvider;
-import org.mobicents.protocols.ss7.isup.ISUPStack;
-import org.mobicents.protocols.ss7.isup.ISUPTimeoutEvent;
-import org.mobicents.protocols.ss7.isup.ParameterException;
-import org.mobicents.protocols.ss7.isup.impl.ISUPStackImpl;
-import org.mobicents.protocols.ss7.isup.message.ISUPMessage;
+import org.restcomm.protocols.ss7.isup.ISUPEvent;
+import org.restcomm.protocols.ss7.isup.ISUPListener;
+import org.restcomm.protocols.ss7.isup.ISUPProvider;
+import org.restcomm.protocols.ss7.isup.ISUPStack;
+import org.restcomm.protocols.ss7.isup.ISUPTimeoutEvent;
+import org.restcomm.protocols.ss7.isup.ParameterException;
+import org.restcomm.protocols.ss7.isup.impl.ISUPStackImpl;
+import org.restcomm.protocols.ss7.isup.message.ISUPMessage;
 
-import org.mobicents.ss7.linkset.oam.Layer4;
-import org.mobicents.ss7.linkset.oam.Linkset;
+import org.restcomm.ss7.linkset.oam.Layer4;
+import org.restcomm.ss7.linkset.oam.Linkset;
 
 public class ISUPTest implements ISUPListener
 {
@@ -35165,7 +35165,7 @@ Match any digits keep the digits in the and add a PC(123) and SSN (8). If the tr
 <div class="sect2">
 <h3 id="_sccp_design"><a class="anchor" href="#_sccp_design"></a>10.2. SCCP Usage</h3>
 <div class="paragraph">
-<p>The instance of <code class="class">org.mobicents.protocols.ss7.sccp.SccpStack</code> acts as starting point.
+<p>The instance of <code class="class">org.restcomm.protocols.ss7.sccp.SccpStack</code> acts as starting point.
 All the sccp messages sent by SCCP User Part are routed as per the rule configured in Router</p>
 </div>
 <div class="admonitionblock note">
@@ -35184,8 +35184,8 @@ The term SCCP User Part refers to the applications that use SCCP&#8217;s service
 <p>The SCCP User Part gets handle to <code class="class">SccpStack</code> by doing a JNDI look-up.</p>
 </div>
 <div class="paragraph">
-<p><code class="class">SccpStack</code> exposes <code class="class">org.mobicents.protocols.ss7.sccp.SccpProvider</code>  that interacts directly with SccpStack.
-This interface defines the methods that will be used by SCCP User Part to send connectionless <code class="class">org.mobicents.protocols.ss7.sccp.message.SccpMessage</code>, create new connections and register  [class]`org.mobicents.protocols.ss7.sccp.SccpListener&#8217;s to listen for incoming SCCP messages and connection events.</p>
+<p><code class="class">SccpStack</code> exposes <code class="class">org.restcomm.protocols.ss7.sccp.SccpProvider</code>  that interacts directly with SccpStack.
+This interface defines the methods that will be used by SCCP User Part to send connectionless <code class="class">org.restcomm.protocols.ss7.sccp.message.SccpMessage</code>, create new connections and register  [class]`org.restcomm.protocols.ss7.sccp.SccpListener&#8217;s to listen for incoming SCCP messages and connection events.</p>
 </div>
 <div class="paragraph">
 <p>SCCP User Part registers SccpListener for specific local subsystem number.
@@ -35195,8 +35195,8 @@ For every incoming SccpMessage or connection event, if the called subsystem matc
 <p><code class="class">SccpProvider</code> exposes <code class="class">SccpConnection</code> which allows to perform common connection actions such as establishing, resetting, confirming/refusing and disconnecting SCCP connections.</p>
 </div>
 <div class="paragraph">
-<p>SccpProvider also exposes <code class="class">org.mobicents.protocols.ss7.sccp.message.MessageFactory</code> and <code class="class">org.mobicents.protocols.ss7.sccp.parameter.ParameterFactory</code> to create new SccpMessage.
-For transfer data via connectionless service <code class="class">org.mobicents.protocols.ss7.sccp.message.SccpDataMessage</code> is used.
+<p>SccpProvider also exposes <code class="class">org.restcomm.protocols.ss7.sccp.message.MessageFactory</code> and <code class="class">org.restcomm.protocols.ss7.sccp.parameter.ParameterFactory</code> to create new SccpMessage.
+For transfer data via connectionless service <code class="class">org.restcomm.protocols.ss7.sccp.message.SccpDataMessage</code> is used.
 (This class use UDT, XUDT, LUDT SCCP message type for message transfer.)</p>
 </div>
 </div>
@@ -35207,22 +35207,22 @@ For transfer data via connectionless service <code class="class">org.mobicents.p
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.protocols.ss7.sccp.impl;
+<pre class="highlight"><code class="language-java" data-lang="java">package org.restcomm.protocols.ss7.sccp.impl;
 
 import java.io.IOException;
 
-import org.mobicents.protocols.ss7.indicator.NatureOfAddress;
-import org.mobicents.protocols.ss7.indicator.NumberingPlan;
-import org.mobicents.protocols.ss7.indicator.RoutingIndicator;
-import org.mobicents.protocols.ss7.sccp.RemoteSccpStatus;
-import org.mobicents.protocols.ss7.sccp.SccpListener;
-import org.mobicents.protocols.ss7.sccp.SccpProvider;
-import org.mobicents.protocols.ss7.sccp.SignallingPointStatus;
-import org.mobicents.protocols.ss7.sccp.message.SccpDataMessage;
-import org.mobicents.protocols.ss7.sccp.message.SccpNoticeMessage;
-import org.mobicents.protocols.ss7.sccp.parameter.GlobalTitle;
-import org.mobicents.protocols.ss7.sccp.parameter.HopCounter;
-import org.mobicents.protocols.ss7.sccp.parameter.SccpAddress;
+import org.restcomm.protocols.ss7.indicator.NatureOfAddress;
+import org.restcomm.protocols.ss7.indicator.NumberingPlan;
+import org.restcomm.protocols.ss7.indicator.RoutingIndicator;
+import org.restcomm.protocols.ss7.sccp.RemoteSccpStatus;
+import org.restcomm.protocols.ss7.sccp.SccpListener;
+import org.restcomm.protocols.ss7.sccp.SccpProvider;
+import org.restcomm.protocols.ss7.sccp.SignallingPointStatus;
+import org.restcomm.protocols.ss7.sccp.message.SccpDataMessage;
+import org.restcomm.protocols.ss7.sccp.message.SccpNoticeMessage;
+import org.restcomm.protocols.ss7.sccp.parameter.GlobalTitle;
+import org.restcomm.protocols.ss7.sccp.parameter.HopCounter;
+import org.restcomm.protocols.ss7.sccp.parameter.SccpAddress;
 
 public class Test implements SccpListener {
         private SccpProvider sccpProvider;
@@ -35344,34 +35344,34 @@ new data message via already established protocol class 2 connection</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.protocols.ss7.sccp.impl;
+<pre class="highlight"><code class="language-java" data-lang="java">package org.restcomm.protocols.ss7.sccp.impl;
 
-import org.mobicents.protocols.ss7.indicator.RoutingIndicator;
-import org.mobicents.protocols.ss7.sccp.NetworkIdState;
-import org.mobicents.protocols.ss7.sccp.RemoteSccpStatus;
-import org.mobicents.protocols.ss7.sccp.SccpConnection;
-import org.mobicents.protocols.ss7.sccp.SccpListener;
-import org.mobicents.protocols.ss7.sccp.SccpProvider;
-import org.mobicents.protocols.ss7.sccp.SignallingPointStatus;
-import org.mobicents.protocols.ss7.sccp.impl.parameter.ImportanceImpl;
-import org.mobicents.protocols.ss7.sccp.impl.parameter.LocalReferenceImpl;
-import org.mobicents.protocols.ss7.sccp.impl.parameter.ProtocolClassImpl;
-import org.mobicents.protocols.ss7.sccp.impl.parameter.ReleaseCauseImpl;
-import org.mobicents.protocols.ss7.sccp.message.SccpConnCrMessage;
-import org.mobicents.protocols.ss7.sccp.message.SccpDataMessage;
-import org.mobicents.protocols.ss7.sccp.message.SccpNoticeMessage;
-import org.mobicents.protocols.ss7.sccp.parameter.Credit;
-import org.mobicents.protocols.ss7.sccp.parameter.ErrorCause;
-import org.mobicents.protocols.ss7.sccp.parameter.Importance;
-import org.mobicents.protocols.ss7.sccp.parameter.ProtocolClass;
-import org.mobicents.protocols.ss7.sccp.parameter.RefusalCause;
-import org.mobicents.protocols.ss7.sccp.parameter.ReleaseCause;
-import org.mobicents.protocols.ss7.sccp.parameter.ReleaseCauseValue;
-import org.mobicents.protocols.ss7.sccp.parameter.ResetCause;
-import org.mobicents.protocols.ss7.sccp.parameter.SccpAddress;
-import org.mobicents.protocols.ss7.scheduler.Clock;
-import org.mobicents.protocols.ss7.scheduler.DefaultClock;
-import org.mobicents.protocols.ss7.scheduler.Scheduler;
+import org.restcomm.protocols.ss7.indicator.RoutingIndicator;
+import org.restcomm.protocols.ss7.sccp.NetworkIdState;
+import org.restcomm.protocols.ss7.sccp.RemoteSccpStatus;
+import org.restcomm.protocols.ss7.sccp.SccpConnection;
+import org.restcomm.protocols.ss7.sccp.SccpListener;
+import org.restcomm.protocols.ss7.sccp.SccpProvider;
+import org.restcomm.protocols.ss7.sccp.SignallingPointStatus;
+import org.restcomm.protocols.ss7.sccp.impl.parameter.ImportanceImpl;
+import org.restcomm.protocols.ss7.sccp.impl.parameter.LocalReferenceImpl;
+import org.restcomm.protocols.ss7.sccp.impl.parameter.ProtocolClassImpl;
+import org.restcomm.protocols.ss7.sccp.impl.parameter.ReleaseCauseImpl;
+import org.restcomm.protocols.ss7.sccp.message.SccpConnCrMessage;
+import org.restcomm.protocols.ss7.sccp.message.SccpDataMessage;
+import org.restcomm.protocols.ss7.sccp.message.SccpNoticeMessage;
+import org.restcomm.protocols.ss7.sccp.parameter.Credit;
+import org.restcomm.protocols.ss7.sccp.parameter.ErrorCause;
+import org.restcomm.protocols.ss7.sccp.parameter.Importance;
+import org.restcomm.protocols.ss7.sccp.parameter.ProtocolClass;
+import org.restcomm.protocols.ss7.sccp.parameter.RefusalCause;
+import org.restcomm.protocols.ss7.sccp.parameter.ReleaseCause;
+import org.restcomm.protocols.ss7.sccp.parameter.ReleaseCauseValue;
+import org.restcomm.protocols.ss7.sccp.parameter.ResetCause;
+import org.restcomm.protocols.ss7.sccp.parameter.SccpAddress;
+import org.restcomm.protocols.ss7.scheduler.Clock;
+import org.restcomm.protocols.ss7.scheduler.DefaultClock;
+import org.restcomm.protocols.ss7.scheduler.Scheduler;
 
 public class Test2 implements SccpListener {
     private SccpProvider sccpProvider;
@@ -35514,13 +35514,13 @@ The primary purpose of TCAP is to facilitate multiple concurrent dialogs between
 <div class="sect2">
 <h3 id="restcomm-jss7-tcap-usage"><a class="anchor" href="#restcomm-jss7-tcap-usage"></a>11.1. Restcomm jSS7  TCAP Usage</h3>
 <div class="paragraph">
-<p>The <code class="class">org.mobicents.protocols.ss7.tcap.api.TCAPStack</code> interface defines the methods required to represent the TCAP Protocol Stack.
-TCAPStack exposes <code class="class">org.mobicents.protocols.ss7.tcap.api.TCAPProvider</code> that interacts directly with the TCAPStack.
-TCAPProvider defines methods that will be used by TCAP User Part to create new  <code class="class">org.mobicents.protocols.ss7.tcap.api.tc.dialog.Dialog</code> to be sent across the network.
-TCAP User Part also allows to register<code class="class">org.mobicents.protocols.ss7.tcap.api.TCListener</code> to listen for TCAP messages.</p>
+<p>The <code class="class">org.restcomm.protocols.ss7.tcap.api.TCAPStack</code> interface defines the methods required to represent the TCAP Protocol Stack.
+TCAPStack exposes <code class="class">org.restcomm.protocols.ss7.tcap.api.TCAPProvider</code> that interacts directly with the TCAPStack.
+TCAPProvider defines methods that will be used by TCAP User Part to create new  <code class="class">org.restcomm.protocols.ss7.tcap.api.tc.dialog.Dialog</code> to be sent across the network.
+TCAP User Part also allows to register<code class="class">org.restcomm.protocols.ss7.tcap.api.TCListener</code> to listen for TCAP messages.</p>
 </div>
 <div class="paragraph">
-<p>TCAPProvider also exposes <code class="class">org.mobicents.protocols.ss7.tcap.api.DialogPrimitiveFactory</code> to create dialog primitives  and <code class="class">org.mobicents.protocols.ss7.tcap.api.ComponentPrimitiveFactory</code> to create components.
+<p>TCAPProvider also exposes <code class="class">org.restcomm.protocols.ss7.tcap.api.DialogPrimitiveFactory</code> to create dialog primitives  and <code class="class">org.restcomm.protocols.ss7.tcap.api.ComponentPrimitiveFactory</code> to create components.
 Components are a means of invoking an operation at a remote node.</p>
 </div>
 <div class="paragraph">
@@ -35533,7 +35533,7 @@ Components are a means of invoking an operation at a remote node.</p>
 <div class="title">Figure 35. Restcomm jSS7 Stack TCAP Class Diagram</div>
 </div>
 <div class="paragraph">
-<p>The <code class="class">org.mobicents.protocols.ss7.tcap.TCAPStackImpl</code> is a concrete implementation of <code class="class">TCAPStack</code>.
+<p>The <code class="class">org.restcomm.protocols.ss7.tcap.TCAPStackImpl</code> is a concrete implementation of <code class="class">TCAPStack</code>.
 The TCAP User Part gets access to <code class="class">TCAPProvider</code> by doing JNDI lookup as explained in the <a href="#_design_overview_ss7_service">SS7 Service</a>.</p>
 </div>
 <div class="listingblock">
@@ -35634,32 +35634,32 @@ Refer to source for function calls.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.protocols.ss7.tcap;
+<pre class="highlight"><code class="language-java" data-lang="java">package org.restcomm.protocols.ss7.tcap;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.mobicents.protocols.ss7.indicator.RoutingIndicator;
-import org.mobicents.protocols.ss7.sccp.parameter.SccpAddress;
-import org.mobicents.protocols.ss7.tcap.api.ComponentPrimitiveFactory;
-import org.mobicents.protocols.ss7.tcap.api.TCAPException;
-import org.mobicents.protocols.ss7.tcap.api.TCAPProvider;
-import org.mobicents.protocols.ss7.tcap.api.TCAPSendException;
-import org.mobicents.protocols.ss7.tcap.api.TCListener;
-import org.mobicents.protocols.ss7.tcap.api.tc.dialog.Dialog;
-import org.mobicents.protocols.ss7.tcap.api.tc.dialog.events.TCBeginIndication;
-import org.mobicents.protocols.ss7.tcap.api.tc.dialog.events.TCBeginRequest;
-import org.mobicents.protocols.ss7.tcap.api.tc.dialog.events.TCContinueIndication;
-import org.mobicents.protocols.ss7.tcap.api.tc.dialog.events.TCEndIndication;
-import org.mobicents.protocols.ss7.tcap.api.tc.dialog.events.TCEndRequest;
-import org.mobicents.protocols.ss7.tcap.api.tc.dialog.events.TCNoticeIndication;
-import org.mobicents.protocols.ss7.tcap.api.tc.dialog.events.TCPAbortIndication;
-import org.mobicents.protocols.ss7.tcap.api.tc.dialog.events.TCUniIndication;
-import org.mobicents.protocols.ss7.tcap.api.tc.dialog.events.TCUserAbortIndication;
-import org.mobicents.protocols.ss7.tcap.api.tc.dialog.events.TerminationType;
-import org.mobicents.protocols.ss7.tcap.asn.ApplicationContextName;
-import org.mobicents.protocols.ss7.tcap.asn.comp.Invoke;
-import org.mobicents.protocols.ss7.tcap.asn.comp.OperationCode;
+import org.restcomm.protocols.ss7.indicator.RoutingIndicator;
+import org.restcomm.protocols.ss7.sccp.parameter.SccpAddress;
+import org.restcomm.protocols.ss7.tcap.api.ComponentPrimitiveFactory;
+import org.restcomm.protocols.ss7.tcap.api.TCAPException;
+import org.restcomm.protocols.ss7.tcap.api.TCAPProvider;
+import org.restcomm.protocols.ss7.tcap.api.TCAPSendException;
+import org.restcomm.protocols.ss7.tcap.api.TCListener;
+import org.restcomm.protocols.ss7.tcap.api.tc.dialog.Dialog;
+import org.restcomm.protocols.ss7.tcap.api.tc.dialog.events.TCBeginIndication;
+import org.restcomm.protocols.ss7.tcap.api.tc.dialog.events.TCBeginRequest;
+import org.restcomm.protocols.ss7.tcap.api.tc.dialog.events.TCContinueIndication;
+import org.restcomm.protocols.ss7.tcap.api.tc.dialog.events.TCEndIndication;
+import org.restcomm.protocols.ss7.tcap.api.tc.dialog.events.TCEndRequest;
+import org.restcomm.protocols.ss7.tcap.api.tc.dialog.events.TCNoticeIndication;
+import org.restcomm.protocols.ss7.tcap.api.tc.dialog.events.TCPAbortIndication;
+import org.restcomm.protocols.ss7.tcap.api.tc.dialog.events.TCUniIndication;
+import org.restcomm.protocols.ss7.tcap.api.tc.dialog.events.TCUserAbortIndication;
+import org.restcomm.protocols.ss7.tcap.api.tc.dialog.events.TerminationType;
+import org.restcomm.protocols.ss7.tcap.asn.ApplicationContextName;
+import org.restcomm.protocols.ss7.tcap.asn.comp.Invoke;
+import org.restcomm.protocols.ss7.tcap.asn.comp.OperationCode;
 
 /**
  * Simple example demonstrates how to use TCAP Stack
@@ -36051,13 +36051,13 @@ We will provide you with all the help that you may require initially.
 <div class="sect2">
 <h3 id="_map_usage"><a class="anchor" href="#_map_usage"></a>12.1. jSS7  MAP</h3>
 <div class="paragraph">
-<p>The methods required to represent the MAP Protocol Stack are defined in the interface <code class="class">org.mobicents.protocols.ss7.map.api.MAPStack</code> which exposes <code class="class">org.mobicents.protocols.ss7.map.api.MAPProvider</code>			that interacts directly with the <code class="class">MAPStack</code>.
+<p>The methods required to represent the MAP Protocol Stack are defined in the interface <code class="class">org.restcomm.protocols.ss7.map.api.MAPStack</code> which exposes <code class="class">org.restcomm.protocols.ss7.map.api.MAPProvider</code>			that interacts directly with the <code class="class">MAPStack</code>.
 This interface defines the methods that will be used by any registered MAP-User application.</p>
 </div>
 <div class="paragraph">
 <p>A MAP-User application must implement interfaces to listen for MAP messages and also implement interfaces for dialogue and component handling primitives.
-One such interface is <code class="class">org.mobicents.protocols.ss7.map.api.MAPDialogListener</code> which must be implemented for listening associated with dialog events.
-Others are one or more interfaces for listening associated with component events based on  <code class="class">org.mobicents.protocols.ss7.map.api.MAPServiceListener</code> interface.</p>
+One such interface is <code class="class">org.restcomm.protocols.ss7.map.api.MAPDialogListener</code> which must be implemented for listening associated with dialog events.
+Others are one or more interfaces for listening associated with component events based on  <code class="class">org.restcomm.protocols.ss7.map.api.MAPServiceListener</code> interface.</p>
 </div>
 <div class="paragraph">
 <p>Below is a list of MAP Service Listener classes.
@@ -36067,27 +36067,27 @@ A MAP-User interested in listening for messages specific to a particular MAP Ser
 <dl>
 <dt class="hdlist1">LMS operations</dt>
 <dd>
-<p><code class="class">org.mobicents.protocols.ss7.map.api.service.lsm.MAPServiceLsmListener</code></p>
+<p><code class="class">org.restcomm.protocols.ss7.map.api.service.lsm.MAPServiceLsmListener</code></p>
 </dd>
 <dt class="hdlist1">Mobility operations</dt>
 <dd>
-<p><code class="class">org.mobicents.protocols.ss7.map.api.service.mobility.MAPServiceMobilityListener</code></p>
+<p><code class="class">org.restcomm.protocols.ss7.map.api.service.mobility.MAPServiceMobilityListener</code></p>
 </dd>
 <dt class="hdlist1">OAM operations</dt>
 <dd>
-<p><code class="class">org.mobicents.protocols.ss7.map.api.service.oam.MAPServiceOamListener</code></p>
+<p><code class="class">org.restcomm.protocols.ss7.map.api.service.oam.MAPServiceOamListener</code></p>
 </dd>
 <dt class="hdlist1">PDP context activation operations</dt>
 <dd>
-<p><code class="class">org.mobicents.protocols.ss7.map.api.service.pdpContextActivation.MAPServicePdpContextActivationListener</code></p>
+<p><code class="class">org.restcomm.protocols.ss7.map.api.service.pdpContextActivation.MAPServicePdpContextActivationListener</code></p>
 </dd>
 <dt class="hdlist1">SMS operations</dt>
 <dd>
-<p><code class="class">org.mobicents.protocols.ss7.map.api.service.sms.MAPServiceSmsListener</code></p>
+<p><code class="class">org.restcomm.protocols.ss7.map.api.service.sms.MAPServiceSmsListener</code></p>
 </dd>
 <dt class="hdlist1">Supplementary operations</dt>
 <dd>
-<p><code class="class">org.mobicents.protocols.ss7.map.api.service.supplementary.MAPServiceSupplementaryListener</code></p>
+<p><code class="class">org.restcomm.protocols.ss7.map.api.service.supplementary.MAPServiceSupplementaryListener</code></p>
 </dd>
 </dl>
 </div>
@@ -36095,7 +36095,7 @@ A MAP-User interested in listening for messages specific to a particular MAP Ser
 <p>A MAP-User interested in all the services must implement all the above Service Listener classes.</p>
 </div>
 <div class="paragraph">
-<p>The <code class="class">org.mobicents.protocols.ss7.map.MAPStackImpl</code> class  is a concrete implementation of <code class="class">MAPStack</code>.
+<p>The <code class="class">org.restcomm.protocols.ss7.map.MAPStackImpl</code> class  is a concrete implementation of <code class="class">MAPStack</code>.
 The MAP-User application gets a reference to <code class="class">MAPProvider</code> by doing a JNDI lookup as explained in <a href="#_design_overview_ss7_service">SS7 Service</a>.</p>
 </div>
 <div class="listingblock">
@@ -36116,31 +36116,31 @@ The following [class]`MAPServiceBase</code> services are exposed by the <code cl
 <dl>
 <dt class="hdlist1">Call handling service</dt>
 <dd>
-<p><code class="class">org.mobicents.protocols.ss7.map.api.service.callhandling.MAPServiceCallHandling</code></p>
+<p><code class="class">org.restcomm.protocols.ss7.map.api.service.callhandling.MAPServiceCallHandling</code></p>
 </dd>
 <dt class="hdlist1">LSM service</dt>
 <dd>
-<p><code class="class">org.mobicents.protocols.ss7.map.api.service.lsm.MAPServiceLsm</code></p>
+<p><code class="class">org.restcomm.protocols.ss7.map.api.service.lsm.MAPServiceLsm</code></p>
 </dd>
 <dt class="hdlist1">Mobility service</dt>
 <dd>
-<p><code class="class">org.mobicents.protocols.ss7.map.api.service.mobility.MAPServiceMobility</code></p>
+<p><code class="class">org.restcomm.protocols.ss7.map.api.service.mobility.MAPServiceMobility</code></p>
 </dd>
 <dt class="hdlist1">OAM service</dt>
 <dd>
-<p><code class="class">org.mobicents.protocols.ss7.map.api.service.oam.MAPServiceOam</code></p>
+<p><code class="class">org.restcomm.protocols.ss7.map.api.service.oam.MAPServiceOam</code></p>
 </dd>
 <dt class="hdlist1">PDP context activation service</dt>
 <dd>
-<p><code class="class">org.mobicents.protocols.ss7.map.api.service.pdpContextActivation.MAPServicePdpContextActivation</code></p>
+<p><code class="class">org.restcomm.protocols.ss7.map.api.service.pdpContextActivation.MAPServicePdpContextActivation</code></p>
 </dd>
 <dt class="hdlist1">SMS service</dt>
 <dd>
-<p><code class="class">org.mobicents.protocols.ss7.map.api.service.sms.MAPServiceSms</code></p>
+<p><code class="class">org.restcomm.protocols.ss7.map.api.service.sms.MAPServiceSms</code></p>
 </dd>
 <dt class="hdlist1">Supplementary service</dt>
 <dd>
-<p><code class="class">org.mobicents.protocols.ss7.map.api.service.supplementary.MAPServiceSupplementary</code></p>
+<p><code class="class">org.restcomm.protocols.ss7.map.api.service.supplementary.MAPServiceSupplementary</code></p>
 </dd>
 </dl>
 </div>
@@ -36371,45 +36371,45 @@ For preventing an Invoke timeout you should invoke <code class="class">resetInvo
 <h3 id="_map_usage_example"><a class="anchor" href="#_map_usage_example"></a>12.3. jSS7  MAP Usage</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.protocols.ss7.map;
+<pre class="highlight"><code class="language-java" data-lang="java">package org.restcomm.protocols.ss7.map;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.mobicents.protocols.ss7.map.api.MAPApplicationContext;
-import org.mobicents.protocols.ss7.map.api.MAPApplicationContextName;
-import org.mobicents.protocols.ss7.map.api.MAPApplicationContextVersion;
-import org.mobicents.protocols.ss7.map.api.MAPDialog;
-import org.mobicents.protocols.ss7.map.api.MAPDialogListener;
-import org.mobicents.protocols.ss7.map.api.MAPException;
-import org.mobicents.protocols.ss7.map.api.MAPMessage;
-import org.mobicents.protocols.ss7.map.api.MAPParameterFactory;
-import org.mobicents.protocols.ss7.map.api.MAPProvider;
-import org.mobicents.protocols.ss7.map.api.datacoding.CBSDataCodingScheme;
-import org.mobicents.protocols.ss7.map.api.dialog.MAPAbortProviderReason;
-import org.mobicents.protocols.ss7.map.api.dialog.MAPAbortSource;
-import org.mobicents.protocols.ss7.map.api.dialog.MAPNoticeProblemDiagnostic;
-import org.mobicents.protocols.ss7.map.api.dialog.MAPRefuseReason;
-import org.mobicents.protocols.ss7.map.api.dialog.MAPUserAbortChoice;
-import org.mobicents.protocols.ss7.map.api.errors.MAPErrorMessage;
-import org.mobicents.protocols.ss7.map.api.primitives.AddressString;
-import org.mobicents.protocols.ss7.map.api.primitives.AlertingPattern;
-import org.mobicents.protocols.ss7.map.api.primitives.IMSI;
-import org.mobicents.protocols.ss7.map.api.primitives.ISDNAddressString;
-import org.mobicents.protocols.ss7.map.api.primitives.MAPExtensionContainer;
-import org.mobicents.protocols.ss7.map.api.primitives.USSDString;
-import org.mobicents.protocols.ss7.map.api.service.supplementary.MAPDialogSupplementary;
-import org.mobicents.protocols.ss7.map.api.service.supplementary.MAPServiceSupplementaryListener;
-import org.mobicents.protocols.ss7.map.api.service.supplementary.ProcessUnstructuredSSRequest;
-import org.mobicents.protocols.ss7.map.api.service.supplementary.ProcessUnstructuredSSResponse;
-import org.mobicents.protocols.ss7.map.api.service.supplementary.UnstructuredSSNotifyRequest;
-import org.mobicents.protocols.ss7.map.api.service.supplementary.UnstructuredSSNotifyResponse;
-import org.mobicents.protocols.ss7.map.api.service.supplementary.UnstructuredSSRequest;
-import org.mobicents.protocols.ss7.map.api.service.supplementary.UnstructuredSSResponse;
-import org.mobicents.protocols.ss7.map.datacoding.CBSDataCodingSchemeImpl;
-import org.mobicents.protocols.ss7.sccp.parameter.SccpAddress;
-import org.mobicents.protocols.ss7.tcap.asn.ApplicationContextName;
-import org.mobicents.protocols.ss7.tcap.asn.comp.Problem;
+import org.restcomm.protocols.ss7.map.api.MAPApplicationContext;
+import org.restcomm.protocols.ss7.map.api.MAPApplicationContextName;
+import org.restcomm.protocols.ss7.map.api.MAPApplicationContextVersion;
+import org.restcomm.protocols.ss7.map.api.MAPDialog;
+import org.restcomm.protocols.ss7.map.api.MAPDialogListener;
+import org.restcomm.protocols.ss7.map.api.MAPException;
+import org.restcomm.protocols.ss7.map.api.MAPMessage;
+import org.restcomm.protocols.ss7.map.api.MAPParameterFactory;
+import org.restcomm.protocols.ss7.map.api.MAPProvider;
+import org.restcomm.protocols.ss7.map.api.datacoding.CBSDataCodingScheme;
+import org.restcomm.protocols.ss7.map.api.dialog.MAPAbortProviderReason;
+import org.restcomm.protocols.ss7.map.api.dialog.MAPAbortSource;
+import org.restcomm.protocols.ss7.map.api.dialog.MAPNoticeProblemDiagnostic;
+import org.restcomm.protocols.ss7.map.api.dialog.MAPRefuseReason;
+import org.restcomm.protocols.ss7.map.api.dialog.MAPUserAbortChoice;
+import org.restcomm.protocols.ss7.map.api.errors.MAPErrorMessage;
+import org.restcomm.protocols.ss7.map.api.primitives.AddressString;
+import org.restcomm.protocols.ss7.map.api.primitives.AlertingPattern;
+import org.restcomm.protocols.ss7.map.api.primitives.IMSI;
+import org.restcomm.protocols.ss7.map.api.primitives.ISDNAddressString;
+import org.restcomm.protocols.ss7.map.api.primitives.MAPExtensionContainer;
+import org.restcomm.protocols.ss7.map.api.primitives.USSDString;
+import org.restcomm.protocols.ss7.map.api.service.supplementary.MAPDialogSupplementary;
+import org.restcomm.protocols.ss7.map.api.service.supplementary.MAPServiceSupplementaryListener;
+import org.restcomm.protocols.ss7.map.api.service.supplementary.ProcessUnstructuredSSRequest;
+import org.restcomm.protocols.ss7.map.api.service.supplementary.ProcessUnstructuredSSResponse;
+import org.restcomm.protocols.ss7.map.api.service.supplementary.UnstructuredSSNotifyRequest;
+import org.restcomm.protocols.ss7.map.api.service.supplementary.UnstructuredSSNotifyResponse;
+import org.restcomm.protocols.ss7.map.api.service.supplementary.UnstructuredSSRequest;
+import org.restcomm.protocols.ss7.map.api.service.supplementary.UnstructuredSSResponse;
+import org.restcomm.protocols.ss7.map.datacoding.CBSDataCodingSchemeImpl;
+import org.restcomm.protocols.ss7.sccp.parameter.SccpAddress;
+import org.restcomm.protocols.ss7.tcap.asn.ApplicationContextName;
+import org.restcomm.protocols.ss7.tcap.asn.comp.Problem;
 
 /**
  * A simple example show-casing how to use MAP stack. Demonstrates how new MAP
@@ -36573,39 +36573,39 @@ public class UssdClientExample implements MAPDialogListener, MAPServiceSupplemen
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.protocols.ss7.map;
+<pre class="highlight"><code class="language-java" data-lang="java">package org.restcomm.protocols.ss7.map;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.mobicents.protocols.ss7.map.api.MAPDialog;
-import org.mobicents.protocols.ss7.map.api.MAPDialogListener;
-import org.mobicents.protocols.ss7.map.api.MAPException;
-import org.mobicents.protocols.ss7.map.api.MAPMessage;
-import org.mobicents.protocols.ss7.map.api.MAPParameterFactory;
-import org.mobicents.protocols.ss7.map.api.MAPProvider;
-import org.mobicents.protocols.ss7.map.api.datacoding.CBSDataCodingScheme;
-import org.mobicents.protocols.ss7.map.api.dialog.MAPAbortProviderReason;
-import org.mobicents.protocols.ss7.map.api.dialog.MAPAbortSource;
-import org.mobicents.protocols.ss7.map.api.dialog.MAPNoticeProblemDiagnostic;
-import org.mobicents.protocols.ss7.map.api.dialog.MAPRefuseReason;
-import org.mobicents.protocols.ss7.map.api.dialog.MAPUserAbortChoice;
-import org.mobicents.protocols.ss7.map.api.errors.MAPErrorMessage;
-import org.mobicents.protocols.ss7.map.api.primitives.AddressString;
-import org.mobicents.protocols.ss7.map.api.primitives.IMSI;
-import org.mobicents.protocols.ss7.map.api.primitives.MAPExtensionContainer;
-import org.mobicents.protocols.ss7.map.api.primitives.USSDString;
-import org.mobicents.protocols.ss7.map.api.service.supplementary.MAPDialogSupplementary;
-import org.mobicents.protocols.ss7.map.api.service.supplementary.MAPServiceSupplementaryListener;
-import org.mobicents.protocols.ss7.map.api.service.supplementary.ProcessUnstructuredSSRequest;
-import org.mobicents.protocols.ss7.map.api.service.supplementary.ProcessUnstructuredSSResponse;
-import org.mobicents.protocols.ss7.map.api.service.supplementary.UnstructuredSSNotifyRequest;
-import org.mobicents.protocols.ss7.map.api.service.supplementary.UnstructuredSSNotifyResponse;
-import org.mobicents.protocols.ss7.map.api.service.supplementary.UnstructuredSSRequest;
-import org.mobicents.protocols.ss7.map.api.service.supplementary.UnstructuredSSResponse;
-import org.mobicents.protocols.ss7.map.datacoding.CBSDataCodingSchemeImpl;
-import org.mobicents.protocols.ss7.tcap.asn.ApplicationContextName;
-import org.mobicents.protocols.ss7.tcap.asn.comp.Problem;
+import org.restcomm.protocols.ss7.map.api.MAPDialog;
+import org.restcomm.protocols.ss7.map.api.MAPDialogListener;
+import org.restcomm.protocols.ss7.map.api.MAPException;
+import org.restcomm.protocols.ss7.map.api.MAPMessage;
+import org.restcomm.protocols.ss7.map.api.MAPParameterFactory;
+import org.restcomm.protocols.ss7.map.api.MAPProvider;
+import org.restcomm.protocols.ss7.map.api.datacoding.CBSDataCodingScheme;
+import org.restcomm.protocols.ss7.map.api.dialog.MAPAbortProviderReason;
+import org.restcomm.protocols.ss7.map.api.dialog.MAPAbortSource;
+import org.restcomm.protocols.ss7.map.api.dialog.MAPNoticeProblemDiagnostic;
+import org.restcomm.protocols.ss7.map.api.dialog.MAPRefuseReason;
+import org.restcomm.protocols.ss7.map.api.dialog.MAPUserAbortChoice;
+import org.restcomm.protocols.ss7.map.api.errors.MAPErrorMessage;
+import org.restcomm.protocols.ss7.map.api.primitives.AddressString;
+import org.restcomm.protocols.ss7.map.api.primitives.IMSI;
+import org.restcomm.protocols.ss7.map.api.primitives.MAPExtensionContainer;
+import org.restcomm.protocols.ss7.map.api.primitives.USSDString;
+import org.restcomm.protocols.ss7.map.api.service.supplementary.MAPDialogSupplementary;
+import org.restcomm.protocols.ss7.map.api.service.supplementary.MAPServiceSupplementaryListener;
+import org.restcomm.protocols.ss7.map.api.service.supplementary.ProcessUnstructuredSSRequest;
+import org.restcomm.protocols.ss7.map.api.service.supplementary.ProcessUnstructuredSSResponse;
+import org.restcomm.protocols.ss7.map.api.service.supplementary.UnstructuredSSNotifyRequest;
+import org.restcomm.protocols.ss7.map.api.service.supplementary.UnstructuredSSNotifyResponse;
+import org.restcomm.protocols.ss7.map.api.service.supplementary.UnstructuredSSRequest;
+import org.restcomm.protocols.ss7.map.api.service.supplementary.UnstructuredSSResponse;
+import org.restcomm.protocols.ss7.map.datacoding.CBSDataCodingSchemeImpl;
+import org.restcomm.protocols.ss7.tcap.asn.ApplicationContextName;
+import org.restcomm.protocols.ss7.tcap.asn.comp.Problem;
 
 /**
  * A simple example show-casing how to use MAP stack. Demonstrates how to listen
@@ -36823,11 +36823,11 @@ We will provide you with all the help that you may require initially.
 <div class="sect2">
 <h3 id="_cap_usage"><a class="anchor" href="#_cap_usage"></a>13.1. jSS7  CAP</h3>
 <div class="paragraph">
-<p>The <code class="class">org.mobicents.protocols.ss7.cap.api.CAPStack</code>			interface defines the methods required to represent CAP Protocol Stack.
-CAPStack exposes <code class="class">org.mobicents.protocols.ss7.cap.api.CAPProvider</code>			that interacts directly with CAPStack.
+<p>The <code class="class">org.restcomm.protocols.ss7.cap.api.CAPStack</code>			interface defines the methods required to represent CAP Protocol Stack.
+CAPStack exposes <code class="class">org.restcomm.protocols.ss7.cap.api.CAPProvider</code>			that interacts directly with CAPStack.
 This interface defines the methods that will be used by any registered CAP-User application.
 CAP-User application must implement interfaces to listen for CAP messages and for dialogue and component handling primitives.
-One interface is <code class="class">org.mobicents.protocols.ss7.cap.api.CAPDialogListener</code>  (listening associated with dialog events). Others are one or more interfaces for listening to messages associated with component events based on  <code class="class">org.mobicents.protocols.ss7.cap.api.CAPServiceListener</code> interface.</p>
+One interface is <code class="class">org.restcomm.protocols.ss7.cap.api.CAPDialogListener</code>  (listening associated with dialog events). Others are one or more interfaces for listening to messages associated with component events based on  <code class="class">org.restcomm.protocols.ss7.cap.api.CAPServiceListener</code> interface.</p>
 </div>
 <div class="paragraph">
 <p>Each CAP-User interested in listening to messages specific to a CAP Service must implement the specific <code class="class">CAPServiceListener</code>.</p>
@@ -36835,14 +36835,14 @@ One interface is <code class="class">org.mobicents.protocols.ss7.cap.api.CAPDial
 <div class="ulist">
 <ul>
 <li>
-<p>CAP-User interested only in circuit switched call operations implements <code class="class">org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.
+<p>CAP-User interested only in circuit switched call operations implements <code class="class">org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.
 CAPServiceCircuitSwitchedCallListener</code></p>
 </li>
 <li>
-<p>CAP-User interested only in GPRS operations implements <code class="class">org.mobicents.protocols.ss7.cap.api.service.gprs.CAPServiceGprsListener</code></p>
+<p>CAP-User interested only in GPRS operations implements <code class="class">org.restcomm.protocols.ss7.cap.api.service.gprs.CAPServiceGprsListener</code></p>
 </li>
 <li>
-<p>CAP-User interested only in SMS operations implements <code class="class">org.mobicents.protocols.ss7.cap.api.service.sms.CAPServiceSmsListener</code></p>
+<p>CAP-User interested only in SMS operations implements <code class="class">org.restcomm.protocols.ss7.cap.api.service.sms.CAPServiceSmsListener</code></p>
 </li>
 </ul>
 </div>
@@ -36850,7 +36850,7 @@ CAPServiceCircuitSwitchedCallListener</code></p>
 <p>CAP-User interested in all the services must implement all the service listener classes.</p>
 </div>
 <div class="paragraph">
-<p>The <code class="class">org.mobicents.protocols.ss7.cap.CAPStackImpl</code>  is a concrete implementation of <code class="class">CAPStack.</code>			The CAP-User application gets access to <code class="class">CAPProvider</code> by doing a JNDI look-up as explained in <a href="#_design_overview_ss7_service">SS7 Service</a>.</p>
+<p>The <code class="class">org.restcomm.protocols.ss7.cap.CAPStackImpl</code>  is a concrete implementation of <code class="class">CAPStack.</code>			The CAP-User application gets access to <code class="class">CAPProvider</code> by doing a JNDI look-up as explained in <a href="#_design_overview_ss7_service">SS7 Service</a>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -36867,14 +36867,14 @@ Following CAPServiceBase are exposed by [class]`CAPProvider</code>.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>For circuit switched call service <code class="class">org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.
+<p>For circuit switched call service <code class="class">org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.
 CAPServiceCircuitSwitchedCall</code></p>
 </li>
 <li>
-<p>For GPRS service <code class="class">org.mobicents.protocols.ss7.cap.api.service.gprs.CAPServiceGprs</code></p>
+<p>For GPRS service <code class="class">org.restcomm.protocols.ss7.cap.api.service.gprs.CAPServiceGprs</code></p>
 </li>
 <li>
-<p>For SMS service <code class="class">org.mobicents.protocols.ss7.cap.api.service.sms.CAPServiceSms</code></p>
+<p>For SMS service <code class="class">org.restcomm.protocols.ss7.cap.api.service.sms.CAPServiceSms</code></p>
 </li>
 </ul>
 </div>
@@ -37154,30 +37154,30 @@ For preventing an Invoke timeout you should invoke <code class="class">resetInvo
 <h3 id="_cap_usage_example"><a class="anchor" href="#_cap_usage_example"></a>13.3. jSS7  CAP Usage</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.protocols.ss7.cap;
+<pre class="highlight"><code class="language-java" data-lang="java">package org.restcomm.protocols.ss7.cap;
 
-import org.mobicents.protocols.ss7.cap.api.EsiBcsm.OAnswerSpecificInfo;
-import org.mobicents.protocols.ss7.cap.api.EsiBcsm.ODisconnectSpecificInfo;
-import org.mobicents.protocols.ss7.cap.api.isup.CalledPartyNumberCap;
-import org.mobicents.protocols.ss7.cap.api.isup.CallingPartyNumberCap;
-import org.mobicents.protocols.ss7.cap.api.isup.CauseCap;
-import org.mobicents.protocols.ss7.cap.api.isup.LocationNumberCap;
-import org.mobicents.protocols.ss7.cap.api.primitives.EventTypeBCSM;
-import org.mobicents.protocols.ss7.cap.api.primitives.ReceivingSideID;
-import org.mobicents.protocols.ss7.inap.api.primitives.LegType;
-import org.mobicents.protocols.ss7.inap.api.primitives.MiscCallInfo;
-import org.mobicents.protocols.ss7.inap.api.primitives.MiscCallInfoMessageType;
-import org.mobicents.protocols.ss7.indicator.RoutingIndicator;
-import org.mobicents.protocols.ss7.isup.message.parameter.CalledPartyNumber;
-import org.mobicents.protocols.ss7.isup.message.parameter.CallingPartyNumber;
-import org.mobicents.protocols.ss7.isup.message.parameter.CauseIndicators;
-import org.mobicents.protocols.ss7.isup.message.parameter.LocationNumber;
-import org.mobicents.protocols.ss7.isup.message.parameter.NAINumber;
-import org.mobicents.protocols.ss7.map.api.primitives.AddressNature;
-import org.mobicents.protocols.ss7.map.api.primitives.ISDNAddressString;
-import org.mobicents.protocols.ss7.map.api.primitives.NumberingPlan;
-import org.mobicents.protocols.ss7.map.api.service.mobility.subscriberInformation.LocationInformation;
-import org.mobicents.protocols.ss7.sccp.parameter.SccpAddress;
+import org.restcomm.protocols.ss7.cap.api.EsiBcsm.OAnswerSpecificInfo;
+import org.restcomm.protocols.ss7.cap.api.EsiBcsm.ODisconnectSpecificInfo;
+import org.restcomm.protocols.ss7.cap.api.isup.CalledPartyNumberCap;
+import org.restcomm.protocols.ss7.cap.api.isup.CallingPartyNumberCap;
+import org.restcomm.protocols.ss7.cap.api.isup.CauseCap;
+import org.restcomm.protocols.ss7.cap.api.isup.LocationNumberCap;
+import org.restcomm.protocols.ss7.cap.api.primitives.EventTypeBCSM;
+import org.restcomm.protocols.ss7.cap.api.primitives.ReceivingSideID;
+import org.restcomm.protocols.ss7.inap.api.primitives.LegType;
+import org.restcomm.protocols.ss7.inap.api.primitives.MiscCallInfo;
+import org.restcomm.protocols.ss7.inap.api.primitives.MiscCallInfoMessageType;
+import org.restcomm.protocols.ss7.indicator.RoutingIndicator;
+import org.restcomm.protocols.ss7.isup.message.parameter.CalledPartyNumber;
+import org.restcomm.protocols.ss7.isup.message.parameter.CallingPartyNumber;
+import org.restcomm.protocols.ss7.isup.message.parameter.CauseIndicators;
+import org.restcomm.protocols.ss7.isup.message.parameter.LocationNumber;
+import org.restcomm.protocols.ss7.isup.message.parameter.NAINumber;
+import org.restcomm.protocols.ss7.map.api.primitives.AddressNature;
+import org.restcomm.protocols.ss7.map.api.primitives.ISDNAddressString;
+import org.restcomm.protocols.ss7.map.api.primitives.NumberingPlan;
+import org.restcomm.protocols.ss7.map.api.service.mobility.subscriberInformation.LocationInformation;
+import org.restcomm.protocols.ss7.sccp.parameter.SccpAddress;
 
 public class Example {
 
@@ -37289,66 +37289,66 @@ public class Example {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.protocols.ss7.cap;
+<pre class="highlight"><code class="language-java" data-lang="java">package org.restcomm.protocols.ss7.cap;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.mobicents.protocols.ss7.cap.api.CAPApplicationContext;
-import org.mobicents.protocols.ss7.cap.api.CAPDialog;
-import org.mobicents.protocols.ss7.cap.api.CAPDialogListener;
-import org.mobicents.protocols.ss7.cap.api.CAPException;
-import org.mobicents.protocols.ss7.cap.api.CAPMessage;
-import org.mobicents.protocols.ss7.cap.api.CAPParameterFactory;
-import org.mobicents.protocols.ss7.cap.api.CAPProvider;
-import org.mobicents.protocols.ss7.cap.api.CAPStack;
-import org.mobicents.protocols.ss7.cap.api.EsiBcsm.OAnswerSpecificInfo;
-import org.mobicents.protocols.ss7.cap.api.EsiBcsm.ODisconnectSpecificInfo;
-import org.mobicents.protocols.ss7.cap.api.dialog.CAPGeneralAbortReason;
-import org.mobicents.protocols.ss7.cap.api.dialog.CAPGprsReferenceNumber;
-import org.mobicents.protocols.ss7.cap.api.dialog.CAPNoticeProblemDiagnostic;
-import org.mobicents.protocols.ss7.cap.api.dialog.CAPUserAbortReason;
-import org.mobicents.protocols.ss7.cap.api.errors.CAPErrorMessage;
-import org.mobicents.protocols.ss7.cap.api.isup.CalledPartyNumberCap;
-import org.mobicents.protocols.ss7.cap.api.isup.CallingPartyNumberCap;
-import org.mobicents.protocols.ss7.cap.api.isup.LocationNumberCap;
-import org.mobicents.protocols.ss7.cap.api.primitives.EventTypeBCSM;
-import org.mobicents.protocols.ss7.cap.api.primitives.ReceivingSideID;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.ActivityTestRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.ActivityTestResponse;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.ApplyChargingReportRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.ApplyChargingRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.AssistRequestInstructionsRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.CAPDialogCircuitSwitchedCall;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.CAPServiceCircuitSwitchedCallListener;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.CallInformationReportRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.CallInformationRequestRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.CancelRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.ConnectRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.ConnectToResourceRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.ContinueRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.DisconnectForwardConnectionRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.EstablishTemporaryConnectionRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.EventReportBCSMRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.FurnishChargingInformationRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.InitialDPRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.PlayAnnouncementRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.PromptAndCollectUserInformationRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.PromptAndCollectUserInformationResponse;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.ReleaseCallRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.RequestReportBCSMEventRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.ResetTimerRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.SendChargingInformationRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.SpecializedResourceReportRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.primitive.DestinationRoutingAddress;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.primitive.EventSpecificInformationBCSM;
-import org.mobicents.protocols.ss7.inap.api.primitives.MiscCallInfo;
-import org.mobicents.protocols.ss7.map.api.MAPProvider;
-import org.mobicents.protocols.ss7.map.api.service.mobility.subscriberInformation.LocationInformation;
-import org.mobicents.protocols.ss7.sccp.SccpProvider;
-import org.mobicents.protocols.ss7.sccp.parameter.SccpAddress;
-import org.mobicents.protocols.ss7.tcap.asn.comp.PAbortCauseType;
-import org.mobicents.protocols.ss7.tcap.asn.comp.Problem;
+import org.restcomm.protocols.ss7.cap.api.CAPApplicationContext;
+import org.restcomm.protocols.ss7.cap.api.CAPDialog;
+import org.restcomm.protocols.ss7.cap.api.CAPDialogListener;
+import org.restcomm.protocols.ss7.cap.api.CAPException;
+import org.restcomm.protocols.ss7.cap.api.CAPMessage;
+import org.restcomm.protocols.ss7.cap.api.CAPParameterFactory;
+import org.restcomm.protocols.ss7.cap.api.CAPProvider;
+import org.restcomm.protocols.ss7.cap.api.CAPStack;
+import org.restcomm.protocols.ss7.cap.api.EsiBcsm.OAnswerSpecificInfo;
+import org.restcomm.protocols.ss7.cap.api.EsiBcsm.ODisconnectSpecificInfo;
+import org.restcomm.protocols.ss7.cap.api.dialog.CAPGeneralAbortReason;
+import org.restcomm.protocols.ss7.cap.api.dialog.CAPGprsReferenceNumber;
+import org.restcomm.protocols.ss7.cap.api.dialog.CAPNoticeProblemDiagnostic;
+import org.restcomm.protocols.ss7.cap.api.dialog.CAPUserAbortReason;
+import org.restcomm.protocols.ss7.cap.api.errors.CAPErrorMessage;
+import org.restcomm.protocols.ss7.cap.api.isup.CalledPartyNumberCap;
+import org.restcomm.protocols.ss7.cap.api.isup.CallingPartyNumberCap;
+import org.restcomm.protocols.ss7.cap.api.isup.LocationNumberCap;
+import org.restcomm.protocols.ss7.cap.api.primitives.EventTypeBCSM;
+import org.restcomm.protocols.ss7.cap.api.primitives.ReceivingSideID;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.ActivityTestRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.ActivityTestResponse;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.ApplyChargingReportRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.ApplyChargingRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.AssistRequestInstructionsRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.CAPDialogCircuitSwitchedCall;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.CAPServiceCircuitSwitchedCallListener;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.CallInformationReportRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.CallInformationRequestRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.CancelRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.ConnectRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.ConnectToResourceRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.ContinueRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.DisconnectForwardConnectionRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.EstablishTemporaryConnectionRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.EventReportBCSMRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.FurnishChargingInformationRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.InitialDPRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.PlayAnnouncementRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.PromptAndCollectUserInformationRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.PromptAndCollectUserInformationResponse;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.ReleaseCallRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.RequestReportBCSMEventRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.ResetTimerRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.SendChargingInformationRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.SpecializedResourceReportRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.primitive.DestinationRoutingAddress;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.primitive.EventSpecificInformationBCSM;
+import org.restcomm.protocols.ss7.inap.api.primitives.MiscCallInfo;
+import org.restcomm.protocols.ss7.map.api.MAPProvider;
+import org.restcomm.protocols.ss7.map.api.service.mobility.subscriberInformation.LocationInformation;
+import org.restcomm.protocols.ss7.sccp.SccpProvider;
+import org.restcomm.protocols.ss7.sccp.parameter.SccpAddress;
+import org.restcomm.protocols.ss7.tcap.asn.comp.PAbortCauseType;
+import org.restcomm.protocols.ss7.tcap.asn.comp.Problem;
 
 public class CallSsfExample implements CAPDialogListener, CAPServiceCircuitSwitchedCallListener {
 
@@ -37703,61 +37703,61 @@ public class CallSsfExample implements CAPDialogListener, CAPServiceCircuitSwitc
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.protocols.ss7.cap;
+<pre class="highlight"><code class="language-java" data-lang="java">package org.restcomm.protocols.ss7.cap;
 
 import java.util.ArrayList;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.mobicents.protocols.ss7.cap.api.CAPDialog;
-import org.mobicents.protocols.ss7.cap.api.CAPDialogListener;
-import org.mobicents.protocols.ss7.cap.api.CAPException;
-import org.mobicents.protocols.ss7.cap.api.CAPMessage;
-import org.mobicents.protocols.ss7.cap.api.CAPParameterFactory;
-import org.mobicents.protocols.ss7.cap.api.CAPProvider;
-import org.mobicents.protocols.ss7.cap.api.dialog.CAPGeneralAbortReason;
-import org.mobicents.protocols.ss7.cap.api.dialog.CAPGprsReferenceNumber;
-import org.mobicents.protocols.ss7.cap.api.dialog.CAPNoticeProblemDiagnostic;
-import org.mobicents.protocols.ss7.cap.api.dialog.CAPUserAbortReason;
-import org.mobicents.protocols.ss7.cap.api.errors.CAPErrorMessage;
-import org.mobicents.protocols.ss7.cap.api.isup.CalledPartyNumberCap;
-import org.mobicents.protocols.ss7.cap.api.primitives.BCSMEvent;
-import org.mobicents.protocols.ss7.cap.api.primitives.EventTypeBCSM;
-import org.mobicents.protocols.ss7.cap.api.primitives.MonitorMode;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.ActivityTestRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.ActivityTestResponse;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.ApplyChargingReportRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.ApplyChargingRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.AssistRequestInstructionsRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.CAPDialogCircuitSwitchedCall;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.CAPServiceCircuitSwitchedCallListener;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.CallInformationReportRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.CallInformationRequestRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.CancelRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.ConnectRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.ConnectToResourceRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.ContinueRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.DisconnectForwardConnectionRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.EstablishTemporaryConnectionRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.EventReportBCSMRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.FurnishChargingInformationRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.InitialDPRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.PlayAnnouncementRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.PromptAndCollectUserInformationRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.PromptAndCollectUserInformationResponse;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.ReleaseCallRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.RequestReportBCSMEventRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.ResetTimerRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.SendChargingInformationRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.SpecializedResourceReportRequest;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.primitive.DestinationRoutingAddress;
-import org.mobicents.protocols.ss7.inap.api.primitives.LegID;
-import org.mobicents.protocols.ss7.inap.api.primitives.LegType;
-import org.mobicents.protocols.ss7.isup.message.parameter.CalledPartyNumber;
-import org.mobicents.protocols.ss7.isup.message.parameter.NAINumber;
-import org.mobicents.protocols.ss7.tcap.asn.comp.PAbortCauseType;
-import org.mobicents.protocols.ss7.tcap.asn.comp.Problem;
+import org.restcomm.protocols.ss7.cap.api.CAPDialog;
+import org.restcomm.protocols.ss7.cap.api.CAPDialogListener;
+import org.restcomm.protocols.ss7.cap.api.CAPException;
+import org.restcomm.protocols.ss7.cap.api.CAPMessage;
+import org.restcomm.protocols.ss7.cap.api.CAPParameterFactory;
+import org.restcomm.protocols.ss7.cap.api.CAPProvider;
+import org.restcomm.protocols.ss7.cap.api.dialog.CAPGeneralAbortReason;
+import org.restcomm.protocols.ss7.cap.api.dialog.CAPGprsReferenceNumber;
+import org.restcomm.protocols.ss7.cap.api.dialog.CAPNoticeProblemDiagnostic;
+import org.restcomm.protocols.ss7.cap.api.dialog.CAPUserAbortReason;
+import org.restcomm.protocols.ss7.cap.api.errors.CAPErrorMessage;
+import org.restcomm.protocols.ss7.cap.api.isup.CalledPartyNumberCap;
+import org.restcomm.protocols.ss7.cap.api.primitives.BCSMEvent;
+import org.restcomm.protocols.ss7.cap.api.primitives.EventTypeBCSM;
+import org.restcomm.protocols.ss7.cap.api.primitives.MonitorMode;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.ActivityTestRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.ActivityTestResponse;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.ApplyChargingReportRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.ApplyChargingRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.AssistRequestInstructionsRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.CAPDialogCircuitSwitchedCall;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.CAPServiceCircuitSwitchedCallListener;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.CallInformationReportRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.CallInformationRequestRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.CancelRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.ConnectRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.ConnectToResourceRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.ContinueRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.DisconnectForwardConnectionRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.EstablishTemporaryConnectionRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.EventReportBCSMRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.FurnishChargingInformationRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.InitialDPRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.PlayAnnouncementRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.PromptAndCollectUserInformationRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.PromptAndCollectUserInformationResponse;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.ReleaseCallRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.RequestReportBCSMEventRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.ResetTimerRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.SendChargingInformationRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.SpecializedResourceReportRequest;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.primitive.DestinationRoutingAddress;
+import org.restcomm.protocols.ss7.inap.api.primitives.LegID;
+import org.restcomm.protocols.ss7.inap.api.primitives.LegType;
+import org.restcomm.protocols.ss7.isup.message.parameter.CalledPartyNumber;
+import org.restcomm.protocols.ss7.isup.message.parameter.NAINumber;
+import org.restcomm.protocols.ss7.tcap.asn.comp.PAbortCauseType;
+import org.restcomm.protocols.ss7.tcap.asn.comp.Problem;
 
 public class CallScfExample implements CAPDialogListener, CAPServiceCircuitSwitchedCallListener {
 
@@ -38715,7 +38715,7 @@ You can install and run the module on any machine.</p>
 <p>Change the working directory to the bin folder in the Simulator&#8217;s installation directory.</p>
 <div class="listingblock">
 <div class="content">
-<pre>downloads]$ cd mobicents-jss7-&lt;version&gt;/ss7/mobicents-ss7-traceparser/bin</pre>
+<pre>downloads]$ cd restcomm-jss7-&lt;version&gt;/ss7/restcomm-ss7-traceparser/bin</pre>
 </div>
 </div>
 </li>
@@ -38834,7 +38834,7 @@ If there are several dialogs with the same path they will be present only once i
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-04 02:28:15 UTC
+Last updated 2018-03-05 19:00:15 UTC
 </div>
 </div>
 <footer>

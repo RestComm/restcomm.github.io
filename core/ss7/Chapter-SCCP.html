@@ -23487,7 +23487,7 @@ Match any digits keep the digits in the and add a PC(123) and SSN (8). If the tr
 <h2 id="_sccp_design"><a class="anchor" href="#_sccp_design"></a>SCCP Usage</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The instance of <code class="class">org.mobicents.protocols.ss7.sccp.SccpStack</code> acts as starting point.
+<p>The instance of <code class="class">org.restcomm.protocols.ss7.sccp.SccpStack</code> acts as starting point.
 All the sccp messages sent by SCCP User Part are routed as per the rule configured in Router</p>
 </div>
 <div class="admonitionblock note">
@@ -23506,8 +23506,8 @@ The term SCCP User Part refers to the applications that use SCCP&#8217;s service
 <p>The SCCP User Part gets handle to <code class="class">SccpStack</code> by doing a JNDI look-up.</p>
 </div>
 <div class="paragraph">
-<p><code class="class">SccpStack</code> exposes <code class="class">org.mobicents.protocols.ss7.sccp.SccpProvider</code>  that interacts directly with SccpStack.
-This interface defines the methods that will be used by SCCP User Part to send connectionless <code class="class">org.mobicents.protocols.ss7.sccp.message.SccpMessage</code>, create new connections and register  [class]`org.mobicents.protocols.ss7.sccp.SccpListener&#8217;s to listen for incoming SCCP messages and connection events.</p>
+<p><code class="class">SccpStack</code> exposes <code class="class">org.restcomm.protocols.ss7.sccp.SccpProvider</code>  that interacts directly with SccpStack.
+This interface defines the methods that will be used by SCCP User Part to send connectionless <code class="class">org.restcomm.protocols.ss7.sccp.message.SccpMessage</code>, create new connections and register  [class]`org.restcomm.protocols.ss7.sccp.SccpListener&#8217;s to listen for incoming SCCP messages and connection events.</p>
 </div>
 <div class="paragraph">
 <p>SCCP User Part registers SccpListener for specific local subsystem number.
@@ -23517,8 +23517,8 @@ For every incoming SccpMessage or connection event, if the called subsystem matc
 <p><code class="class">SccpProvider</code> exposes <code class="class">SccpConnection</code> which allows to perform common connection actions such as establishing, resetting, confirming/refusing and disconnecting SCCP connections.</p>
 </div>
 <div class="paragraph">
-<p>SccpProvider also exposes <code class="class">org.mobicents.protocols.ss7.sccp.message.MessageFactory</code> and <code class="class">org.mobicents.protocols.ss7.sccp.parameter.ParameterFactory</code> to create new SccpMessage.
-For transfer data via connectionless service <code class="class">org.mobicents.protocols.ss7.sccp.message.SccpDataMessage</code> is used.
+<p>SccpProvider also exposes <code class="class">org.restcomm.protocols.ss7.sccp.message.MessageFactory</code> and <code class="class">org.restcomm.protocols.ss7.sccp.parameter.ParameterFactory</code> to create new SccpMessage.
+For transfer data via connectionless service <code class="class">org.restcomm.protocols.ss7.sccp.message.SccpDataMessage</code> is used.
 (This class use UDT, XUDT, LUDT SCCP message type for message transfer.)</p>
 </div>
 </div>
@@ -23531,22 +23531,22 @@ For transfer data via connectionless service <code class="class">org.mobicents.p
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.protocols.ss7.sccp.impl;
+<pre class="highlight"><code class="language-java" data-lang="java">package org.restcomm.protocols.ss7.sccp.impl;
 
 import java.io.IOException;
 
-import org.mobicents.protocols.ss7.indicator.NatureOfAddress;
-import org.mobicents.protocols.ss7.indicator.NumberingPlan;
-import org.mobicents.protocols.ss7.indicator.RoutingIndicator;
-import org.mobicents.protocols.ss7.sccp.RemoteSccpStatus;
-import org.mobicents.protocols.ss7.sccp.SccpListener;
-import org.mobicents.protocols.ss7.sccp.SccpProvider;
-import org.mobicents.protocols.ss7.sccp.SignallingPointStatus;
-import org.mobicents.protocols.ss7.sccp.message.SccpDataMessage;
-import org.mobicents.protocols.ss7.sccp.message.SccpNoticeMessage;
-import org.mobicents.protocols.ss7.sccp.parameter.GlobalTitle;
-import org.mobicents.protocols.ss7.sccp.parameter.HopCounter;
-import org.mobicents.protocols.ss7.sccp.parameter.SccpAddress;
+import org.restcomm.protocols.ss7.indicator.NatureOfAddress;
+import org.restcomm.protocols.ss7.indicator.NumberingPlan;
+import org.restcomm.protocols.ss7.indicator.RoutingIndicator;
+import org.restcomm.protocols.ss7.sccp.RemoteSccpStatus;
+import org.restcomm.protocols.ss7.sccp.SccpListener;
+import org.restcomm.protocols.ss7.sccp.SccpProvider;
+import org.restcomm.protocols.ss7.sccp.SignallingPointStatus;
+import org.restcomm.protocols.ss7.sccp.message.SccpDataMessage;
+import org.restcomm.protocols.ss7.sccp.message.SccpNoticeMessage;
+import org.restcomm.protocols.ss7.sccp.parameter.GlobalTitle;
+import org.restcomm.protocols.ss7.sccp.parameter.HopCounter;
+import org.restcomm.protocols.ss7.sccp.parameter.SccpAddress;
 
 public class Test implements SccpListener {
         private SccpProvider sccpProvider;
@@ -23670,34 +23670,34 @@ new data message via already established protocol class 2 connection</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.protocols.ss7.sccp.impl;
+<pre class="highlight"><code class="language-java" data-lang="java">package org.restcomm.protocols.ss7.sccp.impl;
 
-import org.mobicents.protocols.ss7.indicator.RoutingIndicator;
-import org.mobicents.protocols.ss7.sccp.NetworkIdState;
-import org.mobicents.protocols.ss7.sccp.RemoteSccpStatus;
-import org.mobicents.protocols.ss7.sccp.SccpConnection;
-import org.mobicents.protocols.ss7.sccp.SccpListener;
-import org.mobicents.protocols.ss7.sccp.SccpProvider;
-import org.mobicents.protocols.ss7.sccp.SignallingPointStatus;
-import org.mobicents.protocols.ss7.sccp.impl.parameter.ImportanceImpl;
-import org.mobicents.protocols.ss7.sccp.impl.parameter.LocalReferenceImpl;
-import org.mobicents.protocols.ss7.sccp.impl.parameter.ProtocolClassImpl;
-import org.mobicents.protocols.ss7.sccp.impl.parameter.ReleaseCauseImpl;
-import org.mobicents.protocols.ss7.sccp.message.SccpConnCrMessage;
-import org.mobicents.protocols.ss7.sccp.message.SccpDataMessage;
-import org.mobicents.protocols.ss7.sccp.message.SccpNoticeMessage;
-import org.mobicents.protocols.ss7.sccp.parameter.Credit;
-import org.mobicents.protocols.ss7.sccp.parameter.ErrorCause;
-import org.mobicents.protocols.ss7.sccp.parameter.Importance;
-import org.mobicents.protocols.ss7.sccp.parameter.ProtocolClass;
-import org.mobicents.protocols.ss7.sccp.parameter.RefusalCause;
-import org.mobicents.protocols.ss7.sccp.parameter.ReleaseCause;
-import org.mobicents.protocols.ss7.sccp.parameter.ReleaseCauseValue;
-import org.mobicents.protocols.ss7.sccp.parameter.ResetCause;
-import org.mobicents.protocols.ss7.sccp.parameter.SccpAddress;
-import org.mobicents.protocols.ss7.scheduler.Clock;
-import org.mobicents.protocols.ss7.scheduler.DefaultClock;
-import org.mobicents.protocols.ss7.scheduler.Scheduler;
+import org.restcomm.protocols.ss7.indicator.RoutingIndicator;
+import org.restcomm.protocols.ss7.sccp.NetworkIdState;
+import org.restcomm.protocols.ss7.sccp.RemoteSccpStatus;
+import org.restcomm.protocols.ss7.sccp.SccpConnection;
+import org.restcomm.protocols.ss7.sccp.SccpListener;
+import org.restcomm.protocols.ss7.sccp.SccpProvider;
+import org.restcomm.protocols.ss7.sccp.SignallingPointStatus;
+import org.restcomm.protocols.ss7.sccp.impl.parameter.ImportanceImpl;
+import org.restcomm.protocols.ss7.sccp.impl.parameter.LocalReferenceImpl;
+import org.restcomm.protocols.ss7.sccp.impl.parameter.ProtocolClassImpl;
+import org.restcomm.protocols.ss7.sccp.impl.parameter.ReleaseCauseImpl;
+import org.restcomm.protocols.ss7.sccp.message.SccpConnCrMessage;
+import org.restcomm.protocols.ss7.sccp.message.SccpDataMessage;
+import org.restcomm.protocols.ss7.sccp.message.SccpNoticeMessage;
+import org.restcomm.protocols.ss7.sccp.parameter.Credit;
+import org.restcomm.protocols.ss7.sccp.parameter.ErrorCause;
+import org.restcomm.protocols.ss7.sccp.parameter.Importance;
+import org.restcomm.protocols.ss7.sccp.parameter.ProtocolClass;
+import org.restcomm.protocols.ss7.sccp.parameter.RefusalCause;
+import org.restcomm.protocols.ss7.sccp.parameter.ReleaseCause;
+import org.restcomm.protocols.ss7.sccp.parameter.ReleaseCauseValue;
+import org.restcomm.protocols.ss7.sccp.parameter.ResetCause;
+import org.restcomm.protocols.ss7.sccp.parameter.SccpAddress;
+import org.restcomm.protocols.ss7.scheduler.Clock;
+import org.restcomm.protocols.ss7.scheduler.DefaultClock;
+import org.restcomm.protocols.ss7.scheduler.Scheduler;
 
 public class Test2 implements SccpListener {
     private SccpProvider sccpProvider;
@@ -23831,7 +23831,7 @@ public class Test2 implements SccpListener {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-04 02:28:15 UTC
+Last updated 2018-03-05 19:00:15 UTC
 </div>
 </div>
 <footer>
