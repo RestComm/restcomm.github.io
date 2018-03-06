@@ -23374,16 +23374,16 @@ display: none;
 </li>
 <li><a href="#mgcp-load-balancing">MGCP Load Balancing</a></li>
 <li><a href="#ss7-load-balancing">SS7 Load Balancing</a></li>
-<li><a href="#_fep_ussd_smsc">Integration of Load Balancer SS7 (FEP) with USSD and SMSC servers</a>
+<li><a href="#_fep_ussd_smsc">Integration of Load Balancer SS7 (FEP) with SMSC and USSD Gateways</a>
 <ul class="sectlevel2">
-<li><a href="#_fep_ussd_smsc_map_ra">MAP RA configuring</a></li>
-<li><a href="#_fep_ussd_smsc_smsc_ussd">SMSC GW / USSD SS7 part configuring</a></li>
-<li><a href="#_fep_ussd_smsc_fep_internal">FEP SS7 internal part configuring</a></li>
-<li><a href="#_fep_ussd_smsc_fep_external">FEP SS7 external part configuring</a></li>
-<li><a href="#_fep_ussd_smsc_ss7_sim">Confiruging of SS7 Simulator for local testing</a></li>
+<li><a href="#_fep_ussd_smsc_map_ra">MAP RA configuration</a></li>
+<li><a href="#_fep_ussd_smsc_smsc_ussd">SMSC / USSD GW SS7 part configuration</a></li>
+<li><a href="#_fep_ussd_smsc_fep_internal">FEP SS7 internal part configuration</a></li>
+<li><a href="#_fep_ussd_smsc_fep_external">FEP SS7 external part configuration</a></li>
+<li><a href="#_fep_ussd_smsc_ss7_sim">Configuring of jSS7 Simulator for local testing</a></li>
 </ul>
 </li>
-<li><a href="#pluggable-balancer-algorithms">Pluggable balancer algorithms</a></li>
+<li><a href="#plugable-balancer-algorithms">Plugable balancer algorithms</a></li>
 <li><a href="#distributed-load-balancing">Distributed load balancing</a></li>
 <li><a href="#_sslb_binary_sip_load_balancer_installing_configuring_and_running">Restcomm Load Balancer: Installing, Configuring andRunning</a>
 <ul class="sectlevel2">
@@ -24039,7 +24039,7 @@ accordingly to the corresponding GT. Every entity of the Map will be removed aft
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/SS7-lb-diagram.png" alt="SS7 lb diagram">
+<img src="./images/SS7-LB-diagram.png" alt="SS7 LB diagram">
 </div>
 <div class="title">Figure 6. SS7 load balancer diagram</div>
 </div>
@@ -24403,7 +24403,7 @@ accordingly to the corresponding GT. Every entity of the Map will be removed aft
 </div>
 </div>
 <div class="sect1">
-<h2 id="_fep_ussd_smsc"><a class="anchor" href="#_fep_ussd_smsc"></a>Integration of Load Balancer SS7 (FEP) with USSD and SMSC servers</h2>
+<h2 id="_fep_ussd_smsc"><a class="anchor" href="#_fep_ussd_smsc"></a>Integration of Load Balancer SS7 (FEP) with SMSC and USSD Gateways</h2>
 <div class="sectionbody">
 <div class="admonitionblock note">
 <table>
@@ -24418,23 +24418,26 @@ SS7 Active-Active mode is a <a href="https://www.restcomm.com/on-premise/">Restc
 </table>
 </div>
 <div class="paragraph">
-<p>USSD GW and SMSC GW servers can use FEP instances (Front-End-Processors that play a role of SS7 load-balancing before FEP) as intermediate nodes with connecting to SS7 network.</p>
+<p>SMSC GW and USSD GW servers can use FEP (Front End Processors) instances, which play an SS7 load-balancing role as intermediate nodes between the Gateways and connecting SS7 Circuit-Switched Core-Networks.</p>
 </div>
 <div class="paragraph">
-<p>You can see below configuring examples of USSD / SMSC usage with a FEP.</p>
+<p>You can see below configuration examples of a couple of SMSC / USSD Gateway instances usage with adjacent FEP ones.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/USSD-FEP-schema.png" alt="USSD FEP schema">
+<img src="./images/STP-FEP-SMSC-schema.png" alt="STP FEP SMSC schema">
 </div>
+<div class="title">Figure 7. STP-FEP-SMSC SS7 load balance diagram example</div>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/SMSC-FEP-schema.png" alt="SMSC FEP schema">
+<img src="./images/STP-FEP-USSD-schema.png" alt="STP FEP USSD schema">
 </div>
+<div class="title">Figure 8. STP-FEP-USSD SS7 load balance diagram example</div>
 </div>
 <div class="paragraph">
-<p>We will describe configuring details for a case when FEP1 and SMSC / USSD 1 are deployed to a physical server 1 (with IP address <code>IP1</code>) and FEP2 and SMSC / USSD 2 are deployed to a physical server 2 (with IP address <code>IP2</code>). <code>IP1</code> and <code>IP2</code> will be of cause different for different deployments. We will use in our  example follownf IP values:</p>
+<p>We will describe configuration details for a case when FEP01 and SMSC / USSD GWs 01 instances are deployed within a physical server 1 (with IP address <code>IP1</code>) while FEP02 and SMSC / USSD GWs 02 are deployed within a physical server 2 (with IP address <code>IP2</code>).
+<code>IP1</code> and <code>IP2</code> will naturally be unequal for different deployments. In our example, we will use the following IP values:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -24447,18 +24450,19 @@ SS7 Active-Active mode is a <a href="https://www.restcomm.com/on-premise/">Restc
 </ul>
 </div>
 <div class="paragraph">
-<p>You need to replace the mentioned IP values in configs to your actual values. You can reuse point codes at a leg between FEP and USSD/SMSC GW from an example because this part point codes are not exposed to a SS7 network provider. Point codes, IPs, ports between FEP and a remote SS7 node must be replaced to provided by a SS7 provider values.</p>
+<p>Then, we need to replace the mentioned IP values in configuration files to our actual values. We can reuse Signaling Point Codes at a leg between FEP and USSD/SMSC GWs from an example as for this side, Point Codes are not exposed to any SS7 network provider.
+Point codes, IPs and ports between FEP and remote SS7 nodes (STPs) must be replaced to the ones given by an SS7 provider.</p>
 </div>
 <div class="paragraph">
-<p>Point codes that are used in our example:</p>
+<p>Signaling Point Codes used in our example are described next:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>USSD/SMSC GW 1 - 10</p>
+<p>SMSC/USSD GW 1 - 10</p>
 </li>
 <li>
-<p>USSD/SMSC GW 2 - 40</p>
+<p>SMSC/USSD GW 2 - 40</p>
 </li>
 <li>
 <p>FEP 1 internal side - 11</p>
@@ -24478,48 +24482,51 @@ SS7 Active-Active mode is a <a href="https://www.restcomm.com/on-premise/">Restc
 </ul>
 </div>
 <div class="paragraph">
-<p>Configuring of servers includes configuring of several layers:</p>
+<p>Configuration of SMSC / USSD GWs includes configuration of several layers:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>MAP RA (MAP protocol Resource Adaptor) configuring</p>
+<p>MAP RA (MAP protocol Resource Adaptor)</p>
 </li>
 <li>
-<p>SMSC GW / USSD SS7 part configuring</p>
+<p>SMSC GW / USSD SS7 part</p>
 </li>
 <li>
-<p>FEP SS7 internal part configuring</p>
+<p>FEP SS7 internal part</p>
 </li>
 <li>
-<p>FEP SS7 external part configuring</p>
+<p>FEP SS7 external part</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>If you just want to make end-to-end testing with SS7 Simulator at a place of an external SS7 node (external STP) we provide a config example of SS7 Simulator that allows to deploy one SS7 Simulator instance that will connect to both FEP nodes.</p>
+<p>If you just want to make End-to-End testing with jSS7 Simulator at a place of an external SS7 node (external STP), we provide a configuration example of jSS7 Simulator that allows deploying one jSS7 Simulator instance which will connect to both FEP instances.</p>
 </div>
 <div class="sect2">
-<h3 id="_fep_ussd_smsc_map_ra"><a class="anchor" href="#_fep_ussd_smsc_map_ra"></a>MAP RA configuring</h3>
+<h3 id="_fep_ussd_smsc_map_ra"><a class="anchor" href="#_fep_ussd_smsc_map_ra"></a>MAP RA configuration</h3>
 <div class="paragraph">
-<p>MAP RA is deployed at a USSD/SMSC GW side and contains configuring of connection(s) to FEP(s) that are deployed between USSD/SMSC GWs and a SS7 network. MAP RA config is responsible for a functionality when a USSD/SMSC GW informs FEP side that a GW has started / stopped or a graceful shutdown has initiated. This is needed in order to a FEP node will create a SS7 connection to a started USSD/SMSC GW node and stop of sending of new dialogs to a shutting down USSD/SMSC GW node.</p>
+<p>MAP RA is deployed at a SMSC/USSD GW side and contains configuration of connections to FEP nodes deployed between SMSC/USSD GWs and an SS7 network.</p>
 </div>
 <div class="paragraph">
-<p>For configuring of MAP RA we need to perform follow steps:</p>
+<p>MAP RA configuration is responsible for notifying FEP instance(s) when an SMSC/USSD GW has started/stopped or a graceful shutdown has initiated. This is needed in order to let a FEP node to create SS7 connections to already started SMSC/USSD GW nodes, as well as forcing it to stop sending new TCAP dialogs to SMSC/USSD GW nodes during shutting down processes.</p>
+</div>
+<div class="paragraph">
+<p>For MAP RA configuration we need to perform the following steps:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>MAP RA file has a name like <code>restcomm-slee-ra-map-du-jboss-7.4.1-30.jar</code> (for jboss 5 server) and <code>restcomm-slee-ra-map-du-7.4.1-30.jar</code> (for wildfly server). We can find this file in a folder <code>&lt;jboss&gt;/server/default/deploy</code> (for jboss 5 server) or in a folder <code>&lt;jboss&gt;/standalone/deployments</code> (for wildfly server). This file is actually a zip archive, we need to unzip it.</p>
+<p>MAP RA file is named similarly to <code>restcomm-slee-ra-map-du-jboss-7.4.1-30.jar</code> (for JBoss 5 server) or <code>restcomm-slee-ra-map-du-7.4.1-30.jar</code> (for WildFly server). We can find this file within <code>&lt;jboss&gt;/server/default/deploy</code> folder (for JBoss 5 case) or within <code>&lt;jboss&gt;/standalone/deployments</code> folder (for WildFly case). This file is actually a zip archive, thus we need to unzip it.</p>
 </li>
 <li>
-<p>An unzipped folder contains a file like <code>jars/restcomm-slee-ra-map-ra-7.4.1-30.jar</code>, this is also a zip archive, we need to unzip it too.</p>
+<p>An unzipped folder contains a file named similarly to <code>jars/restcomm-slee-ra-map-ra-7.4.1-30.jar</code>. The latter is also a zip archive, then we need to unzip it too.</p>
 </li>
 <li>
-<p>New unzipped folder contains <code>META-INF/resource-adaptor-jar.xml</code> file that contains several <code>config-property</code> entries that we need to update</p>
+<p>New unzipped folder contains <code>META-INF/resource-adaptor-jar.xml</code> file containing several <code>config-property</code> entries which we need to update.</p>
 </li>
 <li>
-<p>Then we need to zip <code>restcomm-slee-ra-map-ra-7.4.1-30.jar</code> and <code>restcomm-slee-ra-map-du-7.4.1-30.jar</code> files and deploy them into an original jboss / wildfly folder.</p>
+<p>Then, we need to zip <code>restcomm-slee-ra-map-ra-7.4.1-30.jar</code> and <code>restcomm-slee-ra-map-du-7.4.1-30.jar</code> files and deploy them into an original JBoss / WildFly folder.</p>
 </li>
 </ul>
 </div>
@@ -24545,28 +24552,28 @@ SS7 Active-Active mode is a <a href="https://www.restcomm.com/on-premise/">Restc
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.resources.restcomm-slee-ra-map-ra.POINTCODE</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Point code of USSD/SMSC GW at connection to FEP (must fit to a local sccp point code)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Point Code of SMSC/USSD GW connected to FEP (must fit to a local MTP3/M3UA Point Code)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">40</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.resources.restcomm-slee-ra-map-ra.SCTP_PORT</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Port of ss7 m3ua association at a USSD/SMSC side</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Port of SS7 M3UA association at SMSC/USSD GW side</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">8071</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">8061</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.resources.restcomm-slee-ra-map-ra.SCTP_LB_PORT</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Port of ss7 m3ua association at a FEP side</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Port of SS7 M3UA association at FEP side</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">8070</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">8060</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.resources.restcomm-slee-ra-map-ra.LOCAL_ADDRESS</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Local IP address of a USSD/SMSC side</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Local IP address of SMSC/USSD GW side</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">172.30.1.8</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">172.30.1.180</p></td>
 </tr>
@@ -24594,56 +24601,56 @@ SS7 Active-Active mode is a <a href="https://www.restcomm.com/on-premise/">Restc
 </tbody>
 </table>
 <div class="paragraph">
-<p>In the case when USSD/SMSC GW does not communicate with a FEP you need to configure <code>BALANCERS</code> value to an empty value. MAP RA in USSD/SMSC GW is provided originally with no support for FEP and such RA may be safety used for a no FEP case.</p>
+<p>In the case when SMSC/USSD GW does not communicate with a FEP node, we need to configure <code>BALANCERS</code> to an empty value. MAP RA in SMSC/USSD GW is provided originally with no support for FEP, then such RA might be safely used for a non-FEP case.</p>
 </div>
 <div class="paragraph">
-<p>You can find example extraction from <code>resource-adaptor-jar.xml</code> in a folder <code>config-examples/configSS7-ussd-smsc/MAP_RA_1-conf-files</code> for USSD/SMSC GW 1 and in a folder <code>config-examples/configSS7-ussd-smsc/MAP_RA_2-conf-files</code> for USSD/SMSC GW 2. You can take these files, update IP addresses and copy-paste of config extractions into MAP RAs.</p>
+<p>You can find example extraction from <code>resource-adaptor-jar.xml</code> within <code>config-examples/configSS7-ussd-smsc/MAP_RA_1-conf-files</code> folder for SMSC/USSD GW 01 and within <code>config-examples/configSS7-ussd-smsc/MAP_RA_2-conf-files</code> folder for SMSC/USSD GW 02. You can take these files, update IP addresses and copy-paste configuration extractions into MAP RAs.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_fep_ussd_smsc_smsc_ussd"><a class="anchor" href="#_fep_ussd_smsc_smsc_ussd"></a>SMSC GW / USSD SS7 part configuring</h3>
+<h3 id="_fep_ussd_smsc_smsc_ussd"><a class="anchor" href="#_fep_ussd_smsc_smsc_ussd"></a>SMSC / USSD GW SS7 part configuration</h3>
 <div class="paragraph">
-<p>You can configure of USSD/SMSC GW SS7 part via JSS7 CLI or GUI console.</p>
+<p>You can configure SMSC/USSD GW SS7 part via jSS7 CLI or GUI console.</p>
 </div>
 <div class="paragraph">
-<p>SS7 setting of must match FEP internal side SS7 setting (we will describe them below). We will describe here needed settings that match to FEP settings in the described confiuring example.</p>
+<p>SMSC/USSD GW&#8217;s SS7 settings must match FEP&#8217;s internal side SS7 settings. We will here describe needed settings that match to FEP settings in the described configuration example.</p>
 </div>
 <div class="paragraph">
-<p>We need to configure at USSD/SMSC GW side following:</p>
+<p>The following shall be configured at SMSC/USSD GW side:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>FEP always uses m3ua connection between FEP and USSD/SMSC GW node</p>
+<p>FEP always uses M3UA connection between FEP and SMSC/USSD GW node.</p>
 </li>
 <li>
-<p>FEP initiates an SCTP connection so USSD/SMSC GW part must configure SCTP server(s) and server association(s) (one association per a FEP)</p>
+<p>FEP initiates an SCTP connection, thus SMSC/USSD GW side(s) must configure SCTP server(s) and server association(s) (one association per FEP node).</p>
 </li>
 <li>
-<p>FEP prepares m3ua links with follow options: functionality=IPSP, exchangeType=SE, ipspType=CLIENT, networkAppearance=102, RoutingContext=100.</p>
+<p>FEP prepares M3UA links with following options: functionality=IPSP, exchangeType=SE, ipspType=CLIENT, networkAppearance=102, RoutingContext=100.</p>
 </li>
 <li>
-<p>Local PointCode (PC), sctp associations ports, local IP address must match to MAP RA config (as described above)</p>
+<p>Local Point Code (PC), SCTP associations ports and local IP address must match to MAP RA configuration (as described above).</p>
 </li>
 <li>
-<p>FEP side PointCode (PC) must match to FEP config <code>&lt;internal&gt;</code> - <code>&lt;pointCode&gt;</code></p>
+<p>FEP side Point Code (PC) must match to FEP config <code>&lt;internal&gt;</code> - <code>&lt;pointCode&gt;</code>.</p>
 </li>
 <li>
-<p>SCCP settings must allows loadsharing to both configured FEPs with corresponded point codes</p>
+<p>SCCP settings must allow <code>loadsharing</code> to both configured FEP nodes with the correspondent Point Codes.</p>
 </li>
 <li>
-<p>TCAP config for both USSD/SMSC GW nodes must contain unintersected ranges of <code>dialogidrangestart</code> - <code>dialogidrangeend</code>. This is needed for FEP will be able to make of proper dialog delivering between USSD/SMSC GW nodes based on TCAP dialogID value. We can assign for USSD/SMSC GW node 1 a range 1 - 999999999 and for node 2 a range 1000000000 - 1999999999.</p>
+<p>TCAP configuration for both SMSC/USSD GW nodes must contain non-intersected ranges of <code>dialogidrangestart</code> - <code>dialogidrangeend</code>. This is needed for FEP to be able of making proper dialog exchange between SMSC/USSD GW nodes based on TCAP dialogID value. We can assign a range of 1 - 999999999 for SMSC/USSD GW node 01, while 1000000000 - 1999999999 range for SMSC/USSD GW node 02.</p>
 </li>
 <li>
 <p>You need to update clustering settings for SMSC GW only, check SMSC GW User guide chapter "Managing - SMSC Gateway Server Settings - Clustering Settings".</p>
 </li>
 <li>
-<p>You need to configure server level parameters of USSD/SMSC GW like GT, SSNs and others as usual.</p>
+<p>You need to configure server level parameters of SMSC/USSD GW like GT, SSNs and others as usual.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Find CLI commands for configuring of USSD/SMSC GW node 1 SS7 part below:</p>
+<p>Find CLI commands for configuring SS7 part of SMSC/USSD GW node 01 next:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -24682,7 +24689,7 @@ tcap set dialogidrangeend 999999999</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Find CLI commands for configuring of USSD/SMSC GW node 2 SS7 part below</p>
+<p>Find CLI commands for configuring SS7 part of SMSC/USSD GW node 02 next:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -24721,13 +24728,13 @@ tcap set dialogidrangeend 1999999999</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>You can find extracted info from <code>data</code> folder of USSD/SMSC GW in a folder  <code>config-examples/configSS7-ussd-smsc/USSD_SMSC_1/data</code> for configuring of USSD/SMSC GW 1 and in a folder <code>config-examples/configSS7-ussd-smsc/USSD_SMSC_2/data</code> for USSD/SMSC GW 2. You can take these files, update IP addresses and copy them into <code>data</code> folders of USSD/SMSC GWs.</p>
+<p>You can find extracted info from <code>data</code> folder of SMSC/USSD GW in <code>config-examples/configSS7-ussd-smsc/USSD_SMSC_1/data</code> path for configuring SMSC/USSD GW 01, while in <code>config-examples/configSS7-ussd-smsc/USSD_SMSC_2/data</code> path for SMSC/USSD GW 02. You can take these files, update IP addresses and copy them into <code>data</code> folders of correspondent SMSC/USSD GWs.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_fep_ussd_smsc_fep_internal"><a class="anchor" href="#_fep_ussd_smsc_fep_internal"></a>FEP SS7 internal part configuring</h3>
+<h3 id="_fep_ussd_smsc_fep_internal"><a class="anchor" href="#_fep_ussd_smsc_fep_internal"></a>FEP SS7 internal part configuration</h3>
 <div class="paragraph">
-<p>We can configure FEP SS7 internal part in <code>lb-configuration.xml</code> in a section <code>&lt;load-balancer-properties&gt;</code> - <code>&lt;module moduleclass="org.mobicents.tools.balancer.protocols.ss7.Ss7BalancerRunner"</code> - <code>&lt;balancerConfig&gt;</code> - <code>&lt;internal&gt;</code></p>
+<p>You can configure FEP SS7 internal part in <code>lb-configuration.xml</code> in a section <code>&lt;load-balancer-properties&gt;</code> - <code>&lt;module moduleclass="org.mobicents.tools.balancer.protocols.ss7.Ss7BalancerRunner"</code> - <code>&lt;balancerConfig&gt;</code> - <code>&lt;internal&gt;</code></p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 2. The list of properties for FEP internal part configuring</caption>
@@ -24741,83 +24748,83 @@ tcap set dialogidrangeend 1999999999</code></pre>
 <tr>
 <th class="tableblock halign-left valign-top">Property name</th>
 <th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">value in a configuring example for FEP1</th>
-<th class="tableblock halign-left valign-top">value in a configuring example for FEP2</th>
+<th class="tableblock halign-left valign-top">Value in a configuration example for FEP01</th>
+<th class="tableblock halign-left valign-top">Value in a configuration example for FEP02</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">pointCode</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Local point code of FEP for internal part</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Local Point Code for FEP internal part</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">41</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">sctpFixedParams</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Parameters for configuing of SCTP associations. Main parameter is <code>internalIp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Parameters for configuring SCTP associations. Main parameter is <code>internalIp</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">172.30.1.8</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">172.30.1.180</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">m3uaFixedParams</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Configurable parameters for m3ua connections</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configurable parameters for M3UA connections</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">We can leave default parameters</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">We can leave default parameters</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">sccpManagement</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Configurable general parameters for sccp stack</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configurable general parameters for SCCP stack</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">We can leave default parameters</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">We can leave default parameters</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">sccpResourceFixedParams</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Configurable parameters for sccp stack resources. We may need to configure <code>remoteSsns</code> subparameter that means SSNs that USSD/SMSC listens</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">remoteSsns parameter by default may have 2 values <code>8</code> and <code>6</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Same as FEP1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configurable parameters for SCCP stack resources. We may need to configure <code>remoteSsns</code> sub-parameter which refers to SSNs that SMSC/USSD GW nodes listen to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>remoteSsns</code> parameter by default may have 2 values: <code>8</code> and <code>6</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Same as FEP01</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">sccpRouterFixedParams</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Configurable parameters for sccp stack routing control. We need to update <code>opc</code> parameter to a point code of FEP internal side</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configurable parameters for SCCP stack routing control. We need to update <code>opc</code> parameter to a point code of FEP internal side</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">41</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">tcapFixedParams</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Configurable parameters for tcap stack. We need to update <code>ssns</code> parameter to a list of SSNs that USSD/SMSC GW listens and that a remote SS7 node listens</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ssns parameter by default may have 2 values <code>8</code> and <code>6</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Same as FEP1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configurable parameters for TCAP stack. We need to update <code>ssns</code> parameter to a list of remote SSNs that SMSC/USSD GW nodes listen to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ssns</code> parameter by default may have 2 values <code>8</code> and <code>6</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Same as FEP01</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">tcapConfig</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Parameters for TCAP stack. We do not need to update it usually</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Parameters for TCAP stack. We usually don&#8217;t need to update it</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">We can leave default parameters</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">We can leave default parameters</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>You can find extracted info from <code>&lt;internal&gt;</code> section in a folder  <code>config-examples/configSS7-ussd-smsc/FEP1_internal</code> for configuring of FEP 1 and in a folder <code>config-examples/configSS7-ussd-smsc/FEP2_internal</code> for FEP 2. You can take these files, update IP addresses and may be other needed parameters and copy them into <code>lb-configuration.xml</code> of FEP.</p>
+<p>You can find extracted info from <code>&lt;internal&gt;</code> section within <code>config-examples/configSS7-ussd-smsc/FEP1_internal</code> folder for configuration of FEP01 and within <code>config-examples/configSS7-ussd-smsc/FEP2_internal</code> folder for FEP02. You can take these files, update IP addresses and eventually other needed parameters and copy them into <code>lb-configuration.xml</code> of FEP.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_fep_ussd_smsc_fep_external"><a class="anchor" href="#_fep_ussd_smsc_fep_external"></a>FEP SS7 external part configuring</h3>
+<h3 id="_fep_ussd_smsc_fep_external"><a class="anchor" href="#_fep_ussd_smsc_fep_external"></a>FEP SS7 external part configuration</h3>
 <div class="paragraph">
-<p>We can configure FEP SS7 internal part in <code>lb-configuration.xml</code> in a section <code>&lt;load-balancer-properties&gt;</code> - <code>&lt;module moduleclass="org.mobicents.tools.balancer.protocols.ss7.Ss7BalancerRunner"</code> - <code>&lt;balancerConfig&gt;</code> - <code>&lt;external&gt;</code></p>
+<p>You can configure FEP SS7 external part in <code>lb-configuration.xml</code> in a section <code>&lt;load-balancer-properties&gt;</code> - <code>&lt;module moduleclass="org.mobicents.tools.balancer.protocols.ss7.Ss7BalancerRunner"</code> - <code>&lt;balancerConfig&gt;</code> - <code>&lt;external&gt;</code></p>
 </div>
 <div class="paragraph">
-<p>This config contains data from JSS7 stack config <code>data</code> folder for all JSS7 stacks assembled into one section. A set of these parameters must match to parameters that a SS7 network operator provided.</p>
+<p>This configuration contains data from jSS7 stack config <code>data</code> folder for all jSS7 stacks assembled in one section. A set of these parameters must match to those provided by an SS7 network operator.</p>
 </div>
 <div class="paragraph">
-<p>There is no CLI or GUI interface of configuring of JSS7 external part so far. You can use two options:</p>
+<p>There is no CLI or GUI interface for configuring jSS7 external part thus far. You can then use two options:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>update config values directly in <code>lb-configuration.xml</code></p>
+<p>Update config values directly in <code>lb-configuration.xml</code> file.</p>
 </li>
 <li>
-<p>if a USSD/SMSC GW is located at a same physical server as FEP you can stop FEP, configure USSD/SMSC GW SS7 part by CLI / GUI in a way USSD/SMSC GW connects directly to a remore SS7 node without FEP, test SS7 connects from USSD/SMSC GW and then copy generated by USSD/SMSC GW config files from <code>data</code> folder (a list is in a table below) into <code>lb-configuration.xml</code>.</p>
+<p>If an SMSC/USSD GW is located in a same physical server as FEP, you can stop FEP, configure SMSC/USSD GW SS7 part via CLI / GUI so SMSC/USSD GW connects directly to a remote SS7 node without FEP, test that SS7 connects from SMSC/USSD GW and then copy the generated configuration files by SMSC/USSD GW from <code>data</code> folder (a list is in a table below) into <code>lb-configuration.xml</code>.</p>
 </li>
 </ul>
 </div>
@@ -24830,91 +24837,91 @@ tcap set dialogidrangeend 1999999999</code></pre>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">FEP config subsection</th>
+<th class="tableblock halign-left valign-top">FEP configuration subsection</th>
 <th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Corresponded file in <code>data</code> folder</th>
+<th class="tableblock halign-left valign-top">Correspondent file in <code>data</code> folder</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">sctpConfig</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Configuring of SCTP stack</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration of SCTP stack</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SCTPManagement_sctp.xml</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">m3uaConfig</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Configuring of M3UA stack</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration of M3UA stack</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Mtp3UserPart_m3ua1.xml</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">sccpManagement</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Configuring of SCCP stack general parameters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration of SCCP stack general parameters</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SccpStack_management2.xml</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">sccpResource</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Configuring of SCCP stack resource parameters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration of SCCP stack resource parameters</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SccpStack_sccpresource2.xml</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">sccpRouter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Configuring of SCCP stack routing control parameters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration of SCCP stack routing control parameters</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SccpStack_sccprouter2.xml</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">tcapConfig</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Configuring of TCAP stack</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration of TCAP stack</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TcapStack_management.xml</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">tcapFixedParams</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Configuring of TCAP stack extra parameters</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">There is no configuring file. We must put here a list of SSNs that USSD/SMSC GW listens</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration of TCAP stack extra parameters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">There is no configuration file. We must put here a list of SSNs that SMSC/USSD GW nodes listen to</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>You can find extracted info from <code>&lt;external&gt;</code> section in a folder  <code>config-examples/configSS7-ussd-smsc/FEP1_external</code> for configuring of FEP 1 and in a folder <code>config-examples/configSS7-ussd-smsc/FEP2_external</code> for FEP 2. These files demand significant updates manually or by getting of config files from ss7 stack before of putting into <code>lb-configuration.xml</code> of FEP. If a target is to make end-to-end testing with SS7 Simulator you can reuse of these configs and make only IP address changing.</p>
+<p>You can find extracted info from <code>&lt;external&gt;</code> section within <code>config-examples/configSS7-ussd-smsc/FEP1_external</code> folder for configuration of FEP01 and within <code>config-examples/configSS7-ussd-smsc/FEP2_external</code> folder for FEP02. These files demand significant updates, either manually or by gathering of configuration files from SS7 stack before putting them into <code>lb-configuration.xml</code> of FEP node. If a target is to make End-to-End testing with jSS7 Simulator, you can reuse of these configs and make only IP address changing.</p>
 </div>
 <div class="paragraph">
-<p>A full <code>lb-configuration.xml</code> config for FEP1 can be found in <code>config-examples/configSS7-ussd-smsc/FEP1</code> folder. A full <code>lb-configuration.xml</code> config for FEP2 can be found in <code>config-examples/configSS7-ussd-smsc/FEP2</code> folder.</p>
+<p>A full <code>lb-configuration.xml</code> config for FEP01 can be found in <code>config-examples/configSS7-ussd-smsc/FEP1</code> folder. A full <code>lb-configuration.xml</code> configuration for FEP02 can be found in <code>config-examples/configSS7-ussd-smsc/FEP2</code> folder.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_fep_ussd_smsc_ss7_sim"><a class="anchor" href="#_fep_ussd_smsc_ss7_sim"></a>Confiruging of SS7 Simulator for local testing</h3>
+<h3 id="_fep_ussd_smsc_ss7_sim"><a class="anchor" href="#_fep_ussd_smsc_ss7_sim"></a>Configuring of jSS7 Simulator for local testing</h3>
 <div class="paragraph">
-<p>If we want to make end-to-end testing with SS7 Simulator at a place of an external SS7 node (external STP) we provide confid examples for USSD and SMSC GW cases in a folder <code>config-examples/configSS7-ussd-smsc/SS7_Simulator</code>.</p>
+<p>If you want to make End-to-End testing with jSS7 Simulator mimicking an external SS7 node (external STP) we provide configuration examples for SMSC and USSD GW cases in a folder <code>config-examples/configSS7-ussd-smsc/SS7_Simulator</code>.</p>
 </div>
 <div class="paragraph">
-<p>We need for testing:</p>
+<p>We need the following for testing:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>download of a last version from github master (that contains needed updates)</p>
+<p>Download latest version from GitHub master branch (which contains the needed updates).</p>
 </li>
 <li>
-<p>deploy files <code>ussd_simulator2.xml</code> and <code>smsc_simulator2.xml</code> into SS7 Simulator <code>data</code> folder</p>
+<p>Deploy <code>ussd_simulator2.xml</code> and <code>smsc_simulator2.xml</code> files into jSS7 Simulator <code>data</code> folder.</p>
 </li>
 <li>
-<p>run SS7 Simulator with "Host name" <code>ussd</code> or <code>smsc</code> (depending of what we want to test)</p>
+<p>Run jSS7 Simulator with "Host name" <code>ussd</code> or <code>smsc</code> (depending of which one you want to test).</p>
 </li>
 <li>
-<p>update <code>m3ua</code> config for proper IP addresses</p>
+<p>Update <code>m3ua</code> configuration for proper IP addresses.</p>
 </li>
 <li>
-<p>start tests (FEP and USSD/SMSC GW must be already run)</p>
+<p>Start tests (FEP and SMSC/USSD GW must be already running).</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>You can send SS7 message from SS7 Simualtor to FEP - USSD/SMSC GW and terminate USSD dialogs to HTTP Simulator and SMSs to SMPP Simualtors for example.</p>
+<p>You can send SS7 messages from jSS7 Simulator to FEP - SMSC/USSD GW and, for example, terminate USSD dialogs along with HTTP Simulator, while SMSs along with SMPP Simulator.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="pluggable-balancer-algorithms"><a class="anchor" href="#pluggable-balancer-algorithms"></a>Pluggable balancer algorithms</h2>
+<h2 id="plugable-balancer-algorithms"><a class="anchor" href="#plugable-balancer-algorithms"></a>Plugable balancer algorithms</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The Restcomm Load Balancer exposes an interface to allow users to customize the routing decision making for special purposes.
@@ -25046,7 +25053,7 @@ With consistent hash algorithms there is no state to be preserved in the Restcom
 <div class="content">
 <img src="./images/WSS_Failover_Goal.png" alt="WSS Failover Goal">
 </div>
-<div class="title">Figure 7. Example deployment: IP load balancers serving both directions forincoming/outgoing requests in a cluster</div>
+<div class="title">Figure 9. Example deployment: IP load balancers serving both directions forincoming/outgoing requests in a cluster</div>
 </div>
 </div>
 </div>
@@ -25531,14 +25538,14 @@ Each algorithm can have algorithm-specific properties for fine-grained configura
 </dd>
 <dt class="hdlist1">nodeTimeout</dt>
 <dd>
-<p>In milliseonds.
+<p>In milliseconds.
 Default value is 5100.
-If a server node doesnt check in within this time (in ms), it is considered dead.</p>
+If a server node doesn&#8217;t check in within this time (in ms), it is considered dead.</p>
 </dd>
 <dt class="hdlist1">heartbeatInterval</dt>
 <dd>
 <p>In milliseconds.
-Default value is 150 milliseonds.
+Default value is 150 milliseconds.
 The hearbeat interval must be much smaller than the interval specified in the JAIN SIP property on the server machines - <code>org.Restcomm.ha.javax.sip.HEARTBEAT_INTERVAL</code></p>
 </dd>
 <dt class="hdlist1">smppHost</dt>
@@ -25739,7 +25746,7 @@ If the desired behaviour group these requests, we can just make sure the affinit
 <div class="content">
 <img src="./images/converged-integrated-lb.png" alt="converged integrated lb">
 </div>
-<div class="title">Figure 8. Ensuring SIP and HTTP requests are being grouped by commonaffinity value.</div>
+<div class="title">Figure 10. Ensuring SIP and HTTP requests are being grouped by commonaffinity value.</div>
 </div>
 </div>
 </div>
@@ -25982,7 +25989,7 @@ In the diagram, the Restcomm Load Balancer is the server with the IP address of 
 <div class="content">
 <img src="./images/mss-MSSSIPLoadBalancer-dia-ClusterIPsAndPorts.jpg" alt="mss MSSSIPLoadBalancer dia ClusterIPsAndPorts">
 </div>
-<div class="title">Figure 9. Basic IP and Port Cluster Configuration</div>
+<div class="title">Figure 11. Basic IP and Port Cluster Configuration</div>
 </div>
 </div>
 </div>
@@ -26256,7 +26263,7 @@ You should use url <a href="http://host:statisticPort/lbinfo" class="bare">http:
 <div class="content">
 <img src="./images/Restcomm_servers-LB.png" alt="Restcomm servers LB">
 </div>
-<div class="title">Figure 10. Load balancer and Restcomm servers diagram</div>
+<div class="title">Figure 12. Load balancer and Restcomm servers diagram</div>
 </div>
 <div class="paragraph">
 <p>This chapter will show you how to configure two Restcomm instances and Load Balancer instance on one machine with OS Ubuntu.</p>
@@ -26752,7 +26759,7 @@ time which controlled one keepalived service.</p>
 <div class="content">
 <img src="./images/Active-Active.png" alt="Active Active">
 </div>
-<div class="title">Figure 11. Active-Active Load balancer diagram</div>
+<div class="title">Figure 13. Active-Active Load balancer diagram</div>
 </div>
 <div class="paragraph">
 <p>If LB2 will be gracefully shutdown via http request
@@ -26765,7 +26772,7 @@ will be redirected to LB1.</p>
 <div class="content">
 <img src="./images/Active-Active-Graceful-Shutdown.png" alt="Active Active Graceful Shutdown">
 </div>
-<div class="title">Figure 12. The graceful shutdown of Load balancer diagram</div>
+<div class="title">Figure 14. The graceful shutdown of Load balancer diagram</div>
 </div>
 <div class="paragraph">
 <p>For configuring of Load balancer you need setup keepalived service and set
@@ -27091,7 +27098,7 @@ sip-node-1, sip-node-2 etc., then this tag should be &lt;nodeName&gt;sip-node&lt
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-06 09:02:49 UTC
+Last updated 2018-03-06 11:38:09 UTC
 </div>
 </div>
 <footer>
