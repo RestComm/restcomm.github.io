@@ -23356,7 +23356,10 @@ display: none;
 <li><a href="#resource-properties">Resource Properties</a></li>
 <li><a href="#supported-operations">Supported Operations</a></li>
 <li><a href="#account-status-transitions">Account Status transitions</a></li>
+<li><a href="#uninitialized-account-status">Uninitialized Account Status</a></li>
+<li><a href="#active-account-status">Active Account Status</a></li>
 <li><a href="#suspended-account-status">Suspended Account Status</a></li>
+<li><a href="#closed-account-status">Closed Account Status</a></li>
 <li><a href="#account-migration-to-new-organization">Account Migration to new Organization</a></li>
 </ul>
 </li>
@@ -23489,15 +23492,48 @@ business constraints will be applied:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Any modification over a Closed account will be rejected.</p>
-</li>
-<li>
 <p>The given Status will be applied to the given Account, and all the subaccount
 tree.</p>
 </li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="uninitialized-account-status"><a class="anchor" href="#uninitialized-account-status"></a>Uninitialized Account Status</h3>
+<div class="paragraph">
+<p>The following conditions will be honored for an Uninitialized account:</p>
+</div>
+<div class="ulist">
+<ul>
 <li>
-<p>The rest of request parameters will be ignored. This means is not possible to
-suspend an account, and change its FriendlyName at the same time.</p>
+<p>When a new account is created, this Status is the default.</p>
+</li>
+<li>
+<p>An Uninitialized account will reject its Credentials to be used for any REST API invocation.</p>
+</li>
+<li>
+<p>An Uninitialized account will reject any Voice/SMS/USSD traffic. In addition, any
+client registration related to the account, will be rejected.</p>
+</li>
+<li>
+<p>To activate an uninitialized account, a password reset is necessary.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="active-account-status"><a class="anchor" href="#active-account-status"></a>Active Account Status</h3>
+<div class="paragraph">
+<p>The following conditions will be honored for an Active account:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>An Active account will allow its Credentials to be used for any REST API invocation.</p>
+</li>
+<li>
+<p>An Active account will allow any Voice/SMS/USSD traffic. In addition, any
+client registration related to the account, will be allowed.</p>
 </li>
 </ul>
 </div>
@@ -23514,7 +23550,34 @@ suspend an account, and change its FriendlyName at the same time.</p>
 </li>
 <li>
 <p>A Suspended account will reject any Voice/SMS/USSD traffic. In addition, any
-client registration will be rejected.</p>
+client registration related to the accoutn, will be rejected.</p>
+</li>
+<li>
+<p>A Suspended accounts may be reactivate by changing the Status to Active again.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="closed-account-status"><a class="anchor" href="#closed-account-status"></a>Closed Account Status</h3>
+<div class="paragraph">
+<p>The following conditions will be honored for a Closed account:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A Closed account will reject its Credentials to be used for any REST API invocation.</p>
+</li>
+<li>
+<p>A Closed account will reject any Voice/SMS/USSD traffic. In addition, any
+client registration related to the accoutn, will be rejected.</p>
+</li>
+<li>
+<p>When an account is closed, all related resources are removed.</p>
+</li>
+<li>
+<p>Any modification over a Closed account will be rejected. This means a closed
+account can&#8217;t be reactivated</p>
 </li>
 </ul>
 </div>
@@ -23868,7 +23931,7 @@ Account deletion has been deprecated from the REST API. Both of these methods wi
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-06 13:16:39 UTC
+Last updated 2018-03-07 17:03:30 UTC
 </div>
 </div>
 <footer>
