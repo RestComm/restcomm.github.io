@@ -23403,6 +23403,11 @@ REST API. The Default Profile Sid is "PRae6e420f425248d6a26948c17a9e2acf"</p>
 is defined by a JSON schema, rather than regular properties, representing a
 document used as generic container.</p>
 </div>
+<div class="paragraph">
+<p>All Profiles REST API is only accesible by SuperAdmin credentials. With the exception
+of reading the associated Profile, where all Roles are allowed if the queried profile
+is associated with the requesting Account credentials.</p>
+</div>
 <div class="sect2">
 <h3 id="profile-resource-uri"><a class="anchor" href="#profile-resource-uri"></a>Profile Resource URI</h3>
 <div class="paragraph">
@@ -23430,7 +23435,7 @@ document used as generic container.</p>
 <div class="sect2">
 <h3 id="supported-operations"><a class="anchor" href="#supported-operations"></a>Supported Operations</h3>
 <div class="paragraph">
-<p><strong>HTTP GET.</strong> Returns the representation of a Profile resource.</p>
+<p><strong>HTTP GET.</strong> Returns the representation of a Profile resource. All roles are allowed.</p>
 </div>
 <div class="sect3">
 <h4 id="response-status"><a class="anchor" href="#response-status"></a>Response Status</h4>
@@ -23813,7 +23818,7 @@ schema.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-11 02:16:24 UTC
+Last updated 2018-03-14 08:11:32 UTC
 </div>
 </div>
 <footer>

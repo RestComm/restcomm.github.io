@@ -23718,6 +23718,15 @@ display: none;
 <pre>curl -X POST https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json -d "From=+16175551212" -d "To=client:alice" -d "Url=http://127.0.0.1:8080/restcomm/demos/hello-play.xml"</pre>
 </div>
 </div>
+<div class="paragraph">
+<p>This Client URI may contain URI params to declare propietary SIP headers to be
+included in the outgoing INVITE message.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>curl -X POST https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json -d "From=+16175551212" -d "To=client:alice?X-Custom-Header1=1234&amp;X-Custom-Header2=432" -d "Url=http://127.0.0.1:8080/restcomm/demos/hello-play.xml"</pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -24470,7 +24479,7 @@ The call will now be redirected to the Url specified(hello-world.xml)</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-11 02:16:24 UTC
+Last updated 2018-03-14 08:11:32 UTC
 </div>
 </div>
 <footer>
