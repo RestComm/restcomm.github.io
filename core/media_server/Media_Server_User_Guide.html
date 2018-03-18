@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>Restcomm Media Server User Guide</title>
+<title>User Guide</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -23346,9 +23346,10 @@ display: none;
 </head>
 <body class="book">
 <div id="header">
-<h1>Restcomm Media Server User Guide</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
+<ul class="sectlevel0">
+<li><a href="#user-guide">User Guide</a>
 <ul class="sectlevel1">
 <li><a href="#preface">Preface</a></li>
 <li><a href="#document-conventions">Document Conventions</a>
@@ -23369,12 +23370,13 @@ display: none;
 <li><a href="#_chapter_installing_the_media_server">2. Installing the Media Server</a>
 <ul class="sectlevel2">
 <li><a href="#_itms-binary-standalone_media_server-installing_configuring_and_running">2.1. Standalone Media Server Binary Distribution</a></li>
+<li><a href="#_itms_binary_standalone_media_server_running_session">2.2. Running with Session Management</a></li>
 </ul>
 </li>
 <li><a href="#_ctms_configuring_the_media_server">3. Configuring the Media Server</a>
 <ul class="sectlevel2">
 <li><a href="#_ctms_configuring_the_media_server_manual">3.1. Manual Configuration</a></li>
-<li><a href="#_ctms_configuring_the_media_server_automatic">3.2. Automatic Configuration</a></li>
+<li><a href="#_ctms_configuring_the_media_server_override">3.2. Overriding Default Configuration</a></li>
 </ul>
 </li>
 <li><a href="#_captms_controlling_and_programming_the_media_server">4. Controlling and Programming the Restcomm Media Server</a>
@@ -23402,12 +23404,19 @@ display: none;
 </ul>
 </li>
 <li><a href="#_jdk_installing_configuring_and_running">Appendix B: Java Development Kit (): Installing, Configuring and Running</a></li>
-<li><a href="#_jboss_home_setup">Appendix C: Setting the JBOSS_HOME Environment Variable</a></li>
-<li><a href="#revision-history">Appendix D: Revision History</a></li>
+<li><a href="#revision-history">Appendix C: Revision History</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 <div id="content">
+<div class="imageblock">
+<div class="content">
+<img src="./images/restcomm-media-server-logo.svg" alt="RestComm Media Server">
+</div>
+</div>
+<h1 id="user-guide" class="sect0"><a class="anchor" href="#user-guide"></a>User Guide</h1>
 <div class="sect1">
 <h2 id="preface"><a class="anchor" href="#preface"></a>Preface</h2>
 <div class="sectionbody">
@@ -23984,10 +23993,6 @@ Downloading and building the source code is recommended for those who want acces
 <dd>
 <p>Once unzipped, the Restcomm Media Server binary release requires <em>at least</em>	36Mb of free disk space. Keep in mind that disk space requirements may change in future iterations.</p>
 </dd>
-<dt class="hdlist1">Anything Java Itself Will Run On</dt>
-<dd>
-<p>The JBoss embedded Media Server and its bundled servers, JBoss, are 100% Java. The Restcomm Media Server will run on the same hardware that the JBoss Application Server runs on.</p>
-</dd>
 </dl>
 </div>
 <div class="dlist">
@@ -23995,7 +24000,7 @@ Downloading and building the source code is recommended for those who want acces
 <dl>
 <dt class="hdlist1">Java Development Kit</dt>
 <dd>
-<p>A working installation of JDK 5 or higher is required for Restcomm Media Server to run.</p>
+<p>A working installation of JDK 8 is required for Restcomm Media Server to run.</p>
 </dd>
 </dl>
 </div>
@@ -24003,7 +24008,7 @@ Downloading and building the source code is recommended for those who want acces
 <div class="sect3">
 <h4 id="_itms_binary_standalone_media_server_downloading"><a class="anchor" href="#_itms_binary_standalone_media_server_downloading"></a>2.1.2. Downloading</h4>
 <div class="paragraph">
-<p>The latest version of the Restcomm Media Server is available from the project&#8217;s <a href="https://github.com/RestComm/mediaserver/releases/latest">github release page</a>.
+<p>The latest version of the Restcomm Media Server is available from the project&#8217;s <a href="https://github.com/RestComm/media-server-standalone/releases/latest">github release page</a>.
 Select the link named <em>restcomm-media-server-&lt;version&gt;.zip</em> to start downloading the latest stable binary release from community.</p>
 </div>
 </div>
@@ -24095,31 +24100,38 @@ Follow the instructions below for the operating system on which the server will 
 </li>
 </ol>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Instead of executing the shell script, the <em class="path">run.jar</em> executable Java archive can be executed from the <em class="path">bin</em> directory:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>restcomm-media-server-&lt;version&gt;]$ java -jar bin/run.jar</pre>
-</div>
-</div>
-</td>
-</tr>
-</table>
-</div>
 <div class="paragraph">
 <p>You can verify that Restcomm Media Server has started successfully if the last line of output in the Linux Terminal window is similar to</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>15:35:16,897 INFO  [MainDeployer] [[[[[[[[[ RestComm Media Server: release.version=5.0.0-SNAPSHOT Started ]]]]]]]]]</code></pre>
+<pre class="highlight"><code>  _____           _    _____
+ |  __ \         | |  / ____|
+ | |__) |___  ___| |_| |     ___  _ __ ___  _ __ ___
+ |  _  // _ \/ __| __| |    / _ \| '_ ` _ \| '_ ` _ \
+ | | \ \  __/\__ \ |_| |___| (_) | | | | | | | | | | |
+ |_|  \_\___||___/\__|\_____\___/|_| |_| |_|_| |_| |_|
+ |  \/  |        | (_)        / ____|
+ | \  / | ___  __| |_  __ _  | (___   ___ _ ____   _____ _ __
+ | |\/| |/ _ \/ _` | |/ _` |  \___ \ / _ \ '__\ \ / / _ \ '__|
+ | |  | |  __/ (_| | | (_| |  ____) |  __/ |   \ V /  __/ |
+ |_|  |_|\___|\__,_|_|\__,_| |_____/ \___|_|    \_/ \___|_|
+
+ :: Version 8.0.0-SNAPSHOT ::
+
+
+09:36:43,666 INFO  [SpringApplication] (main) Starting application with PID 55792
+09:36:43,668 INFO  [SpringApplication] (main) No active profile set, falling back to default profiles: default
+09:36:43,709 INFO  [AnnotationConfigApplicationContext] (main) Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@4716be8b: startup date [Thu Mar 15 09:36:43 WET 2018]; root of context hierarchy
+09:36:44,580 INFO  [MgcpEndpointManager] (main) Installed MGCP Endpoint Provider for namespace restcomm/bridge/
+09:36:44,580 INFO  [MgcpEndpointManager] (main) Installed MGCP Endpoint Provider for namespace restcomm/ivr/
+09:36:44,580 INFO  [MgcpEndpointManager] (main) Installed MGCP Endpoint Provider for namespace restcomm/cnf/
+09:36:44,601 INFO  [PriorityQueueScheduler] (main) Starting
+09:36:44,603 INFO  [PriorityQueueScheduler] (main) Started
+09:36:44,604 INFO  [ServiceScheduler] (main) Started scheduler!
+09:36:44,604 INFO  [UdpManager] (main) Starting UDP Manager
+09:36:44,605 INFO  [UdpManager] (main) Initialized UDP interface[unknown]: bind address=127.0.0.1
+09:36:44,683 INFO  [StandaloneMediaServer] (main) Media Server started</code></pre>
 </div>
 </div>
 </div>
@@ -24138,7 +24150,7 @@ Follow the instructions below for the operating system on which the server will 
 <div class="listingblock">
 <div class="content">
 <pre>~]$ ps aux | grep java
-hrosa            10947  16.8 22.4  6603132 3755516 s005  S+    3:51PM   0:07.51 /opt/.jenv/versions/oracle64-1.7.0.79/bin/java -Dprogram.name=run.sh -classpath /opt/restcomm-media-server/bin/run.jar org.mobicents.media.server.bootstrap.Main
+hrosa            10947  16.8 22.4  6603132 3755516 s005  S+    3:51PM   0:07.51 /opt/.jenv/versions/1.8/bin/java -Dprogram.name=run.sh -classpath /opt/restcomm-media-server/bin/run.jar org.mobicents.media.server.bootstrap.Main
 ~]$ kill 10947</pre>
 </div>
 </div>
@@ -24146,8 +24158,76 @@ hrosa            10947  16.8 22.4  6603132 3755516 s005  S+    3:51PM   0:07.51 
 </ol>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_itms_binary_standalone_media_server_running_session"><a class="anchor" href="#_itms_binary_standalone_media_server_running_session"></a>2.2. Running with Session Management</h3>
+<div class="paragraph">
+<p>The RestComm Media Server allows users to bootstrap the project using <a href="https://tmux.github.io">TMux</a>, a terminal multiplexer that lets users switch easily between several programs in one terminal, detach them (they keep running in the background) and reattach them to a different terminal.</p>
+</div>
+<div class="listingblock">
+<div class="title">Tmux installation</div>
+<div class="content">
+<pre># CentOS/RHEL
+yum install tmux
+
+# Ubuntu/Debian
+apt-get install tmux
+
+# macOS
+homebrew install tmux</pre>
+</div>
+</div>
 <div class="sect3">
-<h4 id="_itms_standalone_server_structure"><a class="anchor" href="#_itms_standalone_server_structure"></a>2.1.6. Server Structure</h4>
+<h4 id="starting"><a class="anchor" href="#starting"></a>2.2.1. Starting</h4>
+<div class="paragraph">
+<p>The run the project via Tmux, users simply need to execute the <code>MS_HOME/bin/start-media-server.sh</code> script.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">bash-3.2# ./start-mediaserver.sh
+Starting RestComm Media Server...
+...RestComm Media Server started running on session named "mediaserver"!</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>From the Terminal output, we see the script created a tmux session named <code>mediaserver</code> where the Media Server process will be running.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">bash-3.2# tmux ls
+mediaserver: 1 windows (created Wed Nov  2 22:05:14 2016) [160x35]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To access the <em>mediaserver</em> session we just need to run the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">bash-3.2# tmux attach -t mediaserver</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To detach from tmux session, just press <code>ctrl+b d</code> from within tmux console.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ctms_configuring_the_media_server_automatic_stopping"><a class="anchor" href="#_ctms_configuring_the_media_server_automatic_stopping"></a>2.2.2. Stopping</h4>
+<div class="paragraph">
+<p>To stop the Media Server process and kill the tmux session, the user simply needs to execute the stop-mediaserver.sh script.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">bash-3.2# ./stop-mediaserver.sh
+Stopping RestComm Media Server...
+...stopped RestComm Media Server instance running on session "mediaserver".
+
+bash-3.2# tmux ls
+no server running on /private/tmp/tmux-501/default</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_itms_standalone_server_structure"><a class="anchor" href="#_itms_standalone_server_structure"></a>2.2.3. Server Structure</h4>
 <div class="paragraph">
 <p>Now that the server is installed, it is important to understand the layout of the server directories.
 An understanding of the server structure is useful when deploying examples, and making configuration changes.
@@ -24178,10 +24258,6 @@ It is also useful to understand what components can be removed to reduce the ser
 <td class="tableblock halign-left valign-top"><p class="tableblock">Contains the core services that are required for the server. This includes the bootstrap descriptor, log files, and the default media server configuration file.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">deploy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Contains the dynamic deployment content required by the hot deployment service. The deploy location can be overridden by specifying a location in the URL attribute of the URLDeploymentScanner configuration item.</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">lib</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Contains the dependency files required by the server.</p></td>
 </tr>
@@ -24192,7 +24268,7 @@ It is also useful to understand what components can be removed to reduce the ser
 </tbody>
 </table>
 <div class="paragraph">
-<p>The standalone Media Server uses a number of XML configuration
+<p>The standalone Media Server uses a number of YAML configuration
 files that control various aspects of the server.
 &lt;xref linkend="tab-mms-standalone_core_configuration_file_set" /&gt;
 describes the location of the key configuration files,
@@ -24212,30 +24288,26 @@ and provides a description of the</p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">conf/bootstrap-beans.xml</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies which additional microcontainer deployments are loaded as part of the bootstrap phase. For a standard configuration, the bootstrap configuration files require no alteration.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">conf/mediaserver.xml</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">conf/media-server.yml</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Main configuration file responsible for configure all aspects of the Media Server core. For in-depth details of this file please see chapter 3.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">conf/mgcp-conf.xml</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the configuration for the MGCP controller.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">conf/media-plugin-*.yml</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration file for plugins. Each plugin will feature its own configuration file.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">conf/log4j.properties</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the Apache log4j framework category priorities and appenders used by the Media Server.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">conf/media-extra.yml</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Utility file to override required configuration parameters without changing default values established in media-server.yml or plugin configuration files.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">deploy/server-beans.xml</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specified list of Java Beans necessary for bootstrapping the Media Server. For a standard configuration, the bootstrap configuration files require no alteration.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">conf/log4j2.yml</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the Apache Log4j2 framework category priorities and appenders used by the Media Server.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_itms_writing_and_running_tests_against_the_media_server"><a class="anchor" href="#_itms_writing_and_running_tests_against_the_media_server"></a>2.1.7. Writing and Running Tests Against the Media Server</h4>
+<h4 id="_itms_writing_and_running_tests_against_the_media_server"><a class="anchor" href="#_itms_writing_and_running_tests_against_the_media_server"></a>2.2.4. Writing and Running Tests Against the Media Server</h4>
 <div class="paragraph">
 <p>For information about the different kinds of tests that the Media Server provides, refer to <a href="http://groups.google.com/group/mobicents-public/web/mobicents-ms-tests">Writing and Running Tests Against RestComm MS</a></p>
 </div>
@@ -24252,7 +24324,7 @@ and provides a description of the</p>
 <p>The RestComm Media Server features an extensible configuration file, allowing users to have some control over several aspects of its behavior.</p>
 </div>
 <div class="paragraph">
-<p>Users can configure the Media Server by editing the file located at <em>$MS_HOME/conf/mediaserver.xml</em>. The XML file is divided into several main nodes, each one representing a specific aspect of the Media Server:</p>
+<p>Users can configure the Media Server by editing the file located at <em>$MS_HOME/conf/media-server.yml</em>. The YAML file is divided into several main nodes, each one representing a specific aspect of the Media Server:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -24280,13 +24352,13 @@ and provides a description of the</p>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;network&gt;
-	&lt;bindAddress&gt;127.0.0.1&lt;/bindAddress&gt;
-	&lt;externalAddress&gt;127.0.0.1&lt;/externalAddress&gt;
-	&lt;network&gt;127.0.0.1&lt;/network&gt;
-	&lt;subnet&gt;255.255.255.255&lt;/subnet&gt;
-	&lt;sbc&gt;false&lt;/sbc&gt;
-&lt;/network&gt;</code></pre>
+<pre class="highlight"><code class="language-yml" data-lang="yml">mediaserver:
+    network:
+        bindAdress: 127.0.0.1
+        externalAddress: 127.0.0.1
+        network: 127.0.0.1
+        subnet: 255.255.255.255
+        sbc: false</code></pre>
 </div>
 </div>
 </div>
@@ -24335,18 +24407,18 @@ This is similar to when <strong>sbc</strong> is set to false.</p>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;controller protocol="mgcp"&gt;
-	&lt;address&gt;127.0.0.1&lt;/address&gt;
-	&lt;port&gt;2427&lt;/port&gt;
-	&lt;channelBuffer&gt;5000&lt;/channelBuffer&gt;
-	&lt;endpoints&gt;
-		&lt;endpoint name="mobicents/bridge/" class="org.mobicents.media.server.mgcp.endpoint.BridgeEndpoint" poolSize="50" /&gt;
-		&lt;endpoint name="mobicents/ivr/" class="org.mobicents.media.server.mgcp.endpoint.IvrEndpoint" poolSize="50" /&gt;
-		&lt;endpoint name="mobicents/cnf/" class="org.mobicents.media.server.mgcp.endpoint.ConferenceEndpoint" poolSize="50" /&gt;
-	&lt;/endpoints&gt;
-	&lt;configuration&gt;mgcp-conf.xml&lt;/configuration&gt;
-	&lt;poolSize&gt;25&lt;/poolSize&gt;
-&lt;/controller&gt;</code></pre>
+<pre class="highlight"><code class="language-yml" data-lang="yml">  controller:
+    mgcp:
+      address: 127.0.0.1
+      port: 2427
+      channelBuffer: 5000
+      endpoints:
+        - name: "restcomm/bridge/"
+          relay: splitter
+        - name: "restcomm/ivr/"
+          relay: mixer
+        - name: "restcomm/cnf/"
+          relay: mixer</code></pre>
 </div>
 </div>
 </div>
@@ -24360,9 +24432,6 @@ This is similar to when <strong>sbc</strong> is set to false.</p>
 <p>The <strong>Port</strong> parameter defines the port where the control channel will listen to for incoming requests. By default, it is set to 2427.</p>
 </div>
 <div class="paragraph">
-<p>The <strong>PoolSize</strong> parameter defines the number of MGCP requests that Media Server can handle concurrently.</p>
-</div>
-<div class="paragraph">
 <p>The <strong>channelBuffer</strong> parameter defines the MGCP channel buffer size which limits the size of incoming MGCP messages that are received by the MGCP channel. By default it is set to 5000.</p>
 </div>
 </div>
@@ -24372,51 +24441,11 @@ This is similar to when <strong>sbc</strong> is set to false.</p>
 <p>The <strong>Endpoints</strong> configuration allows you to configure all MGCP endpoint groups you want to use with the Media Server instance.</p>
 </div>
 <div class="paragraph">
-<p>The <strong>Configuration</strong> parameter points to an XML file containing the definitions of MGCP packages, signals and packages mapping to endpoints.</p>
-</div>
-<div class="paragraph">
-<p>The user can configure the initial <strong>poolSize</strong> for each endpoint type.
-This value will determine the number of endpoints that are preloaded on startup.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="title">Endpoint Pooling</div>
-<div class="paragraph">
-<p>If all available endpoints are used and a request for  additional endpoint is received, Media Server will allocate a new endpoint and store it in a resource pool.</p>
-</div>
-<div class="paragraph">
-<p>The only exception to this rule is DS0 endpoint type.
-The DS0 endpoint can not be increased as it is directly related to the number of channels available on an E1/T1 card.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
 <p>The <strong>Name</strong> parameter represents the name pattern to be used for MGCP requests that target a specific endpoint type.
 For example, the name pattern <em>mobicents/aap</em> will be created and accessed as <em>mobicents/aap/$</em> (where $ is an integer representing the endpoint ID).</p>
 </div>
 <div class="paragraph">
-<p>The <strong>Class</strong> parameter represents the class of installer.
-Currently 2 types of installers are available:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong class="path">VirtualEndpointInstaller</strong> which allows you to install most endpoints</p>
-</li>
-<li>
-<p><strong class="path">VirtualSS7EndpointInstaller</strong> which is used for DS0 endpoints.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Endpoint class – defines the class which implements endpoints.</p>
+<p>The <strong>Relay</strong> parameter defines how media should be processed by the endpoint: Mixed or Split.</p>
 </div>
 <div class="paragraph">
 <p>Currently, the following endpoint classes are available :</p>
@@ -24431,7 +24460,7 @@ Currently 2 types of installers are available:</p>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Endpoint Class</th>
+<th class="tableblock halign-left valign-top">Endpoint</th>
 <th class="tableblock halign-left valign-top">Available Resources</th>
 <th class="tableblock halign-left valign-top">Connection Types</th>
 <th class="tableblock halign-left valign-top">Relay Type</th>
@@ -24439,38 +24468,20 @@ Currently 2 types of installers are available:</p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.media.server.mgcp.endpoint.AnnouncementEndpoint</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Player</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ivr</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Player, Recorder, Dtmf Detector, Dtmf Generator</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Local+RTP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Mixer</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.media.server.mgcp.endpoint.IvrEndpoint</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Player,Recorder,Dtmf Detector,Dtmf Generator</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Local+RTP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Mixer</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.media.server.mgcp.endpoint.ConferenceEndpoint</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Conference</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Local+RTP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Mixer</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.media.server.mgcp.endpoint.BridgeEndpoint</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bridge</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Local+RTP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Splitter</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.media.server.mgcp.endpoint.PacketRelayEndpoint</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">RTP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Mixer</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">org.mobicents.media.server.mgcp.endpoint.Ds0Endpoint</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Signal Detector,Signal Generator</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Local+RTP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Splitter</p></td>
 </tr>
@@ -24498,26 +24509,6 @@ This implies that non-RTP connections can communicate with RTP endpoints and non
 The same applies to any conference traffic, it will not cross over to IVR.
 This is useful for recording RTP data for specific groups of users.</p>
 </div>
-<div class="paragraph">
-<p>DS0 endpoint is a type Splitter.
-All connections, signal detector and signal generator are in group 1,  while signalling channel SS7 is placed in group 2.
-That means that any SS7 channel data will be sent to any connection and signal detector, while data from signal generator and any connection will be sent only to SS7 channel.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="title">Endpoint Groups</div>
-<div class="paragraph">
-<p>In order to configure multiple groups of endpoints of the same type per Media Server instance, you must change the name of each group.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
 </div>
 </div>
 <div class="sect3">
@@ -24530,22 +24521,15 @@ That means that any SS7 channel data will be sent to any connection and signal d
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;media&gt;
-	&lt;timeout&gt;30&lt;/timeout&gt;
-	&lt;halfOpenDuration&gt;300&lt;/halfOpenDuration&gt;
-	&lt;maxDuration&gt;14400&lt;/maxDuration&gt;
-	&lt;lowPort&gt;34534&lt;/lowPort&gt;
-	&lt;highPort&gt;65534&lt;/highPort&gt;
-	&lt;jitterBuffer size="50" /&gt;
-	&lt;codecs&gt;
-		&lt;codec name="l16" /&gt;
-		&lt;codec name="pcmu" /&gt;
-		&lt;codec name="pcma" /&gt;
-		&lt;codec name="gsm" /&gt;
-		&lt;codec name="opus" /&gt;
-		&lt;codec name="g729" /&gt;
-	&lt;/codecs&gt;
-&lt;/media&gt;</code></pre>
+<pre class="highlight"><code class="language-yml" data-lang="yml">  media:
+    timeout: 0
+    halfOpenDuration: 300
+    maxDuration: 14400
+    lowPort: 34534
+    highPort: 65534
+    jitterBuffer:
+      size: 50
+    codecs: pcmu,pcma,opus,l16,gsm,g729,telephone-event</code></pre>
 </div>
 </div>
 </div>
@@ -24557,8 +24541,10 @@ That means that any SS7 channel data will be sent to any connection and signal d
 These values should be an even number, since odd ports are reserved for RTCP channels.</p>
 </div>
 <div class="paragraph">
-<p>The <strong>HalfOpenDuration</strong> value define the maximum duration an RTP channel can remain half-open, that is, in a state were is waiting for a response from the remote peer in order to fully establish the connection. If set to zero, the connection will stay half-open indeterminately.
-The <strong>MaxDuration</strong> value defines the maximum duration an RTP channel can remain open, thus limiting the lifetime of calls. If set to zero, the connection will stay open forever.</p>
+<p>The <strong>HalfOpenDuration</strong> value define the maximum duration an RTP channel can remain half-open, that is, in a state were is waiting for a response from the remote peer in order to fully establish the connection. If set to zero, the connection will stay half-open indeterminately.</p>
+</div>
+<div class="paragraph">
+<p>The <strong>MaxDuration</strong> value defines the maximum duration an RTP channel can remain open, thus limiting the lifetime of calls. If set to zero, the connection will stay open forever.</p>
 </div>
 <div class="paragraph">
 <p>The <strong>JitterBuffer</strong> size parameter sets the maximum capacity of the jitter buffer, in milliseconds.
@@ -24614,20 +24600,7 @@ Control Server ---&gt; 200 ----&gt; UA</code></pre>
 <div class="sect4">
 <h5 id="codecs"><a class="anchor" href="#codecs"></a>Codecs</h5>
 <div class="paragraph">
-<p>Currently media server supports six codecs : G711 A/U, Linear PCM Raw, GSM, ILBC, Opus and G.729.</p>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-<div class="title">G.729 usage</div>
-Please note that a valid license is required to use G.729 , therefore you should purchase a license prior to enabling this codec.
-</td>
-</tr>
-</table>
+<p>Currently media server supports six codecs : G711 A/U, Linear PCM Raw, GSM, ILBC, OPUS and G.729.</p>
 </div>
 <div class="paragraph">
 <p>If you decide to use a single codec for encoding or decoding data, you should leave one RAW or 2 Raw pair.
@@ -24654,20 +24627,20 @@ It is not recommended to allow L16 codec for UA – server connections, this can
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<div class="title">Opus usage</div>
-Opus codec processes data internally at 8kHz as mono signal. This sample rate and number of channels are limiting factors for sound quality when this codec is used. Bitrate is around 20 kbps. Payload type is fixed to value 111. It won&#8217;t work with clients with other payload type values assigned to Opus codec.
+<div class="title">OPUS usage</div>
+Opus codec processes data internally at 8kHz as mono signal. This sample rate and number of channels are limiting factors for sound quality when this codec is used. Bitrate is around 20 kbps.
 </td>
 </tr>
 </table>
 </div>
 </div>
 <div class="sect4">
-<h5 id="opus-codec-configuration"><a class="anchor" href="#opus-codec-configuration"></a>Opus Codec Configuration</h5>
+<h5 id="opus-codec-configuration"><a class="anchor" href="#opus-codec-configuration"></a>OPUS Codec Configuration</h5>
 <div class="paragraph">
 <p><a href="http://opus-codec.org/">Opus Codec</a> is open, royalty-free, highly versatile audio codec.</p>
 </div>
 <div class="paragraph">
-<p>Prerequisite library for Opus codec is <code>libopus</code> (or <code>libopus-dev</code> if the project is compiled from sources).</p>
+<p>Pre-requisite library for Opus codec is <code>libopus</code> (or <code>libopus-dev</code> if the project is compiled from sources).</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -24696,33 +24669,28 @@ brew install opus</code></pre>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;resources&gt;
-	&lt;localConnection poolSize="100" /&gt;
-	&lt;remoteConnection poolSize="50" /&gt;
-	&lt;player poolSize="50"&gt;
-		&lt;connectionTimeout&gt;2000&lt;/connectionTimeout&gt;
-	&lt;/player&gt;
-	&lt;recorder poolSize="50" /&gt;
-	&lt;dtmfDetector poolSize="50" dbi="-35" /&gt;
-	&lt;dtmfGenerator poolSize="50" toneVolume="-20" toneDuration="80" /&gt;
-	&lt;signalDetector poolSize="0" /&gt;
-	&lt;signalGenerator poolSize="0" /&gt;
-&lt;/resources&gt;</code></pre>
+<pre class="highlight"><code class="language-yml" data-lang="yml">  resources:
+    player:
+      connectionTimeout: 2000
+      cache:
+        enabled: false
+        size: 100
+    dtmfDetector:
+      dbi: -35
+      toneDuration: 100
+      toneInterval: 20
+    dtmfGenerator:
+      toneVolume: -20
+      toneDuration: 100</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>As seen above, default pool sizes are configured for each possible type of media components:</p>
+<p>The Media Server features the following media resources:</p>
 </div>
 <div class="ulist">
 <ul>
-<li>
-<p><strong>Local Connection</strong> - Link between two MGCP Endpoints;</p>
-</li>
-<li>
-<p><strong>Remote Connection</strong> - Link between an MGCP Endpoint and a remote peer;</p>
-</li>
 <li>
 <p><strong>Player</strong> - Plays audio tracks;</p>
 </li>
@@ -24730,16 +24698,13 @@ brew install opus</code></pre>
 <p><strong>Recorder</strong> - Records audio streams;</p>
 </li>
 <li>
+<p><strong>Voice Activity Detector</strong> - Detects speech in media stream;</p>
+</li>
+<li>
 <p><strong>DTMF Generator</strong> - Generates out-of-band DTMF tones;</p>
 </li>
 <li>
 <p><strong>DTMF Detector</strong> - Detects both inband and out-of-band tones;</p>
-</li>
-<li>
-<p><strong>Signal Detector</strong> - Detects SS7 tones;</p>
-</li>
-<li>
-<p><strong>Signal Generator</strong> - Generates SS7 tones.</p>
 </li>
 </ul>
 </div>
@@ -24766,32 +24731,6 @@ IP-only networks should use out-of-band tones only and disable inband detection.
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>Signal Detector and Signal Generator are currently only used for connectivity tests for DS0 channel (COT isup signal), CO1, CO2, CT (Continuity Transport) and Loopback test modes.</p>
-</div>
-<div class="paragraph">
-<p>For more information please see <a href="http://localhost:50253/afx/resource/Users/hrosa/Telestax/mobicents/mediaserver/git/mediaserver/docs/sources-asciidoc/src/main/asciidoc/preview.html#_msep_ms_event_packages">[_msep_ms_event_packages</a>]</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="title">When the specified resource type is not available</div>
-<div class="paragraph">
-<p>Please note that a resource will be automatically allocated if the specified resource type is not available in the resource pool.
-This will require more memory allocation and in some cases may impact performance.</p>
-</div>
-<div class="paragraph">
-<p>The more resources you have pre-configured on startup in the resource pool, the more memory the Media Server will require on startup.
-It is up to the user to decide the best trade-off for the setup (greater memory usage on startup vs slower response when new resources are required in runtime).</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
 </div>
 <div class="sect3">
 <h4 id="dtls-configuration"><a class="anchor" href="#dtls-configuration"></a>3.1.5. DTLS Configuration</h4>
@@ -24803,17 +24742,14 @@ It is up to the user to decide the best trade-off for the setup (greater memory 
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;dtls&gt;
-	&lt;minVersion&gt;1.0&lt;/minVersion&gt;
-	&lt;maxVersion&gt;1.2&lt;/maxVersion&gt;
-	&lt;cipherSuites&gt;
-		TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
-		TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,
-		TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,
-		TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA
-	&lt;/cipherSuites&gt;
-	&lt;certificate path="../conf/dtls/x509-server-ecdsa.pem" key="../conf/dtls/x509-server-key-ecdsa.pem" algorithm="ecdsa"/&gt;
-&lt;/dtls&gt;</code></pre>
+<pre class="highlight"><code class="language-yml" data-lang="yml">  dtls:
+    minVersion: 1.0
+    maxVersion: 1.2
+    cipherSuites: TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA
+    certificate:
+      path: "../conf/dtls/x509-server-ecdsa.pem"
+      key: "../conf/dtls/x509-server-key-ecdsa.pem"
+      algorithm: ecdsa</code></pre>
 </div>
 </div>
 </div>
@@ -24835,26 +24771,25 @@ The following examples show how to set the cipher suites can be configured using
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;cipherSuites&gt;
-	TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
-	TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
-	TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,
-	TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,
-	TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
-	TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
-	TLS_DHE_RSA_WITH_AES_256_GCM_SHA384,
-	TLS_DHE_RSA_WITH_AES_128_GCM_SHA256,
-	TLS_DHE_RSA_WITH_AES_256_CBC_SHA256,
-	TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,
-	TLS_DHE_RSA_WITH_AES_256_CBC_SHA,
-	TLS_DHE_RSA_WITH_AES_128_CBC_SHA,
-	TLS_RSA_WITH_AES_256_GCM_SHA384,
-	TLS_RSA_WITH_AES_128_GCM_SHA256,
-	TLS_RSA_WITH_AES_256_CBC_SHA256,
-	TLS_RSA_WITH_AES_128_CBC_SHA256,
-	TLS_RSA_WITH_AES_256_CBC_SHA,
-	TLS_RSA_WITH_AES_128_CBC_SHA
-&lt;/cipherSuites&gt;</code></pre>
+<pre class="highlight"><code class="language-yml" data-lang="yml">cipherSuites:
+    - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+    - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+    - TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384
+    - TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
+    - TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
+    - TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+    - TLS_DHE_RSA_WITH_AES_256_GCM_SHA384
+    - TLS_DHE_RSA_WITH_AES_128_GCM_SHA256
+    - TLS_DHE_RSA_WITH_AES_256_CBC_SHA256
+    - TLS_DHE_RSA_WITH_AES_128_CBC_SHA256
+    - TLS_DHE_RSA_WITH_AES_256_CBC_SHA
+    - TLS_DHE_RSA_WITH_AES_128_CBC_SHA
+    - TLS_RSA_WITH_AES_256_GCM_SHA384
+    - TLS_RSA_WITH_AES_128_GCM_SHA256
+    - TLS_RSA_WITH_AES_256_CBC_SHA256
+    - TLS_RSA_WITH_AES_128_CBC_SHA256
+    - TLS_RSA_WITH_AES_256_CBC_SHA
+    - TLS_RSA_WITH_AES_128_CBC_SHA</code></pre>
 </div>
 </div>
 </div>
@@ -24864,12 +24799,11 @@ The following examples show how to set the cipher suites can be configured using
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;cipherSuites&gt;
-	TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
-	TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,
-	TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,
-	TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA
-&lt;/cipherSuites&gt;</code></pre>
+<pre class="highlight"><code class="language-yml" data-lang="yml">cipherSuites:
+    - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+    - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
+    - TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
+    - TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SH</code></pre>
 </div>
 </div>
 </div>
@@ -24901,31 +24835,32 @@ The following examples show how to properly set up mediaserver according to the 
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;dtls&gt;
-	&lt;minVersion&gt;1.0&lt;/minVersion&gt;
-	&lt;maxVersion&gt;1.2&lt;/maxVersion&gt;
-	&lt;cipherSuites&gt;
-		TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
-		TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
-		TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,
-		TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,
-		TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
-		TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
-		TLS_DHE_RSA_WITH_AES_256_GCM_SHA384,
-		TLS_DHE_RSA_WITH_AES_128_GCM_SHA256,
-		TLS_DHE_RSA_WITH_AES_256_CBC_SHA256,
-		TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,
-		TLS_DHE_RSA_WITH_AES_256_CBC_SHA,
-		TLS_DHE_RSA_WITH_AES_128_CBC_SHA,
-		TLS_RSA_WITH_AES_256_GCM_SHA384,
-		TLS_RSA_WITH_AES_128_GCM_SHA256,
-		TLS_RSA_WITH_AES_256_CBC_SHA256,
-		TLS_RSA_WITH_AES_128_CBC_SHA256,
-		TLS_RSA_WITH_AES_256_CBC_SHA,
-		TLS_RSA_WITH_AES_128_CBC_SHA
-	&lt;/cipherSuites&gt;
-	&lt;certificate path="../conf/dtls/x509-server.pem" key="../conf/dtls/x509-server-key.pem" algorithm="rsa"/&gt;
-&lt;/dtls&gt;</code></pre>
+<pre class="highlight"><code class="language-yml" data-lang="yml">  dtls:
+    minVersion: 1.0
+    maxVersion: 1.2
+    cipherSuites:
+        - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        - TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384
+        - TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
+        - TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
+        - TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+        - TLS_DHE_RSA_WITH_AES_256_GCM_SHA384
+        - TLS_DHE_RSA_WITH_AES_128_GCM_SHA256
+        - TLS_DHE_RSA_WITH_AES_256_CBC_SHA256
+        - TLS_DHE_RSA_WITH_AES_128_CBC_SHA256
+        - TLS_DHE_RSA_WITH_AES_256_CBC_SHA
+        - TLS_DHE_RSA_WITH_AES_128_CBC_SHA
+        - TLS_RSA_WITH_AES_256_GCM_SHA384
+        - TLS_RSA_WITH_AES_128_GCM_SHA256
+        - TLS_RSA_WITH_AES_256_CBC_SHA256
+        - TLS_RSA_WITH_AES_128_CBC_SHA256
+        - TLS_RSA_WITH_AES_256_CBC_SHA
+        - TLS_RSA_WITH_AES_128_CBC_SHA
+    certificate:
+      path: "../conf/dtls/x509-server.pem"
+      key: "../conf/dtls/x509-server-key.pem"
+      algorithm: rsa</code></pre>
 </div>
 </div>
 </div>
@@ -24935,17 +24870,14 @@ The following examples show how to properly set up mediaserver according to the 
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;dtls&gt;
-	&lt;minVersion&gt;1.0&lt;/minVersion&gt;
-	&lt;maxVersion&gt;1.2&lt;/maxVersion&gt;
-	&lt;cipherSuites&gt;
-		TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
-		TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,
-		TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,
-		TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA
-	&lt;/cipherSuites&gt;
-	&lt;certificate path="../conf/dtls/x509-server-ecdsa.pem" key="../conf/dtls/x509-server-key-ecdsa.pem" algorithm="ecdsa"/&gt;
-&lt;/dtls&gt;</code></pre>
+<pre class="highlight"><code class="language-yml" data-lang="yml">  dtls:
+    minVersion: 1.0
+    maxVersion: 1.2
+    cipherSuites: TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA
+    certificate:
+      path: "../conf/dtls/x509-server-ecdsa.pem"
+      key: "../conf/dtls/x509-server-key-ecdsa.pem"
+      algorithm: ecdsa</code></pre>
 </div>
 </div>
 </div>
@@ -24962,18 +24894,21 @@ The following examples show how to properly set up mediaserver according to the 
 To install a new driver users simply need to copy the driver’s jar file to the <code>MS_HOME/lib</code> directory and declare it in the configuration file.</p>
 </div>
 <div class="paragraph">
-<p>The <code>mediaserver.xml</code> configuration file contains a specific section to define list of supported drivers grouped by subsystem:</p>
+<p>The <code>media-server.yml</code> configuration file contains a specific section to define list of supported drivers grouped by subsystem:</p>
 </div>
 <div class="exampleblock">
 <div class="title">Example 11. Configuration for drivers subsystem</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;subsystems&gt;
-        &lt;subsystem name="asr"&gt;
-            ...
-        &lt;/subsystem&gt;
-&lt;/subsystems&gt;</code></pre>
+<pre class="highlight"><code class="language-yml" data-lang="yml">  drivers:
+    driver-type:
+      driver-name:
+        type: org.restcomm.media.driver.SomeDriver
+        parameters:
+          param1: 1
+          param2: true
+          param3: "value"</code></pre>
 </div>
 </div>
 </div>
@@ -24987,14 +24922,14 @@ Example:</p>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;subsystems&gt;
-         &lt;subsystem name="asr"&gt;
-                &lt;driver name="some-driver" class="org.restcomm.media.drivers.asr.provider.ProviderAsrDriver"&gt;
-                        &lt;parameter name="param1"&gt;value1&lt;/parameter&gt;
-                        &lt;parameter name="param2"&gt;value2&lt;/parameter&gt;
-                &lt;/driver&gt;
-        &lt;/subsystem&gt;
-&lt;/subsystems&gt;</code></pre>
+<pre class="highlight"><code class="language-yml" data-lang="yml">  drivers:
+    asr:
+      watson:
+        type: org.restcomm.media.driver.asr.MyWatsonDriver
+        parameters:
+          hertz: 8000
+          responseTimeout: 1000
+          interimResults: true</code></pre>
 </div>
 </div>
 </div>
@@ -25017,309 +24952,29 @@ Example:</p>
 </table>
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_ctms_configuring_the_media_server_automatic"><a class="anchor" href="#_ctms_configuring_the_media_server_automatic"></a>3.2. Automatic Configuration</h3>
-<div class="paragraph">
-<p>The RestComm Media Server features an automatic configuration mechanism to free the users from the burden of manually configuring every aspect of the platform.</p>
-</div>
-<div class="paragraph">
-<p>Not only users can inject configuration parameters in a very simple format, this mechanism allows for automatization and easy management and multiplexing of processes.</p>
-</div>
 <div class="sect3">
-<h4 id="_ctms_configuring_the_media_server_automatic_dependencies"><a class="anchor" href="#_ctms_configuring_the_media_server_automatic_dependencies"></a>3.2.1. Requirements</h4>
-<div class="paragraph">
-<p>The automatic configuration mechanism requires the following dependencies:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><a href="http://xmlstar.sourceforge.net">XML Starlet</a>, a set of command line utilities (tools) which can be used to transform, query, validate, and edit XML documents and files using simple set of shell commands.</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-shell" data-lang="shell"># CentOS/RHEL
-yum install xmlstarlet
-
-# Ubuntu/Debian
-apt-get install xmlstarlet
-
-# macOS
-homebrew install xmlstarlet</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p><a href="https://tmux.github.io">TMux</a>, a terminal multiplexer that lets you switch easily between several programs in one terminal, detach them (they keep running in the background) and reattach them to a different terminal.</p>
-<div class="listingblock">
-<div class="content">
-<pre># CentOS/RHEL
-yum install tmux
-
-# Ubuntu/Debian
-apt-get install tmux
-
-# macOS
-homebrew install tmux</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_ctms_configuring_the_media_server_automatic_file_structure"><a class="anchor" href="#_ctms_configuring_the_media_server_automatic_file_structure"></a>3.2.2. File Structure</h4>
-<table id="_ctms_configuring_the_media_server_automatic_file_structure_table" class="tableblock frame-all grid-all spread">
-<caption class="title">Table 4. Automatic Configuration File Set</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">File Name and Location</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">mediaserver.conf</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration file containing the list of parameters used to configure the Media Server.
-Users must override the values of this file according to their preferences and environment.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">logger.conf</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration file containing the list of appenders and categories to configure the Logger.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ssl.conf</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration file containing the list of parameters used to configure SSL.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">start-mediaserver.sh</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Shell script that auto-configures the Media Server and bootstraps the Media Server. Loads values from <em>mediaserver.conf</em> file.
-Initiates a new session on tmux named <em>mediaserver</em>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">stop-mediaserver.sh</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Shell script that stops the Media Server.
-Kills the active tmux session named <em>mediaserver</em>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">.autoconfig</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Hidden folder in the root directory of the media server. Contains all scripts responsible for auto-configuration magic.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">.autoconfig/autoconfig.d</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Directory that contains all scripts responsible for configuring specific areas of the Media Server.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">.autoconfig/autoconfig.d/config-network.sh</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Script responsible for configuring Network aspects of the Media Server.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">.autoconfig/autoconfig.d/config-controller-mgcp.sh</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Script responsible for configuring the MGCP Controller of the Media Server.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">.autoconfig/autoconfig.d/config-media.sh</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Script responsible for configuring Media aspects of the Media Server.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">.autoconfig/autoconfig.d/config-resources.sh</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Script responsible for configuring Resource Pooling aspects of the Media Server.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">.autoconfig/autoconfig.d/config-dtls.sh</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Script responsible for configuring DTLS aspects of the Media Server.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">.autoconfig/autoconfig.d/config-asr.sh</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Script responsible for configuring ASR drivers registered in the Media Server.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">.autoconfig/autoconfig.d/config-logger.sh</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Script responsible for configuring the Logger of the Media Server.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">.autoconfig/autoconfig.d/config-java-opts.sh</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Script responsible for configuring the JAVA_OPTS of the Media Server process.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">.autoconfig/autoconfig.d/config-ssl.sh</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Script responsible for configuring SSL.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">.autoconfig/autoconfigure.sh</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Script responsible for invoking all configuration scripts within autoconfig.d directory.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">.autoconfig/verify-dependencies.sh</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Script responsible for verifying if all dependencies are installed in the system. Interrupts auto-configuration process if not all requirements are met.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="configuring-media-resources"><a class="anchor" href="#configuring-media-resources"></a>3.2.3. Configuring Media Resources</h4>
-<div class="paragraph">
-<p>Media resource components are configured by difining the values in <code>mediaserver.conf</code>.</p>
-</div>
-<div class="paragraph">
-<p>The following values could be specified in configuration file.</p>
-</div>
-<div class="exampleblock">
-<div class="title">Example 13. Configuration in mediaserver.conf</div>
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-shell" data-lang="shell">PLAYER_CONNECTION_TIMEOUT=2000</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="configuring-speech-recognition-drivers"><a class="anchor" href="#configuring-speech-recognition-drivers"></a>3.2.4. Configuring Speech Recognition Drivers</h4>
-<div class="paragraph">
-<p>To install an ASR driver, the user must simply copy the driver&#8217;s jar file to <code>MS_HOME/lib</code> directory and specify it in <code>mediaserver.conf</code>.</p>
-</div>
-<div class="paragraph">
-<p>Users can follow this template to register and configure an ASR Driver:</p>
-</div>
-<div class="exampleblock">
-<div class="title">Example 14. Configuration in mediaserver.conf</div>
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-shell" data-lang="shell">ASR_DRIVER_&lt;provider&gt;=&lt;driver-name&gt;
-ASR_DRIVER_&lt;provider&gt;_CLASS=&lt;driver-class&gt;
-ASR_DRIVER_&lt;provider&gt;_PROPERTY_&lt;property&gt;=&lt;property-name&gt;
-ASR_DRIVER_&lt;provider&gt;_PROPERTY_&lt;property&gt;_VALUE=&lt;property-value&gt;</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="exampleblock">
-<div class="title">Example 15. Example configuration in mediaserver.conf</div>
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-shell" data-lang="shell">ASR_DRIVER_SOMEPROVIDER=some-provider
-ASR_DRIVER_SOMEPROVIDER_CLASS=org.restcomm.media.drivers.asr.ProviderAsrDriver
-ASR_DRIVER_SOMEPROVIDER_PROPERTY_PARAM1=param1
-ASR_DRIVER_SOMEPROVIDER_PROPERTY_PARAM1_VALUE=value1
-ASR_DRIVER_SOMEPROVIDER_PROPERTY_PARAM2=param2
-ASR_DRIVER_SOMEPROVIDER_PROPERTY_PARAM2_VALUE=value2</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>If the ASR Driver depends on environment variables, then the user can define them in <code>mediaserver.conf</code> like:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-shell" data-lang="shell">export VARIABLE_NAME=variable_value</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_ctms_configuring_the_media_server_automatic_logger"><a class="anchor" href="#_ctms_configuring_the_media_server_automatic_logger"></a>3.2.5. Configuring the logger</h4>
-<div class="paragraph">
-<p>The Media Server Logger features two static <strong>Appenders</strong>, one that outputs to the Terminal console and the other for the log file located at <code>MS_HOME/log/server.log</code>. The user can define the minimum logging threshold for each appender, which will filter logging statements.</p>
-</div>
-<div class="paragraph">
-<p>If the user which to have more control over the logging threshold for a specific component of the Media Server, he can do so by defining logging <strong>Categories</strong>.
-A logging Category follows the format <code>&lt;package_name&gt;:&lt;log_threshold&gt;</code>, where <em>package_name</em> refers to the Media Server package to which the Logger will impose the <em>log_threshold</em>.</p>
-</div>
-<div class="paragraph">
-<p>In the following example, the Logger will output RTP-related traces with DEBUG level or higher.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Note that even though DEBUG traces are enabled for RTP stack, the Console and File appenders still impose a root threshold of INFO for any other traces.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="exampleblock">
-<div class="title">Example 16. Configuration for Logger</div>
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-shell" data-lang="shell"># Valid logging thresholds: TRACE, DEBUG, INFO, WARN, ERROR, FATAL
-# Root Threshold
-LOG_ROOT=INFO
-
-LOG_FILE_URL=log/server.log
-
-# Categories
-LOG_CATEGORY_RTP='org.restcomm.media.rtp:DEBUG'</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>If the user wished to, for example, define a logging threshold for the MGCP stack, he could do by adding a new Category as shown below:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-shell" data-lang="shell">LOG_CATEGORY_MGCP='org.restcomm.media.control.mgcp:DEBUG'</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The user can also edit the <strong>LOG_FILE_URL</strong> parameter to define the location of the Media Server&#8217;s log file.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p><strong>LOG_FILE_URL</strong> can be set to use either relative or absolute URL. If relative URL is used, then the root address of the URL will be the root directory of the Media Server installation (commonly known as <em>MS_HOME</em>).</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_ctms_configuring_the_media_server_automatic_ssl"><a class="anchor" href="#_ctms_configuring_the_media_server_automatic_ssl"></a>3.2.6. Configuring Secure Sockets Layer (SSL)</h4>
+<h4 id="configuring-secure-sockets-layer-ssl"><a class="anchor" href="#configuring-secure-sockets-layer-ssl"></a>3.1.7. Configuring Secure Sockets Layer (SSL)</h4>
 <div class="paragraph">
 <p><strong>SSL</strong> is the standard security technology for establishing an encrypted link between a web server and a browser. This link ensures that all data passed between the web server and browsers remain private and integral.</p>
 </div>
-<div class="paragraph">
-<p>To configure SSL, the user must edit the <em>ssl.conf</em> file. The changes will take effect during bootstrap.</p>
-</div>
 <div class="exampleblock">
-<div class="title">Example 17. Configuration for SSL</div>
+<div class="title">Example 13. Configuration for SSL</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-shell" data-lang="shell"># Secure SSL configuration.
-SSL_ENABLED=false
-SSL_KEYSTORE=conf/ssl/keystore.jks
-SSL_PASSWORD=changeme</code></pre>
+<pre class="highlight"><code class="language-yml" data-lang="yml">  ssl:
+    keyStore: mykey.jks
+    keyStorePassword: mypass
+    trustStore: mytrust.jks
+    trustStorePassword: mypass
+    trustStoreType: jks
+    debug: false</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>The parameter <strong>SSL_ENABLED</strong> can assume the values <code>true</code> or <code>false</code> and dictates whether SSL is enabled or not.
-If SSL is enabled, then the user must assign the path of the KeyStore to the variable <strong>SSL_KEYSTORE</strong> as well as its password in <strong>SSL_PASSWORD</strong>.</p>
+<p>If user wishes to enable SSL, then he must assign the path of the KeyStore and/or TrustSotre as well as its password(s).</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -25329,83 +24984,40 @@ If SSL is enabled, then the user must assign the path of the KeyStore to the var
 </td>
 <td class="content">
 <div class="paragraph">
-<p><strong>SSL_KEYSTORE</strong> can be set to use either relative or absolute URL. If relative URL is used, then the root address of the URL will be the root directory of the Media Server installation (commonly known as <em>MS_HOME</em>).</p>
+<p>User can set KeyStore and TrustStor to relative or absolute URL. If relative URL is used, then the root address of the URL will be the root directory of the Media Server installation (commonly known as <em>MS_HOME</em>).</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ctms_configuring_the_media_server_override"><a class="anchor" href="#_ctms_configuring_the_media_server_override"></a>3.2. Overriding Default Configuration</h3>
 <div class="paragraph">
-<p>Support for SSL is enabled by appending a new set of parameters to the JAVA_OPTS of the Media Server process. These definitions are present in the script <code>MS_HOME/bin/run.sh</code>.</p>
+<p>To make life easier for users, the RestComm Media Server offers a simple mechanism for overriding the default configuration parameters.</p>
+</div>
+<div class="paragraph">
+<p>By editing the <code>MS_HOME/conf/media-extra.yml</code> file users can override the configuration parameters they need without having to go through every aspect of the Media Server configuration.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows how users can override configuration of the Network by enabling SBC mode and how to enable caching for the Audio Player resource.</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 18. SSL configuration in JAVA_OPTS</div>
+<div class="title">Example 14. media-extra.yml</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-shell" data-lang="shell"># SSL Configuration
-JAVA_OPTS="$JAVA_OPTS -Djavax.net.ssl.trustStore=../conf/ssl/mediaserver.jks -Djavax.net.ssl.trustStorePassword=changeme"</code></pre>
+<pre class="highlight"><code class="language-yml" data-lang="yml">  media-server:
+
+    network:
+        sbc: true
+
+    resources:
+        player:
+            cache:
+                enabled: true</code></pre>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_ctms_configuring_the_media_server_automatic_running"><a class="anchor" href="#_ctms_configuring_the_media_server_automatic_running"></a>3.2.7. Running</h4>
-<div class="paragraph">
-<p>To use the automatic configuration and bootstrapping mechanism, users simply need to edit <em>mediaserver.conf</em> file according to their environment and then execute the <em>start-mediaserver.sh</em> script.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-shell" data-lang="shell">bash-3.2# ./start-mediaserver.sh
-Media Server automatic configuration started:
-Configuring MGCP Controller [Address=192.168.0.182, Port=2427, Expected Load=200]
-Configuring DTLS [Min Version=1.2, Max Version=1.2, Certificate=conf/dtls/x509-server-ecdsa.pem, Key=conf/dtls/x509-server-key-ecdsa.pem, Algorithm=ecdsa, Cipher Suite=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA]
-Configuring MGCP Media [Timeout=10, Lowest Port=44534, Highest Port=55534, Jitter Size=60]
-Configuring Media Codecs [pcmu,pcma,telephone-event]
-Configuring Network [BindAddress=192.168.0.182, ExternalAddress=5.158.17.91, Network=192.168.0.254, Subnet=192.168.0.255, Use SBC=false]
-Configuring Resource Pools [Local Connections=400, Remote Connections=200, Players=200, Recorders=200, DTMF Detectors=200, DTMF Generators=200]
-Configuring Audio Cache [Enabled=true, Size=50]
-Configuring Audio Player [Connection Timeout=2000]
-Configuring DTMF Detector [Dbi=-25]
-Media Server automatic configuration finished!
-Starting RestComm Media Server...
-...RestComm Media Server started running on session named "mediaserver"!</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>From the Terminal output, we see the script configuring the Media Server according to the values of <em>mediaserver.conf</em>. Then, is created a tmux session named <em>mediaserver</em> where the Media Server process will be running.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-shell" data-lang="shell">bash-3.2# tmux ls
-mediaserver: 1 windows (created Wed Nov  2 22:05:14 2016) [160x35]</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>To access the <em>mediaserver</em> session we just need to run the following command:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-shell" data-lang="shell">bash-3.2# tmux attach -t mediaserver</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>To detach from tmux session, just press <code>ctrl+b d</code> from within tmux console.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_ctms_configuring_the_media_server_automatic_stopping"><a class="anchor" href="#_ctms_configuring_the_media_server_automatic_stopping"></a>3.2.8. Stopping</h4>
-<div class="paragraph">
-<p>To stop the Media Server process and kill the tmux session, the user simply needs to execute the stop-mediaserver.sh script.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-shell" data-lang="shell">bash-3.2# ./stop-mediaserver.sh
-Stopping RestComm Media Server...
-...stopped RestComm Media Server instance running on session "mediaserver".
-bash-3.2# tmux ls
-no server running on /private/tmp/tmux-501/default</code></pre>
 </div>
 </div>
 </div>
@@ -25475,7 +25087,7 @@ For example, the user could define qualifiers for any or all of the following: l
 <p>The package was extended with a proprietary command to enable Automatic Speech Recognition (ASR) capabilities.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 5. MGCP AU Package</caption>
+<caption class="title">Table 4. MGCP AU Package</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 20%;">
@@ -25552,7 +25164,7 @@ For example, the user could define qualifiers for any or all of the following: l
 Because there is no need to monitor the incoming media stream this event is an efficient mechanism for treatments, informational announcements, etc.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 6. MGCP PlayAnnouncement Command</caption>
+<caption class="title">Table 5. MGCP PlayAnnouncement Command</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -25609,7 +25221,7 @@ By default PlayCollect does not play an initial prompt, makes only one attempt t
 <p>Various special purpose keys, key sequences, and key sets can be defined for use during the PlayCollect operation.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 7. MGCP PlayCollect Command</caption>
+<caption class="title">Table 6. MGCP PlayCollect Command</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -25756,7 +25368,7 @@ If the user does not speak, the user may be re-prompted and given another chance
 <p>By default PlayRecord does not play an initial prompt, makes only one attempt to record, and therefore functions as a simple Record operation.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 8. MGCP PlayRecord Command</caption>
+<caption class="title">Table 7. MGCP PlayRecord Command</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -26032,7 +25644,7 @@ To further understand the JSR-309 API, download specs from <a href="http://jcp.o
 <p>Announcement Package(A): <code>org.mobicents.media.server.mgcp.pkg.ann</code></p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 9. Announcement Package(A):</caption>
+<caption class="title">Table 8. Announcement Package(A):</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -26065,7 +25677,7 @@ To further understand the JSR-309 API, download specs from <a href="http://jcp.o
 <p><code>Advanced Audio Package(AU): org.mobicents.media.server.mgcp.pkg.au</code></p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 10. Advanced Audio Package(AU):</caption>
+<caption class="title">Table 9. Advanced Audio Package(AU):</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -26110,7 +25722,7 @@ To further understand the JSR-309 API, download specs from <a href="http://jcp.o
 <p><code>Trunk Package(T): org.mobicents.media.server.mgcp.pkg.trunk</code></p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 11. Trunk Package(T):</caption>
+<caption class="title">Table 10. Trunk Package(T):</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -26155,7 +25767,7 @@ To further understand the JSR-309 API, download specs from <a href="http://jcp.o
 <p>Dtmf Package(D): <code>org.mobicents.media.server.mgcp.pkg.dtmf</code></p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 12. Dtmf Package(D):</caption>
+<caption class="title">Table 11. Dtmf Package(D):</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -26248,7 +25860,7 @@ To further understand the JSR-309 API, download specs from <a href="http://jcp.o
 <p>`Signal List Package (SL): org.mobicents.media.server.mgcp.pkg.sl `</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 13. Signal List Package (SL):</caption>
+<caption class="title">Table 12. Signal List Package (SL):</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -26286,7 +25898,7 @@ To further understand the JSR-309 API, download specs from <a href="http://jcp.o
 <p>The table belows shows supported packages and the related enabled endpoints</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 14. List of Supported Packages per Endpoint</caption>
+<caption class="title">Table 13. List of Supported Packages per Endpoint</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -26343,7 +25955,7 @@ The examples below are included in the &amp;Restcomm Media Server_SHORT_NAME; so
 <p>To get Jain-Slee examples please see following examples that are part of mobicents / telestax jain Slee release :</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 15. Example for Jain-Slee</caption>
+<caption class="title">Table 14. Example for Jain-Slee</caption>
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -26371,7 +25983,7 @@ The examples below are included in the &amp;Restcomm Media Server_SHORT_NAME; so
 <p>The following examples use Restcomm Media Server with Restcomm SIP Servlets :</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 16. Examples for SIP Servlets</caption>
+<caption class="title">Table 15. Examples for SIP Servlets</caption>
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -26566,7 +26178,7 @@ The Figure 5 shows the RTP header format.</p>
 </div>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 17. Supported RTP Formats</caption>
+<caption class="title">Table 16. Supported RTP Formats</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -26920,147 +26532,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_16-b03, mixed mode, sharing)</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_jboss_home_setup"><a class="anchor" href="#_jboss_home_setup"></a>Appendix C: Setting the JBOSS_HOME Environment Variable</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The [app]` Platform` (<code class="app">) is built on top of the [app]</code>.
-You do not need to set the <code class="var">JBOSS_HOME</code> environment variable to run any of the [app]` Platform` servers <em>unless</em> <code class="var">JBOSS_HOME</code> is <em>already</em> set.</p>
-</div>
-<div class="paragraph">
-<p>The best way to know for sure whether <code class="var">JBOSS_HOME</code> was set previously or not is to perform a simple check which may save you time and frustration.</p>
-</div>
-<div class="paragraph">
-<div class="title">Checking to See If JBOSS_HOME is Set on Unix</div>
-<p>At the command line, <code>echo</code>			<code>$JBOSS_HOME</code> to see if it is currently defined in your environment:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>~]$ echo $JBOSS_HOME</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The [app]` Platform` and most &amp;THIS.PLATFORM; servers are built on top of the <code class="app"> ([app]</code>). When the [app]` Platform` or &amp;THIS.PLATFORM; servers are built <em>from source</em>, then <code class="var">JBOSS_HOME</code> <em>must</em> be set, because the &amp;THIS.PLATFORM; files are installed into (or &#8220;over top of&#8221; if you prefer) a clean <code class="app"> installation, and the build process assumes that the location pointed to by the <code class="var">JBOSS_HOME</code> environment variable at the time of building is the [app]</code> installation into which you want it to install the &amp;THIS.PLATFORM; files.</p>
-</div>
-<div class="paragraph">
-<p>This guide does not detail building the [app]` Platform` or any &amp;THIS.PLATFORM; servers from source.
-It is nevertheless useful to understand the role played by <code class="app">JBoss AS</code> and <code class="var">JBOSS_HOME</code> in the &amp;THIS.PLATFORM; ecosystem.</p>
-</div>
-<div class="paragraph">
-<p>The immediately-following section considers whether you need to set <code class="var">JBOSS_HOME</code> at all and, if so, when.
-The subsequent sections detail how to set <code class="var">JBOSS_HOME</code> on Unix and Windows</p>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-Even if you fall into the category below of <em>not needing</em> to set <code class="var">JBOSS_HOME</code>, you may want to for various reasons anyway.
-Also, even if you are instructed that you do <em>not need</em> to set <code class="var">JBOSS_HOME</code>, it is good practice nonetheless to check and make sure that <code class="var">JBOSS_HOME</code> actually <em>isn&#8217;t</em> set or defined on your system for some reason.
-This can save you both time and frustration.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>You <em>DO NOT NEED</em> to set <code class="var">JBOSS_HOME</code> if&#8230;&#8203;</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>&#8230;&#8203;you have installed the [app]` Platform` binary distribution.</p>
-</li>
-<li>
-<p>&#8230;&#8203;you have installed a &amp;THIS.PLATFORM;server binary distribution <em>which bundles [app]``.</em></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>You <em>MUST</em> set <code class="var">JBOSS_HOME</code> if&#8230;&#8203;</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>&#8230;&#8203;you are installing the [app]` Platform` or any of the &amp;THIS.PLATFORM; servers <em>from source</em>.</p>
-</li>
-<li>
-<p>&#8230;&#8203;you are installing the [app]` Platform` binary distribution, or one of the &amp;THIS.PLATFORM; server binary distributions, which <em>do not</em> bundle [app]``.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Naturally, if you installed the [app]` Platform` or one of the &amp;THIS.PLATFORM; server binary releases which <em>do not</em> bundle <code class="app">`, yet requires it to run, then you should install before setting [var]`JBOSS_HOME</code> or proceeding with anything else.</p>
-</div>
-<div class="paragraph">
-<div class="title">Setting the JBOSS_HOME Environment Variable on Unix</div>
-<p>The <code class="var">JBOSS_HOME</code> environment variable must point to the directory which contains all of the files for the [app]` Platform` or individual &amp;THIS.PLATFORM; server that you installed.
-As another hint, this topmost directory contains a <em class="path">bin</em> subdirectory.</p>
-</div>
-<div class="paragraph">
-<p>Setting <code class="var">JBOSS_HOME</code> in your personal <em class="path">~/.bashrc</em> startup script carries the advantage of retaining effect over reboots.
-Each time you log in, the environment variable is sure to be set for you, as a user.
-On Unix, it is possible to set <code class="var">JBOSS_HOME</code> as a system-wide environment variable, by defining it in <em class="path">/etc/bashrc</em>, but this method is neither recommended nor detailed in these instructions.</p>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure: To Set JBOSS_HOME on Unix&#8230;&#8203;</div>
-<ol class="arabic">
-<li>
-<p>Open the <em class="path">~/.bashrc</em> startup script, which is a hidden file in your home directory, in a text editor, and insert the following line on its own line while substituting for the actual install location on your system:</p>
-<div class="listingblock">
-<div class="content">
-<pre>export JBOSS_HOME="/home/&lt;username&gt;/&lt;path&gt;/&lt;to&gt;/&lt;install_directory&gt;"</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Save and close the <em class="path">.bashrc</em> startup script.</p>
-</li>
-<li>
-<p>You should <code>source</code> the <em class="path">.bashrc</em> script to force your change to take effect, so that <code class="var">JBOSS_HOME</code> becomes set for the current session<sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnote_2" title="View footnote.">2</a>]</sup>.</p>
-<div class="listingblock">
-<div class="content">
-<pre>~]$ source ~/.bashrc</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Finally, ensure that <code class="var">JBOSS_HOME</code> is set in the current session, and actually points to the correct location:</p>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The command line usage below is based upon a binary installation of the [app]` Platform`.
-In this sample output, <code class="var">JBOSS_HOME</code> has been set correctly to the <code class="replaceable">topmost_directory</code> of the <code class="app"> installation.
-Note that if you are installing one of the standalone [app]</code> servers (with <code class="app">JBoss AS</code> bundled!), then <code class="var">JBOSS_HOME</code> would point to the <code class="replaceable">topmost_directory</code> of your server installation.
-</td>
-</tr>
-</table>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>~]$ echo $JBOSS_HOME
-/home/silas/&lt;path&gt;/&lt;to&gt;/&lt;install_directory&gt;</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<div class="title">Setting the JBOSS_HOME Environment Variable on Windows</div>
-<p>The <code class="var">JBOSS_HOME</code> environment variable must point to the directory which contains all of the files for the &amp;THIS.PLATFORM;Platform or individual &amp;THIS.PLATFORM;server that you installed.
-As another hint, this topmost directory contains a <em class="path">bin</em> subdirectory.</p>
-</div>
-<div class="paragraph">
-<p>For information on how to set environment variables in recent versions of Windows, refer to <a href="http://support.microsoft.com/kb/931715" class="bare">http://support.microsoft.com/kb/931715</a>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="revision-history"><a class="anchor" href="#revision-history"></a>Appendix D: Revision History</h2>
+<h2 id="revision-history"><a class="anchor" href="#revision-history"></a>Appendix C: Revision History</h2>
 <div class="sectionbody">
 
 </div>
@@ -27071,13 +26543,10 @@ As another hint, this topmost directory contains a <em class="path">bin</em> sub
 <div class="footnote" id="_footnote_1">
 <a href="#_footnoteref_1">1</a>. At this point in time, it is possible to run most  servers, such as the JAIN SLEE, using a Java 6 JRE or JDK. Be aware, however, that presently the XML Document Management Server does not run on Java 6. We suggest checking the  web site, forums or discussion pages if you need to inquire about the status of running the XML Document Management Server with Java 6.
 </div>
-<div class="footnote" id="_footnote_2">
-<a href="#_footnoteref_2">2</a>. Note that any other terminals which were opened prior to your having altered .bashrc will need to source ~/.bashrc as well should they require access to JBOSS_HOME.
-</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-06 13:22:28 UTC
+Last updated 2018-03-18 02:22:01 UTC
 </div>
 </div>
 <footer>

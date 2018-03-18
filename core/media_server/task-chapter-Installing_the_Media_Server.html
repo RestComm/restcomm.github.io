@@ -23357,6 +23357,12 @@ display: none;
 <li><a href="#_itms_binary_standalone_media_server_installing">Installing</a></li>
 <li><a href="#_itms_binary_standalone_media_server_running">Running</a></li>
 <li><a href="#_itms-binary-standalone_media_server-stopping">Stopping</a></li>
+</ul>
+</li>
+<li><a href="#_itms_binary_standalone_media_server_running_session">Running with Session Management</a>
+<ul class="sectlevel2">
+<li><a href="#starting">Starting</a></li>
+<li><a href="#_ctms_configuring_the_media_server_automatic_stopping">Stopping</a></li>
 <li><a href="#_itms_standalone_server_structure">Server Structure</a></li>
 <li><a href="#_itms_writing_and_running_tests_against_the_media_server">Writing and Running Tests Against the Media Server</a></li>
 </ul>
@@ -23398,10 +23404,6 @@ Downloading and building the source code is recommended for those who want acces
 <dd>
 <p>Once unzipped, the Restcomm Media Server binary release requires <em>at least</em>	36Mb of free disk space. Keep in mind that disk space requirements may change in future iterations.</p>
 </dd>
-<dt class="hdlist1">Anything Java Itself Will Run On</dt>
-<dd>
-<p>The JBoss embedded Media Server and its bundled servers, JBoss, are 100% Java. The Restcomm Media Server will run on the same hardware that the JBoss Application Server runs on.</p>
-</dd>
 </dl>
 </div>
 <div class="dlist">
@@ -23409,7 +23411,7 @@ Downloading and building the source code is recommended for those who want acces
 <dl>
 <dt class="hdlist1">Java Development Kit</dt>
 <dd>
-<p>A working installation of JDK 5 or higher is required for Restcomm Media Server to run.</p>
+<p>A working installation of JDK 8 is required for Restcomm Media Server to run.</p>
 </dd>
 </dl>
 </div>
@@ -23417,7 +23419,7 @@ Downloading and building the source code is recommended for those who want acces
 <div class="sect2">
 <h3 id="_itms_binary_standalone_media_server_downloading"><a class="anchor" href="#_itms_binary_standalone_media_server_downloading"></a>Downloading</h3>
 <div class="paragraph">
-<p>The latest version of the Restcomm Media Server is available from the project&#8217;s <a href="https://github.com/RestComm/mediaserver/releases/latest">github release page</a>.
+<p>The latest version of the Restcomm Media Server is available from the project&#8217;s <a href="https://github.com/RestComm/media-server-standalone/releases/latest">github release page</a>.
 Select the link named <em>restcomm-media-server-&lt;version&gt;.zip</em> to start downloading the latest stable binary release from community.</p>
 </div>
 </div>
@@ -23509,31 +23511,38 @@ Follow the instructions below for the operating system on which the server will 
 </li>
 </ol>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Instead of executing the shell script, the <em class="path">run.jar</em> executable Java archive can be executed from the <em class="path">bin</em> directory:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>restcomm-media-server-&lt;version&gt;]$ java -jar bin/run.jar</pre>
-</div>
-</div>
-</td>
-</tr>
-</table>
-</div>
 <div class="paragraph">
 <p>You can verify that Restcomm Media Server has started successfully if the last line of output in the Linux Terminal window is similar to</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>15:35:16,897 INFO  [MainDeployer] [[[[[[[[[ RestComm Media Server: release.version=5.0.0-SNAPSHOT Started ]]]]]]]]]</code></pre>
+<pre class="highlight"><code>  _____           _    _____
+ |  __ \         | |  / ____|
+ | |__) |___  ___| |_| |     ___  _ __ ___  _ __ ___
+ |  _  // _ \/ __| __| |    / _ \| '_ ` _ \| '_ ` _ \
+ | | \ \  __/\__ \ |_| |___| (_) | | | | | | | | | | |
+ |_|  \_\___||___/\__|\_____\___/|_| |_| |_|_| |_| |_|
+ |  \/  |        | (_)        / ____|
+ | \  / | ___  __| |_  __ _  | (___   ___ _ ____   _____ _ __
+ | |\/| |/ _ \/ _` | |/ _` |  \___ \ / _ \ '__\ \ / / _ \ '__|
+ | |  | |  __/ (_| | | (_| |  ____) |  __/ |   \ V /  __/ |
+ |_|  |_|\___|\__,_|_|\__,_| |_____/ \___|_|    \_/ \___|_|
+
+ :: Version 8.0.0-SNAPSHOT ::
+
+
+09:36:43,666 INFO  [SpringApplication] (main) Starting application with PID 55792
+09:36:43,668 INFO  [SpringApplication] (main) No active profile set, falling back to default profiles: default
+09:36:43,709 INFO  [AnnotationConfigApplicationContext] (main) Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@4716be8b: startup date [Thu Mar 15 09:36:43 WET 2018]; root of context hierarchy
+09:36:44,580 INFO  [MgcpEndpointManager] (main) Installed MGCP Endpoint Provider for namespace restcomm/bridge/
+09:36:44,580 INFO  [MgcpEndpointManager] (main) Installed MGCP Endpoint Provider for namespace restcomm/ivr/
+09:36:44,580 INFO  [MgcpEndpointManager] (main) Installed MGCP Endpoint Provider for namespace restcomm/cnf/
+09:36:44,601 INFO  [PriorityQueueScheduler] (main) Starting
+09:36:44,603 INFO  [PriorityQueueScheduler] (main) Started
+09:36:44,604 INFO  [ServiceScheduler] (main) Started scheduler!
+09:36:44,604 INFO  [UdpManager] (main) Starting UDP Manager
+09:36:44,605 INFO  [UdpManager] (main) Initialized UDP interface[unknown]: bind address=127.0.0.1
+09:36:44,683 INFO  [StandaloneMediaServer] (main) Media Server started</code></pre>
 </div>
 </div>
 </div>
@@ -23552,12 +23561,82 @@ Follow the instructions below for the operating system on which the server will 
 <div class="listingblock">
 <div class="content">
 <pre>~]$ ps aux | grep java
-hrosa            10947  16.8 22.4  6603132 3755516 s005  S+    3:51PM   0:07.51 /opt/.jenv/versions/oracle64-1.7.0.79/bin/java -Dprogram.name=run.sh -classpath /opt/restcomm-media-server/bin/run.jar org.mobicents.media.server.bootstrap.Main
+hrosa            10947  16.8 22.4  6603132 3755516 s005  S+    3:51PM   0:07.51 /opt/.jenv/versions/1.8/bin/java -Dprogram.name=run.sh -classpath /opt/restcomm-media-server/bin/run.jar org.mobicents.media.server.bootstrap.Main
 ~]$ kill 10947</pre>
 </div>
 </div>
 </li>
 </ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_itms_binary_standalone_media_server_running_session"><a class="anchor" href="#_itms_binary_standalone_media_server_running_session"></a>Running with Session Management</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The RestComm Media Server allows users to bootstrap the project using <a href="https://tmux.github.io">TMux</a>, a terminal multiplexer that lets users switch easily between several programs in one terminal, detach them (they keep running in the background) and reattach them to a different terminal.</p>
+</div>
+<div class="listingblock">
+<div class="title">Tmux installation</div>
+<div class="content">
+<pre># CentOS/RHEL
+yum install tmux
+
+# Ubuntu/Debian
+apt-get install tmux
+
+# macOS
+homebrew install tmux</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="starting"><a class="anchor" href="#starting"></a>Starting</h3>
+<div class="paragraph">
+<p>The run the project via Tmux, users simply need to execute the <code>MS_HOME/bin/start-media-server.sh</code> script.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">bash-3.2# ./start-mediaserver.sh
+Starting RestComm Media Server...
+...RestComm Media Server started running on session named "mediaserver"!</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>From the Terminal output, we see the script created a tmux session named <code>mediaserver</code> where the Media Server process will be running.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">bash-3.2# tmux ls
+mediaserver: 1 windows (created Wed Nov  2 22:05:14 2016) [160x35]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To access the <em>mediaserver</em> session we just need to run the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">bash-3.2# tmux attach -t mediaserver</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To detach from tmux session, just press <code>ctrl+b d</code> from within tmux console.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ctms_configuring_the_media_server_automatic_stopping"><a class="anchor" href="#_ctms_configuring_the_media_server_automatic_stopping"></a>Stopping</h3>
+<div class="paragraph">
+<p>To stop the Media Server process and kill the tmux session, the user simply needs to execute the stop-mediaserver.sh script.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">bash-3.2# ./stop-mediaserver.sh
+Stopping RestComm Media Server...
+...stopped RestComm Media Server instance running on session "mediaserver".
+
+bash-3.2# tmux ls
+no server running on /private/tmp/tmux-501/default</code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -23592,10 +23671,6 @@ It is also useful to understand what components can be removed to reduce the ser
 <td class="tableblock halign-left valign-top"><p class="tableblock">Contains the core services that are required for the server. This includes the bootstrap descriptor, log files, and the default media server configuration file.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">deploy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Contains the dynamic deployment content required by the hot deployment service. The deploy location can be overridden by specifying a location in the URL attribute of the URLDeploymentScanner configuration item.</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">lib</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Contains the dependency files required by the server.</p></td>
 </tr>
@@ -23606,7 +23681,7 @@ It is also useful to understand what components can be removed to reduce the ser
 </tbody>
 </table>
 <div class="paragraph">
-<p>The standalone Media Server uses a number of XML configuration
+<p>The standalone Media Server uses a number of YAML configuration
 files that control various aspects of the server.
 &lt;xref linkend="tab-mms-standalone_core_configuration_file_set" /&gt;
 describes the location of the key configuration files,
@@ -23626,24 +23701,20 @@ and provides a description of the</p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">conf/bootstrap-beans.xml</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies which additional microcontainer deployments are loaded as part of the bootstrap phase. For a standard configuration, the bootstrap configuration files require no alteration.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">conf/mediaserver.xml</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">conf/media-server.yml</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Main configuration file responsible for configure all aspects of the Media Server core. For in-depth details of this file please see chapter 3.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">conf/mgcp-conf.xml</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the configuration for the MGCP controller.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">conf/media-plugin-*.yml</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration file for plugins. Each plugin will feature its own configuration file.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">conf/log4j.properties</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the Apache log4j framework category priorities and appenders used by the Media Server.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">conf/media-extra.yml</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Utility file to override required configuration parameters without changing default values established in media-server.yml or plugin configuration files.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">deploy/server-beans.xml</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specified list of Java Beans necessary for bootstrapping the Media Server. For a standard configuration, the bootstrap configuration files require no alteration.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">conf/log4j2.yml</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the Apache Log4j2 framework category priorities and appenders used by the Media Server.</p></td>
 </tr>
 </tbody>
 </table>
@@ -23659,7 +23730,7 @@ and provides a description of the</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-06 13:22:28 UTC
+Last updated 2018-03-18 02:22:01 UTC
 </div>
 </div>
 <footer>
