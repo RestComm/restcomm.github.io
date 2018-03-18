@@ -23367,7 +23367,7 @@ display: none;
 <li><a href="#_restcomm_gmlc_overview">2.3. Restcomm GMLC</a></li>
 </ul>
 </li>
-<li><a href="#running">3. Running</a>
+<li><a href="#running-jboss-as">3. Running (JBoss AS)</a>
 <ul class="sectlevel2">
 <li><a href="#running-the-gateway">3.1. Running the Gateway</a></li>
 <li><a href="#_running_the_gateway_simulator">3.2. Running the Gateway - Simulator Profile</a></li>
@@ -23377,12 +23377,22 @@ display: none;
 <li><a href="#_gui_security">3.6. Authentication</a></li>
 </ul>
 </li>
-<li><a href="#configuring">4. Configuring</a>
+<li><a href="#running-wildfly-10">4. Running (WildFly 10)</a>
 <ul class="sectlevel2">
-<li><a href="#memory-settings">4.1. Memory Settings</a></li>
-<li><a href="#_java_setting">4.2. JSupported Java Version</a></li>
-<li><a href="#_http_client_ra">4.3. Configuring JSLEE http-client RA</a></li>
-<li><a href="#_configuring_ss7">4.4. Configuring the SS7 Stack</a></li>
+<li><a href="#running-the-gateway-2">4.1. Running the Gateway</a></li>
+<li><a href="#_running_the_gateway_simulator">4.2. Running the Gateway - Simulator Profile</a></li>
+<li><a href="#_simulator_gmlc_example">4.3. Running GMLC Examples in Simulator</a></li>
+<li><a href="#_running_shell">4.4. Running the Shell</a></li>
+<li><a href="#_connect_gui">4.5. Connect to a new Instance</a></li>
+<li><a href="#_gui_security">4.6. Authentication</a></li>
+</ul>
+</li>
+<li><a href="#configuring">5. Configuring</a>
+<ul class="sectlevel2">
+<li><a href="#memory-settings">5.1. Memory Settings</a></li>
+<li><a href="#_java_setting">5.2. JSupported Java Version</a></li>
+<li><a href="#_http_client_ra">5.3. Configuring JSLEE http-client RA</a></li>
+<li><a href="#_configuring_ss7">5.4. Configuring the SS7 Stack</a></li>
 </ul>
 </li>
 <li><a href="#revision-history">Appendix A: Revision History</a></li>
@@ -24571,7 +24581,7 @@ The third-party application can be either of the following technologies on any O
 </div>
 </div>
 <div class="sect1">
-<h2 id="running"><a class="anchor" href="#running"></a>3. Running</h2>
+<h2 id="running-jboss-as"><a class="anchor" href="#running-jboss-as"></a>3. Running (JBoss AS)</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="running-the-gateway"><a class="anchor" href="#running-the-gateway"></a>3.1. Running the Gateway</h3>
@@ -24900,7 +24910,316 @@ You can change the user-id and password in files  <em class="path">jmx-console-r
 </div>
 </div>
 <div class="sect1">
-<h2 id="configuring"><a class="anchor" href="#configuring"></a>4. Configuring</h2>
+<h2 id="running-wildfly-10"><a class="anchor" href="#running-wildfly-10"></a>4. Running (WildFly 10)</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="running-the-gateway-2"><a class="anchor" href="#running-the-gateway-2"></a>4.1. Running the Gateway</h3>
+<div class="olist arabic">
+<div class="title">Procedure: Run Restcomm GMLC</div>
+<ol class="arabic">
+<li>
+<p>Pre-requisite:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>You must have Restcomm GMLC installed as explained in the Installation Guide.</p>
+</li>
+<li>
+<p>If you are using the SS7 board on server, you must ensure that the <code>java.library.path</code> variable is set to point to the directory containing the native component.
+Alternatively you can copy it to the JBoss native library path manually.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>All you have to do to start the Gateway is start the Wildfly Application Server.
+To start the Wildfly Server you must execute the <em class="path">standalone.sh</em> (Unix) or <em class="path">standalone.bat</em> (Microsoft Windows) startup script in the installation directory <em class="path">restcomm-gmlc-/wildfly-10.1.0.Final/bin</em>.
+Note that this will start the server in the default profile.
+The "default" profile is a clean profile where you start from scratch and configure the entire SS7 Stack and GMLC Gateway to suit your requirements.</p>
+</li>
+<li>
+<p>Result: If the service started properly you should see the following last few output lines in the Unix terminal or Command Prompt depending on your environment:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>10:55:39,578 INFO  [org.mobicents.slee.container.management.jmx.DeploymentMBeanImpl] (MSC service thread 1-7) Installed LibraryID[name=org.mobicents.gmlc,vendor=gmlc-library,version=2.0]
+10:55:39,600 INFO  [org.mobicents.slee.container.management.jmx.DeploymentMBeanImpl] (MSC service thread 1-7) Installed SbbID[name=MobileCoreNetworkInterfaceSbb,vendor=org.mobicents,version=1.0]
+10:55:39,612 INFO  [org.mobicents.slee.container.management.jmx.DeploymentMBeanImpl] (MSC service thread 1-7) Installed ServiceID[name=mobicents-gmlc,vendor=org.mobicents,version=1.0]. Root sbb is SbbID[name=MobileCoreNetworkInterfaceSbb,vendor=org.mobicents,version=1.0]
+10:55:39,612 INFO  [org.mobicents.slee.container.management.jmx.DeploymentMBeanImpl] (MSC service thread 1-7) Installed DeployableUnitID[url=file:/home/username/restcomm-gmlc-2.0.0-SNAPSHOT/wildfly-10.1.0.Final/standalone/tmp/vfs/temp/temp16e65a4743d174ee/content-eda66810008ffb69/content/]
+10:55:39,909 INFO  [org.mobicents.slee.container.management.ServiceManagementImpl] (MSC service thread 1-7) Activated ServiceID[name=mobicents-gmlc,vendor=org.mobicents,version=1.0]</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>If you are starting GMLC-2.0.0-SNAPSHOT for the first time, SS7 is not configured.
+You can use either the Shell Client or the GUI to connect to GMLC-2.0.0-SNAPSHOT and configure the SS7 Stack, GMLC parameters and Routing Rules.
+Once configured, the state and configuration of SS7 and GMLC are both persisted which stands a server re-start operation.
+The next chapter will discuss in detail about configuring SS7 and the GMLC Gateway.</p>
+</li>
+</ol>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure: Stop the Gateway</div>
+<ol class="arabic">
+<li>
+<p>To stop the Restcomm GMLC , you must shut down the Wildfly Application Server.
+To shut down the server(s) you must execute the <code>jboss-cli.sh --connect command=:shutdown</code> (Unix) or  <code>jboss-cli.bat --connect command=:shutdown</code> (Microsoft Windows) script in the installation directory <em class="path">restcomm-gmlc-/wildfly-10.1.0.Final/bin</em>.</p>
+</li>
+<li>
+<p>If the server stopped properly, you will see the following three lines as the  last output in the Unix terminal or Command Prompt:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>INFO  [org.jboss.as] (MSC service thread 1-6) WFLYSRV0050: WildFly Full 10.1.0.Final (WildFly Core 2.2.0.Final) stopped</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_running_the_gateway_simulator"><a class="anchor" href="#_running_the_gateway_simulator"></a>4.2. Running the Gateway - Simulator Profile</h3>
+<div class="paragraph">
+<p>The Restcomm GMLC offers you an option to run the Gateway with a "simulator" profile for testing purpose.
+The "simulator" profile is a pre-configured profile to work with the jss7-simulator.
+Starting the Gateway with the "simulator" profile is similar to the steps explained for the "default" profile except that you must pass the string value with path to "simulator" folder when invoking the run script. Simulator folder is located in $JBOSS_HOME directory.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>[bin]$ ./standalone.sh -Djboss.server.base.dir=$JBOSS_HOME/simulator</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By default, the GMLC Simulator profile is configured for use in Linux systems.
+For using it in Microsoft Windows systems, you must configure the parameters as explained below.</p>
+</div>
+<div class="paragraph">
+<p>Open the file  <em class="path">restcomm-gmlc-&lt;version&gt;/wildfly-10.1.0.Final/simulator/data/SCTPManagement_sctp.xml</em> and replace in two places, the parameter <code>ipChannelType="0"</code> with <code>ipChannelType="1"</code> to enable TCP connection instead of SCTP since Windows does not support SCTP.
+If you are using in a Linux system, there is no modification required to the settings.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_simulator_gmlc_example"><a class="anchor" href="#_simulator_gmlc_example"></a>4.3. Running GMLC Examples in Simulator</h3>
+<div class="paragraph">
+<p>If you are not familiar with the Restcomm jSS7 Simulator, you can find instructions about using the jSS7-simulator in the Restcomm jSS7 User Guide.
+You will also find example test cases explained in detail in the jSS7 User Guide.
+In this section you will find a simple Location Service example explained using the jSS7 Simulator.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure: Running Restcomm jSS7 Simulator - MAP ATI TEST SERVER Example</div>
+<ol class="arabic">
+<li>
+<p>Change the working directory to the bin folder in the Simulator&#8217;s installation directory.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>[vinu@vinu-neha ~]$ cd restcomm-gmlc-&lt;version&gt;/tools/restcomm-ss7-simulator/bin</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Ensure that the <em class="path">run.sh</em> start script is executable.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>bin$ chmod x run.sh</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Execute the <em class="path">run.sh</em> Bourne shell script with the command <code>./run.sh gui</code>.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>bin$ ./run.sh gui</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will launch the Simulator GUI Application.
+. When the GUI shows up, select "main" (default) as host name [or type "win" as host name under Windows] and press the 'Start' button.
+  The Simulator is already pre-configured to connect to the GMLC Gateway (running in simulator profile). Press 'Run test' and again click on 'Start' in the next screen.
+  The Simulator will connect to GMLC (via a SIGTRAN SCTP/M3UA association). The Low layer is configured to SCTP (not TCP) protocol, therefore you can test the GMLC in a Linux environment.
+  To test under Windows OS, you must change the SS7 simulator settings to TCP.
+. After approximately 30 seconds you will see the appear two events in the the Simulator window log showing "Sctp connection is up" and "M3UA connection is active" as in figure below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/GMLC_SS7_Simulator_ACTIVE.png" alt="GMLC SS7 Simulator ACTIVE">
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Restcomm GMLC is configured, in simulator mode, to process an HTTP GET to trigger a MAP ATI at the jSS7 Simulator, which will return a fake answer for the only purpose of testing. Assuming the server is running with no IP binding (i.e. it&#8217;s running in loopback address 127.0.0.1), open a browser and perform an HTTP GET test, for example (msisdn can be any number except the dummy one reserved, i.e. 19395550113): <a href="http://127.0.0.1:8080/restcomm/gmlc/rest?msisdn=87583439" class="bare">http://127.0.0.1:8080/restcomm/gmlc/rest?msisdn=87583439</a></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>You should immediately receive the following testing response with GCI  Age of Location Information parameters: mcc=250,mnc=1,lac=32000,cellid=221,aol=5,vlrNumber=5555555666</p>
+</div>
+<div class="paragraph">
+<p>If you check the SS7 simulator (where the MAP ATI was sent and responded back), you should be able to see the following request and response (click on "Open Event Window" on each event logged):</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/SS7sim_MAP-ATI_req.png" alt="SS7sim MAP ATI req">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/SS7sim_MAP-ATI_resp.png" alt="SS7sim MAP ATI resp">
+</div>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure: Running Restcomm jSS7 Simulator - HTTP POST MLP Request</div>
+<ol class="arabic">
+<li>
+<p>You must first start the Restcomm GMLC in simulator profile.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>[telestax@127 ~]$ cd restcomm-gmlc-&lt;version&gt;/jboss-5.1.0.GA/bin
+[telestax@127 bin]$./run.sh -b 127.0.0.1 -c simulator</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>To send an OMA MLP request test, in the same path from where you just ran the server, issue the following command:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>curl -X POST -d @mlpreq.txt http://127.0.0.1:8080/restcomm/gmlc/mlp</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>mlpreq.txt is like this (you may change the MSISDN):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE svc_init SYSTEM "MLP_SVC_INIT_310.DTD"&gt;
+&lt;svc_init xmlns="MLP_SVC_INIT_310.dtd"&gt;
+	&lt;hdr&gt;
+		&lt;client&gt;
+       			&lt;id&gt;USERNAME&lt;/id&gt;
+       			&lt;pwd&gt;PASSWORD&lt;/pwd&gt;
+       			&lt;serviceid&gt;SERVICEID&lt;/serviceid&gt;
+     		&lt;/client&gt;
+   	&lt;/hdr&gt;
+   	&lt;slir&gt;
+     		&lt;msids&gt;
+       			&lt;msid type="MSISDN"&gt;59899077937&lt;/msid&gt;
+     		&lt;/msids&gt;
+     		&lt;eqop&gt;
+        		&lt;resp_timer&gt;15&lt;/resp_timer&gt;
+     		&lt;/eqop&gt;
+   	&lt;/slir&gt;
+&lt;/svc_init&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should immediately receive the following testing MLP response:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;!DOCTYPE svc_result SYSTEM "MLP_SVC_RESULT_310.DTD"&gt;
+&lt;svc_result xmlns="MLP_SVC_RESULT_310.dtd" ver="3.1.0"&gt;
+    &lt;slia ver="3.1.0"&gt;
+        &lt;pos&gt;
+            &lt;msid&gt;59899077937&lt;/msid&gt;
+            &lt;pd&gt;
+                &lt;time utc_off="-0300"&gt;20160801211238&lt;/time&gt;
+                &lt;shape&gt;
+                    &lt;CircularArea&gt;
+                        &lt;coord&gt;
+                            &lt;X&gt;27 28 25.00S&lt;/X&gt;
+                            &lt;Y&gt;153 01 43.00E&lt;/Y&gt;
+                        &lt;/coord&gt;
+                        &lt;radius&gt;5000&lt;/radius&gt;
+                    &lt;/CircularArea&gt;
+                &lt;/shape&gt;
+            &lt;/pd&gt;
+        &lt;/pos&gt;
+    &lt;/slia&gt;
+&lt;/svc_result&gt;</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_running_shell"><a class="anchor" href="#_running_shell"></a>4.4. Running the Shell</h3>
+<div class="paragraph">
+<p>You must start the Shell client and connect to the managed instance prior to executing commands to configure the Gateway.
+Shell can be started by issuing the following command from <em class="path">restcomm-gmlc-/wildfly-10.1.0.Final/bin</em> directory:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>[$] ./ss7-cli.sh</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once console starts, it will print following information and await further commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>version=7.0.1383,name=Restcomm jSS7 CLI,prefix=restcomm,vendor=TeleStax</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Before issuing further commands you must connect to a managed instance.
+For more details on connecting to an instance and for a list of all supported commands and details on configuring the SS7 stack refer to the Restcomm SS7 Stack User Guide.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_connect_gui"><a class="anchor" href="#_connect_gui"></a>4.5. Connect to a new Instance</h3>
+<div class="paragraph">
+<p>You can connect to a new instance by entering the IP:Port values and then login credentials in the top left corner of the GUI.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_gui_security"><a class="anchor" href="#_gui_security"></a>4.6. Authentication</h3>
+<div class="paragraph">
+<p>Restcomm GMLC GUI Management Security is based on the JBoss Security Framework.</p>
+</div>
+<div class="paragraph">
+<p>As of now, there is basic authentication offered (which is based on the JBoss Security framework). When you try to start the Web Console, you will be prompted to enter login credentials.
+These credentials can be configured in the files <em class="path">jmx-roles.properties</em> and <em class="path">jmx-users.properties</em> located at <em class="path">restcomm-gmlc-&lt;version&gt;/wildfly-10.1.0.Final/standalone/configuration/</em>.</p>
+</div>
+<div class="paragraph">
+<p>For detailed instructions and to know more about Wildfly user configuration please refer to official Wildfly 10 guide <a href="https://docs.jboss.org/author/display/WFLY10/add-userutility">here</a>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Deafult user-id and password for GUI Management Console is admin and admin.
+You can change the user-id and password in files  <em class="path">jmx-roles.properties</em> and <em class="path">jmx-users.properties</em>  located at <em class="path">restcomm-gmlc-&lt;version&gt;/wildfly-10.1.0.Final/standalone/configuration/</em>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configuring"><a class="anchor" href="#configuring"></a>5. Configuring</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>You must fine-tune Memory and Database settings for better performance before using Restcomm GMLC in production.
@@ -24909,10 +25228,10 @@ While the CLI tool allows complete configuration and control of the Gateway, the
 This chapter will explain how to manage the Gateway effectively using both the GUI and the CLI.</p>
 </div>
 <div class="sect2">
-<h3 id="memory-settings"><a class="anchor" href="#memory-settings"></a>4.1. Memory Settings</h3>
+<h3 id="memory-settings"><a class="anchor" href="#memory-settings"></a>5.1. Memory Settings</h3>
 <div class="paragraph">
 <p>You should fine tune the JVM memory settings based on your needs but we recommend you allocate a minimum of 3 GB for initial and maximum heap size.
-These settings are specified in the file[path]<em>restcomm-gmlc-/jboss-5.1.0.GA/bin/run.conf</em>.</p>
+These settings are specified in the file[path]<em>restcomm-gmlc-/jboss-5.1.0.GA/bin/run.conf</em> for JBoss AS or [path]_restcomm-gmlc-/wildfly-10.1.0.Final/bin/standalone.conf for Wildfly 10.</p>
 </div>
 <div class="dlist">
 <dl>
@@ -24928,14 +25247,14 @@ These settings are specified in the file[path]<em>restcomm-gmlc-/jboss-5.1.0.GA/
 </div>
 </div>
 <div class="sect2">
-<h3 id="_java_setting"><a class="anchor" href="#_java_setting"></a>4.2. JSupported Java Version</h3>
+<h3 id="_java_setting"><a class="anchor" href="#_java_setting"></a>5.2. JSupported Java Version</h3>
 <div class="paragraph">
 <p>GMLC Gateway can run only with Java 7 JRE or JDK.
 We refered Oracle Java 7 JDK.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_http_client_ra"><a class="anchor" href="#_http_client_ra"></a>4.3. Configuring JSLEE http-client RA</h3>
+<h3 id="_http_client_ra"><a class="anchor" href="#_http_client_ra"></a>5.3. Configuring JSLEE http-client RA</h3>
 <div class="paragraph">
 <p>Restcomm GMLC acts as a HTTP Client to achieve GMLC pull by sending a HTTP POST/GET request to GMLC gateway.
 You must configure the HTTP Client JSLEE Resource Adaptor&#8217;s properties to suit your requirements.
@@ -24943,7 +25262,7 @@ Please refer to the SLEE RA HTTP Client User Guide available in <em class="path"
 </div>
 </div>
 <div class="sect2">
-<h3 id="_configuring_ss7"><a class="anchor" href="#_configuring_ss7"></a>4.4. Configuring the SS7 Stack</h3>
+<h3 id="_configuring_ss7"><a class="anchor" href="#_configuring_ss7"></a>5.4. Configuring the SS7 Stack</h3>
 <div class="paragraph">
 <p>You must configure the SS7 Stack prior to configuring GMLC.
 For details on configuring the SS7 Stack please refer to the RestComm SS7 Stack User Guide.
@@ -24962,7 +25281,7 @@ In addition, help files are also available for every Shell command providing all
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-06 13:29:51 UTC
+Last updated 2018-03-18 02:29:31 UTC
 </div>
 </div>
 <footer>

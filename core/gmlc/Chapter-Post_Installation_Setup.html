@@ -23404,6 +23404,30 @@ You must ensure that you delete this datasource and configure a production-frien
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>For WildFly 10 datasource is configured in [path]_restcomm-gmlc-version&gt;/wildfly-10.1.0.Final/standalone/configuration/standalone.xml file, "datasources" subsystem</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;subsystem xmlns="urn:jboss:domain:datasources:4.0"&gt;
+            &lt;datasources&gt;
+                &lt;datasource jndi-name="java:jboss/datasources/ExampleDS" pool-name="ExampleDS" enabled="true" use-java-context="true"&gt;
+                    &lt;connection-url&gt;jdbc:h2:~/test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE&lt;/connection-url&gt;
+                    &lt;driver&gt;h2&lt;/driver&gt;
+                    &lt;security&gt;
+                        &lt;user-name&gt;sa&lt;/user-name&gt;
+                        &lt;password&gt;sa&lt;/password&gt;
+                    &lt;/security&gt;
+                &lt;/datasource&gt;
+                &lt;drivers&gt;
+                    &lt;driver name="h2" module="com.h2database.h2"&gt;
+                        &lt;xa-datasource-class&gt;org.h2.jdbcx.JdbcDataSource&lt;/xa-datasource-class&gt;
+                    &lt;/driver&gt;
+                &lt;/drivers&gt;
+            &lt;/datasources&gt;
+        &lt;/subsystem&gt;</pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -23422,7 +23446,7 @@ For instructions on starting the Shell and help with commands, please refer to t
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-06 13:29:51 UTC
+Last updated 2018-03-18 02:29:32 UTC
 </div>
 </div>
 <footer>
