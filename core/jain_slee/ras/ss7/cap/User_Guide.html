@@ -23709,9 +23709,9 @@ This RA Type defines only one activity object:</p>
 <dd>
 <p>All the events related to CAP Dialog and events related to Service are fired on this activity.
 This activity ends implicitly when CAP stack sends P-Abort or explicitly when user aborts the  Dialog or end&#8217;s the Dialog.
-Class name is <code>org.mobicents.protocols.ss7.cap.api.CAPDialog</code>
+Class name is <code>org.restcomm.protocols.ss7.cap.api.CAPDialog</code>
 New CAPDialog activity objects are created via specific CAP Service interface. Check <a href="#_ratype_ra_interface">Resource Adaptor Interface</a> section for available services.
-Depending on service used, activity object provides additional set of methods. For instance Circuit Switched Call dialog: org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.CAPDialogCircuitSwitchedCall exposes methods specific for exchange of call related messages.</p>
+Depending on service used, activity object provides additional set of methods. For instance Circuit Switched Call dialog: org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.CAPDialogCircuitSwitchedCall exposes methods specific for exchange of call related messages.</p>
 </dd>
 </dl>
 </div>
@@ -23927,7 +23927,7 @@ For prefix values, for each column, please see list below:</p>
 </dd>
 <dt class="hdlist1">Event Class</dt>
 <dd>
-<p>org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.</p>
+<p>org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.</p>
 </dd>
 </dl>
 </div>
@@ -24345,7 +24345,7 @@ import javax.slee.ActivityContextInterface;
 import javax.slee.FactoryException;
 import javax.slee.UnrecognizedActivityException;
 
-import org.mobicents.protocols.ss7.cap.api.CAPDialog;
+import org.restcomm.protocols.ss7.cap.api.CAPDialog;
 
 public interface CAPContextInterfaceFactory {
 
@@ -24364,17 +24364,17 @@ It is defined as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.protocols.ss7.cap.api;
+<pre class="highlight"><code class="language-java" data-lang="java">package org.restcomm.protocols.ss7.cap.api;
 
 import java.io.Serializable;
 
-import org.mobicents.protocols.ss7.cap.api.errors.CAPErrorMessageFactory;
-import org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.CAPServiceCircuitSwitchedCall;
-import org.mobicents.protocols.ss7.cap.api.service.gprs.CAPServiceGprs;
-import org.mobicents.protocols.ss7.cap.api.service.sms.CAPServiceSms;
-import org.mobicents.protocols.ss7.inap.api.INAPParameterFactory;
-import org.mobicents.protocols.ss7.isup.ISUPParameterFactory;
-import org.mobicents.protocols.ss7.map.api.MAPParameterFactory;
+import org.restcomm.protocols.ss7.cap.api.errors.CAPErrorMessageFactory;
+import org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.CAPServiceCircuitSwitchedCall;
+import org.restcomm.protocols.ss7.cap.api.service.gprs.CAPServiceGprs;
+import org.restcomm.protocols.ss7.cap.api.service.sms.CAPServiceSms;
+import org.restcomm.protocols.ss7.inap.api.INAPParameterFactory;
+import org.restcomm.protocols.ss7.isup.ISUPParameterFactory;
+import org.restcomm.protocols.ss7.map.api.MAPParameterFactory;
 
 public interface CAPProvider extends Serializable {
 
@@ -24572,7 +24572,7 @@ Any attempt to do so should be rejected by throwing a SecurityException.</p>
 	}
 
 	public void onINITIAL_DP_REQUEST(
-			org.mobicents.protocols.ss7.cap.api.service.circuitSwitchedCall.InitialDPRequest event,
+			org.restcomm.protocols.ss7.cap.api.service.circuitSwitchedCall.InitialDPRequest event,
 			ActivityContextInterface aci) {
 
 		if (this.logger.isFineEnabled()) {
@@ -24869,7 +24869,7 @@ If already performed, the following should be used in order to switch  back to t
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-18 02:24:46 UTC
+Last updated 2018-03-25 02:25:24 UTC
 </div>
 </div>
 <footer>

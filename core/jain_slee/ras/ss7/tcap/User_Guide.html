@@ -23705,7 +23705,7 @@ This RA Type defines only one activity object:</p>
 <dd>
 <p>All the events related to TCAP Dialog and events related to Service are fired on this activity.
 This activity ends implicitly when TCAP stack sends P-Abort or explicitly when user aborts the  Dialog or end&#8217;s the Dialog.
-Class name is <code>org.mobicents.protocols.ss7.tcap.api.tc.dialog.Dialog</code>
+Class name is <code>org.restcomm.protocols.ss7.tcap.api.tc.dialog.Dialog</code>
 New Dialog activity objects is created via SBB interface exposed by Resource Adaptor</p>
 </dd>
 </dl>
@@ -23832,7 +23832,7 @@ For prefix values, for each column, please see list below:</p>
 </dd>
 <dt class="hdlist1">Event Class</dt>
 <dd>
-<p>org.mobicents.protocols.ss7.tcap.api.tc.dialog.</p>
+<p>org.restcomm.protocols.ss7.tcap.api.tc.dialog.</p>
 </dd>
 </dl>
 </div>
@@ -23932,7 +23932,7 @@ import javax.slee.ActivityContextInterface;
 import javax.slee.FactoryException;
 import javax.slee.UnrecognizedActivityException;
 
-import org.mobicents.protocols.ss7.tcap.api.tc.dialog.Dialog;
+import org.restcomm.protocols.ss7.tcap.api.tc.dialog.Dialog;
 
 public interface TCAPContextInterfaceFactory {
 
@@ -23951,12 +23951,12 @@ It is defined as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">package org.mobicents.protocols.ss7.tcap.api;
+<pre class="highlight"><code class="language-java" data-lang="java">package org.restcomm.protocols.ss7.tcap.api;
 
 import java.io.Serializable;
 
-import org.mobicents.protocols.ss7.sccp.parameter.SccpAddress;
-import org.mobicents.protocols.ss7.tcap.api.tc.dialog.Dialog;
+import org.restcomm.protocols.ss7.sccp.parameter.SccpAddress;
+import org.restcomm.protocols.ss7.tcap.api.tc.dialog.Dialog;
 
 public interface TCAPProvider extends Serializable {
 
@@ -24052,52 +24052,52 @@ import org.mobicents.slee.*;
 public abstract class TCAPExampleSbb implements Sbb, TCAPExample {
 
 	public void onDIALOG_UNI(
-		org.mobicents.protocols.ss7.tcap.api.tc.dialog.Dialog event,
+		org.restcomm.protocols.ss7.tcap.api.tc.dialog.Dialog event,
 		ActivityContextInterface aci/*, EventContext eventContext*/) {
 	}
 
 	public void onDIALOG_BEGIN(
-		org.mobicents.protocols.ss7.tcap.api.tc.dialog.Dialog event,
+		org.restcomm.protocols.ss7.tcap.api.tc.dialog.Dialog event,
 		ActivityContextInterface aci/*, EventContext eventContext*/) {
 	}
 
 	public void onDIALOG_CONTINUE(
-		org.mobicents.protocols.ss7.tcap.api.tc.dialog.Dialog event,
+		org.restcomm.protocols.ss7.tcap.api.tc.dialog.Dialog event,
 		ActivityContextInterface aci/*, EventContext eventContext*/) {
 	}
 
 	public void onDIALOG_END(
-		org.mobicents.protocols.ss7.tcap.api.tc.dialog.Dialog event,
+		org.restcomm.protocols.ss7.tcap.api.tc.dialog.Dialog event,
 		ActivityContextInterface aci/*, EventContext eventContext*/) {
 	}
 
 	public void onDIALOG_USERABORT(
-		org.mobicents.protocols.ss7.tcap.api.tc.dialog.events.TCUserAbortIndication event,
+		org.restcomm.protocols.ss7.tcap.api.tc.dialog.events.TCUserAbortIndication event,
 		ActivityContextInterface aci/*, EventContext eventContext*/) {
 	}
 
 	public void onDIALOG_PROVIDERABORT(
-		org.mobicents.protocols.ss7.tcap.api.tc.dialog.events.TCPAbortIndication event,
+		org.restcomm.protocols.ss7.tcap.api.tc.dialog.events.TCPAbortIndication event,
 		ActivityContextInterface aci/*, EventContext eventContext*/) {
 	}
 
 	public void onDIALOG_NOTICE(
-		org.mobicents.protocols.ss7.tcap.api.tc.dialog.Dialog event,
+		org.restcomm.protocols.ss7.tcap.api.tc.dialog.Dialog event,
 		ActivityContextInterface aci/*, EventContext eventContext*/) {
 	}
 
 	public void onDIALOG_RELEASED(
-		org.mobicents.protocols.ss7.tcap.api.tc.dialog.Dialog event,
+		org.restcomm.protocols.ss7.tcap.api.tc.dialog.Dialog event,
 		ActivityContextInterface aci/*, EventContext eventContext*/) {
 	}
 
 	public void onDIALOG_TIMEOUT(
-		org.mobicents.protocols.ss7.tcap.api.tc.dialog.Dialog event,
+		org.restcomm.protocols.ss7.tcap.api.tc.dialog.Dialog event,
 		ActivityContextInterface aci/*, EventContext eventContext*/) {
 	}
 
 	public void onDIALOG_DELIMITER(
-		org.mobicents.protocols.ss7.tcap.api.tc.dialog.Dialog event,
+		org.restcomm.protocols.ss7.tcap.api.tc.dialog.Dialog event,
 		ActivityContextInterface aci/*, EventContext eventContext*/) {
 	}
 
@@ -24412,7 +24412,7 @@ If already performed, the following should be used in order to switch  back to t
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-18 02:24:46 UTC
+Last updated 2018-03-25 02:25:24 UTC
 </div>
 </div>
 <footer>

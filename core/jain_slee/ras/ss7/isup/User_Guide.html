@@ -23703,7 +23703,7 @@ Life cycle of this activity depends on message type. Client transaction stays al
 <ul>
 <li>
 <p>Reset Circuit:
-Full class name is: <code>org.mobicents.protocols.ss7.isup.ISUPClientTransaction</code>. It is created on demand with RA SBB Interface.</p>
+Full class name is: <code>org.restcomm.protocols.ss7.isup.ISUPClientTransaction</code>. It is created on demand with RA SBB Interface.</p>
 </li>
 </ul>
 </div>
@@ -23714,7 +23714,7 @@ Full class name is: <code>org.mobicents.protocols.ss7.isup.ISUPClientTransaction
 All types of request are fired by on this activity.
 Answers are sent through this activity.
 Life cycle of this activity depends on message type. Server transaction stays alive until it timeouts or answer is sent back. Exception to this rule are messages which are only indication of state - they dont require any answer. See above activity.
-Full class name is: <code>org.mobicents.protocols.ss7.isup.ISUPServerTransaction</code>. It is created by RA for each request which does not have transaction associated with it.</p>
+Full class name is: <code>org.restcomm.protocols.ss7.isup.ISUPServerTransaction</code>. It is created by RA for each request which does not have transaction associated with it.</p>
 </dd>
 </dl>
 </div>
@@ -23746,7 +23746,7 @@ For prefix values, for each column, please see list below:</p>
 </dd>
 <dt class="hdlist1">Event Class</dt>
 <dd>
-<p>org.mobicents.protocols.ss7.isup.message.</p>
+<p>org.restcomm.protocols.ss7.isup.message.</p>
 </dd>
 </dl>
 </div>
@@ -24072,8 +24072,8 @@ It indicates timeout of transaction:</p>
 import javax.slee.ActivityContextInterface;
 import javax.slee.FactoryException;
 import javax.slee.UnrecognizedActivityException;
-import org.mobicents.protocols.ss7.isup.ISUPClientTransaction;
-import org.mobicents.protocols.ss7.isup.ISUPServerTransaction;
+import org.restcomm.protocols.ss7.isup.ISUPClientTransaction;
+import org.restcomm.protocols.ss7.isup.ISUPServerTransaction;
 
 public interface ActivityContextInterfaceFactory{
 
@@ -24118,13 +24118,13 @@ import javax.slee.resource.ActivityAlreadyExistsException;
 
 import javax.slee.resource.StartActivityException;
 
-import org.mobicents.protocols.ss7.isup.ISUPClientTransaction;
-import org.mobicents.protocols.ss7.isup.ISUPMessageFactory;
-import org.mobicents.protocols.ss7.isup.ISUPParameterFactory;
-import org.mobicents.protocols.ss7.isup.ISUPServerTransaction;
-import org.mobicents.protocols.ss7.isup.ParameterRangeInvalidException;
-import org.mobicents.protocols.ss7.isup.TransactionAlredyExistsException;
-import org.mobicents.protocols.ss7.isup.message.ISUPMessage;
+import org.restcomm.protocols.ss7.isup.ISUPClientTransaction;
+import org.restcomm.protocols.ss7.isup.ISUPMessageFactory;
+import org.restcomm.protocols.ss7.isup.ISUPParameterFactory;
+import org.restcomm.protocols.ss7.isup.ISUPServerTransaction;
+import org.restcomm.protocols.ss7.isup.ParameterRangeInvalidException;
+import org.restcomm.protocols.ss7.isup.TransactionAlredyExistsException;
+import org.restcomm.protocols.ss7.isup.message.ISUPMessage;
 
 public interface RAISUPProvider {
 
@@ -24492,7 +24492,7 @@ If already performed, the following should be used in order to switch  back to t
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-18 02:24:46 UTC
+Last updated 2018-03-25 02:25:24 UTC
 </div>
 </div>
 <footer>
