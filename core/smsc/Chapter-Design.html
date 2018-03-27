@@ -23352,17 +23352,11 @@ display: none;
 <ul class="sectlevel1">
 <li><a href="#database-table-structure">Database Table Structure</a>
 <ul class="sectlevel2">
-<li><a href="#current_slot_table">CURRENT_SLOT_TABLE</a></li>
-<li><a href="#_sms_routing_rule">SMPP_SMS_ROUTING_RULE_2</a></li>
-<li><a href="#sip_sms_routing_rule_2">SIP_SMS_ROUTING_RULE_2</a></li>
-<li><a href="#dst_slot_table_yyyy_mm_dd">DST_SLOT_TABLE_yyyy_mm_dd</a></li>
-<li><a href="#slot_messages_table_yyyy_mm_dd">SLOT_MESSAGES_TABLE_yyyy_mm_dd</a></li>
-<li><a href="#messages_yyyy_mm_dd">MESSAGES_yyyy_mm_dd</a></li>
-<li><a href="#mes_id_yyyy_mm_dd">MES_ID_YYYY_MM_DD</a></li>
-<li><a href="#dlv_mes_id_yyyy_mm_dd">DLV_MES_ID_YYYY_MM_DD</a></li>
-<li><a href="#_db_reporting">Reporting</a></li>
+<li><a href="#dedicated-keyspace">Dedicated KeySpace</a></li>
+<li><a href="#shared-keyspace">Shared KeySpace</a></li>
 </ul>
 </li>
+<li><a href="#_db_reporting">Reporting</a></li>
 </ul>
 </div>
 </div>
@@ -23457,7 +23451,13 @@ All these services interact with the Cassandra database for storing data (messag
 <h2 id="database-table-structure"><a class="anchor" href="#database-table-structure"></a>Database Table Structure</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Restcomm SMSC stores messages using Cassandra database. The database is used for storing:</p>
+<p>Restcomm SMSC stores messages using Cassandra database. Each SMSC demands a dedicated KeySpace per a SMSC instanse.
+If we use SMSC in a clustering mode we need an extra shared KeySpace one for a whole cluster.</p>
+</div>
+<div class="sect2">
+<h3 id="dedicated-keyspace"><a class="anchor" href="#dedicated-keyspace"></a>Dedicated KeySpace</h3>
+<div class="paragraph">
+<p>The dedicated database KeySpace is used for storing:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -23482,8 +23482,8 @@ All these services interact with the Cassandra database for storing data (messag
 <p>Apart from the above tables created everyday, the database also comprises of three other tables namely <code>CURRENT_SLOT_TABLE</code>, <code>SMPP_SMS_ROUTING_RULE_2</code> and <code>SIP_SMS_ROUTING_RULE_2</code> created when the SMSC is started for the first time.
 The firts one is used for storing system-wide data and the latter two for storing the routing rules.</p>
 </div>
-<div class="sect2">
-<h3 id="current_slot_table"><a class="anchor" href="#current_slot_table"></a>CURRENT_SLOT_TABLE</h3>
+<div class="sect3">
+<h4 id="current_slot_table"><a class="anchor" href="#current_slot_table"></a>CURRENT_SLOT_TABLE</h4>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 1. <code>CURRENT_SLOT_TABLE</code></caption>
 <colgroup>
@@ -23512,8 +23512,8 @@ The firts one is used for storing system-wide data and the latter two for storin
 </tbody>
 </table>
 </div>
-<div class="sect2">
-<h3 id="_sms_routing_rule"><a class="anchor" href="#_sms_routing_rule"></a>SMPP_SMS_ROUTING_RULE_2</h3>
+<div class="sect3">
+<h4 id="_sms_routing_rule"><a class="anchor" href="#_sms_routing_rule"></a>SMPP_SMS_ROUTING_RULE_2</h4>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 2. <code>SMPP_SMS_ROUTING_RULE_2</code></caption>
 <colgroup>
@@ -23547,8 +23547,8 @@ The firts one is used for storing system-wide data and the latter two for storin
 </tbody>
 </table>
 </div>
-<div class="sect2">
-<h3 id="sip_sms_routing_rule_2"><a class="anchor" href="#sip_sms_routing_rule_2"></a>SIP_SMS_ROUTING_RULE_2</h3>
+<div class="sect3">
+<h4 id="sip_sms_routing_rule_2"><a class="anchor" href="#sip_sms_routing_rule_2"></a>SIP_SMS_ROUTING_RULE_2</h4>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 3. <code>SIP_SMS_ROUTING_RULE_2</code></caption>
 <colgroup>
@@ -23582,8 +23582,8 @@ The firts one is used for storing system-wide data and the latter two for storin
 </tbody>
 </table>
 </div>
-<div class="sect2">
-<h3 id="dst_slot_table_yyyy_mm_dd"><a class="anchor" href="#dst_slot_table_yyyy_mm_dd"></a>DST_SLOT_TABLE_yyyy_mm_dd</h3>
+<div class="sect3">
+<h4 id="dst_slot_table_yyyy_mm_dd"><a class="anchor" href="#dst_slot_table_yyyy_mm_dd"></a>DST_SLOT_TABLE_yyyy_mm_dd</h4>
 <div class="paragraph">
 <p>This table contains a list of <code>DUE_SLOT</code> values for <code>TARGET_ID</code> to store the data for this day.</p>
 </div>
@@ -23615,8 +23615,8 @@ The firts one is used for storing system-wide data and the latter two for storin
 </tbody>
 </table>
 </div>
-<div class="sect2">
-<h3 id="slot_messages_table_yyyy_mm_dd"><a class="anchor" href="#slot_messages_table_yyyy_mm_dd"></a>SLOT_MESSAGES_TABLE_yyyy_mm_dd</h3>
+<div class="sect3">
+<h4 id="_slot_messages_table_yyyy_mm_dd"><a class="anchor" href="#_slot_messages_table_yyyy_mm_dd"></a>SLOT_MESSAGES_TABLE_yyyy_mm_dd</h4>
 <div class="paragraph">
 <p>This table stores the messages that are scheduled for delivery.
 The messages are not deleted after delivery.</p>
@@ -23912,8 +23912,8 @@ The messages are not deleted after delivery.</p>
 </tbody>
 </table>
 </div>
-<div class="sect2">
-<h3 id="messages_yyyy_mm_dd"><a class="anchor" href="#messages_yyyy_mm_dd"></a>MESSAGES_yyyy_mm_dd</h3>
+<div class="sect3">
+<h4 id="messages_yyyy_mm_dd"><a class="anchor" href="#messages_yyyy_mm_dd"></a>MESSAGES_yyyy_mm_dd</h4>
 <div class="paragraph">
 <p>This table archives the messages that have been delivered successfully or whose delivery failed.</p>
 </div>
@@ -24208,8 +24208,8 @@ The messages are not deleted after delivery.</p>
 </tbody>
 </table>
 </div>
-<div class="sect2">
-<h3 id="mes_id_yyyy_mm_dd"><a class="anchor" href="#mes_id_yyyy_mm_dd"></a>MES_ID_YYYY_MM_DD</h3>
+<div class="sect3">
+<h4 id="mes_id_yyyy_mm_dd"><a class="anchor" href="#mes_id_yyyy_mm_dd"></a>MES_ID_YYYY_MM_DD</h4>
 <div class="paragraph">
 <p>This table contains referenses of local messageIds to a primary keys of MESSAGES_YYYY_MM_DD tables for a possibility of finding of sent / delivery failed messages by thier messageId value.</p>
 </div>
@@ -24249,8 +24249,8 @@ The messages are not deleted after delivery.</p>
 </tbody>
 </table>
 </div>
-<div class="sect2">
-<h3 id="dlv_mes_id_yyyy_mm_dd"><a class="anchor" href="#dlv_mes_id_yyyy_mm_dd"></a>DLV_MES_ID_YYYY_MM_DD</h3>
+<div class="sect3">
+<h4 id="dlv_mes_id_yyyy_mm_dd"><a class="anchor" href="#dlv_mes_id_yyyy_mm_dd"></a>DLV_MES_ID_YYYY_MM_DD</h4>
 <div class="paragraph">
 <p>This table contains referenses of remote messageIds (that are assigned by a remote SMSC GW to which a message was sent via SMPP protocol) to a local messageIds for sent to SMPP detination messages to corralate them.</p>
 </div>
@@ -24290,8 +24290,18 @@ The messages are not deleted after delivery.</p>
 </tbody>
 </table>
 </div>
+</div>
 <div class="sect2">
-<h3 id="_db_reporting"><a class="anchor" href="#_db_reporting"></a>Reporting</h3>
+<h3 id="shared-keyspace"><a class="anchor" href="#shared-keyspace"></a>Shared KeySpace</h3>
+<div class="paragraph">
+<p>The shared database KeySpace is used for storing of data that is needed for different SMSC instances information exchange.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_db_reporting"><a class="anchor" href="#_db_reporting"></a>Reporting</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>As of now there is no reporting in Restcomm SMSC .
 However you can leverage any external third party tool to dig Cassandra tables as defined above and create reports.
@@ -24300,10 +24310,9 @@ The next release of Restcomm SMSC will feature a reporting section and also the 
 </div>
 </div>
 </div>
-</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-25 02:28:52 UTC
+Last updated 2018-03-27 14:37:01 UTC
 </div>
 </div>
 <footer>

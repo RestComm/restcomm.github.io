@@ -23624,7 +23624,30 @@ We recommend that you set logging threshold to <code>WARN</code> and let the CDR
 <p>SMSC GW supports of a graceful shutdown procedure. See more in a chapter <a href="#_gsd_settings">[_gsd_settings]</a>. A graceful shutdown procedure is initiated by a GUI / CLI interface. SMSC GW will stop of loading new messages from a database and will make a server shutdown when all message delivering processes have completed. FEP nodes will prevent of sending new external dialogs to a SS7 node that is gracefully shutting down. SMSC GW node even after a graceful shutdown start will aceept and process of incoming messages from other interfaces (SMPP, SIP, HTTP). A user must stop of sending of messages via these interfeces before of a graceful shutdown start.</p>
 </div>
 <div class="paragraph">
-<p>For a smooth support of HR (Home Routing) and AlertCerviceCenter operations between SMSC GW nodes an extra cassandra KeySpace is introduced. This new clustering KeySpace is used for cache of correlationId values and data for HR procedure and exchanging of AlertCerviceCenter requests between SMSC GW servers (for MT SS7 procedure). If you use several SMSC GW nodes then you need to turn on an option <code>In cluster</code>, prepare a new empty cassandra KeySpace (a single instance for both/all SMSC GW nodes) and configure this KeySpace in <code>Shared Database Configuration</code> section. See more info in the chapter <a href="#_smsc_clustering_settings">[_smsc_clustering_settings]</a>.</p>
+<p>For a smooth support of HR (Home Routing) and AlertCerviceCenter operations between SMSC GW nodes an extra cassandra KeySpace is introduced ss an addition to a dedicated cassandra KeySpace (default name is "Shared").
+This new clustering KeySpace is used for cache of correlationId values and data for HR procedure and exchanging of AlertCerviceCenter requests between SMSC GW servers (for MT SS7 procedure).
+If you use several SMSC GW nodes then you need to turn on an option <code>In cluster</code>, prepare a new empty cassandra KeySpace (a single instance for both/all SMSC GW nodes) and configure this KeySpace in <code>Shared Database Configuration</code> section.
+See more info in the chapter <a href="#_smsc_clustering_settings">[_smsc_clustering_settings]</a>.</p>
+</div>
+<div class="paragraph">
+<p>When working of SMSC we need to have both dedicated and shared cassandra KeySpaces up. We may need to bring cassandra databases down for maintenance. A dedicated KeySpace may be turned down with a corresponded SMSC server.
+If we need to turn down a database with a shared keyspace and some SMSC GWs are up that time then we need to follow this order:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>turn <code>InCLuster</code> option to <code>false</code> - see <a href="#_in_cluster">[_in_cluster]</a></p>
+</li>
+<li>
+<p>stop a database with shared KeySpace</p>
+</li>
+<li>
+<p>start a database with shared KeySpace</p>
+</li>
+<li>
+<p>turn <code>InCLuster</code> option to <code>true</code></p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>We need to make special configuring procedures of SS7 part before SMSC GW / FEP will be able to work in a load-balancing mode. This configuring is described in a manual "Restcomm Load Balancer User Guide", check a chapter "Integration Load Balancer SS7 (FEP) with USSD and SMSC servers".</p>
@@ -23872,7 +23895,79 @@ CLI commabd can be like:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="routing-desision-based-on-sri-request-results"><a class="anchor" href="#routing-desision-based-on-sri-request-results"></a>Routing desision based on SRI request results</h4>
+<h4 id="routing-desision-when-we-have-several-service-providers-and-operators"><a class="anchor" href="#routing-desision-when-we-have-several-service-providers-and-operators"></a>Routing desision when we have several service providers and operators</h4>
+<div class="paragraph">
+<p>An example of connection schema for connecting to operators and clients:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/SMS-routing-ex.png" alt="SMS routing ex">
+</div>
+</div>
+<div class="paragraph">
+<p>We will do routing based on message destination addresses mask. For example the algorithm may be:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>all messages with destination addresses starting with "1*" will be routed to client 1 (with networkId 1)</p>
+</li>
+<li>
+<p>all messages with destination addresses starting with "2*" will be routed to client 2 (with networkId 2)</p>
+</li>
+<li>
+<p>all other messages will be routed to an operator (with etworkId 3)</p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="routing-based-on-destination-address-mask"><a class="anchor" href="#routing-based-on-destination-address-mask"></a>Routing based on destination address mask</h5>
+<div class="paragraph">
+<p>Example algorithm: we have 3 networkId areas (1, 2 and 3) for client / agents.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>smsc mproc add 1 destdigmask ^1[0-9].* newnetworkid 1
+smsc mproc add 2 destdigmask ^2[0-9].* newnetworkid 2
+smsc mproc add 3 destdigmask ^(?!1|2).* newnetworkid 3</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="routing-based-on-destination-address-mask-with-usage-of-intermediate-networkid"><a class="anchor" href="#routing-based-on-destination-address-mask-with-usage-of-intermediate-networkid"></a>Routing based on destination address mask with usage of intermediate networkId</h5>
+<div class="paragraph">
+<p>Example algorithm: we have 3 networkId areas (1, 2 and 3) for client / agents. We use intermediate networkId areas (101, 102, 103 for temporary parking routed messages) for simpler formalizing.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>smsc mproc add 1 destdigmask ^1[0-9].* newnetworkid 101
+smsc mproc add 2 destdigmask ^2[0-9].* newnetworkid 102
+smsc mproc add 101 networkidmask 1 newnetworkid 103
+smsc mproc add 102 networkidmask 2 newnetworkid 103
+smsc mproc add 103 networkidmask 3 newnetworkid 103
+smsc mproc add 201 networkidmask 101 newnetworkid 1
+smsc mproc add 202 networkidmask 102 newnetworkid 2
+smsc mproc add 203 networkidmask 103 newnetworkid 3</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="routing-when-a-client-belongs-to-an-operator"><a class="anchor" href="#routing-when-a-client-belongs-to-an-operator"></a>Routing when a client belongs to an operator</h5>
+<div class="paragraph">
+<p>Example algorithm: we have operator 1 (networkId==1) and a client 1 (networkId==101) and all messages from client 1 will be routed to soperator 1 and vice versa, we have operator 2 (networkId==2) and a client 2 (networkId==102) and all messages from client 2 will be routed to soperator 2 and vice versa.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>smsc mproc add 1 originnetworkidmask 1 newnetworkid 101
+smsc mproc add 2 originnetworkidmask 2 newnetworkid 102
+smsc mproc add 3 originnetworkidmask 101 newnetworkid 1
+smsc mproc add 4 originnetworkidmask 102 newnetworkid 2</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="routing-decision-based-on-sri-request-results"><a class="anchor" href="#routing-decision-based-on-sri-request-results"></a>Routing decision based on SRI request results</h4>
 <div class="paragraph">
 <p>Sometimes we need to decide where to route messages depending on SendRoutingRequest (SRI) to HLR results. To achieve it we may use two approaches</p>
 </div>
@@ -26100,7 +26195,7 @@ The details of the format and the possible values for the fields recorded in the
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-25 02:28:52 UTC
+Last updated 2018-03-27 14:37:01 UTC
 </div>
 </div>
 <footer>

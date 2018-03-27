@@ -23795,7 +23795,7 @@ You must have Cassandra database (versions 2.1 or 3.*) installed. Later versions
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Cassandra database version 3.0 demands JAVA 8 but Restcomm SMSC 7.4.0-SNAPSHOT supports only JAVA 7. If you have both cassandra database and Restcomm SMSC installed at the same host then you need to install two JAVA versions and switch between them by usage of JAVA_HOME environmental variables.
+Cassandra database version 3.0 demands JAVA 8 but Restcomm SMSC 7.4.0-SNAPSHOT based on jboss 5.1 server supports only JAVA 7. You can use Restcomm SMSC based on Wildfly 10 server that supports JAVA 8. If you have both cassandra database and Restcomm SMSC based on jboss 5.1 installed at the same host then you need to install two JAVA versions and switch between them by usage of JAVA_HOME environmental variables.
 </td>
 </tr>
 </table>
@@ -23821,6 +23821,23 @@ We recommend that you download the latest binaries and install the database foll
 <p>If you already use old cassandra database version, you must think to update it to a newer version when it is possible before next version has been released.
 If you do not have database routing rules and it is not important to you to lose of pending messages in SMSC GW, you can just remove RestCommSMSC Keyspace, uninstall old version, install a new one and create an empty RestCommSMSC Keyspace.
 Else you can update your database as DataStax recommends: <a href="http://docs.datastax.com/en/latest-upgrade/upgrade/cassandra/upgrdCassandraDetails.html" class="bare">http://docs.datastax.com/en/latest-upgrade/upgrade/cassandra/upgrdCassandraDetails.html</a>.</p>
+</div>
+<div class="paragraph">
+<p>Restcomm SMSC use 2 types of keyspaces:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a dedicated KeySpace (default name is "RestCommSMSC") used for storing of messages and configs for concrete SMSC GW instance (we have a KeySpace per a SMSC GW instance), it is mandatory if we want to use stroreAndForward mode.</p>
+</li>
+<li>
+<p>a shared KeySpace (default name is "Shared") used for exchange of information between SMSC GW instances in cluster (we have a KeySpace for all SMSC GW cluster). Find more info in a User Guide chapter "Configuring of SS7 Active-Active mode with
+Telscale SS7 FEP before SS7 network". This KeySpace is needed only for a cluster work.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Before a first Restcomm SMSC start we need to create an empty dedicated keyspace per SMSC GW instance (and one empty shared KeySpace only in clustering mode). SMSC creates all needed tables itself after starting of SMSC.</p>
 </div>
 </div>
 </div>
@@ -24451,7 +24468,7 @@ As another hint, this topmost directory contains a <em class="path">bin</em> sub
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-25 02:28:52 UTC
+Last updated 2018-03-27 14:37:01 UTC
 </div>
 </div>
 <footer>

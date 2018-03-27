@@ -23370,6 +23370,7 @@ display: none;
 <li><a href="#_design_overview">3. Architecture</a>
 <ul class="sectlevel2">
 <li><a href="#database-table-structure">3.1. Database Table Structure</a></li>
+<li><a href="#_db_reporting">3.2. Reporting</a></li>
 </ul>
 </li>
 <li><a href="#running">4. Running</a>
@@ -23991,7 +23992,13 @@ All these services interact with the Cassandra database for storing data (messag
 <div class="sect2">
 <h3 id="database-table-structure"><a class="anchor" href="#database-table-structure"></a>3.1. Database Table Structure</h3>
 <div class="paragraph">
-<p>Restcomm SMSC stores messages using Cassandra database. The database is used for storing:</p>
+<p>Restcomm SMSC stores messages using Cassandra database. Each SMSC demands a dedicated KeySpace per a SMSC instanse.
+If we use SMSC in a clustering mode we need an extra shared KeySpace one for a whole cluster.</p>
+</div>
+<div class="sect3">
+<h4 id="dedicated-keyspace"><a class="anchor" href="#dedicated-keyspace"></a>3.1.1. Dedicated KeySpace</h4>
+<div class="paragraph">
+<p>The dedicated database KeySpace is used for storing:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -24016,8 +24023,8 @@ All these services interact with the Cassandra database for storing data (messag
 <p>Apart from the above tables created everyday, the database also comprises of three other tables namely <code>CURRENT_SLOT_TABLE</code>, <code>SMPP_SMS_ROUTING_RULE_2</code> and <code>SIP_SMS_ROUTING_RULE_2</code> created when the SMSC is started for the first time.
 The firts one is used for storing system-wide data and the latter two for storing the routing rules.</p>
 </div>
-<div class="sect3">
-<h4 id="current_slot_table"><a class="anchor" href="#current_slot_table"></a>3.1.1. CURRENT_SLOT_TABLE</h4>
+<div class="sect4">
+<h5 id="current_slot_table"><a class="anchor" href="#current_slot_table"></a>3.1.1.1. CURRENT_SLOT_TABLE</h5>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 1. <code>CURRENT_SLOT_TABLE</code></caption>
 <colgroup>
@@ -24046,8 +24053,8 @@ The firts one is used for storing system-wide data and the latter two for storin
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="_sms_routing_rule"><a class="anchor" href="#_sms_routing_rule"></a>3.1.2. SMPP_SMS_ROUTING_RULE_2</h4>
+<div class="sect4">
+<h5 id="_sms_routing_rule"><a class="anchor" href="#_sms_routing_rule"></a>3.1.1.2. SMPP_SMS_ROUTING_RULE_2</h5>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 2. <code>SMPP_SMS_ROUTING_RULE_2</code></caption>
 <colgroup>
@@ -24081,8 +24088,8 @@ The firts one is used for storing system-wide data and the latter two for storin
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="sip_sms_routing_rule_2"><a class="anchor" href="#sip_sms_routing_rule_2"></a>3.1.3. SIP_SMS_ROUTING_RULE_2</h4>
+<div class="sect4">
+<h5 id="sip_sms_routing_rule_2"><a class="anchor" href="#sip_sms_routing_rule_2"></a>3.1.1.3. SIP_SMS_ROUTING_RULE_2</h5>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 3. <code>SIP_SMS_ROUTING_RULE_2</code></caption>
 <colgroup>
@@ -24116,8 +24123,8 @@ The firts one is used for storing system-wide data and the latter two for storin
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="dst_slot_table_yyyy_mm_dd"><a class="anchor" href="#dst_slot_table_yyyy_mm_dd"></a>3.1.4. DST_SLOT_TABLE_yyyy_mm_dd</h4>
+<div class="sect4">
+<h5 id="dst_slot_table_yyyy_mm_dd"><a class="anchor" href="#dst_slot_table_yyyy_mm_dd"></a>3.1.1.4. DST_SLOT_TABLE_yyyy_mm_dd</h5>
 <div class="paragraph">
 <p>This table contains a list of <code>DUE_SLOT</code> values for <code>TARGET_ID</code> to store the data for this day.</p>
 </div>
@@ -24149,8 +24156,8 @@ The firts one is used for storing system-wide data and the latter two for storin
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="slot_messages_table_yyyy_mm_dd"><a class="anchor" href="#slot_messages_table_yyyy_mm_dd"></a>3.1.5. SLOT_MESSAGES_TABLE_yyyy_mm_dd</h4>
+<div class="sect4">
+<h5 id="_slot_messages_table_yyyy_mm_dd"><a class="anchor" href="#_slot_messages_table_yyyy_mm_dd"></a>3.1.1.5. SLOT_MESSAGES_TABLE_yyyy_mm_dd</h5>
 <div class="paragraph">
 <p>This table stores the messages that are scheduled for delivery.
 The messages are not deleted after delivery.</p>
@@ -24446,8 +24453,8 @@ The messages are not deleted after delivery.</p>
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="messages_yyyy_mm_dd"><a class="anchor" href="#messages_yyyy_mm_dd"></a>3.1.6. MESSAGES_yyyy_mm_dd</h4>
+<div class="sect4">
+<h5 id="messages_yyyy_mm_dd"><a class="anchor" href="#messages_yyyy_mm_dd"></a>3.1.1.6. MESSAGES_yyyy_mm_dd</h5>
 <div class="paragraph">
 <p>This table archives the messages that have been delivered successfully or whose delivery failed.</p>
 </div>
@@ -24742,8 +24749,8 @@ The messages are not deleted after delivery.</p>
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="mes_id_yyyy_mm_dd"><a class="anchor" href="#mes_id_yyyy_mm_dd"></a>3.1.7. MES_ID_YYYY_MM_DD</h4>
+<div class="sect4">
+<h5 id="mes_id_yyyy_mm_dd"><a class="anchor" href="#mes_id_yyyy_mm_dd"></a>3.1.1.7. MES_ID_YYYY_MM_DD</h5>
 <div class="paragraph">
 <p>This table contains referenses of local messageIds to a primary keys of MESSAGES_YYYY_MM_DD tables for a possibility of finding of sent / delivery failed messages by thier messageId value.</p>
 </div>
@@ -24783,8 +24790,8 @@ The messages are not deleted after delivery.</p>
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="dlv_mes_id_yyyy_mm_dd"><a class="anchor" href="#dlv_mes_id_yyyy_mm_dd"></a>3.1.8. DLV_MES_ID_YYYY_MM_DD</h4>
+<div class="sect4">
+<h5 id="dlv_mes_id_yyyy_mm_dd"><a class="anchor" href="#dlv_mes_id_yyyy_mm_dd"></a>3.1.1.8. DLV_MES_ID_YYYY_MM_DD</h5>
 <div class="paragraph">
 <p>This table contains referenses of remote messageIds (that are assigned by a remote SMSC GW to which a message was sent via SMPP protocol) to a local messageIds for sent to SMPP detination messages to corralate them.</p>
 </div>
@@ -24824,13 +24831,20 @@ The messages are not deleted after delivery.</p>
 </tbody>
 </table>
 </div>
+</div>
 <div class="sect3">
-<h4 id="_db_reporting"><a class="anchor" href="#_db_reporting"></a>3.1.9. Reporting</h4>
+<h4 id="shared-keyspace"><a class="anchor" href="#shared-keyspace"></a>3.1.2. Shared KeySpace</h4>
+<div class="paragraph">
+<p>The shared database KeySpace is used for storing of data that is needed for different SMSC instances information exchange.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_db_reporting"><a class="anchor" href="#_db_reporting"></a>3.2. Reporting</h3>
 <div class="paragraph">
 <p>As of now there is no reporting in Restcomm SMSC .
 However you can leverage any external third party tool to dig Cassandra tables as defined above and create reports.
 The next release of Restcomm SMSC will feature a reporting section and also the flexibility to search for a specific SMS based on various search criteria.</p>
-</div>
 </div>
 </div>
 </div>
@@ -25876,7 +25890,30 @@ We recommend that you set logging threshold to <code>WARN</code> and let the CDR
 <p>SMSC GW supports of a graceful shutdown procedure. See more in a chapter <a href="#_gsd_settings">Graceful shutdown</a>. A graceful shutdown procedure is initiated by a GUI / CLI interface. SMSC GW will stop of loading new messages from a database and will make a server shutdown when all message delivering processes have completed. FEP nodes will prevent of sending new external dialogs to a SS7 node that is gracefully shutting down. SMSC GW node even after a graceful shutdown start will aceept and process of incoming messages from other interfaces (SMPP, SIP, HTTP). A user must stop of sending of messages via these interfeces before of a graceful shutdown start.</p>
 </div>
 <div class="paragraph">
-<p>For a smooth support of HR (Home Routing) and AlertCerviceCenter operations between SMSC GW nodes an extra cassandra KeySpace is introduced. This new clustering KeySpace is used for cache of correlationId values and data for HR procedure and exchanging of AlertCerviceCenter requests between SMSC GW servers (for MT SS7 procedure). If you use several SMSC GW nodes then you need to turn on an option <code>In cluster</code>, prepare a new empty cassandra KeySpace (a single instance for both/all SMSC GW nodes) and configure this KeySpace in <code>Shared Database Configuration</code> section. See more info in the chapter <a href="#_smsc_clustering_settings">Clustering Settings</a>.</p>
+<p>For a smooth support of HR (Home Routing) and AlertCerviceCenter operations between SMSC GW nodes an extra cassandra KeySpace is introduced ss an addition to a dedicated cassandra KeySpace (default name is "Shared").
+This new clustering KeySpace is used for cache of correlationId values and data for HR procedure and exchanging of AlertCerviceCenter requests between SMSC GW servers (for MT SS7 procedure).
+If you use several SMSC GW nodes then you need to turn on an option <code>In cluster</code>, prepare a new empty cassandra KeySpace (a single instance for both/all SMSC GW nodes) and configure this KeySpace in <code>Shared Database Configuration</code> section.
+See more info in the chapter <a href="#_smsc_clustering_settings">Clustering Settings</a>.</p>
+</div>
+<div class="paragraph">
+<p>When working of SMSC we need to have both dedicated and shared cassandra KeySpaces up. We may need to bring cassandra databases down for maintenance. A dedicated KeySpace may be turned down with a corresponded SMSC server.
+If we need to turn down a database with a shared keyspace and some SMSC GWs are up that time then we need to follow this order:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>turn <code>InCLuster</code> option to <code>false</code> - see <a href="#_in_cluster">Clustering Configuration</a></p>
+</li>
+<li>
+<p>stop a database with shared KeySpace</p>
+</li>
+<li>
+<p>start a database with shared KeySpace</p>
+</li>
+<li>
+<p>turn <code>InCLuster</code> option to <code>true</code></p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>We need to make special configuring procedures of SS7 part before SMSC GW / FEP will be able to work in a load-balancing mode. This configuring is described in a manual "Restcomm Load Balancer User Guide", check a chapter "Integration Load Balancer SS7 (FEP) with USSD and SMSC servers".</p>
@@ -26122,7 +26159,79 @@ CLI commabd can be like:</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="routing-desision-based-on-sri-request-results"><a class="anchor" href="#routing-desision-based-on-sri-request-results"></a>5.6.4.4. Routing desision based on SRI request results</h5>
+<h5 id="routing-desision-when-we-have-several-service-providers-and-operators"><a class="anchor" href="#routing-desision-when-we-have-several-service-providers-and-operators"></a>5.6.4.4. Routing desision when we have several service providers and operators</h5>
+<div class="paragraph">
+<p>An example of connection schema for connecting to operators and clients:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/SMS-routing-ex.png" alt="SMS routing ex">
+</div>
+</div>
+<div class="paragraph">
+<p>We will do routing based on message destination addresses mask. For example the algorithm may be:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>all messages with destination addresses starting with "1*" will be routed to client 1 (with networkId 1)</p>
+</li>
+<li>
+<p>all messages with destination addresses starting with "2*" will be routed to client 2 (with networkId 2)</p>
+</li>
+<li>
+<p>all other messages will be routed to an operator (with etworkId 3)</p>
+</li>
+</ul>
+</div>
+<div class="sect5">
+<h6 id="routing-based-on-destination-address-mask"><a class="anchor" href="#routing-based-on-destination-address-mask"></a>5.6.4.4.1. Routing based on destination address mask</h6>
+<div class="paragraph">
+<p>Example algorithm: we have 3 networkId areas (1, 2 and 3) for client / agents.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>smsc mproc add 1 destdigmask ^1[0-9].* newnetworkid 1
+smsc mproc add 2 destdigmask ^2[0-9].* newnetworkid 2
+smsc mproc add 3 destdigmask ^(?!1|2).* newnetworkid 3</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="routing-based-on-destination-address-mask-with-usage-of-intermediate-networkid"><a class="anchor" href="#routing-based-on-destination-address-mask-with-usage-of-intermediate-networkid"></a>5.6.4.4.2. Routing based on destination address mask with usage of intermediate networkId</h6>
+<div class="paragraph">
+<p>Example algorithm: we have 3 networkId areas (1, 2 and 3) for client / agents. We use intermediate networkId areas (101, 102, 103 for temporary parking routed messages) for simpler formalizing.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>smsc mproc add 1 destdigmask ^1[0-9].* newnetworkid 101
+smsc mproc add 2 destdigmask ^2[0-9].* newnetworkid 102
+smsc mproc add 101 networkidmask 1 newnetworkid 103
+smsc mproc add 102 networkidmask 2 newnetworkid 103
+smsc mproc add 103 networkidmask 3 newnetworkid 103
+smsc mproc add 201 networkidmask 101 newnetworkid 1
+smsc mproc add 202 networkidmask 102 newnetworkid 2
+smsc mproc add 203 networkidmask 103 newnetworkid 3</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="routing-when-a-client-belongs-to-an-operator"><a class="anchor" href="#routing-when-a-client-belongs-to-an-operator"></a>5.6.4.4.3. Routing when a client belongs to an operator</h6>
+<div class="paragraph">
+<p>Example algorithm: we have operator 1 (networkId==1) and a client 1 (networkId==101) and all messages from client 1 will be routed to soperator 1 and vice versa, we have operator 2 (networkId==2) and a client 2 (networkId==102) and all messages from client 2 will be routed to soperator 2 and vice versa.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>smsc mproc add 1 originnetworkidmask 1 newnetworkid 101
+smsc mproc add 2 originnetworkidmask 2 newnetworkid 102
+smsc mproc add 3 originnetworkidmask 101 newnetworkid 1
+smsc mproc add 4 originnetworkidmask 102 newnetworkid 2</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="routing-decision-based-on-sri-request-results"><a class="anchor" href="#routing-decision-based-on-sri-request-results"></a>5.6.4.5. Routing decision based on SRI request results</h5>
 <div class="paragraph">
 <p>Sometimes we need to decide where to route messages depending on SendRoutingRequest (SRI) to HLR results. To achieve it we may use two approaches</p>
 </div>
@@ -36429,11 +36538,11 @@ The CDR generated in the text file is of the below format:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>DELIVERY_DATE,SUBMIT_DATE,ADDR_SRC_DIGITS,ADDR_SRC_TON,ADDR_SRC_NPI,ADDR_DST_DIGITS,ADDR_DST_TON,ADDR_DST_NPI,MESSAGE_DELIVERY_STATUS,ORIGINATION_TYPE,MESSAGE_TYPE,ORIG_SYSTEM_ID,MESSAGE_ID,DVL_MESSAGE_ID,RECEIPT_LOCAL_MESSAGE_ID,NNN_DIGITS,IMSI,CORR_ID,ORIGINATOR_SCCP_ADDRESS,MtServiceCenterAddress,ORIG_NETWORK_ID,NETWORK_ID,MPROC_NOTES,MSG_PARTS,CHAR_NUMBERS,PROCESSING_TIME,SCHEDULE_DELIVERY_DELAY,DELIVERY_COUNT,MESSAGE_PART_PROCESSING_TIME,FIRST_20_CHARACTERS_OF_SMS,REASON_FOR_FAILURE,DELIVERY_RECEIPT_MESSAGE_STATUS,DELIVERY_RECEIPT_MESSAGE_STATE_TLV,DELIVERY_RECEIPT_MESSAGE_ERR</pre>
+<pre>DELIVERY_DATE,SUBMIT_DATE,ADDR_SRC_DIGITS,ADDR_SRC_TON,ADDR_SRC_NPI,ADDR_DST_DIGITS,ADDR_DST_TON,ADDR_DST_NPI,MESSAGE_DELIVERY_STATUS,ORIGINATION_TYPE,MESSAGE_TYPE,ORIG_SYSTEM_ID,MESSAGE_ID,DVL_MESSAGE_ID,RECEIPT_LOCAL_MESSAGE_ID,NNN_DIGITS,IMSI,CORR_ID,ORIGINATOR_SCCP_ADDRESS,MtServiceCenterAddress,ORIG_NETWORK_ID,NETWORK_ID,MPROC_NOTES,MSG_PARTS,CHAR_NUMBERS,PROCESSING_TIME,SCHEDULE_DELIVERY_DELAY,DELIVERY_COUNT,MESSAGE_PART_PROCESSING_TIME,DATA_CODING,FIRST_20_CHARACTERS_OF_SMS,REASON_FOR_FAILURE,DELIVERY_RECEIPT_MESSAGE_STATUS,DELIVERY_RECEIPT_MESSAGE_STATE_TLV,DELIVERY_RECEIPT_MESSAGE_ERR</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>where <code>ADDR_SRC_DIGITS, ADDR_SRC_TON, ADDR_SRC_NPI, ADDR_DST_DIGITS, ADDR_DST_TON, ADDR_DST_NPI, ORIG_SYSTEM_ID, MESSAGE_ID, NNN_DIGITS, IMSI, ORIG_NETWORK_ID, NETWORK_ID, DELIVERY_COUNT</code> and <code>CORR_ID</code> are as explained in <a href="#_slot_messages_table_yyyy_mm_dd">[_slot_messages_table_yyyy_mm_dd]</a> and other values are described below in this section.</p>
+<p>where ADDR_SRC_DIGITS, ADDR_SRC_TON, ADDR_SRC_NPI, ADDR_DST_DIGITS, ADDR_DST_TON, ADDR_DST_NPI, ORIG_SYSTEM_ID, MESSAGE_ID, NNN_DIGITS, IMSI, ORIG_NETWORK_ID, NETWORK_ID, DELIVERY_COUNT, DATA_CODING and CORR_ID are as explained in <a href="#_slot_messages_table_yyyy_mm_dd">SLOT_MESSAGES_TABLE_yyyy_mm_dd</a> and other values are described below in this section.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -37629,7 +37738,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-25 02:28:52 UTC
+Last updated 2018-03-27 14:37:01 UTC
 </div>
 </div>
 <footer>
