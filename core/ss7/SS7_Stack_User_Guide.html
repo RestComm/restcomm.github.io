@@ -30002,9 +30002,54 @@ Change value and save.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_sccp_property_ssttimerduration_increasefactor"><a class="anchor" href="#_sccp_property_ssttimerduration_increasefactor"></a>7.4.3.7. SST Timer Duration Increase Factor</h5>
+<h5 id="_sccp_property_respectpc"><a class="anchor" href="#_sccp_property_respectpc"></a>7.4.3.7. Respect Point Code</h5>
 <div class="sect5">
-<h6 id="_sccp_property_ssttimerduration_increasefactor_cli"><a class="anchor" href="#_sccp_property_ssttimerduration_increasefactor_cli"></a>7.4.3.7.1. Using CLI</h6>
+<h6 id="_sccp_property_respectpc_cli"><a class="anchor" href="#_sccp_property_respectpc_cli"></a>7.4.3.7.1. Using CLI</h6>
+<div class="paragraph">
+<p>You can set the 'respectpc' by issuing the command <code>sccp set respectpc</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>sccp get respectpc</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	sccp set respectpc
+
+SYNOPSIS
+	sccp set respectpc &lt;false | true&gt; stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	If set, the PC will be used for choosing primary or secondary address
+	for outgoing messages if corresponding routing is based on GT
+
+PARAMETERS
+
+	Standard Parameters
+
+	&lt;respectpc&gt;	-	true or false value.
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	sccp set respectpc true</pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sccp_property_respectpc_gui"><a class="anchor" href="#_sccp_property_respectpc_gui"></a>7.4.3.7.2. Using GUI</h6>
+<div class="paragraph">
+<p>On SCCP management page, click on pencil against the 'RespectPc' property and text box becomes editable.
+Change value and save.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_sccp_property_ssttimerduration_increasefactor"><a class="anchor" href="#_sccp_property_ssttimerduration_increasefactor"></a>7.4.3.8. SST Timer Duration Increase Factor</h5>
+<div class="sect5">
+<h6 id="_sccp_property_ssttimerduration_increasefactor_cli"><a class="anchor" href="#_sccp_property_ssttimerduration_increasefactor_cli"></a>7.4.3.8.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'ssttimerduration_increasefactor' by issuing the command <code>sccp set ssttimerduration_increasefactor</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>sccp get ssttimerduration_increasefactor</code> which will display the value set for this property.</p>
@@ -30043,7 +30088,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sccp_property_ssttimerduration_increasefactor_gui"><a class="anchor" href="#_sccp_property_ssttimerduration_increasefactor_gui"></a>7.4.3.7.2. Using GUI</h6>
+<h6 id="_sccp_property_ssttimerduration_increasefactor_gui"><a class="anchor" href="#_sccp_property_ssttimerduration_increasefactor_gui"></a>7.4.3.8.2. Using GUI</h6>
 <div class="paragraph">
 <p>On SCCP management page, click on pencil against the 'SstTimerDuration_IncreaseFactor' property and text box becomes editable.
 Change value and save.</p>
@@ -30051,9 +30096,9 @@ Change value and save.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_sccp_property_ssttimerduration_max"><a class="anchor" href="#_sccp_property_ssttimerduration_max"></a>7.4.3.8. SST Timer Duration Max</h5>
+<h5 id="_sccp_property_ssttimerduration_max"><a class="anchor" href="#_sccp_property_ssttimerduration_max"></a>7.4.3.9. SST Timer Duration Max</h5>
 <div class="sect5">
-<h6 id="_sccp_property_ssttimerduration_max_cli"><a class="anchor" href="#_sccp_property_ssttimerduration_max_cli"></a>7.4.3.8.1. Using CLI</h6>
+<h6 id="_sccp_property_ssttimerduration_max_cli"><a class="anchor" href="#_sccp_property_ssttimerduration_max_cli"></a>7.4.3.9.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'ssttimerduration_max' by issuing the command <code>sccp set ssttimerduration_max</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>sccp get ssttimerduration_max</code> which will display the value set for this property.</p>
@@ -30089,7 +30134,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sccp_property_ssttimerduration_max_gui"><a class="anchor" href="#_sccp_property_ssttimerduration_max_gui"></a>7.4.3.8.2. Using GUI</h6>
+<h6 id="_sccp_property_ssttimerduration_max_gui"><a class="anchor" href="#_sccp_property_ssttimerduration_max_gui"></a>7.4.3.9.2. Using GUI</h6>
 <div class="paragraph">
 <p>On SCCP management page, click on pencil against the 'SstTimerDuration_Max' property and text box becomes editable.
 Change value and save.</p>
@@ -30097,9 +30142,9 @@ Change value and save.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_sccp_property_ssttimerduration_min"><a class="anchor" href="#_sccp_property_ssttimerduration_min"></a>7.4.3.9. SST Timer Duration Min</h5>
+<h5 id="_sccp_property_ssttimerduration_min"><a class="anchor" href="#_sccp_property_ssttimerduration_min"></a>7.4.3.10. SST Timer Duration Min</h5>
 <div class="sect5">
-<h6 id="_sccp_property_ssttimerduration_min_cli"><a class="anchor" href="#_sccp_property_ssttimerduration_min_cli"></a>7.4.3.9.1. Using CLI</h6>
+<h6 id="_sccp_property_ssttimerduration_min_cli"><a class="anchor" href="#_sccp_property_ssttimerduration_min_cli"></a>7.4.3.10.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'ssttimerduration_min' by issuing the command <code>sccp set ssttimerduration_min</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>sccp get ssttimerduration_min</code> which will display the value set for this property.</p>
@@ -30135,7 +30180,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sccp_property_ssttimerduration_min_gui"><a class="anchor" href="#_sccp_property_ssttimerduration_min_gui"></a>7.4.3.9.2. Using GUI</h6>
+<h6 id="_sccp_property_ssttimerduration_min_gui"><a class="anchor" href="#_sccp_property_ssttimerduration_min_gui"></a>7.4.3.10.2. Using GUI</h6>
 <div class="paragraph">
 <p>On SCCP management page, click on pencil against the 'SstTimerDuration_Max' property and text box becomes editable.
 Change value and save.</p>
@@ -30143,9 +30188,9 @@ Change value and save.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_sccp_property_zmarginxudtmessage"><a class="anchor" href="#_sccp_property_zmarginxudtmessage"></a>7.4.3.10. ZMargin XUDT Message</h5>
+<h5 id="_sccp_property_zmarginxudtmessage"><a class="anchor" href="#_sccp_property_zmarginxudtmessage"></a>7.4.3.11. ZMargin XUDT Message</h5>
 <div class="sect5">
-<h6 id="_sccp_property_zmarginxudtmessage_cli"><a class="anchor" href="#_sccp_property_zmarginxudtmessage_cli"></a>7.4.3.10.1. Using CLI</h6>
+<h6 id="_sccp_property_zmarginxudtmessage_cli"><a class="anchor" href="#_sccp_property_zmarginxudtmessage_cli"></a>7.4.3.11.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'zmarginxudtmessage' by issuing the command <code>sccp set zmarginxudtmessage</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>sccp get zmarginxudtmessage</code> which will display the value set for this property.</p>
@@ -30182,7 +30227,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sccp_property_zmarginxudtmessage_min_gui"><a class="anchor" href="#_sccp_property_zmarginxudtmessage_min_gui"></a>7.4.3.10.2. Using GUI</h6>
+<h6 id="_sccp_property_zmarginxudtmessage_min_gui"><a class="anchor" href="#_sccp_property_zmarginxudtmessage_min_gui"></a>7.4.3.11.2. Using GUI</h6>
 <div class="paragraph">
 <p>On SCCP management page, click on pencil against the 'ZMarginXudtMessage' property and text box becomes editable.
 Change value and save.</p>
@@ -30190,9 +30235,9 @@ Change value and save.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_sccp_property_cc_timer_a"><a class="anchor" href="#_sccp_property_cc_timer_a"></a>7.4.3.11. Timer A value for the congestion control</h5>
+<h5 id="_sccp_property_cc_timer_a"><a class="anchor" href="#_sccp_property_cc_timer_a"></a>7.4.3.12. Timer A value for the congestion control</h5>
 <div class="sect5">
-<h6 id="_sccp_property_cc_timer_a_cli"><a class="anchor" href="#_sccp_property_cc_timer_a_cli"></a>7.4.3.11.1. Using CLI</h6>
+<h6 id="_sccp_property_cc_timer_a_cli"><a class="anchor" href="#_sccp_property_cc_timer_a_cli"></a>7.4.3.12.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'cc_timer_a' by issuing the command <code>sccp set cc_timer_a</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>sccp get cc_timer_a</code> which will display the value set for this property.</p>
@@ -30227,7 +30272,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sccp_property_cc_timer_a_gui"><a class="anchor" href="#_sccp_property_cc_timer_a_gui"></a>7.4.3.11.2. Using GUI</h6>
+<h6 id="_sccp_property_cc_timer_a_gui"><a class="anchor" href="#_sccp_property_cc_timer_a_gui"></a>7.4.3.12.2. Using GUI</h6>
 <div class="paragraph">
 <p>On SCCP management page, click on pencil against the 'Congestion control: Timer A' property and text box becomes editable.
 Change value and save.</p>
@@ -30235,9 +30280,9 @@ Change value and save.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_sccp_property_cc_timer_d"><a class="anchor" href="#_sccp_property_cc_timer_d"></a>7.4.3.12. Timer D value for the congestion control</h5>
+<h5 id="_sccp_property_cc_timer_d"><a class="anchor" href="#_sccp_property_cc_timer_d"></a>7.4.3.13. Timer D value for the congestion control</h5>
 <div class="sect5">
-<h6 id="_sccp_property_cc_timer_d_cli"><a class="anchor" href="#_sccp_property_cc_timer_d_cli"></a>7.4.3.12.1. Using CLI</h6>
+<h6 id="_sccp_property_cc_timer_d_cli"><a class="anchor" href="#_sccp_property_cc_timer_d_cli"></a>7.4.3.13.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'cc_timer_d' by issuing the command <code>sccp set cc_timer_d</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>sccp get cc_timer_d</code> which will display the value set for this property.</p>
@@ -30273,7 +30318,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sccp_property_cc_timer_d_min_gui"><a class="anchor" href="#_sccp_property_cc_timer_d_min_gui"></a>7.4.3.12.2. Using GUI</h6>
+<h6 id="_sccp_property_cc_timer_d_min_gui"><a class="anchor" href="#_sccp_property_cc_timer_d_min_gui"></a>7.4.3.13.2. Using GUI</h6>
 <div class="paragraph">
 <p>On SCCP management page, click on pencil against the 'Congestion control: Timer A' property and text box becomes editable.
 Change value and save.</p>
@@ -30281,9 +30326,9 @@ Change value and save.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="can-relay-value"><a class="anchor" href="#can-relay-value"></a>7.4.3.13. Can relay value</h5>
+<h5 id="can-relay-value"><a class="anchor" href="#can-relay-value"></a>7.4.3.14. Can relay value</h5>
 <div class="sect5">
-<h6 id="_sccp_property_canrelay_cli"><a class="anchor" href="#_sccp_property_canrelay_cli"></a>7.4.3.13.1. Using CLI</h6>
+<h6 id="_sccp_property_canrelay_cli"><a class="anchor" href="#_sccp_property_canrelay_cli"></a>7.4.3.14.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'canrelay' by issuing the command <code>sccp set canrelay</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>sccp get canrelay</code> which will display the value set for this property.</p>
@@ -30319,9 +30364,9 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="connection-establishing-timer-delay-value"><a class="anchor" href="#connection-establishing-timer-delay-value"></a>7.4.3.14. Connection establishing timer delay value</h5>
+<h5 id="connection-establishing-timer-delay-value"><a class="anchor" href="#connection-establishing-timer-delay-value"></a>7.4.3.15. Connection establishing timer delay value</h5>
 <div class="sect5">
-<h6 id="_sccp_property_connesttimerdelay_cli"><a class="anchor" href="#_sccp_property_connesttimerdelay_cli"></a>7.4.3.14.1. Using CLI</h6>
+<h6 id="_sccp_property_connesttimerdelay_cli"><a class="anchor" href="#_sccp_property_connesttimerdelay_cli"></a>7.4.3.15.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'connesttimerdelay' by issuing the command <code>sccp set connesttimerdelay</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>sccp get connesttimerdelay</code> which will display the value set for this property.</p>
@@ -30360,9 +30405,9 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="connection-it-send-timer-delay-value"><a class="anchor" href="#connection-it-send-timer-delay-value"></a>7.4.3.15. Connection IT send timer delay value</h5>
+<h5 id="connection-it-send-timer-delay-value"><a class="anchor" href="#connection-it-send-timer-delay-value"></a>7.4.3.16. Connection IT send timer delay value</h5>
 <div class="sect5">
-<h6 id="_sccp_property_iastimerdelay_cli"><a class="anchor" href="#_sccp_property_iastimerdelay_cli"></a>7.4.3.15.1. Using CLI</h6>
+<h6 id="_sccp_property_iastimerdelay_cli"><a class="anchor" href="#_sccp_property_iastimerdelay_cli"></a>7.4.3.16.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'iastimerdelay' by issuing the command <code>sccp set iastimerdelay</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>sccp get iastimerdelay</code> which will display the value set for this property.</p>
@@ -30401,9 +30446,9 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="connection-message-receive-timer-delay-value"><a class="anchor" href="#connection-message-receive-timer-delay-value"></a>7.4.3.16. Connection message receive timer delay value</h5>
+<h5 id="connection-message-receive-timer-delay-value"><a class="anchor" href="#connection-message-receive-timer-delay-value"></a>7.4.3.17. Connection message receive timer delay value</h5>
 <div class="sect5">
-<h6 id="_sccp_property_iartimerdelay_cli"><a class="anchor" href="#_sccp_property_iartimerdelay_cli"></a>7.4.3.16.1. Using CLI</h6>
+<h6 id="_sccp_property_iartimerdelay_cli"><a class="anchor" href="#_sccp_property_iartimerdelay_cli"></a>7.4.3.17.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'iartimerdelay' by issuing the command <code>sccp set iartimerdelay</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>sccp get iartimerdelay</code> which will display the value set for this property.</p>
@@ -30441,9 +30486,9 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="connection-release-complete-message-timer-delay-value"><a class="anchor" href="#connection-release-complete-message-timer-delay-value"></a>7.4.3.17. Connection release complete message timer delay value</h5>
+<h5 id="connection-release-complete-message-timer-delay-value"><a class="anchor" href="#connection-release-complete-message-timer-delay-value"></a>7.4.3.18. Connection release complete message timer delay value</h5>
 <div class="sect5">
-<h6 id="_sccp_property_reltimerdelay_cli"><a class="anchor" href="#_sccp_property_reltimerdelay_cli"></a>7.4.3.17.1. Using CLI</h6>
+<h6 id="_sccp_property_reltimerdelay_cli"><a class="anchor" href="#_sccp_property_reltimerdelay_cli"></a>7.4.3.18.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'reltimerdelay' by issuing the command <code>sccp set reltimerdelay</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>sccp get reltimerdelay</code> which will display the value set for this property.</p>
@@ -30481,9 +30526,9 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="connection-released-message-repeat-timer-delay-value"><a class="anchor" href="#connection-released-message-repeat-timer-delay-value"></a>7.4.3.18. Connection released message repeat timer delay value</h5>
+<h5 id="connection-released-message-repeat-timer-delay-value"><a class="anchor" href="#connection-released-message-repeat-timer-delay-value"></a>7.4.3.19. Connection released message repeat timer delay value</h5>
 <div class="sect5">
-<h6 id="_sccp_property_repeatreltimerdelay_cli"><a class="anchor" href="#_sccp_property_repeatreltimerdelay_cli"></a>7.4.3.18.1. Using CLI</h6>
+<h6 id="_sccp_property_repeatreltimerdelay_cli"><a class="anchor" href="#_sccp_property_repeatreltimerdelay_cli"></a>7.4.3.19.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'repeatreltimerdelay' by issuing the command <code>sccp set repeatreltimerdelay</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>sccp get repeatreltimerdelay</code> which will display the value set for this property.</p>
@@ -30522,9 +30567,9 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="connection-resources-release-timer-delay-value"><a class="anchor" href="#connection-resources-release-timer-delay-value"></a>7.4.3.19. Connection resources release timer delay value</h5>
+<h5 id="connection-resources-release-timer-delay-value"><a class="anchor" href="#connection-resources-release-timer-delay-value"></a>7.4.3.20. Connection resources release timer delay value</h5>
 <div class="sect5">
-<h6 id="_sccp_property_inttimerdelay_cli"><a class="anchor" href="#_sccp_property_inttimerdelay_cli"></a>7.4.3.19.1. Using CLI</h6>
+<h6 id="_sccp_property_inttimerdelay_cli"><a class="anchor" href="#_sccp_property_inttimerdelay_cli"></a>7.4.3.20.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'inttimerdelay' by issuing the command <code>sccp set inttimerdelay</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>sccp get inttimerdelay</code> which will display the value set for this property.</p>
@@ -30563,9 +30608,9 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="connection-work-resume-after-restart-time-delay-value"><a class="anchor" href="#connection-work-resume-after-restart-time-delay-value"></a>7.4.3.20. Connection work resume after restart time delay value</h5>
+<h5 id="connection-work-resume-after-restart-time-delay-value"><a class="anchor" href="#connection-work-resume-after-restart-time-delay-value"></a>7.4.3.21. Connection work resume after restart time delay value</h5>
 <div class="sect5">
-<h6 id="_sccp_property_guardtimerdelay_cli"><a class="anchor" href="#_sccp_property_guardtimerdelay_cli"></a>7.4.3.20.1. Using CLI</h6>
+<h6 id="_sccp_property_guardtimerdelay_cli"><a class="anchor" href="#_sccp_property_guardtimerdelay_cli"></a>7.4.3.21.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'guardtimerdelay' by issuing the command <code>sccp set guardtimerdelay</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>sccp get guardtimerdelay</code> which will display the value set for this property.</p>
@@ -30604,9 +30649,9 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="connection-release-after-reset-delay-value"><a class="anchor" href="#connection-release-after-reset-delay-value"></a>7.4.3.21. Connection release after reset delay value</h5>
+<h5 id="connection-release-after-reset-delay-value"><a class="anchor" href="#connection-release-after-reset-delay-value"></a>7.4.3.22. Connection release after reset delay value</h5>
 <div class="sect5">
-<h6 id="_sccp_property_resettimerdelay_cli"><a class="anchor" href="#_sccp_property_resettimerdelay_cli"></a>7.4.3.21.1. Using CLI</h6>
+<h6 id="_sccp_property_resettimerdelay_cli"><a class="anchor" href="#_sccp_property_resettimerdelay_cli"></a>7.4.3.22.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'resettimerdelay' by issuing the command <code>sccp set resettimerdelay</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>sccp get resettimerdelay</code> which will display the value set for this property.</p>
@@ -30645,9 +30690,9 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="thread-count-in-connections-timers-thread-pool-value"><a class="anchor" href="#thread-count-in-connections-timers-thread-pool-value"></a>7.4.3.22. Thread count in connections timers thread pool value</h5>
+<h5 id="thread-count-in-connections-timers-thread-pool-value"><a class="anchor" href="#thread-count-in-connections-timers-thread-pool-value"></a>7.4.3.23. Thread count in connections timers thread pool value</h5>
 <div class="sect5">
-<h6 id="_sccp_property_timerexecutors_threadcount_cli"><a class="anchor" href="#_sccp_property_timerexecutors_threadcount_cli"></a>7.4.3.22.1. Using CLI</h6>
+<h6 id="_sccp_property_timerexecutors_threadcount_cli"><a class="anchor" href="#_sccp_property_timerexecutors_threadcount_cli"></a>7.4.3.23.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'timerexecutors_threadcount' by issuing the command <code>sccp set timerexecutors_threadcount</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>sccp get timerexecutors_threadcount</code> which will display the value set for this property.</p>
@@ -30685,9 +30730,9 @@ EXAMPLES
 </div>
 </div>
 <div class="sect4">
-<h5 id="_sccp_property_cc_algo"><a class="anchor" href="#_sccp_property_cc_algo"></a>7.4.3.23. Algorithm of the congestion control at SCCP level</h5>
+<h5 id="_sccp_property_cc_algo"><a class="anchor" href="#_sccp_property_cc_algo"></a>7.4.3.24. Algorithm of the congestion control at SCCP level</h5>
 <div class="sect5">
-<h6 id="_sccp_property_cc_algo_cli"><a class="anchor" href="#_sccp_property_cc_algo_cli"></a>7.4.3.23.1. Using CLI</h6>
+<h6 id="_sccp_property_cc_algo_cli"><a class="anchor" href="#_sccp_property_cc_algo_cli"></a>7.4.3.24.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'cc_algo' by issuing the command <code>sccp set cc_algo</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>sccp get cc_algo</code> which will display the value set for this property.</p>
@@ -30731,7 +30776,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sccp_property_cc_algo_gui"><a class="anchor" href="#_sccp_property_cc_algo_gui"></a>7.4.3.23.2. Using GUI</h6>
+<h6 id="_sccp_property_cc_algo_gui"><a class="anchor" href="#_sccp_property_cc_algo_gui"></a>7.4.3.24.2. Using GUI</h6>
 <div class="paragraph">
 <p>On SCCP management page, click on pencil against the 'Congestion control: algorithm' property and text box becomes editable.
 Change value and save.</p>
@@ -30739,9 +30784,9 @@ Change value and save.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_sccp_property_cc_blockingoutgoungsccpmessages"><a class="anchor" href="#_sccp_property_cc_blockingoutgoungsccpmessages"></a>7.4.3.24. Blocking of outgoing messages in case of the congestion</h5>
+<h5 id="_sccp_property_cc_blockingoutgoungsccpmessages"><a class="anchor" href="#_sccp_property_cc_blockingoutgoungsccpmessages"></a>7.4.3.25. Blocking of outgoing messages in case of the congestion</h5>
 <div class="sect5">
-<h6 id="_sccp_property_blockingoutgoungsccpmessages_cli"><a class="anchor" href="#_sccp_property_blockingoutgoungsccpmessages_cli"></a>7.4.3.24.1. Using CLI</h6>
+<h6 id="_sccp_property_blockingoutgoungsccpmessages_cli"><a class="anchor" href="#_sccp_property_blockingoutgoungsccpmessages_cli"></a>7.4.3.25.1. Using CLI</h6>
 <div class="paragraph">
 <p>You can set the 'cc_blockingoutgoungsccpmessages' by issuing the command <code>sccp set cc_blockingoutgoungsccpmessages</code> with appropriate parameters as described below.
 You can verify this by issuing the command <code>sccp get cc_blockingoutgoungsccpmessages</code> which will display the value set for this property.</p>
@@ -30780,7 +30825,7 @@ EXAMPLES
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sccp_property_blockingoutgoungsccpmessages_gui"><a class="anchor" href="#_sccp_property_blockingoutgoungsccpmessages_gui"></a>7.4.3.24.2. Using GUI</h6>
+<h6 id="_sccp_property_blockingoutgoungsccpmessages_gui"><a class="anchor" href="#_sccp_property_blockingoutgoungsccpmessages_gui"></a>7.4.3.25.2. Using GUI</h6>
 <div class="paragraph">
 <p>On SCCP management page, click on pencil against the 'Congestion control: blocking of outgoing messages' property and text box becomes editable.
 Change value and save.</p>
@@ -38831,7 +38876,7 @@ If there are several dialogs with the same path they will be present only once i
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-25 02:27:59 UTC
+Last updated 2018-03-27 14:36:09 UTC
 </div>
 </div>
 <footer>

@@ -26534,6 +26534,51 @@ Change value and save.</p>
 </div>
 </div>
 <div class="sect3">
+<h4 id="_sccp_property_respectpc"><a class="anchor" href="#_sccp_property_respectpc"></a>Respect Point Code</h4>
+<div class="sect4">
+<h5 id="_sccp_property_respectpc_cli"><a class="anchor" href="#_sccp_property_respectpc_cli"></a>Using CLI</h5>
+<div class="paragraph">
+<p>You can set the 'respectpc' by issuing the command <code>sccp set respectpc</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>sccp get respectpc</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	sccp set respectpc
+
+SYNOPSIS
+	sccp set respectpc &lt;false | true&gt; stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	If set, the PC will be used for choosing primary or secondary address
+	for outgoing messages if corresponding routing is based on GT
+
+PARAMETERS
+
+	Standard Parameters
+
+	&lt;respectpc&gt;	-	true or false value.
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	sccp set respectpc true</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_sccp_property_respectpc_gui"><a class="anchor" href="#_sccp_property_respectpc_gui"></a>Using GUI</h5>
+<div class="paragraph">
+<p>On SCCP management page, click on pencil against the 'RespectPc' property and text box becomes editable.
+Change value and save.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
 <h4 id="_sccp_property_ssttimerduration_increasefactor"><a class="anchor" href="#_sccp_property_ssttimerduration_increasefactor"></a>SST Timer Duration Increase Factor</h4>
 <div class="sect4">
 <h5 id="_sccp_property_ssttimerduration_increasefactor_cli"><a class="anchor" href="#_sccp_property_ssttimerduration_increasefactor_cli"></a>Using CLI</h5>
@@ -31054,7 +31099,7 @@ But as of now, only currently active alarms will be displayed in this window.</p
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-25 02:27:59 UTC
+Last updated 2018-03-27 14:36:09 UTC
 </div>
 </div>
 <footer>
