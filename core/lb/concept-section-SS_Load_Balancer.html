@@ -23376,11 +23376,13 @@ display: none;
 <li><a href="#ss7-load-balancing">SS7 Load Balancing</a></li>
 <li><a href="#_fep_ussd_smsc">Integration of Load Balancer SS7 (FEP) with SMSC and USSD Gateways</a>
 <ul class="sectlevel2">
+<li><a href="#_fep_ussd_smsc_server">Servers configuring, IP addreses, point codes</a></li>
+<li><a href="#_fep_ussd_smsc_shared_keyspace">Configuring of extra shared cassandra database KeySpace (SMSC GW only)</a></li>
 <li><a href="#_fep_ussd_smsc_map_ra">MAP RA configuration</a></li>
 <li><a href="#_fep_ussd_smsc_smsc_ussd">SMSC / USSD GW SS7 part configuration</a></li>
-<li><a href="#_fep_ussd_smsc_fep_internal">FEP SS7 internal part configuration</a></li>
-<li><a href="#_fep_ussd_smsc_fep_external">FEP SS7 external part configuration</a></li>
+<li><a href="#_fep_ussd_smsc_fep">FEP SS7 common configuration</a></li>
 <li><a href="#_fep_ussd_smsc_ss7_sim">Configuring of jSS7 Simulator for local testing</a></li>
+<li><a href="#_fep_ussd_smsc_maint">Maintenance of nodes</a></li>
 </ul>
 </li>
 <li><a href="#plugable-balancer-algorithms">Plugable balancer algorithms</a></li>
@@ -24436,6 +24438,15 @@ SS7 Active-Active mode is a <a href="https://www.restcomm.com/on-premise/">Restc
 <div class="title">Figure 8. STP-FEP-USSD SS7 load balance diagram example</div>
 </div>
 <div class="paragraph">
+<p>Minimal SMSC GW version that is available for usage in cluster is 7.4.1-88. Minimal USSD GW version that is available for usage in cluster is 7.1.1-35.</p>
+</div>
+<div class="paragraph">
+<p>Before configuring of FEPs and SMSC/USSD cluster you need to download and install proper SMSC/USSD GW instances and configure them as for Installation and User Guides of products.
+It makes sense to configure (and test) servers in a standalone mode and get sure that SMSC/USSD GW is configured properly before bringing them into cluster and adding of FEP nodes in front of them.</p>
+</div>
+<div class="sect2">
+<h3 id="_fep_ussd_smsc_server"><a class="anchor" href="#_fep_ussd_smsc_server"></a>Servers configuring, IP addreses, point codes</h3>
+<div class="paragraph">
 <p>We will describe configuration details for a case when FEP01 and SMSC / USSD GWs 01 instances are deployed within a physical server 1 (with IP address <code>IP1</code>) while FEP02 and SMSC / USSD GWs 02 are deployed within a physical server 2 (with IP address <code>IP2</code>).
 <code>IP1</code> and <code>IP2</code> will naturally be unequal for different deployments. In our example, we will use the following IP values:</p>
 </div>
@@ -24487,6 +24498,9 @@ Point codes, IPs and ports between FEP and remote SS7 nodes (STPs) must be repla
 <div class="ulist">
 <ul>
 <li>
+<p>Configuring of extra shared cassandra database KeySpace</p>
+</li>
+<li>
 <p>MAP RA (MAP protocol Resource Adaptor)</p>
 </li>
 <li>
@@ -24502,6 +24516,17 @@ Point codes, IPs and ports between FEP and remote SS7 nodes (STPs) must be repla
 </div>
 <div class="paragraph">
 <p>If you just want to make End-to-End testing with jSS7 Simulator at a place of an external SS7 node (external STP), we provide a configuration example of jSS7 Simulator that allows deploying one jSS7 Simulator instance which will connect to both FEP instances.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_fep_ussd_smsc_shared_keyspace"><a class="anchor" href="#_fep_ussd_smsc_shared_keyspace"></a>Configuring of extra shared cassandra database KeySpace (SMSC GW only)</h3>
+<div class="paragraph">
+<p>For a smooth support of HR (Home Routing) and AlertCerviceCenter operations between SMSC GW nodes an extra cassandra KeySpace is introduced ss an addition to a dedicated cassandra KeySpace (default name is "Shared").
+Before of starting of cluster we need to configure an empty shared KeySpace (one per a cluster), SMSC GW will add needed tables into the KeySpace itseft. How to configure an extra KeySpace you can see in SMSC GW User Guide in chapter "Clustering Settings".</p>
+</div>
+<div class="paragraph">
+<p>An extra shared KeySpace may be configured in either at a separate cassandra database instance or in a one of databases that contains a dedicated KeySpace.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_fep_ussd_smsc_map_ra"><a class="anchor" href="#_fep_ussd_smsc_map_ra"></a>MAP RA configuration</h3>
@@ -24732,7 +24757,74 @@ tcap set dialogidrangeend 1999999999</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_fep_ussd_smsc_fep_internal"><a class="anchor" href="#_fep_ussd_smsc_fep_internal"></a>FEP SS7 internal part configuration</h3>
+<h3 id="_fep_ussd_smsc_fep"><a class="anchor" href="#_fep_ussd_smsc_fep"></a>FEP SS7 common configuration</h3>
+<div class="paragraph">
+<p>Before configuring of internal and external side of FEP you need to check/set next:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>versions of FEP, SMSC/USSD. A minimal version that can be used for FEP (12.0.1 release),
+USSD (7.1.1 release) and SMSC (7.4.1 release);</p>
+</li>
+<li>
+<p>in config file of FEP MUST be present <code>noderegistermodule</code>:</p>
+<div class="literalblock">
+<div class="content">
+<pre> &lt;noderegistermodule moduleclass="org.mobicents.tools.balancer.register.NodeRegisterRunner"
+configclass="org.mobicents.tools.heartbeat.rmi.HeartbeatConfigRmi"&gt;
+	&lt;heartbeatConfig&gt;
+		&lt;ProtocolClassName&gt;org.mobicents.tools.heartbeat.rmi.ServerControllerRmi&lt;/ProtocolClassName&gt;
+           &lt;heartbeatHost&gt;172.30.1.8&lt;/heartbeatHost&gt;
+      		&lt;rmiRegistryPort&gt;2000&lt;/rmiRegistryPort&gt;
+      		&lt;rmiRemoteObjectPort&gt;2001&lt;/rmiRemoteObjectPort&gt;
+	&lt;/heartbeatConfig&gt;
+&lt;/noderegistermodule&gt;</pre>
+</div>
+</div>
+</li>
+<li>
+<p>if you need statistic, you need to set <code>statisticmodule</code> :</p>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;statisticmodule moduleclass="org.mobicents.tools.balancer.statistic.StatisticRunner" configclass="org.mobicents.tools.balancer.statistic.StatisticConfig"&gt;
+  &lt;statisticConfig&gt;
+    &lt;statisticPort&gt;2006&lt;/statisticPort&gt;
+  &lt;/statisticConfig&gt;
+&lt;/statisticmodule&gt;</pre>
+</div>
+</div>
+</li>
+<li>
+<p>for Active-Active mode you need to have well configured infinispan cache file (it depends from environment)
+and set path to this file in FEP configuration file.</p>
+<div class="literalblock">
+<div class="content">
+<pre> &lt;module moduleclass="org.mobicents.tools.balancer.protocols.ss7.Ss7BalancerRunner"
+	configclass="org.mobicents.tools.balancer.protocols.ss7.config.Ss7BalancerConfig"&gt;
+   &lt;balancerConfig&gt;
+     &lt;nodeExpirationTaskInterval&gt;1000&lt;/nodeExpirationTaskInterval&gt;
+     &lt;nodeExpiration&gt;8100&lt;/nodeExpiration&gt;
+     &lt;cacheConfig&gt;path/to/file/infinispan-cache.xml&lt;/cacheConfig&gt;
+     &lt;external&gt;
+     ...
+     &lt;/external&gt;
+     &lt;internal&gt;
+     ...
+     &lt;/internal&gt;
+   &lt;/balancerConfig&gt;
+&lt;/module&gt;</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Example of infinispan configuration file you can find in <code>config-examples</code> folder
+in zip file with binary.</p>
+</div>
+<div class="sect3">
+<h4 id="_fep_ussd_smsc_fep_internal"><a class="anchor" href="#_fep_ussd_smsc_fep_internal"></a>FEP SS7 internal part configuration</h4>
 <div class="paragraph">
 <p>You can configure FEP SS7 internal part in <code>lb-configuration.xml</code> in a section <code>&lt;load-balancer-properties&gt;</code> - <code>&lt;module moduleclass="org.mobicents.tools.balancer.protocols.ss7.Ss7BalancerRunner"</code> - <code>&lt;balancerConfig&gt;</code> - <code>&lt;internal&gt;</code></p>
 </div>
@@ -24807,8 +24899,8 @@ tcap set dialogidrangeend 1999999999</code></pre>
 <p>You can find extracted info from <code>&lt;internal&gt;</code> section within <code>config-examples/configSS7-ussd-smsc/FEP1_internal</code> folder for configuration of FEP01 and within <code>config-examples/configSS7-ussd-smsc/FEP2_internal</code> folder for FEP02. You can take these files, update IP addresses and eventually other needed parameters and copy them into <code>lb-configuration.xml</code> of FEP.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_fep_ussd_smsc_fep_external"><a class="anchor" href="#_fep_ussd_smsc_fep_external"></a>FEP SS7 external part configuration</h3>
+<div class="sect3">
+<h4 id="_fep_ussd_smsc_fep_external"><a class="anchor" href="#_fep_ussd_smsc_fep_external"></a>FEP SS7 external part configuration</h4>
 <div class="paragraph">
 <p>You can configure FEP SS7 external part in <code>lb-configuration.xml</code> in a section <code>&lt;load-balancer-properties&gt;</code> - <code>&lt;module moduleclass="org.mobicents.tools.balancer.protocols.ss7.Ss7BalancerRunner"</code> - <code>&lt;balancerConfig&gt;</code> - <code>&lt;external&gt;</code></p>
 </div>
@@ -24887,6 +24979,7 @@ tcap set dialogidrangeend 1999999999</code></pre>
 <p>A full <code>lb-configuration.xml</code> config for FEP01 can be found in <code>config-examples/configSS7-ussd-smsc/FEP1</code> folder. A full <code>lb-configuration.xml</code> configuration for FEP02 can be found in <code>config-examples/configSS7-ussd-smsc/FEP2</code> folder.</p>
 </div>
 </div>
+</div>
 <div class="sect2">
 <h3 id="_fep_ussd_smsc_ss7_sim"><a class="anchor" href="#_fep_ussd_smsc_ss7_sim"></a>Configuring of jSS7 Simulator for local testing</h3>
 <div class="paragraph">
@@ -24916,6 +25009,39 @@ tcap set dialogidrangeend 1999999999</code></pre>
 </div>
 <div class="paragraph">
 <p>You can send SS7 messages from jSS7 Simulator to FEP - SMSC/USSD GW and, for example, terminate USSD dialogs along with HTTP Simulator, while SMSs along with SMPP Simulator.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_fep_ussd_smsc_maint"><a class="anchor" href="#_fep_ussd_smsc_maint"></a>Maintenance of nodes</h3>
+<div class="paragraph">
+<p>We can safely bring any of FEP or/and SMSC/USSD GW node down for some time for maintenance procedures. In this case another node of FEP or/and SMSC/USSD GW will process all traffic.</p>
+</div>
+<div class="paragraph">
+<p>For bringing of a SMSC/USSD GW node down we need to follow of a procedure "Graceful shutdown", check for extra info SMSC/USSD GW User Guide chapter "Graceful shutdown".
+This procedure will wait till all initiated dialogs will be processed to end and only then stop the server.</p>
+</div>
+<div class="paragraph">
+<p>Note that messages for SMSC GW in storeAndForward mode that were stored into a dedicated cassandra database KeySpace for SMSC GW 1/2 will not be processed by another SMSC GW node when a first node is down. We need to bring the node up to be able to delivery those messages.</p>
+</div>
+<div class="paragraph">
+<p>When working of SMSC GW we need to have both dedicated and shared cassandra KeySpaces up. This means that we can stop of a dedicated KeySpace when a corresponded SMSC GW is down.
+If we need to turn down a database with a shared keyspace and some SMSC GWs are up that time then we need to follow this order:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>turn <code>InCLuster</code> option to <code>false</code> (you can check it in SMSC GW User Guide in chapter "Clustering Settings")</p>
+</li>
+<li>
+<p>stop a database with shared KeySpace</p>
+</li>
+<li>
+<p>start a database with shared KeySpace</p>
+</li>
+<li>
+<p>turn <code>InCLuster</code> option to <code>true</code></p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -26473,7 +26599,7 @@ SSL_MODE='allowall'</pre>
 <p>Add your VoiceRSS API key to the variable</p>
 <div class="literalblock">
 <div class="content">
-<pre>VOICERSS_KEY=‘f4840af6675b4d20a8d96dea8466296b‘</pre>
+<pre>VOICERSS_KEY='f4840af6675b4d20a8d96dea8466296b'</pre>
 </div>
 </div>
 </li>
@@ -27098,7 +27224,7 @@ sip-node-1, sip-node-2 etc., then this tag should be &lt;nodeName&gt;sip-node&lt
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-25 02:31:24 UTC
+Last updated 2018-03-27 14:39:35 UTC
 </div>
 </div>
 <footer>
