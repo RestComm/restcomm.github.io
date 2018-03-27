@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>Architecture</title>
+<title>API interface for access to SMSC GW configuring</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -23344,19 +23344,14 @@ display: none;
 
     </header>
 </head>
-<body id="_design_overview" class="article">
+<body id="_appendix_mproc_api" class="article">
 <div id="header">
-<h1>Architecture</h1>
+<h1>API interface for access to SMSC GW configuring</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#database-table-structure">Database Table Structure</a>
-<ul class="sectlevel2">
-<li><a href="#dedicated-keyspace">Dedicated KeySpace</a></li>
-<li><a href="#shared-keyspace">Shared KeySpace</a></li>
-</ul>
-</li>
-<li><a href="#_db_reporting">Reporting</a></li>
+<li><a href="#_appendix_mproc_api_java">Creating of a custom java application</a></li>
+<li><a href="#_appendix_mproc_api_jconsole">Connecting to SMSC GW mbeans by jconsole</a></li>
 </ul>
 </div>
 </div>
@@ -23364,948 +23359,125 @@ display: none;
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Restcomm SMSC is based on robust and proven Restcomm JAIN SLEE 1.1 Server and Restcomm jSS7 Stack and provides easy integration with any third party communication protocol and platform.</p>
+<p>A user may need to configure mproc rules of SMSC GW instance or other SMSC GW configuring programmatically by a user application. SMSC GW has an API based of JMX access interface for configuring.
+We explain more detailed how to access mproc rules in this chapter. Other configuring parts can be also configured via JMX interface but by using of other management beans.
+A list of such beans can be obtained by an application <code>jconsole</code> for Wildfly based server or by WEB interface <a href="http://&lt;IP&gt;:8080/jmx-console" class="bare">http://&lt;IP&gt;:8080/jmx-console</a> for jboss 5.1 based servers.</p>
 </div>
 <div class="paragraph">
-<p>Restcomm JAIN SLEE Server is a highly scalable event-driven application server with a robust component model and fault tolerant execution environment.
-It provides a set of connectors to a variety of networks elements: SS7 MAP, TCAP, INAP, ISUP, SMPP, XMPP, SIP, MGCP, HTTP, XDM, XCAP, Diameter and many others.
-It is fully compliant with JSR 240 (JSLEE 1.1).</p>
+<p>Configuring of mproc rules can be done by implementing of a java application that will connect to SMSC GW server by JMX interface.</p>
 </div>
 <div class="paragraph">
-<p>Restcomm jSS7 is a software based implementation of the SS7 protocol.
-It provides implementation for Level 2 and above in the SS7 protocol Stack. Restcomm jSS7 Stack User Guide is bundled within and you can refer to the guide for more details on the Stack.</p>
+<p>We have MBean <code>MProcManagementMBean</code> for accessing to mproc rules, here is a code for it:</p>
 </div>
-<div class="paragraph">
-<p>The diagram below depicts a high level design of Restcomm SMSC .</p>
-</div>
-<div class="imageblock">
+<div class="listingblock">
 <div class="content">
-<img src="./images/smsc-application-design-overview.png" alt="smsc application design overview">
+<pre class="highlight"><code class="language-java" data-lang="java">public interface MProcManagementMBean {
+
+    List&lt;MProcRule&gt; getMProcRules();
+
+    String[] getMProcRulesStr();
+
+    MProcRule getMProcRuleById(int id);
+
+    String getMProcRuleByIdStr(int id);
+
+    MProcRule createMProcRule(int id, String ruleFactoryName, String parametersString) throws Exception;
+
+    String createMProcRuleStr(int id, String ruleFactoryName, String parametersString) throws Exception;
+
+    MProcRule modifyMProcRule(int id, String parametersString) throws Exception;
+
+    String modifyMProcRuleStr(int id, String parametersString) throws Exception;
+
+    MProcRule destroyMProcRule(int mProcRuleId) throws Exception;
+
+    String destroyMProcRuleStr(int mProcRuleId) throws Exception;
+
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Restcomm SMSC provides 8 basic services of an SMSC as shown in the figure above.
-Each of these 8 services are implemented in the Gateway as a module that can be activated or deactivated based on the needs of an operator.
-All these services interact with the Cassandra database for storing data (messages not yet sent and an archive for sent/failed to send messages) and retreiving data for messages that are pending to be sent.</p>
+<p>We can use methods <code>createMProcRule()</code> for adding of an mproc rule, <code>modifyMProcRule()</code> for updating of an mproc rule, <code>destroyMProcRule()</code> for deleting of a mproc rule.
+Methods <code>getMProcRules()</code> and <code>getMProcRuleById()</code> may be used for getting info of current mproc rules state.</p>
 </div>
 <div class="paragraph">
-<p>Restcomm SMSC can accept SMPP (incoming BIND) from ESMEs or can also initiate SMPP (outgoing BIND) to third party SMSC and hence itself acting as an ESME. Restcomm SMSC provides intelligent routing rules that can route SMS between various SMPP connections or between SMPP, GSM and SIP Network.</p>
+<p>Methods that return <code>MProcRule</code> interface demands adding extra jars into your java application classpath - <code>smsc-common-library-<strong>.jar</code>, <code>mproc-api-</strong>.jar</code> and <code>javolution-5.5.1.jar</code>, all they can be obtained from SMSC GW server.
+Methods with suffix <code>Str</code> return String values and do not demand extra libraries. It is a developer choice to select needed methods.</p>
 </div>
-<div class="dlist">
-<div class="title">Service Modules</div>
-<dl>
-<dt class="hdlist1">Mo (Mobile originated) module</dt>
-<dd>
-<p>Receives mobile originated SMS via MO procedure for further delivering.</p>
-</dd>
-<dt class="hdlist1">Hr (Home routing) module</dt>
-<dd>
-<p>Receives mobile originated SMS via HR (Home routing) procedure for further delivering.</p>
-</dd>
-<dt class="hdlist1">Tx SMPP module</dt>
-<dd>
-<p>Receives incoming SMS from ESME/third party via SMPP protocol for further delivering.</p>
-</dd>
-<dt class="hdlist1">Tx SIP module</dt>
-<dd>
-<p>Receives incoming SMS from SIP Client and routes them for further delivering.</p>
-</dd>
-<dt class="hdlist1">Tx HTTP module</dt>
-<dd>
-<p>Receives incoming SMS from HTTP connector and routes them for further delivering.</p>
-</dd>
-<dt class="hdlist1">Mt (Mobile terminated)</dt>
-<dd>
-<p>Delivers SMS to mobile via MT procedure.</p>
-</dd>
-<dt class="hdlist1">Rx SMPP module</dt>
-<dd>
-<p>Delivers SMS to external ESME/third party SMSC.</p>
-</dd>
-<dt class="hdlist1">Rx SIP module</dt>
-<dd>
-<p>Delivers SMS to SIP Client received.</p>
-</dd>
-</dl>
-</div>
-<div class="dlist">
-<div class="title">Administration</div>
-<dl>
-<dt class="hdlist1">CLI</dt>
-<dd>
-<p>Restcomm SMSC comes with a Command Line Interface (CLI) that provides easy to use commands to manage and monitor the SS7 Stack and the SMSC Gateway.</p>
-</dd>
-<dt class="hdlist1">Web Interface</dt>
-<dd>
-<p>Restcomm SMSC also includes an easy to use Web Interface administration tool that allows you to manage and monitor the Gateway via a convenient Web console.</p>
-</dd>
-<dt class="hdlist1">Campaign Tool</dt>
-<dd>
-<p>In addition, future releases will also offer a Web based campaign tool to define and manage campaigns. |</p>
-</dd>
-</dl>
+<div class="paragraph">
+<p>You can read details for mproc rules in <a href="#_mproc_rules_fundamentals">[_mproc_rules_fundamentals]</a> and details for message routing process there: <a href="#_routing_fundamentals">[_routing_fundamentals]</a>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="database-table-structure"><a class="anchor" href="#database-table-structure"></a>Database Table Structure</h2>
+<h2 id="_appendix_mproc_api_java"><a class="anchor" href="#_appendix_mproc_api_java"></a>Creating of a custom java application</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Restcomm SMSC stores messages using Cassandra database. Each SMSC demands a dedicated KeySpace per a SMSC instanse.
-If we use SMSC in a clustering mode we need an extra shared KeySpace one for a whole cluster.</p>
+<p>A custom java based user application can be created based on a following template. The code contains of a connection opening section, management section and connection closing section.
+You can put any code into the management section for making of configuring (adding, updating or removing of rules).</p>
 </div>
-<div class="sect2">
-<h3 id="dedicated-keyspace"><a class="anchor" href="#dedicated-keyspace"></a>Dedicated KeySpace</h3>
-<div class="paragraph">
-<p>The dedicated database KeySpace is used for storing:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>unsent messages, messages successfully sent and messages that failed to be sent</p>
-</li>
-<li>
-<p>referenses to sent messages depending on local and remote SMSC messageId</p>
-</li>
-<li>
-<p>some service info needed for SMSC GW functionality</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The Restcomm SMSC creates all database tables itself. A user have to create only an empty keyspace for them. Default keyspace name is "RestCommSMSC".</p>
-</div>
-<div class="paragraph">
-<p>The Restcomm SMSC creates tables for every new day with the date suffixed to the names of the tables as <code>DST_SLOT_TABLE_yyyy_mm_dd</code>, <code>SLOT_MESSAGES_TABLE_yyyy_mm_dd</code>, <code>MESSAGES_yyyy_mm_dd</code>, <code>MES_ID_YYYY_MM_DD</code> and <code>DLV_MES_ID_YYYY_MM_DD</code> where <code>yyyy_mm_dd</code> is the date in that format.</p>
-</div>
-<div class="paragraph">
-<p>Apart from the above tables created everyday, the database also comprises of three other tables namely <code>CURRENT_SLOT_TABLE</code>, <code>SMPP_SMS_ROUTING_RULE_2</code> and <code>SIP_SMS_ROUTING_RULE_2</code> created when the SMSC is started for the first time.
-The firts one is used for storing system-wide data and the latter two for storing the routing rules.</p>
-</div>
-<div class="sect3">
-<h4 id="current_slot_table"><a class="anchor" href="#current_slot_table"></a>CURRENT_SLOT_TABLE</h4>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 1. <code>CURRENT_SLOT_TABLE</code></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Column Name</th>
-<th class="tableblock halign-left valign-top">Data Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Acts as a primary key and is unique for each entry. The value acts as an identifier of content: 0 indicates the current due slot that the SMSC processes now and 1 indicates the last assigned messageId.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NEXT_SLOT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BIGINT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The next slot value.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="_sms_routing_rule"><a class="anchor" href="#_sms_routing_rule"></a>SMPP_SMS_ROUTING_RULE_2</h4>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 2. <code>SMPP_SMS_ROUTING_RULE_2</code></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Column Name</th>
-<th class="tableblock halign-left valign-top">Data Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ADDRESS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Text</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Acts with NETWORK_ID as a primary key and is unique for each entry. Stores the address for which the messages are being routed.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NETWORK_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Acts with ADDRESS as a primary key and is used as networkId to which a rule belongs</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CLUSTER_NAME</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Text</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the SMPP Cluster.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="sip_sms_routing_rule_2"><a class="anchor" href="#sip_sms_routing_rule_2"></a>SIP_SMS_ROUTING_RULE_2</h4>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 3. <code>SIP_SMS_ROUTING_RULE_2</code></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Column Name</th>
-<th class="tableblock halign-left valign-top">Data Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ADDRESS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Text</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Acts with NETWORK_ID as a primary key and is unique for each entry. Stores the address for which the messages are being routed.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NETWORK_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Acts with ADDRESS as a primary key and is used as networkId to which a rule belongs</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CLUSTER_NAME</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Text</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the SIP Cluster. This is not used as of now and all SMS message are routed through a single SIP stack.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="dst_slot_table_yyyy_mm_dd"><a class="anchor" href="#dst_slot_table_yyyy_mm_dd"></a>DST_SLOT_TABLE_yyyy_mm_dd</h4>
-<div class="paragraph">
-<p>This table contains a list of <code>DUE_SLOT</code> values for <code>TARGET_ID</code> to store the data for this day.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 4. <code>DST_SLOT_TABLE_yyyy_mm_dd</code></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Column Name</th>
-<th class="tableblock halign-left valign-top">Data Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TARGET_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Acts as a primary key and is made up of ADDR_DST_DIGITS + '_' + ADDR_DST_TON + '_' + ADDR_DST_NPI + '_' + NETWORK_ID.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DUE_SLOT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BIGINT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">All new incoming messages will be added into this DUE_SLOT if it is not yet processed. If DUE_SLOT has been processed already or is absent, a new DUE_SLOT will be assigned.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="_slot_messages_table_yyyy_mm_dd"><a class="anchor" href="#_slot_messages_table_yyyy_mm_dd"></a>SLOT_MESSAGES_TABLE_yyyy_mm_dd</h4>
-<div class="paragraph">
-<p>This table stores the messages that are scheduled for delivery.
-The messages are not deleted after delivery.</p>
-</div>
-<div class="paragraph">
-<p>The fields "DUE_SLOT", "TARGET_ID", "ID" together act as the primary key.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 5. <code>SLOT_MESSAGES_TABLE_yyyy_mm_dd</code></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Column Name</th>
-<th class="tableblock halign-left valign-top">Data Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">UUID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Record Identifier.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TARGET_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Made up of ADDR_DST_DIGITS + '_' + ADDR_DST_TON + '_' + ADDR_DST_NPI + '_' + NETWORK_ID.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NETWORK_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NetworkId area via which a message will attemt to deliver.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ORIG_NETWORK_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NetworkId area via which a message has come to SMSC GW.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DUE_SLOT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BIGINT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">For which the messages will be loaded for delivering.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">IN_SYSTEM</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0 - idle state, 1 - delivery in progress, 2 - delivery finished (by success or failure)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMSC_UUID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">UUID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Id of the SMSC session (from start to stop), this is needed to know which session has launched the delivery of a message.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ADDR_DST_DIGITS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Destination address digits.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ADDR_DST_TON</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP style TON (type of number) of destination address.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ADDR_DST_NPI</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP style Numbering Plan Indicator of destination address.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ADDR_SRC_DIGITS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Originating address digits.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ADDR_SRC_TON</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP style TON (type of number) of source address.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ADDR_SRC_NPI</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP style Numbering Plan Indicator of source address.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DUE_DELAY</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Duration (in seconds) after which a new delivery attempt will be done. If the SMS has just arrived in the system, this value is 0.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SM_STATUS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Error Code value for the last attempt (0==no attempts yet). For more details on Error Codes please refer to <a href="#_appendix_smsc_errorcodes">[_appendix_smsc_errorcodes]</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ALERTING_SUPPORTED</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BOOLEAN</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The value is 'true' if SMSC was successfully registered at HLR after delivery failure. However this field is currently not being used because this demands extra database access.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BIGINT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A unique message ID assigned by SMSC. Max value is 10 000 000 000 (because of limitation of delivery receipts IDs), so this value may repeats in some big time. This messageId is used in SMPP protocol at the leg when a client is sending (submitting) a message to SMSC GW.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MO_MESSAGE_REF</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMS TPDU Message Reference field.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ORIG_ESME_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMSC internal name of origination ESME (empty for MO, HR and HTTP messages).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ORIG_SYSTEM_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP systemId of origination ESME for SMPP originated messages, HTTP account name for HTTP originated messages, empty for MO, HR and SIP originated messages.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DEST_CLUSTER_NAME</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name of cluster for destination ESME terminated massages (empty for MT messages).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DEST_ESME_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMSC internal name of destination ESME (empty for MT messages).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DEST_SYSTEM_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP name of destination ESME (empty for MT messages).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SUBMIT_DATE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TIMESTAMP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Time when a message was received by SMSC.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DELIVER_DATE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TIMESTAMP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Time when a message was sent from SMSC (null if message failed to deliver).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SERVICE_TYPE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP parameter (service_type) for ESME originated messages.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ESM_CLASS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Indicates Message Mode (Messaging Mode==Datagram, Forward or Store and Forward mode) and Message Type (MessageType==some flags including UDH indicator).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PROTOCOL_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Protocol Identifier SMPP parameter (TP-Protocol-Identifier files for GSM).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PRIORITY</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP parameter (priority_flag).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">REGISTERED_DELIVERY</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP parameter (registered_delivery).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">REPLACE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP parameter (replace_if_present_flag).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DATA_CODING</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">data_coding scheme.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DEFAULT_MSG_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP parameter (sm_default_msg_id).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BLOB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Not used now.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_TEXT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Message text - text part.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_BIN</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BLOB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Message text - UDH data part.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">OPTIONAL_PARAMETERS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TLVs.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SCHEDULE_DELIVERY_TIME</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TIMESTAMP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP parameter (schedule_delivery_time) - time when SMSC should start a delivery (may be null if immediate message delivery).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">VALIDITY_PERIOD</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TIMESTAMP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The validity period of this message. If ESME has not defined (or for MO messages) this field is filled by default SMSC settings.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">IMSI</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">IMSI of a mobile station (in SS7 network). This value is obtained after a successful SRI request. SRI request is executed in two cases: a) when delivering messages into SS7 network (MT procedure), b) when submitting (receiving) of a message from SS7 network b Home Routing procedure (if a request to a local HLR was made).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CORR_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This field is used for keeping of correlationId value for home routing procedure (SS7 originating messages). CorrelationId value plays a role of a fake “IMSI” when remote SMSC GW sends a short message to SMSC GW. Empty for messages that come to SMSC GW not via a Home Routing procedure. This table will keep this value when StoreAndForward mode for time between storing of message and scheduling it for delivering.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NNN_DIGITS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NetworkNodeNumber = MSC/VLR address that serves a mobile station (in SS7 network). This value is obtained after a successful SRI request. SRI request is executed in two cases: a) when delivering messages into SS7 network (MT procedure), b) when submitting (receiving) of a message from SS7 network b Home Routing procedure (if a request to a local HLR was made).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NNN_AN</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">AddressNature for NetworkNodeNumber</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NNN_NP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NumberingPlan for NetworkNodeNumber</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SM_TYPE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0-ESME terminated, 1-MT terminated, 2-SIP terminated</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DELIVERY_COUNT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Delivery attempt count. (this will be==1 if a message was delivered in one go)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ORIGINATOR_SCCP_ADDRESS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SCCP CallingPartyAddress address for SS7 originated messages (it usually contains originating MSC or SMSC address).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DELIVERY_ATTEMPT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">STATUS_REPORT_REQUEST</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">USER_DATA</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A compound field that contains XML serialized info for several auxiliary fields.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA_2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA_3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA_4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="messages_yyyy_mm_dd"><a class="anchor" href="#messages_yyyy_mm_dd"></a>MESSAGES_yyyy_mm_dd</h4>
-<div class="paragraph">
-<p>This table archives the messages that have been delivered successfully or whose delivery failed.</p>
-</div>
-<div class="paragraph">
-<p>The fields "ADDR_DST_DIGITS", "ID" together act as the primary key.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 6. <code>MESSAGES_yyyy_mm_dd</code></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Column Name</th>
-<th class="tableblock halign-left valign-top">Data Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">UUID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Record Identifier.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TARGET_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Made up of ADDR_DST_DIGITS + '_' + ADDR_DST_TON + '_' + ADDR_DST_NPI + '_' + NETWORK_ID.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NETWORK_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NetworkId area via which a message has delivered (or failed in delivery).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ORIG_NETWORK_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NetworkId area via which a message has come to SMSC GW.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DUE_SLOT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BIGINT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">For which the messages will be loaded for delivering.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">IN_SYSTEM</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Not used in this table.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMSC_UUID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">UUID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Id of the SMSC session (from start to stop), this is needed to know which session has launched the delivery of a message.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ADDR_DST_DIGITS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Destination address digits.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ADDR_DST_TON</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP style TON (type of number) of destination address.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ADDR_DST_NPI</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP style Numbering Plan Indicator of destination address.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ADDR_SRC_DIGITS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Originating address digits.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ADDR_SRC_TON</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP style TON (type of number) of source address.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ADDR_SRC_NPI</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP style Numbering Plan Indicator of source address.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DUE_DELAY</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Duration (in seconds) after which a new delivery attempt will be done - value before the last delivery attempt.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SM_STATUS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Error Code value for the last attempt (0==no attempts yet). For more details on Error Codes please refer to <a href="#_appendix_smsc_errorcodes">[_appendix_smsc_errorcodes]</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ALERTING_SUPPORTED</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BOOLEAN</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The value is 'true' if SMSC was successfully registered at HLR after delivery failure. However this field is currently not being used because this demands extra database access.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BIGINT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A unique message ID assigned by SMSC. Max value is 10 000 000 000 (because of limitation of delivery receipts IDs), so this value may repeats in some big time. This messageId is used in SMPP protocol at the leg when a client is sending (submitting) a message to SMSC GW.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MO_MESSAGE_REF</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMS TPDU Message Reference field.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ORIG_ESME_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMSC internal name of origination ESME (empty for MO, HR, SIP and HTTP messages).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ORIG_SYSTEM_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP systemId of origination ESME for SMPP originated messages, HTTP account name for HTTP originated messages, empty for MO, HR and SIP originated messages.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DEST_CLUSTER_NAME</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name of cluster for destination ESME terminated massages (empty for MT messages).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DEST_ESME_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMSC internal name of destination ESME (empty for MT messages).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DEST_SYSTEM_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP name of destination ESME (empty for MT messages).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SUBMIT_DATE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TIMESTAMP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Time when a message was received by SMSC.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DELIVER_DATE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TIMESTAMP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Time when a message was sent from SMSC (null if message failed to deliver).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SERVICE_TYPE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP parameter (service_type) for ESME originated messages.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ESM_CLASS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Indicates Message Mode (Messaging Mode==Datagram, Forward or Store and Forward mode) and Message Type (MessageType==some flags including UDH indicator).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PROTOCOL_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Protocol Identifier SMPP parameter (TP-Protocol-Identifier files for GSM).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PRIORITY</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP parameter (priority_flag).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">REGISTERED_DELIVERY</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP parameter (registered_delivery).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">REPLACE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP parameter (replace_if_present_flag).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DATA_CODING</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">data_coding scheme.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DEFAULT_MSG_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP parameter (sm_default_msg_id).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BLOB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Not used now.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_TEXT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Message text - text part.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_BIN</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BLOB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Message text - UDH data part.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">OPTIONAL_PARAMETERS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TEXT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TLVs.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SCHEDULE_DELIVERY_TIME</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TIMESTAMP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SMPP parameter (schedule_delivery_time) - time when SMSC should start a delivery (may be null if immediate message delivery).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">VALIDITY_PERIOD</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TIMESTAMP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The validity period of this message. If ESME has not defined (or for MO messages) this field is filled by default SMSC settings.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">IMSI</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">IMSI of a mobile station (in SS7 network). This value is obtained after a successful SRI request. SRI request is executed in two cases: a) when delivering messages into SS7 network (MT procedure), b) when submitting (receiving) of a message from SS7 network b Home Routing procedure (if a request to a local HLR was made).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CORR_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This field is used for keeping of correlationId value for home routing procedure (SS7 originating messages). CorrelationId value plays a role of a fake “IMSI” when remote SMSC GW sends a short message to SMSC GW. Empty for messages that come to SMSC GW not via a Home Routing procedure. This table will keep this value for logging purpose.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NNN_DIGITS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NetworkNodeNumber = MSC/VLR address that serves a mobile station (in SS7 network). This value is obtained after a successful SRI request. SRI request is executed in two cases: a) when delivering messages into SS7 network (MT procedure), b) when submitting (receiving) of a message from SS7 network b Home Routing procedure (if a request to a local HLR was made).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NNN_AN</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">AddressNature for NetworkNodeNumber</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NNN_NP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NumberingPlan for NetworkNodeNumber</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SM_TYPE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0-ESME terminated, 1-MT terminated, 2-SIP terminated</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DELIVERY_COUNT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Delivery attempt count. (this will be==1 if a message was delivered in one go)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ORIGINATOR_SCCP_ADDRESS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SCCP CallingPartyAddress address for SS7 originated messages (it usually contains originating MSC or SMSC address).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DELIVERY_ATTEMPT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">INT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">STATUS_REPORT_REQUEST</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">USER_DATA</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A compound field that contains XML serialized info for several auxiliary fields.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA_2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA_3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EXTRA_DATA_4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A field for future usage.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="mes_id_yyyy_mm_dd"><a class="anchor" href="#mes_id_yyyy_mm_dd"></a>MES_ID_YYYY_MM_DD</h4>
-<div class="paragraph">
-<p>This table contains referenses of local messageIds to a primary keys of MESSAGES_YYYY_MM_DD tables for a possibility of finding of sent / delivery failed messages by thier messageId value.</p>
-</div>
-<div class="paragraph">
-<p>The field "MESSAGE_ID" acts as the primary key.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 7. <code>MES_ID_YYYY_MM_DD</code></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Column Name</th>
-<th class="tableblock halign-left valign-top">Data Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BIGINT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A unique message ID assigned by SMSC. Max value is 10 000 000 000 (because of limitation of delivery receipts IDs), so this value may repeats in some big time.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ADDR_DST_DIGITS</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Destination address digits.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">UUID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Record Identifier.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="dlv_mes_id_yyyy_mm_dd"><a class="anchor" href="#dlv_mes_id_yyyy_mm_dd"></a>DLV_MES_ID_YYYY_MM_DD</h4>
-<div class="paragraph">
-<p>This table contains referenses of remote messageIds (that are assigned by a remote SMSC GW to which a message was sent via SMPP protocol) to a local messageIds for sent to SMPP detination messages to corralate them.</p>
-</div>
-<div class="paragraph">
-<p>The fields "REMOTE_MESSAGE_ID", "DEST_ID" together act as the primary key.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 8. <code>DLV_MES_ID_YYYY_MM_DD</code></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Column Name</th>
-<th class="tableblock halign-left valign-top">Data Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">REMOTE_MESSAGE_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A unique message ID assigned by a remote SMSC.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DEST_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ASCII</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Cluster name of ESME via which a message has gone.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MESSAGE_ID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BIGINT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A unique message ID assigned by local SMSC.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="shared-keyspace"><a class="anchor" href="#shared-keyspace"></a>Shared KeySpace</h3>
-<div class="paragraph">
-<p>The shared database KeySpace is used for storing of data that is needed for different SMSC instances information exchange.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">        String urlString = "service:jmx:rmi:///jndi/rmi://localhost:9998/server";
+        JMXConnector jmxc;
+
+        // opening connecting
+        JMXServiceURL url = new JMXServiceURL(urlString);
+        jmxc = JMXConnectorFactory.connect(url, null);
+        MBeanServerConnection mbsc = jmxc.getMBeanServerConnection();
+
+        // checking of existence the target domain
+        String tagDomain = "org.mobicents.smsc";
+        String[] domains = mbsc.getDomains();
+        boolean found = false;
+        for (String domain : domains) {
+            if (tagDomain.equals(domain)) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            System.out.println("Remote domain has not found: " + tagDomain);
+            jmxc.close();
+            return;
+        }
+
+        ObjectName mbeanNameMprocManagement = new ObjectName(tagDomain + ":layer=MProcManagement,name=SmscManagement");
+        MProcManagementMBean mprocBean;
+        mprocBean = JMX.newMBeanProxy(mbsc, mbeanNameMprocManagement, MProcManagementMBean.class, true);
+
+        // management actions
+        MProcRule res = mprocBean.getMProcRuleById(1);
+        // we can put extra code for message actions here
+
+        // closing connection
+        jmxc.close();</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_db_reporting"><a class="anchor" href="#_db_reporting"></a>Reporting</h2>
+<h2 id="_appendix_mproc_api_jconsole"><a class="anchor" href="#_appendix_mproc_api_jconsole"></a>Connecting to SMSC GW mbeans by jconsole</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As of now there is no reporting in Restcomm SMSC .
-However you can leverage any external third party tool to dig Cassandra tables as defined above and create reports.
-The next release of Restcomm SMSC will feature a reporting section and also the flexibility to search for a specific SMS based on various search criteria.</p>
+<p><code>jconsole</code> is a java application from java JDK that helps us in mbeans observing and methods of mbeans invoking.
+The simpluet way of <code>jconsole</code> running is just typing:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>jconsole</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This example will not work if we want to use <code>MProcRule</code> interface of methods return values. For this we need to add into a class path extra libraries. Here is an example how to run <code>jconsole</code> (you need to replace <code>&lt;path&gt;</code> with an actual path to libraries and &lt;version&gt; to actual libraries version):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>jconsole -J-Djava.class.path=%JAVA_HOME%\lib\jconsole.jar;%JAVA_HOME%\lib\tools.jar;&lt;path&gt;\smsc-common-library-&lt;version&gt;.jar;&lt;path&gt;\mproc-api-&lt;version&gt;.jar;&lt;path&gt;\jcon\javolution-5.5.1.jar</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then you need to connect to a local jboss instance or remotely, go to section "MBeans", and find there a needed mbean: "org.mobicents.smsc" - "MProcManagement" - "SmscManagement" and invoke needed beans. You can check then actions result in SMSC GW web GUI.</p>
 </div>
 </div>
 </div>

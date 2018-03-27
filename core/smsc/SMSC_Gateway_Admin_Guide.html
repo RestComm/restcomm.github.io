@@ -23441,8 +23441,14 @@ display: none;
 <li><a href="#_smpp_simulator_bulk_messages">10.3. SMPP Simulator Tool - sending of bulk messages</a></li>
 </ul>
 </li>
-<li><a href="#_appendix_smsc_errorcodes">Appendix A: Error Codes</a></li>
-<li><a href="#revision-history">Appendix B: Revision History</a></li>
+<li><a href="#_appendix_mproc_api">Appendix A: API interface for access to SMSC GW configuring</a>
+<ul class="sectlevel2">
+<li><a href="#_appendix_mproc_api_java">Creating of a custom java application</a></li>
+<li><a href="#_appendix_mproc_api_jconsole">Connecting to SMSC GW mbeans by jconsole</a></li>
+</ul>
+</li>
+<li><a href="#_appendix_smsc_errorcodes">Appendix B: Error Codes</a></li>
+<li><a href="#revision-history">Appendix C: Revision History</a></li>
 </ul>
 </div>
 </div>
@@ -25890,7 +25896,7 @@ We recommend that you set logging threshold to <code>WARN</code> and let the CDR
 <p>SMSC GW supports of a graceful shutdown procedure. See more in a chapter <a href="#_gsd_settings">Graceful shutdown</a>. A graceful shutdown procedure is initiated by a GUI / CLI interface. SMSC GW will stop of loading new messages from a database and will make a server shutdown when all message delivering processes have completed. FEP nodes will prevent of sending new external dialogs to a SS7 node that is gracefully shutting down. SMSC GW node even after a graceful shutdown start will aceept and process of incoming messages from other interfaces (SMPP, SIP, HTTP). A user must stop of sending of messages via these interfeces before of a graceful shutdown start.</p>
 </div>
 <div class="paragraph">
-<p>For a smooth support of HR (Home Routing) and AlertCerviceCenter operations between SMSC GW nodes an extra cassandra KeySpace is introduced ss an addition to a dedicated cassandra KeySpace (default name is "Shared").
+<p>For a smooth support of HR (Home Routing) and AlertCerviceCenter operations between SMSC GW nodes an extra cassandra KeySpace is introduced as an addition to a dedicated cassandra KeySpace (default name is "Shared").
 This new clustering KeySpace is used for cache of correlationId values and data for HR procedure and exchanging of AlertCerviceCenter requests between SMSC GW servers (for MT SS7 procedure).
 If you use several SMSC GW nodes then you need to turn on an option <code>In cluster</code>, prepare a new empty cassandra KeySpace (a single instance for both/all SMSC GW nodes) and configure this KeySpace in <code>Shared Database Configuration</code> section.
 See more info in the chapter <a href="#_smsc_clustering_settings">Clustering Settings</a>.</p>
@@ -37364,7 +37370,129 @@ To stop bulk message sending press "Stop bulk sending" button.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_appendix_smsc_errorcodes"><a class="anchor" href="#_appendix_smsc_errorcodes"></a>Appendix A: Error Codes</h2>
+<h2 id="_appendix_mproc_api"><a class="anchor" href="#_appendix_mproc_api"></a>Appendix A: API interface for access to SMSC GW configuring</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A user may need to configure mproc rules of SMSC GW instance or other SMSC GW configuring programmatically by a user application. SMSC GW has an API based of JMX access interface for configuring.
+We explain more detailed how to access mproc rules in this chapter. Other configuring parts can be also configured via JMX interface but by using of other management beans.
+A list of such beans can be obtained by an application <code>jconsole</code> for Wildfly based server or by WEB interface <a href="http://&lt;IP&gt;:8080/jmx-console" class="bare">http://&lt;IP&gt;:8080/jmx-console</a> for jboss 5.1 based servers.</p>
+</div>
+<div class="paragraph">
+<p>Configuring of mproc rules can be done by implementing of a java application that will connect to SMSC GW server by JMX interface.</p>
+</div>
+<div class="paragraph">
+<p>We have MBean <code>MProcManagementMBean</code> for accessing to mproc rules, here is a code for it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">public interface MProcManagementMBean {
+
+    List&lt;MProcRule&gt; getMProcRules();
+
+    String[] getMProcRulesStr();
+
+    MProcRule getMProcRuleById(int id);
+
+    String getMProcRuleByIdStr(int id);
+
+    MProcRule createMProcRule(int id, String ruleFactoryName, String parametersString) throws Exception;
+
+    String createMProcRuleStr(int id, String ruleFactoryName, String parametersString) throws Exception;
+
+    MProcRule modifyMProcRule(int id, String parametersString) throws Exception;
+
+    String modifyMProcRuleStr(int id, String parametersString) throws Exception;
+
+    MProcRule destroyMProcRule(int mProcRuleId) throws Exception;
+
+    String destroyMProcRuleStr(int mProcRuleId) throws Exception;
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can use methods <code>createMProcRule()</code> for adding of an mproc rule, <code>modifyMProcRule()</code> for updating of an mproc rule, <code>destroyMProcRule()</code> for deleting of a mproc rule.
+Methods <code>getMProcRules()</code> and <code>getMProcRuleById()</code> may be used for getting info of current mproc rules state.</p>
+</div>
+<div class="paragraph">
+<p>Methods that return <code>MProcRule</code> interface demands adding extra jars into your java application classpath - <code>smsc-common-library-<strong>.jar</code>, <code>mproc-api-</strong>.jar</code> and <code>javolution-5.5.1.jar</code>, all they can be obtained from SMSC GW server.
+Methods with suffix <code>Str</code> return String values and do not demand extra libraries. It is a developer choice to select needed methods.</p>
+</div>
+<div class="paragraph">
+<p>You can read details for mproc rules in <a href="#_mproc_rules_fundamentals">Message processing rules (mproc rules)</a> and details for message routing process there: <a href="#_routing_fundamentals">SMSC GW routing fundamentals</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="_appendix_mproc_api_java"><a class="anchor" href="#_appendix_mproc_api_java"></a>Creating of a custom java application</h3>
+<div class="paragraph">
+<p>A custom java based user application can be created based on a following template. The code contains of a connection opening section, management section and connection closing section.
+You can put any code into the management section for making of configuring (adding, updating or removing of rules).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">        String urlString = "service:jmx:rmi:///jndi/rmi://localhost:9998/server";
+        JMXConnector jmxc;
+
+        // opening connecting
+        JMXServiceURL url = new JMXServiceURL(urlString);
+        jmxc = JMXConnectorFactory.connect(url, null);
+        MBeanServerConnection mbsc = jmxc.getMBeanServerConnection();
+
+        // checking of existence the target domain
+        String tagDomain = "org.mobicents.smsc";
+        String[] domains = mbsc.getDomains();
+        boolean found = false;
+        for (String domain : domains) {
+            if (tagDomain.equals(domain)) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            System.out.println("Remote domain has not found: " + tagDomain);
+            jmxc.close();
+            return;
+        }
+
+        ObjectName mbeanNameMprocManagement = new ObjectName(tagDomain + ":layer=MProcManagement,name=SmscManagement");
+        MProcManagementMBean mprocBean;
+        mprocBean = JMX.newMBeanProxy(mbsc, mbeanNameMprocManagement, MProcManagementMBean.class, true);
+
+        // management actions
+        MProcRule res = mprocBean.getMProcRuleById(1);
+        // we can put extra code for message actions here
+
+        // closing connection
+        jmxc.close();</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appendix_mproc_api_jconsole"><a class="anchor" href="#_appendix_mproc_api_jconsole"></a>Connecting to SMSC GW mbeans by jconsole</h3>
+<div class="paragraph">
+<p><code>jconsole</code> is a java application from java JDK that helps us in mbeans observing and methods of mbeans invoking.
+The simpluet way of <code>jconsole</code> running is just typing:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>jconsole</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This example will not work if we want to use <code>MProcRule</code> interface of methods return values. For this we need to add into a class path extra libraries. Here is an example how to run <code>jconsole</code> (you need to replace <code>&lt;path&gt;</code> with an actual path to libraries and &lt;version&gt; to actual libraries version):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>jconsole -J-Djava.class.path=%JAVA_HOME%\lib\jconsole.jar;%JAVA_HOME%\lib\tools.jar;&lt;path&gt;\smsc-common-library-&lt;version&gt;.jar;&lt;path&gt;\mproc-api-&lt;version&gt;.jar;&lt;path&gt;\jcon\javolution-5.5.1.jar</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then you need to connect to a local jboss instance or remotely, go to section "MBeans", and find there a needed mbean: "org.mobicents.smsc" - "MProcManagement" - "SmscManagement" and invoke needed beans. You can check then actions result in SMSC GW web GUI.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_appendix_smsc_errorcodes"><a class="anchor" href="#_appendix_smsc_errorcodes"></a>Appendix B: Error Codes</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The following error codes are used to indicate the Error Code value for the last delivery attempt in table field <code>SM_STATUS</code>.
@@ -37724,7 +37852,7 @@ public enum ErrorCode {
 </div>
 </div>
 <div class="sect1">
-<h2 id="revision-history"><a class="anchor" href="#revision-history"></a>Appendix B: Revision History</h2>
+<h2 id="revision-history"><a class="anchor" href="#revision-history"></a>Appendix C: Revision History</h2>
 <div class="sectionbody">
 
 </div>
@@ -37738,7 +37866,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-27 14:37:01 UTC
+Last updated 2018-03-27 18:17:14 UTC
 </div>
 </div>
 <footer>
