@@ -24737,6 +24737,33 @@ Before of starting of cluster we need to configure an empty shared KeySpace (one
 <div class="paragraph">
 <p>An extra shared KeySpace may be configured in either at a separate cassandra database instance or in a one of databases that contains a dedicated KeySpace.</p>
 </div>
+<div class="paragraph">
+<p>Here is a script example for database creation in case when we put a Shared KeySpace to cassandra 1.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>&gt; at cassandra 1
+CREATE KEYSPACE "RestCommSMSC" WITH REPLICATION = {'class' : 'SimpleStrategy', 'replication_factor': 1};
+CREATE KEYSPACE "Shared" WITH REPLICATION = {'class' : 'SimpleStrategy', 'replication_factor': 1};
+
+&gt; at cassandra 2
+CREATE KEYSPACE "RestCommSMSC" WITH REPLICATION = {'class' : 'SimpleStrategy', 'replication_factor': 1};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is a CLI script example for settings a shared KeySpace options.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>smsc set shareddbhosts &lt;IP&gt;
+smsc set shareddbport 9042
+smsc set shareddbkeyspace Shared
+smsc set shareddbuser cassandra
+smsc set shareddbpass cassandra
+
+smsc set incluster true</code></pre>
+</div>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_fep_ussd_smsc_map_ra"><a class="anchor" href="#_fep_ussd_smsc_map_ra"></a>1.6.3. MAP RA configuration</h4>
@@ -24885,9 +24912,11 @@ Before of starting of cluster we need to configure an empty shared KeySpace (one
 </ul>
 </div>
 <div class="paragraph">
-<p>Find CLI commands for configuring SS7 part of SMSC/USSD GW node 01 next:</p>
+<p>Find CLI commands for configuring SS7 part of SMSC/USSD GW nodes further. Note that you need remove existing configure items from SS7 part if a SS7 conenction to an operator is already present.
+It may be done with CLI or web GUI. There is also a simplier way: stop SMSC GW server and then remove from data folder corresponded SS7 xml files: <code>Mtp3UserPart_m3ua<strong>.xml</code>, <code>SccpStack_</strong>.xml</code>, <code>SCTPManagement_sctp.xml</code>, <code>TcapStack_**.xml</code>.</p>
 </div>
 <div class="listingblock">
+<div class="title">CLI commands for configuring SS7 part of SMSC/USSD GW node 01 next.</div>
 <div class="content">
 <pre class="highlight"><code>sctp server create serv1 172.30.1.8 8071 sockettype SCTP
 sctp server start serv1
@@ -24923,10 +24952,8 @@ tcap set dialogidrangestart 1
 tcap set dialogidrangeend 999999999</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Find CLI commands for configuring SS7 part of SMSC/USSD GW node 02 next:</p>
-</div>
 <div class="listingblock">
+<div class="title">CLI commands for configuring SS7 part of SMSC/USSD GW node 02 next:</div>
 <div class="content">
 <pre class="highlight"><code>sctp server create serv1 172.30.1.180 8061 sockettype SCTP
 sctp server start serv1
@@ -24964,6 +24991,309 @@ tcap set dialogidrangeend 1999999999</code></pre>
 </div>
 <div class="paragraph">
 <p>You can find extracted info from <code>data</code> folder of SMSC/USSD GW in <code>config-examples/configSS7-ussd-smsc/USSD_SMSC_1/data</code> path for configuring SMSC/USSD GW 01, while in <code>config-examples/configSS7-ussd-smsc/USSD_SMSC_2/data</code> path for SMSC/USSD GW 02. You can take these files, update IP addresses and copy them into <code>data</code> folders of correspondent SMSC/USSD GWs.</p>
+</div>
+<div class="paragraph">
+<p>You can find here ss7 xml files examples for server 1:</p>
+</div>
+<div class="listingblock">
+<div class="title">SCTPManagement_sctp.xml</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;connectdelay value="5000"/&gt;
+&lt;servers&gt;
+	&lt;server name="serv1" started="true" hostAddress="172.30.1.8" hostPort="8071" ipChannelType="0" acceptAnonymousConnections="false" maxConcurrentConnectionsCount="0" extraHostAddresseSize="0"&gt;
+		&lt;associations&gt;
+			&lt;string value="ass1"/&gt;
+			&lt;string value="ass2"/&gt;
+		&lt;/associations&gt;
+	&lt;/server&gt;
+&lt;/servers&gt;
+&lt;associations&gt;
+	&lt;name value="ass1"/&gt;
+	&lt;association name="ass1" assoctype="SERVER" hostAddress="" hostPort="0" peerAddress="172.30.1.8" peerPort="8070" serverName="serv1" ipChannelType="0" extraHostAddresseSize="0"/&gt;
+	&lt;name value="ass2"/&gt;
+	&lt;association name="ass2" assoctype="SERVER" hostAddress="" hostPort="0" peerAddress="172.30.1.180" peerPort="8070" serverName="serv1" ipChannelType="0" extraHostAddresseSize="0"/&gt;
+&lt;/associations&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Mtp3UserPart_m3ua1.xml</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;heartbeattime value="10000"/&gt;
+&lt;aspFactoryList&gt;
+	&lt;aspFactory name="asp1" assocName="ass1" started="true" maxseqnumber="256" aspid="4" heartbeat="false"/&gt;
+	&lt;aspFactory name="asp2" assocName="ass2" started="true" maxseqnumber="256" aspid="4" heartbeat="false"/&gt;
+&lt;/aspFactoryList&gt;
+&lt;asList&gt;
+	&lt;as name="as1" minAspActiveForLb="1" functionality="IPSP" exchangeType="SE" ipspType="SERVER"&gt;
+		&lt;routingContext size="1"&gt;
+			&lt;rc value="100"/&gt;
+		&lt;/routingContext&gt;
+		&lt;networkAppearance value="102"/&gt;
+		&lt;trafficMode mode="2"/&gt;
+		&lt;defTrafficMode mode="2"/&gt;
+		&lt;asps&gt;
+			&lt;asp name="asp1"/&gt;
+		&lt;/asps&gt;
+	&lt;/as&gt;
+	&lt;as name="as2" minAspActiveForLb="1" functionality="IPSP" exchangeType="SE" ipspType="SERVER"&gt;
+		&lt;routingContext size="1"&gt;
+			&lt;rc value="100"/&gt;
+		&lt;/routingContext&gt;
+		&lt;networkAppearance value="102"/&gt;
+		&lt;trafficMode mode="2"/&gt;
+		&lt;defTrafficMode mode="2"/&gt;
+		&lt;asps&gt;
+			&lt;asp name="asp2"/&gt;
+		&lt;/asps&gt;
+	&lt;/as&gt;
+&lt;/asList&gt;
+&lt;route&gt;
+	&lt;key value="11:10:3"/&gt;
+	&lt;routeAs trafficModeType="2" as="as1"/&gt;
+	&lt;key value="41:10:3"/&gt;
+	&lt;routeAs trafficModeType="2" as="as2"/&gt;
+&lt;/route&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">SccpStack_sccpresource2.xml</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;remoteSsns&gt;
+	&lt;id value="1"/&gt;
+	&lt;value remoteSpc="11" remoteSsn="8" remoteSsnFlag="0" markProhibitedWhenSpcResuming="false"/&gt;
+	&lt;id value="2"/&gt;
+	&lt;value remoteSpc="11" remoteSsn="6" remoteSsnFlag="0" markProhibitedWhenSpcResuming="false"/&gt;
+	&lt;id value="3"/&gt;
+	&lt;value remoteSpc="41" remoteSsn="8" remoteSsnFlag="0" markProhibitedWhenSpcResuming="false"/&gt;
+	&lt;id value="4"/&gt;
+	&lt;value remoteSpc="41" remoteSsn="6" remoteSsnFlag="0" markProhibitedWhenSpcResuming="false"/&gt;
+&lt;/remoteSsns&gt;
+&lt;remoteSpcs&gt;
+	&lt;id value="1"/&gt;
+	&lt;value remoteSpc="11" remoteSpcFlag="0" mask="0"/&gt;
+	&lt;id value="2"/&gt;
+	&lt;value remoteSpc="41" remoteSpcFlag="0" mask="0"/&gt;
+&lt;/remoteSpcs&gt;
+&lt;concernedSpcs/&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">SccpStack_sccprouter2.xml</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;rule&gt;
+	&lt;id value="1"/&gt;
+	&lt;value ruleType="Loadshared" loadSharingAlgo="Bit0" originatingType="LocalOriginated" mask="K" paddress="1" saddress="2" networkId="0"&gt;
+		&lt;patternSccpAddress pc="-1" ssn="0"&gt;
+			&lt;ai value="82"/&gt;
+			&lt;gt type="GT0100" tt="0" es="1" np="1" nai="4" digits="*"/&gt;
+		&lt;/patternSccpAddress&gt;
+	&lt;/value&gt;
+	&lt;id value="2"/&gt;
+	&lt;value ruleType="Solitary" loadSharingAlgo="Undefined" originatingType="RemoteOriginated" mask="K" paddress="21" saddress="-1" networkId="0"&gt;
+		&lt;patternSccpAddress pc="-1" ssn="0"&gt;
+			&lt;ai value="82"/&gt;
+			&lt;gt type="GT0100" tt="0" es="1" np="1" nai="4" digits="*"/&gt;
+		&lt;/patternSccpAddress&gt;
+	&lt;/value&gt;
+&lt;/rule&gt;
+&lt;routingAddress&gt;
+	&lt;id value="1"/&gt;
+	&lt;sccpAddress pc="11" ssn="0"&gt;
+		&lt;ai value="83"/&gt;
+		&lt;gt type="GT0100" tt="0" es="1" np="1" nai="4" digits="100000"/&gt;
+	&lt;/sccpAddress&gt;
+	&lt;id value="2"/&gt;
+	&lt;sccpAddress pc="41" ssn="0"&gt;
+		&lt;ai value="83"/&gt;
+		&lt;gt type="GT0100" tt="0" es="1" np="1" nai="4" digits="100000"/&gt;
+	&lt;/sccpAddress&gt;
+	&lt;id value="21"/&gt;
+	&lt;sccpAddress pc="10" ssn="0"&gt;
+		&lt;ai value="83"/&gt;
+		&lt;gt type="GT0100" tt="0" es="1" np="1" nai="4" digits="200000"/&gt;
+	&lt;/sccpAddress&gt;
+&lt;/routingAddress&gt;
+&lt;longMessageRule/&gt;
+&lt;sap&gt;
+	&lt;id value="1"/&gt;
+	&lt;value mtp3Id="1" opc="10" ni="2" networkId="0"&gt;
+		&lt;mtp3DestinationMap&gt;
+			&lt;id value="1"/&gt;
+			&lt;value firstDpc="11" lastDpc="41" firstSls="0" lastSls="255" slsMask="255"/&gt;
+		&lt;/mtp3DestinationMap&gt;
+	&lt;/value&gt;
+&lt;/sap&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">TcapStack_management.xml</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;dialogidletimeout value="60000"/&gt;
+&lt;invoketimeout value="30000"/&gt;
+&lt;maxdialogs value="5000"/&gt;
+&lt;dialogidrangestart value="1"/&gt;
+&lt;dialogidrangeend value="999999999"/&gt;
+&lt;donotsendprotocolversion value="false"/&gt;
+&lt;slsrange value="All"/&gt;
+&lt;statisticsenabled value="false"/&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can find here ss7 xml files examples for server 2:</p>
+</div>
+<div class="listingblock">
+<div class="title">SCTPManagement_sctp.xml</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;connectdelay value="5000"/&gt;
+&lt;servers&gt;
+	&lt;server name="serv1" started="true" hostAddress="172.30.1.180" hostPort="8061" ipChannelType="0" acceptAnonymousConnections="false" maxConcurrentConnectionsCount="0" extraHostAddresseSize="0"&gt;
+		&lt;associations&gt;
+			&lt;string value="ass1"/&gt;
+			&lt;string value="ass2"/&gt;
+		&lt;/associations&gt;
+	&lt;/server&gt;
+&lt;/servers&gt;
+&lt;associations&gt;
+	&lt;name value="ass1"/&gt;
+	&lt;association name="ass1" assoctype="SERVER" hostAddress="" hostPort="0" peerAddress="172.30.1.180" peerPort="8060" serverName="serv1" ipChannelType="0" extraHostAddresseSize="0"/&gt;
+	&lt;name value="ass2"/&gt;
+	&lt;association name="ass2" assoctype="SERVER" hostAddress="" hostPort="0" peerAddress="172.30.1.8" peerPort="8060" serverName="serv1" ipChannelType="0" extraHostAddresseSize="0"/&gt;
+&lt;/associations&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Mtp3UserPart_m3ua1.xml</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;heartbeattime value="10000"/&gt;
+&lt;aspFactoryList&gt;
+	&lt;aspFactory name="asp1" assocName="ass1" started="true" maxseqnumber="256" aspid="4" heartbeat="false"/&gt;
+	&lt;aspFactory name="asp2" assocName="ass2" started="true" maxseqnumber="256" aspid="4" heartbeat="false"/&gt;
+&lt;/aspFactoryList&gt;
+&lt;asList&gt;
+	&lt;as name="as1" minAspActiveForLb="1" functionality="IPSP" exchangeType="SE" ipspType="SERVER"&gt;
+		&lt;routingContext size="1"&gt;
+			&lt;rc value="100"/&gt;
+		&lt;/routingContext&gt;
+		&lt;networkAppearance value="102"/&gt;
+		&lt;trafficMode mode="2"/&gt;
+		&lt;defTrafficMode mode="2"/&gt;
+		&lt;asps&gt;
+			&lt;asp name="asp1"/&gt;
+		&lt;/asps&gt;
+	&lt;/as&gt;
+	&lt;as name="as2" minAspActiveForLb="1" functionality="IPSP" exchangeType="SE" ipspType="SERVER"&gt;
+		&lt;routingContext size="1"&gt;
+			&lt;rc value="100"/&gt;
+		&lt;/routingContext&gt;
+		&lt;networkAppearance value="102"/&gt;
+		&lt;trafficMode mode="2"/&gt;
+		&lt;defTrafficMode mode="2"/&gt;
+		&lt;asps&gt;
+			&lt;asp name="asp2"/&gt;
+		&lt;/asps&gt;
+	&lt;/as&gt;
+&lt;/asList&gt;
+&lt;route&gt;
+	&lt;key value="11:40:3"/&gt;
+	&lt;routeAs trafficModeType="2" as="as1"/&gt;
+	&lt;key value="41:40:3"/&gt;
+	&lt;routeAs trafficModeType="2" as="as2"/&gt;
+&lt;/route&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">SccpStack_sccpresource2.xml</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;remoteSsns&gt;
+    &lt;id value="1"/&gt;
+    &lt;value remoteSpc="11" remoteSsn="8" remoteSsnFlag="0" markProhibitedWhenSpcResuming="false"/&gt;
+    &lt;id value="2"/&gt;
+    &lt;value remoteSpc="11" remoteSsn="6" remoteSsnFlag="0" markProhibitedWhenSpcResuming="false"/&gt;
+    &lt;id value="3"/&gt;
+    &lt;value remoteSpc="41" remoteSsn="8" remoteSsnFlag="0" markProhibitedWhenSpcResuming="false"/&gt;
+    &lt;id value="4"/&gt;
+    &lt;value remoteSpc="41" remoteSsn="6" remoteSsnFlag="0" markProhibitedWhenSpcResuming="false"/&gt;
+&lt;/remoteSsns&gt;
+&lt;remoteSpcs&gt;
+    &lt;id value="1"/&gt;
+    &lt;value remoteSpc="11" remoteSpcFlag="0" mask="0"/&gt;
+    &lt;id value="2"/&gt;
+    &lt;value remoteSpc="41" remoteSpcFlag="0" mask="0"/&gt;
+&lt;/remoteSpcs&gt;
+&lt;concernedSpcs/&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">SccpStack_sccprouter2.xml</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;rule&gt;
+	&lt;id value="1"/&gt;
+	&lt;value ruleType="Solitary" loadSharingAlgo="Bit0" originatingType="LocalOriginated" mask="K" paddress="1" saddress="2" networkId="0"&gt;
+		&lt;patternSccpAddress pc="-1" ssn="0"&gt;
+			&lt;ai value="82"/&gt;
+			&lt;gt type="GT0100" tt="0" es="1" np="1" nai="4" digits="*"/&gt;
+		&lt;/patternSccpAddress&gt;
+	&lt;/value&gt;
+	&lt;id value="2"/&gt;
+	&lt;value ruleType="Solitary" loadSharingAlgo="Undefined" originatingType="RemoteOriginated" mask="K" paddress="21" saddress="-1" networkId="0"&gt;
+		&lt;patternSccpAddress pc="-1" ssn="0"&gt;
+			&lt;ai value="82"/&gt;
+			&lt;gt type="GT0100" tt="0" es="1" np="1" nai="4" digits="*"/&gt;
+		&lt;/patternSccpAddress&gt;
+	&lt;/value&gt;
+&lt;/rule&gt;
+
+&lt;routingAddress&gt;
+    &lt;id value="1"/&gt;
+    &lt;sccpAddress pc="11" ssn="0"&gt;
+        &lt;ai value="83"/&gt;
+        &lt;gt type="GT0100" tt="0" es="1" np="1" nai="4" digits="100000"/&gt;
+    &lt;/sccpAddress&gt;
+    &lt;id value="2"/&gt;
+    &lt;sccpAddress pc="41" ssn="0"&gt;
+        &lt;ai value="83"/&gt;
+        &lt;gt type="GT0100" tt="0" es="1" np="1" nai="4" digits="100000"/&gt;
+    &lt;/sccpAddress&gt;
+    &lt;id value="21"/&gt;
+    &lt;sccpAddress pc="40" ssn="0"&gt;
+        &lt;ai value="83"/&gt;
+        &lt;gt type="GT0100" tt="0" es="1" np="1" nai="4" digits="200000"/&gt;
+    &lt;/sccpAddress&gt;
+&lt;/routingAddress&gt;
+&lt;longMessageRule/&gt;
+&lt;sap&gt;
+	&lt;id value="1"/&gt;
+	&lt;value mtp3Id="1" opc="40" ni="2" networkId="0"&gt;
+		&lt;mtp3DestinationMap&gt;
+			&lt;id value="1"/&gt;
+			&lt;value firstDpc="11" lastDpc="41" firstSls="0" lastSls="255" slsMask="255"/&gt;
+		&lt;/mtp3DestinationMap&gt;
+	&lt;/value&gt;
+&lt;/sap&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">TcapStack_management.xml</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;dialogidletimeout value="60000"/&gt;
+&lt;invoketimeout value="30000"/&gt;
+&lt;maxdialogs value="5000"/&gt;
+&lt;dialogidrangestart value="1000000000"/&gt;
+&lt;dialogidrangeend value="1999999999"/&gt;
+&lt;donotsendprotocolversion value="false"/&gt;
+&lt;slsrange value="All"/&gt;
+&lt;statisticsenabled value="false"/&gt;</code></pre>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -27419,7 +27749,7 @@ sip-node-1, sip-node-2 etc., then this tag should be &lt;nodeName&gt;sip-node&lt
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-27 18:19:41 UTC
+Last updated 2018-03-30 14:46:44 UTC
 </div>
 </div>
 <footer>
