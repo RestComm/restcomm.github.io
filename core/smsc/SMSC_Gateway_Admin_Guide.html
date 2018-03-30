@@ -25898,8 +25898,24 @@ We recommend that you set logging threshold to <code>WARN</code> and let the CDR
 <div class="paragraph">
 <p>For a smooth support of HR (Home Routing) and AlertCerviceCenter operations between SMSC GW nodes an extra cassandra KeySpace is introduced as an addition to a dedicated cassandra KeySpace (default name is "Shared").
 This new clustering KeySpace is used for cache of correlationId values and data for HR procedure and exchanging of AlertCerviceCenter requests between SMSC GW servers (for MT SS7 procedure).
-If you use several SMSC GW nodes then you need to turn on an option <code>In cluster</code>, prepare a new empty cassandra KeySpace (a single instance for both/all SMSC GW nodes) and configure this KeySpace in <code>Shared Database Configuration</code> section.
-See more info in the chapter <a href="#_smsc_clustering_settings">Clustering Settings</a>.</p>
+If you use several SMSC GW nodes then you need to turn on an option <code>In cluster</code>, prepare a new empty cassandra KeySpace (a single instance for both/all SMSC GW nodes) and configure this KeySpace in <code>Shared Database Configuration</code> section.</p>
+</div>
+<div class="paragraph">
+<p>Here is a script example for settings a shared KeySpace options.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>smsc set shareddbhosts &lt;IP&gt;
+smsc set shareddbport 9042
+smsc set shareddbkeyspace Shared
+smsc set shareddbuser cassandra
+smsc set shareddbpass cassandra
+
+smsc set incluster true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can use also web GUI <code><a href="http://localhost:8080/smsc-management/" class="bare">http://localhost:8080/smsc-management/</a></code> - "Server settings" - "Clustering". See more info in the chapter <a href="#_smsc_clustering_settings">Clustering Settings</a>.</p>
 </div>
 <div class="paragraph">
 <p>When working of SMSC we need to have both dedicated and shared cassandra KeySpaces up. We may need to bring cassandra databases down for maintenance. A dedicated KeySpace may be turned down with a corresponded SMSC server.
@@ -25908,7 +25924,7 @@ If we need to turn down a database with a shared keyspace and some SMSC GWs are 
 <div class="ulist">
 <ul>
 <li>
-<p>turn <code>InCLuster</code> option to <code>false</code> - see <a href="#_in_cluster">Clustering Configuration</a></p>
+<p>turn <code>InCLuster</code> option to <code>false</code></p>
 </li>
 <li>
 <p>stop a database with shared KeySpace</p>
@@ -25920,6 +25936,19 @@ If we need to turn down a database with a shared keyspace and some SMSC GWs are 
 <p>turn <code>InCLuster</code> option to <code>true</code></p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>Turning <code>InCLuster</code> to <code>false</code> or <code>true</code> can be done by a web GUI or by CLI commands</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>smsc set incluster false
+
+smsc set incluster true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See for details <a href="#_in_cluster">Clustering Configuration</a>.</p>
 </div>
 <div class="paragraph">
 <p>We need to make special configuring procedures of SS7 part before SMSC GW / FEP will be able to work in a load-balancing mode. This configuring is described in a manual "Restcomm Load Balancer User Guide", check a chapter "Integration Load Balancer SS7 (FEP) with USSD and SMSC servers".</p>
@@ -37866,7 +37895,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-27 18:17:14 UTC
+Last updated 2018-03-30 14:44:12 UTC
 </div>
 </div>
 <footer>

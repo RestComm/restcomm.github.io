@@ -23405,10 +23405,29 @@ Telscale SS7 FEP before SS7 network". This KeySpace is needed only for a cluster
 <div class="paragraph">
 <p>Before a first Restcomm SMSC start we need to create an empty dedicated keyspace per SMSC GW instance (and one empty shared KeySpace only in clustering mode). SMSC creates all needed tables itself after starting of SMSC.</p>
 </div>
+<div class="paragraph">
+<p>Here is the simplest script for creating a dedicated KeySpace by cassandra CQL console:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>CREATE KEYSPACE "RestCommSMSC" WITH REPLICATION = {'class' : 'SimpleStrategy', 'replication_factor': 1};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is the simplest script for creating a dedicated KeySpace by cassandra CQL console:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>CREATE KEYSPACE "Shared" WITH REPLICATION = {'class' : 'SimpleStrategy', 'replication_factor': 1};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can use updated commands if you need other cassandra configurations like usage of cassandra cluster.</p>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-27 18:17:14 UTC
+Last updated 2018-03-30 14:44:12 UTC
 </div>
 </div>
 <footer>
