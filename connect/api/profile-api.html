@@ -23404,6 +23404,14 @@ is defined by a JSON schema, rather than regular properties, representing a
 document used as generic container.</p>
 </div>
 <div class="paragraph">
+<p>The REST API will validate well-known contains
+of the document that are used by RestcommConnect during session handling logic. The
+rest of the document will not be validated, with the only constraint of a
+maximum size limitation of 10MB. This means the REST API consumer may use the Profile
+document to store/retrieve any kind of arbitrary information as long as the document is
+a valid JSON document.</p>
+</div>
+<div class="paragraph">
 <p>All Profiles REST API is only accesible by SuperAdmin credentials. With the exception
 of reading the associated Profile, where all Roles are allowed if the queried profile
 is associated with the requesting Account credentials.</p>
@@ -23818,7 +23826,7 @@ schema.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-08 02:15:49 UTC
+Last updated 2018-04-14 04:53:37 UTC
 </div>
 </div>
 <footer>
