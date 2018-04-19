@@ -26709,6 +26709,12 @@ If a message fits to all conditions then the rule will be applied to the message
 <td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that source address of the message will not be changed.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sriremotesccpgtprefix</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arrival Trigger / &lt;sri remote sccp gt prefix&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sriremotesccpgtprefix will be added to the beginning of a message SCCP called party address to route SriForSM request to.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"-1". This means that Sccp called party address will not be changed.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">mtlocalsccpgt</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Arrival trigger / &lt;new gt value&gt;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">global title of a local SCCP address of an MT message will be changed to &lt;new gt value&gt;. This means that GT in originating SCCP address of an MT message will be changed from what is specified by SMSC for current networkId.</p></td>
@@ -35715,8 +35721,9 @@ SYNOPSIS
 	newdestnpi &lt;new destination numbering plan indicator&gt;
 	adddestdigprefix &lt;prefix value&gt; addsourcedigprefix &lt;prefix value&gt;
 	newsourceton &lt;new source type of number&gt; newsourcenpi
-	&lt;new source numbering plan indicator&gt; newsourceaddr &lt;new source address value&gt; mtlocalsccpgt
-	&lt;new gt of a local sccp address of an mt message&gt; mtremotesccptt
+	&lt;new source numbering plan indicator&gt; newsourceaddr &lt;new source address value&gt;
+	sriremotesccpgtprefix &lt;sri remote sccp gt prefix&gt;
+	mtlocalsccpgt &lt;new gt of a local sccp address of an mt message&gt; mtremotesccptt
 	&lt;new tt for remote sccp address for mt message&gt; hrbypass &lt;false | true&gt; dropaftersri
 	&lt;false | true&gt; newnetworkidaftersri &lt;networkId value&gt; dropaftertempfail &lt;false | true&gt;
 	newnetworkidaftertempfail &lt;networkId value&gt; droponarrival &lt;false | true&gt; rejectonarrival
@@ -35761,6 +35768,7 @@ PARAMETERS
 	newsourceton - an optional parameter.
 	newsourcenpi - an optional parameter.
 	newsourceaddr - an optional parameter.
+	sriremotesccpgtprefix - an optional parameter.
 	mtlocalsccpgt - an optional parameter.
 	mtremotesccptt - an optional parameter.
 	makecopy - an optional parameter.
@@ -35844,6 +35852,7 @@ SYNOPSIS
 	adddestdigprefix &lt;prefix value&gt; addsourcedigprefix &lt;prefix value&gt;
 	newsourceton &lt;new source type of number&gt; newsourcenpi
 	&lt;new source numbering plan indicator&gt; newsourceaddr &lt;new source address value&gt;
+	sriremotesccpgtprefix &lt;sri remote sccp gt prefix&gt;
 	mtlocalsccpgt &lt;new gt of a local sccp address of an mt message&gt; mtremotesccptt
 	&lt;new tt for remote sccp address for mt message&gt; hrbypass &lt;false | true&gt; dropaftersri
 	&lt;false | true&gt; newnetworkidaftersri &lt;networkId value&gt; dropaftertempfail &lt;false | true&gt;
@@ -35887,6 +35896,7 @@ PARAMETERS
 	newsourceton - an optional parameter.
 	newsourcenpi - an optional parameter.
 	newsourceaddr - an optional parameter.
+	sriremotesccpgtprefix - an optional parameter.
 	mtlocalsccpgt - an optional parameter.
 	mtremotesccptt - an optional parameter.
 	makecopy - an optional parameter.
@@ -37895,7 +37905,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 02:28:27 UTC
+Last updated 2018-04-19 15:11:34 UTC
 </div>
 </div>
 <footer>
