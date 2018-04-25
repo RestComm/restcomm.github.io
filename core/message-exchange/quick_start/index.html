@@ -23437,7 +23437,7 @@ rep or GSS rep to schedule your federation interop.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Provide your server&#8217;s public IP address(es) to your GSS rep prior to the scheduled interop date.</p>
+<p>Add your server&#8217;s IP addresses to our Whitelist using the <a href="https://cloud-xmpp.restcomm.com/api/swagger-ui.html#/whitelist-rule-controller">Whitelist API</a></p>
 </li>
 <li>
 <p>Create DNS SRV records on your DNS servers for your UC server.</p>
@@ -23522,9 +23522,49 @@ dropdown value as <code>POST</code></p>
 </div>
 <div class="sect2">
 <h3 id="existing-number"><a class="anchor" href="#existing-number"></a>Existing Number</h3>
-<div class="paragraph">
-<p>For an existing phone number that you want to enable for SMS messaging, the steps are exactly the same as for New Number
-process above. You will need to send the list of numbers you want to test with ahead of time to your GSS representative.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Send a CSV of all numbers you want to enable for SMS traffic to your GSS representative</p>
+</li>
+<li>
+<p>Click on <code>Numbers</code></p>
+</li>
+<li>
+<p>Click on <code>Register Number</code></p>
+</li>
+<li>
+<p>In the <code>SIP Address</code> text box, enter your number. If in the US, do not enter a + in front of your number</p>
+</li>
+<li>
+<p>In the <code>Friendly Name</code> text box, enter some identifying name</p>
+</li>
+<li>
+<p>Once registration is completed, the number will show up in your Numbers List on the Dashboard.</p>
+</li>
+<li>
+<p>Click the number. You&#8217;ll see a screen that looks like this:</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./../images/configure_number.png" alt="Configure Number">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Select RCML URL from the dropdown</p>
+</li>
+<li>
+<p>Enter the value <code><a href="https://xmpp-service.restcomm.com/api/messages/sms" class="bare">https://xmpp-service.restcomm.com/api/messages/sms</a></code> in the textbox and leave the right
+dropdown value as <code>POST</code></p>
+</li>
+<li>
+<p>Click <code>Save Changes</code></p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -23604,7 +23644,7 @@ created your first mapping!</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-25 16:21:28 UTC
+Last updated 2018-04-25 19:30:04 UTC
 </div>
 </div>
 <footer>
