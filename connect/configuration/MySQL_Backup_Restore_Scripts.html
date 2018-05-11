@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>Requirements</title>
+<title>MySQL Backup/Restore scripts</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -23347,336 +23347,195 @@ display: none;
 
     </header>
 </head>
-<body class="article">
+<body id="mysql-backup-restore-scripts" class="article">
 <div id="header">
+<h1>MySQL Backup/Restore scripts</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
-<ul class="sectlevel0">
+<ul class="sectlevel1">
+<li><a href="#overview">Overview</a></li>
 <li><a href="#requirements">Requirements</a></li>
-<li><a href="#application-features">Application features</a></li>
-<li><a href="#step-1">Step 1</a></li>
-<li><a href="#step-2">Step 2</a></li>
-<li><a href="#step-3">Step 3</a></li>
-<li><a href="#step-4">Step 4</a></li>
-<li><a href="#step-5">Step 5</a></li>
-<li><a href="#step-6">Step 6</a></li>
+<li><a href="#scripts-location">Scripts location</a></li>
+<li><a href="#full-backup-restore">Full backup/restore</a>
+<ul class="sectlevel3">
+<li><a href="#backup">Backup</a></li>
+<li><a href="#restore">Restore</a></li>
+</ul>
+</li>
+<li><a href="#clients-backup-restore">Clients backup/restore</a>
+<ul class="sectlevel3">
+<li><a href="#full-backup">Full Backup</a></li>
+<li><a href="#backup-per-organization">Backup per Organization</a></li>
+<li><a href="#restore-2">Restore</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 <div id="content">
+<div class="sect1">
+<h2 id="overview"><a class="anchor" href="#overview"></a>Overview</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>This tutorial will show you how to build a Restcomm powered app <strong>Voicemail to Email</strong> that can be used within the context of a small business. When a customer leaves a voicemail, an email is automatically sent to the callee. The email will contain details about the caller and a URL link to listen to the voicemail. You can download a working  "Voicemail to Email" app <a href="http://apps.restcomm.com/apps/">HERE</a> or proceed below to learn how to build a similar app.</p>
+<p>Restcomm-Connect provides a set of bash scripts that can be used to manually backup/restore database or the <code>restcomm_client</code> table.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="requirements"><a class="anchor" href="#requirements"></a>Requirements</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><code>mysql</code> client utility</p>
+</li>
+<li>
+<p><code>mysqldump</code> client utility</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="scripts-location"><a class="anchor" href="#scripts-location"></a>Scripts location</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p><span class="image"><img src="./images/voicemail2email-logo3-e14214254549981.jpg" alt="Envelope with message and email technology" width="300" height="300"></span></p>
+<p>At the folder <code>$RESTCOMM_HOME/bin/restcomm/db_backup_scripts</code> you will find all the scripts for backup and restore</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>full_backup</code> folder contains scripts for full database backup and restore</p>
+</li>
+<li>
+<p><code>clients_backup</code> folder contains scripts for <code>restcomm_client</code> table backup and restore</p>
+</li>
+<li>
+<p><code>backup</code> folder will be used to save the sql dump files from the previous scripts</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="full-backup-restore"><a class="anchor" href="#full-backup-restore"></a>Full backup/restore</h2>
+<div class="sectionbody">
+<div class="sect3">
+<h4 id="backup"><a class="anchor" href="#backup"></a>Backup</h4>
 <div class="paragraph">
-<p>The email part of the app is powered by Mailgun but you are free to use any email service provider of your choice.</p>
+<p>In order to full backup Restcomm-Connect database follow the step below:</p>
 </div>
-<h1 id="requirements" class="sect0"><a class="anchor" href="#requirements"></a>Requirements</h1>
-<div class="ulist">
-<ul>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>knowledge of Restcomm</p>
+<p>Edit <code>$RESTCOMM_HOME/bin/restcomm/upgrade.conf</code> to provide Mysql IP Address, username, password and Restcomm-Connect database name</p>
 </li>
 <li>
-<p>knowledge of PHP</p>
+<p>Execute <code>$RESTCOMM_HOME/bin/restcomm/db_backup_scripts/full_backup/restcomm_full_backup.sh</code></p>
 </li>
-<li>
-<p>knowledge of JSON</p>
-</li>
-<li>
-<p>knowledge of MailGun service</p>
-</li>
-<li>
-<p>Web server to host PHP scripts</p>
-</li>
-</ul>
-</div>
-<h1 id="application-features" class="sect0"><a class="anchor" href="#application-features"></a>Application features</h1>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Welcome module</strong> - choose a department to leave a message for</p>
-</li>
-<li>
-<p><strong>LeaveMessage</strong> – leave a message</p>
-</li>
-<li>
-<p><strong>ExternalService</strong> – this module attach your voicemail and sent it to an email</p>
-</li>
-<li>
-<p><strong>Bye</strong> - you can hang up or press 1 to go to the Welcome module</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-To get the application working you will need to make and configure a MailGun account. You will also need Composer (<a href="https://getcomposer.org/" class="bare">https://getcomposer.org/</a>) configured on your local host.
-</td>
-</tr>
-</table>
-</div>
-<h1 id="step-1" class="sect0"><a class="anchor" href="#step-1"></a>Step 1</h1>
-<div class="ulist">
-<ul>
-<li>
-<p>Log into Restcomm Admin UI</p>
-</li>
-<li>
-<p>Create a new project</p>
-</li>
-<li>
-<p>Create the following modules:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Welcome</p>
-</li>
-<li>
-<p>LeaveMessage</p>
-</li>
-<li>
-<p>ExternalService</p>
-</li>
-<li>
-<p>Bye</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div id="voicemail2email-modules" class="paragraph">
-<p><span class="image"><img src="./images/Selection_004.png" alt="Voicemail2Email modules" width="482" height="113"></span></p>
-</div>
-<h1 id="step-2" class="sect0"><a class="anchor" href="#step-2"></a>Step 2</h1>
-<div class="ulist">
-<ul>
-<li>
-<p>Go to <strong>Welcome</strong> module</p>
-</li>
-<li>
-<p>Add Collect verb</p>
-</li>
-<li>
-<p>Drag and drop Say verb into collect prompt. Enter the following text in the Say text area: "Welcome to Telestax. To leave a message for <strong>$deptOne</strong> press 1. For <strong>$deptTwo</strong> and general inquiries press 2."</p>
-</li>
-<li>
-<p>From the right side choose to collect digits.</p>
-</li>
-<li>
-<p>Enter <strong>getUserInput</strong> in Assign to text area. Choose application as a scope.</p>
-</li>
-<li>
-<p>Choose to continue to <strong>LeaveMessage</strong> module</p>
-</li>
-<li>
-<p>Go to Say if invalid area and type the following text: "<strong>You have entered an invalid value, please try again."</strong></p>
-</li>
-<li>
-<p>Set 1 as Number of digits</p>
-</li>
-</ul>
+</ol>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="./images/Selection_005.png" alt="Welcome Module Voicemail2Email" width="845" height="552"></span></p>
-</div>
-<h1 id="step-3" class="sect0"><a class="anchor" href="#step-3"></a>Step 3</h1>
-<div class="ulist">
-<ul>
-<li>
-<p>Go to <strong>LeaveMessage</strong> module</p>
-</li>
-<li>
-<p>Drag and drop Say verb.</p>
-</li>
-<li>
-<p>Type the following in the text area: "<strong>Please leave your message and phone number after the beep and press star when you are finished.</strong>"</p>
-</li>
-<li>
-<p>Drag and drop Record verb</p>
-</li>
-<li>
-<p>Choose to continue to External Service module</p>
-</li>
-<li>
-<p>Choose beep to be played</p>
-</li>
-<li>
-<p>Set star as <strong>Finish on key</strong></p>
-</li>
-</ul>
+<p>The script will generate an sql dump file at <code>$RESTCOMM_HOME/bin/restcomm/db_backup_scripts/backup</code>.
+Part of the filename will be the date and time of the execution similar to:</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="./images/Selection_006.png" alt="Voicemail2Email LeaveMessage module" width="845" height="535"></span></p>
+<p><code>restcomm_full_backup_$DATE.sql</code></p>
 </div>
-<h1 id="step-4" class="sect0"><a class="anchor" href="#step-4"></a>Step 4</h1>
-<div class="ulist">
-<ul>
-<li>
-<p>Go to <strong>ExternalService</strong> module</p>
-</li>
-<li>
-<p>Drag and drop External Service</p>
-</li>
-<li>
-<p>Add as Url Parameters following variables:</p>
-</li>
-</ul>
 </div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Variable Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Variable Value</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"> core_From</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">$core_From</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"> core_PublicRecordingUrl</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">$core_PublicRecordingUrl</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"> emailFrom</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">$emailFrom</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"> deptOne</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">$deptOne</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"> deptTwo</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">$deptTwo</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"> emailSubject</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">$emailSubject</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"> emailTo</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">$emailTo</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"> getUserInput</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">$getUserInput</p></td>
-</tr>
-</tbody>
-</table>
-<div class="ulist">
-<ul>
+<div class="sect3">
+<h4 id="restore"><a class="anchor" href="#restore"></a>Restore</h4>
+<div class="paragraph">
+<p>To restore a previously taken database backup file, follow the steps bellow:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>Choose to Continue to Bye module</p>
+<p>Edit <code>$RESTCOMM_HOME/bin/restcomm/upgrade.conf</code> to provide Mysql IP Address, username, password and Restcomm-Connect database name</p>
 </li>
 <li>
-<p>When you are done the page should look similar to the screenshot below</p>
+<p>Execute <code>$RESTCOMM_HOME/bin/restcomm/db_backup_scripts/full_backup/restcomm_restore.sh BACKUP_FILE</code>.</p>
 </li>
-</ul>
+</ol>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="./images/Selection_007.png" alt="Voicemail2Email ES" width="845" height="600"></span></p>
-</div>
-<h1 id="step-5" class="sect0"><a class="anchor" href="#step-5"></a>Step 5</h1>
-<div class="ulist">
-<ul>
-<li>
-<p>In this step we will create a PHP script that is going to send the recorded messages and caller ID from RestComm to e specific email address.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-lang:php" data-lang="lang:php">&lt;?php
-
-//require Composer autoload file
-require 'vendor/autoload.php';
-use Mailgun\Mailgun;
-
-//External Service variables needed for the Application Voicemail2Email
-$mgKey = $_GET["mgKey"];
-$mgDomain = $_GET["mgDomain"];
-$emailTo = $_GET["emailTo"];
-$emailFrom = $_GET["emailFrom"];
-$emailSubject = $_GET["emailSubject"];
-$emailBody = $_GET["emailBody"];
-$deptOne = $_GET["deptOne"];
-$deptTwo = $_GET["deptTwo"];
-
-//Get user's option for which department to leave a message.
-$getUserInput = $_GET["getUserInput"];
-//Get user phone number
-$core_From=$_GET['core_From'];
-//Get recording URL
-$core_PublicRecordingUrl=$_GET['core_PublicRecordingUrl'];
-//Warning message included in the email body
-$warning = 'This is an automatic message sent from Smaill Company IVR. Please DO NOT reply to this message.';
-
-//Sending the message to the department of choice
-$messageFor;
-
-if ($_GET['getUserInput'] == 1){
-
-$GLOBALS['messageFor'] = $deptOne;
-
-    } elseif($_GET['getUserInput'] == 2){
-$GLOBALS['messageFor'] = $deptTwo;
-}
-
-//Sending the recording and caller information to specific email
-$mgClient = new Mailgun($mgKey);
-$result = $mgClient-&gt;sendMessage($mgDomain, array(
-    'from'    =&gt; $emailFrom,
-    'to'      =&gt; $emailTo,
-    'subject' =&gt; $GLOBALS['messageFor'] . ':' . $emailSubject,
-    'text'    =&gt;   $emailBody . "\r\n" .
-            ' Caller info : '. $core_From . "\r\n" .
-            ' Click on the voicemail URL: ' .  $core_PublicRecordingUrl  ));
-
-
-
-?&gt;</code></pre>
+<p><strong>Script expects as the first argument the name of the sql dump file you want to restore</strong></p>
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Now go back to the ExternalService module and use the link to this script as Service URL</p>
-</li>
-</ul>
 </div>
-<h1 id="step-6" class="sect0"><a class="anchor" href="#step-6"></a>Step 6</h1>
-<div class="ulist">
-<ul>
+</div>
+<div class="sect1">
+<h2 id="clients-backup-restore"><a class="anchor" href="#clients-backup-restore"></a>Clients backup/restore</h2>
+<div class="sectionbody">
+<div class="sect3">
+<h4 id="full-backup"><a class="anchor" href="#full-backup"></a>Full Backup</h4>
+<div class="paragraph">
+<p>In order to full backup Restcomm-Connect <code>restcomm_clients</code> table follow the step below:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>Go to <strong>Bye</strong> module</p>
+<p>Edit <code>$RESTCOMM_HOME/bin/restcomm/upgrade.conf</code> to provide Mysql IP Address, username, password and Restcomm-Connect database name</p>
 </li>
 <li>
-<p>Drag and drop Collect verb</p>
+<p>Execute <code>$RESTCOMM_HOME/bin/restcomm/db_backup_scripts/clients_backup/clients_full_backup.sh</code></p>
 </li>
-<li>
-<p>Drag and drop Say into the collect prompt. Type the following in the Say text area: <strong>"Thank you for calling Telestax.</strong> <strong>You may hang up or press one to go back to the main menu"</strong></p>
-</li>
-<li>
-<p>Choose to Create menu. Enter 1 as digit and choose Welcome module as a target.</p>
-</li>
-</ul>
+</ol>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="./images/Selection_012.png" alt="Voicemail2Email Bye" width="845" height="463"></span></p>
+<p>The script will generate an sql dump file at <code>$RESTCOMM_HOME/bin/restcomm/db_backup_scripts/backup</code>.
+Part of the filename will be the date and time of the execution similar to:</p>
 </div>
 <div class="paragraph">
-<p>You now have a fully functional Voicemail To Email service that can be used as a standalone solution or integrated into a more complex PBX solution.</p>
+<p><code>restcomm_clients_full_backup_$DATE.sql</code></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="backup-per-organization"><a class="anchor" href="#backup-per-organization"></a>Backup per Organization</h4>
+<div class="paragraph">
+<p>In order to backup Restcomm-Connect <code>restcomm_clients</code> table per Organization follow the step below:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Edit <code>$RESTCOMM_HOME/bin/restcomm/upgrade.conf</code> to provide Mysql IP Address, username, password and Restcomm-Connect database name</p>
+</li>
+<li>
+<p>Execute <code>$RESTCOMM_HOME/bin/restcomm/db_backup_scripts/clients_backup/clients_per_org_backup.sh ORG_SID</code></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Script expects as the first argument the Organization SID that you want to backup its clients</strong></p>
+</div>
+<div class="paragraph">
+<p>The script will generate an sql dump file at <code>$RESTCOMM_HOME/bin/restcomm/db_backup_scripts/backup</code>.
+Part of the filename will be the date and time of the execution similar to:</p>
+</div>
+<div class="paragraph">
+<p><code>restcomm_clients_for_ORG_$DATE.sql</code></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="restore-2"><a class="anchor" href="#restore-2"></a>Restore</h4>
+<div class="paragraph">
+<p>To restore a previously taken database backup file, follow the steps bellow:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Edit <code>$RESTCOMM_HOME/bin/restcomm/upgrade.conf</code> to provide Mysql IP Address, username, password and Restcomm-Connect database name</p>
+</li>
+<li>
+<p>Execute <code>$RESTCOMM_HOME/bin/restcomm/db_backup_scripts/clients_backup/clients_restore.sh BACKUP_FILE</code>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Script expects as the first argument the name of the sql dump file you want to restore</strong></p>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">

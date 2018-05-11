@@ -23353,172 +23353,528 @@ display: none;
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel2">
-<li><a href="#step-1-edit-restcomm-management-war">Step 1 - Edit restcomm-management.war</a></li>
-<li><a href="#step-2-edit-restcomm-rvd-war">Step 2 - Edit restcomm-rvd.war</a></li>
-<li><a href="#step-3-replace-default-rvd-welcome-message">Step 3 - Replace Default RVD Welcome Message</a></li>
-<li><a href="#step-4-editing-the-logos">Step 4 - Editing the Logos</a></li>
+<li><a href="#dashboard-step-1-copy-files">Dashboard - STEP 1 - Copy Files</a></li>
+<li><a href="#dashboard-step-2-rename-files-and-edit-images">Dashboard - STEP 2 - Rename Files and Edit Images</a></li>
+<li><a href="#visual-designer-step-1-copy-files">Visual Designer - STEP 1 - Copy Files</a></li>
+<li><a href="#visual-designer-step-2-rename-files-and-edit-images">Visual Designer - STEP 2 - Rename Files and Edit Images</a></li>
+<li><a href="#visual-designer-step-3-update-the-css-files">Visual Designer - Step 3 Update the CSS Files</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+You need to be running Restcomm-connect 8.4.0 and higher
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
-<p>Please see the instructions below</p>
+<p>Create  new directory (vnd) under the resources directory of restcomm-management.war</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="step-1-edit-restcomm-management-war"><a class="anchor" href="#step-1-edit-restcomm-management-war"></a>Step 1 - Edit restcomm-management.war</h3>
+<h3 id="dashboard-step-1-copy-files"><a class="anchor" href="#dashboard-step-1-copy-files"></a>Dashboard - STEP 1 - Copy Files</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Go to RESTCOMM_HOME/standalone/deployments/restcomm-management.war/resources</p>
+</li>
+<li>
+<p>sudo mkdir vnd</p>
+</li>
+<li>
+<p>Go to RESTCOMM_HOME/standalone/deployments/restcomm-management.war/resources/vnd</p>
+</li>
+</ul>
+</div>
 <div class="paragraph">
-<p>Edit the following files inside <strong>restcomm-management.war</strong> directory</p>
+<p>Create a new directory under <code>vnd</code> based on your Organization name. If your organization name is <code>mycompany.restcomm.com</code>, you will create a new directory called <code>mycompany</code> under the vnd directory</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Go to RESTCOMM_HOME/standalone/deployments/restcomm-management.war/resources/vnd/mycompany</p>
+</li>
+<li>
+<p>Copy the <code>dashboard.css</code> and <code>dashboard-dark.css</code> files from RESTCOMM_HOME/standalone/deployments/restcomm-management.war/resources/css/ into the newly created mycompany directory</p>
+</li>
+<li>
+<p>Copy the <code>favicon.png</code> file from RESTCOMM_HOME/standalone/deployments/restcomm-management.war/resources/img/ into the newly created mycompany directory</p>
+</li>
+<li>
+<p>Copy all <code>png</code> and <code>svg</code> files from RESTCOMM_HOME/standalone/deployments/restcomm-management.war/resources/img/v2 into the newly created mycompany directory</p>
+</li>
+</ul>
 </div>
 <div class="sect3">
-<h4 id="replace-all-restcomm-and-telestax-instances-in-the-following-files"><a class="anchor" href="#replace-all-restcomm-and-telestax-instances-in-the-following-files"></a>Replace all Restcomm and Telestax instances in the following files</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>./modules/modals/modal-about.html</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>&lt;h3 class="text-muted"&gt;&lt;img src="resources/img/telestax-logo-dark.png" class="navbar-telestax"&gt; &lt;img src="resources/img/restcomm-logo.png" class="navbar-restcomm"&gt; Telestax RestComm v&lt;strong&gt;{{ version.Version }} &lt;/strong&gt; &lt;small&gt;released {{ releaseDate | date:"MM/dd/yyyy h:mma"}}&lt;/small&gt; &lt;/h3&gt;</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>./WEB-INF/web.xml</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>&lt;display-name&gt;RestComm&lt;/display-name&gt;</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>./index.html</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>&lt;title&gt; RestComm&lt;/title&gt;</pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>./index.html</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>&lt;h4 class="pull-right"&gt;POWERED BY RestComm &lt;small&gt;(c) 2013 Telestax &lt;/small&gt;&lt;/h4&gt;</pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>./templates/navbar.html</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>&lt;span class="navbar-brand"&gt;&lt;img src="resources/img/telestax-logo-dark.png" class="navbar-telestax" /&gt; &lt;img src="resources/img/restcomm-logo.png" class="navbar-restcomm" /&gt; RestComm&lt;/span&gt;</pre>
-</div>
-</div>
+<h4 id="the-code-mycompany-code-directory-should-now-contain-the-following-files"><a class="anchor" href="#the-code-mycompany-code-directory-should-now-contain-the-following-files"></a>The <code>mycompany</code> directory should now contain the following files</h4>
+<table class="tableblock frame-topbot grid-none" style="width: 60%;">
+<caption class="title">Table 1. Content of mycompany directory</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">app-wizard-url-app.png</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restcomm-console-inside.svg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">app-wizard-vd-app.png</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restcomm-console-light.svg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">app-wizard-zip-app.png</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restcomm-console.svg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dashboard.css</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restcomm-logo.svg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dashboard-dark.css</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restcomm-one-letters.svg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">favicon.png</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restcommone-webrtc-demo.svg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restcomm-cloud.png.svg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rvd.css</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restcomm-console-inside-light.svg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rvd-dark.css</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="step-2-edit-restcomm-rvd-war"><a class="anchor" href="#step-2-edit-restcomm-rvd-war"></a>Step 2 - Edit restcomm-rvd.war</h3>
-<div class="sect4">
-<h5 id="edit-the-following-files-inside-restcomm-rvd-war-directory"><a class="anchor" href="#edit-the-following-files-inside-restcomm-rvd-war-directory"></a>Edit the following files inside restcomm-rvd.war directory</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>./languages/pt-BR.json	"designerSettingsModalRestcommAPILabel": "API RestComm",
-./languages/pt-BR.json	"designerSettingsModalCredencialsLabel1": "Credenciais para acessar a RestComm API. Deve ser informado caso",
-./languages/pt-BR.json	"dialStepContinueCalledIdTooltip": "O ID de quem está ligando, que aparecerá para a parte chamada quando o RestComm fizer a chamada",
-./languages/pt-BR.json	"formPackageAppLabel2": "Loja de Aplicativos RestComm",
-./languages/pt-BR.json	"indexPageTitle": "RestComm Editor",
-./languages/pt-BR.json	"indexHeadDescriptorLabel": "RestComm serviço de edição visual",
-./languages/pt-BR.json	"webTriggerModalFallbackParamHelp10": "usam a sintaxe de discagem RestComm RCML. Por exemplo:",
-./languages/es.json	"designerSettingsModalRestcommAPILabel": "RestComm API",
-./languages/es.json	"designerSettingsModalCredencialsLabel1": "Credenciales para accesar a la RestComm API. Debe proporcionarlos si",
-./languages/es.json	"formPackageAppLabel2": "App store de RestComm",
-./languages/es.json	"indexPageTitle": "RestComm Designer",
-./languages/es.json	"indexHeadDescriptorLabel": "RestComm visual service designer",
-./languages/es.json	"webTriggerModalFallbackParamHelp10": "valores que utilizaron el sintax marcador RCML de RestComm. Por ejemplo:",
-./languages/en-US.json	"designerSettingsModalRestcommAPILabel": "RestComm API",
-./languages/en-US.json	"designerSettingsModalCredencialsLabel1": "Credentials for accessing RestComm API. You should provide these if",
-./languages/en-US.json	"formPackageAppLabel2": "RestComm Application Store",
-./languages/en-US.json	"indexPageTitle": "RestComm Designer",
-./languages/en-US.json	"indexHeadDescriptorLabel": "RestComm visual service designer",
-./languages/en-US.json	"webTriggerModalFallbackParamHelp10": "values use the RestComm RCML dial syntax. For example:",</code></pre>
+<h3 id="dashboard-step-2-rename-files-and-edit-images"><a class="anchor" href="#dashboard-step-2-rename-files-and-edit-images"></a>Dashboard - STEP 2 - Rename Files and Edit Images</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Rename all the files starting with (prefix) <code>restcomm*</code> <code>telestax*</code> to <code>mycompany*</code></p>
+</li>
+<li>
+<p>the `mycompany directory should now look something like the list below</p>
+</li>
+</ul>
 </div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="step-3-replace-default-rvd-welcome-message"><a class="anchor" href="#step-3-replace-default-rvd-welcome-message"></a>Step 3 - Replace Default RVD Welcome Message</h3>
+<table class="tableblock frame-topbot grid-none" style="width: 60%;">
+<caption class="title">Table 2. Content of <code>mycompany</code> updated directory</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">app-wizard-url-app.png</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mycompany-console-inside.svg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">app-wizard-vd-app.png</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mycompany-console-light.svg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">app-wizard-zip-app.png</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mycompany-console.svg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dashboard.css</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mycompany-logo.svg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dashboard-dark.css</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mycompany-one-letters.svg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">favicon.png</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mycompany-webrtc-demo.svg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mycompany-cloud.png.svg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rvd.css</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mycompany-console-inside-light.svg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rvd-dark.css</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
-<p>Replace Restcomm in the ProjectState.java file to update default demo welcome message. You might need to do the same for the Telestax brand name.</p>
-</div>
-<div class="paragraph">
-<p>You will need to build the ProjectState.java class to replace the file in the</p>
-</div>
-<div class="paragraph">
-<p>$RESTCOMM_HOME/standalone/deployments/restcomm-rvd.war/WEB-INF/classes/org/restcomm/connect/rvd/model/client directory</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>./WEB-INF/classes/org/restcomm/connect/rvd/model/client/ProjectState.java
-
-./workspace/APb70c33bf0b6748f09eaec97030af36f3/data/start.step1:1:{"phrase":"Welcome to Telestax RestComm Visual Designer Demo","kind":"say","label":"say","title":"say","name":"step1"}
-./workspace/AP87971d6fa2094658a4955c23bcd66355/data/start.step1:1:{"phrase":"Welcome to Telestax RestComm Visual Designer Demo","kind":"say","label":"say","title":"say","name":"step1"}
-./workspace/AP87971d6fa2094658a4955c23bcd66355/state:1:{"lastStepId":1,"nodes":[{"name":"start","label":"Welcome","kind":"voice","steps":[{"phrase":"Welcome to Telestax RestComm Visual Designer Demo","kind":"say","label":"say","title":"say","name":"step1"}]}],"lastNodeId":0,"header":{"projectKind":"voice","startNodeName":"start","version":"1.6","owner":"administrator@company.com"}}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="step-4-editing-the-logos"><a class="anchor" href="#step-4-editing-the-logos"></a>Step 4 - Editing the Logos</h3>
-<div class="sect3">
-<h4 id="rvd-logos"><a class="anchor" href="#rvd-logos"></a>RVD Logos,</h4>
-<div class="paragraph">
-<p>Replace all image files in the following directory. : <strong>$RESTCOMM_HOME/standalone/deployments/restcomm-rvd.war/images</strong></p>
-</div>
-<div class="paragraph">
-<p>You can right-click on the image files in the link below to check for image size:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>https://github.com/RestComm/Restcomm-Connect/tree/162f637161a655bbcf6f2c5dc0346ddbd2d67cbc/restcomm/restcomm.rvd/src/main/webapp/images</code></pre>
-</div>
-</div>
+<p>You must now edit the images png and svg files to match your company log and style</p>
 </div>
 <div class="sect3">
-<h4 id="admin-ui-logos"><a class="anchor" href="#admin-ui-logos"></a>Admin UI Logos</h4>
+<h4 id="dashboard-step-3-update-the-css-files"><a class="anchor" href="#dashboard-step-3-update-the-css-files"></a>Dashboard - Step 3 Update the CSS Files</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Edit the <code>$RESTCOMM_HOME/standalone/deployments/restcomm-management.war/resources/vnd/mycompany/dashboard.css</code></p>
+</li>
+<li>
+<p>Change the <code>--main-logo-url:</code> to the following value :</p>
+</li>
+<li>
+<p><code>--main-logo-url: url('mycompany-logo.svg')</code></p>
+</li>
+</ul>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 3. List of Parameters to change in CSS files</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Variables and sample values</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top"></th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">button-hover-text-color: #ffffff</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default text color for buttons, on mouse over.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tfoot>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">main-logo-url: url("path/to/{name-of-logo-file}")</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Logo image displayed while inside (logge in) the console. Logo image filename supplied by theme creator. The path should be relative to the CSS file. Read more on logo requirements section [&#8230;&#8203;].</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sign-in-logo-url: url("path/to/{name-of-logo-file}")</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Logo image displayed on the console sign in screen.
+Logo image filename supplied by theme creator. The path should be relative to the CSS file. Read more on logo requirements section [&#8230;&#8203;].</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">footer-image-url: url("path/to/{name-of-logo-file}")</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Logo image displayed on the console footer, only in sign in screen.
+Logo image filename supplied by theme creator. The path should be relative to the CSS file. Read more on logo requirements section [&#8230;&#8203;].</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">main-bg-color: #ffffff</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Main console background color.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">main-text-color: #434A5B</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Text color for most places.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">muted-text-color: #bdbdbd</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Text color for more discrete elements (comments, hints, etc)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">primary-color: #1ea5db</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color of components that have a prominent role like buttons, active module, links etc.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">lines-color: #eee</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color of discrete separator lines. Modals and menus typically contain them.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">link-text-color: #141D33</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color for links.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">link-text-hover-color: #4a4a4b;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color for links, on mouse over.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">link-muted-text-color: var(--muted-text-color)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color for more discrete links.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">link-muted-text-hover-color: var(--link-text-color)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color for more discrete links, on mouse over.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">link-disabled-text-color: #eeeeee</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color for more disabled links.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">button-bg-color: #d1d1d1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default background color for buttons.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">button-text-color: #ffffff</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default text color for buttons.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">button-hover-bg-color: #c8c7c7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default background color for buttons, on mouse over.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="visual-designer-step-1-copy-files"><a class="anchor" href="#visual-designer-step-1-copy-files"></a>Visual Designer - STEP 1 - Copy Files</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Go to RESTCOMM_HOME/standalone/deployments/restcomm-rvd.war/</p>
+</li>
+<li>
+<p>sudo mkdir vnd</p>
+</li>
+<li>
+<p>Go to RESTCOMM_HOME/standalone/deployments/restcomm-rvd.war/vnd</p>
+</li>
+</ul>
+</div>
 <div class="paragraph">
-<p>Replace all images in the Admin UI resources/img directory</p>
+<p>Create a new directory under <code>vnd</code> based on your Organization name. If your organization name is <code>mycompany.restcomm.com</code>, you will create a new directory called <code>mycompany</code> under the vnd directory</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$RESTCOMM_HOME/standalone/deployments/restcomm-management.war/resources/img</code></pre>
+<div class="ulist">
+<ul>
+<li>
+<p>Go to RESTCOMM_HOME/standalone/deployments/restcomm-rvd.war/vnd/mycompany</p>
+</li>
+<li>
+<p>Copy the <code>rvd.css</code>  <code>rvd-dark.css</code> files from RESTCOMM_HOME/standalone/deployments/restcomm-rvd.war/css/ into the newly created <code>mycompany</code> directory</p>
+</li>
+<li>
+<p>Copy all the content of the directory RESTCOMM_HOME/standalone/deployments/restcomm-rvd.war/images into the newly created <code>mycompany</code> directory</p>
+</li>
+</ul>
+</div>
+<table class="tableblock frame-topbot grid-none" style="width: 60%;">
+<caption class="title">Table 4. Content of <code>mycompany</code> updated directory</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">favicon.png</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">s-m-google+.png</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">s-m-twitter.png</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">telestax-logo-dark.png</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">visual-designer-logo.svg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restcomm-v-d-logo.png</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">s-m-linkedin.png</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">s-m-youtube.png</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ussd-btn.png</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">voice-btn.png</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">s-m-facebook.png</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sms-btn.png</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">telestax-footer.png</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">visual-designer-logo-dark.svg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rvd.css</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rvd-dark.css</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="visual-designer-step-2-rename-files-and-edit-images"><a class="anchor" href="#visual-designer-step-2-rename-files-and-edit-images"></a>Visual Designer - STEP 2 - Rename Files and Edit Images</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Rename all the files starting with (prefix) <code>restcomm*</code> <code>telestax*</code> to <code>mycompany*</code></p>
+</li>
+<li>
+<p>the `mycompany directory should now look something like the list below</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You must now edit the images png and svg files to match your company log and style</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="visual-designer-step-3-update-the-css-files"><a class="anchor" href="#visual-designer-step-3-update-the-css-files"></a>Visual Designer - Step 3 Update the CSS Files</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Edit the <code>$RESTCOMM_HOME/standalone/deployments/restcomm-rvd.war/</code></p>
+</li>
+<li>
+<p>Change the <code>--main-logo-url:</code> to the following value :</p>
+</li>
+<li>
+<p><code>--main-logo-url: url('mycompany-logo.svg')</code></p>
+</li>
+</ul>
 </div>
+<div class="paragraph">
+<p>Visual Designer defines  a large number of CSS variables. Here follows a handy subset of them and their role in theme configuration:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 5. List of Parameters to change in CSS files</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Variables and sample values</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top"></th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--drop-area-color: var(--aux-back-color);</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Background color of area that accepts dropped items.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tfoot>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--logo-url: url("path/to/{name-of-logo-file}");</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Logo image filename supplied by theme creator. The path of the file is relative to the path of the theme .css file. Typically only the filename should be needed. Read more on logo requirements section.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--background-color: #ffffff;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Main background color. It lies behind steps and modals and controls.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--text-color: #5b6170;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Text color for most places.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--aux-back-color: #f1f1f1;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Background color for surrounding area. Header, toolbox and input-groups  get that.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--primary-color: #1ea5db;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color of components that have a prominent role like buttons, active module, links etc.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--secondary-color: #E63828;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color for less prominent links.  Limited use. SUBJECT TO CHANGE.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--border-color: #ccc;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Border color for steps and controls.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--lines-color: #eee;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color of discrete separator lines. Modals and menus typically contain them.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--verb-text-color: var(--background-color);</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Text color for verb buttons and step headings</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--verb-back-color: var(--primary-back-color);</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Background color for verb buttons and step headings</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--link-text-color: var(--primary-color);</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color for links.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--comment-color: #999</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color for comments and hints.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--danger-hint-color: #E63828;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Error hint color.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--default-button-back-color: #B8BBC1;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Background color for default buttons.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--default-button-text-color: #434A5B;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default text color for buttons.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--primary-button-back-color: #B8BBC1;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Background color for prominent  buttons.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--primary-button-text-color: #434A5B;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Text color for prominent buttons.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--danger-button-back-color: #B8BBC1;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Background color for buttons that typical remove stuff.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--danger-button-text-color: #434A5B;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Text color for buttons that typical remove stuff.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--sortable-band-placeholder-color: #1084AC;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color of the band that appears when dropping a verb on the module.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-05-06 02:15:57 UTC
+Last updated 2018-05-11 13:44:43 UTC
 </div>
 </div>
 <footer>

@@ -23354,7 +23354,7 @@ display: none;
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel2">
 <li><a href="#tags">Tags</a></li>
-<li><a href="#8-5-0-version">8.5.0 version</a>
+<li><a href="#8-4-1-version-2018-05-11">8.4.1 version 2018-05-11</a>
 <ul class="sectlevel2">
 <li><a href="#new-features">New Features</a></li>
 <li><a href="#breaking-changes">Breaking Changes</a></li>
@@ -23363,7 +23363,7 @@ display: none;
 <li><a href="#external-dependencies-updates">External Dependencies Updates</a></li>
 </ul>
 </li>
-<li><a href="#8-4-0-version">8.4.0 version</a>
+<li><a href="#8-4-0-version-2018-04-19">8.4.0 version 2018-04-19</a>
 <ul class="sectlevel2">
 <li><a href="#new-features-2">New Features</a></li>
 <li><a href="#breaking-changes-2">Breaking Changes</a></li>
@@ -23400,14 +23400,17 @@ display: none;
 </div>
 </div>
 <div class="sect1">
-<h2 id="8-5-0-version"><a class="anchor" href="#8-5-0-version"></a>8.5.0 version</h2>
+<h2 id="8-4-1-version-2018-05-11"><a class="anchor" href="#8-4-1-version-2018-05-11"></a>8.4.1 version 2018-05-11</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="new-features"><a class="anchor" href="#new-features"></a>New Features</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>REST API performance improvements.</p>
+<p>SMS outbound long messages support</p>
+</li>
+<li>
+<p>New Clients password migration tool</p>
 </li>
 </ul>
 </div>
@@ -23418,20 +23421,128 @@ display: none;
 </div>
 <div class="sect2">
 <h3 id="bug-fixes"><a class="anchor" href="#bug-fixes"></a>Bug Fixes</h3>
-
+<div class="ulist">
+<ul>
+<li>
+<p>Profile Service using correct requesting account for organization resolution.</p>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect2">
 <h3 id="migration-notes"><a class="anchor" href="#migration-notes"></a>Migration Notes</h3>
-
+<div class="paragraph">
+<p><strong>Important Note</strong> Migration notes are applicable to Restcomm-Connect versions before 8.4.0. If you have upgraded to 8.4.0 already, you can ignore the notes here.</p>
+</div>
+<div class="paragraph">
+<p>With the release of Restcomm-Connect 8.4.1, we provided a new method in the Organization REST API which can be used to migrate existing clients using clear text password to hashed password.</p>
+</div>
+<div class="paragraph">
+<p>Restcomm-Connect 8.4.1, will work just fine with either hashed or clear text client passwords (this might change in the future by forcing only hashed passwords)</p>
+</div>
+<div class="paragraph">
+<p>As part of the 8.4.1 release, we also provided a set of DB backup/restore bash scripts <a href="MySQL_Backup_Restore_Scripts.html#mysql-backup-restore-scripts">Mysql backup/restore scripts</a>, that we recommend to use during the migration process.</p>
+</div>
+<div class="sect3">
+<h4 id="migration-steps-part-1"><a class="anchor" href="#migration-steps-part-1"></a>Migration steps - part 1</h4>
+<div class="paragraph">
+<p>Follow the steps below to upgrade DB schema</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Use full backup database script to backup database - follow <a href="MySQL_Backup_Restore_Scripts.html#mysql-backup-restore-scripts">Mysql backup/restore scripts</a></p>
+</li>
+<li>
+<p>Use database schema upgrade scripts to move DB schema to the latest - follow <a href="How to use Mysql schema upgrade scripts.html#mysql-schema-upgrade">How to use Mysql schema upgrade scripts</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>At this point, you can upgrade Restcomm-Connect instance.</strong></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="migration-steps-part-2"><a class="anchor" href="#migration-steps-part-2"></a>Migration steps - part 2</h4>
+<div class="paragraph">
+<p>Migration of client passwords from clear text to hashed password, can be done using Organization REST API, see <a href="organization-api.html#organization">Restcomm API – Organization</a>.</p>
+</div>
+<div class="paragraph">
+<p>Given you want to migrate clients of an Organization follow the steps below to backup <code>restcomm_clients</code> table and migrate client passwords from clear test to MD5 algorithm</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Use Client full backup script to backup <code>restcomm_clients</code> table - follow <a href="MySQL_Backup_Restore_Scripts.html#mysql-backup-restore-scripts">Mysql backup/restore scripts</a></p>
+</li>
+<li>
+<p>Use Client per Org backup script to backup <code>restcomm_client</code> table for the clients that belond to that specific Organization - follow <a href="MySQL_Backup_Restore_Scripts.html#mysql-backup-restore-scripts">Mysql backup/restore scripts</a></p>
+</li>
+<li>
+<p>Use Organization REST API to migrate clients of the given Organization - check <a href="organization-api.html#organization">Restcomm API – Organization</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Repeat the process for all the Organizations as required</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="rollback-steps"><a class="anchor" href="#rollback-steps"></a>Rollback steps</h4>
+<div class="paragraph">
+<p>In case something goes wrong during the migration/upgrade process, you can rollback changes and run the previous version of Restcomm-Connect</p>
+</div>
+<div class="paragraph">
+<p>Follow the steps below:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Use previously generated Clients table backup files and the scripts provided to restore client passwords to clear text - follow <a href="MySQL_Backup_Restore_Scripts.html#mysql-backup-restore-scripts">Mysql backup/restore scripts</a></p>
+</li>
+<li>
+<p>Stop 8.4.1 instance</p>
+</li>
+<li>
+<p>Start old version instance.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>You don&#8217;t need to migrate DB schema</strong></p>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="external-dependencies-updates"><a class="anchor" href="#external-dependencies-updates"></a>External Dependencies Updates</h3>
-
+<div class="ulist">
+<ul>
+<li>
+<p>Console updated to version <strong><em>8.4.1</em></strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>In tables, differentiate between no items and not matching search</p>
+</li>
+<li>
+<p>Match partial results in logs search</p>
+</li>
+<li>
+<p>Fix pagination issues in Notifications Logs</p>
+</li>
+<li>
+<p>Introduced encrypted password for Clients</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="8-4-0-version"><a class="anchor" href="#8-4-0-version"></a>8.4.0 version</h2>
+<h2 id="8-4-0-version-2018-04-19"><a class="anchor" href="#8-4-0-version-2018-04-19"></a>8.4.0 version 2018-04-19</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="new-features-2"><a class="anchor" href="#new-features-2"></a>New Features</h3>
@@ -23574,7 +23685,7 @@ scripts are available in <strong>commercial</strong> version. Database migration
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-05-06 02:15:57 UTC
+Last updated 2018-05-11 13:44:43 UTC
 </div>
 </div>
 <footer>
