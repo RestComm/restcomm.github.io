@@ -23432,7 +23432,7 @@ To start the server do the following:</p>
 </div>
 <div class="paragraph">
 <p>During the startup process, you will notice that the final part of the log output will be similar to the truncated output below.
-Notice that the Admin Console interface can be accessed at <a href="http://172.0.0.1:9990" class="bare">http://172.0.0.1:9990</a>.
+Notice that the Admin Console interface can be accessed at <code>http\://172.0.0.1:9990</code>.
 This will be explained later.</p>
 </div>
 <div class="listingblock">
@@ -23446,7 +23446,7 @@ started in 22148ms - Started 222 of 306 services (83 services are passive or on-
 <p>You will notice that the startup is very fast.
 The reason for this is that JBoss was rewritten from the ground up for speed with services being started concurrently and non critical services remain passive until first use.
 This provides better system resource management.
-With the simple startup above, you will be able to enter the default web interface of the application server by going to this url <a href="http://127.0.0.1:8080" class="bare">http://127.0.0.1:8080</a>.
+With the simple startup above, you will be able to enter the default web interface of the application server by going to this url 'http\://127.0.0.1:8080'.
 The result will show a screenshot similar to the one below.</p>
 </div>
 <div class="imageblock">
@@ -23499,7 +23499,7 @@ Type the following command:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The click2call SIP sample application bundled with Restcomm SIP Servlets will become available at this url <a href="http://127.0.0.1:8080/click2call" class="bare">http://127.0.0.1:8080/click2call</a>.
+<p>The click2call SIP sample application bundled with Restcomm SIP Servlets will become available at this url <code>http\://127.0.0.1:8080/click2call</code>.
 You can configure multiple SIP softphones to use the sample application.
 See the section below for how to configure and test the SIP sample application.</p>
 </div>
@@ -23551,7 +23551,7 @@ Leave the rest of the settings as default.</pre>
 <div class="title">Figure 2. Successfully Configured Linphone</div>
 </div>
 <div class="paragraph">
-<p>Once the phones are successfully registered with the Restcomm SIP Servlets for JBoss AS7 server, you can check the result in the sample SIP application at this url, <a href="http://127.0.0.1:8080/click2call" class="bare">http://127.0.0.1:8080/click2call</a></p>
+<p>Once the phones are successfully registered with the Restcomm SIP Servlets for JBoss AS7 server, you can check the result in the sample SIP application at this url, <code>http\://127.0.0.1:8080/click2call</code></p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -23703,7 +23703,7 @@ sip-sessions-per-sec=0.0</pre>
 <ol class="arabic">
 <li>
 <p>SIP Servlets Management Console
-There is also a SIP servlets management console that is available at this url  <a href="http://127.0.0.1:8080/sip-servlets-management" class="bare">http://127.0.0.1:8080/sip-servlets-management</a>.
+There is also a SIP servlets management console that is available at this url  <code>http\://127.0.0.1:8080/sip-servlets-management</code>.
 The resulting page will be similar to the screenshot below.
 More information will be provided about the SIP servlets management console in later chapters of this guide.</p>
 </li>
@@ -23720,7 +23720,7 @@ More information will be provided about the SIP servlets management console in l
 <h4 id="accessing-management-console"><a class="anchor" href="#accessing-management-console"></a>Accessing Management Console</h4>
 <div class="paragraph">
 <p>Restcomm SIP Servlets for JBoss AS7 provides a management console that can be useful for accessing vital information about your server.
-In the welcome page that appears when you access <a href="http://127.0.0.1:8080" class="bare">http://127.0.0.1:8080</a>, there is a link that points to  the Administration Console.</p>
+In the welcome page that appears when you access <code>http\://127.0.0.1:8080</code>, there is a link that points to  the Administration Console.</p>
 </div>
 <div class="paragraph">
 <p>If you don&#8217;t have a user account for the management console, you will see a screenshot like the one below.
@@ -23887,7 +23887,7 @@ INFO: Server startup in 3608 ms</pre>
 <div class="sect3">
 <h4 id="testing-click2callasync-with-restcomm-for-tomcat-7"><a class="anchor" href="#testing-click2callasync-with-restcomm-for-tomcat-7"></a>Testing Click2CallAsync with Restcomm  for Tomcat 7</h4>
 <div class="paragraph">
-<p>If Restcomm SIP Servlets for Tomcat 7 is started and running, you should be able to use your web browser to access the welcome page at this url <a href="http://127.0.0.1:8080/" class="bare">http://127.0.0.1:8080/</a> This will show you a screenshot similar to the one below.</p>
+<p>If Restcomm SIP Servlets for Tomcat 7 is started and running, you should be able to use your web browser to access the welcome page at this url <code>http\://127.0.0.1:8080/</code> This will show you a screenshot similar to the one below.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -23904,7 +23904,7 @@ You need to copy your .War files to the  $CATALINA_HOME/webapps directory.</p>
 The application is also located in the $CATALINA_HOME/webapps directory</p>
 </div>
 <div class="paragraph">
-<p>Start your web browser and go to the link, <a href="http://127.0.0.1:8080/Click2CallAsync/" class="bare">http://127.0.0.1:8080/Click2CallAsync/</a></p>
+<p>Start your web browser and go to the link, <code>http\://127.0.0.1:8080/Click2CallAsync/</code></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -23915,7 +23915,7 @@ The application is also located in the $CATALINA_HOME/webapps directory</p>
 <td class="content">
 <div class="title">Sample Application Name</div>
 <div class="paragraph">
-<p>Note that the application name is case-sensitive and will not work if you try to access it as <a href="http://127.0.0.1:8080/click2callasync/" class="bare">http://127.0.0.1:8080/click2callasync/</a></p>
+<p>Note that the application name is case-sensitive and will not work if you try to access it as <code>http\://127.0.0.1:8080/click2callasync/</code></p>
 </div>
 </td>
 </tr>
@@ -23984,7 +23984,7 @@ Leave the rest of the settings as default.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Once the softphones are configured and are successfully registered with the Restcomm SIP Servlets for Tomcat 7 server, you will see a screenshot like the one below in the web browser at this url <a href="http://127.0.0.1:8080/Click2CallAsync/" class="bare">http://127.0.0.1:8080/Click2CallAsync/</a></p>
+<p>Once the softphones are configured and are successfully registered with the Restcomm SIP Servlets for Tomcat 7 server, you will see a screenshot like the one below in the web browser at this url <code>http\://127.0.0.1:8080/Click2CallAsync/</code></p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -24816,7 +24816,7 @@ org.mobicents.ha.javax.sip.LoadBalancerHeartBeatingServiceClassName=org.mobicent
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-05-14 11:52:14 UTC
+Last updated 2018-05-16 12:09:31 UTC
 </div>
 </div>
 <footer>
