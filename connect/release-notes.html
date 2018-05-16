@@ -23441,7 +23441,7 @@ display: none;
 <p>Restcomm-Connect 8.4.1, will work just fine with either hashed or clear text client passwords (this might change in the future by forcing only hashed passwords)</p>
 </div>
 <div class="paragraph">
-<p>As part of the 8.4.1 release, we also provided a set of DB backup/restore bash scripts <a href="MySQL_Backup_Restore_Scripts.html#mysql-backup-restore-scripts">Mysql backup/restore scripts</a>, that we recommend to use during the migration process.</p>
+<p>As part of the 8.4.1 release, we also provided a set of DB backup/restore bash scripts <a href="configuration/MySQL_Backup_Restore_Scripts.html#mysql-backup-restore-scripts">Mysql backup/restore scripts</a>, that we recommend to use during the migration process.</p>
 </div>
 <div class="sect3">
 <h4 id="migration-steps-part-1"><a class="anchor" href="#migration-steps-part-1"></a>Migration steps - part 1</h4>
@@ -23451,10 +23451,10 @@ display: none;
 <div class="ulist">
 <ul>
 <li>
-<p>Use full backup database script to backup database - follow <a href="MySQL_Backup_Restore_Scripts.html#mysql-backup-restore-scripts">Mysql backup/restore scripts</a></p>
+<p>Use full backup database script to backup database - follow <a href="#configuration/MySQL_Backup_Restore_Scripts.html">Mysql backup/restore scripts</a></p>
 </li>
 <li>
-<p>Use database schema upgrade scripts to move DB schema to the latest - follow <a href="How to use Mysql schema upgrade scripts.html#mysql-schema-upgrade">How to use Mysql schema upgrade scripts</a></p>
+<p>Use database schema upgrade scripts to move DB schema to the latest - follow <a href="configuration/How to use Mysql schema upgrade scripts.html#mysql-schema-upgrade">How to use Mysql schema upgrade scripts</a></p>
 </li>
 </ul>
 </div>
@@ -23465,7 +23465,7 @@ display: none;
 <div class="sect3">
 <h4 id="migration-steps-part-2"><a class="anchor" href="#migration-steps-part-2"></a>Migration steps - part 2</h4>
 <div class="paragraph">
-<p>Migration of client passwords from clear text to hashed password, can be done using Organization REST API, see <a href="organization-api.html#organization">Restcomm API – Organization</a>.</p>
+<p>Migration of client passwords from clear text to hashed password, can be done using Organization REST API, see <a href="api/organization-api.html#organization">Restcomm API – Organization</a>.</p>
 </div>
 <div class="paragraph">
 <p>Given you want to migrate clients of an Organization follow the steps below to backup <code>restcomm_clients</code> table and migrate client passwords from clear test to MD5 algorithm</p>
@@ -23473,13 +23473,13 @@ display: none;
 <div class="ulist">
 <ul>
 <li>
-<p>Use Client full backup script to backup <code>restcomm_clients</code> table - follow <a href="MySQL_Backup_Restore_Scripts.html#mysql-backup-restore-scripts">Mysql backup/restore scripts</a></p>
+<p>Use Client full backup script to backup <code>restcomm_clients</code> table - follow <a href="#configuration/MySQL_Backup_Restore_Scripts.html">Mysql backup/restore scripts</a></p>
 </li>
 <li>
-<p>Use Client per Org backup script to backup <code>restcomm_client</code> table for the clients that belond to that specific Organization - follow <a href="MySQL_Backup_Restore_Scripts.html#mysql-backup-restore-scripts">Mysql backup/restore scripts</a></p>
+<p>Use Client per Org backup script to backup <code>restcomm_client</code> table for the clients that belond to that specific Organization - follow <a href="#configuration/MySQL_Backup_Restore_Scripts.html">Mysql backup/restore scripts</a></p>
 </li>
 <li>
-<p>Use Organization REST API to migrate clients of the given Organization - check <a href="organization-api.html#organization">Restcomm API – Organization</a></p>
+<p>Use Organization REST API to migrate clients of the given Organization - check <a href="api/organization-api.html#organization">Restcomm API – Organization</a></p>
 </li>
 </ul>
 </div>
@@ -23498,7 +23498,7 @@ display: none;
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Use previously generated Clients table backup files and the scripts provided to restore client passwords to clear text - follow <a href="MySQL_Backup_Restore_Scripts.html#mysql-backup-restore-scripts">Mysql backup/restore scripts</a></p>
+<p>Use previously generated Clients table backup files and the scripts provided to restore client passwords to clear text - follow <a href="MySQL_Backup_Restore_Scripts.html#mysql-backup-restore-scripts.html">Mysql backup/restore scripts</a></p>
 </li>
 <li>
 <p>Stop 8.4.1 instance</p>
@@ -23685,7 +23685,7 @@ scripts are available in <strong>commercial</strong> version. Database migration
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-05-14 11:48:38 UTC
+Last updated 2018-05-16 12:05:51 UTC
 </div>
 </div>
 <footer>
