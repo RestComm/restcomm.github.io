@@ -23362,7 +23362,12 @@ display: none;
 </ul>
 </li>
 <li><a href="#creating-an-xmpp-mapping">Creating an XMPP Mapping</a></li>
-<li><a href="#sending-a-message">Sending a Message</a></li>
+<li><a href="#receiving-an-sms-message-on-your-uc-client">Receiving an SMS Message on Your UC Client</a></li>
+<li><a href="#sending-an-sms-message-from-your-uc-client">Sending an SMS Message from Your UC Client</a>
+<ul class="sectlevel2">
+<li><a href="#sending-a-broadcast-message">Sending a Broadcast Message</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -23630,21 +23635,84 @@ created your first mapping!</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="sending-a-message"><a class="anchor" href="#sending-a-message"></a>Sending a Message</h2>
+<h2 id="receiving-an-sms-message-on-your-uc-client"><a class="anchor" href="#receiving-an-sms-message-on-your-uc-client"></a>Receiving an SMS Message on Your UC Client</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Once you&#8217;ve completed all of the steps above, you&#8217;re ready to test. Login to your UC client as your test user (in our case
-<code>joe@myserver.com</code>, then using your mobile phone send a text message to the number you added to Restcomm.</p>
+<code>joe@myserver.com</code>), then using your mobile phone send a text message to the number you added to Restcomm.</p>
 </div>
 <div class="paragraph">
 <p>You should see the message show up in your UC client.</p>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="sending-an-sms-message-from-your-uc-client"><a class="anchor" href="#sending-an-sms-message-from-your-uc-client"></a>Sending an SMS Message from Your UC Client</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To send an SMS message from your UC client, perform the following steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Add a contact to your contact list in your UC client as you would normally.</p>
+</li>
+<li>
+<p>In the <code>IM Address</code> field, enter the address in the format of <code>phoneNumber@restcomm.com</code> or, if you have a custom
+domain, <code>phoneNumber@yourdomain.com</code>. For example, if your cell phone number is <code>19195551212</code>, then you would enter
+<code>19195551212@restcomm.com</code> for the <code>IM Address</code> of the contact.</p>
+</li>
+<li>
+<p>Once the contact is added, send a message from your client to the new contact.</p>
+</li>
+<li>
+<p>Restcomm Message Exchange will convert the message from a UC message to SMS and route it to the number provided.</p>
+</li>
+<li>
+<p>The message will appear on the destination handset.</p>
+</li>
+</ol>
+</div>
+<div class="sect2">
+<h3 id="sending-a-broadcast-message"><a class="anchor" href="#sending-a-broadcast-message"></a>Sending a Broadcast Message</h3>
+<div class="paragraph">
+<p>A broadcast message is a message intended for more than one SMS recipient. This is NOT the same as group messaging, which
+is currently not supported by Restcomm Message Exchange.</p>
+</div>
+<div class="paragraph">
+<p>When you send a broadcast message, Restcomm Message Exchange will send an individual message to each of the specified
+recipients.</p>
+</div>
+<div class="paragraph">
+<p>To send an SMS Broadcast message, perform the following steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Add a contact to your contact list in your UC client as you would normally.</p>
+</li>
+<li>
+<p>In the <code>IM Address</code> field, enter the address in the format of <code>phoneNumber1,phoneNumber2,<a href="mailto:phoneNumber3@restcomm.com">phoneNumber3@restcomm.com</a></code> or
+<code>phoneNumber1;phoneNumber2;<a href="mailto:phoneNumber3@restcomm.com">phoneNumber3@restcomm.com</a></code></p>
+</li>
+<li>
+<p>Once the contact is added, send a message from your client to the new contact.</p>
+</li>
+<li>
+<p>Restcomm Message Exchange will convert the message from a UC message to SMS and route it to each of the numbers provided.</p>
+</li>
+<li>
+<p>The message will appear on each of the destination handsets.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-05-16 19:30:20 UTC
+Last updated 2018-05-17 11:33:17 UTC
 </div>
 </div>
 <footer>
