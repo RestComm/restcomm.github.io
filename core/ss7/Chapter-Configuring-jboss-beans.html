@@ -24037,13 +24037,14 @@ For <code>dahdi</code> need to declare <code>LinksetExecutor</code> bean and add
                 &lt;inject bean="TcapStackMap" property="provider" /&gt;
             &lt;/parameter&gt;
         &lt;/constructor&gt;
+        &lt;property name="persistDir"&gt;${jboss.server.data.dir}&lt;/property&gt;
     &lt;/bean&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p><code class="class">org.restcomm.protocols.ss7.tcap.MAPStackImpl</code> takes <code class="class">String</code> as a first constructor argument.
 The name is prepend to <code>xml</code> file created by MAP stack for persisting state of MAP resources.
-The <code>xml</code> is stored in path specified by <code>persistDir</code> property above. As for now MAP stack does not store any XML files.
+The <code>xml</code> is stored in path specified by <code>persistDir</code> property above.
 The second constructor argument is <code class="class">TcapStack</code>. MAP uses passed TCAP stack.</p>
 </div>
 <div class="paragraph">
@@ -24067,13 +24068,14 @@ The second constructor argument is <code class="class">TcapStack</code>. MAP use
                 &lt;inject bean="TcapStackCap" property="provider" /&gt;
             &lt;/parameter&gt;
         &lt;/constructor&gt;
+        &lt;property name="persistDir"&gt;${jboss.server.data.dir}&lt;/property&gt;
     &lt;/bean&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p><code class="class">org.restcomm.protocols.ss7.tcap.CAPStackImpl</code> takes <code class="class">String</code> as a first constructor argument.
 The name is prepend to <code>xml</code> file created by CAP stack for persisting state of CAP resources.
-The <code>xml</code> is stored in path specified by <code>persistDir</code> property above. As for now CAP stack does not store any XML files.
+The <code>xml</code> is stored in path specified by <code>persistDir</code> property above.
 The second constructor argument is <code class="class">TcapStack</code>. CAP uses passed TCAP stack.</p>
 </div>
 <div class="paragraph">
@@ -24559,7 +24561,7 @@ The shell commands are exchanged over TCP/IP.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-05-20 02:27:00 UTC
+Last updated 2018-05-27 02:26:56 UTC
 </div>
 </div>
 <footer>

@@ -23550,7 +23550,7 @@ telscale(10.65.208.215:3435)&gt;sccp sap create 2 2 102 2</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>sccp sap modify &lt;id&gt; &lt;mtp3-id&gt; &lt;opc&gt; &lt;ni&gt;</code></pre>
+<pre class="highlight"><code>sccp sap modify &lt;id&gt; mtp3-id &lt;mtp3-id&gt; opc &lt;opc&gt; ni &lt;ni&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23880,8 +23880,10 @@ telscale(10.65.208.215:3435)&gt;sccp rule create 2 R 71 2 8 0 0 3 123456789 load
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>sccp rule modify &lt;id&gt; &lt;mask&gt; &lt;address-indicator&gt; &lt;point-code&gt; &lt;subsystem-number&gt; &lt;translation-type&gt; &lt;numbering-plan&gt;
-&lt;nature-of-address-indicator&gt; &lt;digits&gt; &lt;ruleType&gt; &lt;primary-address-id&gt; &lt;backup-address-id&gt;</code></pre>
+<pre class="highlight"><code>sccp rule modify &lt;id&gt; mask &lt;mask&gt; address-indicator &lt;address-indicator&gt; point-code &lt;point-code&gt;
+subsystem-number &lt;subsystem-number&gt; translation-type &lt;translation-type&gt; numbering-plan &lt;numbering-plan&gt;
+nature-of-address-indicator &lt;nature-of-address-indicator&gt; digits &lt;digits&gt; rule-type &lt;rule-type&gt;
+primary-address-id &lt;primary-address-id&gt; backup-address-id &lt;backup-address-id&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -24274,7 +24276,7 @@ Reserved for future</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>sccp rsp modify &lt;id&gt; &lt;remote-spc&gt; &lt;rspc-flag&gt; &lt;mask&gt;</code></pre>
+<pre class="highlight"><code>sccp rsp modify &lt;id&gt; remote-spc &lt;remote-spc&gt; rspc-flag &lt;rspc-flag&gt; mask &lt;mask&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -24417,7 +24419,7 @@ When this parameter is present configured subsystem is marked as prohibited when
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>sccp rss modify &lt;id&gt; &lt;remote-spc&gt; &lt;remote-ssn&gt; &lt;rss-flag&gt; &lt;mark-prohibited-when-spc-resuming&gt;</code></pre>
+<pre class="highlight"><code>sccp rss modify &lt;id&gt; remote-spc &lt;remote-spc&gt; remote-ssn &lt;remote-ssn&gt; rss-flag &lt;rss-flag&gt; prohibitedwhenspcresuming &lt;mark-prohibited-when-spc-resuming&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -24553,7 +24555,7 @@ telscale(10.65.208.215:3435)&gt;sccp lmr create 2 230 239 udt</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>sccp lmr modify &lt;id&gt; &lt;first-spc&gt; &lt;last-spc&gt; &lt;long-message-rule-type&gt;</code></pre>
+<pre class="highlight"><code>sccp lmr modify &lt;id&gt; first-spc &lt;first-spc&gt; last-spc &lt;last-spc&gt; rule-type &lt;long-message-rule-type&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -24832,7 +24834,7 @@ telscale(10.65.208.215:3435)&gt;sccp get</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-05-20 02:27:00 UTC
+Last updated 2018-05-27 02:26:56 UTC
 </div>
 </div>
 <footer>

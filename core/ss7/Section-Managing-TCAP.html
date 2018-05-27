@@ -23365,6 +23365,7 @@ display: none;
 <li><a href="#_tcap_property_maxdialogs">Max Dialogs</a></li>
 <li><a href="#_tcap_property_previewmode">Preview Mode</a></li>
 <li><a href="#_tcap_property_statisticsenabled">Statistics Enabled</a></li>
+<li><a href="#_tcap_property_swaptcapidbytes">Swap TCAP id bytes Enabled</a></li>
 <li><a href="#_tcap_property_executordelaythreshold">Thresholds for Executors congestion control</a></li>
 <li><a href="#_tcap_property_memorythreshold">Thresholds for Memory congestion control</a></li>
 <li><a href="#_tcap_property_blockingincomingtcapmessages">Blocking of incoming messages in congestion case</a></li>
@@ -23826,6 +23827,50 @@ Change value and save.</p>
 </div>
 </div>
 <div class="sect2">
+<h3 id="_tcap_property_swaptcapidbytes"><a class="anchor" href="#_tcap_property_swaptcapidbytes"></a>Swap TCAP id bytes Enabled</h3>
+<div class="sect3">
+<h4 id="_tcap_property_swaptcapidbytes_cli"><a class="anchor" href="#_tcap_property_swaptcapidbytes_cli"></a>Using CLI</h4>
+<div class="paragraph">
+<p>You can set the 'swaptcapidbytes' by issuing the command <code>tcap set swaptcapidbytes</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>tcap get swaptcapidbytes</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	tcap set swaptcapidbytes
+
+SYNOPSIS
+	tcap set swaptcapidbytes &lt;true | false&gt; stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	If set to true, swap tcap id bytes is enabled..
+
+PARAMETERS
+
+	Standard Parameters
+
+	&lt;swaptcapidbytes&gt;	-	If true, swap tcap id bytes is enabled
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	tcap set swaptcapidbytes false</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_tcap_property_swaptcapidbytes_gui"><a class="anchor" href="#_tcap_property_swaptcapidbytes_gui"></a>Using GUI</h4>
+<div class="paragraph">
+<p>On TCAP management page, click on pencil against the 'Swap tcapid bytes Enabled' property and text box becomes editable.
+Change value and save.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_tcap_property_executordelaythreshold"><a class="anchor" href="#_tcap_property_executordelaythreshold"></a>Thresholds for Executors congestion control</h3>
 <div class="sect3">
 <h4 id="_tcap_property_executordelaythreshold_cli"><a class="anchor" href="#_tcap_property_executordelaythreshold_cli"></a>Using CLI</h4>
@@ -24070,7 +24115,7 @@ Change value and save.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-05-20 02:27:00 UTC
+Last updated 2018-05-27 02:26:56 UTC
 </div>
 </div>
 <footer>

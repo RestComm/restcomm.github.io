@@ -27599,7 +27599,7 @@ If there is an error in creating the SAP then you will find the details of the e
 	sccp sap modify
 
 SYNOPSIS
-	sccp sap modify &lt;id&gt; &lt;mtp3-id&gt; &lt;opc&gt; &lt;ni&gt; stackname &lt;stack-name&gt; networkid &lt;networkId&gt;
+	sccp sap modify &lt;id&gt; mtp3-id &lt;mtp3-id&gt; opc &lt;opc&gt; ni &lt;ni&gt; stackname &lt;stack-name&gt; networkid &lt;networkId&gt;
 	localgtdigits &lt;localGtDigits&gt;
 
 DESCRIPTION
@@ -27611,6 +27611,8 @@ PARAMETERS
 
 	&lt;id&gt;			-	The id of the SAP whose values are being modified.
 
+	Optional Parameters
+
 	&lt;mtp3-id&gt;		-	Mtp3UserPart index - used as an index of 'mtp3UserPart'
 					property of the SccpStack Bean. For each Mtp3UserPart, a
 					sap must be configured.
@@ -27620,8 +27622,6 @@ PARAMETERS
 
 	&lt;ni&gt;			-	Network indicator that forms part of the Service
 					Information Octet (SIO).
-
-	Optional Parameters
 
 	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
 					If not passed, the first stack configured in ShellExecutor
@@ -27639,7 +27639,7 @@ PARAMETERS
 
 
 EXAMPLES
-	sccp sap modify 1 2 102 2
+	sccp sap modify 1 mtp3-id 2 opc 102 ni 2
 
 	The above command will modify the values of the Service Access Point identified
 	by the number '1'. The new values for 'mtp3-id', 'opc' and 'ni' are 2, 102 and 2
@@ -27870,8 +27870,8 @@ If there is an error in creating the SAP then you will find the details of the e
 	sccp dest modify
 
 SYNOPSIS
-	sccp dest modify &lt;sap-id&gt; &lt;id&gt; &lt;first-dpc&gt; &lt;last-dpc&gt; &lt;first-sls&gt; &lt;last-sls&gt;
-	&lt;sls-mask&gt; stackname &lt;stack-name&gt;
+	sccp dest modify &lt;sap-id&gt; &lt;id&gt; first-dpc &lt;first-dpc&gt; last-dpc &lt;last-dpc&gt; first-sls &lt;first-sls&gt; last-sls &lt;last-sls&gt;
+	sls-mask &lt;sls-mask&gt; stackname &lt;stack-name&gt;
 
 
 DESCRIPTION
@@ -27887,6 +27887,7 @@ PARAMETERS
 
 	&lt;id&gt;		-	The identifier of the Destination that is being modified.
 
+	Optional Parameters
 	&lt;first-dpc&gt;	-	The first value of the remote signaling point codes range.
 
 	&lt;last-dpc&gt;	-	The last value of the remote signaling point codes range.
@@ -27902,15 +27903,12 @@ PARAMETERS
 	&lt;sls-mask&gt;	-	The mask value. SLS of a message will be exposed by
 				performing a bitwise AND operation with this mask prior to
 				comparing it with first-sls and last-sls values.
-
-	Optional Parameters
-
 	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
 					If not passed, the first stack configured in ShellExecutor
 					will be used.
 
 EXAMPLES
-	sccp dest modify 1 1 201 299 0 255 255
+	sccp dest modify 1 1 first-dpc 201 last-dpc 299 first-sls 0 last-sls 255 sls-mask 255
 
 	The above command will modify the values of the Destination identified by the
 	number '1' within the Service Access Point identified by the number '1'.
@@ -28238,8 +28236,8 @@ If there is an error in creating the Address then you will find the details of t
 	sccp address modify
 
 SYNOPSIS
-	sccp address modify &lt;id&gt; &lt;address-indicator&gt; &lt;point-code&gt; &lt;subsystem-number&gt;
-	&lt;translation-type&gt; &lt;numbering-plan&gt; &lt;nature-of-address-indicator&gt; &lt;digits&gt;
+	sccp address modify &lt;id&gt; address-indicator &lt;address-indicator&gt; point-code &lt;point-code&gt; subsystem-number &lt;subsystem-number&gt;
+	translation-type &lt;translation-type&gt; numbering-plan &lt;numbering-plan&gt; nature-of-address-indicator &lt;nature-of-address-indicator&gt; digits &lt;digits&gt;
 	stackname &lt;stack-name&gt;
 
 DESCRIPTION
@@ -28252,6 +28250,7 @@ PARAMETERS
 
 	&lt;id&gt;			-	Identifier of the address to be modified.
 
+	Optional Parameters
 	&lt;address-indicator&gt;	-	The address indicator is the first field in a SCCP
 					Party Address (called/calling) and is one octet in
 					length. Its function is to indicate which
@@ -28384,8 +28383,6 @@ PARAMETERS
                     mask contains "R" (replace) value. Else set this field
                     to "0". If this field is needed it should contain the
                     same subsections as the rule mask has.
-
-	Optional Parameters
 
 	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
 					If not passed, the first stack configured in ShellExecutor
@@ -28997,9 +28994,9 @@ If there is an error in creating the Rule then you will find the details of the 
 	sccp rule modify
 
 SYNOPSIS
-	sccp rule modify &lt;id&gt; &lt;mask&gt; &lt;address-indicator&gt; &lt;point-code&gt; &lt;subsystem-number&gt;
-	&lt;translation-type&gt; &lt;numbering-plan&gt; &lt;nature-of-address-indicator&gt; &lt;digits&gt;
-	&lt;ruleType&gt; &lt;primary-address-id&gt; backup-addressid &lt;backup-address-id&gt;
+	sccp rule modify &lt;id&gt; mask &lt;mask&gt; address-indicator &lt;address-indicator&gt; point-code &lt;point-code&gt; subsystem-number &lt;subsystem-number&gt;
+	translation-type &lt;translation-type&gt; numbering-plan &lt;numbering-plan&gt; nature-of-address-indicator &lt;nature-of-address-indicator&gt; digits &lt;digits&gt;
+	rule-type &lt;rule-type&gt; primary-address-id &lt;primary-address-id&gt; backup-addressid &lt;backup-address-id&gt;
 	loadsharing-algo &lt;loadsharing-algorithm&gt; newcgparty-addressid
 	&lt;new-callingPartyAddress-id&gt; origination-type &lt;originationType&gt;
 	networkid &lt;networkId&gt; calling-ai &lt;calling-address-indicator&gt;
@@ -29017,6 +29014,7 @@ PARAMETERS
 
 	&lt;id&gt;			-	A unique number to identify this Rule.
 
+	Optional Parameters
 	&lt;mask&gt;			-	A mask defines which part of the originally dialed
 					digits remains in the translated digits and which
 					part is replaced by the digits from primary or
@@ -29270,7 +29268,6 @@ PARAMETERS
 	&lt;primary-address-id&gt;	-	Identifies the SCCP Address used as the primary
 					translation.
 
-	Optional Parameters
 
 	&lt;backup-address-id&gt;	-	Identifies the SCCP Address used as the backup
 					translation in case the pointcode specified by the
@@ -29556,7 +29553,7 @@ If there is an error in creating the RSP then you will find the details of the e
 	sccp rsp modify
 
 SYNOPSIS
-	sccp rsp modify &lt;id&gt; &lt;remote-spc&gt; &lt;rspc-flag&gt; &lt;mask&gt; stackname &lt;stack-name&gt;
+	sccp rsp modify &lt;id&gt; remote-spc &lt;remote-spc&gt; rspc-flag &lt;rspc-flag&gt; mask &lt;mask&gt; stackname &lt;stack-name&gt;
 
 DESCRIPTION
 	This command is used to modify the values of a Remote Signaling Point previously
@@ -29777,8 +29774,8 @@ If there is an error in creating the RSS then you will find the details of the e
 	sccp rss modify
 
 SYNOPSIS
-	sccp rss modify &lt;id&gt; &lt;remote-spc&gt; &lt;remote-ssn&gt; &lt;rss-flag&gt;
-	&lt;mark-prohibited-when-spc-resuming&gt; stackname &lt;stack-name&gt;
+	sccp rss modify &lt;id&gt; remote-spc &lt;remote-spc&gt; remote-ssn &lt;remote-ssn&gt; rss-flag &lt;rss-flag&gt;
+	prohibitedwhenspcresuming &lt;mark-prohibited-when-spc-resuming&gt; stackname &lt;stack-name&gt;
 
 DESCRIPTION
 	This command is used to modify the values of a Remote Sub-System previously
@@ -29791,6 +29788,8 @@ PARAMETERS
 	&lt;id&gt;			-	Identifier of the Remote Sub-System to be
 					modified.
 
+	Optional Parameters
+
 	&lt;remote-spc&gt;		-	The Remote Signaling Point where this Remote
 					Sub-System is deployed.
 
@@ -29798,17 +29797,6 @@ PARAMETERS
 
 	&lt;rss-flag&gt;		-	32 bit value. Not used for now.
 					Reserved for future.
-
-	Optional Parameters
-
-	&lt;mark-prohibited-when-spc-resuming&gt;
-				-	Possible value: prohibitedWhenSpcResuming.
-					When this parameter is specified, the configured
-					subsystem is marked as prohibited when its
-					corresponding signaling point code has been
-					resumed.
-
-	Optional Parameters
 
 	&lt;mark-prohibited-when-spc-resuming&gt;
 				-	Possible value: prohibitedWhenSpcResuming.
@@ -30014,7 +30002,7 @@ If there is an error in creating the LMR then you will find the details of the e
 	sccp lmr modify
 
 SYNOPSIS
-	sccp lmr modify &lt;id&gt; &lt;first-spc&gt; &lt;last-spc&gt; &lt;long-message-rule-type&gt;
+	sccp lmr modify &lt;id&gt; first-spc &lt;first-spc&gt; last-spc &lt;last-spc&gt; rule-type &lt;long-message-rule-type&gt;
 	stackname &lt;stack-name&gt;
 
 DESCRIPTION
@@ -30028,6 +30016,7 @@ PARAMETERS
 	&lt;id&gt;			-	Identifier of the Long Message Rule to be
 					modified.
 
+	Optional Parameters
 	&lt;first-spc&gt;		-	The first value of the remote signaling
 					point code range, for which this Long message Rule
 					will apply.
@@ -30040,9 +30029,6 @@ PARAMETERS
 	&lt;long-message-rule-type&gt;-	Message types used for the remote signaling point
 					codes range.
 					Possible values : udt, xudt, ludt and ludt_segm.
-
-	Optional Parameters
-
 	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
 					If not passed, the first stack configured in ShellExecutor
 					will be used.</pre>
@@ -30757,6 +30743,50 @@ Change value and save.</p>
 </div>
 </div>
 <div class="sect3">
+<h4 id="_tcap_property_swaptcapidbytes"><a class="anchor" href="#_tcap_property_swaptcapidbytes"></a>Swap TCAP id bytes Enabled</h4>
+<div class="sect4">
+<h5 id="_tcap_property_swaptcapidbytes_cli"><a class="anchor" href="#_tcap_property_swaptcapidbytes_cli"></a>Using CLI</h5>
+<div class="paragraph">
+<p>You can set the 'swaptcapidbytes' by issuing the command <code>tcap set swaptcapidbytes</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>tcap get swaptcapidbytes</code> which will display the value set for this property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Name
+	tcap set swaptcapidbytes
+
+SYNOPSIS
+	tcap set swaptcapidbytes &lt;true | false&gt; stackname &lt;stack-name&gt;
+
+DESCRIPTION
+	If set to true, swap tcap id bytes is enabled..
+
+PARAMETERS
+
+	Standard Parameters
+
+	&lt;swaptcapidbytes&gt;	-	If true, swap tcap id bytes is enabled
+
+	Optional Parameters
+
+	&lt;stack-name&gt;	-	Name of the stack on which this command is executed.
+					If not passed, the first stack configured in ShellExecutor
+					will be used.
+
+EXAMPLES
+	tcap set swaptcapidbytes false</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_tcap_property_swaptcapidbytes_gui"><a class="anchor" href="#_tcap_property_swaptcapidbytes_gui"></a>Using GUI</h5>
+<div class="paragraph">
+<p>On TCAP management page, click on pencil against the 'Swap tcapid bytes Enabled' property and text box becomes editable.
+Change value and save.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
 <h4 id="_tcap_property_executordelaythreshold"><a class="anchor" href="#_tcap_property_executordelaythreshold"></a>Thresholds for Executors congestion control</h4>
 <div class="sect4">
 <h5 id="_tcap_property_executordelaythreshold_cli"><a class="anchor" href="#_tcap_property_executordelaythreshold_cli"></a>Using CLI</h5>
@@ -31190,7 +31220,7 @@ But as of now, only currently active alarms will be displayed in this window.</p
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-05-20 02:27:00 UTC
+Last updated 2018-05-27 02:26:56 UTC
 </div>
 </div>
 <footer>

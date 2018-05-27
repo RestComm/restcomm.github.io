@@ -23366,7 +23366,18 @@ display: none;
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>If you intend to use the Stack as a standalone library without using JBoss Application Server or JSLEE RAs, then you must manually build each of the protocols, configure them individually, and bind them together.</p>
+<p>If you intend to use the Stack as a standalone library without using JBoss Application Server or JSLEE RAs, then you must manually build each of the protocols, configure them individually, and bind them together.
+For RestcommONE (Telscale) version before start JSS7 layers you need to create Ss7ExtInterfaceTelscale object for extending functionality:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Ss7ExtInterfaceTelscale ss7ExtInterfaceTelscale = new Ss7ExtInterfaceTelscale();
+SccpExtModule sccpExtModule = new SccpExtModuleImpl();
+ss7ExtInterfaceTelscale.setSs7ExtSccpInterface(sccpExtModule);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>this object will be used crating M3UA, SCCP, Dialogic instances</p>
 </div>
 </div>
 </div>
@@ -23469,6 +23480,14 @@ Association will be started automatically when layer above M3UA&#8217;s ASP is s
 </div>
 </div>
 <div class="paragraph">
+<p>For RestcommONE (Telscale) version creation of M3UAManagement looks like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>    clientM3UAMgmt = new M3UAManagement("Client", null, ss7ExtInterfaceTelscale);</code></pre>
+</div>
+</div>
+<div class="paragraph">
 <p>For M3UA, it should know which underlying SCTP layer to use <code>clientM3UAMgmt.setTransportManagement(sctpManagement);</code>.</p>
 </div>
 <div class="paragraph">
@@ -23525,6 +23544,14 @@ Once M3UA is configured depending on whether you are trying to build voice appli
     sccpStack.setMtp3UserPart(1, this.clientM3UAMgmt);
 
     sccpStack.start();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For RestcommONE (Telscale) version creation of SccpStackImpl looks like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>    sccpStack = new SccpStackImpl(schedulerMBean, beanName, ss7ExtInterfaceTelscale);</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23703,7 +23730,7 @@ Don&#8217;t forget to include your compiled Application class file in classpath 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-05-20 02:27:00 UTC
+Last updated 2018-05-27 02:26:56 UTC
 </div>
 </div>
 <footer>
