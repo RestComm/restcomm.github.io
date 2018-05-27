@@ -27923,7 +27923,7 @@ For more details refer to <a href="#_smsc_gateway_server_hr">Home Routing Settin
 <div class="listingblock">
 <div class="title">Content for JBOSS 5</div>
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">	&lt;bean name="TcapStack" class="org.mobicents.protocols.ss7.tcap.TCAPStackImpl"&gt;
+<pre class="highlight"><code class="language-xml" data-lang="xml">	&lt;bean name="TcapStack" class="org.restcomm.protocols.ss7.tcap.TCAPStackImpl"&gt;
 		&lt;constructor&gt;
 			&lt;parameter&gt;TcapStack&lt;/parameter&gt;
 			&lt;parameter&gt;
@@ -27943,7 +27943,7 @@ For more details refer to <a href="#_smsc_gateway_server_hr">Home Routing Settin
 <div class="listingblock">
 <div class="title">Content for Wildfly 10</div>
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">	&lt;mbean class="org.mobicents.protocols.ss7.tcap.TCAPStackImpl" enabled="true" name="TcapStackMap" reflection="false" type="TcapStack"&gt;
+<pre class="highlight"><code class="language-xml" data-lang="xml">	&lt;mbean class="org.restcomm.protocols.ss7.tcap.TCAPStackImpl" enabled="true" name="TcapStackMap" reflection="false" type="TcapStack"&gt;
                 &lt;property name="sccpStack" type="Bean" value="SccpStack"/&gt;
                 &lt;property name="ssn" type="int" value="8"/&gt;
                 &lt;property name="previewMode" type="bool" value="false"/&gt;
@@ -37908,7 +37908,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-05-20 02:27:53 UTC
+Last updated 2018-05-27 02:27:48 UTC
 </div>
 </div>
 <footer>
