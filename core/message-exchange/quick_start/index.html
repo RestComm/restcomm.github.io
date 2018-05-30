@@ -23355,6 +23355,7 @@ display: none;
 <ul class="sectlevel1">
 <li><a href="#what-you-ll-need">What You&#8217;ll Need</a></li>
 <li><a href="#federating-your-uc-server">Federating Your UC Server</a></li>
+<li><a href="#use-an-already-federated-xmpp-server-and-xmpp-client">Use an Already Federated XMPP Server and XMPP Client</a></li>
 <li><a href="#setting-up-your-first-phone-number">Setting Up Your First Phone Number</a>
 <ul class="sectlevel2">
 <li><a href="#new-number">New Number</a></li>
@@ -23413,10 +23414,10 @@ display: none;
 <p>A working knowledge of and a way to make HTTP API calls (either cURL or <a href="https://www.getpostman.com/">Postman</a>. We recommend Postman if you&#8217;re not familiar with cURL)</p>
 </li>
 <li>
-<p>An understanding of how to add and configure phone numbers in RestcommOne. Please consult the <a href="https://www.restcomm.com/docs/connect/admin/Restcomm%20-%20Overview%20Admin%20User%20Interface.html#adminUI">Restcomm Admin Guide</a> as needed.</p>
+<p>An understanding of how to add and configure phone numbers in Restcomm. Please consult the <a href="https://www.restcomm.com/docs/connect/admin/Restcomm%20-%20Overview%20Admin%20User%20Interface.html#adminUI">Restcomm Admin Guide</a> as needed.</p>
 </li>
 <li>
-<p>An account on RestcommOne. Please ask your sales rep for an account if you don&#8217;t already have one.</p>
+<p>An account on <a href="https://www.restcomm.com/sign-up/">Restcomm Cloud</a>.</p>
 </li>
 </ul>
 </div>
@@ -23465,14 +23466,28 @@ federation process. Our technical representatives will verify that federation ha
 </div>
 </div>
 <div class="sect1">
+<h2 id="use-an-already-federated-xmpp-server-and-xmpp-client"><a class="anchor" href="#use-an-already-federated-xmpp-server-and-xmpp-client"></a>Use an Already Federated XMPP Server and XMPP Client</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Restcomm Message Exchange Service has already been federated with a number of public servers.
+If you don&#8217;t have your own UC Server to federate with, you can use <a href="https://xmpp.is/">XMPP.is</a> and register with an account there.</p>
+</div>
+<div class="paragraph">
+<p>If you don&#8217;t have a UC Client, any XMPP Client should work.
+<a href="https://pidgin.im/download/">Pidgin</a> and <a href="https://adium.im">Audium</a> have been successfully tested with Restcomm Message Exchange.
+You can configure either of those clients with the previously created account from <a href="https://xmpp.is/">XMPP.is</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="setting-up-your-first-phone-number"><a class="anchor" href="#setting-up-your-first-phone-number"></a>Setting Up Your First Phone Number</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Note: You <strong>must</strong> have a valid, working RestcommOne account in order to complete this step. If you do not have one,
-contact your sales rep.</p>
+<p>Note: You <strong>must</strong> have a valid, working <a href="https://www.restcomm.com/sign-up/">Restcomm account</a> in order to complete this step. If you do not have one,
+you can <a href="https://www.restcomm.com/sign-up/">sign up for one</a> or <a href="https://www.restcomm.com/contact/">Contact us</a>.</p>
 </div>
 <div class="paragraph">
-<p>You can set up your phone number in two different ways, either via the <a href="https://cloud.restcomm.com">RestcommOne Dashboard</a> or
+<p>You can set up your phone number in two different ways, either via the <a href="https://cloud.restcomm.com">Restcomm Dashboard</a> or
 via API. For purposes of this guide, we will use the Dashboard and will be using a new number rather than an existing number.</p>
 </div>
 <div class="sect2">
@@ -23480,7 +23495,7 @@ via API. For purposes of this guide, we will use the Dashboard and will be using
 <div class="ulist">
 <ul>
 <li>
-<p>Login to your RestcommOne account</p>
+<p>Login to your Restcomm account</p>
 </li>
 <li>
 <p>Click on <code>Numbers</code></p>
@@ -23530,7 +23545,7 @@ dropdown value as <code>POST</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>Send a CSV of all numbers you want to enable for SMS traffic to your GSS representative</p>
+<p>Send a CSV of all numbers you want to enable for SMS traffic to your Telestax Restcomm Support representative</p>
 </li>
 <li>
 <p>Click on <code>Numbers</code></p>
@@ -23591,12 +23606,12 @@ anytime Joe sends an outbound SMS from his XMPP account, it will be sent from hi
  click on your name in the upper right corner, and select <code>Account</code>.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s create a Mapping. For our example, we&#8217;re going to use the XMPP service Swagger UI. You can use Postman or cURL if you&#8217;d prefer it.</p>
+<p>Let&#8217;s create a Mapping. For our example, we&#8217;re going to use the <a href="https://cloud.restcomm.com/xmpp/swagger-ui.html#/xmpp-mapping-controller">Restcomm Message Exchange API</a>. You can use Postman or cURL if you&#8217;d prefer it.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Go to <a href="https://cloud.restcomm.com/xmpp/swagger-ui.html#/xmpp-mapping-controller">Swagger</a></p>
+<p>Go to <a href="https://cloud.restcomm.com/xmpp/swagger-ui.html#/xmpp-mapping-controller">Restcomm Message Exchange API</a></p>
 </li>
 <li>
 <p>Click on the Authorize button on the right side of the screen.</p>
@@ -23712,7 +23727,7 @@ recipients.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-05-23 19:30:33 UTC
+Last updated 2018-05-30 08:59:57 UTC
 </div>
 </div>
 <footer>
