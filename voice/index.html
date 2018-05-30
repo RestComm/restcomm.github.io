@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.6.1">
-<title>JAIN SLEE Resource Adaptors</title>
+<title>Overview</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -23358,30 +23358,261 @@ display: none;
 </head>
 <body class="article">
 <div id="header">
-<h1>JAIN SLEE Resource Adaptors</h1>
+<h1>Overview</h1>
 </div>
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>You can use different Resource Adaptors depending on which protocols you need in your JAIN SLEE application.</p>
+<p>Restcomm allows to easily build fast, reliable and secure voice applications that let you make, manage, route and scale calls to a browser or any phone.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="/docs/core/jain_slee/ras/sip/User_Guide.html">SIP CAP Resource Adaptor</a></p>
+<p>Programmatically make and receive voice calls in your application. Using this REST API, you can make outgoing calls, modify calls in progress, and query metadata about calls</p>
 </li>
 <li>
-<p><a href="/docs/core/jain_slee/ras/ss7/cap/User_Guide.html">SS7 CAP Resource Adaptor</a></p>
+<p>Build apps that scale with the web technologies that you are already using.</p>
 </li>
 <li>
-<p><a href="/docs/core/jain_slee/ras/ss7/isup/User_Guide.html">SS7 ISUP Resource Adaptor</a></p>
+<p>Bring personalized call experiences to your customers quickly with the help of our handy drag and drop Visual Designer.</p>
 </li>
 <li>
-<p><a href="/docs/core/jain_slee/ras/ss7/map/User_Guide.html">SS7 MAP Resource Adaptor</a></p>
+<p>Restcomm enables you to stay in control of call quality in bringing your own carrier.</p>
 </li>
 <li>
-<p><a href="/docs/core/jain_slee/ras/ss7/tcap/User_Guide.html">SS7 TCAP Resource Adaptor</a></p>
+<p>Quickly interconnect any existing Voice system and handle advanced call control or call transfer with Restcomm.</p>
+</li>
+<li>
+<p>Record and store inbound or outbound calls</p>
+</li>
+<li>
+<p>Create and manage conference calls</p>
+</li>
+<li>
+<p>Send text-to-speech messages</p>
+</li>
+<li>
+<p>Integrate speech recognition that translates audio-to-text</p>
 </li>
 </ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="api-reference">API Reference</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="base-url">Base URL</h3>
+<div class="paragraph">
+<p>All URLs referenced in the documentation have the following base:</p>
+</div>
+<div class="paragraph">
+<p><code>https://cloud.restcomm.com/restcomm/2012-04-24</code></p>
+</div>
+<div class="paragraph">
+<p>The Restcomm RESTful APIs are served over HTTPS. To ensure data privacy, unencrypted HTTP is not supported.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="voice">Voice</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="calls-api.html#calls">Restcomm API – Calls</a></p>
+</li>
+<li>
+<p><a href="clients-api.html#clients">Restcomm API – Clients</a></p>
+</li>
+<li>
+<p><a href="recordings-api.html#recordings">Restcomm API – Recordings</a></p>
+</li>
+<li>
+<p><a href="conferences-api.html#conferenceapi">Restcomm API - Conference Management</a></p>
+</li>
+<li>
+<p><a href="participants-api.html#participantsapi">Restcomm API - Conference Participants Management</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="rcml">RCML</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="overview">Overview</h3>
+<div class="paragraph">
+<p>RCML is a set of instructions you can use to tell Restcomm what to do when you receive an incoming call or SMS.</p>
+</div>
+<div class="paragraph">
+<p>When someone makes a call to one of your Restcomm numbers, Restcomm will look up the URL associated with that phone number and make a request to that URL. Restcomm will read RCML instructions at that URL to determine what to do: record the call, play a message for the caller, prompt the caller to press digits on their keypad, etc.</p>
+</div>
+<div class="paragraph">
+<p>RCML is similar to HTML. Only one RCML document is rendered to the caller at once, but many documents can be linked together to build complex interactive SMS applications.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="restcomm-s-request-to-your-application">Restcomm&#8217;s request to your application</h3>
+<div class="paragraph">
+<p>Restcomm makes HTTP requests to your application just like a regular web browser, in the format <strong>application/x-www-form-urlencoded</strong>. By including parameters and values in its requests, Restcomm sends data to your application that you can act upon before responding.</p>
+</div>
+<div class="paragraph">
+<p>You can configure the URLs and HTTP Methods Restcomm uses to make its requests via your account portal or using the REST API.</p>
+</div>
+<div class="paragraph">
+<p>When Restcomm receives a message for one of your Restcomm numbers, it makes a synchronous HTTP request to the message URL configured for that number and expects to receive RCML in response.</p>
+</div>
+<div class="paragraph">
+<p>Restcomm sends the following parameters with its request as POST parameters or URL query parameters, depending on which HTTP method you&#8217;ve configured:</p>
+</div>
+<div class="sect3">
+<h4 id="request-parameters">Request Parameters</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CallSid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The unique identifier for this call.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AccountSid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Your account id.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">From</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The phone number of the originator of the call.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">To</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The phone number of the call recipient.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CallStatus</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The status of the call. The possible values are queued, ringing, in-progress, completed, busy, failed, and no-answer.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ApiVersion</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The version of the RestComm API used to handle this call.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Direction</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The direction of the call. The possible values are inbound and outbound-dial.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CallerName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The caller ID for the caller in the case of inbound calls.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="the-rcml-verbs-for-programmable-voice">The RCML verbs for Programmable Voice</h4>
+<div class="paragraph">
+<p>You can use different combinations of the verbs below to create all kinds of interactive voice and messaging applications.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="dial-rcml.html#dial">Dial - Add another party to the call</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="client-rcml.html#client">Client</a></p>
+</li>
+<li>
+<p><a href="conference-rcml.html#conference">Conference</a></p>
+</li>
+<li>
+<p><a href="number-rcml.html#number">Number</a></p>
+</li>
+<li>
+<p><a href="sip-rcml.html#sip">SIP</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="gather-rcml.html#gather">Gather - Collect digits the caller types on their keypad or do speech recognition that translates audio-to-text</a></p>
+</li>
+<li>
+<p><a href="hangup-rcml.html#hangup">Hangup - Hang up the call</a></p>
+</li>
+<li>
+<p><a href="pause-rcml.html#pause">Pause - Wait before executing more instructions</a></p>
+</li>
+<li>
+<p><a href="play-rcml.html#play">Play - Play an audio file for the caller</a></p>
+</li>
+<li>
+<p><a href="record-rcml.html#record">Record - Record the caller&#8217;s voice</a></p>
+</li>
+<li>
+<p><a href="redirect-rcml.html#redirect">Redirect - Redirect call flow to a different RCML document.</a></p>
+</li>
+<li>
+<p><a href="reject-rcml.html#reject">Reject - Decline an incoming call without being billed.</a></p>
+</li>
+<li>
+<p><a href="say-rcml.html#say">Say - Read text to the caller</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="restcomm_response">Restcomm Response</h3>
+<div class="paragraph">
+<p>In your response to the request from RestComm you want to provide RCML that will instruct RestComm on how to handle the current call.</p>
+</div>
+<div class="paragraph">
+<p><strong>MIME Types. </strong>RestComm supports the MIME types described in the table below.</p>
+</div>
+<div class="sect3">
+<h4 id="supported-mime-types">Supported MIME Types</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">text/xml, application/xml</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RestComm interprets the returned document as an XML instruction set.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+When your application returns the RCML document the root element of the document must always be &lt;Response&gt; or the parser will complain.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
