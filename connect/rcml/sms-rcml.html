@@ -23415,11 +23415,6 @@ display: none;
 <td class="tableblock halign-left valign-top"><p class="tableblock">GET, POST</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">POST</p></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">statusCallback</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">relative or absolute URL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">none</p></td>
-</tr>
 </tbody>
 </table>
 <div class="sect3">
@@ -23444,12 +23439,6 @@ display: none;
 <h4 id="method"><a class="anchor" href="#method"></a>method</h4>
 <div class="paragraph">
 <p>The 'method' attribute takes the value 'GET' or 'POST'. This tells RestComm whether to request the 'action' URL via HTTP GET or POST. This attribute is modeled after the HTML form 'method' attribute.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="statuscallback"><a class="anchor" href="#statuscallback"></a>statusCallback</h4>
-<div class="paragraph">
-<p>The 'statusCallback' attribute takes a URL as an argument. When the SMS message is actually sent, or if sending fails, RestComm will make an asynchronous POST request to this URL with the parameters 'SmsStatus' and 'SmsSid'. Note, 'statusCallback' always uses HTTP POST to request the given url.</p>
 </div>
 <div class="sect4">
 <h5 id="request-parameters"><a class="anchor" href="#request-parameters"></a>Request Parameters</h5>
@@ -23507,7 +23496,7 @@ display: none;
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-05-30 16:44:47 UTC
+Last updated 2018-06-01 11:19:15 UTC
 </div>
 </div>
 <footer>

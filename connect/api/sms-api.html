@@ -23463,7 +23463,7 @@ display: none;
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The status of this SMS message. Possible values are queued, sending, sent, failed, and received.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The status of this SMS message. Possible values are queued, sending, sent, failed, received, delivered, and undelivered.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Direction</p></td>
@@ -23476,6 +23476,49 @@ display: none;
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Uri</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The URI for this account, relative to <a href="https://localhost/restcomm" class="bare">https://localhost/restcomm</a>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="status-description"><a class="anchor" href="#status-description"></a>Status Description</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">queued</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This is not currently supported, as SMS is sent directly to provider.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sending</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Restcomm has accepted the message and is sending it to provider. Applies to outbound message.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sent</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Restcomm has already sent message to provider. Applies to outbound message.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">failed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Message failed to progress in provider. Reason could be the message was expired, rejected or deleted by the provider.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">received</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Restcomm has received the message. Applies to inbound message.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">delivered</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The provider has delivered the message into user&#8217;s terminal. Applies to outbound message.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">undelivered</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The provider couldnt deliver the message into user&#8217;s terminal. Applies to outbound message.</p></td>
 </tr>
 </tbody>
 </table>
@@ -23931,7 +23974,7 @@ display: none;
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-05-30 16:44:47 UTC
+Last updated 2018-06-01 11:19:15 UTC
 </div>
 </div>
 <footer>
