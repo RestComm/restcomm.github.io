@@ -23389,10 +23389,10 @@ display: none;
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">	&lt;bean name="SS7Clock" class="org.mobicents.protocols.ss7.scheduler.DefaultClock"&gt;
+<pre class="highlight"><code class="language-xml" data-lang="xml">	&lt;bean name="SS7Clock" class="org.restcomm.protocols.ss7.scheduler.DefaultClock"&gt;
 	&lt;/bean&gt;
 
-	&lt;bean name="SS7Scheduler" class="org.mobicents.protocols.ss7.scheduler.Scheduler"&gt;
+	&lt;bean name="SS7Scheduler" class="org.restcomm.protocols.ss7.scheduler.Scheduler"&gt;
 		&lt;property name="clock"&gt;
 			&lt;inject bean="SS7Clock" /&gt;
 		&lt;/property&gt;
@@ -23413,7 +23413,7 @@ display: none;
 </div>
 </div>
 <div class="paragraph">
-<div class="title"><code class="class">org.mobicents.protocols.ss7.scheduler.Scheduler</code></div>
+<div class="title"><code class="class">org.restcomm.protocols.ss7.scheduler.Scheduler</code></div>
 <p>DefaultClock and Scheduler are service beans that are needed for SmppManagement service.</p>
 </div>
 <div class="paragraph">
@@ -23452,7 +23452,7 @@ Received commands are executed on local resources to  perform actions like  ESME
 				&lt;inject bean="SS7Scheduler" /&gt;
 			&lt;/parameter&gt;
 			&lt;parameter&gt;
-				&lt;list class="javolution.util.FastList" elementClass="org.mobicents.ss7.management.console.ShellExecutor"&gt;
+				&lt;list class="javolution.util.FastList" elementClass="org.restcomm.ss7.management.console.ShellExecutor"&gt;
 					&lt;inject bean="SmppShellExecutor" /&gt;
 				&lt;/list&gt;
 			&lt;/parameter&gt;
@@ -23501,7 +23501,7 @@ To understand JBoss bind options look at  <a href="http://docs.jboss.org/jbossas
 <div class="ulist">
 <ul>
 <li>
-<p><code>org.mobicents.ss7.commons</code> module that contains a base code for CLI interface</p>
+<p><code>org.restcomm.ss7.commons</code> module that contains a base code for CLI interface</p>
 </li>
 <li>
 <p><code>org.restcomm.smpp.bootstrap</code> module that contains SMPP server staff</p>
@@ -23509,7 +23509,7 @@ To understand JBoss bind options look at  <a href="http://docs.jboss.org/jbossas
 </ul>
 </div>
 <div class="paragraph">
-<p><code>org.mobicents.ss7.commons</code> module is used also for SS7 library. If you use SMPP library along with SS7 library you need to deploy this module only once.</p>
+<p><code>org.restcomm.ss7.commons</code> module is used also for SS7 library. If you use SMPP library along with SS7 library you need to deploy this module only once.</p>
 </div>
 <div class="paragraph">
 <p><em>$JBOSS_HOME/standalone/configuration/standalone.xml</em> file (or other appropriate config if you use another profile) must contain a dscription of <code>org.restcomm:smpp-extensions</code> subsystem.</p>
@@ -23541,7 +23541,7 @@ The shell commands are exchanged over TCP/IP.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-01 11:55:11 UTC
+Last updated 2018-06-03 02:27:57 UTC
 </div>
 </div>
 <footer>
