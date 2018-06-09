@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.5">
+<meta name="generator" content="Asciidoctor 1.5.4">
 <title>Advanced Topics</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
@@ -22814,7 +22814,7 @@ display: none;
 /***[END TSG 12-18-2017]***/
 
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <head>
   <meta charset="UTF-8"/>
 
@@ -23389,7 +23389,7 @@ This classloader sees the component classes contained in the component jar (<cod
 It does not see classes from a component that it does not depend on.</p>
 </div>
 <div class="paragraph">
-<p>JAIN SLEE defines a class loading domain with the s required in the JAIN SLEE 1.1 container (for example, JAIN SLEE,  and ). This domain (<code>JBoss Microcontainer ClassLoadingDomain</code>) imports all classes shared in the JBoss Application Server , and acts like the parent domain for all <code>URLClassLoaderDomain</code>s, which means that a class imported by a SLEE classloading domain will always be used first.</p>
+<p>JAIN SLEE defines a class loading domain with the s required in the JAIN SLEE 1.1 container (for example, JAIN SLEE,  and ). This domain (<code>JBoss Microcontainer ClassLoadingDomain</code>) imports all classes shared in the WildFly , and acts like the parent domain for all <code>URLClassLoaderDomain</code>s, which means that a class imported by a SLEE classloading domain will always be used first.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -23423,8 +23423,8 @@ It also depends on the classloader domain of the SIP Event jar.</p>
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-JBoss Application Server does not see the classes of deployed JAIN SLEE components.
-This means that if it exports its classes for components that are complemented with Java EE components, the common classes must be deployed on JBoss Application Server , either directly or included in the Java EE component.
+WildFly does not see the classes of deployed JAIN SLEE components.
+This means that if it exports its classes for components that are complemented with Java EE components, the common classes must be deployed on WildFly , either directly or included in the Java EE component.
 </td>
 </tr>
 </table>
@@ -23591,16 +23591,56 @@ Please refer to its documentation to learn about it.</p>
 <p>Checkout and build the container source code as explained in <a href="#_install">[_install]</a>.</p>
 </li>
 <li>
-<p>Install the TCK Resource Adaptor and Plugin:</p>
+<p>Setup JBOSS_HOME environment variable to WildFly with JAIN SLEE container.</p>
+</li>
+<li>
+<p>Download source code</p>
+<div class="paragraph">
+<p>Use Git to checkout the specific source, the Git repository URL
+is <a href="https://github.com/RestComm/jain-slee.more/" class="bare">https://github.com/RestComm/jain-slee.more/</a></p>
+</div>
 <div class="listingblock">
 <div class="content">
-<pre>cd tck/jain-slee-1.1
+<pre class="highlight"><code>[usr]$ git clone https://github.com/RestComm/jain-slee.more restcomm-jain-slee-more</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Setup TCK_HOME environment variable to <em class="path">tck/jain-slee-1.1</em>.</p>
+<div class="listingblock">
+<div class="content">
+<pre>export TCK_HOME=restcomm-jain-slee-more/tck/jain-slee-1.1</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Install the TCK Plugin and Resource Adaptor:</p>
+<div class="listingblock">
+<div class="content">
+<pre>cd $TCK_HOME
 mvn install</pre>
 </div>
 </div>
 </li>
 <li>
-<p>Setup JAVA_OPTS environment variable to include -XX:MaxPermSize=128M -Djboss.defined.home=<code>/Volumes/2/jboss-5.1.0.GA</code> -Djava.security.manager=default -Djava.security.policy=<code><a href="file:///Volumes/2/workspace/restcomm-jainslee-2/" class="bare">file:///Volumes/2/workspace/restcomm-jainslee-2/</a></code>tck/jain-slee-1.1/tck-security.policy, replacing the <code>absolute paths</code> with $JBOSS_HOME and the path of the Git checkout.</p>
+<p>Copy OpenCloud JAIN SLEE TCK 1.1 module from <em class="path">tck/kain-slee-1.1/release/opencloud</em>
+to <em class="path">$JBOSS_HOME/modules/system/layers/base/com/opencloud</em>.</p>
+</li>
+<li>
+<p>Start Restcomm JAIN SLEE with the Security Manager:</p>
+<div class="listingblock">
+<div class="content">
+<pre>$JBOSS_HOME/bin/standalone.sh -secmgr</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Setup JAVA_OPTS environment variable</p>
+<div class="listingblock">
+<div class="content">
+<pre>export JAVA_OPTS="-Djboss.defined.home=$JBOSS_HOME -Djava.security.manager=default -Djava.security.policy=file://$TCK_HOME/tck-security-wildfly.policy"</pre>
+</div>
+</div>
 </li>
 <li>
 <p>Unzip and run the JAIN SLEE 1.1 TCK distribution:</p>
@@ -23683,7 +23723,7 @@ If the project is large, such as the JAIN SLEE Core, M2Eclipse may be a consider
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-06 19:39:31 UTC
+Last updated 2018-06-09 18:01:48 UTC
 </div>
 </div>
 <footer>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.5">
+<meta name="generator" content="Asciidoctor 1.5.4">
 <title>Configuring and Running Restcomm  JAIN SLEE</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
@@ -22814,7 +22814,7 @@ display: none;
 /***[END TSG 12-18-2017]***/
 
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <head>
   <meta charset="UTF-8"/>
 
@@ -23363,13 +23363,13 @@ display: none;
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_server_profiles">Server Profiles</a></li>
-<li><a href="#_running">Running Restcomm  JAIN SLEE</a>
+<li><a href="#_running">Running Restcomm JAIN SLEE</a>
 <ul class="sectlevel2">
 <li><a href="#starting">Starting</a></li>
 <li><a href="#stopping">Stopping</a></li>
 </ul>
 </li>
-<li><a href="#_configuration">Configuring Restcomm  JAIN SLEE</a></li>
+<li><a href="#_configuration">Configuring Restcomm JAIN SLEE</a></li>
 <li><a href="#eventcontext-factory-configuration">EventContext Factory Configuration</a>
 <ul class="sectlevel2">
 <li><a href="#eventcontext-factory-persistent-configuration">EventContext Factory Persistent Configuration</a></li>
@@ -23400,47 +23400,58 @@ display: none;
 <h2 id="_server_profiles"><a class="anchor" href="#_server_profiles"></a>Server Profiles</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Restcomm JAIN SLEE reuses &amp;JEE.PLATFORM;server profiles to expose different configurations for different needs:</p>
+<p>Restcomm JAIN SLEE reuses WildFly server modes to expose different configurations for different needs. WildFly can be booted in two different modes. A managed domain allows you to run and manage a multi-server topology. Alternatively, you can run a standalone server instance.</p>
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">Default Profile</dt>
+<dt class="hdlist1">Standalone Server</dt>
 <dd>
-<p>The <code class="app">default</code> profile is proper for standalone or pure high availability.
-It provides the best performance per cluster node, with linear scaling, but there is no state replication in the cluster, which means that there is no support for failover, neither there is any kind of state gravitation (one node sending state so another node continues its work.</p>
+<p>For many use cases, the centralized management capability available via a managed domain is not necessary. For these use cases, a WildFly instance can be run as a <code>standalone server</code>. A standalone server instance is an independent process, much like an JBoss Application Server 3, 4, 5, or 6 instance is. Standalone instances can be launched via the standalone.sh or standalone.bat launch scripts.</p>
 </dd>
-<dt class="hdlist1">All Profile</dt>
+<dt class="hdlist1"></dt>
 <dd>
-<p>The <code class="app">all</code> profile is proper for more flexible high availability and failover support.
-Performance per node decreases but the cluster does state replication or gravitation.</p>
+<p>If more than one standalone instance is launched and multi-server management is desired, it is the user&#8217;s responsibility to coordinate management across the servers. For example, to deploy an application across all of the standalone servers, the user would need to individually deploy the application on each server.</p>
+</dd>
+<dt class="hdlist1"></dt>
+<dd>
+<p>It is perfectly possible to launch multiple standalone server instances and have them form an HA cluster, just like it was possible with JBoss Application Server 3, 4, 5 and 6.</p>
+</dd>
+<dt class="hdlist1">Managed Domain</dt>
+<dd>
+<p>One of the primary new features of WildFly is the ability to manage multiple WildFly instances from a single control point. A collection of such servers is referred to as the members of a <code>domain</code> with a single Domain Controller process acting as the central management control point. All of the WildFly instances in the domain share a common management policy, with the Domain Controller acting to ensure that each server is configured according to that policy. Domains can span multiple physical (or virtual) machines, with all WildFly instances on a given host under the control of a special Host Controller process. One Host Controller instance is configured to act as the central Domain Controller. The Host Controller on each host interacts with the Domain Controller to control the lifecycle of the application server instances running on its host and to assist the Domain Controller in managing them.</p>
 </dd>
 </dl>
 </div>
 <div class="paragraph">
-<p>Profiles can be selected when starting the server, see <a href="#_running">Running Restcomm  JAIN SLEE</a> for detailed instructions.</p>
+<p>Profiles can be selected when starting the server, see <a href="#_running">Running Restcomm JAIN SLEE</a> for detailed instructions.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_running"><a class="anchor" href="#_running"></a>Running Restcomm  JAIN SLEE</h2>
+<h2 id="_running"><a class="anchor" href="#_running"></a>Running Restcomm JAIN SLEE</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Starting or stopping Restcomm JAIN SLEE is no different than starting or stopping &amp;JEE.PLATFORM;</p>
+<p>Starting or stopping Restcomm JAIN SLEE is no different than starting or stopping WildFly</p>
 </div>
 <div class="sect2">
 <h3 id="starting"><a class="anchor" href="#starting"></a>Starting</h3>
 <div class="paragraph">
-<p>Once installed, you can run server(s) by executing the run.sh (Unix) or run.bat (Microsoft Windows) startup scripts in the <em class="path">&lt;install_directory&gt;/bin</em> directory (on Unix or Windows).</p>
+<p>Once installed, you can run server(s) by executing the standalone.sh (Unix) or standalone.bat (Microsoft Windows) startup scripts in the <em class="path">&lt;install_directory&gt;/bin</em> directory (on Unix or Windows).</p>
 </div>
 <div class="sect3">
 <h4 id="_starting_paramaters"><a class="anchor" href="#_starting_paramaters"></a>Starting Parameters</h4>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">Server Profile</dt>
+<dt class="hdlist1">Server Config</dt>
 <dd>
-<p>To specify the server profile use <code>-c profile_name</code>, for instance, to use the <code class="app">all</code> profile then start the server with <code>-c all</code></p>
+<p>If you choose to start your server with one of the other provided configurations, they can be accessed by passing the --server-config argument with the server-config file to be used.</p>
 </dd>
 </dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$JBOSS_HOME/bin/standalone.sh --server-config=standalone-full-ha.xml</pre>
+</div>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -23449,7 +23460,7 @@ Performance per node decreases but the cluster does state replication or gravita
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-If not specified the default profile is used.
+If not specified the default config is used.
 </td>
 </tr>
 </table>
@@ -23458,9 +23469,14 @@ If not specified the default profile is used.
 <dl>
 <dt class="hdlist1">IP / Host</dt>
 <dd>
-<p>To specify the IP/Host which the server binds, use <code>-b IP</code>, for instance, to use the 192.168.0.1 IP then start the server with <code>-b 192.168.0.1</code></p>
+<p>To specify the IP/Host which the server binds, use <code>-b=IP</code>, for instance, to use the 192.168.0.1 IP then start the server with <code>-b=192.168.0.1</code></p>
 </dd>
 </dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$JBOSS_HOME/bin/standalone.sh -b=192.168.0.1</pre>
+</div>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -23474,29 +23490,45 @@ If not specified then 127.0.0.1 is used.
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>More details on command line parameters you can read here:
+<a href="https://docs.jboss.org/author/display/WFLY10/Command+line+parameters" class="bare">https://docs.jboss.org/author/display/WFLY10/Command+line+parameters</a></p>
+</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="stopping"><a class="anchor" href="#stopping"></a>Stopping</h3>
 <div class="paragraph">
-<p>You can shut down the server(s) by executing the <code>shutdown.sh -s</code> (Unix) or <code>shutdown.bat -s</code> (Microsoft Windows) scripts in the <em class="path">&lt;install_directory&gt;/bin</em> directory (on Unix or Windows). Note that if you properly stop the server, you will see the following three lines as the last output in the Unix terminal or Command Prompt:</p>
+<p>You can shut down the server(s) by executing</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>[Server] Shutdown complete
-Shutdown complete
-Halting VM</pre>
+<pre>$JBOSS_HOME/bin/jboss-cli.sh --connect command=:shutdown</pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Or you can stop server with Ctrl + C.</p>
+</div>
+<div class="paragraph">
+<p>Note that if you properly stop the server, you will see the following three lines as the last output in the Unix terminal or Command Prompt:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>14:57:43,783 INFO  [org.jboss.as] (MSC service thread 1-8) WFLYSRV0050: WildFly Full 10.1.0.Final (WildFly Core 2.2.0.Final) stopped in 403ms</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>More details on command line interface you can read here:
+<a href="https://docs.jboss.org/author/display/WFLY10/Admin+Guide#AdminGuide-CommandLineInterface" class="bare">https://docs.jboss.org/author/display/WFLY10/Admin+Guide#AdminGuide-CommandLineInterface</a></p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_configuration"><a class="anchor" href="#_configuration"></a>Configuring Restcomm  JAIN SLEE</h2>
+<h2 id="_configuration"><a class="anchor" href="#_configuration"></a>Configuring Restcomm JAIN SLEE</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>JAIN SLEE is configured through an XML descriptor for each <a href="#_server_profiles">Server Profiles</a>.
-The XML file is named <em class="path">jboss-beans.xml</em> and is located at <em class="path">$JBOSS_HOME/server/profile_name/deploy/restcomm-slee/META-INF</em>, where <code class="app">profile_name</code> is the server profile name.</p>
+<p>JAIN SLEE is deployed as WildFly extension and is configured through an standalone.xml. This file is located at <em class="path">$JBOSS_HOME/standalone/configuration</em>.</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -23520,27 +23552,21 @@ This is for advanced users that know the internals of the container.
 <p>The EventContext Factory is responsible for managing all EventContexts in the SLEE Container, and its behavior is configurable.</p>
 </div>
 <div class="paragraph">
-<p>The EventContext Factory configuration can be changed through an XML file and a JMX MBean.</p>
+<p>The EventContext Factory configuration can be changed through an XML element &lt;mbean&gt; and a JMX MBean.</p>
 </div>
 <div class="sect2">
 <h3 id="eventcontext-factory-persistent-configuration"><a class="anchor" href="#eventcontext-factory-persistent-configuration"></a>EventContext Factory Persistent Configuration</h3>
 <div class="paragraph">
-<p>Configuration is done through an XML descriptor for each Restcomm Cluster.
-The XML file is named <em class="path">jboss-beans.xml</em> and is located at <em class="path">{JBOSS_HOME}/server/{profile_name}/deploy/restcomm-slee/META-INF</em></p>
+<p>JAIN SLEE is deployed as WildFly extension and is configured through an standalone.xml. This file is located at <em class="path">$JBOSS_HOME/standalone/configuration</em>.</p>
 </div>
 <div class="paragraph">
 <p>The configuration is exposed a JBoss Microcontainer Bean:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;bean name="Mobicents.JAINSLEE.EventContextFactoryConfiguration"
-	class="org.mobicents.slee.container.management.jmx.EventContextFactoryConfiguration"&gt;
-	&lt;annotation&gt;@org.jboss.aop.microcontainer.aspects.jmx.JMX(name=
-		"org.mobicents.slee:name=EventContextFactoryConfiguration",exposedInterface=
-		org.mobicents.slee.container.management.jmx.EventContextFactoryConfigurationMBean.class,
-		registerDirectly=true)&lt;/annotation&gt;
-	&lt;property name="defaultEventContextSuspensionTimeout"&gt;60000&lt;/property&gt;
-&lt;/bean&gt;</code></pre>
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;mbean name="EventContextFactoryConfiguration"&gt;
+	&lt;property name="defaultEventContextSuspensionTimeout" value="60000" /&gt;
+&lt;/mbean&gt;</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all spread">
@@ -23573,8 +23599,10 @@ The XML file is named <em class="path">jboss-beans.xml</em> and is located at <e
 Note that such configuration changes are not persisted.</p>
 </div>
 <div class="paragraph">
-<p>The JMX MBean which can be used to change the EventContext Factory configuration is named <code class="app">org.mobicents.slee:name=EventContextFactoryConfiguration</code>, and provides getters and setters to change each property defined in the persistent configuration.
-The JMX Console can be used to use this MBean, see <a href="#_management_jmx_console">[_management_jmx_console]</a>.</p>
+<p>The JMX MBean which can be used to change the EventContext Factory configuration is named <code class="app">org.mobicents.slee:name=EventContextFactoryConfiguration</code>, and provides getters and setters to change each property defined in the persistent configuration.</p>
+</div>
+<div class="paragraph">
+<p>The JConsole can be used to use this MBean, see <a href="#_management_jconsole">[_management_jconsole]</a></p>
 </div>
 </div>
 </div>
@@ -23618,26 +23646,19 @@ Its configuration can be tuned, through an XML file and a JMX MBean.</p>
 <div class="sect2">
 <h3 id="event-router-persistent-configuration"><a class="anchor" href="#event-router-persistent-configuration"></a>Event Router Persistent Configuration</h3>
 <div class="paragraph">
-<p>Configuration is done through an XML descriptor for each <a href="#_server_profiles">Server Profiles</a>.
-The XML file is named <em class="path">jboss-beans.xml</em> and is located at <em class="path">$JBOSS_HOME/server/profile_name/deploy/restcomm-slee/META-INF</em>, where <code class="app">profile_name</code> is the server profile name.</p>
+<p>JAIN SLEE is deployed as WildFly extension and is configured through an standalone.xml. This file is located at <em class="path">$JBOSS_HOME/standalone/configuration</em>.</p>
 </div>
 <div class="paragraph">
 <p>The configuration is exposed a JBoss Microcontainer Bean:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;bean name="Mobicents.JAINSLEE.EventRouterConfiguration"
-	class="org.mobicents.slee.container.management.jmx.EventRouterConfiguration"&gt;
-	&lt;annotation&gt;@org.jboss.aop.microcontainer.aspects.jmx.JMX(name=
-		"org.mobicents.slee:name=EventRouterConfiguration",	exposedInterface=
-		org.mobicents.slee.container.management.jmx.EventRouterConfigurationMBean.class,
-		registerDirectly=true)&lt;/annotation&gt;
-	&lt;property name="eventRouterThreads"&gt;8&lt;/property&gt;
-	&lt;property name="collectStats"&gt;true&lt;/property&gt;
-	&lt;property name="executorMapperClassName"&gt;
-		org.mobicents.slee.runtime.eventrouter.mapping.ActivityHashingEventRouterExecutorMapper
-	&lt;/property&gt;
-&lt;/bean&gt;</code></pre>
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;mbean name="EventRouterConfiguration"&gt;
+	&lt;property name="eventRouterThreads" value="8" /&gt;
+	&lt;property name="collectStats" value="true" /&gt;
+	&lt;property name="confirmSbbEntityAttachement" value="true" /&gt;
+	&lt;property name="executorMapperClassName" value="org.mobicents.slee.runtime.eventrouter.mapping.ActivityHashingEventRouterExecutorMapper" /&gt;
+&lt;/mbean&gt;</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all spread">
@@ -23685,8 +23706,10 @@ The XML file is named <em class="path">jboss-beans.xml</em> and is located at <e
 These configuration changes are not persisted.</p>
 </div>
 <div class="paragraph">
-<p>The JMX MBean that can be used to change the Event Router configuration is named <code class="app">org.mobicents.slee:name=EventRouterConfiguration</code>, and provides getters and setters to change each property defined in the persistent configuration.
-See <a href="#_management_jmx_console">[_management_jmx_console]</a> for how the JMX Console can be used to use this MBean.</p>
+<p>The JMX MBean that can be used to change the Event Router configuration is named <code class="app">org.mobicents.slee:name=EventRouterConfiguration</code>, and provides getters and setters to change each property defined in the persistent configuration.</p>
+</div>
+<div class="paragraph">
+<p>The JConsole can be used to use this MBean, see <a href="#_management_jconsole">[_management_jconsole]</a></p>
 </div>
 </div>
 </div>
@@ -23703,22 +23726,16 @@ See <a href="#_management_jmx_console">[_management_jmx_console]</a> for how the
 <div class="sect2">
 <h3 id="timer-facility-persistent-configuration"><a class="anchor" href="#timer-facility-persistent-configuration"></a>Timer Facility Persistent Configuration</h3>
 <div class="paragraph">
-<p>Configuration is done through an XML descriptor for each Restcomm Cluster.
-The XML file is named <em class="path">jboss-beans.xml</em> and is located at <em class="path">{JBOSS_HOME}/server/{profile_name}/deploy/restcomm-slee/META-INF</em></p>
+<p>JAIN SLEE is deployed as WildFly extension and is configured through an standalone.xml. This file is located at <em class="path">$JBOSS_HOME/standalone/configuration</em>.</p>
 </div>
 <div class="paragraph">
 <p>The configuration is exposed a JBoss Microcontainer Bean:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;bean name="Mobicents.JAINSLEE.TimerFacilityConfiguration"
-	class="org.mobicents.slee.container.management.jmx.TimerFacilityConfiguration"&gt;
-	&lt;annotation&gt;@org.jboss.aop.microcontainer.aspects.jmx.JMX(name=
-		"org.mobicents.slee:name=TimerFacilityConfiguration",exposedInterface=
-		org.mobicents.slee.container.management.jmx.TimerFacilityConfigurationMBean.class,
-		registerDirectly=true)&lt;/annotation&gt;
-	&lt;property name="timerThreads"&gt;4&lt;/property&gt;
-&lt;/bean&gt;</code></pre>
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;mbean name="TimerFacilityConfiguration"&gt;
+	&lt;property name="timerThreads" value="4" /&gt;
+&lt;/mbean&gt;</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all spread">
@@ -23756,36 +23773,39 @@ The XML file is named <em class="path">jboss-beans.xml</em> and is located at <e
 Note that such configuration changes are not persisted.</p>
 </div>
 <div class="paragraph">
-<p>The JMX MBean which can be used to change the Timer Facility configuration is named <code class="app">org.mobicents.slee:name=TimerFacilityConfiguration</code>, and provides getters and setters to change each property defined in the persistent configuration.
-The JMX Console can be used to use this MBean, see <a href="#_management_jmx_console">[_management_jmx_console]</a>.</p>
+<p>The JMX MBean which can be used to change the Timer Facility configuration is named <code class="app">org.mobicents.slee:name=TimerFacilityConfiguration</code>, and provides getters and setters to change each property defined in the persistent configuration.</p>
+</div>
+<div class="paragraph">
+<p>The JConsole can be used to use this MBean, see <a href="#_management_jconsole">[_management_jconsole]</a>.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_profiles_configuration"><a class="anchor" href="#_profiles_configuration"></a>Configuring JAIN SLEE Profiles</h3>
 <div class="paragraph">
 <p>JAIN SLEE Profiles is a component used to store data, usually related with a user and/or service profile.
-JAIN SLEE maps JAIN SLEE Profiles to a Java Persistence API () Datasource, through Hibernate.</p>
+JAIN SLEE maps JAIN SLEE Profiles to a Java Persistence API (JPA) Datasource, through Hibernate.</p>
 </div>
 <div class="paragraph">
-<p>There are two configurations for JAIN SLEE Profiles provided as JBoss Microcontainer Beans:</p>
+<p>There is configuration for JAIN SLEE Profiles provided as JBoss Microcontainer Beans:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;bean name="Mobicents.JAINSLEE.Profiles.JPA.HSQLDBConfig"
-	class="org.mobicents.slee.container.deployment.profile.jpa.Configuration"&gt;
-	&lt;property name="persistProfiles"&gt;true&lt;/property&gt;
-	&lt;property name="clusteredProfiles"&gt;false&lt;/property&gt;
-	&lt;property name="hibernateDatasource"&gt;java:/DefaultDS&lt;/property&gt;
-	&lt;property name="hibernateDialect"&gt;org.hibernate.dialect.HSQLDialect&lt;/property&gt;
-	&lt;depends&gt;jboss.jca:service=DataSourceBinding,name=DefaultDS&lt;/depends&gt;
-&lt;/bean&gt;
-&lt;bean name="Mobicents.JAINSLEE.Profiles.JPA.PostgreSQLConfig"
-	class="org.mobicents.slee.container.deployment.profile.jpa.Configuration"&gt;
-	&lt;property name="persistProfiles"&gt;true&lt;/property&gt;
-	&lt;property name="clusteredProfiles"&gt;true&lt;/property&gt;
-	&lt;property name="hibernateDatasource"&gt;java:/PostgresDS&lt;/property&gt;
-	&lt;property name="hibernateDialect"&gt;org.hibernate.dialect.PostgreSQLDialect&lt;/property&gt;
-&lt;/bean&gt;</code></pre>
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;mbean name="H2DBConfig"&gt;
+    &lt;property name="persistProfiles" value="true" /&gt;
+    &lt;property name="clusteredProfiles" value="false" /&gt;
+    &lt;property name="hibernateDatasource" value="java:jboss/datasources/ExampleDS" /&gt;
+    &lt;property name="hibernateDialect" value="org.hibernate.dialect.H2Dialect" /&gt;
+&lt;/mbean&gt;
+&lt;mbean name="PostgreDBConfig"&gt;
+    &lt;property name="persistProfiles" value="true" /&gt;
+    &lt;property name="clusteredProfiles" value="false" /&gt;
+    &lt;property name="hibernateDatasource" value="java:jboss/datasources/PostgreDS" /&gt;
+    &lt;property name="hibernateDialect" value="org.hibernate.dialect.PostgreSQL94Dialect" /&gt;
+    &lt;property name="datasourceServiceName" value="PostgreDS" /&gt;
+&lt;/mbean&gt;
+&lt;mbean name="ProfileManagement"&gt;
+    &lt;property name="dbConfigMBean" value="PostgreDBConfig" /&gt;
+&lt;/mbean&gt;</code></pre>
 </div>
 </div>
 <div class="admonitionblock important">
@@ -23829,18 +23849,21 @@ For new ones, ensure that the name attribute of the bean element is unique.
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">hibernateDatasource</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the Java Datasource deployed in the JBoss Application Server.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the Java Datasource deployed in the WildFly.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">hibernateDialect</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The java class name of the hibernate dialect to use, related with the selected datasource.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The java class name of the hibernate dialect to use, related with
+ the selected datasource.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">datasourceServiceName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The pool name of Datasource from WildFly configuration.</p></td>
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>To switch the active configuration simply change the parameter injected in the bean named <code class="app">Mobicents.JAINSLEE.Container</code>.</p>
-</div>
 </div>
 <div class="sect2">
 <h3 id="other-configurations"><a class="anchor" href="#other-configurations"></a>Other Configurations</h3>
@@ -23849,18 +23872,10 @@ For new ones, ensure that the name attribute of the bean element is unique.
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;bean name="Mobicents.JAINSLEE.MobicentsManagement"
-	class="org.mobicents.slee.container.management.jmx.MobicentsManagement"&gt;
-	&lt;annotation&gt;@org.jboss.aop.microcontainer.aspects.jmx.JMX(
-		name="org.mobicents.slee:service=MobicentsManagement",
-		exposedInterface=org.mobicents.slee.container.management.
-		jmx.MobicentsManagementMBean.class,
-		registerDirectly=true)&lt;/annotation&gt;
-	&lt;property name="entitiesRemovalDelay"&gt;1&lt;/property&gt;
-	&lt;property name="timerThreads"&gt;8&lt;/property&gt;
-	&lt;property name="loadClassesFirstFromAS"&gt;true&lt;/property&gt;
-	&lt;property name="initializeReferenceDataTypesWithNull"&gt;true&lt;/property&gt;
-&lt;/bean&gt;</code></pre>
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;mbean name="MobicentsManagement"&gt;
+	&lt;property name="entitiesRemovalDelay" value="1" /&gt;
+	&lt;property name="initializeReferenceDataTypesWithNull" value="true" /&gt;
+&lt;/mbean&gt;</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all spread">
@@ -23884,11 +23899,6 @@ For new ones, ensure that the name attribute of the bean element is unique.
 <td class="tableblock halign-left valign-top"><p class="tableblock">The number of minutes before the container forces the ending of SBB entities from a service being deactivated.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">timerThreads</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The number of threads used by the timer facility.</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">initializeReferenceDataTypesWithNull</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The flag for initializing SBB CMP fields with Numeric Reference Data types to 0 (false) or null (true).</p></td>
@@ -23901,7 +23911,7 @@ Note that such configuration changes are not persisted.</p>
 </div>
 <div class="paragraph">
 <p>To change the configuraton, use the JMX MBean named <code class="app">org.mobicents.slee:service=MobicentsManagement</code>, which provides getters and setters to change each property defined in the persistent configuration that is configurable with the container running.
-The JMX Console can be used to use this MBean, as described in <a href="#_management_jmx_console">[_management_jmx_console]</a>.</p>
+The JConsole can be used to use this MBean, as described in <a href="#_management_jconsole">[_management_jconsole]</a>.</p>
 </div>
 </div>
 <div class="sect2">
@@ -23921,7 +23931,7 @@ The JMX Console can be used to use this MBean, as described in <a href="#_manage
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-06 19:39:31 UTC
+Last updated 2018-06-09 18:01:48 UTC
 </div>
 </div>
 <footer>

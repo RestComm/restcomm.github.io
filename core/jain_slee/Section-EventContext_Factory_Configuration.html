@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.5">
+<meta name="generator" content="Asciidoctor 1.5.4">
 <title>EventContext Factory Configuration</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
@@ -22814,7 +22814,7 @@ display: none;
 /***[END TSG 12-18-2017]***/
 
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <head>
   <meta charset="UTF-8"/>
 
@@ -23374,7 +23374,7 @@ display: none;
 <p>The EventContext Factory is responsible for managing all EventContexts in the SLEE Container, and its behavior is configurable.</p>
 </div>
 <div class="paragraph">
-<p>The EventContext Factory configuration can be changed through an XML file and a JMX MBean.</p>
+<p>The EventContext Factory configuration can be changed through an XML element &lt;mbean&gt; and a JMX MBean.</p>
 </div>
 </div>
 </div>
@@ -23382,22 +23382,16 @@ display: none;
 <h2 id="eventcontext-factory-persistent-configuration"><a class="anchor" href="#eventcontext-factory-persistent-configuration"></a>EventContext Factory Persistent Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Configuration is done through an XML descriptor for each Restcomm Cluster.
-The XML file is named <em class="path">jboss-beans.xml</em> and is located at <em class="path">{JBOSS_HOME}/server/{profile_name}/deploy/restcomm-slee/META-INF</em></p>
+<p>JAIN SLEE is deployed as WildFly extension and is configured through an standalone.xml. This file is located at <em class="path">$JBOSS_HOME/standalone/configuration</em>.</p>
 </div>
 <div class="paragraph">
 <p>The configuration is exposed a JBoss Microcontainer Bean:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;bean name="Mobicents.JAINSLEE.EventContextFactoryConfiguration"
-	class="org.mobicents.slee.container.management.jmx.EventContextFactoryConfiguration"&gt;
-	&lt;annotation&gt;@org.jboss.aop.microcontainer.aspects.jmx.JMX(name=
-		"org.mobicents.slee:name=EventContextFactoryConfiguration",exposedInterface=
-		org.mobicents.slee.container.management.jmx.EventContextFactoryConfigurationMBean.class,
-		registerDirectly=true)&lt;/annotation&gt;
-	&lt;property name="defaultEventContextSuspensionTimeout"&gt;60000&lt;/property&gt;
-&lt;/bean&gt;</code></pre>
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;mbean name="EventContextFactoryConfiguration"&gt;
+	&lt;property name="defaultEventContextSuspensionTimeout" value="60000" /&gt;
+&lt;/mbean&gt;</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all spread">
@@ -23432,15 +23426,17 @@ The XML file is named <em class="path">jboss-beans.xml</em> and is located at <e
 Note that such configuration changes are not persisted.</p>
 </div>
 <div class="paragraph">
-<p>The JMX MBean which can be used to change the EventContext Factory configuration is named <code class="app">org.mobicents.slee:name=EventContextFactoryConfiguration</code>, and provides getters and setters to change each property defined in the persistent configuration.
-The JMX Console can be used to use this MBean, see <a href="#_management_jmx_console">[_management_jmx_console]</a>.</p>
+<p>The JMX MBean which can be used to change the EventContext Factory configuration is named <code class="app">org.mobicents.slee:name=EventContextFactoryConfiguration</code>, and provides getters and setters to change each property defined in the persistent configuration.</p>
+</div>
+<div class="paragraph">
+<p>The JConsole can be used to use this MBean, see <a href="#_management_jconsole">[_management_jconsole]</a></p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-06 19:39:31 UTC
+Last updated 2018-06-09 18:01:48 UTC
 </div>
 </div>
 <footer>

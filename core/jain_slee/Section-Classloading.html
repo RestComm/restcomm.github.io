@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.5">
+<meta name="generator" content="Asciidoctor 1.5.4">
 <title>Class Loading</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
@@ -22814,7 +22814,7 @@ display: none;
 /***[END TSG 12-18-2017]***/
 
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <head>
   <meta charset="UTF-8"/>
 
@@ -23367,7 +23367,7 @@ This classloader sees the component classes contained in the component jar (<cod
 It does not see classes from a component that it does not depend on.</p>
 </div>
 <div class="paragraph">
-<p>JAIN SLEE defines a class loading domain with the s required in the JAIN SLEE 1.1 container (for example, JAIN SLEE,  and ). This domain (<code>JBoss Microcontainer ClassLoadingDomain</code>) imports all classes shared in the JBoss Application Server , and acts like the parent domain for all <code>URLClassLoaderDomain</code>s, which means that a class imported by a SLEE classloading domain will always be used first.</p>
+<p>JAIN SLEE defines a class loading domain with the s required in the JAIN SLEE 1.1 container (for example, JAIN SLEE,  and ). This domain (<code>JBoss Microcontainer ClassLoadingDomain</code>) imports all classes shared in the WildFly , and acts like the parent domain for all <code>URLClassLoaderDomain</code>s, which means that a class imported by a SLEE classloading domain will always be used first.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -23401,8 +23401,8 @@ It also depends on the classloader domain of the SIP Event jar.</p>
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-JBoss Application Server does not see the classes of deployed JAIN SLEE components.
-This means that if it exports its classes for components that are complemented with Java EE components, the common classes must be deployed on JBoss Application Server , either directly or included in the Java EE component.
+WildFly does not see the classes of deployed JAIN SLEE components.
+This means that if it exports its classes for components that are complemented with Java EE components, the common classes must be deployed on WildFly , either directly or included in the Java EE component.
 </td>
 </tr>
 </table>
@@ -23410,7 +23410,7 @@ This means that if it exports its classes for components that are complemented w
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-06 19:39:31 UTC
+Last updated 2018-06-09 18:01:48 UTC
 </div>
 </div>
 <footer>

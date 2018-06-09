@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.5">
+<meta name="generator" content="Asciidoctor 1.5.4">
 <title>Persistent Deployable Unit Management</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
@@ -22814,7 +22814,7 @@ display: none;
 /***[END TSG 12-18-2017]***/
 
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <head>
   <meta charset="UTF-8"/>
 
@@ -23356,12 +23356,12 @@ display: none;
 
     </header>
 </head>
-<body id="_management_persistent_file_deployer" class="article">
+<body class="article">
 <div id="header">
-<h1>Persistent Deployable Unit Management</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
+<li><a href="#_management_persistent_file_deployer">Persistent Deployable Unit Management</a></li>
 <li><a href="#_management_persistent_du_install">Persistent Deployable Unit Install</a></li>
 <li><a href="#_management_persistent_du_uninstall">Persistent Deployable Unit Uninstall</a></li>
 <li><a href="#_management_persistent_deployer_additional_behavior">Beyond Deployable Unit (Un)Install</a></li>
@@ -23370,7 +23370,8 @@ display: none;
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="_management_persistent_file_deployer"><a class="anchor" href="#_management_persistent_file_deployer"></a>Persistent Deployable Unit Management</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>JAIN SLEE provides a file deployer that greatly simplifies the management of JAIN SLEE deployable unit jars.
@@ -23398,7 +23399,7 @@ The deployer:</p>
 <h2 id="_management_persistent_du_install"><a class="anchor" href="#_management_persistent_du_install"></a>Persistent Deployable Unit Install</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To install a deployable unit jar simply copy the file to <em class="path">$JBOSS_HOME/server/profile_name/deploy/</em>, where <code class="app">profile_name</code> is the server profile name.
+<p>To install a deployable unit jar simply copy the file to <em class="path">$JBOSS_HOME/standalone/deployments/</em>.
 Child directories can be used.</p>
 </div>
 </div>
@@ -23538,7 +23539,7 @@ If an RA is installed using the persistent deployer, then SLEE reads its own dep
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-06 19:39:31 UTC
+Last updated 2018-06-09 18:01:48 UTC
 </div>
 </div>
 <footer>

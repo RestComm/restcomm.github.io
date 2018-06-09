@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.5">
+<meta name="generator" content="Asciidoctor 1.5.4">
 <title>Setting the JBOSS_HOME Environment Variable</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
@@ -22814,7 +22814,7 @@ display: none;
 /***[END TSG 12-18-2017]***/
 
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <head>
   <meta charset="UTF-8"/>
 
@@ -23362,7 +23362,7 @@ display: none;
 </div>
 <div id="content">
 <div class="paragraph">
-<p>The <code class="app">Restcomm Platform</code> (<code class="app">Restcomm</code>) is built on top of <code class="app">JBoss Application Server</code>.
+<p>The <code class="app">Restcomm Platform</code> (<code class="app">Restcomm</code>) is built on top of <code class="app">WildFly</code>.
 You do not need to set the <code class="var">JBOSS_HOME</code> environment variable to run any of the <code class="app">Restcomm Platform</code> servers <em>unless</em> <code class="var">JBOSS_HOME</code> is <em>already</em> set.</p>
 </div>
 <div class="paragraph">
@@ -23378,7 +23378,7 @@ You do not need to set the <code class="var">JBOSS_HOME</code> environment varia
 </div>
 </div>
 <div class="paragraph">
-<p>The <code class="app">Restcomm Platform</code> and most Restcomm servers are built on top of <code class="app">JBoss Application Server</code> (<code class="app">JBoss Application Server</code>). When the <code class="app">Restcomm Platform</code> or Restcomm  servers are built <em>from source</em>, then <code class="var">JBOSS_HOME</code> <em>must</em> be set, because the Restcomm files are installed into (or &#8220;on top of&#8221; if you prefer) a clean <code class="app">JBoss Application Server</code> installation, and the build process assumes that the location pointed to by the <code class="var">JBOSS_HOME</code> environment variable at the time of building is the <code class="app">JBoss Application Server</code> installation into which you want to install the Restcomm files.</p>
+<p>The <code class="app">Restcomm Platform</code> and most Restcomm servers are built on top of <code class="app">WildFly</code> (<code class="app">WildFly</code>). When the <code class="app">Restcomm Platform</code> or Restcomm  servers are built <em>from source</em>, then <code class="var">JBOSS_HOME</code> <em>must</em> be set, because the Restcomm files are installed into (or &#8220;on top of&#8221; if you prefer) a clean <code class="app">WildFly</code> installation, and the build process assumes that the location pointed to by the <code class="var">JBOSS_HOME</code> environment variable at the time of building is the <code class="app">WildFly</code> installation into which you want to install the Restcomm files.</p>
 </div>
 <div class="paragraph">
 <p>This guide does not detail building the <code class="app">Restcomm Platform</code> or any Restcomm servers from source.
@@ -23411,7 +23411,7 @@ This can save you both time and frustration.
 <p>&#8230;&#8203;you have installed the <code class="app">Restcomm Platform</code> binary distribution.</p>
 </li>
 <li>
-<p>&#8230;&#8203;you have installed a Restcomm server binary distribution <em>which bundles <code class="app">JBoss Application Server</code>.</em></p>
+<p>&#8230;&#8203;you have installed a Restcomm server binary distribution <em>which bundles <code class="app">WildFly</code>.</em></p>
 </li>
 </ul>
 </div>
@@ -23424,12 +23424,12 @@ This can save you both time and frustration.
 <p>&#8230;&#8203;you are installing the <code class="app">Restcomm Platform</code> or any of the Restcomm servers <em>from source</em>.</p>
 </li>
 <li>
-<p>&#8230;&#8203;you are installing the <code class="app">Restcomm Platform</code> binary distribution, or one of the Restcomm server binary distributions, which <em>do not</em> bundle <code class="app">JBoss Application Server</code>.</p>
+<p>&#8230;&#8203;you are installing the <code class="app">Restcomm Platform</code> binary distribution, or one of the Restcomm server binary distributions, which <em>do not</em> bundle <code class="app">WildFly</code>.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Naturally, if you installed the <code class="app">Restcomm Platform</code> or one of the Restcomm server binary releases which <em>do not</em> bundle <code class="app">JBoss Application Server</code>, yet requires it to run, then you should install before setting <code class="var">JBOSS_HOME</code> or proceeding with anything else.</p>
+<p>Naturally, if you installed the <code class="app">Restcomm Platform</code> or one of the Restcomm server binary releases which <em>do not</em> bundle <code class="app">WildFly</code>, yet requires it to run, then you should install before setting <code class="var">JBOSS_HOME</code> or proceeding with anything else.</p>
 </div>
 <div class="paragraph">
 <div class="title">Setting the JBOSS_HOME Environment Variable on Unix</div>
@@ -23505,7 +23505,7 @@ As another hint, this topmost directory contains a <em class="path">bin</em> sub
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-06 19:39:31 UTC
+Last updated 2018-06-09 18:01:48 UTC
 </div>
 </div>
 <footer>

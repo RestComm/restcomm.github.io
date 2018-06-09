@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.5">
+<meta name="generator" content="Asciidoctor 1.5.4">
 <title>Logging, Traces and Alarms</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
@@ -22814,7 +22814,7 @@ display: none;
 /***[END TSG 12-18-2017]***/
 
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <head>
   <meta charset="UTF-8"/>
 
@@ -23362,11 +23362,7 @@ display: none;
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_log4j_service">Log4j Logging Service</a>
-<ul class="sectlevel2">
-<li><a href="#_global_logging_config">Simplified Global Log4j Configuration</a></li>
-</ul>
-</li>
+<li><a href="#_log4j_service">Logging Service</a></li>
 <li><a href="#alarm-facility">Alarm Facility</a></li>
 <li><a href="#trace-facility">Trace Facility</a>
 <ul class="sectlevel2">
@@ -23378,141 +23374,72 @@ display: none;
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_log4j_service"><a class="anchor" href="#_log4j_service"></a>Log4j Logging Service</h2>
+<h2 id="_log4j_service"><a class="anchor" href="#_log4j_service"></a>Logging Service</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In Restcomm JAIN SLEE <code>Apache log4j</code> is used for logging.
-If you are not familiar with the log4j package and would like to use it in your applications, you can read more about it at the <a href="http://jakarta.apache.org/log4j/">Jakarta web site</a>.</p>
+<p>In Restcomm JAIN SLEE <code>WildFly Logging subsystem</code> is used for logging. If you are not familiar with the Logging subsystem and would like to use it in your applications, you can read more about it here: <a href="https://docs.jboss.org/author/display/WFLY10/Logging+Configuration/">WildFly 10 documentation</a>.</p>
 </div>
 <div class="paragraph">
-<p>Logging is controlled from a central <em class="path">conf/jboss-log4j.xml</em> file, in each server configuration profile.
-This file defines a set of appenders specifying the log files, what categories of messages should go there, the message format and the level of filtering.
-By default, in Restcomm  produces output to both the console and a log file (<em class="path">log/server.log</em>).</p>
+<p>Logging is controlled from a <em class="path">/standalone/configuration/standalone.xml</em> file.</p>
 </div>
 <div class="paragraph">
-<p>There are 6 basic log levels used: TRACE, DEBUG, INFO, WARN, ERROR and FATAL.</p>
-</div>
-<div class="paragraph">
-<p>Logging is organized in categories and appenders.
-Appenders control destination of log entries.
-Different appenders differ in configuration, however each supports threshold.
-Threshold filters log entries based on their level.
-Threshold set to WARN will allow log entry to pass into appender if its level is WARN, ERROR or FATAL, other entries will be discarded.
-For more details on appender configuration please refer to its documentation or java doc.</p>
-</div>
-<div class="paragraph">
-<p>The logging threshold on the console is INFO, by default.
-In contrast, there is no threshold set for the server.log file, so all generated logging messages are  logged there.</p>
-</div>
-<div class="paragraph">
-<p>Categories control level for loggers and its children, for details please refer to log4j manual.</p>
-</div>
-<div class="paragraph">
-<p>By default  Restcomm JAIN SLEE inherits level of INFO from root logger.
-To make platform add more detailed logs, file             <em class="path">conf/jboss-log4j.xml</em> has to be altered.
-Explicit category definition for Restcomm  JAIN SLEE looks like:</p>
+<p>The overall server logging configuration is represented by the <code>logging subsystem</code>. It consists of four notable parts: <code>handler</code> configurations, <code>logger</code>, the <code>root logger</code> declarations (aka log categories) and <code>logging profiles</code>. Each logger does reference a handler (or set of handlers). Each handler declares the log format and output:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;category name="org.mobicents.slee"&gt;
-    &lt;priority value="INFO"/&gt;
-&lt;/category&gt;</code></pre>
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;subsystem xmlns="urn:jboss:domain:logging:3.0"&gt;
+   &lt;console-handler name="CONSOLE" autoflush="true"&gt;
+       &lt;level name="DEBUG"/&gt;
+       &lt;formatter&gt;
+           &lt;named-formatter name="COLOR-PATTERN"/&gt;
+       &lt;/formatter&gt;
+   &lt;/console-handler&gt;
+   &lt;periodic-rotating-file-handler name="FILE" autoflush="true"&gt;
+       &lt;formatter&gt;
+           &lt;named-formatter name="PATTERN"/&gt;
+       &lt;/formatter&gt;
+       &lt;file relative-to="jboss.server.log.dir" path="server.log"/&gt;
+       &lt;suffix value=".yyyy-MM-dd"/&gt;
+   &lt;/periodic-rotating-file-handler&gt;
+   &lt;logger category="com.arjuna"&gt;
+       &lt;level name="WARN"/&gt;
+   &lt;/logger&gt;
+   [...]
+   &lt;root-logger&gt;
+       &lt;level name="DEBUG"/&gt;
+       &lt;handlers&gt;
+           &lt;handler name="CONSOLE"/&gt;
+           &lt;handler name="FILE"/&gt;
+       &lt;/handlers&gt;
+   &lt;/root-logger&gt;
+   &lt;formatter name="PATTERN"&gt;
+       &lt;pattern-formatter pattern="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p [%c] (%t) %s%e%n"/&gt;
+   &lt;/formatter&gt;
+   &lt;formatter name="COLOR-PATTERN"&gt;
+       &lt;pattern-formatter pattern="%K{level}%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%e%n"/&gt;
+   &lt;/formatter&gt;
+&lt;/subsystem&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This limits the level of logging to INFO for all Restcomm JAIN SLEE classes.
-It is possible to declare more categories with different level, to provide logs with greater detail.</p>
-</div>
-<div class="paragraph">
-<p>For instance, to provide detailed information on Restcomm JAIN SLEE transaction engine in separate log file(<em class="path">txmanager.log</em>), file   <em class="path">conf/jboss-log4j.xml</em> should contain entries as follows:</p>
+<p>By default Restcomm JAIN SLEE inherits level of INFO from root-logger. To make platform add
+more detailed logs, file <em class="path">/standaloneconfiguration/standalone.xml</em> has to be altered. Explicit category definition for Restcomm JAIN SLEE looks like:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;appender name="TXMANAGER" class="org.jboss.logging.appender.RollingFileAppender"&gt;
-    &lt;errorHandler class="org.jboss.logging.util.OnlyOnceErrorHandler"/&gt;
-    &lt;param name="File" value="${jboss.server.home.dir}/log/txmanager.log"/&gt;
-    &lt;param name="Append" value="false"/&gt;
-    &lt;param name="MaxFileSize" value="500KB"/&gt;
-    &lt;param name="MaxBackupIndex" value="1"/&gt;
-
-    &lt;layout class="org.apache.log4j.PatternLayout"&gt;
-        &lt;param name="ConversionPattern" value="%d %-5p [%c] %m%n"/&gt;
-    &lt;/layout&gt;
-&lt;/appender&gt;
-
-&lt;category name="org.mobicents.slee.runtime.transaction"&gt;
-    &lt;priority value="DEBUG" /&gt;
-    &lt;appender-ref ref="TXMANAGER"/&gt;
-&lt;/category&gt;</code></pre>
+<pre>&lt;logger category="org.mobicents.slee"&gt;
+    &lt;level name="INFO"/&gt;
+&lt;/logger&gt;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This creates a new file appender and specifies that it should be used by the logger (or category) for the package org.mobicents.slee.runtime.transaction.</p>
+<p>This limits the level of logging to INFO for all Restcomm JAIN SLEE classes. It is possible to declare more categories with different level, to provide logs with greater detail.</p>
 </div>
 <div class="paragraph">
-<p>The file appender is set up to produce a new log file every day rather than producing a new one every time you restart the server or writing to a single file indefinitely.
-The current log file is txmanager.log.
-Older files have the date they were written added to their filenames.</p>
-</div>
-<div class="sect2">
-<h3 id="_global_logging_config"><a class="anchor" href="#_global_logging_config"></a>Simplified Global Log4j Configuration</h3>
-<div class="paragraph">
-<p>Besides manual logging configuration, described previously, Restcomm JAIN SLEE also exposes management operations that greatly simplify such configuration, allowing the administrator to select through predefined and complete logging configuration presets.
-Such operations are available in MBean named <em class="path">org.mobicents.slee%3Aservice%3DMobicentsManagement</em>, and the available presets are:</p>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Level</dt>
-<dd>
-<p>The available management operations are:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>DEFAULT: Regular logging, at INFO level, displaying most user-related messages;</p>
-</li>
-<li>
-<p>DEBUG: More verbose logging, mostly using DEBUG/TRACE level, displaying message of interest for developers;</p>
-</li>
-<li>
-<p>PRODUCTION: Low verbosity and async logging, mostly in WARN level, for systems in production so that logging does impact performance.</p>
-</li>
-</ul>
-</div>
-</dd>
-<dt class="hdlist1">JMX Operation</dt>
-<dd>
-<div class="ulist">
-<ul>
-<li>
-<p>getLoggingConfiguration: retrieves what is the current logging configuration;</p>
-</li>
-<li>
-<p>switchLoggingConfiguration: allows switching to a different configuration preset;</p>
-</li>
-<li>
-<p>setLoggingConfiguration: used to upload a complete logging configuration.</p>
-</li>
-</ul>
-</div>
-</dd>
-</dl>
+<p>Handlers are used to determine what happens with a log message if the logger determines the message is loggable. You can read about handlers in <a href="https://docs.jboss.org/author/display/WFLY10/Handlers">Logging Handlers</a>.</p>
 </div>
 <div class="paragraph">
-<p>Custom presets can be easily deployed in the application server too.
-Simply name the configuration file as <em class="path">jboss-log4j.xml.PRESET_NAME</em>, where <code>PRESET_NAME</code> should be unique preset name, and copy it to directory <em class="path">$JBOSS_HOME/server/profile_name/deploy/restcomm-slee/log4j-templates</em>, where <code class="app">profile_name</code> is the server profile name.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-These procedures changes the whole JBoss Application Server Platform logging configuration, so it will affect also logging for other running applications besides the JAIN SLEE container.
-</td>
-</tr>
-</table>
-</div>
+<p>WildFly Logging subsystem supports per-deployment logging that allows you to add a logging configuration file to your deployment and have the logging for that deployment configured according to the configuration file. In an EAR the configuration should be in the META-INF directory. In a WAR or JAR deployment the configuration file can be in either the META-INF or WEB-INF/classes directories. More details you can read in <a href="https://docs.jboss.org/author/display/WFLY10/Logging+Configuration#LoggingConfiguration-PerdeploymentLogging">Per-deployment Logging</a>.</p>
 </div>
 </div>
 </div>
@@ -23644,7 +23571,7 @@ Since JAIN SLEE tracer levels differ from log4j logger levels a mapping is neede
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-06 19:39:31 UTC
+Last updated 2018-06-09 18:01:48 UTC
 </div>
 </div>
 <footer>

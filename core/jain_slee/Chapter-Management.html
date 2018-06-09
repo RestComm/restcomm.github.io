@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.5">
+<meta name="generator" content="Asciidoctor 1.5.4">
 <title>Managing Restcomm  JAIN SLEE</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
@@ -22814,7 +22814,7 @@ display: none;
 /***[END TSG 12-18-2017]***/
 
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <head>
   <meta charset="UTF-8"/>
 
@@ -23362,27 +23362,19 @@ display: none;
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_management_jmx_agent">JAIN SLEE JMX Agent</a></li>
-<li><a href="#_management_snmp_agent">SNMP Agent</a></li>
-<li><a href="#_management_components">Managing JAIN SLEE Components</a></li>
-<li><a href="#_management_persistent_file_deployer">Persistent Deployable Unit Management</a>
+<li><a href="#_management_components">Managing JAIN SLEE Components</a>
 <ul class="sectlevel2">
+<li><a href="#_management_persistent_file_deployer">Persistent Deployable Unit Management</a></li>
 <li><a href="#_management_persistent_du_install">Persistent Deployable Unit Install</a></li>
 <li><a href="#_management_persistent_du_uninstall">Persistent Deployable Unit Uninstall</a></li>
 <li><a href="#_management_persistent_deployer_additional_behavior">Beyond Deployable Unit (Un)Install</a></li>
 <li><a href="#_management_persistent_deployer_deploy_config_extension">Deploy-Config Extension</a></li>
 </ul>
 </li>
-<li><a href="#_management_tools_ant_tasks">Ant Tasks</a>
-<ul class="sectlevel2">
-<li><a href="#_management_tools_ant_tasks_slee_management">SLEE Management Task</a></li>
-</ul>
-</li>
 <li><a href="#management-consoles">Management Consoles</a>
 <ul class="sectlevel2">
-<li><a href="#_management_jmx_console">JMX Console</a></li>
+<li><a href="#_management_jconsole">JConsole</a></li>
 <li><a href="#_management_web_console">SLEE Management Console</a></li>
-<li><a href="#_management_jon_console">Jopr Console</a></li>
 <li><a href="#_management_twiddle_cli">TWIDDLE CLI</a></li>
 </ul>
 </li>
@@ -23391,67 +23383,10 @@ display: none;
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_management_jmx_agent"><a class="anchor" href="#_management_jmx_agent"></a>JAIN SLEE JMX Agent</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The JMX Agent exposes all MBeans running in the server, including the ones mandated by the JAIN SLEE 1.1 specification.</p>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-The operations done through the JMX Agent are not kept once the server is shutdown.
-For instance, if a deployable unit is installed through JMX, and the server is shutdown, once the server is started again the deployable unit will not be installed.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-By default, the JMX Agent listens to port 1099, and is only available at the host/ip which the server is bound.
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_management_snmp_agent"><a class="anchor" href="#_management_snmp_agent"></a>SNMP Agent</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>JBoss Application Server provides an SNMP Agent, which can be used to &#8230;&#8203;</p>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
 <h2 id="_management_components"><a class="anchor" href="#_management_components"></a>Managing JAIN SLEE Components</h2>
 <div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
-<h2 id="_management_persistent_file_deployer"><a class="anchor" href="#_management_persistent_file_deployer"></a>Persistent Deployable Unit Management</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_management_persistent_file_deployer"><a class="anchor" href="#_management_persistent_file_deployer"></a>Persistent Deployable Unit Management</h3>
 <div class="paragraph">
 <p>JAIN SLEE provides a file deployer that greatly simplifies the management of JAIN SLEE deployable unit jars.
 The deployer:</p>
@@ -23472,10 +23407,11 @@ The deployer:</p>
 <div class="paragraph">
 <p>All operations are persistent, which means that unlike management done through JMX, these survive server shutdowns.</p>
 </div>
+</div>
 <div class="sect2">
 <h3 id="_management_persistent_du_install"><a class="anchor" href="#_management_persistent_du_install"></a>Persistent Deployable Unit Install</h3>
 <div class="paragraph">
-<p>To install a deployable unit jar simply copy the file to <em class="path">$JBOSS_HOME/server/profile_name/deploy/</em>, where <code class="app">profile_name</code> is the server profile name.
+<p>To install a deployable unit jar simply copy the file to <em class="path">$JBOSS_HOME/standalone/deployments/</em>.
 Child directories can be used.</p>
 </div>
 </div>
@@ -23608,246 +23544,17 @@ If an RA is installed using the persistent deployer, then SLEE reads its own dep
 </div>
 </div>
 <div class="sect1">
-<h2 id="_management_tools_ant_tasks"><a class="anchor" href="#_management_tools_ant_tasks"></a>Ant Tasks</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>JAIN SLEE includes some tasks for Apache Ant, which can be used for common management tasks done through , when the container is running.
-The tasks come bundled in <em class="path">$JBOSS_HOME/server/default/deploy/restcomm-slee/lib/ant-tasks.jar</em>.
-To use these, the Ant script must include the following code:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;property environment="system" /&gt;
-&lt;property name="node" value="default" /&gt;
-&lt;property name="jboss.deploy" value="${system.JBOSS_HOME}/server/${node}/deploy" /&gt;
-
-&lt;path id="project.classpath"&gt;
-	&lt;fileset dir="${jboss.deploy}/restcomm-slee/lib"&gt;
-		&lt;include name="*.jar" /&gt;
-	&lt;/fileset&gt;
-	&lt;fileset dir="${system.JBOSS_HOME}/client"&gt;
-		&lt;include name="*.jar" /&gt;
-	&lt;/fileset&gt;
-&lt;/path&gt;
-
-&lt;property name="project.classpath" refid="project.classpath" /&gt;
-
-&lt;property name="jnpHost" value="127.0.0.1" /&gt;
-&lt;property name="jnpPort" value="1099" /&gt;
-
-&lt;taskdef name="slee-management"
-	classname="org.mobicents.ant.MobicentsManagementAntTask"
-	classpath="${project.classpath}" /&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>It is important to understand some properties set by the code above:</p>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1"><code class="parameter">node</code></dt>
-<dd>
-<p>This property defines the server configuration profile to be used, for further information about those refer to <a href="#_server_profiles">[_server_profiles]</a>.</p>
-</dd>
-<dt class="hdlist1"><code class="parameter">jnpHost</code></dt>
-<dd>
-<p>The host/ip which Restcomm JAIN SLEE is bound.</p>
-</dd>
-<dt class="hdlist1"><code class="parameter">jnpPort</code></dt>
-<dd>
-<p>The port which the JMX Agent is listening.</p>
-</dd>
-</dl>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-The property values can be overridden when invoking the Ant script.
-To do this, use the parameter <code class="parameter">-DpropertyName=propertyValue</code>.
-For example, the server profile can be changed from <code class="app">default</code> to <code class="app">all</code> using <code class="parameter">-Dnode=all</code>.
-</td>
-</tr>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_management_tools_ant_tasks_slee_management"><a class="anchor" href="#_management_tools_ant_tasks_slee_management"></a>SLEE Management Task</h3>
-<div class="paragraph">
-<p>The <code>slee-management</code> task allows a script to manage JAIN SLEE deployable units, services and resource adapters.
-The operations, or sub-tasks, are done through .</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;slee-management jnpport="${jnpPort}" host="${jnpHost}"&gt;
-	&lt;!-- sub-tasks --&gt;
-&lt;/slee-management&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The attributes have the same meaning as the properties listed in the script code to import the tasks here: <a href="#_management_tools_ant_tasks">Ant Tasks</a>.</p>
-</div>
-<div class="sect3">
-<h4 id="_management_tools_ant_tasks_slee_management_install_du"><a class="anchor" href="#_management_tools_ant_tasks_slee_management_install_du"></a>Install Deployable Unit Sub-Task</h4>
-<div class="paragraph">
-<p>The <code>install</code> sub-task installs JAIN SLEE the deployable unit jar pointed by the value of attribute <code class="parameter">url</code>.
-Example of usage:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;slee-management jnpport="${jnpPort}" host="${jnpHost}"&gt;
-	&lt;install url="file:///tmp/my-deployable-unit.jar" /&gt;
-&lt;/slee-management&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_management_tools_ant_tasks_slee_management_uninstall_du"><a class="anchor" href="#_management_tools_ant_tasks_slee_management_uninstall_du"></a>Uninstall Deployable Unit Sub-Task</h4>
-<div class="paragraph">
-<p>The <code>uninstall</code> sub-task uninstalls JAIN SLEE the deployable unit jar which was installed from the value of attribute <code class="parameter">url</code>.
-Example of usage:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;slee-management jnpport="${jnpPort}" host="${jnpHost}"&gt;
-	&lt;uninstall url="file:///tmp/my-deployable-unit.jar" /&gt;
-&lt;/slee-management&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_management_tools_ant_tasks_slee_management_activate_service"><a class="anchor" href="#_management_tools_ant_tasks_slee_management_activate_service"></a>Activate Service Sub-Task</h4>
-<div class="paragraph">
-<p>The <code>activateservice</code> sub-task activates an already installed JAIN SLEE service, with the id specified by the value of attribute <code class="parameter">componentid</code>.
-Example of usage:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;slee-management host="${jnpHost}" jnpport="${jnpPort}"&gt;
-	&lt;activateservice
-		componentid="ServiceID[name=FooService,vendor=org.mobicents,version=1.0]" /&gt;
-&lt;/slee-management&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_management_tools_ant_tasks_slee_management_deactivate_service"><a class="anchor" href="#_management_tools_ant_tasks_slee_management_deactivate_service"></a>Deactivate Service Sub-Task</h4>
-<div class="paragraph">
-<p>The <code>deactivateservice</code> sub-task deactivates an already installed JAIN SLEE service, with the id specified by the value of attribute <code class="parameter">componentid</code>.
-Example of usage:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;slee-management host="${jnpHost}" jnpport="${jnpPort}"&gt;
-	&lt;deactivateservice
-		componentid="ServiceID[name=FooService,vendor=org.mobicents,version=1.0]" /&gt;
-&lt;/slee-management&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_management_tools_ant_tasks_slee_management_create_ra_entity"><a class="anchor" href="#_management_tools_ant_tasks_slee_management_create_ra_entity"></a>Create Resource Adaptor Entity Sub-Task</h4>
-<div class="paragraph">
-<p>The <code>createraentity</code> sub-task creates the resource adaptor entity with the name specified by the value of attribute <code class="parameter">entityname</code>, for an already installed JAIN SLEE resource adaptor, with the id specified by the value of attribute <code class="parameter">componentid</code>.
-Example of usage:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;slee-management host="${jnpHost}" jnpport="${jnpPort}"&gt;
-	&lt;createraentity
-		componentid="ResourceAdaptorID[name=FooRA,vendor=org.mobicents,version=1.0]"
-		entityname="FooRA" /&gt;
-&lt;/slee-management&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_management_tools_ant_tasks_slee_management_remove_ra_entity"><a class="anchor" href="#_management_tools_ant_tasks_slee_management_remove_ra_entity"></a>Remove Resource Adaptor Entity Sub-Task</h4>
-<div class="paragraph">
-<p>The <code>removeraentity</code> sub-task removes the resource adaptor entity with the name specified by the value of attribute <code class="parameter">entityname</code>.
-Example of usage:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;slee-management host="${jnpHost}" jnpport="${jnpPort}"&gt;
-	&lt;removeraentity entityname="FooRA" /&gt;
-&lt;/slee-management&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_management_tools_ant_tasks_slee_management_activate_ra_entity"><a class="anchor" href="#_management_tools_ant_tasks_slee_management_activate_ra_entity"></a>Activate Resource Adaptor Entity Sub-Task</h4>
-<div class="paragraph">
-<p>The <code>activateraentity</code> sub-task activates the resource adaptor entity with the name specified by the value of attribute <code class="parameter">entityname</code>.
-Example of usage:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;slee-management host="${jnpHost}" jnpport="${jnpPort}"&gt;
-	&lt;activateraentity entityname="FooRA" /&gt;
-&lt;/slee-management&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_management_tools_ant_tasks_slee_management_deactivate_ra_entity"><a class="anchor" href="#_management_tools_ant_tasks_slee_management_deactivate_ra_entity"></a>Deactivate Resource Adaptor Entity Sub-Task</h4>
-<div class="paragraph">
-<p>The <code>deactivateraentity</code> sub-task deactivates the resource adaptor entity with the name specified by the value of attribute <code class="parameter">entityname</code>.
-Example of usage:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;slee-management host="${jnpHost}" jnpport="${jnpPort}"&gt;
-	&lt;deactivateraentity entityname="FooRA" /&gt;
-&lt;/slee-management&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_management_tools_ant_tasks_slee_management_bind_ra_link"><a class="anchor" href="#_management_tools_ant_tasks_slee_management_bind_ra_link"></a>Bind Resource Adaptor Link Sub-Task</h4>
-<div class="paragraph">
-<p>The <code>bindralinkname</code> sub-task binds the resource adaptor link with the name specified by the value of attribute <code class="parameter">linkname</code>, for an already active JAIN SLEE resource adaptor entity, with the name specified by the value of attribute <code class="parameter">entityname</code>.
-Example of usage:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;slee-management host="${jnpHost}" jnpport="${jnpPort}"&gt;
-	&lt;bindralinkname entityname="FooRA"
-		linkname="FooRA" /&gt;
-&lt;/slee-management&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_management_tools_ant_tasks_slee_management_unbind_ra_link"><a class="anchor" href="#_management_tools_ant_tasks_slee_management_unbind_ra_link"></a>Unbind Resource Adaptor Link Sub-Task</h4>
-<div class="paragraph">
-<p>The <code>unbindralinkname</code> sub-task unbinds the resource adaptor link with the name specified by the value of attribute <code class="parameter">linkname</code>.
-Example of usage:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;slee-management host="${jnpHost}" jnpport="${jnpPort}"&gt;
-	&lt;unbindralinkname linkname="FooRA" /&gt;
-&lt;/slee-management&gt;</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
 <h2 id="management-consoles"><a class="anchor" href="#management-consoles"></a>Management Consoles</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_management_jmx_console"><a class="anchor" href="#_management_jmx_console"></a>JMX Console</h3>
+<h3 id="_management_jconsole"><a class="anchor" href="#_management_jconsole"></a>JConsole</h3>
 <div class="paragraph">
-<p>JBoss Application Server provides a simple web console that gives quick access to all MBeans registered in the server, which includes the ones defined by the JAIN SLEE 1.1 specification.</p>
+<p>WildFly provides a script <code>jconsole.sh</code> that starts JConsole tool that gives quick access to all MBeans registered in the server, which includes the ones defined by the JAIN SLEE 1.1 specification. This script adds WildFly CLI tab for access to WildFly server information. Also you can acces to all MBeans in MBeans tab.</p>
 </div>
-<div class="paragraph">
-<p>To access the JMX console once the server is running, point a web browser to <code><a href="http://ip:8080/jmx-console" class="bare">http://ip:8080/jmx-console</a></code>, where <code>ip</code> is the IP/Host the container is bound.
-Unless set during start up, the IP/Host will be <code>127.0.0.1/localhost</code> by default.</p>
+<div class="listingblock">
+<div class="content">
+<pre>$JBOSS_HOME/bin/jconsole.sh</pre>
+</div>
 </div>
 <div class="paragraph">
 <p>MBeans in the domain <code>javax.slee</code> are all standard JAIN SLEE 1.1 MBeans, while the ones in the domain <code>org.mobicents.slee</code> are proprietary to Restcomm  JAIN SLEE.
@@ -23898,19 +23605,10 @@ Unless set during start up, the IP/Host will be <code>127.0.0.1/localhost</code>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_management_jon_console"><a class="anchor" href="#_management_jon_console"></a>Jopr Console</h3>
-<div class="paragraph">
-<p>Joprwas developed to become Red Hat&#8217;s Middleware Administration Tool, providing an unified interface and extensible model, to be used mainly to control and monitor servers individually, or clusters.</p>
-</div>
-<div class="paragraph">
-<p>Restcomm JAIN SLEE binary release includes a JoprConsole in <em class="path">tools/jopr-plugin</em>, with standalone documentation on same path, but inside <em class="path">docs</em> directory.</p>
-</div>
-</div>
-<div class="sect2">
 <h3 id="_management_twiddle_cli"><a class="anchor" href="#_management_twiddle_cli"></a>TWIDDLE CLI</h3>
 <div class="paragraph">
-<p>Both,  Console and  Jopr Console, are graphic(web) based tools.
-Some deployments may require command line access to Restcomm  .
+<p>Console is graphic(web) based tools.
+Some deployments may require command line access to Restcomm.
 To aid such cases, Restcomm  offers <code>TWIDDLE</code> based CLI.
 It allows to manage single instance (remote or local) of Restcomm   server.</p>
 </div>
@@ -23923,7 +23621,7 @@ It allows to manage single instance (remote or local) of Restcomm   server.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-06 19:39:31 UTC
+Last updated 2018-06-09 18:01:48 UTC
 </div>
 </div>
 <footer>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.5">
+<meta name="generator" content="Asciidoctor 1.5.4">
 <title>Install Alternatives</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
@@ -22814,7 +22814,7 @@ display: none;
 /***[END TSG 12-18-2017]***/
 
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <head>
   <meta charset="UTF-8"/>
 
@@ -23362,10 +23362,9 @@ display: none;
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#binary-release">Binary Release</a></li>
+<li><a href="#_binary_release">Binary Release</a></li>
 <li><a href="#binary-release-snapshot">Binary Release Snapshot</a></li>
-<li><a href="#release-source-building">Release Source Building</a></li>
-<li><a href="#_2x_branch_source_building">2.x Branch Source Building</a></li>
+<li><a href="#_release_source_building">Release Source Building</a></li>
 <li><a href="#master-source-building">Master Source Building</a></li>
 </ul>
 </div>
@@ -23396,10 +23395,10 @@ display: none;
 </div>
 </div>
 <div class="sect1">
-<h2 id="binary-release"><a class="anchor" href="#binary-release"></a>Binary Release</h2>
+<h2 id="_binary_release"><a class="anchor" href="#_binary_release"></a>Binary Release</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>You can download the Binary zip files from <a href="https://mobicents.ci.cloudbees.com/job/Restcomm-JAIN-SLEE-Release/lastSuccessfulBuild/artifact/release/" class="bare">https://mobicents.ci.cloudbees.com/job/Restcomm-JAIN-SLEE-Release/lastSuccessfulBuild/artifact/release/</a>.</p>
+<p>You can download the Binary zip files from <a href="https://mobicents.ci.cloudbees.com/job/Restcomm-JAIN-SLEE-7-Release/lastSuccessfulBuild/artifact/release/" class="bare">https://mobicents.ci.cloudbees.com/job/Restcomm-JAIN-SLEE-7-Release/lastSuccessfulBuild/artifact/release/</a>.</p>
 </div>
 <div class="paragraph">
 <p>In this form of installation, simply unzip the downloaded zip file to the directory of your choice on any operating system that supports the zip format.</p>
@@ -23410,19 +23409,19 @@ display: none;
 <p>Unzip the release file</p>
 <div class="paragraph">
 <p>Unzip the file to extract the archive contents into the location of your choice.
-You can do this using the JDK jar tool (or any other ZIP extraction tool). In the example below we are assuming you downloaded the zip file was named restcomm-jainslee-2.9.0-SNAPSHOT .zip to the /restcomm directory.</p>
+You can do this using the JDK jar tool (or any other ZIP extraction tool). In the example below we are assuming you downloaded the zip file was named restcomm-slee-7.0.0-SNAPSHOT-wildfly-10.1.0.Final.zip to the /restcomm directory.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>				    [usr]$ cd /restcomm
-				    [usr]$ jar -xvf restcomm-jainslee.zip</code></pre>
+<pre class="highlight"><code>[usr]$ cd /restcomm
+[usr]$ jar -xvf restcomm-slee-7.0.0-SNAPSHOT-wildfly-10.1.0.Final.zip</code></pre>
 </div>
 </div>
 </li>
 <li>
 <p>Setting up JBOSS_HOME Environment Variable</p>
 <div class="paragraph">
-<p>You should now have a directory called restcomm-jainslee-2.9.0-SNAPSHOT .
+<p>You should now have a directory called restcomm-slee-7.0.0-SNAPSHOT-wildfly-10.1.0.Final.
 Next you need to set your JBOSS_HOME environment variables.
 This is discussed in <a href="#_jboss_home_setup">[_jboss_home_setup]</a>.</p>
 </div>
@@ -23436,12 +23435,12 @@ This is discussed in <a href="#_jboss_home_setup">[_jboss_home_setup]</a>.</p>
 <div class="sectionbody">
 <div class="paragraph">
 <p>You can download the Binary Snapshot zip files from <a href="https://github.com/RestComm/jain-slee/releases/latest" class="bare">https://github.com/RestComm/jain-slee/releases/latest</a>.
-The installation is similar to the <a href="#_binary_release">[_binary_release]</a> one.</p>
+The installation is similar to the <a href="#_binary_release">Binary Release</a> one.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="release-source-building"><a class="anchor" href="#release-source-building"></a>Release Source Building</h2>
+<h2 id="_release_source_building"><a class="anchor" href="#_release_source_building"></a>Release Source Building</h2>
 <div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">
@@ -23461,13 +23460,13 @@ Instructions for downloading, installing and using Git can be found at <a href="
 </table>
 </div>
 <div class="paragraph">
-<p>Use Git to checkout the specific release source, the Git repository URL is <a href="https://github.com/RestComm/jain-slee/" class="bare">https://github.com/RestComm/jain-slee/</a> , then switch to the specific release version, lets consider 2.9.0-SNAPSHOT .</p>
+<p>Use Git to checkout the specific release source, the Git repository URL is <a href="https://github.com/RestComm/jain-slee/" class="bare">https://github.com/RestComm/jain-slee/</a>, then switch to the specific release version, lets consider 7.0.0-SNAPSHOT.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>[usr]$ git clone https://github.com/RestComm/jain-slee restcomm-jain-slee-release
 [usr]$ cd restcomm-jain-slee-release
-[usr]$ git checkout tags/
+[usr]$ git checkout tags/7.0.0-SNAPSHOT
 [usr]$ cd release</code></pre>
 </div>
 </div>
@@ -23492,11 +23491,11 @@ Instructions for using Ant and Maven2, including install, can be found at <a hre
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>				    [usr]$ ant</code></pre>
+<pre class="highlight"><code>[usr]$ ant</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Once the process finishes you should have a restcomm-jainslee-2.9.0-SNAPSHOT.zip file, installation is the same as for <a href="#_binary_release">[_binary_release]</a>.</p>
+<p>Once the process finishes you should have a restcomm-slee-7.0.0-SNAPSHOT.zip file, installation is the same as for <a href="#_binary_release">Binary Release</a>.</p>
 </div>
 </li>
 </ol>
@@ -23504,31 +23503,16 @@ Instructions for using Ant and Maven2, including install, can be found at <a hre
 </div>
 </div>
 <div class="sect1">
-<h2 id="_2x_branch_source_building"><a class="anchor" href="#_2x_branch_source_building"></a>2.x Branch Source Building</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Similar process as for <a href="#_release_source_building">[_release_source_building]</a>, the only change is the Git reference should be the <code>2.x</code>.
-The <code>git checkout tags/2.9.0-SNAPSHOT</code> command should not be performed.
-If already performed, the following should be used in order to switch back to the 2.x branch:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>		    [usr]$ git checkout 2.x</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
 <h2 id="master-source-building"><a class="anchor" href="#master-source-building"></a>Master Source Building</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Similar process as for <a href="#_release_source_building">[_release_source_building]</a>, the only change is the Git reference should be the <code>master</code>.
-The <code>git checkout tags/2.9.0-SNAPSHOT</code> command should not be performed.
+<p>Similar process as for <a href="#_release_source_building">Release Source Building</a>, the only change is the Git reference should be the <code>master</code>.
+The <code>git checkout tags/7.0.0-SNAPSHOT</code> command should not be performed.
 If already performed, the following should be used in order to switch back to the master:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>		    [usr]$ git checkout master</code></pre>
+<pre class="highlight"><code>[usr]$ git checkout master</code></pre>
 </div>
 </div>
 </div>
@@ -23536,7 +23520,7 @@ If already performed, the following should be used in order to switch back to th
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-06 19:39:31 UTC
+Last updated 2018-06-09 18:01:48 UTC
 </div>
 </div>
 <footer>

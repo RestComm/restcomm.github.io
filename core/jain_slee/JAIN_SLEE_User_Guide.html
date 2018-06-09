@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.5">
-<title>User Guide to Restcomm JAIN-SLEE 2.9.0-SNAPSHOT</title>
+<meta name="generator" content="Asciidoctor 1.5.4">
+<title>User Guide to Restcomm JAIN-SLEE 7.0</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -22814,7 +22814,7 @@ display: none;
 /***[END TSG 12-18-2017]***/
 
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <head>
   <meta charset="UTF-8"/>
 
@@ -23358,7 +23358,7 @@ display: none;
 </head>
 <body class="book">
 <div id="header">
-<h1>User Guide to Restcomm JAIN-SLEE 2.9.0-SNAPSHOT</h1>
+<h1>User Guide to Restcomm JAIN-SLEE 7.0</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -23372,7 +23372,7 @@ display: none;
 </li>
 <li><a href="#provide-feedback-to-the-authors">Provide feedback to the authors!</a></li>
 <li><a href="#_introduction">1. Introduction to Restcomm  JAIN SLEE</a></li>
-<li><a href="#_install">2. Installing Restcomm  JAIN SLEE</a>
+<li><a href="#_install">2. Installing Restcomm JAIN SLEE</a>
 <ul class="sectlevel2">
 <li><a href="#_preinstall_requirements_and_prerequisites">2.1. Pre-Install Requirements and Prerequisites</a></li>
 <li><a href="#install-alternatives">2.2. Install Alternatives</a></li>
@@ -23382,8 +23382,8 @@ display: none;
 <li><a href="#_configuration_and_running">3. Configuring and Running Restcomm  JAIN SLEE</a>
 <ul class="sectlevel2">
 <li><a href="#_server_profiles">3.1. Server Profiles</a></li>
-<li><a href="#_running">3.2. Running Restcomm  JAIN SLEE</a></li>
-<li><a href="#_configuration">3.3. Configuring Restcomm  JAIN SLEE</a></li>
+<li><a href="#_running">3.2. Running Restcomm JAIN SLEE</a></li>
+<li><a href="#_configuration">3.3. Configuring Restcomm JAIN SLEE</a></li>
 <li><a href="#eventcontext-factory-configuration">3.4. EventContext Factory Configuration</a></li>
 <li><a href="#_event_router_configuration">3.5. Event Router Statistics and Configuration</a></li>
 <li><a href="#timer-facility-configuration">3.6. Timer Facility Configuration</a></li>
@@ -23391,17 +23391,13 @@ display: none;
 </li>
 <li><a href="#_management">4. Managing Restcomm  JAIN SLEE</a>
 <ul class="sectlevel2">
-<li><a href="#_management_jmx_agent">4.1. JAIN SLEE JMX Agent</a></li>
-<li><a href="#_management_snmp_agent">4.2. SNMP Agent</a></li>
-<li><a href="#_management_components">4.3. Managing JAIN SLEE Components</a></li>
-<li><a href="#_management_persistent_file_deployer">4.4. Persistent Deployable Unit Management</a></li>
-<li><a href="#_management_tools_ant_tasks">4.5. Ant Tasks</a></li>
-<li><a href="#management-consoles">4.6. Management Consoles</a></li>
+<li><a href="#_management_components">4.1. Managing JAIN SLEE Components</a></li>
+<li><a href="#management-consoles">4.2. Management Consoles</a></li>
 </ul>
 </li>
 <li><a href="#logging-traces-and-alarms">5. Logging, Traces and Alarms</a>
 <ul class="sectlevel2">
-<li><a href="#_log4j_service">5.1. Log4j Logging Service</a></li>
+<li><a href="#_log4j_service">5.1. Logging Service</a></li>
 <li><a href="#alarm-facility">5.2. Alarm Facility</a></li>
 <li><a href="#trace-facility">5.3. Trace Facility</a></li>
 </ul>
@@ -23422,7 +23418,7 @@ display: none;
 <li><a href="#_container_clustering_ra_activity_replication">8. Resource Adaptor Activity Replication</a></li>
 <li><a href="#_slee_connection_factory">9. Firing Events from Java EE Applications</a>
 <ul class="sectlevel2">
-<li><a href="#_slee_connection_factory_intro">9.1. SLEE Connection Factory</a></li>
+<li><a href="#remote-slee-connection-service">9.1. Remote SLEE Connection Service</a></li>
 </ul>
 </li>
 <li><a href="#_slee_1_1_extensions">10. JAIN SLEE 1.1 Extensions</a>
@@ -23734,7 +23730,7 @@ This model was designed and optimized for event-driven applications.</p>
 <div class="title">Figure 1. Overview of JAIN SLEE</div>
 </div>
 <div class="paragraph">
-<p>Restcomm  is built on top of the open source award winning JBoss Application Server , which means that Restcomm   complements  with Java Enterprise () 5 container features, allowing strong convergence of different application models, for even feature richer communication services, for instance, the Web and  can be combined to achieve a more sophisticated and natural user experience. Restcomm   inherits quality management features and tools from JBoss Application Server , such as the JMX Console, Jopr Plugins and SNMP Adaptor.</p>
+<p>Restcomm is built on top of the open source award winning WildFly, which means that Restcomm complements with Java Enterprise (JEE) 7 container features, allowing strong convergence of different application models, for even feature richer communication services, for instance, the Web and  can be combined to achieve a more sophisticated and natural user experience.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -23743,12 +23739,12 @@ This model was designed and optimized for event-driven applications.</p>
 <div class="title">Figure 2. Restcomm  Platform</div>
 </div>
 <div class="paragraph">
-<p>Restcomm JAIN SLEE can also be complemented with Restcomm SIP Servlets and Restcomm  Media Server, providing unique value and integration features not found elsewhere.</p>
+<p>Restcomm JAIN SLEE can also be complemented with Restcomm SIP Servlets and Restcomm Media Server, providing unique value and integration features not found elsewhere.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_install"><a class="anchor" href="#_install"></a>2. Installing Restcomm  JAIN SLEE</h2>
+<h2 id="_install"><a class="anchor" href="#_install"></a>2. Installing Restcomm JAIN SLEE</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_preinstall_requirements_and_prerequisites"><a class="anchor" href="#_preinstall_requirements_and_prerequisites"></a>2.1. Pre-Install Requirements and Prerequisites</h3>
@@ -23767,7 +23763,7 @@ Keep in mind that disk space requirements may change from release to release.</p
 <dt class="hdlist1">Anything Java Itself Will Run On</dt>
 <dd>
 <p>The Restcomm JAIN SLEE container, and bundled JAIN SLEE components are 100% java.
-The JAIN SLEE will run on the same hardware that the JBoss Application Server runs on, but it is recommended at least 2GB or 4GB of RAM memory, for 32 or 64 bit Operating Systems.</p>
+The JAIN SLEE will run on the same hardware that the WildFly runs on, but it is recommended at least 2GB or 4GB of RAM memory, for 32 or 64 bit Operating Systems.</p>
 </dd>
 </dl>
 </div>
@@ -23779,7 +23775,7 @@ The JAIN SLEE will run on the same hardware that the JBoss Application Server ru
 <dt class="hdlist1">JDK 6</dt>
 <dd>
 <p>A working installation of the Java Development Kit () version 6 is required in order to run the Restcomm  JAIN SLEE.
-Note that the JBoss Application Server  is a runtime dependency, but comes bundled with the binary distribution.
+Note that the WildFly  is a runtime dependency, but comes bundled with the binary distribution.
 For instructions on how to install the JDK, refer to <a href="#_jdk_installing_configuring_and_running">Java Development Kit (): Installing, Configuring and Running</a></p>
 </dd>
 </dl>
@@ -23809,9 +23805,9 @@ For instructions on how to install the JDK, refer to <a href="#_jdk_installing_c
 </dl>
 </div>
 <div class="sect3">
-<h4 id="binary-release"><a class="anchor" href="#binary-release"></a>2.2.1. Binary Release</h4>
+<h4 id="_binary_release"><a class="anchor" href="#_binary_release"></a>2.2.1. Binary Release</h4>
 <div class="paragraph">
-<p>You can download the Binary zip files from <a href="https://mobicents.ci.cloudbees.com/job/Restcomm-JAIN-SLEE-Release/lastSuccessfulBuild/artifact/release/" class="bare">https://mobicents.ci.cloudbees.com/job/Restcomm-JAIN-SLEE-Release/lastSuccessfulBuild/artifact/release/</a>.</p>
+<p>You can download the Binary zip files from <a href="https://mobicents.ci.cloudbees.com/job/Restcomm-JAIN-SLEE-7-Release/lastSuccessfulBuild/artifact/release/" class="bare">https://mobicents.ci.cloudbees.com/job/Restcomm-JAIN-SLEE-7-Release/lastSuccessfulBuild/artifact/release/</a>.</p>
 </div>
 <div class="paragraph">
 <p>In this form of installation, simply unzip the downloaded zip file to the directory of your choice on any operating system that supports the zip format.</p>
@@ -23822,19 +23818,19 @@ For instructions on how to install the JDK, refer to <a href="#_jdk_installing_c
 <p>Unzip the release file</p>
 <div class="paragraph">
 <p>Unzip the file to extract the archive contents into the location of your choice.
-You can do this using the JDK jar tool (or any other ZIP extraction tool). In the example below we are assuming you downloaded the zip file was named restcomm-jainslee-2.9.0-SNAPSHOT .zip to the /restcomm directory.</p>
+You can do this using the JDK jar tool (or any other ZIP extraction tool). In the example below we are assuming you downloaded the zip file was named restcomm-slee-7.0.0-SNAPSHOT-wildfly-10.1.0.Final.zip to the /restcomm directory.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>				    [usr]$ cd /restcomm
-				    [usr]$ jar -xvf restcomm-jainslee.zip</code></pre>
+<pre class="highlight"><code>[usr]$ cd /restcomm
+[usr]$ jar -xvf restcomm-slee-7.0.0-SNAPSHOT-wildfly-10.1.0.Final.zip</code></pre>
 </div>
 </div>
 </li>
 <li>
 <p>Setting up JBOSS_HOME Environment Variable</p>
 <div class="paragraph">
-<p>You should now have a directory called restcomm-jainslee-2.9.0-SNAPSHOT .
+<p>You should now have a directory called restcomm-slee-7.0.0-SNAPSHOT-wildfly-10.1.0.Final.
 Next you need to set your JBOSS_HOME environment variables.
 This is discussed in <a href="#_jboss_home_setup">Setting the JBOSS_HOME Environment Variable</a>.</p>
 </div>
@@ -23846,11 +23842,11 @@ This is discussed in <a href="#_jboss_home_setup">Setting the JBOSS_HOME Environ
 <h4 id="binary-release-snapshot"><a class="anchor" href="#binary-release-snapshot"></a>2.2.2. Binary Release Snapshot</h4>
 <div class="paragraph">
 <p>You can download the Binary Snapshot zip files from <a href="https://github.com/RestComm/jain-slee/releases/latest" class="bare">https://github.com/RestComm/jain-slee/releases/latest</a>.
-The installation is similar to the <a href="#_binary_release">[_binary_release]</a> one.</p>
+The installation is similar to the <a href="#_binary_release">Binary Release</a> one.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="release-source-building"><a class="anchor" href="#release-source-building"></a>2.2.3. Release Source Building</h4>
+<h4 id="_release_source_building"><a class="anchor" href="#_release_source_building"></a>2.2.3. Release Source Building</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -23869,13 +23865,13 @@ Instructions for downloading, installing and using Git can be found at <a href="
 </table>
 </div>
 <div class="paragraph">
-<p>Use Git to checkout the specific release source, the Git repository URL is <a href="https://github.com/RestComm/jain-slee/" class="bare">https://github.com/RestComm/jain-slee/</a> , then switch to the specific release version, lets consider 2.9.0-SNAPSHOT .</p>
+<p>Use Git to checkout the specific release source, the Git repository URL is <a href="https://github.com/RestComm/jain-slee/" class="bare">https://github.com/RestComm/jain-slee/</a>, then switch to the specific release version, lets consider 7.0.0-SNAPSHOT.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>[usr]$ git clone https://github.com/RestComm/jain-slee restcomm-jain-slee-release
 [usr]$ cd restcomm-jain-slee-release
-[usr]$ git checkout tags/
+[usr]$ git checkout tags/7.0.0-SNAPSHOT
 [usr]$ cd release</code></pre>
 </div>
 </div>
@@ -23900,39 +23896,26 @@ Instructions for using Ant and Maven2, including install, can be found at <a hre
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>				    [usr]$ ant</code></pre>
+<pre class="highlight"><code>[usr]$ ant</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Once the process finishes you should have a restcomm-jainslee-2.9.0-SNAPSHOT.zip file, installation is the same as for <a href="#_binary_release">[_binary_release]</a>.</p>
+<p>Once the process finishes you should have a restcomm-slee-7.0.0-SNAPSHOT.zip file, installation is the same as for <a href="#_binary_release">Binary Release</a>.</p>
 </div>
 </li>
 </ol>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_2x_branch_source_building"><a class="anchor" href="#_2x_branch_source_building"></a>2.2.4. 2.x Branch Source Building</h4>
+<h4 id="master-source-building"><a class="anchor" href="#master-source-building"></a>2.2.4. Master Source Building</h4>
 <div class="paragraph">
-<p>Similar process as for <a href="#_release_source_building">[_release_source_building]</a>, the only change is the Git reference should be the <code>2.x</code>.
-The <code>git checkout tags/2.9.0-SNAPSHOT</code> command should not be performed.
-If already performed, the following should be used in order to switch back to the 2.x branch:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>		    [usr]$ git checkout 2.x</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="master-source-building"><a class="anchor" href="#master-source-building"></a>2.2.5. Master Source Building</h4>
-<div class="paragraph">
-<p>Similar process as for <a href="#_release_source_building">[_release_source_building]</a>, the only change is the Git reference should be the <code>master</code>.
-The <code>git checkout tags/2.9.0-SNAPSHOT</code> command should not be performed.
+<p>Similar process as for <a href="#_release_source_building">Release Source Building</a>, the only change is the Git reference should be the <code>master</code>.
+The <code>git checkout tags/7.0.0-SNAPSHOT</code> command should not be performed.
 If already performed, the following should be used in order to switch back to the master:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>		    [usr]$ git checkout master</code></pre>
+<pre class="highlight"><code>[usr]$ git checkout master</code></pre>
 </div>
 </div>
 </div>
@@ -23951,45 +23934,56 @@ If already performed, the following should be used in order to switch back to th
 <div class="sect2">
 <h3 id="_server_profiles"><a class="anchor" href="#_server_profiles"></a>3.1. Server Profiles</h3>
 <div class="paragraph">
-<p>Restcomm JAIN SLEE reuses &amp;JEE.PLATFORM;server profiles to expose different configurations for different needs:</p>
+<p>Restcomm JAIN SLEE reuses WildFly server modes to expose different configurations for different needs. WildFly can be booted in two different modes. A managed domain allows you to run and manage a multi-server topology. Alternatively, you can run a standalone server instance.</p>
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">Default Profile</dt>
+<dt class="hdlist1">Standalone Server</dt>
 <dd>
-<p>The <code class="app">default</code> profile is proper for standalone or pure high availability.
-It provides the best performance per cluster node, with linear scaling, but there is no state replication in the cluster, which means that there is no support for failover, neither there is any kind of state gravitation (one node sending state so another node continues its work.</p>
+<p>For many use cases, the centralized management capability available via a managed domain is not necessary. For these use cases, a WildFly instance can be run as a <code>standalone server</code>. A standalone server instance is an independent process, much like an JBoss Application Server 3, 4, 5, or 6 instance is. Standalone instances can be launched via the standalone.sh or standalone.bat launch scripts.</p>
 </dd>
-<dt class="hdlist1">All Profile</dt>
+<dt class="hdlist1"></dt>
 <dd>
-<p>The <code class="app">all</code> profile is proper for more flexible high availability and failover support.
-Performance per node decreases but the cluster does state replication or gravitation.</p>
+<p>If more than one standalone instance is launched and multi-server management is desired, it is the user&#8217;s responsibility to coordinate management across the servers. For example, to deploy an application across all of the standalone servers, the user would need to individually deploy the application on each server.</p>
+</dd>
+<dt class="hdlist1"></dt>
+<dd>
+<p>It is perfectly possible to launch multiple standalone server instances and have them form an HA cluster, just like it was possible with JBoss Application Server 3, 4, 5 and 6.</p>
+</dd>
+<dt class="hdlist1">Managed Domain</dt>
+<dd>
+<p>One of the primary new features of WildFly is the ability to manage multiple WildFly instances from a single control point. A collection of such servers is referred to as the members of a <code>domain</code> with a single Domain Controller process acting as the central management control point. All of the WildFly instances in the domain share a common management policy, with the Domain Controller acting to ensure that each server is configured according to that policy. Domains can span multiple physical (or virtual) machines, with all WildFly instances on a given host under the control of a special Host Controller process. One Host Controller instance is configured to act as the central Domain Controller. The Host Controller on each host interacts with the Domain Controller to control the lifecycle of the application server instances running on its host and to assist the Domain Controller in managing them.</p>
 </dd>
 </dl>
 </div>
 <div class="paragraph">
-<p>Profiles can be selected when starting the server, see <a href="#_running">Running Restcomm  JAIN SLEE</a> for detailed instructions.</p>
+<p>Profiles can be selected when starting the server, see <a href="#_running">Running Restcomm JAIN SLEE</a> for detailed instructions.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_running"><a class="anchor" href="#_running"></a>3.2. Running Restcomm  JAIN SLEE</h3>
+<h3 id="_running"><a class="anchor" href="#_running"></a>3.2. Running Restcomm JAIN SLEE</h3>
 <div class="paragraph">
-<p>Starting or stopping Restcomm JAIN SLEE is no different than starting or stopping &amp;JEE.PLATFORM;</p>
+<p>Starting or stopping Restcomm JAIN SLEE is no different than starting or stopping WildFly</p>
 </div>
 <div class="sect3">
 <h4 id="starting"><a class="anchor" href="#starting"></a>3.2.1. Starting</h4>
 <div class="paragraph">
-<p>Once installed, you can run server(s) by executing the run.sh (Unix) or run.bat (Microsoft Windows) startup scripts in the <em class="path">&lt;install_directory&gt;/bin</em> directory (on Unix or Windows).</p>
+<p>Once installed, you can run server(s) by executing the standalone.sh (Unix) or standalone.bat (Microsoft Windows) startup scripts in the <em class="path">&lt;install_directory&gt;/bin</em> directory (on Unix or Windows).</p>
 </div>
 <div class="sect4">
 <h5 id="_starting_paramaters"><a class="anchor" href="#_starting_paramaters"></a>Starting Parameters</h5>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">Server Profile</dt>
+<dt class="hdlist1">Server Config</dt>
 <dd>
-<p>To specify the server profile use <code>-c profile_name</code>, for instance, to use the <code class="app">all</code> profile then start the server with <code>-c all</code></p>
+<p>If you choose to start your server with one of the other provided configurations, they can be accessed by passing the --server-config argument with the server-config file to be used.</p>
 </dd>
 </dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$JBOSS_HOME/bin/standalone.sh --server-config=standalone-full-ha.xml</pre>
+</div>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -23998,7 +23992,7 @@ Performance per node decreases but the cluster does state replication or gravita
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-If not specified the default profile is used.
+If not specified the default config is used.
 </td>
 </tr>
 </table>
@@ -24007,9 +24001,14 @@ If not specified the default profile is used.
 <dl>
 <dt class="hdlist1">IP / Host</dt>
 <dd>
-<p>To specify the IP/Host which the server binds, use <code>-b IP</code>, for instance, to use the 192.168.0.1 IP then start the server with <code>-b 192.168.0.1</code></p>
+<p>To specify the IP/Host which the server binds, use <code>-b=IP</code>, for instance, to use the 192.168.0.1 IP then start the server with <code>-b=192.168.0.1</code></p>
 </dd>
 </dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$JBOSS_HOME/bin/standalone.sh -b=192.168.0.1</pre>
+</div>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -24023,27 +24022,43 @@ If not specified then 127.0.0.1 is used.
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>More details on command line parameters you can read here:
+<a href="https://docs.jboss.org/author/display/WFLY10/Command+line+parameters" class="bare">https://docs.jboss.org/author/display/WFLY10/Command+line+parameters</a></p>
+</div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="stopping"><a class="anchor" href="#stopping"></a>3.2.2. Stopping</h4>
 <div class="paragraph">
-<p>You can shut down the server(s) by executing the <code>shutdown.sh -s</code> (Unix) or <code>shutdown.bat -s</code> (Microsoft Windows) scripts in the <em class="path">&lt;install_directory&gt;/bin</em> directory (on Unix or Windows). Note that if you properly stop the server, you will see the following three lines as the last output in the Unix terminal or Command Prompt:</p>
+<p>You can shut down the server(s) by executing</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>[Server] Shutdown complete
-Shutdown complete
-Halting VM</pre>
+<pre>$JBOSS_HOME/bin/jboss-cli.sh --connect command=:shutdown</pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Or you can stop server with Ctrl + C.</p>
+</div>
+<div class="paragraph">
+<p>Note that if you properly stop the server, you will see the following three lines as the last output in the Unix terminal or Command Prompt:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>14:57:43,783 INFO  [org.jboss.as] (MSC service thread 1-8) WFLYSRV0050: WildFly Full 10.1.0.Final (WildFly Core 2.2.0.Final) stopped in 403ms</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>More details on command line interface you can read here:
+<a href="https://docs.jboss.org/author/display/WFLY10/Admin+Guide#AdminGuide-CommandLineInterface" class="bare">https://docs.jboss.org/author/display/WFLY10/Admin+Guide#AdminGuide-CommandLineInterface</a></p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_configuration"><a class="anchor" href="#_configuration"></a>3.3. Configuring Restcomm  JAIN SLEE</h3>
+<h3 id="_configuration"><a class="anchor" href="#_configuration"></a>3.3. Configuring Restcomm JAIN SLEE</h3>
 <div class="paragraph">
-<p>JAIN SLEE is configured through an XML descriptor for each <a href="#_server_profiles">Server Profiles</a>.
-The XML file is named <em class="path">jboss-beans.xml</em> and is located at <em class="path">$JBOSS_HOME/server/profile_name/deploy/restcomm-slee/META-INF</em>, where <code class="app">profile_name</code> is the server profile name.</p>
+<p>JAIN SLEE is deployed as WildFly extension and is configured through an standalone.xml. This file is located at <em class="path">$JBOSS_HOME/standalone/configuration</em>.</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -24065,27 +24080,21 @@ This is for advanced users that know the internals of the container.
 <p>The EventContext Factory is responsible for managing all EventContexts in the SLEE Container, and its behavior is configurable.</p>
 </div>
 <div class="paragraph">
-<p>The EventContext Factory configuration can be changed through an XML file and a JMX MBean.</p>
+<p>The EventContext Factory configuration can be changed through an XML element &lt;mbean&gt; and a JMX MBean.</p>
 </div>
 <div class="sect3">
 <h4 id="eventcontext-factory-persistent-configuration"><a class="anchor" href="#eventcontext-factory-persistent-configuration"></a>3.4.1. EventContext Factory Persistent Configuration</h4>
 <div class="paragraph">
-<p>Configuration is done through an XML descriptor for each Restcomm Cluster.
-The XML file is named <em class="path">jboss-beans.xml</em> and is located at <em class="path">{JBOSS_HOME}/server/{profile_name}/deploy/restcomm-slee/META-INF</em></p>
+<p>JAIN SLEE is deployed as WildFly extension and is configured through an standalone.xml. This file is located at <em class="path">$JBOSS_HOME/standalone/configuration</em>.</p>
 </div>
 <div class="paragraph">
 <p>The configuration is exposed a JBoss Microcontainer Bean:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;bean name="Mobicents.JAINSLEE.EventContextFactoryConfiguration"
-	class="org.mobicents.slee.container.management.jmx.EventContextFactoryConfiguration"&gt;
-	&lt;annotation&gt;@org.jboss.aop.microcontainer.aspects.jmx.JMX(name=
-		"org.mobicents.slee:name=EventContextFactoryConfiguration",exposedInterface=
-		org.mobicents.slee.container.management.jmx.EventContextFactoryConfigurationMBean.class,
-		registerDirectly=true)&lt;/annotation&gt;
-	&lt;property name="defaultEventContextSuspensionTimeout"&gt;60000&lt;/property&gt;
-&lt;/bean&gt;</code></pre>
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;mbean name="EventContextFactoryConfiguration"&gt;
+	&lt;property name="defaultEventContextSuspensionTimeout" value="60000" /&gt;
+&lt;/mbean&gt;</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all spread">
@@ -24118,8 +24127,10 @@ The XML file is named <em class="path">jboss-beans.xml</em> and is located at <e
 Note that such configuration changes are not persisted.</p>
 </div>
 <div class="paragraph">
-<p>The JMX MBean which can be used to change the EventContext Factory configuration is named <code class="app">org.mobicents.slee:name=EventContextFactoryConfiguration</code>, and provides getters and setters to change each property defined in the persistent configuration.
-The JMX Console can be used to use this MBean, see <a href="#_management_jmx_console">JMX Console</a>.</p>
+<p>The JMX MBean which can be used to change the EventContext Factory configuration is named <code class="app">org.mobicents.slee:name=EventContextFactoryConfiguration</code>, and provides getters and setters to change each property defined in the persistent configuration.</p>
+</div>
+<div class="paragraph">
+<p>The JConsole can be used to use this MBean, see <a href="#_management_jconsole">JConsole</a></p>
 </div>
 </div>
 </div>
@@ -24161,26 +24172,19 @@ Its configuration can be tuned, through an XML file and a JMX MBean.</p>
 <div class="sect3">
 <h4 id="event-router-persistent-configuration"><a class="anchor" href="#event-router-persistent-configuration"></a>3.5.1. Event Router Persistent Configuration</h4>
 <div class="paragraph">
-<p>Configuration is done through an XML descriptor for each <a href="#_server_profiles">Server Profiles</a>.
-The XML file is named <em class="path">jboss-beans.xml</em> and is located at <em class="path">$JBOSS_HOME/server/profile_name/deploy/restcomm-slee/META-INF</em>, where <code class="app">profile_name</code> is the server profile name.</p>
+<p>JAIN SLEE is deployed as WildFly extension and is configured through an standalone.xml. This file is located at <em class="path">$JBOSS_HOME/standalone/configuration</em>.</p>
 </div>
 <div class="paragraph">
 <p>The configuration is exposed a JBoss Microcontainer Bean:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;bean name="Mobicents.JAINSLEE.EventRouterConfiguration"
-	class="org.mobicents.slee.container.management.jmx.EventRouterConfiguration"&gt;
-	&lt;annotation&gt;@org.jboss.aop.microcontainer.aspects.jmx.JMX(name=
-		"org.mobicents.slee:name=EventRouterConfiguration",	exposedInterface=
-		org.mobicents.slee.container.management.jmx.EventRouterConfigurationMBean.class,
-		registerDirectly=true)&lt;/annotation&gt;
-	&lt;property name="eventRouterThreads"&gt;8&lt;/property&gt;
-	&lt;property name="collectStats"&gt;true&lt;/property&gt;
-	&lt;property name="executorMapperClassName"&gt;
-		org.mobicents.slee.runtime.eventrouter.mapping.ActivityHashingEventRouterExecutorMapper
-	&lt;/property&gt;
-&lt;/bean&gt;</code></pre>
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;mbean name="EventRouterConfiguration"&gt;
+	&lt;property name="eventRouterThreads" value="8" /&gt;
+	&lt;property name="collectStats" value="true" /&gt;
+	&lt;property name="confirmSbbEntityAttachement" value="true" /&gt;
+	&lt;property name="executorMapperClassName" value="org.mobicents.slee.runtime.eventrouter.mapping.ActivityHashingEventRouterExecutorMapper" /&gt;
+&lt;/mbean&gt;</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all spread">
@@ -24228,8 +24232,10 @@ The XML file is named <em class="path">jboss-beans.xml</em> and is located at <e
 These configuration changes are not persisted.</p>
 </div>
 <div class="paragraph">
-<p>The JMX MBean that can be used to change the Event Router configuration is named <code class="app">org.mobicents.slee:name=EventRouterConfiguration</code>, and provides getters and setters to change each property defined in the persistent configuration.
-See <a href="#_management_jmx_console">JMX Console</a> for how the JMX Console can be used to use this MBean.</p>
+<p>The JMX MBean that can be used to change the Event Router configuration is named <code class="app">org.mobicents.slee:name=EventRouterConfiguration</code>, and provides getters and setters to change each property defined in the persistent configuration.</p>
+</div>
+<div class="paragraph">
+<p>The JConsole can be used to use this MBean, see <a href="#_management_jconsole">JConsole</a></p>
 </div>
 </div>
 </div>
@@ -24244,22 +24250,16 @@ See <a href="#_management_jmx_console">JMX Console</a> for how the JMX Console c
 <div class="sect3">
 <h4 id="timer-facility-persistent-configuration"><a class="anchor" href="#timer-facility-persistent-configuration"></a>3.6.1. Timer Facility Persistent Configuration</h4>
 <div class="paragraph">
-<p>Configuration is done through an XML descriptor for each Restcomm Cluster.
-The XML file is named <em class="path">jboss-beans.xml</em> and is located at <em class="path">{JBOSS_HOME}/server/{profile_name}/deploy/restcomm-slee/META-INF</em></p>
+<p>JAIN SLEE is deployed as WildFly extension and is configured through an standalone.xml. This file is located at <em class="path">$JBOSS_HOME/standalone/configuration</em>.</p>
 </div>
 <div class="paragraph">
 <p>The configuration is exposed a JBoss Microcontainer Bean:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;bean name="Mobicents.JAINSLEE.TimerFacilityConfiguration"
-	class="org.mobicents.slee.container.management.jmx.TimerFacilityConfiguration"&gt;
-	&lt;annotation&gt;@org.jboss.aop.microcontainer.aspects.jmx.JMX(name=
-		"org.mobicents.slee:name=TimerFacilityConfiguration",exposedInterface=
-		org.mobicents.slee.container.management.jmx.TimerFacilityConfigurationMBean.class,
-		registerDirectly=true)&lt;/annotation&gt;
-	&lt;property name="timerThreads"&gt;4&lt;/property&gt;
-&lt;/bean&gt;</code></pre>
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;mbean name="TimerFacilityConfiguration"&gt;
+	&lt;property name="timerThreads" value="4" /&gt;
+&lt;/mbean&gt;</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all spread">
@@ -24297,36 +24297,39 @@ The XML file is named <em class="path">jboss-beans.xml</em> and is located at <e
 Note that such configuration changes are not persisted.</p>
 </div>
 <div class="paragraph">
-<p>The JMX MBean which can be used to change the Timer Facility configuration is named <code class="app">org.mobicents.slee:name=TimerFacilityConfiguration</code>, and provides getters and setters to change each property defined in the persistent configuration.
-The JMX Console can be used to use this MBean, see <a href="#_management_jmx_console">JMX Console</a>.</p>
+<p>The JMX MBean which can be used to change the Timer Facility configuration is named <code class="app">org.mobicents.slee:name=TimerFacilityConfiguration</code>, and provides getters and setters to change each property defined in the persistent configuration.</p>
+</div>
+<div class="paragraph">
+<p>The JConsole can be used to use this MBean, see <a href="#_management_jconsole">JConsole</a>.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_profiles_configuration"><a class="anchor" href="#_profiles_configuration"></a>3.6.3. Configuring JAIN SLEE Profiles</h4>
 <div class="paragraph">
 <p>JAIN SLEE Profiles is a component used to store data, usually related with a user and/or service profile.
-JAIN SLEE maps JAIN SLEE Profiles to a Java Persistence API () Datasource, through Hibernate.</p>
+JAIN SLEE maps JAIN SLEE Profiles to a Java Persistence API (JPA) Datasource, through Hibernate.</p>
 </div>
 <div class="paragraph">
-<p>There are two configurations for JAIN SLEE Profiles provided as JBoss Microcontainer Beans:</p>
+<p>There is configuration for JAIN SLEE Profiles provided as JBoss Microcontainer Beans:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;bean name="Mobicents.JAINSLEE.Profiles.JPA.HSQLDBConfig"
-	class="org.mobicents.slee.container.deployment.profile.jpa.Configuration"&gt;
-	&lt;property name="persistProfiles"&gt;true&lt;/property&gt;
-	&lt;property name="clusteredProfiles"&gt;false&lt;/property&gt;
-	&lt;property name="hibernateDatasource"&gt;java:/DefaultDS&lt;/property&gt;
-	&lt;property name="hibernateDialect"&gt;org.hibernate.dialect.HSQLDialect&lt;/property&gt;
-	&lt;depends&gt;jboss.jca:service=DataSourceBinding,name=DefaultDS&lt;/depends&gt;
-&lt;/bean&gt;
-&lt;bean name="Mobicents.JAINSLEE.Profiles.JPA.PostgreSQLConfig"
-	class="org.mobicents.slee.container.deployment.profile.jpa.Configuration"&gt;
-	&lt;property name="persistProfiles"&gt;true&lt;/property&gt;
-	&lt;property name="clusteredProfiles"&gt;true&lt;/property&gt;
-	&lt;property name="hibernateDatasource"&gt;java:/PostgresDS&lt;/property&gt;
-	&lt;property name="hibernateDialect"&gt;org.hibernate.dialect.PostgreSQLDialect&lt;/property&gt;
-&lt;/bean&gt;</code></pre>
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;mbean name="H2DBConfig"&gt;
+    &lt;property name="persistProfiles" value="true" /&gt;
+    &lt;property name="clusteredProfiles" value="false" /&gt;
+    &lt;property name="hibernateDatasource" value="java:jboss/datasources/ExampleDS" /&gt;
+    &lt;property name="hibernateDialect" value="org.hibernate.dialect.H2Dialect" /&gt;
+&lt;/mbean&gt;
+&lt;mbean name="PostgreDBConfig"&gt;
+    &lt;property name="persistProfiles" value="true" /&gt;
+    &lt;property name="clusteredProfiles" value="false" /&gt;
+    &lt;property name="hibernateDatasource" value="java:jboss/datasources/PostgreDS" /&gt;
+    &lt;property name="hibernateDialect" value="org.hibernate.dialect.PostgreSQL94Dialect" /&gt;
+    &lt;property name="datasourceServiceName" value="PostgreDS" /&gt;
+&lt;/mbean&gt;
+&lt;mbean name="ProfileManagement"&gt;
+    &lt;property name="dbConfigMBean" value="PostgreDBConfig" /&gt;
+&lt;/mbean&gt;</code></pre>
 </div>
 </div>
 <div class="admonitionblock important">
@@ -24370,18 +24373,21 @@ For new ones, ensure that the name attribute of the bean element is unique.
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">hibernateDatasource</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the Java Datasource deployed in the JBoss Application Server.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the Java Datasource deployed in the WildFly.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">hibernateDialect</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The java class name of the hibernate dialect to use, related with the selected datasource.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The java class name of the hibernate dialect to use, related with
+ the selected datasource.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">datasourceServiceName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The pool name of Datasource from WildFly configuration.</p></td>
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>To switch the active configuration simply change the parameter injected in the bean named <code class="app">Mobicents.JAINSLEE.Container</code>.</p>
-</div>
 </div>
 <div class="sect3">
 <h4 id="other-configurations"><a class="anchor" href="#other-configurations"></a>3.6.4. Other Configurations</h4>
@@ -24390,18 +24396,10 @@ For new ones, ensure that the name attribute of the bean element is unique.
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;bean name="Mobicents.JAINSLEE.MobicentsManagement"
-	class="org.mobicents.slee.container.management.jmx.MobicentsManagement"&gt;
-	&lt;annotation&gt;@org.jboss.aop.microcontainer.aspects.jmx.JMX(
-		name="org.mobicents.slee:service=MobicentsManagement",
-		exposedInterface=org.mobicents.slee.container.management.
-		jmx.MobicentsManagementMBean.class,
-		registerDirectly=true)&lt;/annotation&gt;
-	&lt;property name="entitiesRemovalDelay"&gt;1&lt;/property&gt;
-	&lt;property name="timerThreads"&gt;8&lt;/property&gt;
-	&lt;property name="loadClassesFirstFromAS"&gt;true&lt;/property&gt;
-	&lt;property name="initializeReferenceDataTypesWithNull"&gt;true&lt;/property&gt;
-&lt;/bean&gt;</code></pre>
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;mbean name="MobicentsManagement"&gt;
+	&lt;property name="entitiesRemovalDelay" value="1" /&gt;
+	&lt;property name="initializeReferenceDataTypesWithNull" value="true" /&gt;
+&lt;/mbean&gt;</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all spread">
@@ -24425,11 +24423,6 @@ For new ones, ensure that the name attribute of the bean element is unique.
 <td class="tableblock halign-left valign-top"><p class="tableblock">The number of minutes before the container forces the ending of SBB entities from a service being deactivated.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">timerThreads</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The number of threads used by the timer facility.</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">initializeReferenceDataTypesWithNull</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The flag for initializing SBB CMP fields with Numeric Reference Data types to 0 (false) or null (true).</p></td>
@@ -24442,13 +24435,13 @@ Note that such configuration changes are not persisted.</p>
 </div>
 <div class="paragraph">
 <p>To change the configuraton, use the JMX MBean named <code class="app">org.mobicents.slee:service=MobicentsManagement</code>, which provides getters and setters to change each property defined in the persistent configuration that is configurable with the container running.
-The JMX Console can be used to use this MBean, as described in <a href="#_management_jmx_console">JMX Console</a>.</p>
+The JConsole can be used to use this MBean, as described in <a href="#_management_jconsole">JConsole</a>.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="logging-configuration"><a class="anchor" href="#logging-configuration"></a>3.6.5. Logging Configuration</h4>
 <div class="paragraph">
-<p>Logging configuration is documented in section <a href="#_global_logging_config">Simplified Global Log4j Configuration</a></p>
+<p>Logging configuration is documented in section <a href="#_global_logging_config">[_global_logging_config]</a></p>
 </div>
 </div>
 <div class="sect3">
@@ -24464,60 +24457,9 @@ The JMX Console can be used to use this MBean, as described in <a href="#_manage
 <h2 id="_management"><a class="anchor" href="#_management"></a>4. Managing Restcomm  JAIN SLEE</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_management_jmx_agent"><a class="anchor" href="#_management_jmx_agent"></a>4.1. JAIN SLEE JMX Agent</h3>
-<div class="paragraph">
-<p>The JMX Agent exposes all MBeans running in the server, including the ones mandated by the JAIN SLEE 1.1 specification.</p>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-The operations done through the JMX Agent are not kept once the server is shutdown.
-For instance, if a deployable unit is installed through JMX, and the server is shutdown, once the server is started again the deployable unit will not be installed.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-By default, the JMX Agent listens to port 1099, and is only available at the host/ip which the server is bound.
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_management_snmp_agent"><a class="anchor" href="#_management_snmp_agent"></a>4.2. SNMP Agent</h3>
-<div class="paragraph">
-<p>JBoss Application Server provides an SNMP Agent, which can be used to &#8230;&#8203;</p>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-TODO
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_management_components"><a class="anchor" href="#_management_components"></a>4.3. Managing JAIN SLEE Components</h3>
-
-</div>
-<div class="sect2">
-<h3 id="_management_persistent_file_deployer"><a class="anchor" href="#_management_persistent_file_deployer"></a>4.4. Persistent Deployable Unit Management</h3>
+<h3 id="_management_components"><a class="anchor" href="#_management_components"></a>4.1. Managing JAIN SLEE Components</h3>
+<div class="sect3">
+<h4 id="_management_persistent_file_deployer"><a class="anchor" href="#_management_persistent_file_deployer"></a>4.1.1. Persistent Deployable Unit Management</h4>
 <div class="paragraph">
 <p>JAIN SLEE provides a file deployer that greatly simplifies the management of JAIN SLEE deployable unit jars.
 The deployer:</p>
@@ -24538,21 +24480,22 @@ The deployer:</p>
 <div class="paragraph">
 <p>All operations are persistent, which means that unlike management done through JMX, these survive server shutdowns.</p>
 </div>
+</div>
 <div class="sect3">
-<h4 id="_management_persistent_du_install"><a class="anchor" href="#_management_persistent_du_install"></a>4.4.1. Persistent Deployable Unit Install</h4>
+<h4 id="_management_persistent_du_install"><a class="anchor" href="#_management_persistent_du_install"></a>4.1.2. Persistent Deployable Unit Install</h4>
 <div class="paragraph">
-<p>To install a deployable unit jar simply copy the file to <em class="path">$JBOSS_HOME/server/profile_name/deploy/</em>, where <code class="app">profile_name</code> is the server profile name.
+<p>To install a deployable unit jar simply copy the file to <em class="path">$JBOSS_HOME/standalone/deployments/</em>.
 Child directories can be used.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_management_persistent_du_uninstall"><a class="anchor" href="#_management_persistent_du_uninstall"></a>4.4.2. Persistent Deployable Unit Uninstall</h4>
+<h4 id="_management_persistent_du_uninstall"><a class="anchor" href="#_management_persistent_du_uninstall"></a>4.1.3. Persistent Deployable Unit Uninstall</h4>
 <div class="paragraph">
 <p>To uninstall a deployable unit jar simply delete the file.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_management_persistent_deployer_additional_behavior"><a class="anchor" href="#_management_persistent_deployer_additional_behavior"></a>4.4.3. Beyond Deployable Unit (Un)Install</h4>
+<h4 id="_management_persistent_deployer_additional_behavior"><a class="anchor" href="#_management_persistent_deployer_additional_behavior"></a>4.1.4. Beyond Deployable Unit (Un)Install</h4>
 <div class="paragraph">
 <p>The file deployer provides additional behavior then simply (un)install deployable unit jars, as done through the JAIN SLEE 1.1 DeploymentMBean:</p>
 </div>
@@ -24573,7 +24516,7 @@ After an install or uninstall, the deployer evaluates all operations on hold.</p
 </div>
 </div>
 <div class="sect3">
-<h4 id="_management_persistent_deployer_deploy_config_extension"><a class="anchor" href="#_management_persistent_deployer_deploy_config_extension"></a>4.4.4. Deploy-Config Extension</h4>
+<h4 id="_management_persistent_deployer_deploy_config_extension"><a class="anchor" href="#_management_persistent_deployer_deploy_config_extension"></a>4.1.5. Deploy-Config Extension</h4>
 <div class="paragraph">
 <p>A deployable unit jar may include a deploy-config.xml file in its <em class="path">META-INF/</em> directory.
 This file provides additional management actions for persistent install/uninstall operations:</p>
@@ -24673,243 +24616,16 @@ If an RA is installed using the persistent deployer, then SLEE reads its own dep
 </div>
 </div>
 <div class="sect2">
-<h3 id="_management_tools_ant_tasks"><a class="anchor" href="#_management_tools_ant_tasks"></a>4.5. Ant Tasks</h3>
-<div class="paragraph">
-<p>JAIN SLEE includes some tasks for Apache Ant, which can be used for common management tasks done through , when the container is running.
-The tasks come bundled in <em class="path">$JBOSS_HOME/server/default/deploy/restcomm-slee/lib/ant-tasks.jar</em>.
-To use these, the Ant script must include the following code:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;property environment="system" /&gt;
-&lt;property name="node" value="default" /&gt;
-&lt;property name="jboss.deploy" value="${system.JBOSS_HOME}/server/${node}/deploy" /&gt;
-
-&lt;path id="project.classpath"&gt;
-	&lt;fileset dir="${jboss.deploy}/restcomm-slee/lib"&gt;
-		&lt;include name="*.jar" /&gt;
-	&lt;/fileset&gt;
-	&lt;fileset dir="${system.JBOSS_HOME}/client"&gt;
-		&lt;include name="*.jar" /&gt;
-	&lt;/fileset&gt;
-&lt;/path&gt;
-
-&lt;property name="project.classpath" refid="project.classpath" /&gt;
-
-&lt;property name="jnpHost" value="127.0.0.1" /&gt;
-&lt;property name="jnpPort" value="1099" /&gt;
-
-&lt;taskdef name="slee-management"
-	classname="org.mobicents.ant.MobicentsManagementAntTask"
-	classpath="${project.classpath}" /&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>It is important to understand some properties set by the code above:</p>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1"><code class="parameter">node</code></dt>
-<dd>
-<p>This property defines the server configuration profile to be used, for further information about those refer to <a href="#_server_profiles">Server Profiles</a>.</p>
-</dd>
-<dt class="hdlist1"><code class="parameter">jnpHost</code></dt>
-<dd>
-<p>The host/ip which Restcomm JAIN SLEE is bound.</p>
-</dd>
-<dt class="hdlist1"><code class="parameter">jnpPort</code></dt>
-<dd>
-<p>The port which the JMX Agent is listening.</p>
-</dd>
-</dl>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-The property values can be overridden when invoking the Ant script.
-To do this, use the parameter <code class="parameter">-DpropertyName=propertyValue</code>.
-For example, the server profile can be changed from <code class="app">default</code> to <code class="app">all</code> using <code class="parameter">-Dnode=all</code>.
-</td>
-</tr>
-</table>
-</div>
+<h3 id="management-consoles"><a class="anchor" href="#management-consoles"></a>4.2. Management Consoles</h3>
 <div class="sect3">
-<h4 id="_management_tools_ant_tasks_slee_management"><a class="anchor" href="#_management_tools_ant_tasks_slee_management"></a>4.5.1. SLEE Management Task</h4>
+<h4 id="_management_jconsole"><a class="anchor" href="#_management_jconsole"></a>4.2.1. JConsole</h4>
 <div class="paragraph">
-<p>The <code>slee-management</code> task allows a script to manage JAIN SLEE deployable units, services and resource adapters.
-The operations, or sub-tasks, are done through .</p>
+<p>WildFly provides a script <code>jconsole.sh</code> that starts JConsole tool that gives quick access to all MBeans registered in the server, which includes the ones defined by the JAIN SLEE 1.1 specification. This script adds WildFly CLI tab for access to WildFly server information. Also you can acces to all MBeans in MBeans tab.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;slee-management jnpport="${jnpPort}" host="${jnpHost}"&gt;
-	&lt;!-- sub-tasks --&gt;
-&lt;/slee-management&gt;</code></pre>
+<pre>$JBOSS_HOME/bin/jconsole.sh</pre>
 </div>
-</div>
-<div class="paragraph">
-<p>The attributes have the same meaning as the properties listed in the script code to import the tasks here: <a href="#_management_tools_ant_tasks">Ant Tasks</a>.</p>
-</div>
-<div class="sect4">
-<h5 id="_management_tools_ant_tasks_slee_management_install_du"><a class="anchor" href="#_management_tools_ant_tasks_slee_management_install_du"></a>Install Deployable Unit Sub-Task</h5>
-<div class="paragraph">
-<p>The <code>install</code> sub-task installs JAIN SLEE the deployable unit jar pointed by the value of attribute <code class="parameter">url</code>.
-Example of usage:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;slee-management jnpport="${jnpPort}" host="${jnpHost}"&gt;
-	&lt;install url="file:///tmp/my-deployable-unit.jar" /&gt;
-&lt;/slee-management&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_management_tools_ant_tasks_slee_management_uninstall_du"><a class="anchor" href="#_management_tools_ant_tasks_slee_management_uninstall_du"></a>Uninstall Deployable Unit Sub-Task</h5>
-<div class="paragraph">
-<p>The <code>uninstall</code> sub-task uninstalls JAIN SLEE the deployable unit jar which was installed from the value of attribute <code class="parameter">url</code>.
-Example of usage:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;slee-management jnpport="${jnpPort}" host="${jnpHost}"&gt;
-	&lt;uninstall url="file:///tmp/my-deployable-unit.jar" /&gt;
-&lt;/slee-management&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_management_tools_ant_tasks_slee_management_activate_service"><a class="anchor" href="#_management_tools_ant_tasks_slee_management_activate_service"></a>Activate Service Sub-Task</h5>
-<div class="paragraph">
-<p>The <code>activateservice</code> sub-task activates an already installed JAIN SLEE service, with the id specified by the value of attribute <code class="parameter">componentid</code>.
-Example of usage:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;slee-management host="${jnpHost}" jnpport="${jnpPort}"&gt;
-	&lt;activateservice
-		componentid="ServiceID[name=FooService,vendor=org.mobicents,version=1.0]" /&gt;
-&lt;/slee-management&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_management_tools_ant_tasks_slee_management_deactivate_service"><a class="anchor" href="#_management_tools_ant_tasks_slee_management_deactivate_service"></a>Deactivate Service Sub-Task</h5>
-<div class="paragraph">
-<p>The <code>deactivateservice</code> sub-task deactivates an already installed JAIN SLEE service, with the id specified by the value of attribute <code class="parameter">componentid</code>.
-Example of usage:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;slee-management host="${jnpHost}" jnpport="${jnpPort}"&gt;
-	&lt;deactivateservice
-		componentid="ServiceID[name=FooService,vendor=org.mobicents,version=1.0]" /&gt;
-&lt;/slee-management&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_management_tools_ant_tasks_slee_management_create_ra_entity"><a class="anchor" href="#_management_tools_ant_tasks_slee_management_create_ra_entity"></a>Create Resource Adaptor Entity Sub-Task</h5>
-<div class="paragraph">
-<p>The <code>createraentity</code> sub-task creates the resource adaptor entity with the name specified by the value of attribute <code class="parameter">entityname</code>, for an already installed JAIN SLEE resource adaptor, with the id specified by the value of attribute <code class="parameter">componentid</code>.
-Example of usage:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;slee-management host="${jnpHost}" jnpport="${jnpPort}"&gt;
-	&lt;createraentity
-		componentid="ResourceAdaptorID[name=FooRA,vendor=org.mobicents,version=1.0]"
-		entityname="FooRA" /&gt;
-&lt;/slee-management&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_management_tools_ant_tasks_slee_management_remove_ra_entity"><a class="anchor" href="#_management_tools_ant_tasks_slee_management_remove_ra_entity"></a>Remove Resource Adaptor Entity Sub-Task</h5>
-<div class="paragraph">
-<p>The <code>removeraentity</code> sub-task removes the resource adaptor entity with the name specified by the value of attribute <code class="parameter">entityname</code>.
-Example of usage:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;slee-management host="${jnpHost}" jnpport="${jnpPort}"&gt;
-	&lt;removeraentity entityname="FooRA" /&gt;
-&lt;/slee-management&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_management_tools_ant_tasks_slee_management_activate_ra_entity"><a class="anchor" href="#_management_tools_ant_tasks_slee_management_activate_ra_entity"></a>Activate Resource Adaptor Entity Sub-Task</h5>
-<div class="paragraph">
-<p>The <code>activateraentity</code> sub-task activates the resource adaptor entity with the name specified by the value of attribute <code class="parameter">entityname</code>.
-Example of usage:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;slee-management host="${jnpHost}" jnpport="${jnpPort}"&gt;
-	&lt;activateraentity entityname="FooRA" /&gt;
-&lt;/slee-management&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_management_tools_ant_tasks_slee_management_deactivate_ra_entity"><a class="anchor" href="#_management_tools_ant_tasks_slee_management_deactivate_ra_entity"></a>Deactivate Resource Adaptor Entity Sub-Task</h5>
-<div class="paragraph">
-<p>The <code>deactivateraentity</code> sub-task deactivates the resource adaptor entity with the name specified by the value of attribute <code class="parameter">entityname</code>.
-Example of usage:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;slee-management host="${jnpHost}" jnpport="${jnpPort}"&gt;
-	&lt;deactivateraentity entityname="FooRA" /&gt;
-&lt;/slee-management&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_management_tools_ant_tasks_slee_management_bind_ra_link"><a class="anchor" href="#_management_tools_ant_tasks_slee_management_bind_ra_link"></a>Bind Resource Adaptor Link Sub-Task</h5>
-<div class="paragraph">
-<p>The <code>bindralinkname</code> sub-task binds the resource adaptor link with the name specified by the value of attribute <code class="parameter">linkname</code>, for an already active JAIN SLEE resource adaptor entity, with the name specified by the value of attribute <code class="parameter">entityname</code>.
-Example of usage:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;slee-management host="${jnpHost}" jnpport="${jnpPort}"&gt;
-	&lt;bindralinkname entityname="FooRA"
-		linkname="FooRA" /&gt;
-&lt;/slee-management&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_management_tools_ant_tasks_slee_management_unbind_ra_link"><a class="anchor" href="#_management_tools_ant_tasks_slee_management_unbind_ra_link"></a>Unbind Resource Adaptor Link Sub-Task</h5>
-<div class="paragraph">
-<p>The <code>unbindralinkname</code> sub-task unbinds the resource adaptor link with the name specified by the value of attribute <code class="parameter">linkname</code>.
-Example of usage:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;slee-management host="${jnpHost}" jnpport="${jnpPort}"&gt;
-	&lt;unbindralinkname linkname="FooRA" /&gt;
-&lt;/slee-management&gt;</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="management-consoles"><a class="anchor" href="#management-consoles"></a>4.6. Management Consoles</h3>
-<div class="sect3">
-<h4 id="_management_jmx_console"><a class="anchor" href="#_management_jmx_console"></a>4.6.1. JMX Console</h4>
-<div class="paragraph">
-<p>JBoss Application Server provides a simple web console that gives quick access to all MBeans registered in the server, which includes the ones defined by the JAIN SLEE 1.1 specification.</p>
-</div>
-<div class="paragraph">
-<p>To access the JMX console once the server is running, point a web browser to <code><a href="http://ip:8080/jmx-console" class="bare">http://ip:8080/jmx-console</a></code>, where <code>ip</code> is the IP/Host the container is bound.
-Unless set during start up, the IP/Host will be <code>127.0.0.1/localhost</code> by default.</p>
 </div>
 <div class="paragraph">
 <p>MBeans in the domain <code>javax.slee</code> are all standard JAIN SLEE 1.1 MBeans, while the ones in the domain <code>org.mobicents.slee</code> are proprietary to Restcomm  JAIN SLEE.
@@ -24948,7 +24664,7 @@ For further information about JAIN SLEE 1.1 MBeans and their operations refer to
 </div>
 </div>
 <div class="sect3">
-<h4 id="_management_web_console"><a class="anchor" href="#_management_web_console"></a>4.6.2. SLEE Management Console</h4>
+<h4 id="_management_web_console"><a class="anchor" href="#_management_web_console"></a>4.2.2. SLEE Management Console</h4>
 <div class="paragraph">
 <p>The JMX Console is simple but the MBeans operations were made considering its invocation by management clients, not people using browsers.
 The SLEE Management Console is a web application that provides high level management functionality for the SLEE, and comes pre-deployed in SLEE binary releases.
@@ -24960,19 +24676,10 @@ Unless set during start up, the IP/Host will be <code>127.0.0.1/localhost</code>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_management_jon_console"><a class="anchor" href="#_management_jon_console"></a>4.6.3. Jopr Console</h4>
+<h4 id="_management_twiddle_cli"><a class="anchor" href="#_management_twiddle_cli"></a>4.2.3. TWIDDLE CLI</h4>
 <div class="paragraph">
-<p>Joprwas developed to become Red Hat&#8217;s Middleware Administration Tool, providing an unified interface and extensible model, to be used mainly to control and monitor servers individually, or clusters.</p>
-</div>
-<div class="paragraph">
-<p>Restcomm JAIN SLEE binary release includes a JoprConsole in <em class="path">tools/jopr-plugin</em>, with standalone documentation on same path, but inside <em class="path">docs</em> directory.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_management_twiddle_cli"><a class="anchor" href="#_management_twiddle_cli"></a>4.6.4. TWIDDLE CLI</h4>
-<div class="paragraph">
-<p>Both,  Console and  Jopr Console, are graphic(web) based tools.
-Some deployments may require command line access to Restcomm  .
+<p>Console is graphic(web) based tools.
+Some deployments may require command line access to Restcomm.
 To aid such cases, Restcomm  offers <code>TWIDDLE</code> based CLI.
 It allows to manage single instance (remote or local) of Restcomm   server.</p>
 </div>
@@ -24987,140 +24694,71 @@ It allows to manage single instance (remote or local) of Restcomm   server.</p>
 <h2 id="logging-traces-and-alarms"><a class="anchor" href="#logging-traces-and-alarms"></a>5. Logging, Traces and Alarms</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_log4j_service"><a class="anchor" href="#_log4j_service"></a>5.1. Log4j Logging Service</h3>
+<h3 id="_log4j_service"><a class="anchor" href="#_log4j_service"></a>5.1. Logging Service</h3>
 <div class="paragraph">
-<p>In Restcomm JAIN SLEE <code>Apache log4j</code> is used for logging.
-If you are not familiar with the log4j package and would like to use it in your applications, you can read more about it at the <a href="http://jakarta.apache.org/log4j/">Jakarta web site</a>.</p>
+<p>In Restcomm JAIN SLEE <code>WildFly Logging subsystem</code> is used for logging. If you are not familiar with the Logging subsystem and would like to use it in your applications, you can read more about it here: <a href="https://docs.jboss.org/author/display/WFLY10/Logging+Configuration/">WildFly 10 documentation</a>.</p>
 </div>
 <div class="paragraph">
-<p>Logging is controlled from a central <em class="path">conf/jboss-log4j.xml</em> file, in each server configuration profile.
-This file defines a set of appenders specifying the log files, what categories of messages should go there, the message format and the level of filtering.
-By default, in Restcomm  produces output to both the console and a log file (<em class="path">log/server.log</em>).</p>
+<p>Logging is controlled from a <em class="path">/standalone/configuration/standalone.xml</em> file.</p>
 </div>
 <div class="paragraph">
-<p>There are 6 basic log levels used: TRACE, DEBUG, INFO, WARN, ERROR and FATAL.</p>
-</div>
-<div class="paragraph">
-<p>Logging is organized in categories and appenders.
-Appenders control destination of log entries.
-Different appenders differ in configuration, however each supports threshold.
-Threshold filters log entries based on their level.
-Threshold set to WARN will allow log entry to pass into appender if its level is WARN, ERROR or FATAL, other entries will be discarded.
-For more details on appender configuration please refer to its documentation or java doc.</p>
-</div>
-<div class="paragraph">
-<p>The logging threshold on the console is INFO, by default.
-In contrast, there is no threshold set for the server.log file, so all generated logging messages are  logged there.</p>
-</div>
-<div class="paragraph">
-<p>Categories control level for loggers and its children, for details please refer to log4j manual.</p>
-</div>
-<div class="paragraph">
-<p>By default  Restcomm JAIN SLEE inherits level of INFO from root logger.
-To make platform add more detailed logs, file             <em class="path">conf/jboss-log4j.xml</em> has to be altered.
-Explicit category definition for Restcomm  JAIN SLEE looks like:</p>
+<p>The overall server logging configuration is represented by the <code>logging subsystem</code>. It consists of four notable parts: <code>handler</code> configurations, <code>logger</code>, the <code>root logger</code> declarations (aka log categories) and <code>logging profiles</code>. Each logger does reference a handler (or set of handlers). Each handler declares the log format and output:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;category name="org.mobicents.slee"&gt;
-    &lt;priority value="INFO"/&gt;
-&lt;/category&gt;</code></pre>
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;subsystem xmlns="urn:jboss:domain:logging:3.0"&gt;
+   &lt;console-handler name="CONSOLE" autoflush="true"&gt;
+       &lt;level name="DEBUG"/&gt;
+       &lt;formatter&gt;
+           &lt;named-formatter name="COLOR-PATTERN"/&gt;
+       &lt;/formatter&gt;
+   &lt;/console-handler&gt;
+   &lt;periodic-rotating-file-handler name="FILE" autoflush="true"&gt;
+       &lt;formatter&gt;
+           &lt;named-formatter name="PATTERN"/&gt;
+       &lt;/formatter&gt;
+       &lt;file relative-to="jboss.server.log.dir" path="server.log"/&gt;
+       &lt;suffix value=".yyyy-MM-dd"/&gt;
+   &lt;/periodic-rotating-file-handler&gt;
+   &lt;logger category="com.arjuna"&gt;
+       &lt;level name="WARN"/&gt;
+   &lt;/logger&gt;
+   [...]
+   &lt;root-logger&gt;
+       &lt;level name="DEBUG"/&gt;
+       &lt;handlers&gt;
+           &lt;handler name="CONSOLE"/&gt;
+           &lt;handler name="FILE"/&gt;
+       &lt;/handlers&gt;
+   &lt;/root-logger&gt;
+   &lt;formatter name="PATTERN"&gt;
+       &lt;pattern-formatter pattern="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p [%c] (%t) %s%e%n"/&gt;
+   &lt;/formatter&gt;
+   &lt;formatter name="COLOR-PATTERN"&gt;
+       &lt;pattern-formatter pattern="%K{level}%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%e%n"/&gt;
+   &lt;/formatter&gt;
+&lt;/subsystem&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This limits the level of logging to INFO for all Restcomm JAIN SLEE classes.
-It is possible to declare more categories with different level, to provide logs with greater detail.</p>
-</div>
-<div class="paragraph">
-<p>For instance, to provide detailed information on Restcomm JAIN SLEE transaction engine in separate log file(<em class="path">txmanager.log</em>), file   <em class="path">conf/jboss-log4j.xml</em> should contain entries as follows:</p>
+<p>By default Restcomm JAIN SLEE inherits level of INFO from root-logger. To make platform add
+more detailed logs, file <em class="path">/standaloneconfiguration/standalone.xml</em> has to be altered. Explicit category definition for Restcomm JAIN SLEE looks like:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;appender name="TXMANAGER" class="org.jboss.logging.appender.RollingFileAppender"&gt;
-    &lt;errorHandler class="org.jboss.logging.util.OnlyOnceErrorHandler"/&gt;
-    &lt;param name="File" value="${jboss.server.home.dir}/log/txmanager.log"/&gt;
-    &lt;param name="Append" value="false"/&gt;
-    &lt;param name="MaxFileSize" value="500KB"/&gt;
-    &lt;param name="MaxBackupIndex" value="1"/&gt;
-
-    &lt;layout class="org.apache.log4j.PatternLayout"&gt;
-        &lt;param name="ConversionPattern" value="%d %-5p [%c] %m%n"/&gt;
-    &lt;/layout&gt;
-&lt;/appender&gt;
-
-&lt;category name="org.mobicents.slee.runtime.transaction"&gt;
-    &lt;priority value="DEBUG" /&gt;
-    &lt;appender-ref ref="TXMANAGER"/&gt;
-&lt;/category&gt;</code></pre>
+<pre>&lt;logger category="org.mobicents.slee"&gt;
+    &lt;level name="INFO"/&gt;
+&lt;/logger&gt;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This creates a new file appender and specifies that it should be used by the logger (or category) for the package org.mobicents.slee.runtime.transaction.</p>
+<p>This limits the level of logging to INFO for all Restcomm JAIN SLEE classes. It is possible to declare more categories with different level, to provide logs with greater detail.</p>
 </div>
 <div class="paragraph">
-<p>The file appender is set up to produce a new log file every day rather than producing a new one every time you restart the server or writing to a single file indefinitely.
-The current log file is txmanager.log.
-Older files have the date they were written added to their filenames.</p>
-</div>
-<div class="sect3">
-<h4 id="_global_logging_config"><a class="anchor" href="#_global_logging_config"></a>5.1.1. Simplified Global Log4j Configuration</h4>
-<div class="paragraph">
-<p>Besides manual logging configuration, described previously, Restcomm JAIN SLEE also exposes management operations that greatly simplify such configuration, allowing the administrator to select through predefined and complete logging configuration presets.
-Such operations are available in MBean named <em class="path">org.mobicents.slee%3Aservice%3DMobicentsManagement</em>, and the available presets are:</p>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Level</dt>
-<dd>
-<p>The available management operations are:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>DEFAULT: Regular logging, at INFO level, displaying most user-related messages;</p>
-</li>
-<li>
-<p>DEBUG: More verbose logging, mostly using DEBUG/TRACE level, displaying message of interest for developers;</p>
-</li>
-<li>
-<p>PRODUCTION: Low verbosity and async logging, mostly in WARN level, for systems in production so that logging does impact performance.</p>
-</li>
-</ul>
-</div>
-</dd>
-<dt class="hdlist1">JMX Operation</dt>
-<dd>
-<div class="ulist">
-<ul>
-<li>
-<p>getLoggingConfiguration: retrieves what is the current logging configuration;</p>
-</li>
-<li>
-<p>switchLoggingConfiguration: allows switching to a different configuration preset;</p>
-</li>
-<li>
-<p>setLoggingConfiguration: used to upload a complete logging configuration.</p>
-</li>
-</ul>
-</div>
-</dd>
-</dl>
+<p>Handlers are used to determine what happens with a log message if the logger determines the message is loggable. You can read about handlers in <a href="https://docs.jboss.org/author/display/WFLY10/Handlers">Logging Handlers</a>.</p>
 </div>
 <div class="paragraph">
-<p>Custom presets can be easily deployed in the application server too.
-Simply name the configuration file as <em class="path">jboss-log4j.xml.PRESET_NAME</em>, where <code>PRESET_NAME</code> should be unique preset name, and copy it to directory <em class="path">$JBOSS_HOME/server/profile_name/deploy/restcomm-slee/log4j-templates</em>, where <code class="app">profile_name</code> is the server profile name.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-These procedures changes the whole JBoss Application Server Platform logging configuration, so it will affect also logging for other running applications besides the JAIN SLEE container.
-</td>
-</tr>
-</table>
-</div>
+<p>WildFly Logging subsystem supports per-deployment logging that allows you to add a logging configuration file to your deployment and have the logging for that deployment configured according to the configuration file. In an EAR the configuration should be in the META-INF directory. In a WAR or JAR deployment the configuration file can be in either the META-INF or WEB-INF/classes directories. More details you can read in <a href="https://docs.jboss.org/author/display/WFLY10/Logging+Configuration#LoggingConfiguration-PerdeploymentLogging">Per-deployment Logging</a>.</p>
 </div>
 </div>
 <div class="sect2">
@@ -25266,8 +24904,8 @@ The Restcomm  JAIN SLEE implementation also exposes a clustering extension  for 
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-JAIN SLEE reuses the JBoss Application Server clustering framework, and if all nodes of a cluster are in the same network then the underlying JBoss Application Server clustering will automatically handle the discovery of new cluster nodes and join these to the cluster.
-For more complicated setups, refer to the JBoss Application Server clustering documentation.
+JAIN SLEE reuses the WildFly clustering framework, and if all nodes of a cluster are in the same network then the underlying WildFly clustering will automatically handle the discovery of new cluster nodes and join these to the cluster.
+For more complicated setups, refer to the WildFly clustering documentation.
 </td>
 </tr>
 </table>
@@ -25661,62 +25299,33 @@ Usage of the Fault Tolerant RA API is recommended since it reuses the clustering
 <h2 id="_slee_connection_factory"><a class="anchor" href="#_slee_connection_factory"></a>9. Firing Events from Java EE Applications</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_slee_connection_factory_intro"><a class="anchor" href="#_slee_connection_factory_intro"></a>9.1. SLEE Connection Factory</h3>
+<h3 id="remote-slee-connection-service"><a class="anchor" href="#remote-slee-connection-service"></a>9.1. Remote SLEE Connection Service</h3>
 <div class="paragraph">
-<p>The JAIN SLEE specification includes an API for interaction with JAIN SLEE container, with the interface <code class="class">javax.slee.connection.SleeConnectionFactory</code> upfront, which allows external applications, such as an EJB, to create connections to a specific JAIN SLEE instance, and use that to fire events.</p>
-</div>
-<div class="paragraph">
-<p>JAIN SLEE provides two different implementations of the API, one for access in the same JVM, another for remote access.
-Both implementations expose the SLEE Connection Factory in the local JNDI tree, thus the same code is used by the application independently of the implementation used.</p>
-</div>
-<div class="sect3">
-<h4 id="local-slee-connection-factory"><a class="anchor" href="#local-slee-connection-factory"></a>9.1.1. Local SLEE Connection Factory</h4>
-<div class="paragraph">
-<p>JAIN SLEE container instances always expose the local SLEE Connection Factory in its JVM, which means that an external application running in the same JVM doesn&#8217;t need any additional tools or setup to use it.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="remote-slee-connection-factory"><a class="anchor" href="#remote-slee-connection-factory"></a>9.1.2. Remote SLEE Connection Factory</h4>
-<div class="paragraph">
-<p>JAIN SLEE includes a tool, named Remote SLEE Connection Tool, which is a JCA connector that can be deployed in any Java EE application server.
-Once deployed this connector installs the factory into JNDI, which communicates with the remote SLEE container through RMI.</p>
+<p>JAIN SLEE provides Remote SLEE Connection Service via RMI Registry lookup method for firing event.</p>
 </div>
 <div class="paragraph">
-<p>Restcomm Remote SLEE Connection Tool is bundled in all Restcomm JAIN SLEE releases, in the tools/remote-slee-connection directory, including its own documentation.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="using-slee-connection-factory"><a class="anchor" href="#using-slee-connection-factory"></a>9.1.3. Using SLEE Connection Factory</h4>
-<div class="paragraph">
-<p>Below is example code which retrieves the SLEE Connection Factory and uses it to fire an event into the JAIN SLEE container.
-The code is the same whether the SLEE container is in the same JVM or not.</p>
+<p>The code is the same whether the SLEE container is in the same JVM or not.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">	// retrieves JNDI context
-	InitialContext context = new InitialContext();
+<pre class="highlight"><code class="language-java" data-lang="java">    // get local or remote RMI registry on rmiAddress:rmiPort
+    Registry registry = LocateRegistry.getRegistry(this.rmiAddress, this.rmiPort);
 
-	// retrieves the connection factory from JNDI
-	SleeConnectionFactory factory = (SleeConnectionFactory) context.lookup("java:/MobicentsConnectionFactory");
+    // get RMI stup throw lookup
+    RemoteSleeConnectionService rmiStub =
+        (RemoteSleeConnectionService) registry.lookup("RemoteSleeConnectionService");
 
-	// creates a connection to the SLEE container
-	SleeConnection connection = factory.getConnection();
+    // create activity handle
+    ExternalActivityHandle handle = rmiStub.createActivityHandle();
 
-	// creates the activity handle which will be used to fire the event
-	ExternalActivityHandle handle = connection.createActivityHandle();
+    // get event type
+    EventTypeID requestType = rmiStub.getEventTypeID(eventName, eventVendor, eventVersion);
 
-	// retrieves the event type ID
-	EventTypeID eventTypeID = connection.getEventTypeID("CustomEvent", "...", "1.0");
+    CustomEvent customEvent = new CustomEvent();
+    customEvent.setMessage(messagePassed);
+    logger.info("The event type is: " + requestType);
 
-	// creates the event object
-	CustomEvent eventObject = new CustomEvent();
-
-	// fires the event in the remote SLEE container
-	connection.fireEvent(eventObject, eventTypeID, handle, null);
-
-	// closes the connection
-	connection.close();</code></pre>
-</div>
+    rmiStub.fireEvent(customEvent, requestType, handle, null);</code></pre>
 </div>
 </div>
 </div>
@@ -26355,7 +25964,7 @@ This classloader sees the component classes contained in the component jar (<cod
 It does not see classes from a component that it does not depend on.</p>
 </div>
 <div class="paragraph">
-<p>JAIN SLEE defines a class loading domain with the s required in the JAIN SLEE 1.1 container (for example, JAIN SLEE,  and ). This domain (<code>JBoss Microcontainer ClassLoadingDomain</code>) imports all classes shared in the JBoss Application Server , and acts like the parent domain for all <code>URLClassLoaderDomain</code>s, which means that a class imported by a SLEE classloading domain will always be used first.</p>
+<p>JAIN SLEE defines a class loading domain with the s required in the JAIN SLEE 1.1 container (for example, JAIN SLEE,  and ). This domain (<code>JBoss Microcontainer ClassLoadingDomain</code>) imports all classes shared in the WildFly , and acts like the parent domain for all <code>URLClassLoaderDomain</code>s, which means that a class imported by a SLEE classloading domain will always be used first.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -26389,8 +25998,8 @@ It also depends on the classloader domain of the SIP Event jar.</p>
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-JBoss Application Server does not see the classes of deployed JAIN SLEE components.
-This means that if it exports its classes for components that are complemented with Java EE components, the common classes must be deployed on JBoss Application Server , either directly or included in the Java EE component.
+WildFly does not see the classes of deployed JAIN SLEE components.
+This means that if it exports its classes for components that are complemented with Java EE components, the common classes must be deployed on WildFly , either directly or included in the Java EE component.
 </td>
 </tr>
 </table>
@@ -26495,7 +26104,7 @@ These configuration changes are not persisted.</p>
 </div>
 <div class="paragraph">
 <p>The JMX MBean which can be used to change the Congestion Control configuration is named <code class="app">org.mobicents.slee:name=CongestionControlConfiguration</code>, and provides getters and setters to change each property defined in the persistent configuration.
-The JMX Console can be used to use this MBean, see <a href="#_management_jmx_console">JMX Console</a>.</p>
+The JMX Console can be used to use this MBean, see <a href="#_management_jmx_console">[_management_jmx_console]</a>.</p>
 </div>
 </div>
 </div>
@@ -26548,19 +26157,59 @@ Please refer to its documentation to learn about it.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Checkout and build the container source code as explained in <a href="#_install">Installing Restcomm  JAIN SLEE</a>.</p>
+<p>Checkout and build the container source code as explained in <a href="#_install">Installing Restcomm JAIN SLEE</a>.</p>
 </li>
 <li>
-<p>Install the TCK Resource Adaptor and Plugin:</p>
+<p>Setup JBOSS_HOME environment variable to WildFly with JAIN SLEE container.</p>
+</li>
+<li>
+<p>Download source code</p>
+<div class="paragraph">
+<p>Use Git to checkout the specific source, the Git repository URL
+is <a href="https://github.com/RestComm/jain-slee.more/" class="bare">https://github.com/RestComm/jain-slee.more/</a></p>
+</div>
 <div class="listingblock">
 <div class="content">
-<pre>cd tck/jain-slee-1.1
+<pre class="highlight"><code>[usr]$ git clone https://github.com/RestComm/jain-slee.more restcomm-jain-slee-more</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Setup TCK_HOME environment variable to <em class="path">tck/jain-slee-1.1</em>.</p>
+<div class="listingblock">
+<div class="content">
+<pre>export TCK_HOME=restcomm-jain-slee-more/tck/jain-slee-1.1</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Install the TCK Plugin and Resource Adaptor:</p>
+<div class="listingblock">
+<div class="content">
+<pre>cd $TCK_HOME
 mvn install</pre>
 </div>
 </div>
 </li>
 <li>
-<p>Setup JAVA_OPTS environment variable to include -XX:MaxPermSize=128M -Djboss.defined.home=<code>/Volumes/2/jboss-5.1.0.GA</code> -Djava.security.manager=default -Djava.security.policy=<code><a href="file:///Volumes/2/workspace/restcomm-jainslee-2/" class="bare">file:///Volumes/2/workspace/restcomm-jainslee-2/</a></code>tck/jain-slee-1.1/tck-security.policy, replacing the <code>absolute paths</code> with $JBOSS_HOME and the path of the Git checkout.</p>
+<p>Copy OpenCloud JAIN SLEE TCK 1.1 module from <em class="path">tck/kain-slee-1.1/release/opencloud</em>
+to <em class="path">$JBOSS_HOME/modules/system/layers/base/com/opencloud</em>.</p>
+</li>
+<li>
+<p>Start Restcomm JAIN SLEE with the Security Manager:</p>
+<div class="listingblock">
+<div class="content">
+<pre>$JBOSS_HOME/bin/standalone.sh -secmgr</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Setup JAVA_OPTS environment variable</p>
+<div class="listingblock">
+<div class="content">
+<pre>export JAVA_OPTS="-Djboss.defined.home=$JBOSS_HOME -Djava.security.manager=default -Djava.security.policy=file://$TCK_HOME/tck-security-wildfly.policy"</pre>
+</div>
+</div>
 </li>
 <li>
 <p>Unzip and run the JAIN SLEE 1.1 TCK distribution:</p>
@@ -26794,7 +26443,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_16-b03, mixed mode, sharing)</pre>
 <h2 id="_jboss_home_setup"><a class="anchor" href="#_jboss_home_setup"></a>Appendix B: Setting the JBOSS_HOME Environment Variable</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code class="app">Restcomm Platform</code> (<code class="app">Restcomm</code>) is built on top of <code class="app">JBoss Application Server</code>.
+<p>The <code class="app">Restcomm Platform</code> (<code class="app">Restcomm</code>) is built on top of <code class="app">WildFly</code>.
 You do not need to set the <code class="var">JBOSS_HOME</code> environment variable to run any of the <code class="app">Restcomm Platform</code> servers <em>unless</em> <code class="var">JBOSS_HOME</code> is <em>already</em> set.</p>
 </div>
 <div class="paragraph">
@@ -26810,7 +26459,7 @@ You do not need to set the <code class="var">JBOSS_HOME</code> environment varia
 </div>
 </div>
 <div class="paragraph">
-<p>The <code class="app">Restcomm Platform</code> and most Restcomm servers are built on top of <code class="app">JBoss Application Server</code> (<code class="app">JBoss Application Server</code>). When the <code class="app">Restcomm Platform</code> or Restcomm  servers are built <em>from source</em>, then <code class="var">JBOSS_HOME</code> <em>must</em> be set, because the Restcomm files are installed into (or &#8220;on top of&#8221; if you prefer) a clean <code class="app">JBoss Application Server</code> installation, and the build process assumes that the location pointed to by the <code class="var">JBOSS_HOME</code> environment variable at the time of building is the <code class="app">JBoss Application Server</code> installation into which you want to install the Restcomm files.</p>
+<p>The <code class="app">Restcomm Platform</code> and most Restcomm servers are built on top of <code class="app">WildFly</code> (<code class="app">WildFly</code>). When the <code class="app">Restcomm Platform</code> or Restcomm  servers are built <em>from source</em>, then <code class="var">JBOSS_HOME</code> <em>must</em> be set, because the Restcomm files are installed into (or &#8220;on top of&#8221; if you prefer) a clean <code class="app">WildFly</code> installation, and the build process assumes that the location pointed to by the <code class="var">JBOSS_HOME</code> environment variable at the time of building is the <code class="app">WildFly</code> installation into which you want to install the Restcomm files.</p>
 </div>
 <div class="paragraph">
 <p>This guide does not detail building the <code class="app">Restcomm Platform</code> or any Restcomm servers from source.
@@ -26843,7 +26492,7 @@ This can save you both time and frustration.
 <p>&#8230;&#8203;you have installed the <code class="app">Restcomm Platform</code> binary distribution.</p>
 </li>
 <li>
-<p>&#8230;&#8203;you have installed a Restcomm server binary distribution <em>which bundles <code class="app">JBoss Application Server</code>.</em></p>
+<p>&#8230;&#8203;you have installed a Restcomm server binary distribution <em>which bundles <code class="app">WildFly</code>.</em></p>
 </li>
 </ul>
 </div>
@@ -26856,12 +26505,12 @@ This can save you both time and frustration.
 <p>&#8230;&#8203;you are installing the <code class="app">Restcomm Platform</code> or any of the Restcomm servers <em>from source</em>.</p>
 </li>
 <li>
-<p>&#8230;&#8203;you are installing the <code class="app">Restcomm Platform</code> binary distribution, or one of the Restcomm server binary distributions, which <em>do not</em> bundle <code class="app">JBoss Application Server</code>.</p>
+<p>&#8230;&#8203;you are installing the <code class="app">Restcomm Platform</code> binary distribution, or one of the Restcomm server binary distributions, which <em>do not</em> bundle <code class="app">WildFly</code>.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Naturally, if you installed the <code class="app">Restcomm Platform</code> or one of the Restcomm server binary releases which <em>do not</em> bundle <code class="app">JBoss Application Server</code>, yet requires it to run, then you should install before setting <code class="var">JBOSS_HOME</code> or proceeding with anything else.</p>
+<p>Naturally, if you installed the <code class="app">Restcomm Platform</code> or one of the Restcomm server binary releases which <em>do not</em> bundle <code class="app">WildFly</code>, yet requires it to run, then you should install before setting <code class="var">JBOSS_HOME</code> or proceeding with anything else.</p>
 </div>
 <div class="paragraph">
 <div class="title">Setting the JBOSS_HOME Environment Variable on Unix</div>
@@ -27030,7 +26679,7 @@ Had another  than the SipRA been used, a similar kind of clustering would have b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-06 19:39:31 UTC
+Last updated 2018-06-09 18:01:48 UTC
 </div>
 </div>
 <footer>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.5">
+<meta name="generator" content="Asciidoctor 1.5.4">
 <title>Firing Events from Java EE Applications</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
@@ -22814,7 +22814,7 @@ display: none;
 /***[END TSG 12-18-2017]***/
 
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <head>
   <meta charset="UTF-8"/>
 
@@ -23362,75 +23362,40 @@ display: none;
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_slee_connection_factory_intro">SLEE Connection Factory</a>
-<ul class="sectlevel2">
-<li><a href="#local-slee-connection-factory">Local SLEE Connection Factory</a></li>
-<li><a href="#remote-slee-connection-factory">Remote SLEE Connection Factory</a></li>
-<li><a href="#using-slee-connection-factory">Using SLEE Connection Factory</a></li>
-</ul>
-</li>
+<li><a href="#remote-slee-connection-service">Remote SLEE Connection Service</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_slee_connection_factory_intro"><a class="anchor" href="#_slee_connection_factory_intro"></a>SLEE Connection Factory</h2>
+<h2 id="remote-slee-connection-service"><a class="anchor" href="#remote-slee-connection-service"></a>Remote SLEE Connection Service</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The JAIN SLEE specification includes an API for interaction with JAIN SLEE container, with the interface <code class="class">javax.slee.connection.SleeConnectionFactory</code> upfront, which allows external applications, such as an EJB, to create connections to a specific JAIN SLEE instance, and use that to fire events.</p>
+<p>JAIN SLEE provides Remote SLEE Connection Service via RMI Registry lookup method for firing event.</p>
 </div>
 <div class="paragraph">
-<p>JAIN SLEE provides two different implementations of the API, one for access in the same JVM, another for remote access.
-Both implementations expose the SLEE Connection Factory in the local JNDI tree, thus the same code is used by the application independently of the implementation used.</p>
-</div>
-<div class="sect2">
-<h3 id="local-slee-connection-factory"><a class="anchor" href="#local-slee-connection-factory"></a>Local SLEE Connection Factory</h3>
-<div class="paragraph">
-<p>JAIN SLEE container instances always expose the local SLEE Connection Factory in its JVM, which means that an external application running in the same JVM doesn&#8217;t need any additional tools or setup to use it.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="remote-slee-connection-factory"><a class="anchor" href="#remote-slee-connection-factory"></a>Remote SLEE Connection Factory</h3>
-<div class="paragraph">
-<p>JAIN SLEE includes a tool, named Remote SLEE Connection Tool, which is a JCA connector that can be deployed in any Java EE application server.
-Once deployed this connector installs the factory into JNDI, which communicates with the remote SLEE container through RMI.</p>
-</div>
-<div class="paragraph">
-<p>Restcomm Remote SLEE Connection Tool is bundled in all Restcomm JAIN SLEE releases, in the tools/remote-slee-connection directory, including its own documentation.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="using-slee-connection-factory"><a class="anchor" href="#using-slee-connection-factory"></a>Using SLEE Connection Factory</h3>
-<div class="paragraph">
-<p>Below is example code which retrieves the SLEE Connection Factory and uses it to fire an event into the JAIN SLEE container.
-The code is the same whether the SLEE container is in the same JVM or not.</p>
+<p>The code is the same whether the SLEE container is in the same JVM or not.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">	// retrieves JNDI context
-	InitialContext context = new InitialContext();
+<pre class="highlight"><code class="language-java" data-lang="java">    // get local or remote RMI registry on rmiAddress:rmiPort
+    Registry registry = LocateRegistry.getRegistry(this.rmiAddress, this.rmiPort);
 
-	// retrieves the connection factory from JNDI
-	SleeConnectionFactory factory = (SleeConnectionFactory) context.lookup("java:/MobicentsConnectionFactory");
+    // get RMI stup throw lookup
+    RemoteSleeConnectionService rmiStub =
+        (RemoteSleeConnectionService) registry.lookup("RemoteSleeConnectionService");
 
-	// creates a connection to the SLEE container
-	SleeConnection connection = factory.getConnection();
+    // create activity handle
+    ExternalActivityHandle handle = rmiStub.createActivityHandle();
 
-	// creates the activity handle which will be used to fire the event
-	ExternalActivityHandle handle = connection.createActivityHandle();
+    // get event type
+    EventTypeID requestType = rmiStub.getEventTypeID(eventName, eventVendor, eventVersion);
 
-	// retrieves the event type ID
-	EventTypeID eventTypeID = connection.getEventTypeID("CustomEvent", "...", "1.0");
+    CustomEvent customEvent = new CustomEvent();
+    customEvent.setMessage(messagePassed);
+    logger.info("The event type is: " + requestType);
 
-	// creates the event object
-	CustomEvent eventObject = new CustomEvent();
-
-	// fires the event in the remote SLEE container
-	connection.fireEvent(eventObject, eventTypeID, handle, null);
-
-	// closes the connection
-	connection.close();</code></pre>
-</div>
+    rmiStub.fireEvent(customEvent, requestType, handle, null);</code></pre>
 </div>
 </div>
 </div>
@@ -23438,7 +23403,7 @@ The code is the same whether the SLEE container is in the same JVM or not.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-06 19:39:31 UTC
+Last updated 2018-06-09 18:01:48 UTC
 </div>
 </div>
 <footer>
