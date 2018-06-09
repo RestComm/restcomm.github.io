@@ -28010,7 +28010,7 @@ SMSC GW has two configurable parameters for decoding / encodoing, one for GSM 7 
 <div class="ulist">
 <ul>
 <li>
-<p>Turn on the option <a href="#_receiptsdisabling">Disabling of Reciepts generating</a> (by this we prevent SMSC GW from generating of its own delivery receipts)</p>
+<p>Turn on the option <a href="#_deliveryreceiptslevel">Disabling of Reciepts generating</a> (by this we prevent SMSC GW from generating of its own delivery receipts)</p>
 </li>
 <li>
 <p>Turn on the option <a href="#_incomereceiptsprocessing">Income receipts processing</a>. This will force SMSC GW to store extra info for each received and resent original message into extra tables of cassandra database and then when a delivery receipt comes from an upper node then SMSC GW will replace messageID in the receipt to the proper messageId that was sent to the originator of submit_sm (to lower SMSC GW).</p>
@@ -32653,33 +32653,34 @@ If there is an error in setting the value, then you will find the details of the
 </div>
 </div>
 <div class="sect4">
-<h5 id="_receiptsdisabling"><a class="anchor" href="#_receiptsdisabling"></a>6.1.9.5. Disabling of Reciepts generating</h5>
+<h5 id="_deliveryreceiptslevel"><a class="anchor" href="#_deliveryreceiptslevel"></a>6.1.9.5. Disabling of Reciepts generating</h5>
 <div class="sect5">
-<h6 id="_receiptsdisabling_cli"><a class="anchor" href="#_receiptsdisabling_cli"></a>6.1.9.5.1. Using CLI</h6>
+<h6 id="_deliveryreceiptslevel_cli"><a class="anchor" href="#_deliveryreceiptslevel_cli"></a>6.1.9.5.1. Using CLI</h6>
 <div class="paragraph">
-<p>SMCS can generate receipts of messages delivering results (success / error). See chapter "Appendix B.
-Delivery Receipt Format" of "Short Message Peer to Peer.
-Protocol Specification v3.4." You can set the 'receiptsdisabling' value to true/false by issuing the command <code>smsc set receiptsdisabling</code> with appropriate parameters as described below.
-You can verify this by issuing the command <code>smsc get receiptsdisabling</code> which will display the value set for this property.</p>
+<p>SMCS can generate receipts of messages delivering results (success / error). See chapter "Appendix B. Delivery Receipt Format" of "Short Message Peer to Peer. Protocol Specification v3.4."
+You can set the 'deliveryreceiptslevel' value to "NONE | FAILURE | ALL" by issuing the command <code>smsc set deliveryreceiptslevel</code> with appropriate parameters as described below.
+You can verify this by issuing the command <code>smsc get deliveryreceiptslevel</code> which will display the value set for this property.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>Name
-    smsc set receiptsdisabling
+	smsc set deliveryreceiptslevel
 
 SYNOPSIS
-    smsc set receiptsdisabling &lt;true | false&gt;
+	smsc set deliveryreceiptslevel &lt;NONE | FAILURE | ALL&gt;
 
 DESCRIPTION
-    The SMSC can be configured to generat or not delivery receipts.
-     Setting of receiptsdisabling to false enables of receipts generation.
-     Setting of receiptsdisabling to true disables of receipts generation.
-     Default value: false (receipts will be generated).</pre>
+	The SMSC can be configured to generate or not delivery receipts.
+	Possible values:
+	NONE - SMSC GW will not generate any delivery receipts
+	FAILURE - SMSC GW will generate delivery receipts only for failures
+	ALL - SMSC GW will generate delivery receipts for successful and failures cases
+	Default value: ALL (receipts will be generated for all cases).</pre>
 </div>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_receiptsdisabling_gui"><a class="anchor" href="#_receiptsdisabling_gui"></a>6.1.9.5.2. Using GUI</h6>
+<h6 id="_deliveryreceiptslevel_gui"><a class="anchor" href="#_deliveryreceiptslevel_gui"></a>6.1.9.5.2. Using GUI</h6>
 <div class="olist arabic">
 <div class="title">Procedure: Disabling of Reciepts generating using the GUI</div>
 <ol class="arabic">
@@ -32691,7 +32692,7 @@ DESCRIPTION
 Switch to the 'Processing' tab in the GUI.</p>
 </li>
 <li>
-<p>You can specify if the SMSC should disable of receipt generating by setting the value for the field 'Disable Delivery Receipt' to true or false accordingly.
+<p>You can specify if the SMSC should disable of receipt generating by setting the value for the field 'Delivery Receipts Level' to true or false accordingly.
 For more details of this parameter, please refer to the description of the CLI command for the same in the preceding section.</p>
 </li>
 <li>
@@ -37917,7 +37918,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-06 19:44:20 UTC
+Last updated 2018-06-09 18:06:46 UTC
 </div>
 </div>
 <footer>
