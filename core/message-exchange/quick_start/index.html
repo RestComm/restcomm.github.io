@@ -23751,18 +23751,77 @@ recipients.</p>
 <div class="sect2">
 <h3 id="pre-requisites"><a class="anchor" href="#pre-requisites"></a>Pre-requisites</h3>
 <div class="paragraph">
-<p>In order to use a custom domain with Restcomm Message Exchange the following pre-requisites needs to be completed</p>
+<p>In order to use a custom domain with Restcomm Message Exchange the pre-requisites are:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>You need to provide the full chain certificate of the domain in PEM format</p>
-</li>
-<li>
-<p>You have to create a DNS SRV record pointing to Restcomm Message Exchange. For example the DNS SRV record for <code>xmpp.mycompany.com</code> should look like:
-<strong>_xmpp-server._tcp.</strong><code>xmpp.mycompany.com.</code> <strong>1 1 5269 cloud-xmpp-server.restcomm.com.</strong></p>
+<p>A valid certificate obtained by a trusted third party organization is required.</p>
 </li>
 </ol>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Certificate should contain Root CA and intermediate CAs - it should be a <strong>full chain</strong> certificate
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Certificate should be in <strong>PEM</strong> format
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>You need to have available provide the full chain certificate of the domain in PEM format</p>
+</li>
+<li>
+<p>You have to create a DNS SRV record pointing to Restcomm Message Exchange. For example the DNS SRV record for <code>xmpp.mycompany.com</code> should look like:</p>
+<div class="literalblock">
+<div class="content">
+<pre>_xmpp-server._tcp.xmpp.mycompany.com. 1 1 5269 cloud-xmpp-server.restcomm.com.</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Pay attention to <code>_</code> or <code>.</code> characters since they are important for DNS SRV records
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+DNS Records propagation might take several time to complete.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -23811,13 +23870,25 @@ created your new custom domain!</p>
 </li>
 </ul>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Please allow few minutes for domain changes to be applied to Restcomm Message Exchange
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-11 07:39:18 UTC
+Last updated 2018-06-11 08:22:02 UTC
 </div>
 </div>
 <footer>
