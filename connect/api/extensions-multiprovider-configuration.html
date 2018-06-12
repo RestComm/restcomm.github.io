@@ -23380,7 +23380,8 @@ display: none;
 <li><a href="#voice-enablement">Voice Enablement</a>
 <ul class="sectlevel2">
 <li><a href="#configurationdata-parameter-outboundvoice-object-properties">ConfigurationData Parameter OutboundVoice Object Properties</a></li>
-<li><a href="#example-voice-enablement">Example Voice Enablement</a></li>
+<li><a href="#example-voice-enablement-creation">Example Voice Enablement Creation</a></li>
+<li><a href="#example-voice-enablement-update">Example Voice Enablement Update</a></li>
 </ul>
 </li>
 </ul>
@@ -23453,10 +23454,10 @@ This REST API is only accessible by the super-admin.
 <div class="sect2">
 <h3 id="supported-operations"><a class="anchor" href="#supported-operations"></a>Supported Operations</h3>
 <div class="paragraph">
-<p><strong>HTTP GET.</strong> Returns the representation of the MultiProvider Extension resource.</p>
+<p><strong>https GET.</strong> Returns the representation of the MultiProvider Extension resource.</p>
 </div>
 <div class="paragraph">
-<p><strong>HTTP POST/PUT</strong>. Adds or modifies MultiProvider configuration for specific Account and returns the representation. Below you will find a list of supported parameters.</p>
+<p><strong>https POST</strong>. Adds or modifies MultiProvider configuration for specific Account and returns the representation. Below you will find a list of supported parameters.</p>
 </div>
 </div>
 <div class="sect2">
@@ -23627,9 +23628,9 @@ In the future, injection of other arbitrary TLVs may be enabled.
 <h3 id="example-sms-enablement"><a class="anchor" href="#example-sms-enablement"></a>Example SMS Enablement</h3>
 <div class="listingblock">
 <div class="content">
-<pre>curl -X POST http://ACae6e420f425248d6a26948c17a9e2acg:77f8c12cc7b8f8423e5c38b035249166@10.0.0.4:8080/restcomm/2012-04-24/ExtensionsConfiguration.json \
+<pre>curl -X POST https://&lt;Admin Account Sid&gt;:&lt;Auth token&gt;@cloud.restcomm.com/restcomm/2012-04-24/ExtensionsConfiguration.json \
 -d "ExtensionName=multi_provider" -d "Enabled=true"  \
--d "AccountSid=ACae6e420f425248d6a26948c17a9e2acf" \
+-d "AccountSid=&lt;Account Sid to be configured&gt;" \
 -d "ConfigurationData={\"outbound-sms\": [{\"destination_network_id\": \"1000\"}]}"</pre>
 </div>
 </div>
@@ -23896,12 +23897,37 @@ In the future, injection of other arbitrary TLVs may be enabled.
 </div>
 </div>
 <div class="sect2">
-<h3 id="example-voice-enablement"><a class="anchor" href="#example-voice-enablement"></a>Example Voice Enablement</h3>
+<h3 id="example-voice-enablement-creation"><a class="anchor" href="#example-voice-enablement-creation"></a>Example Voice Enablement Creation</h3>
 <div class="listingblock">
 <div class="content">
-<pre>curl -X POST http://ACae6e420f425248d6a26948c17a9e2acg:77f8c12cc7b8f8423e5c38b035249166@10.0.0.4:8080/restcomm/2012-04-24/ExtensionsConfiguration.json \
+<pre>curl -X POST https://&lt;Admin Account Sid&gt;:&lt;Auth token&gt;@cloud.restcomm.com/restcomm/2012-04-24/ExtensionsConfiguration.json \
 -d "ExtensionName=multi_provider" -d "Enabled=true"  \
--d "AccountSid=ACae6e420f425248d6a26948c17a9e2acf" \
+-d "AccountSid=&lt;Account Sid to be configured&gt;" \
+-d "ConfigurationData={\"outbound-voice\": [  {\"proxy\": [ \
+{\"uri\":\"192.168.0.1;uriprop1=uri_prop_value1;uriprop2=uri_prop_value2"\", \"username\":\"someuser1.com\", \"password\":\"somepassword1.com\", \"match\":\"uri.com\"}, \
+{\"uri\":\"192.168.0.1\", \"username\":\"someuser1.com\", \"password\":\"somepassword1.com\", \"match\":\"uri[12]\\.com\", \"headers\": [
+   {\"headerName\":\"Request-URI\", \"key\":\"newkey1\", \"value\":\"newvalue1\"}, \
+   {\"headerName\":\"Request-URI\", \"key\":\"newkey2\", \"value\":\"newvalue2\"}, \
+   {\"headerName\":\"To\",          \"key\":\"newkey3\", \"value\":\"newvalue3\"}, \
+   {\"headerName\":\"X-CustomHeader\", \"key\":\"newkey4\", \"value\":\"newvalue4\"}  \
+]} \
+{\"uri\":\"192.168.0.2\", \"username\":\"someuser2.com\", \"password\":\"somepassword2.com\", \"headers\": [
+   {\"headerName\":\"Request-URI\", \"key\":\"newkey5\", \"value\":\"newvalue5\"}, \
+   {\"headerName\":\"Request-URI\", \"key\":\"newkey6\", \"value\":\"newvalue6\"}, \
+   {\"headerName\":\"To\", \"key\":\"newkey\", \"value7\":\"newvalue7\"}, \
+   {\"headerName\":\"X-CustomHeader\", \"key\":\"newkey8\", \"value\":\"newvalue8\"}  \
+]} \
+] } ] }"</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="example-voice-enablement-update"><a class="anchor" href="#example-voice-enablement-update"></a>Example Voice Enablement Update</h3>
+<div class="listingblock">
+<div class="content">
+<pre>curl -X POST https://&lt;Admin Account Sid&gt;:&lt;Auth token&gt;@cloud.restcomm.com/restcomm/2012-04-24/ExtensionsConfiguration.json/EXd1ff6cfa369a436b86c27ec278be196e \
+-d "ExtensionName=multi_provider" -d "Enabled=true"  \
+-d "AccountSid=&lt;Account Sid to be configured&gt;" \
 -d "ConfigurationData={\"outbound-voice\": [  {\"proxy\": [ \
 {\"uri\":\"192.168.0.1;uriprop1=uri_prop_value1;uriprop2=uri_prop_value2"\", \"username\":\"someuser1.com\", \"password\":\"somepassword1.com\", \"match\":\"uri.com\"}, \
 {\"uri\":\"192.168.0.1\", \"username\":\"someuser1.com\", \"password\":\"somepassword1.com\", \"match\":\"uri[12]\\.com\", \"headers\": [
@@ -23925,7 +23951,7 @@ In the future, injection of other arbitrary TLVs may be enabled.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-10 02:16:22 UTC
+Last updated 2018-06-12 23:00:51 UTC
 </div>
 </div>
 <footer>
