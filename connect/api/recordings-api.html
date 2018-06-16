@@ -23394,6 +23394,11 @@ display: none;
 <li><a href="#request-parameters-3">Request Parameters</a></li>
 </ul>
 </li>
+<li><a href="#delete-a-recording">Delete a Recording</a>
+<ul class="sectlevel2">
+<li><a href="#recording-delete-resource-uri">Recording Delete Resource URI</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -23473,8 +23478,10 @@ display: none;
 <div class="sect2">
 <h3 id="supported-operations"><a class="anchor" href="#supported-operations"></a>Supported Operations</h3>
 <div class="paragraph">
-<p><strong>HTTP GET.</strong> Returns the representation of a Recording resource, including the properties above.
-<strong>HTTP DELETE</strong>. Removes the recording from the account.</p>
+<p><strong>HTTP GET.</strong> Returns the representation of a Recording resource, including the properties above.</p>
+</div>
+<div class="paragraph">
+<p><strong>HTTP DELETE</strong>. Removes the recording from the account.</p>
 </div>
 </div>
 </div>
@@ -23513,6 +23520,12 @@ Unlike the Recording instance resource described above, the list of recordings I
 <h4 id="http-get"><a class="anchor" href="#http-get"></a>HTTP GET</h4>
 <div class="paragraph">
 <p>Returns the list representation of all the Recording resources for this Account, including the properties above.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="http-delete"><a class="anchor" href="#http-delete"></a>HTTP DELETE</h4>
+<div class="paragraph">
+<p>Deletes a recording that belongs to this Account.</p>
 </div>
 </div>
 </div>
@@ -23745,11 +23758,6 @@ Here is how to access the file using http <strong><a href="https://IP_ADDRESS/re
 }</code></pre>
 </div>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre> </pre>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -23798,10 +23806,33 @@ Here is how to access the file using http <strong><a href="https://IP_ADDRESS/re
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="delete-a-recording"><a class="anchor" href="#delete-a-recording"></a>Delete a Recording</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="recording-delete-resource-uri"><a class="anchor" href="#recording-delete-resource-uri"></a>Recording Delete Resource URI</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>/2012-04-24/Accounts/{AccountSid}/Recordings/{RecordingSid}</strong></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>From the bash terminal, you can run the command below:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -X DELETE  https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Recordings/RE10000000000000000000000000000032</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-12 23:00:51 UTC
+Last updated 2018-06-16 04:54:16 UTC
 </div>
 </div>
 <footer>

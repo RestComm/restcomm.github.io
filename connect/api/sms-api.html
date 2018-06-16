@@ -23477,6 +23477,14 @@ display: none;
 <td class="tableblock halign-left valign-top"><p class="tableblock">Uri</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The URI for this account, relative to <a href="https://localhost/restcomm" class="bare">https://localhost/restcomm</a>.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">error_code</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In case message status is <strong>failed</strong> or <strong>undelivered</strong>, this will give you more information about failure reason. If not, the content will be simply null.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">error_message</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Same as <strong>error_code</strong>, but providing human readable text.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -23515,6 +23523,61 @@ display: none;
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">undelivered</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The provider couldnt deliver the message into user&#8217;s terminal. Applies to outbound message.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="error-code-description"><a class="anchor" href="#error-code-description"></a>Error Code Description</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Code</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Message</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Queue overflow</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Account suspended</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30003</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unreachable destination handset</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30004</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Message blocked</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30005</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unknown destination handset</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30006</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Landline or unreachable carrier</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30007</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Carrier violation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30008</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unknown error</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30009</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Missing segment</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">300010</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Message price exceeds max price</p></td>
 </tr>
 </tbody>
 </table>
@@ -23970,7 +24033,7 @@ display: none;
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-12 23:00:51 UTC
+Last updated 2018-06-16 04:54:16 UTC
 </div>
 </div>
 <footer>
