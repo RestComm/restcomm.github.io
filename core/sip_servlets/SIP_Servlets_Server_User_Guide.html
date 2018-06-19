@@ -23422,14 +23422,9 @@ display: none;
 <li><a href="#_bp_best_practices_nat">9.2. NAT Traversal</a></li>
 </ul>
 </li>
-<li><a href="#_appendix">10. Apendix</a>
+<li><a href="#_bp_jsr289_errata">10. JSR 289 Errata</a>
 <ul class="sectlevel2">
-<li><a href="#_install_configure_jdk">10.1. Java Development Kit (): Installing, Configuring and Running</a></li>
-</ul>
-</li>
-<li><a href="#_bp_jsr289_errata">11. JSR 289 Errata</a>
-<ul class="sectlevel2">
-<li><a href="#_errata_deviations">11.1. Restcomm SIP Servlets Deviations from JSR 289</a></li>
+<li><a href="#_errata_deviations">10.1. Restcomm SIP Servlets Deviations from JSR 289</a></li>
 </ul>
 </li>
 </ul>
@@ -23538,14 +23533,7 @@ The root directory of the Restcomm SIP Servlets for JBoss AS7 that you downloade
 </div>
 <div class="paragraph">
 <p>If this is your first time working with Restcomm SIP Servlets for JBoss, you will need to make sure you have Java Run Time or JDK installed on your computer.
-You will also need to have the environment variables set.
-See the links below to  learn how to get JRE or JDK setup on your system.</p>
-</div>
-<div class="paragraph">
-<p><a href="Common_Content/Java_Development_Kit-Installing_Configuring_and_Running.adoc">Installing and Configuring JDK</a></p>
-</div>
-<div class="paragraph">
-<p><a href="Common_Content/Setting_the_JBOSS_HOME_Environment_Variable.adoc">Setting Environment Variables</a></p>
+You will also need to have the environment variables set.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -27971,10 +27959,6 @@ If you leave these two options out, the keytool command will ask you for it.</p>
 <p>-keyalg specifies which algorithm to use when generating the keys and the keysize how long those keys should be.</p>
 </div>
 <div class="paragraph">
-<p>Note: the command -genkeypair is new in JDK 6 and was previously named -genkey.
-The keytool in JDK 6 has some improvements over the previous versions so it is recommended to use it instead.</p>
-</div>
-<div class="paragraph">
 <p>See more about the Java keytool here: <a href="http://docs.oracle.com/javase/6/docs/technotes/tools/solaris/keytool.html" class="bare">http://docs.oracle.com/javase/6/docs/technotes/tools/solaris/keytool.html</a></p>
 </div>
 </li>
@@ -29386,7 +29370,7 @@ Eventually the connection will be closed.</p>
 <div class="sect3">
 <h4 id="tuning-the-jvm"><a class="anchor" href="#tuning-the-jvm"></a>9.1.4. Tuning The JVM</h4>
 <div class="paragraph">
-<p>The following tuning information applies to Sun JDK 1.6, however the information should also apply to Sun JDK 1.5.</p>
+<p>The following tuning information applies to Sun JDK 1.7</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -29572,392 +29556,27 @@ There might be cases where it is not possible to use those solutions at all.</p>
 <div class="paragraph">
 <p>Here is more information on <a href="http://groups.google.com/group/mobicents-public/browse_thread/thread/5f1d6cbda9e8c302">Session Border Controllers</a> and how they can resolve NAT issues when above solutions  are not possible</p>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_appendix"><a class="anchor" href="#_appendix"></a>10. Apendix</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_install_configure_jdk"><a class="anchor" href="#_install_configure_jdk"></a>10.1. Java Development Kit (): Installing, Configuring and Running</h3>
 <div class="paragraph">
-<p>The [app]` Platform` is written in Java; therefore, before running any <code class="app"> server, you must have a working Java Runtime Environment () or Java Development Kit () installed on your system.
-In addition, the JRE or JDK you are using to run [app]</code> must be version 5 or higher<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup>.</p>
-</div>
-<div class="sect3">
-<h4 id="_jre_or_jdk_32bit_or_64bit"><a class="anchor" href="#_jre_or_jdk_32bit_or_64bit"></a>10.1.1. JRE versus JDK - 32-Bit versus 64-Bit</h4>
-<div class="paragraph">
-<div class="title">Should I Install the JRE or JDK?</div>
-<p>Although you can run <code class="app"> servers using the Java Runtime Environment, we assume that most users are developers interested in developing Java-based, [app]</code>-driven solutions.
-Therefore, in this guide we take the tact of showing how to install the full Java Development Kit.</p>
+<p>#:leveloffset: 1</p>
 </div>
 <div class="paragraph">
-<div class="title">Should I Install the 32-Bit or the 64-Bit JDK, and Does It Matter?</div>
-<p>Briefly stated: if you are running on a 64-Bit Linux or Windows platform, you should consider installing and running the 64-bit JDK over the 32-bit one.
-Here are some heuristics for determining whether you would rather run the 64-bit Java Virtual Machine (JVM) over its 32-bit cousin for your application:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Wider datapath: the pipe between RAM and CPU is doubled, which improves the performance of memory-bound applications when using a 64-bit JVM.</p>
-</li>
-<li>
-<p>64-bit memory addressing gives virtually unlimited (1 exabyte) heap allocation.
-However large heaps affect garbage collection.</p>
-</li>
-<li>
-<p>Applications that run with more than 1.5 GB of RAM (including free space for garbage collection optimization) should utilize the 64-bit JVM.</p>
-</li>
-<li>
-<p>Applications that run on a 32-bit JVM and do not require more than minimal heap sizes will gain nothing from a 64-bit JVM.
-Barring memory issues, 64-bit hardware with the same relative clock speed and architecture is not likely to run Java applications faster than their 32-bit cousin.</p>
-</li>
-</ul>
+<p>#include::concept-chapter-Appendix.adoc[]</p>
 </div>
 <div class="paragraph">
-<p>Note that the following instructions detail how to download and install the 32-bit JDK, although the steps are nearly identical for installing the 64-bit version.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="downloading-jdk"><a class="anchor" href="#downloading-jdk"></a>10.1.2. Downloading JDK</h4>
-<div class="paragraph">
-<p>You can download the Sun JDK 5.0 (Java 2 Development Kit) from Sun&#8217;s website: <a href="http://java.sun.com/javase/downloads/index_jdk5.jsp" class="bare">http://java.sun.com/javase/downloads/index_jdk5.jsp</a>.
-Click on the <span class="label">Download</span> link next to "JDK 5.0 Update <code class="replaceable">&lt;x&gt;`" (where [replaceable]</code>&lt;x&gt;` is the latest minor version release number). On the next page, select your language and platform (both architecture&#8212;&#8203;whether 32- or 64-bit&#8212;&#8203;and operating system), read and agree to the <code>Java Development Kit 5.0 License Agreement</code>, and proceed to the download page.</p>
-</div>
-<div class="paragraph">
-<p>The Sun website will present two download alternatives to you: one is an RPM inside a self-extracting file (for example, <em class="path">jdk-1_5_0_16-linux-i586-rpm.bin</em>), and the other is merely a self-extracting file (e.g. <em class="path">jdk-1_5_0_16-linux-i586.bin</em>). If you are installing the JDK on Red Hat Enterprise Linux, Fedora, or another RPM-based Linux system, we suggest that you download the self-extracting file containing the RPM package, which will set up and use the SysV service scripts in addition to installing the JDK.
-We also suggest installing the self-extracting RPM file if you will be running [app]`` in a production environment.</p>
-</div>
-<div class="paragraph">
-<div class="title">Installing</div>
-<p>The following procedures detail how to install the Java Development Kit on both Linux and Windows.</p>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure: Installing the JDK on Linux</div>
-<ol class="arabic">
-<li>
-<p>Regardless of which file you downloaded, you can install it on Linux by simply making sure the file is executable and then running it:</p>
-<div class="listingblock">
-<div class="content">
-<pre>~]$ chmod +x "jdk-1_5_0_&lt;minor_version&gt;-linux-&lt;architecture&gt;-rpm.bin"
-~]$ ./"jdk-1_5_0_&lt;minor_version&gt;-linux-&lt;architecture&gt;-rpm.bin"</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="title">Moving from Non-RPM Installer to SysV Service Scripts</div>
-<div class="paragraph">
-<p>If you download the non-RPM self-extracting file (and installed it), and you are running on an RPM-based system, you can still set up the SysV service scripts by downloading and installing one of the <code>-compat</code> packages from the JPackage project.
-Remember to download the <code>-compat</code> package which corresponds correctly to the minor release number of the JDK you installed.
-The compat packages are available from link:ftp://jpackage.hmdc.harvard.edu/JPackage/1.7/generic/RPMS.non-free/.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-You do not need to install a <code>-compat</code> package in addition to the JDK if you installed the self-extracting RPM file! The <code>-compat</code> package merely performs the same SysV service script set up that the RPM version of the JDK installer does.
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_install_jdk_on_windows"><a class="anchor" href="#_install_jdk_on_windows"></a>10.1.3. Installing JDK on Windows</h4>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Using Explorer, simply double-click the downloaded self-extracting installer and follow the instructions to install the JDK.</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<div class="title">Configuring</div>
-<p>Configuring your system for the JDK consists in two tasks: setting the <code class="var">JAVA_HOME</code> environment variable, and ensuring that the system is using the proper JDK (or JRE) using the <code>alternatives</code> command.
-Setting <code class="var">JAVA_HOME</code> usually overrides the values for <code>java</code>, <code>javac</code> and <code>java_sdk_1.5.0</code> in <code>alternatives</code>, but we will set them all just to be safe and consistent.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_setting_env_linux"><a class="anchor" href="#_setting_env_linux"></a>10.1.4. Setting Linux JAVA_HOME Environment Variables</h4>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Setting the <code class="var">JAVA_HOME</code> Environment Variable on Generic Linux</dt>
-<dd>
-<p>After installing the JDK, you must ensure that the <code class="var">JAVA_HOME</code> environment variable exists and points to the location of your JDK installation.</p>
-</dd>
-</dl>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_setting_correct_java_version"><a class="anchor" href="#_setting_correct_java_version"></a>10.1.5. Setting the Correct Java Version</h4>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Setting <code class="var">java</code>, <code class="var">javac</code> and <code class="var">java_sdk_1.5.0</code> Using the <code>alternatives</code> command </dt>
-<dd>
-<p><em>As the root user</em>, call <code>/usr/sbin/alternatives</code> with the <code class="option">--config java</code> option to select between JDKs and JREs installed on your system:</p>
-</dd>
-</dl>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_setting_env_windows"><a class="anchor" href="#_setting_env_windows"></a>10.1.6. Setting JAVA_HOME Environment Variables on Windows</h4>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Setting the <code class="var">JAVA_HOME</code> Environment Variable on Windows</dt>
-<dd>
-<p>For information on how to set environment variables in Windows, refer to <a href="http://support.microsoft.com/kb/931715" class="bare">http://support.microsoft.com/kb/931715</a>.</p>
-</dd>
-</dl>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_install_jdk_linux_windows"><a class="anchor" href="#_install_jdk_linux_windows"></a>10.1.7. Uninstalling JDK on Linux and Windows</h4>
-<div class="paragraph">
-<div class="title">Uninstalling</div>
-<p>There is usually no reason (other than space concerns) to remove a particular JDK from your system, given that you can switch between JDKs and JREs easily using <code>alternatives</code>, and/or by setting <code class="var">JAVA_HOME</code>.</p>
-</div>
-<div class="paragraph">
-<div class="title">Uninstalling the JDK on Linux</div>
-<p>On RPM-based systems, you can uninstall the JDK using the `yum remove &lt;jdk_rpm_name&gt;
-			` command.</p>
-</div>
-<div class="paragraph">
-<div class="title">Uninstalling the JDK on Windows</div>
-<p>On Windows systems, check the JDK entry in the <code>Start</code> menu for an uninstall command, or use <code>Add/Remove Programs</code>.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_setting_jboss_env_variable_windows_unix"><a class="anchor" href="#_setting_jboss_env_variable_windows_unix"></a>10.1.8. Setting the JBOSS_HOME Environment Variable</h4>
-<div class="paragraph">
-<p>The [app]` Platform` (<code class="app">`) is built on top of the [app]`JBoss Application Server</code> (<code class="app">JBoss AS</code>). You do not need to set the <code class="var">JBOSS_HOME</code> environment variable to run any of the [app]` Platform` servers <em>unless</em> <code class="var">JBOSS_HOME</code> is <em>already</em> set.</p>
-</div>
-<div class="paragraph">
-<p>The best way to know for sure whether <code class="var">JBOSS_HOME</code> was set previously or not is to perform a simple check which may save you time and frustration.</p>
-</div>
-<div class="paragraph">
-<div class="title">Checking to See If JBOSS_HOME is Set on Unix</div>
-<p>At the command line, <code>echo</code>			<code>$JBOSS_HOME</code> to see if it is currently defined in your environment:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>~]$ echo $JBOSS_HOME</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The [app]` Platform` and most &amp;PLATFORM_NAME; servers are built on top of the <code class="app">JBoss Application Server</code> (<code class="app">JBoss AS</code>). When the [app]` Platform` or &amp;PLATFORM_NAME; servers are built <em>from source</em>, then <code class="var">JBOSS_HOME</code> <em>must</em> be set, because the &amp;PLATFORM_NAME; files are installed into (or &#8220;over top of&#8221; if you prefer) a clean <code class="app">JBoss AS</code> installation, and the build process assumes that the location pointed to by the <code class="var">JBOSS_HOME</code> environment variable at the time of building is the <code class="app">JBoss AS</code> installation into which you want it to install the &amp;PLATFORM_NAME; files.</p>
-</div>
-<div class="paragraph">
-<p>This guide does not detail building the [app]` Platform` or any &amp;PLATFORM_NAME; servers from source.
-It is nevertheless useful to understand the role played by <code class="app">JBoss AS</code> and <code class="var">JBOSS_HOME</code> in the &amp;PLATFORM_NAME; ecosystem.</p>
-</div>
-<div class="paragraph">
-<p>The immediately-following section considers whether you need to set <code class="var">JBOSS_HOME</code> at all and, if so, when.
-The subsequent sections detail how to set <code class="var">JBOSS_HOME</code> on Unix and Windows</p>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-Even if you fall into the category below of <em>not needing</em> to set <code class="var">JBOSS_HOME</code>, you may want to for various reasons anyway.
-Also, even if you are instructed that you do <em>not need</em> to set <code class="var">JBOSS_HOME</code>, it is good practice nonetheless to check and make sure that <code class="var">JBOSS_HOME</code> actually <em>isn&#8217;t</em> set or defined on your system for some reason.
-This can save you both time and frustration.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>You <em>DO NOT NEED</em> to set <code class="var">JBOSS_HOME</code> if&#8230;&#8203;</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>&#8230;&#8203;you have installed the [app]` Platform` binary distribution.</p>
-</li>
-<li>
-<p>&#8230;&#8203;you have installed a &amp;PLATFORM_NAME;server binary distribution <em>which bundles <code class="app">JBoss AS</code>.</em></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>You <em>MUST</em> set <code class="var">JBOSS_HOME</code> if&#8230;&#8203;</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>&#8230;&#8203;you are installing the [app]` Platform` or any of the &amp;PLATFORM_NAME; servers <em>from source</em>.</p>
-</li>
-<li>
-<p>&#8230;&#8203;you are installing the [app]` Platform` binary distribution, or one of the &amp;PLATFORM_NAME; server binary distributions, which <em>do not</em> bundle <code class="app">JBoss AS</code>.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Naturally, if you installed the [app]` Platform` or one of the &amp;PLATFORM_NAME; server binary releases which <em>do not</em> bundle <code class="app">JBoss AS</code>, yet requires it to run, then you should <a href="http://docs.jboss.org/jbossas/docs/Installation_And_Getting_Started_Guide/5/html_single/index.html">install JBoss AS
-		</a> before setting <code class="var">JBOSS_HOME</code> or proceeding with anything else.</p>
-</div>
-<div class="paragraph">
-<div class="title">Setting the JBOSS_HOME Environment Variable on Unix</div>
-<p>The <code class="var">JBOSS_HOME</code> environment variable must point to the directory which contains all of the files for the [app]` Platform` or individual &amp;PLATFORM_NAME; server that you installed.
-As another hint, this topmost directory contains a <em class="path">bin</em> subdirectory.</p>
-</div>
-<div class="paragraph">
-<p>Setting <code class="var">JBOSS_HOME</code> in your personal <em class="path">~/.bashrc</em> startup script carries the advantage of retaining effect over reboots.
-Each time you log in, the environment variable is sure to be set for you, as a user.
-On Unix, it is possible to set <code class="var">JBOSS_HOME</code> as a system-wide environment variable, by defining it in <em class="path">/etc/bashrc</em>, but this method is neither recommended nor detailed in these instructions.</p>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure: To Set JBOSS_HOME on Unix&#8230;&#8203;</div>
-<ol class="arabic">
-<li>
-<p>Open the <em class="path">~/.bashrc</em> startup script, which is a hidden file in your home directory, in a text editor, and insert the following line on its own line while substituting for the actual install location on your system:</p>
-<div class="listingblock">
-<div class="content">
-<pre>export JBOSS_HOME="/home/&lt;username&gt;/&lt;path&gt;/&lt;to&gt;/&lt;install_directory&gt;"</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Save and close the <em class="path">.bashrc</em> startup script.</p>
-</li>
-<li>
-<p>You should <code>source</code> the <em class="path">.bashrc</em> script to force your change to take effect, so that <code class="var">JBOSS_HOME</code> becomes set for the current session<sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnote_2" title="View footnote.">2</a>]</sup>.</p>
-<div class="listingblock">
-<div class="content">
-<pre>~]$ source ~/.bashrc</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Finally, ensure that <code class="var">JBOSS_HOME</code> is set in the current session, and actually points to the correct location:</p>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The command line usage below is based upon a binary installation of the [app]` Platform`.
-In this sample output, <code class="var">JBOSS_HOME</code> has been set correctly to the <code class="replaceable">topmost_directory</code> of the <code class="app"> installation.
-Note that if you are installing one of the standalone [app]</code> servers (with <code class="app">JBoss AS</code> bundled!), then <code class="var">JBOSS_HOME</code> would point to the <code class="replaceable">topmost_directory</code> of your server installation.
-</td>
-</tr>
-</table>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>~]$ echo $JBOSS_HOME
-/home/silas/</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<div class="title">Setting the JBOSS_HOME Environment Variable on Windows</div>
-<p>The <code class="var">JBOSS_HOME</code> environment variable must point to the directory which contains all of the files for the &amp;PLATFORM_NAME;Platform or individual &amp;PLATFORM_NAME;server that you installed.
-As another hint, this topmost directory contains a <em class="path">bin</em> subdirectory.</p>
-</div>
-<div class="paragraph">
-<p>For information on how to set environment variables in recent versions of Windows, refer to <a href="http://support.microsoft.com/kb/931715" class="bare">http://support.microsoft.com/kb/931715</a>.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_setting_catalina_home_env_linux_windows"><a class="anchor" href="#_setting_catalina_home_env_linux_windows"></a>10.1.9. Setting CATALINA_HOME on Linux and Windows</h4>
-<div class="olist arabic">
-<div class="title">Procedure: Setting the <code class="var">CATALINA_HOME</code> Environment Variable on Linux</div>
-<ol class="arabic">
-<li>
-<p>The <code class="var">CATALINA_HOME</code> environment variable must point to the location of your Tomcat installation.
-Any &amp;PLATFORM_NAME; server which runs on top of the Tomcat servlet container has a topmost directory, i.e.
-the directory in which you unzipped the zip file to install the server, and underneath that directory, a <em class="path">bin</em> directory. <code class="var">CATALINA_HOME</code> must be set to the topmost directory of your &amp;PLATFORM_NAME; server installation.</p>
-<div class="paragraph">
-<p>Setting this variable in your personal <em class="path">~/.bashrc</em> file has the advantage that it will always be set (for you, as a user) each time you log in or reboot the system.
-To do so, open <em class="path">~/.bashrc</em> in a text editor (or create the file if it doesn&#8217;t already exist) and insert the following line anywhere in the file, taking care to substitute <em class="path">&lt;sip_server&gt;</em> for the topmost directory of the &amp;PLATFORM_NAME; server you installed:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>export CATALINA_HOME="/home/&lt;username&gt;/&lt;path&gt;/&lt;to&gt;/&lt;sip_server&gt;"</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Save and close <em class="path">.bashrc</em>.</p>
-</div>
-</li>
-<li>
-<p>You can&#8212;&#8203;and should--<code>source</code> your <em class="path">.bashrc</em> file to make your change take effect (so that <code class="var">CATALINA_HOME</code> is set) for the current session:</p>
-<div class="listingblock">
-<div class="content">
-<pre>~]$ source ~/.bashrc</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Finally, make sure that <code class="var">CATALINA_HOME</code> has been set correctly (that it leads to the right directory), and has taken effect in the current session.</p>
-<div class="paragraph">
-<p>The following command will show the path to the directory pointed to by <code class="var">CATALINA_HOME</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>~]$ echo $CATALINA_HOME</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>To be absolutely sure, change your directory to the one pointed to by <code class="var">CATALINA_HOME</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>~]$ cd $CATALINA_HOME &amp;&amp; pwd</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-<div class="olist arabic">
-<div class="title">Procedure: Setting the <code class="var">CATALINA_HOME</code> Environment Variable on Windows</div>
-<ol class="arabic">
-<li>
-<p>The <code class="var">CATALINA_HOME</code> environment variable must point to the location of your Tomcat installation.
-Any &amp;PLATFORM_NAME; server which runs on top of the Tomcat servlet container has a topmost directory, i.e.
-the directory in which you unzipped the zip file to install the server, and underneath that directory, a <em class="path">bin</em> directory. <code class="var">CATALINA_HOME</code> must be set to the topmost directory of your &amp;PLATFORM_NAME; server installation.</p>
-<div class="paragraph">
-<p>If you are planning on running the Tomcat container as the Administrator, then you should, of course, set the <code class="var">CATALINA_HOME</code> environment variable <em>as the administrator</em>, and if you planning to run Tomcat as a normal user, then set <code class="var">CATALINA_HOME</code> as a user environment variable.</p>
-</div>
-<div class="paragraph">
-<p>For information on how to set environment variables in Windows, refer to <a href="http://support.microsoft.com/kb/931715" class="bare">http://support.microsoft.com/kb/931715</a>.</p>
-</div>
-</li>
-</ol>
+<p>#:leveloffset: 0</p>
 </div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_bp_jsr289_errata"><a class="anchor" href="#_bp_jsr289_errata"></a>11. JSR 289 Errata</h2>
+<h2 id="_bp_jsr289_errata"><a class="anchor" href="#_bp_jsr289_errata"></a>10. JSR 289 Errata</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter discusses deviations from the JSR 289 specification by Restcomm SIP Servlets after feedback on usage in real world deployments and from the community.</p>
 </div>
 <div class="sect2">
-<h3 id="_errata_deviations"><a class="anchor" href="#_errata_deviations"></a>11.1. Restcomm SIP Servlets Deviations from JSR 289</h3>
+<h3 id="_errata_deviations"><a class="anchor" href="#_errata_deviations"></a>10.1. Restcomm SIP Servlets Deviations from JSR 289</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -29972,18 +29591,9 @@ the directory in which you unzipped the zip file to install the server, and unde
 </div>
 </div>
 </div>
-<div id="footnotes">
-<hr>
-<div class="footnote" id="_footnote_1">
-<a href="#_footnoteref_1">1</a>. At this point in time, it is possible to run most  servers, such as the JAIN SLEE Server, using a Java 6 JRE or JDK. Be aware, however, that presently the XML Document Management Server does not run on Java 6. We suggest checking the  web site, forums or discussion pages if you need to inquire about the status of running the XML Document Management Server with Java 6.
-</div>
-<div class="footnote" id="_footnote_2">
-<a href="#_footnoteref_2">2</a>. Note that any other terminals which were opened prior to your having altered .bashrc will need to source ~/.bashrc as well should they require access to JBOSS_HOME.
-</div>
-</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-19 04:37:16 UTC
+Last updated 2018-06-19 05:11:20 UTC
 </div>
 </div>
 <footer>
