@@ -23583,15 +23583,15 @@ display: none;
 <td class="tableblock halign-left valign-top"><p class="tableblock">The HTTP method that RestComm should use to request the FallbackUrl. Must be either GET or POST. Defaults to POST.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">statusCallbackEvent</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">StatusCallbackEvent</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>initiated</code>, <code>ringing</code>, <code>answered</code>, <code>completed</code>. Default none</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">statusCallback</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">StatusCallback</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">any url. Default none</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">statusCallbackMethod</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">StatusCallbackMethod</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET</code>, <code>POST</code>. Default <code>POST</code></p></td>
 </tr>
 <tr>
@@ -23601,12 +23601,12 @@ display: none;
 </tbody>
 </table>
 <div class="sect3">
-<h4 id="statuscallbackevent"><a class="anchor" href="#statuscallbackevent"></a>statusCallbackEvent</h4>
+<h4 id="statuscallbackevent"><a class="anchor" href="#statuscallbackevent"></a>StatusCallbackEvent</h4>
 <div class="paragraph">
-<p>When creating a Call using the Calls API, an outbound call is initiated. The call transitions from the initiated state to the ringing state when the phone starts ringing. It transitions to the answered state when the call is picked up, and finally to the completed state when the call is over. With <strong>statusCallbackEvent</strong>, you can subscribe to receive webhooks for the different call progress events: initiated, ringing, answered, or completed for a given call.</p>
+<p>When creating a Call using the Calls API, an outbound call is initiated. The call transitions from the initiated state to the ringing state when the phone starts ringing. It transitions to the answered state when the call is picked up, and finally to the completed state when the call is over. With <strong>StatusCallbackEvent</strong>, you can subscribe to receive webhooks for the different call progress events: initiated, ringing, answered, or completed for a given call.</p>
 </div>
 <div class="paragraph">
-<p>The <strong>statusCallbackEvent</strong> attribute allows you to specify which events Restcomm should webhook on. To specify multiple events separate them with a space: initiated ringing answered completed. If a statusCallback is provided and no status callback events are specified the completed event will be sent by default.</p>
+<p>The <strong>StatusCallbackEvent</strong> attribute allows you to specify which events Restcomm should webhook on. To specify multiple events separate them with a space: initiated ringing answered completed. If a StatusCallback is provided and no status callback events are specified the completed event will be sent by default.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -23639,21 +23639,21 @@ display: none;
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">completed</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The <code>completed</code> event is fired when the call is completed regardless of the termination status: <code>busy</code>, <code>canceled</code>, <code>completed</code>, <code>failed</code>, or <code>no-answer</code>. If no <code>statusCallbackEvent</code> is specified, <code>completed</code> will be fired by default.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The <code>completed</code> event is fired when the call is completed regardless of the termination status: <code>busy</code>, <code>canceled</code>, <code>completed</code>, <code>failed</code>, or <code>no-answer</code>. If no <code>StatusCallbackEvent</code> is specified, <code>completed</code> will be fired by default.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect3">
-<h4 id="attributes-status-callback"><a class="anchor" href="#attributes-status-callback"></a>statusCallback</h4>
+<h4 id="attributes-status-callback"><a class="anchor" href="#attributes-status-callback"></a>StatusCallback</h4>
 <div class="paragraph">
-<p>The <strong>statusCallback</strong> attribute allows you to specify a URL for Restcomm to send webhook requests to on each event specified in the statusCallbackEvent attribute.</p>
+<p>The <strong>StatusCallback</strong> attribute allows you to specify a URL for Restcomm to send webhook requests to on each event specified in the StatusCallbackEvent attribute.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="statuscallbackmethod"><a class="anchor" href="#statuscallbackmethod"></a>statusCallbackMethod</h4>
+<h4 id="statuscallbackmethod"><a class="anchor" href="#statuscallbackmethod"></a>StatusCallbackMethod</h4>
 <div class="paragraph">
-<p>The <strong>statusCallbackMethod</strong> attribute allows you to specify which HTTP method Restcomm should use when requesting the URL in the statusCallback attribute. The default is POST.</p>
+<p>The <strong>StatusCallbackMethod</strong> attribute allows you to specify which HTTP method Restcomm should use when requesting the URL in the StatusCallback attribute. The default is POST.</p>
 </div>
 </div>
 <div class="sect3">
@@ -24491,7 +24491,7 @@ The call will now be redirected to the Url specified(hello-world.xml)</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-19 04:17:57 UTC
+Last updated 2018-06-19 04:33:55 UTC
 </div>
 </div>
 <footer>
