@@ -23465,7 +23465,7 @@ display: none;
 <h3 id="create-a-new-gateway"><a class="anchor" href="#create-a-new-gateway"></a>Create a new Gateway</h3>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X POST https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@&lt;RESTCOMM_IP&gt;/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Management/Gateways -d "FriendlyName=mygateway" -d "UserName=username" -d "Password=password" -d "Proxy=my.gateway.com" -d "Register=true" -d "TTL=3600"</pre>
+<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Management/Gateways -d "FriendlyName=mygateway" -d "UserName=username" -d "Password=password" -d "Proxy=my.gateway.com" -d "Register=true" -d "TTL=3600"</pre>
 </div>
 </div>
 </div>
@@ -23473,7 +23473,7 @@ display: none;
 <h3 id="get-a-list-of-available-gateways"><a class="anchor" href="#get-a-list-of-available-gateways"></a>Get a list of available Gateways.</h3>
 <div class="literalblock">
 <div class="content">
-<pre>curl -G https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@&lt;RESTCOMM_IP&gt;/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Management/Gateways</pre>
+<pre>curl -G https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Management/Gateways</pre>
 </div>
 </div>
 </div>
@@ -23481,7 +23481,7 @@ display: none;
 <h3 id="update-an-existing-gateway"><a class="anchor" href="#update-an-existing-gateway"></a>Update an existing Gateway.</h3>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X POST https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@&lt;RESTCOMM_IP&gt;/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Management/Gateways/GW106bc6f34bd24790a435eaeccc1aed72 -d "FriendlyName=MyGatewayNewName" -d "UserName=newUserName"</pre>
+<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Management/Gateways/GW106bc6f34bd24790a435eaeccc1aed72 -d "FriendlyName=MyGatewayNewName" -d "UserName=newUserName"</pre>
 </div>
 </div>
 </div>
@@ -23489,7 +23489,7 @@ display: none;
 <h3 id="delete-an-existing-gateway"><a class="anchor" href="#delete-an-existing-gateway"></a>Delete an existing Gateway.</h3>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X DELETE https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@&lt;RESTCOMM_IP&gt;/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Management/Gateways/GW1cffb069192a45f2b5f5af2e76489550</pre>
+<pre>curl -X DELETE https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Management/Gateways/GW1cffb069192a45f2b5f5af2e76489550</pre>
 </div>
 </div>
 </div>
@@ -23498,7 +23498,7 @@ display: none;
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-17 02:15:42 UTC
+Last updated 2018-06-19 04:17:57 UTC
 </div>
 </div>
 <footer>

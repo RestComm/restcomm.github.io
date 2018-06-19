@@ -23652,7 +23652,7 @@ To associate a single Profile with multiple Accounts/Organizations, multiple req
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X GET  https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2acf</pre>
+<pre>curl -X GET  https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2acf</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23660,7 +23660,7 @@ To associate a single Profile with multiple Accounts/Organizations, multiple req
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X POST -H 'Content-Type: application/instance+json' --data "@/path/to/filename" https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Profiles</pre>
+<pre>curl -X POST -H 'Content-Type: application/instance+json' --data "@/path/to/filename" https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23674,12 +23674,12 @@ To associate a single Profile with multiple Accounts/Organizations, multiple req
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X PUT -H 'Content-Type: application/instance+json' --data "@/path/to/filename" https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123</pre>
+<pre>curl -X PUT -H 'Content-Type: application/instance+json' --data "@/path/to/filename" https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123</pre>
 </div>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X GET  https://administrator%40company.com:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123</pre>
+<pre>curl -X GET  https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23717,7 +23717,7 @@ To associate a single Profile with multiple Accounts/Organizations, multiple req
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X PUT -H "X-HTTP-Method-Override:LINK" -H "Link:&lt;https://127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf&gt;;rel=related" https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123</pre>
+<pre>curl -X PUT -H "X-HTTP-Method-Override:LINK" -H "Link:&lt;https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf&gt;;rel=related" https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23725,7 +23725,7 @@ To associate a single Profile with multiple Accounts/Organizations, multiple req
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X PUT -H "X-HTTP-Method-Override:UNLINK" -H "Link:&lt;https://127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf&gt;;rel=related" https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123</pre>
+<pre>curl -X PUT -H "X-HTTP-Method-Override:UNLINK" -H "Link:&lt;https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf&gt;;rel=related" https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23733,7 +23733,7 @@ To associate a single Profile with multiple Accounts/Organizations, multiple req
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X PUT -H "X-HTTP-Method-Override:LINK" -H "Link:&lt;https://127.0.0.1:8080/restcomm/2012-04-24/Organizations/ORafbe225ad37541eba518a74248f0ac4c&gt;;rel=related" https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123</pre>
+<pre>curl -X PUT -H "X-HTTP-Method-Override:LINK" -H "Link:&lt;https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Organizations/ORafbe225ad37541eba518a74248f0ac4c&gt;;rel=related" https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23741,7 +23741,7 @@ To associate a single Profile with multiple Accounts/Organizations, multiple req
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X PUT -H "X-HTTP-Method-Override:UNLINK" -H  "Link:&lt;https://127.0.0.1:8080/restcomm/2012-04-24/Organizations/ORafbe225ad37541eba518a74248f0ac4c&gt;;rel=related" https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123</pre>
+<pre>curl -X PUT -H "X-HTTP-Method-Override:UNLINK" -H  "Link:&lt;https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Organizations/ORafbe225ad37541eba518a74248f0ac4c&gt;;rel=related" https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123</pre>
 </div>
 </div>
 </div>
@@ -23770,7 +23770,7 @@ format</p>
 <div class="literalblock">
 <div class="content">
 <pre>[{
-	"uri": "http://127.0.0.1:8080/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2acf",
+	"uri": "https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2acf",
 	"sid": "PRae6e420f425248d6a26948c17a9e2acf",
 	"dateUpdated": 1516745449949,
 	"dateCreated": 1516745449949
@@ -23838,7 +23838,7 @@ schema.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-17 02:15:42 UTC
+Last updated 2018-06-19 04:17:57 UTC
 </div>
 </div>
 <footer>

@@ -23714,7 +23714,7 @@ display: none;
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X POST https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json -d "From=+16175551212" -d "To=sip:alice@127.0.0.1:5060" -d "Url=http://127.0.0.1:8080/restcomm/demos/hello-play.xml"</pre>
+<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json -d "From=+16175551212" -d "To=sip:alice@127.0.0.1:5060" -d "Url=https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/demos/hello-play.xml"</pre>
 </div>
 </div>
 </div>
@@ -23727,7 +23727,7 @@ display: none;
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X POST https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json -d "From=+16175551212" -d "To=client:alice" -d "Url=http://127.0.0.1:8080/restcomm/demos/hello-play.xml"</pre>
+<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json -d "From=+16175551212" -d "To=client:alice" -d "Url=https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/demos/hello-play.xml"</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23736,7 +23736,7 @@ included in the outgoing INVITE message.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>curl -X POST https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json -d "From=+16175551212" -d "To=client:alice?X-Custom-Header1=1234&amp;X-Custom-Header2=432" -d "Url=http://127.0.0.1:8080/restcomm/demos/hello-play.xml"</pre>
+<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json -d "From=+16175551212" -d "To=client:alice?X-Custom-Header1=1234&amp;X-Custom-Header2=432" -d "Url=https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/demos/hello-play.xml"</pre>
 </div>
 </div>
 </div>
@@ -23757,7 +23757,7 @@ included in the outgoing INVITE message.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X GET  https://administrator%40company.com:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls</pre>
+<pre>curl -X GET  https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23975,17 +23975,17 @@ included in the outgoing INVITE message.</p>
 <div class="sect2">
 <h3 id="redirect-call-to-a-new-rcml"><a class="anchor" href="#redirect-call-to-a-new-rcml"></a>Redirect Call to a new RCML</h3>
 <div class="paragraph">
-<p>Live Call Modification POST request URL : <strong><a href="http://127.0.0.1:8080/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CAd62f17e7c7f149ac8095f7574495d988" class="bare">http://127.0.0.1:8080/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CAd62f17e7c7f149ac8095f7574495d988</a></strong></p>
+<p>Live Call Modification POST request URL : <strong><a href="https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CAd62f17e7c7f149ac8095f7574495d988" class="bare">https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CAd62f17e7c7f149ac8095f7574495d988</a></strong></p>
 </div>
 <div class="sect3">
 <h4 id="parameters"><a class="anchor" href="#parameters"></a>Parameters:</h4>
 <div class="paragraph">
-<p><strong>Url</strong>=http://127.0.0.1:8080/restcomm/dial­alice.xml</p>
+<p><strong>Url</strong>=https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/dial­alice.xml</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>curl ­X POST
-http://ACae6e420f425248d6a26948c17a9e2acf:dcd25094354d425c8ab85b6621083d20@192.168.1.151:8080/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CAccccfd3a0c394cc1993803af785abc60 ­-d
+https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CAccccfd3a0c394cc1993803af785abc60 ­-d
 "Url=http://192.168.1.151:8080/restcomm/demos/dial­alice.xml"</pre>
 </div>
 </div>
@@ -23994,17 +23994,17 @@ http://ACae6e420f425248d6a26948c17a9e2acf:dcd25094354d425c8ab85b6621083d20@192.1
 <div class="sect2">
 <h3 id="redirect-call-to-a-new-rcml-and-connect-both-call-legs"><a class="anchor" href="#redirect-call-to-a-new-rcml-and-connect-both-call-legs"></a>Redirect Call to a new RCML and connect both call legs</h3>
 <div class="paragraph">
-<p>Live Call Modification POST request URL: <strong><a href="http://127.0.0.1:8080/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CAd62f17e7c7f149ac8095f7574495d988" class="bare">http://127.0.0.1:8080/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CAd62f17e7c7f149ac8095f7574495d988</a></strong></p>
+<p>Live Call Modification POST request URL: <strong><a href="https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CAd62f17e7c7f149ac8095f7574495d988" class="bare">https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CAd62f17e7c7f149ac8095f7574495d988</a></strong></p>
 </div>
 <div class="sect3">
 <h4 id="parameters-2"><a class="anchor" href="#parameters-2"></a>Parameters</h4>
 <div class="paragraph">
-<p><strong>Url</strong>=http://127.0.0.1:8080/restcomm/conference.xml</p>
+<p><strong>Url</strong>=https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/conference.xml</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>curl ­X POST
-http://ACae6e420f425248d6a26948c17a9e2acf:dcd25094354d425c8ab85b6621083d20@192.168.1.151:8080/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CAccccfd3a0c394cc1993803af785abc60 ­-d
+https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CAccccfd3a0c394cc1993803af785abc60 ­-d
 "Url=http://192.168.1.151:8080/restcomm/demos/conference.xml" ­-d
 "MoveConnectedCallLeg=true"</pre>
 </div>
@@ -24014,7 +24014,7 @@ http://ACae6e420f425248d6a26948c17a9e2acf:dcd25094354d425c8ab85b6621083d20@192.1
 <div class="sect2">
 <h3 id="terminate-in-progress-call"><a class="anchor" href="#terminate-in-progress-call"></a>Terminate In Progress call</h3>
 <div class="paragraph">
-<p>Live Call Modification POST request URL: <strong><a href="http://127.0.0.1:8080/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CAe29bf33b54ba43dc952f0d3eb331567c" class="bare">http://127.0.0.1:8080/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CAe29bf33b54ba43dc952f0d3eb331567c</a></strong></p>
+<p>Live Call Modification POST request URL: <strong><a href="https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CAe29bf33b54ba43dc952f0d3eb331567c" class="bare">https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CAe29bf33b54ba43dc952f0d3eb331567c</a></strong></p>
 </div>
 <div class="sect3">
 <h4 id="parameters-3"><a class="anchor" href="#parameters-3"></a>Parameters:</h4>
@@ -24026,7 +24026,7 @@ http://ACae6e420f425248d6a26948c17a9e2acf:dcd25094354d425c8ab85b6621083d20@192.1
 <div class="sect2">
 <h3 id="terminate-ringing-call"><a class="anchor" href="#terminate-ringing-call"></a>Terminate Ringing call</h3>
 <div class="paragraph">
-<p>Live Call Modification POST request URL: <strong><a href="http://127.0.0.1:8080/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CA312824ebd262419dbd4c00b057448d57" class="bare">http://127.0.0.1:8080/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CA312824ebd262419dbd4c00b057448d57</a></strong>  </p>
+<p>Live Call Modification POST request URL: <strong><a href="https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CA312824ebd262419dbd4c00b057448d57" class="bare">https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CA312824ebd262419dbd4c00b057448d57</a></strong>  </p>
 </div>
 <div class="sect3">
 <h4 id="parameters-4"><a class="anchor" href="#parameters-4"></a>Parameters:</h4>
@@ -24067,7 +24067,7 @@ http://ACae6e420f425248d6a26948c17a9e2acf:dcd25094354d425c8ab85b6621083d20@192.1
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>curl -X POST http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json -d "From=+16175551212" -d "To=sip:alice@127.0.0.1:5061" -d "Url=http://127.0.0.1:8080/restcomm/demos/hello-play.xml"</pre>
+<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json -d "From=+16175551212" -d "To=sip:alice@127.0.0.1:5061" -d "Url=https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/demos/hello-play.xml"</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -24103,7 +24103,7 @@ The call will now be redirected to the Url specified(hello-world.xml)</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>curl -X POST http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls/CAfa51b104354440b09213d04752f50271 -d "Url=http://127.0.0.1:8080/restcomm/demos/hello-world.xml"</pre>
+<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls/CAfa51b104354440b09213d04752f50271 -d "Url=https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/demos/hello-world.xml"</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -24129,7 +24129,7 @@ The call will now be redirected to the Url specified(hello-world.xml)</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>curl -X POST http://ACae6e420f425248d6f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls/CAfa51b104354440b09213d04752f50271 -d "Url=http://127.0.0.1:8080/restcomm/demos/hello-play.xml"</pre>
+<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls/CAfa51b104354440b09213d04752f50271 -d "Url=https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/demos/hello-play.xml"</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -24155,7 +24155,7 @@ The call will now be redirected to the Url specified(hello-world.xml)</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>curl -X POST http://ACae6e420f425248d6f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls/CAfa51b104354440b09213d04752f50271 -d "Status=completed"</pre>
+<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls/CAfa51b104354440b09213d04752f50271 -d "Status=completed"</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -24397,7 +24397,7 @@ The call will now be redirected to the Url specified(hello-world.xml)</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X GET  http://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls?PageSize=1</pre>
+<pre>curl -X GET  https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls?PageSize=1</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -24491,7 +24491,7 @@ The call will now be redirected to the Url specified(hello-world.xml)</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-17 02:15:42 UTC
+Last updated 2018-06-19 04:17:57 UTC
 </div>
 </div>
 <footer>

@@ -23475,7 +23475,7 @@ display: none;
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Uri</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The URI for this account, relative to <a href="https://localhost/restcomm" class="bare">https://localhost/restcomm</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The URI for this account, relative to <a href="https://cloud.restcomm.com/restcomm" class="bare">https://cloud.restcomm.com/restcomm</a>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">error_code</p></td>
@@ -23646,7 +23646,7 @@ display: none;
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X POST https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages -d "To=%2B13216549878" -d "From=%2B19876543212" -d "Body=This is a test from RestComm"</pre>
+<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages -d "To=%2B13216549878" -d "From=%2B19876543212" -d "Body=This is a test from RestComm"</pre>
 </div>
 </div>
 </div>
@@ -23662,7 +23662,7 @@ display: none;
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X GET https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages</pre>
+<pre>curl -X GET https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages</pre>
 </div>
 </div>
 </div>
@@ -23674,7 +23674,7 @@ display: none;
 <h3 id="xml-post-response"><a class="anchor" href="#xml-post-response"></a>XML POST Response</h3>
 <div class="listingblock">
 <div class="content">
-<pre>curl -X POST https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e0f425248d6a26948c17a9e2acf/SMS/Messages -d "To=%2B1321654879" -d "From=%2B1654123987" -d "Body=This is a test from RestComm"</pre>
+<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e0f425248d6a26948c17a9e2acf/SMS/Messages -d "To=%2B1321654879" -d "From=%2B1654123987" -d "Body=This is a test from RestComm"</pre>
 </div>
 </div>
 <div class="listingblock">
@@ -23703,7 +23703,7 @@ display: none;
 <h3 id="json-post-response"><a class="anchor" href="#json-post-response"></a>JSON POST Response</h3>
 <div class="listingblock">
 <div class="content">
-<pre>curl -X POST https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-20f425248d6a26948c17a9e2acf/SMS/Messages.json -d "To=%2B1321654879" -d "From=%2B1654123987" -d "Body=This is a test from RestComm"</pre>
+<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-20f425248d6a26948c17a9e2acf/SMS/Messages.json -d "To=%2B1321654879" -d "From=%2B1654123987" -d "Body=This is a test from RestComm"</pre>
 </div>
 </div>
 <div class="listingblock">
@@ -23735,7 +23735,7 @@ display: none;
 <h3 id="json-get-response"><a class="anchor" href="#json-get-response"></a>JSON GET Response</h3>
 <div class="listingblock">
 <div class="content">
-<pre>curl -X GET https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages.json</pre>
+<pre>curl -X GET https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages.json</pre>
 </div>
 </div>
 <div class="listingblock">
@@ -23771,7 +23771,7 @@ display: none;
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre>curl -X GET https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e42f425248d6a26948c17a9e2acf/SMS/Messages/SM55ce5cf07b9649c283cbacab4dae56a9.json</pre>
+<pre>curl -X GET https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e42f425248d6a26948c17a9e2acf/SMS/Messages/SM55ce5cf07b9649c283cbacab4dae56a9.json</pre>
 </div>
 </div>
 <div class="listingblock">
@@ -23856,7 +23856,7 @@ display: none;
 </div>
 <div class="literalblock">
 <div class="content">
-<pre> curl -X GET  https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages.json?From=alice</pre>
+<pre> curl -X GET  https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages.json?From=alice</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23948,7 +23948,7 @@ display: none;
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X GET  https://ACae6e420f425248d6a26948c17a9e2acf:77f8c12cc7b8f8423e5c38b035249166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages.json?PageSize=1</pre>
+<pre>curl -X GET  https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages.json?PageSize=1</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -24033,7 +24033,7 @@ display: none;
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-17 02:15:42 UTC
+Last updated 2018-06-19 04:17:57 UTC
 </div>
 </div>
 <footer>

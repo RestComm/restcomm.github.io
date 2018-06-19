@@ -23400,7 +23400,7 @@ display: none;
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">domain_name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A custom DNS hostname that you create on Restcomm Cloud. It can accept traffic for an account. If anyone makes a SIP/HTTP request using that domain, say the SIP URI sip:alice@mycompany.restcomm.com, it will route to Restcomm.
+<td class="tableblock halign-left valign-top"><p class="tableblock">A custom DNS hostname that you create on Restcomm Cloud. It can accept traffic for an account. If anyone makes a SIP/HTTP request using that domain, say the SIP URI sip:alice@cloud.restcomm.com, it will route to Restcomm.
 </p><p class="tableblock">Total Length of domain_name can be upto 255 Characters. It can contain only letters, number and “-” aka hyphen sign.</p></td>
 </tr>
 <tr>
@@ -23448,7 +23448,7 @@ display: none;
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">domainName</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A custom DNS hostname that you create on Restcomm Cloud. It can accept traffic for an account. If anyone makes a SIP/HTTP request using that domain, say the SIP URI sip:alice@mycompany.restcomm.com, it will route to Restcomm.
+<td class="tableblock halign-left valign-top"><p class="tableblock">A custom DNS hostname that you create on Restcomm Cloud. It can accept traffic for an account. If anyone makes a SIP/HTTP request using that domain, say the SIP URI sip:alice@cloud.restcomm.com, it will route to Restcomm.
 </p><p class="tableblock">Total Length of domain_name can be upto 255 Characters. It can contain only letters, number and “-” aka hyphen sign.</p></td>
 </tr>
 </tbody>
@@ -23457,7 +23457,7 @@ display: none;
 <div class="title">Example 1. Add new organization with domain name "test" - Example</div>
 <div class="content">
 <div class="paragraph">
-<p>curl -X PUT "https://&lt;accountSid&gt;:&lt;authtoke&gt;@mycompany.restcomm.com/restcomm/2012-04-24/Organizations/test"</p>
+<p>curl -X PUT "https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Organizations/test"</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -23495,7 +23495,7 @@ display: none;
 <div class="title">Example 2. Add new organization with domain name "test" under a specific hosted zone - Example</div>
 <div class="content">
 <div class="paragraph">
-<p>curl -X PUT "https://&lt;accountSid&gt;:&lt;authToken&gt;@mycompany.restcomm.com/restcomm/2012-04-24/Organizations/test" -d "HostedZoneId=&lt;myHostedZoneId&gt;"</p>
+<p>curl -X PUT "https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Organizations/test" -d "HostedZoneId=&lt;myHostedZoneId&gt;"</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -23554,7 +23554,7 @@ display: none;
 <div class="title">Example 3. Read Organization Example</div>
 <div class="content">
 <div class="paragraph">
-<p>curl -X GET "https://{accountSid}:{authToken}@mycompany.restcomm.com/restcomm/2012-04-24/Organizations/{OrganizationSid}"</p>
+<p>curl -X GET "https://{accountSid}:{authToken}@cloud.restcomm.com/restcomm/2012-04-24/Organizations/{OrganizationSid}"</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -23573,7 +23573,7 @@ display: none;
 <div class="title">Example 4. Read Organization Json Example</div>
 <div class="content">
 <div class="paragraph">
-<p>curl -X GET "https://{accountSid}:{authToken}@mycompany.restcomm.com/restcomm/2012-04-24/Organizations.json/{OrganizationSid}"</p>
+<p>curl -X GET "https://{accountSid}:{authToken}@cloud.restcomm.com/restcomm/2012-04-24/Organizations.json/{OrganizationSid}"</p>
 </div>
 </div>
 </div>
@@ -23618,7 +23618,7 @@ display: none;
 <div class="title">Example 5. Read Organization List with filter Example</div>
 <div class="content">
 <div class="paragraph">
-<p>curl -X GET "https://{accountSid}:{authToken}@mycompany.restcomm.com/restcomm/2012-04-24/Organizations/{OrganizationSid}.json" -d "Status=active"</p>
+<p>curl -X GET "https://{accountSid}:{authToken}@cloud.restcomm.com/restcomm/2012-04-24/Organizations/{OrganizationSid}.json" -d "Status=active"</p>
 </div>
 </div>
 </div>
@@ -23644,7 +23644,7 @@ At this moment, the target algorithm is hardcoded to MD5.</p>
 <div class="title">Example 6. Migrate Organization Example</div>
 <div class="content">
 <div class="paragraph">
-<p>curl -X PUT "https://{accountSid}:{authToken}@mycompany.restcomm.com/restcomm/2012-04-24/Organizations/{OrganizationSid}.json/Migrate"</p>
+<p>curl -X PUT "https://{accountSid}:{authToken}@cloud.restcomm.com/restcomm/2012-04-24/Organizations/{OrganizationSid}.json/Migrate"</p>
 </div>
 </div>
 </div>
@@ -23656,7 +23656,7 @@ At this moment, the target algorithm is hardcoded to MD5.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-17 02:15:42 UTC
+Last updated 2018-06-19 04:17:57 UTC
 </div>
 </div>
 <footer>
