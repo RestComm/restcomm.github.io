@@ -23390,6 +23390,7 @@ display: none;
 </ul>
 </li>
 <li><a href="#sms-home-routing">SMS Home Routing</a></li>
+<li><a href="#sms-routing-by-smpp-optional-tlv-fields">SMS Routing By SMPP Optional TLV Fields</a></li>
 <li><a href="#_smpp_interface_description">SMPP interface description</a>
 <ul class="sectlevel2">
 <li><a href="#_smpp_interface_encoding">Encoding at SMPP interface</a></li>
@@ -25701,6 +25702,35 @@ For more details refer to <a href="#_smsc_gateway_server_hr">[_smsc_gateway_serv
 </div>
 </div>
 <div class="sect1">
+<h2 id="sms-routing-by-smpp-optional-tlv-fields"><a class="anchor" href="#sms-routing-by-smpp-optional-tlv-fields"></a>SMS Routing By SMPP Optional TLV Fields</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Telscale SMSC has supprted special routing by using special SMPP TLV field, there are 4 fiels (you need to fill these tag in your SMPP client and send to Telscale SMSC as a submit_sm or deliver_sm), in this case, Telscale SMSC will not send SRIforSM and use these values for sending MtForwardSM:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>TAG_IMSI: value 1403, it&#8217;s IMSI of destination, C-Octec String and mandatory</p>
+</li>
+<li>
+<p>TAG_NNN_DIGITS: value 1404, it&#8217;s Network Node Number (MSC/VLR GT numbers), C-Octec String and mandatory</p>
+</li>
+<li>
+<p>TAG_NNN_TON: value 1405, it&#8217;s TON number, Interger and optional</p>
+</li>
+<li>
+<p>TAG_NNN_NPI: value 1406, it&#8217;s NPI number, Interger and optional</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If TAG_IMSI or TAG_NNN_DIGITS has empty or bad value, SMSC will ignore other TAGs and accept SMS as normal SMS.
+If TAG_NNN_TON or TAG_NNN_NPI has empty or bad value, SMSC will fill with 1
+This feature only support by Telscale SMSC version</p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_smpp_interface_description"><a class="anchor" href="#_smpp_interface_description"></a>SMPP interface description</h2>
 <div class="sectionbody">
 <div class="sect2">
@@ -26242,7 +26272,7 @@ The details of the format and the possible values for the fields recorded in the
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-17 02:27:29 UTC
+Last updated 2018-06-19 04:29:10 UTC
 </div>
 </div>
 <footer>

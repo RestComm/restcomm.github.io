@@ -23405,11 +23405,12 @@ display: none;
 <li><a href="#_routing_fundamentals">5.6. SMSC GW routing fundamentals</a></li>
 <li><a href="#_mproc_rules_fundamentals">5.7. Message processing rules (mproc rules)</a></li>
 <li><a href="#sms-home-routing">5.8. SMS Home Routing</a></li>
-<li><a href="#_smpp_interface_description">5.9. SMPP interface description</a></li>
-<li><a href="#_http_interface_description">5.10. HTTP interface description</a></li>
-<li><a href="#_diameter_ocs_server">5.11. Interworking with Diameter OCS server</a></li>
-<li><a href="#security-issues">5.12. Security issues</a></li>
-<li><a href="#cdr-logging-settings">5.13. CDR Logging Settings</a></li>
+<li><a href="#sms-routing-by-smpp-optional-tlv-fields">5.9. SMS Routing By SMPP Optional TLV Fields</a></li>
+<li><a href="#_smpp_interface_description">5.10. SMPP interface description</a></li>
+<li><a href="#_http_interface_description">5.11. HTTP interface description</a></li>
+<li><a href="#_diameter_ocs_server">5.12. Interworking with Diameter OCS server</a></li>
+<li><a href="#security-issues">5.13. Security issues</a></li>
+<li><a href="#cdr-logging-settings">5.14. CDR Logging Settings</a></li>
 </ul>
 </li>
 <li><a href="#managing">6. Managing</a>
@@ -27966,9 +27967,36 @@ For more details refer to <a href="#_smsc_gateway_server_hr">Home Routing Settin
 </div>
 </div>
 <div class="sect2">
-<h3 id="_smpp_interface_description"><a class="anchor" href="#_smpp_interface_description"></a>5.9. SMPP interface description</h3>
+<h3 id="sms-routing-by-smpp-optional-tlv-fields"><a class="anchor" href="#sms-routing-by-smpp-optional-tlv-fields"></a>5.9. SMS Routing By SMPP Optional TLV Fields</h3>
+<div class="paragraph">
+<p>Telscale SMSC has supprted special routing by using special SMPP TLV field, there are 4 fiels (you need to fill these tag in your SMPP client and send to Telscale SMSC as a submit_sm or deliver_sm), in this case, Telscale SMSC will not send SRIforSM and use these values for sending MtForwardSM:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>TAG_IMSI: value 1403, it&#8217;s IMSI of destination, C-Octec String and mandatory</p>
+</li>
+<li>
+<p>TAG_NNN_DIGITS: value 1404, it&#8217;s Network Node Number (MSC/VLR GT numbers), C-Octec String and mandatory</p>
+</li>
+<li>
+<p>TAG_NNN_TON: value 1405, it&#8217;s TON number, Interger and optional</p>
+</li>
+<li>
+<p>TAG_NNN_NPI: value 1406, it&#8217;s NPI number, Interger and optional</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If TAG_IMSI or TAG_NNN_DIGITS has empty or bad value, SMSC will ignore other TAGs and accept SMS as normal SMS.
+If TAG_NNN_TON or TAG_NNN_NPI has empty or bad value, SMSC will fill with 1
+This feature only support by Telscale SMSC version</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_smpp_interface_description"><a class="anchor" href="#_smpp_interface_description"></a>5.10. SMPP interface description</h3>
 <div class="sect3">
-<h4 id="_smpp_interface_encoding"><a class="anchor" href="#_smpp_interface_encoding"></a>5.9.1. Encoding at SMPP interface</h4>
+<h4 id="_smpp_interface_encoding"><a class="anchor" href="#_smpp_interface_encoding"></a>5.10.1. Encoding at SMPP interface</h4>
 <div class="paragraph">
 <p>When message sending and recieveing via SMPP interface of SMSC GW we need to care of message body encoding and assigning of a parameter DCS (data coding schema).</p>
 </div>
@@ -27997,7 +28025,7 @@ SMSC GW has two configurable parameters for decoding / encodoing, one for GSM 7 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_smpp_dlivery_receipt_transit"><a class="anchor" href="#_smpp_dlivery_receipt_transit"></a>5.9.2. Delivery receipts transit at SMPP interface</h4>
+<h4 id="_smpp_dlivery_receipt_transit"><a class="anchor" href="#_smpp_dlivery_receipt_transit"></a>5.10.2. Delivery receipts transit at SMPP interface</h4>
 <div class="paragraph">
 <p>SMSC GW can generate delivery receipts after a message is delivered / failed to some destination. For this a SMPP application must set suitable values in the <code>registered_delivery</code> field. After a message is delivered / failed to some destionation, then SMSC GW will generate a delivery receipt. For simple routing such receipts back to an original ESME we can just assign to each ESME a separate networkId value and turn on the following option: <a href="#_smsc_gateway_server_routing_dlv">Routing of delivery receipts</a>.</p>
 </div>
@@ -28026,9 +28054,9 @@ SMSC GW has two configurable parameters for decoding / encodoing, one for GSM 7 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_http_interface_description"><a class="anchor" href="#_http_interface_description"></a>5.10. HTTP interface description</h3>
+<h3 id="_http_interface_description"><a class="anchor" href="#_http_interface_description"></a>5.11. HTTP interface description</h3>
 <div class="sect3">
-<h4 id="_http_interface_description_send_sms"><a class="anchor" href="#_http_interface_description_send_sms"></a>5.10.1. Send SMS</h4>
+<h4 id="_http_interface_description_send_sms"><a class="anchor" href="#_http_interface_description_send_sms"></a>5.11.1. Send SMS</h4>
 <div class="paragraph">
 <p>Send message API is responsible for sending SMS messages. To send message we should
 create and send HTTP request in proper format. Supported HTTP methods
@@ -28136,7 +28164,7 @@ error:6,request not accepted</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_http_interface_description_get_message_status"><a class="anchor" href="#_http_interface_description_get_message_status"></a>5.10.2. Get message status</h4>
+<h4 id="_http_interface_description_get_message_status"><a class="anchor" href="#_http_interface_description_get_message_status"></a>5.11.2. Get message status</h4>
 <div class="paragraph">
 <p>Get message status API is responsible for checking sent messages status. To check message
 status we should create and send HTTP request in proper format. Supported HTTP methods are GET and POST. Request URL must have "msgQuery" context and contain all of mandatory parameters.</p>
@@ -28213,9 +28241,9 @@ error:4,message ID not exists</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_diameter_ocs_server"><a class="anchor" href="#_diameter_ocs_server"></a>5.11. Interworking with Diameter OCS server</h3>
+<h3 id="_diameter_ocs_server"><a class="anchor" href="#_diameter_ocs_server"></a>5.12. Interworking with Diameter OCS server</h3>
 <div class="sect3">
-<h4 id="_diameter_ocs_server_general"><a class="anchor" href="#_diameter_ocs_server_general"></a>5.11.1. General information</h4>
+<h4 id="_diameter_ocs_server_general"><a class="anchor" href="#_diameter_ocs_server_general"></a>5.12.1. General information</h4>
 <div class="paragraph">
 <p>SMSC GW can interoperate with an OCS server via Diameter protocol connection.</p>
 </div>
@@ -28363,7 +28391,7 @@ So MO SS7, HR SS7 and SMPP part will be informed if the message is rejected.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_diameter_ocs_server_conig"><a class="anchor" href="#_diameter_ocs_server_conig"></a>5.11.2. Configuring</h4>
+<h4 id="_diameter_ocs_server_conig"><a class="anchor" href="#_diameter_ocs_server_conig"></a>5.12.2. Configuring</h4>
 <div class="paragraph">
 <p>You can use Telestax OCS server or any third party OCS server as you wish.
 SMSC GW party configuring is the same for both.
@@ -28465,7 +28493,7 @@ You can assign for User Name any value (for example "telestax").</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="security-issues"><a class="anchor" href="#security-issues"></a>5.12. Security issues</h3>
+<h3 id="security-issues"><a class="anchor" href="#security-issues"></a>5.13. Security issues</h3>
 <div class="paragraph">
 <p>When you configure SMSC GW for the first usage you need to care for security to avoid of unauthorized usage. Here you can find some tips for this.</p>
 </div>
@@ -28480,7 +28508,7 @@ You can assign for User Name any value (for example "telestax").</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="cdr-logging-settings"><a class="anchor" href="#cdr-logging-settings"></a>5.13. CDR Logging Settings</h3>
+<h3 id="cdr-logging-settings"><a class="anchor" href="#cdr-logging-settings"></a>5.14. CDR Logging Settings</h3>
 <div class="paragraph">
 <p>Restcomm SMSC is configured to generate CDR in a plain text files <code>cdr.log</code> and <code>cdr_detailed.log</code> located at <em class="path">restcomm-smscgateway-&lt;version&gt;/jboss-5.1.0.GA/server/&lt;profile&gt;/log/cdr.log</em> for JBOSS 5 server and [path]_restcomm-smscgateway-&lt;version&gt;/wildfly-10.1.0.Final/standalone/log for Wildfly 10 server and also detailed CDR in Cassandra tables <code>MESSAGES_yyyy_mm_dd</code>.</p>
 </div>
@@ -37918,7 +37946,7 @@ public enum ErrorCode {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-17 02:27:29 UTC
+Last updated 2018-06-19 04:29:10 UTC
 </div>
 </div>
 <footer>
