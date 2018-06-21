@@ -23339,7 +23339,7 @@ Countly.q.push(['report_conversion']);
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel2">
 <li><a href="#tags">Tags</a></li>
-<li><a href="#8-6-0-version-2018-06-19">8.6.0 version 2018-06-19</a>
+<li><a href="#8-6-0-version-2018-06-19-docker-tag-8-6-0-211">8.6.0 version 2018-06-19 (docker tag 8.6.0-211)</a>
 <ul class="sectlevel2">
 <li><a href="#new-features">New Features</a></li>
 <li><a href="#breaking-changes">Breaking Changes</a></li>
@@ -23401,7 +23401,7 @@ Countly.q.push(['report_conversion']);
 </div>
 </div>
 <div class="sect1">
-<h2 id="8-6-0-version-2018-06-19"><a class="anchor" href="#8-6-0-version-2018-06-19"></a>8.6.0 version 2018-06-19</h2>
+<h2 id="8-6-0-version-2018-06-19-docker-tag-8-6-0-211"><a class="anchor" href="#8-6-0-version-2018-06-19-docker-tag-8-6-0-211"></a>8.6.0 version 2018-06-19 (docker tag 8.6.0-211)</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="new-features"><a class="anchor" href="#new-features"></a>New Features</h3>
@@ -23439,7 +23439,10 @@ Countly.q.push(['report_conversion']);
 <div class="sect2">
 <h3 id="migration-notes"><a class="anchor" href="#migration-notes"></a>Migration Notes</h3>
 <div class="paragraph">
-<p><strong>Important Note</strong> This version is adding a new columns to support SMS Error Code updates.</p>
+<p><strong>Important Note</strong> This version is adding a new columns to support SMS Error Code updates, and SMS StatusCallback notifications.</p>
+</div>
+<div class="paragraph">
+<p><strong>Important Note</strong> There is new cache configuration. New settings is CACHE_PATH with value /mnt/restcomm_cache. "docker run" command needs to be inline with this to sync the EFS sharing with app configuration.</p>
 </div>
 <div class="sect3">
 <h4 id="migration-steps-part-1"><a class="anchor" href="#migration-steps-part-1"></a>Migration steps - part 1</h4>
@@ -23853,7 +23856,7 @@ scripts are available in <strong>commercial</strong> version. Database migration
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-20 05:15:25 UTC
+Last updated 2018-06-21 08:05:42 UTC
 </div>
 </div>
 <footer >
