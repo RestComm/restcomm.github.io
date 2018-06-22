@@ -23339,104 +23339,54 @@ Countly.q.push(['report_conversion']);
 <div class="sect1 text-center">
 <h2 id="restcomm-docs">Restcomm Docs</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>The Restcomm Real Time Communications Server is the best architecture to integrate Communications as a Feature into your applications and services. It enables you create, deploy and manage services and applications integrating voice, video and data across a range of IP and legacy communications networks. It drives convergence with the following key enablers and full Communications stack :</p>
+<div class="paragraph text-left">
+<p>Read our API Reference Documentation and Quickstarts to integrate SMS and Voice to your website, applications or unified communications clients.</p>
 </div>
-<img src="./images/RestComm_Platform.png" usemap="#restcommMap"/>
-<map name="restcommMap">
-  <area shape="rect" coords="10,7,806,132" href="/docs/connect/sdks/index.html" alt="Restcomm SDKs and Clients">
-  <area shape="rect" coords="10,141,806,197" href="/docs/connect/index.html" alt="Restcomm-Connect">
-  <area shape="rect" coords="10,215,72,267" href="/docs/core/gmlc/GMLC_Admin_Guide.html" alt="Restcomm GMLC GeoLocation Server User Guide">
-  <area shape="rect" coords="178,215,245,267" href="/docs/core/smsc/SMSC_Gateway_Admin_Guide.html" alt="Restcomm SMSC User Guide">
-  <area shape="rect" coords="250,215,337,267" href="/docs/core/ussd/USSD_Gateway_Admin_Guide.html" alt="Restcomm USSD Gateway User Guide">
-  <area shape="rect" coords="480,215,574,340" href="/docs/core/lb/Load_Balancer_User_Guide.html" alt="Restcomm Load Balancer User Guide">
-  <area shape="rect" coords="583,215,704,340" href="/docs/core/sip_servlets/SIP_Servlets_Server_User_Guide.html" alt="Restcomm-SIP-Servlets">
-  <area shape="rect" coords="711,215,807,340" href="/docs/core/media_server/Media_Server_User_Guide.html" alt="Restcomm Media Server">
-  <area shape="rect" coords="10,282,470,340" href="/docs/core/jain_slee/JAIN_SLEE_User_Guide.html" alt="Restcomm JAIN SLEE Service Delivery Platform">
-  <area shape="rect" coords="10,355,107,418" href="/docs/core/ss7/SS7_Stack_User_Guide.html" alt="Restcomm jSS7 Stack User Guide">
-  <area shape="rect" coords="142,410,265,489" href="/docs/core/smpp-extensions/SMPP_Extensions_User_Guide.html" alt="Restcomm SMPP Stack User Guide" >
-  <area shape="rect" coords="242,355,345,418" href="/docs/core/diameter/Diameter_User_Guide.html" alt="Restcomm jDiameter User Guide">
-</map>
-<div class="paragraph">
-<p>The Restcomm Platform is comprised of 3 main parts as can be seen on the diagram above :</p>
+<div class="paragraph text-left">
+<p>Get familiar with concepts common to Restcomm APIs and products then start building connected applications with Restcomm.</p>
 </div>
-<div class="ulist text-left">
-<ul>
-<li>
-<p>The <a href="/docs/connect/sdks/index.html">Restcomm Web, iOS and Android SDKs and Clients</a> which allows you to embed Communications as a feature in your Web, iOS and Android Native Applications</p>
-</li>
-<li>
-<p>The <a href="/docs/connect/index.html">Restcomm-Connect</a>, which is an API Exposure layer allowing Web developers to embed Communications as a Feature without having to know anything about telecommunications. You can read <a href="/docs/connect/tutorials/index.html">Restcomm Connect Tutorials</a> to learn more on how to build powerful apps or master the platform.</p>
-</li>
-<li>
-<p>The <a href="/docs/core/index.html">Restcomm Core</a> which is the core of the Restcomm Communications Platform and powers Restcomm-Connect. It contains all the necessary low level telecommunications stacks, servers and standalone components allowing you to write powerful and scalable telecommunications applications that interconnect with core network telecommunications elements such as Core IN SS7 Networks or IMS Core Network/EPC for newer generation networks :</p>
+<a href="https://www.restcomm.com/sign-up">
+<img width="104" height="100" src="./images/Signup.png"/>
+</a>
+<div class="sect2 text-left">
+<h3 id="concepts">Concepts</h3>
+<div class="paragraph">
+<p>There is multiple ways to interact with Restcomm to build communications applications</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls/CAfa51b104354440b09213d04752f50271 -d "Status=completed"</pre>
+</div>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="/docs/core/sip_servlets/SIP_Servlets_Server_User_Guide.html">Restcomm SIP Servlets / SIP - IMS - LTE - WebRTC Application Server</a></p>
+<p>Use <a href="rvd/index.html#RVD">Restcomm Visual Designer (RVD)</a> to build applications easily with drag and drop without knowing anything about programming</p>
 </li>
 <li>
-<p><a href="/docs/core/jain_slee/JAIN_SLEE_User_Guide.html">Restcomm JAIN SLEE Service Delivery Platform</a></p>
+<p>The <a href="api/index.html#API">Restcomm API</a> allows you to query meta-data about your account, phone numbers, calls, text messages, and recordings. You can also do some communications control like initiate outbound calls and send SMS messages.</p>
 </li>
 <li>
-<p><a href="/docs/core/media_server/Media_Server_User_Guide.html">Restcomm Media Server</a></p>
+<p>The <a href="rcml/index.html#RCML">RestComm Markup Language</a> is a set of instructions you can use to tell Restcomm what to do when you receive an incoming call or SMS.</p>
 </li>
 <li>
-<p><a href="/docs/core/smsc/SMSC_Gateway_Installation_Guide.html">Restcomm SMSC Installation Guide</a></p>
+<p>The <a href="sdks/index.html#SDKs">Restcomm Web, iOS and Android SDKs - Preview</a> allows you to embed Communications as a feature in your Web, iOS and Android Native Applications</p>
 </li>
 <li>
-<p><a href="/docs/core/smsc/SMSC_Gateway_Admin_Guide.html">Restcomm SMSC User Guide</a></p>
+<p>The <a href="admin/index.html#AdminUI">Restcomm Console</a> allows you to interact with your account, buy DIDs, configure your Restcomm Clients, check your logs and much more</p>
 </li>
 <li>
-<p><a href="/docs/core/ussd/USSD_Gateway_Installation_Guide.html">Restcomm USSD Gateway Installation Guide</a></p>
-</li>
-<li>
-<p><a href="/docs/core/ussd/USSD_Gateway_Admin_Guide.html">Restcomm USSD Gateway User Guide</a></p>
-</li>
-<li>
-<p><a href="/docs/core/gmlc/GMLC_Installation_Guide.html">Restcomm GMLC GeoLocation Server Installation Guide</a></p>
-</li>
-<li>
-<p><a href="/docs/core/gmlc/GMLC_Admin_Guide.html">Restcomm GMLC GeoLocation Server User Guide</a></p>
-</li>
-<li>
-<p><a href="/docs/core/camelgw/CAMEL_Gateway_Installation_Guide.html">Restcomm CAMEL Gateway Installation Guide</a></p>
-</li>
-<li>
-<p><a href="/docs/core/camelgw/CAMEL_Gateway_Admin_Guide.html">Restcomm CAMEL Gateway User Guide</a></p>
-</li>
-<li>
-<p><a href="/docs/core/ss7/SS7_Stack_Installation_Guide.html">Restcomm jSS7 Installation Guide</a></p>
-</li>
-<li>
-<p><a href="/docs/core/ss7/SS7_Stack_User_Guide.html">Restcomm jSS7 User Guide</a></p>
-</li>
-<li>
-<p><a href="/docs/core/smpp-extensions/SMPP_Extensions_Installation_Guide.html">Restcomm SMPP Extensions Installation Guide</a></p>
-</li>
-<li>
-<p><a href="/docs/core/smpp-extensions/SMPP_Extensions_User_Guide.html">Restcomm SMPP Extensions User Guide</a></p>
-</li>
-<li>
-<p><a href="/docs/core/diameter/Diameter_User_Guide.html">Restcomm jDiameter User Guide</a></p>
-</li>
-<li>
-<p><a href="/docs/core/lb/Load_Balancer_User_Guide.html">Restcomm Load Balancer User Guide</a></p>
-</li>
-<li>
-<p>You can also read <a href="/docs/connect/tutorials/index.html">Restcomm Core Tutorials</a> to master advanced concepts.</p>
+<p>The <a href="tutorials/index.html#tutorials">Restcomm Tutorials</a> will help you in creating sample applications that cover common use cases in a variety of languages using the Restcomm API, RCML or Visual Designer. Download, test, and tweak for yourself.</p>
 </li>
 </ul>
 </div>
-</li>
-</ul>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-22 09:10:58 UTC
+Last updated 2018-06-22 14:08:50 UTC
 </div>
 </div>
 <footer >
@@ -23575,7 +23525,7 @@ span {
 var wpreview = {"ajaxurl":"https:\/\/www.restcomm.com\/wp-admin\/admin-ajax.php"};var qodeLike = {"ajaxurl":"https:\/\/www.restcomm.com\/wp-admin\/admin-ajax.php"};var megamenu = {"timeout":"300","interval":"100"};var fm_objectL10n = {"states":{"":"","Alabama":"Alabama","Alaska":"Alaska","Arizona":"Arizona","Arkansas":"Arkansas","California":"California","Colorado":"Colorado","Connecticut":"Connecticut","Delaware":"Delaware","District Of Columbia":"District Of Columbia","Florida":"Florida","Georgia":"Georgia","Hawaii":"Hawaii","Idaho":"Idaho","Illinois":"Illinois","Indiana":"Indiana","Iowa":"Iowa","Kansas":"Kansas","Kentucky":"Kentucky","Louisiana":"Louisiana","Maine":"Maine","Maryland":"Maryland","Massachusetts":"Massachusetts","Michigan":"Michigan","Minnesota":"Minnesota","Mississippi":"Mississippi","Missouri":"Missouri","Montana":"Montana","Nebraska":"Nebraska","Nevada":"Nevada","New Hampshire":"New Hampshire","New Jersey":"New Jersey","New Mexico":"New Mexico","New York":"New York","North Carolina":"North Carolina","North Dakota":"North Dakota","Ohio":"Ohio","Oklahoma":"Oklahoma","Oregon":"Oregon","Pennsylvania":"Pennsylvania","Rhode Island":"Rhode Island","South Carolina":"South Carolina","South Dakota":"South Dakota","Tennessee":"Tennessee","Texas":"Texas","Utah":"Utah","Vermont":"Vermont","Virginia":"Virginia","Washington":"Washington","West Virginia":"West Virginia","Wisconsin":"Wisconsin","Wyoming":"Wyoming"},"plugin_url":"https:\/\/www.restcomm.com\/wp-content\/plugins\/form-maker","form_maker_admin_ajax":"https:\/\/www.restcomm.com\/wp-admin\/admin-ajax.php","fm_file_type_error":"Can not upload this type of file","fm_field_is_required":"Field is required.","fm_min_max_check_1":"The ","fm_min_max_check_2":" value must be between ","fm_spinner_check":"Value must be between ","fm_clear_data":"Are you sure you want to clear saved data?","fm_grading_text":"Your score should be less than","time_validation":"This is not a valid time value.","number_validation":"This is not a valid number value.","date_validation":"This is not a valid date value.","year_validation":"The year must be between %%start%% and %%end%%"};
 /* ]]> */
 </script>
-<script type='text/javascript' src='https://xpu9xkeqmm25weon2hdkq715-wpengine.netdna-ssl.com/wp-content/mmr/bd70770f-1528982102.js'></script>
+<script type='text/javascript' src='./js/default.js?ver=4.4.2'></script>
 <script type="text/javascript">/* <![CDATA[ */EnlighterJS_Config = {"selector":{"block":"pre.EnlighterJSRAW","inline":"code.EnlighterJSRAW"},"language":"generic","theme":"enlighter","indent":2,"hover":"hoverEnabled","showLinenumbers":true,"rawButton":true,"infoButton":true,"windowButton":true,"rawcodeDoubleclick":false,"grouping":true,"cryptex":{"enabled":false,"email":"mail@example.tld"}};!function(){var a=function(a){var b="Enlighter Error: ";console.error?console.error(b+a):console.log&&console.log(b+a)};return window.addEvent?"undefined"==typeof EnlighterJS?void a("Javascript Resources not loaded yet!"):"undefined"==typeof EnlighterJS_Config?void a("Configuration not loaded yet!"):void window.addEvent("domready",function(){EnlighterJS.Util.Init(EnlighterJS_Config.selector.block,EnlighterJS_Config.selector.inline,EnlighterJS_Config)}):void a("MooTools Framework not loaded yet!")}();;/* ]]> */</script><style>
 #tawkchat-minified-container {
 background-color: #434a5b !important;
