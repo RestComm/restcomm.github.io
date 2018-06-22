@@ -23475,9 +23475,21 @@ Countly.q.push(['report_conversion']);
 <p><strong>input</strong> A list of inputs that RestComm should accept for &lt;Gather&gt;. Can be "dtmf" or "speech". Defaults to "dtmf".</p>
 </li>
 <li>
-<p><strong>partialResultCallback</strong> A relative or fully qualified URL. Is a mandatory attribute for “speech” mode. RestComm will make requests to your partialResultCallback in real-time as speech is recognized.</p>
+<p><strong>partialResultCallback</strong> A relative or fully qualified URL. Is a mandatory attribute for “speech” mode. RestComm will make requests to your partialResultCallback in real-time as speech is recognized.  These webhooks will contain UnstableSpeechResult parameter with partial transcriptions that may change as the recognition progresses.</p>
 </li>
 </ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The Webhooks to partialResultCallback are async and doesn&#8217;t accept RCML back. If you want to act based on the partial result, then use the REST API to Live Modify the call.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -23543,7 +23555,7 @@ Countly.q.push(['report_conversion']);
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-06-21 08:05:42 UTC
+Last updated 2018-06-22 09:11:54 UTC
 </div>
 </div>
 <footer >
