@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>Requirements</title>
+<title>Restcomm Visual Designer</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -23335,221 +23335,266 @@ Countly.q.push(['report_conversion']);
 </head>
 <body class="article">
 <div id="header">
+<h1>Restcomm Visual Designer</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
-<ul class="sectlevel3">
-<li><a href="#requirements">Requirements</a></li>
-<li><a href="#step-1---adding-the-mariadb-jdbc-connector-to-jboss-datasource">Step 1 - Adding the MariaDB JDBC connector to JBoss Datasource</a></li>
-<li><a href="#step-2---configuring-the-mybatis.xml-file-to-use-mariadb">Step 2 - Configuring the mybatis.xml file to use MariaDB</a></li>
-<li><a href="#step-3---download-mariadb-java-client-driver">Step 3 - Download MariaDB Java Client Driver</a></li>
-<li><a href="#step-4---start-mariadb-and-create-the-restcomm-database."> Step 4 - Start mariaDB and Create the restcomm Database.</a></li>
-<li><a href="#step-5---edit-the-restcomm.xml-file-to-point-the-dao-to-mariadb">Step 5 - Edit the restcomm.xml file to point the DAO to mariadb</a></li>
+<ul class="sectlevel1">
+<li><a href="#quick-start-guide">Quick Start guide</a>
+<ul class="sectlevel2">
+<li><a href="#the-em-greeting-em-application">The <em>Greeting</em> application</a></li>
+<li><a href="#working-with-visual-designer">Working with Visual Designer</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 <div id="content">
+<div class="sect1">
+<h2 id="quick-start-guide"><a class="anchor" href="#quick-start-guide"></a>Quick Start guide</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>When working with the binary version of Restcomm, the default database is hsqlDB. This is of course not suitable for production but it is provided as a way for you to conveniently and quickly start up Restcomm. If you are running Restcomm on Amazon Cloud, the configuration and setup comes with MariaDB. For those who wish to run Restcomm on a local server or on another cloud based system, the following tutorial will show you how to get started with Restcomm and MariaDB</p>
+<p>This guide will help you learn the bare basics of Visual Designer.</p>
 </div>
+<div class="sect2">
+<h3 id="the-em-greeting-em-application"><a class="anchor" href="#the-em-greeting-em-application"></a>The <em>Greeting</em> application</h3>
 <div class="sect3">
-<h4 id="requirements"><a class="anchor" href="#requirements"></a>Requirements</h4>
+<h4 id="create-the-application"><a class="anchor" href="#create-the-application"></a>Create the application</h4>
+<div class="paragraph">
+<p>New applications are easily created from within the Console. Sign into your account and navigate to the
+application list view. For cloud accounts this is:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://cloud.restcomm.com/#/applications" class="bare">https://cloud.restcomm.com/#/applications</a></p>
+</div>
+<div class="paragraph">
+<p>In order to create an application</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Make sure MariaDB is installed, for those run on systems that supports Yum install, see the instruction <a href="https://mariadb.com/kb/en/mariadb/yum/">HERE</a></p>
+<p>Click on the <code>Add New App</code> button. This will start the application creation wizzard.</p>
 </li>
 <li>
-<p>Download the latest version of Restcomm-Connect as explained in <a href="Starting Restcomm-Connect.html#start-restcomm-connect">Starting Restcomm-Connect</a></p>
+<p>Choose <code>Create a Visual Designer Application</code> in the next view.
+Other options are <a href="importing application from local file.html">[importing application from local file]</a> or <a href="linking to an external one.html">[linking to an external one]</a>.
+We will review these options later.</p>
+</li>
+<li>
+<p>In the Template Gallery pick the <code>Blank</code> template. That&#8217;s the most basic Visual Designer application.
+<a href="Template Gallery.html">[Template Gallery]</a> offers a range of options to kick start your application and can save you a great deal of time
+and effort. We will stick to the bare minimum for now.</p>
+</li>
+<li>
+<p>Next, you need to name your application and choose a <em>type</em> for it. The <em>name</em> is not an
+identifier but more like a user friendly way to refer to your app. Pick something short and descriptive.
+We&#8217;ll use <code>greeting-app</code> for the purpose of this example.</p>
+</li>
+<li>
+<p>The <em>type</em> determines whether this application will respond to voice calls or SMS messages.
+Choose <code>voice</code> for now. You may learn more about application types <a href="here.html">[here]</a>.</p>
+</li>
+<li>
+<p>When done, click <code>Create</code>. This will create your application and navigate you to the
+application details page. Here, you can perform management operations like
+application removal. Other helpfull information, such as which numbers are bound to it, is displayed too.</p>
+</li>
+<li>
+<p>Click <code>Design</code> to open the Visual Designer editor in a new tab.</p>
+</li>
+<li>
+<p>Keep the tab open. You will need it in a while.</p>
 </li>
 </ul>
 </div>
-</div>
-<div class="sect3">
-<h4 id="step-1---adding-the-mariadb-jdbc-connector-to-jboss-datasource"><a class="anchor" href="#step-1---adding-the-mariadb-jdbc-connector-to-jboss-datasource"></a>Step 1 - Adding the MariaDB JDBC connector to JBoss Datasource</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Edit <strong>$RESTCOMM_HOME/standalone/configuration/standalone-sip.xml</strong> file</p>
-</li>
-<li>
-<p>Under the datasource tag add the following:</p>
-</li>
-<li>
-<p>Make sure you are using the correct IP address and port default port 3306. In the example below the local IP is 192.168.1.3:3306</p>
-</li>
-<li>
-<p>Use the correct username and password for the MariaDB access</p>
-</li>
-<li>
-<p>Set the MariaDB enabled="true" and make sure you set the default dummy datasource to "false"</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
+<div class="imageblock">
 <div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">&lt;datasource jndi-name="java:/MariaDS" pool-name="MariaDS" enabled="true"&gt;
-    &lt;connection-url&gt;jdbc:mariadb://192.168.1.3:3306/restcomm&lt;/connection-url&gt;
-    &lt;driver&gt;mariadb&lt;/driver&gt;
-    &lt;transaction-isolation&gt;TRANSACTION_READ_COMMITTED&lt;/transaction-isolation&gt;
-    &lt;pool&gt;
-        &lt;min-pool-size&gt;100&lt;/min-pool-size&gt;
-        &lt;max-pool-size&gt;200&lt;/max-pool-size&gt;
-    &lt;/pool&gt;
-    &lt;security&gt;
-        &lt;user-name&gt;myTestUsername&lt;/user-name&gt;
-        &lt;password&gt;myTestPassword&lt;/password&gt;
-    &lt;/security&gt;
-    &lt;statement&gt;
-        &lt;prepared-statement-cache-size&gt;100&lt;/prepared-statement-cache-size&gt;
-        &lt;share-prepared-statements/&gt;
-    &lt;/statement&gt;
-&lt;/datasource&gt;</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>In the datasource under the <strong>drivers</strong> tag, add the following:</p>
-</li>
-<li>
-<p>save and exit the standalone-sip.xml file</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">&lt;driver name="mariadb" module="org.mariadb.jdbc"&gt;
-	&lt;xa-datasource-class&gt;org.mariadb.jdbc.MySQLDataSource&lt;/xa-datasource-class&gt;
-&lt;/driver&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="step-2---configuring-the-mybatis.xml-file-to-use-mariadb"><a class="anchor" href="#step-2---configuring-the-mybatis.xml-file-to-use-mariadb"></a>Step 2 - Configuring the mybatis.xml file to use MariaDB</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Edit the file <strong>$RESTCOMM_HOME/standalone/deployments/restcomm.war/WEB-INF/conf/mybatis.xml</strong></p>
-</li>
-<li>
-<p>Change the environments id to id="mariadb"</p>
-</li>
-<li>
-<p>Add the MariaDB configuration environment tag as shown below</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">&lt;environments default="mariadb"&gt;
-        &lt;environment id="mariadb"&gt;
-                &lt;transactionManager type="JDBC" /&gt;
-                &lt;dataSource type="JNDI"&gt;
-                        &lt;property name="data_source" value="java:/MariaDS" /&gt;
-                &lt;/dataSource&gt;
-        &lt;/environment&gt;
-&lt;/environments&gt;</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Save and exist the <strong>mybatis.xml</strong> file</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="step-3---download-mariadb-java-client-driver"><a class="anchor" href="#step-3---download-mariadb-java-client-driver"></a>Step 3 - Download MariaDB Java Client Driver</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Download the mariaDB java client driver from <a href="https://mariadb.com/my_portal/download/java-client">HERE</a></p>
-</li>
-<li>
-<p>Go to the directory <strong>$RESTCOMM_HOME/modules</strong></p>
-</li>
-<li>
-<p>Run the following command to create a new directory structure:  <strong>mkdir -p ./org/mariadb/jdbc/main</strong></p>
-</li>
-<li>
-<p>Go to the newly created directory structure <strong>$RESTCOMM_HOME/modules/org/mariadb/jdbc/main</strong></p>
-</li>
-<li>
-<p>Copy the downloaded <strong>mariadb-java-client-1.2.0.jar</strong> to the <strong>$RESTCOMM_HOME/modules/org/mariadb/jdbc/main</strong></p>
-</li>
-<li>
-<p>In the <strong>$RESTCOMM_HOME/modules/org/mariadb/jdbc/main</strong> create a new xml file called <strong>module.xml</strong></p>
-</li>
-<li>
-<p>The content of the <strong>module.xml</strong> should be similar to the one below. Notice the <strong>path</strong> name of the java client must matches the one you download</p>
-</li>
-<li>
-<p>You should now have 2 files in the <strong>$RESTCOMM_HOME/modules/org/mariadb/jdbc/main</strong> directory.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
-&lt;module xmlns="urn:jboss:module:1.1" name="org.mariadb.jdbc"&gt;
-    &lt;resources&gt;
-        &lt;resource-root path="mariadb-java-client-1.2.0.jar"/&gt;
-    &lt;/resources&gt;
-    &lt;dependencies&gt;
-        &lt;module name="javax.api"/&gt;
-        &lt;module name="javax.transaction.api"/&gt;
-    &lt;/dependencies&gt;
-&lt;/module&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="step-4---start-mariadb-and-create-the-restcomm-database."><a class="anchor" href="#step-4---start-mariadb-and-create-the-restcomm-database."></a> Step 4 - Start mariaDB and Create the restcomm Database.</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Start mariaDB  - <strong>sudo /etc/init.d/mysql start</strong></p>
-</li>
-<li>
-<p>Go to the directory <strong>$RESTCOMM_HOME/standalone/deployments/restcomm.war/WEB-INF/scripts/mariadb</strong></p>
-</li>
-<li>
-<p>There will be an <strong>init.sql</strong> file and an <strong>sql</strong> directory</p>
-</li>
-<li>
-<p>Create the restcomm database from the <strong>init.sql</strong> as follows:</p>
-</li>
-<li>
-<p>mysql -u root &lt; <strong>init.sql</strong></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="step-5---edit-the-restcomm.xml-file-to-point-the-dao-to-mariadb"><a class="anchor" href="#step-5---edit-the-restcomm.xml-file-to-point-the-dao-to-mariadb"></a>Step 5 - Edit the restcomm.xml file to point the DAO to mariadb</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Edit the file <strong>$RESTCOMM_HOME/standalone/deployments/restcomm.war/WEB-INF</strong>/conf/dao-manager.xml</p>
-</li>
-<li>
-<p>Find the dao-manager tag and change the sql-files path to mariadb as shown below</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default"> &lt;dao-manager class="org.restcomm.connect.dao.mybatis.MybatisDaoManager"&gt;
-        &lt;configuration-file&gt;${restcomm:home}/WEB-INF/conf/mybatis.xml
-        &lt;/configuration-file&gt;
-        &lt;data-files&gt;${restcomm:home}/WEB-INF/data/hsql&lt;/data-files&gt;
-        &lt;sql-files&gt;${restcomm:home}/WEB-INF/scripts/mariadb/sql&lt;/sql-files&gt;
-  &lt;/dao-manager&gt;</code></pre>
+<img src="https://www.restcomm.com/wp-content/uploads/2018/07/Screenshot-from-2018-07-02-16-39-23.png" alt="Restcomm Visual Designer Greeting application">
 </div>
 </div>
 <div class="paragraph">
-<p>Start Restcomm as explained in <a href="Starting Restcomm-Connect.html#start-restcomm-connect">Starting Restcomm-Connect</a></p>
+<p>You&#8217;re almost there. Your application is operational and will greet you with the default message when called.
+You do need a way to reach it though. To do that, you&#8217;ll have to
+<a href="bind it to a DID.html">[bind it to a DID]</a> (a number you can call to) and finally <a href="make a call using a SIP client.html">[make a call using a SIP client]</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="bind-with-a-number"><a class="anchor" href="#bind-with-a-number"></a>Bind with a number</h4>
+<div class="paragraph">
+<p>You&#8217;ve just created a <em>voice</em> application. Such applications are triggered
+and respond to voice calls. You will need some sort of handle to make a call to. We call this handle a <em>DID</em> or <em>Incoming Number</em>.
+In cloud Console you can manage these entities in the <code>Numbers</code> section. In cloud this is:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://cloud.restcomm.com/#/numbers/incoming" class="bare">https://cloud.restcomm.com/#/numbers/incoming</a></p>
+</div>
+<div class="paragraph">
+<p>Navigate  your browser to the <em>Numbers</em> section. Then</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click on the <code>Register Number</code> to start the wizard for reserving a number.</p>
+</li>
+<li>
+<p>In the form provide an identifier value for <code>SIP Address</code> and <code>Friendly Name</code>. You can use something like
+a handy numeric value in both fields. For example 5555. Remember, what you define as SIP Address is where you will
+call to in a while. Click <code>Register</code> to reserve this number. The operation will fail if the number has
+already been reserved. That&#8217;s ok, you may try another one.</p>
+</li>
+<li>
+<p>You should now see the number details form. Your number is reserved but does not point
+to your application yet.</p>
+</li>
+<li>
+<p>In the <code>Voice</code> section expand the dropdown with the list of applications. You should
+see an entry named <code>greeting-app</code>. Select it.</p>
+</li>
+<li>
+<p>Click <code>Save changes</code> at the bottom.</p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">image</dt>
+<dd>
+<p><a href="https://www.restcomm.com/wp-content/uploads/2018/07/Screenshot-from-2018-07-02-16-42-35.png">Bind greeting application to a phone number</a></p>
+</dd>
+</dl>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Your number is now linked to the application.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="call-the-application"><a class="anchor" href="#call-the-application"></a>Call the application</h4>
+<div class="paragraph">
+<p>Time to execute the application. Voice applications respond to voice calls. In order to make such
+one, you can use a SIP client to call the number you just registered. In cloud you can use the <a href="WebRTC Demo client.html">[WebRTC Demo client]</a>.</p>
+</div>
+<div class="paragraph">
+<p>Get back to the Console</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Start WebRTC Demo client. It will open in a new tab.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>From WebRTC Demo client</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Create a new Contact named after the number you created. In our case this is 5555.</p>
+</li>
+<li>
+<p>Place your call and make sure your sound output device is active.</p>
+</li>
+<li>
+<p>You should hear the greeting message of the <code>greeting-app</code> application.</p>
+</li>
+<li>
+<p>Keep the tab open for later use.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://www.restcomm.com/wp-content/uploads/2018/07/Screenshot-from-2018-07-02-16-55-39.png" alt="Greeting app demo call">
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="working-with-visual-designer"><a class="anchor" href="#working-with-visual-designer"></a>Working with Visual Designer</h3>
+<div class="paragraph">
+<p>Now that the plumbing is all set up, you can go ahead and extend  your applicaiton
+ with more usefull and interesting features. Switch back to Visual Designer tab. Let&#8217;s introduce some basic concepts.</p>
+</div>
+<div class="sect3">
+<h4 id="elements"><a class="anchor" href="#elements"></a>Elements</h4>
+<div class="paragraph">
+<p>On the left you will notice a long list of buttons. We call these <code>elements</code>. You can&#8217;t click on them, but
+you can drag and drop them into modules. <a href="Elements.html">[Elements]</a> are the building blocks of each Visual Designer application.</p>
+</div>
+<div class="paragraph">
+<p>You will notice that your application already contains a <code>Say</code> element. It contains the greeting that
+you heard when calling the application. <code>Say</code> elements are able to convert written phrases to their
+verbal representations. We call this Text-To-Speech (TTS).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="modules"><a class="anchor" href="#modules"></a>Modules</h4>
+<div class="paragraph">
+<p><code>Elements</code> are grouped together in sequences we call <code>modules</code>. The whole area next to the
+element toolbox is where modules appear. They are organized in a series of tabs and will accept
+elements when dragged  and dropped over them. <a href="Modules.html">[Modules]</a> are the main execution unit in a Visual Designer application.</p>
+</div>
+<div class="paragraph">
+<p>By default new applications already contain a <em>Welcome</em> module with the <code>Say</code> element we just
+mentioned. Since this gets executed first, we call this the <code>Startup</code> module.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="making-changes"><a class="anchor" href="#making-changes"></a>Making changes</h4>
+<div class="paragraph">
+<p>Let&#8217;s now change the greeting to something more interesting.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Edit the default text in the <code>Say</code> element and use something more personalized like <em>'Hello Alice. I am glad to hear back from you.'</em>.</p>
+</li>
+<li>
+<p>Click the <code>Save</code> button.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://www.restcomm.com/wp-content/uploads/2018/07/Screenshot-from-2018-07-02-16-49-11.png" alt="Greeting app announcement modified">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Get back to the WebRTC Demo tab and call your application once again.</p>
+</li>
+<li>
+<p>You should hear the updated greeting.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://www.restcomm.com/wp-content/uploads/2018/07/Screenshot-from-2018-07-02-16-55-39.png" alt="Greeting demo app call">
+</div>
+</div>
+<div class="sect4">
+<h5 id="validation-errors"><a class="anchor" href="#validation-errors"></a>Validation errors</h5>
+<div class="paragraph">
+<p>You will need to <em>Save</em> your changes so that they are effective. In case you get a validation
+error, your changes won&#8217;t be applied to the actual running application. They will be persisted though so
+that you don&#8217;t loose your work.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="workflow"><a class="anchor" href="#workflow"></a>Workflow</h4>
+<div class="paragraph">
+<p>Once you&#8217;re done, it&#8217;s good practice to close the editor tab. Think of Visual Designer
+as an editor like the one you edit images in. You get a new window for each new image you edit
+and you&#8217;re allowed to switch between them. When done, you just close what you don&#8217;t need any more.
+This is not required but will result in a cleaner and faster workflow.</p>
+</div>
+<div class="paragraph">
+<p><a href="index.html">Back to Visual Designer documentation home</a></p>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
