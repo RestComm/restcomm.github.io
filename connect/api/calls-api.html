@@ -23384,9 +23384,15 @@ Countly.q.push(['report_conversion']);
 <li><a href="#example">Example.</a></li>
 </ul>
 </li>
-<li><a href="#additional-paging-information">Additional Paging Information.</a>
+<li><a href="#additional-paging-information">Additional Paging Information</a>
 <ul class="sectlevel2">
 <li><a href="#request-parameters-6">Request Parameters</a></li>
+</ul>
+</li>
+<li><a href="#sorting-information">Sorting Information</a>
+<ul class="sectlevel2">
+<li><a href="#sortby-attributes">SortBy Attributes</a></li>
+<li><a href="#example-2">Example</a></li>
 </ul>
 </li>
 </ul>
@@ -23742,7 +23748,7 @@ included in the outgoing INVITE message.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-lang:xml" data-lang="lang:xml">&lt;RestcommResponse&gt;
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;RestcommResponse&gt;
   &lt;Calls page="0" numpages="0" pagesize="50" total="0" start="0" end="0" uri="/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls" firstpageuri="/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls?Page=0&amp;amp;PageSize=50" previouspageuri="null" nextpageuri="null" lastpageuri=="/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls?Page=0&amp;amp;PageSize=50"/&gt;</code></pre>
 </div>
 </div>
@@ -24282,7 +24288,7 @@ The call will now be redirected to the Url specified(hello-world.xml)</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-lang:xml" data-lang="lang:xml">&lt;RestcommResponse&gt;
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;RestcommResponse&gt;
   &lt;Calls page="0" numpages="0" pagesize="50" total="0" start="0" end="1" uri="/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls" firstpageuri="/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls?Page=0&amp;amp;PageSize=50" previouspageuri="null" nextpageuri="null" lastpageuri=="/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls?Page=0&amp;amp;PageSize=50"&gt;
     &lt;Call&gt;
       &lt;Sid&gt;CAc0fb839632cf444f9066876d5de741e0&lt;/Sid&gt;
@@ -24330,7 +24336,7 @@ The call will now be redirected to the Url specified(hello-world.xml)</p>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">PParameter</th>
+<th class="tableblock halign-left valign-top">Parameter</th>
 <th class="tableblock halign-left valign-top">Description</th>
 </tr>
 </thead>
@@ -24382,7 +24388,7 @@ The call will now be redirected to the Url specified(hello-world.xml)</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-lang:xml" data-lang="lang:xml">&lt;RestcommResponse&gt;
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;RestcommResponse&gt;
   &lt;Calls page="0" numpages="7" pagesize="1" total="7" start="0" end="0" uri="/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls" firstpageuri="/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls?Page=0&amp;amp;PageSize=1" previouspageuri="null" nextpageuri="/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls?Page=1&amp;amp;PageSize=1&amp;amp;AfterSid=CA4049cf008d6b4277b92ab863fd4ec7c8" lastpageuri=="/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls?Page=7&amp;amp;PageSize=1"&gt;
     &lt;Call&gt;
       &lt;Sid&gt;CA4049cf008d6b4277b92ab863fd4ec7c8&lt;/Sid&gt;
@@ -24412,16 +24418,11 @@ The call will now be redirected to the Url specified(hello-world.xml)</p>
   &lt;/Calls&gt;</code></pre>
 </div>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre> </pre>
-</div>
-</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="additional-paging-information"><a class="anchor" href="#additional-paging-information"></a>Additional Paging Information.</h2>
+<h2 id="additional-paging-information"><a class="anchor" href="#additional-paging-information"></a>Additional Paging Information</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The API returns URIs to the next, previous, first and last pages of the returned list as shown in the table below:</p>
@@ -24465,10 +24466,109 @@ The call will now be redirected to the Url specified(hello-world.xml)</p>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="sorting-information"><a class="anchor" href="#sorting-information"></a>Sorting Information</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>HTTP GET.</strong> You can use the <strong>SortBy</strong> GET query parameter to determine which attribute you want to sort by and in which direction; direction can either be 'asc' for ascending and 'desc' for descending sort ordering. Here&#8217;s the overall format: <strong>SortBy=&lt;sorting attribute&gt;:&lt;direction&gt;</strong>. If no direction parameter is provided, then the listing of calls is sorted by the attribute in ascending order. Below you can find the possible attributes you can sort by:</p>
+</div>
+<div class="sect2">
+<h3 id="sortby-attributes"><a class="anchor" href="#sortby-attributes"></a>SortBy Attributes</h3>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DateCreated</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by date at which the call was created</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">From</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the party who initiated the call</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">To</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the party who received the call</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Direction</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the direction of the call</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the status of the call</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Duration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the duration of the call</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Price</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the price of the call, if applicable</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="example-2"><a class="anchor" href="#example-2"></a>Example</h3>
+<div class="paragraph">
+<p>The command below will return calls sorted by the creation date in ascending order using SortBy parameter:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -X GET  https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/&lt;accountSid&gt;/Calls?SortBy=DateCreated:asc</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The result of the <strong>SortBy</strong> parameter:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;RestcommResponse&gt;
+    &lt;Calls page="0" numpages="0" pagesize="50" total="0" start="0" end="3" uri="/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls" firstpageuri="/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls?Page=0&amp;amp;PageSize=50" previouspageuri="null" nextpageuri="null" lastpageuri="/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls?Page=0&amp;amp;PageSize=50"&gt;
+        &lt;Call&gt;
+            &lt;Sid&gt;ID8555f97abe0441e0a07ca2da3a081871-CAaf146bdb9ea04cd7a9a6f76d955f1aed&lt;/Sid&gt;
+            &lt;InstanceId&gt;ID8555f97abe0441e0a07ca2da3a081871&lt;/InstanceId&gt;
+            &lt;DateCreated&gt;Thu, 28 Jun 2018 16:56:33 +0300&lt;/DateCreated&gt;
+            &lt;DateUpdated&gt;Thu, 28 Jun 2018 16:56:36 +0300&lt;/DateUpdated&gt;
+            &lt;ParentCallSid/&gt;
+            ...
+        &lt;/Call&gt;
+        &lt;Call&gt;
+            &lt;Sid&gt;ID8555f97abe0441e0a07ca2da3a081871-CA898196ba193342769877eb218d5008d3&lt;/Sid&gt;
+            &lt;InstanceId&gt;ID8555f97abe0441e0a07ca2da3a081871&lt;/InstanceId&gt;
+            &lt;DateCreated&gt;Thu, 28 Jun 2018 16:56:39 +0300&lt;/DateCreated&gt;
+            &lt;DateUpdated&gt;Thu, 28 Jun 2018 16:56:42 +0300&lt;/DateUpdated&gt;
+            &lt;ParentCallSid/&gt;
+            ...
+        &lt;/Call&gt;
+        &lt;Call&gt;
+            &lt;Sid&gt;ID8555f97abe0441e0a07ca2da3a081871-CA4458385933b4447aa3fa02389426a99d&lt;/Sid&gt;
+            &lt;InstanceId&gt;ID8555f97abe0441e0a07ca2da3a081871&lt;/InstanceId&gt;
+            &lt;DateCreated&gt;Thu, 28 Jun 2018 16:56:44 +0300&lt;/DateCreated&gt;
+            &lt;DateUpdated&gt;Thu, 28 Jun 2018 16:56:50 +0300&lt;/DateUpdated&gt;
+            &lt;ParentCallSid/&gt;
+            ...
+        &lt;/Call&gt;
+    &lt;/Calls&gt;
+&lt;/RestcommResponse&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-07-02 15:38:48 UTC
+Last updated 2018-07-04 07:57:22 UTC
 </div>
 </div>
 <footer >

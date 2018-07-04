@@ -23340,7 +23340,7 @@ Countly.q.push(['report_conversion']);
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel2">
 <li><a href="#tags">Tags</a></li>
-<li><a href="#8-7-0-version-2018-06-19-docker-tag-em-_-em">8.7.0 version 2018-06-19 (docker tag <em>_</em>)</a>
+<li><a href="#8-7-0-version-2018-07-4-docker-tag-em-_-em">8.7.0 version 2018-07-4 (docker tag <em>_</em>)</a>
 <ul class="sectlevel2">
 <li><a href="#new-features">New Features</a></li>
 <li><a href="#breaking-changes">Breaking Changes</a></li>
@@ -23410,14 +23410,20 @@ Countly.q.push(['report_conversion']);
 </div>
 </div>
 <div class="sect1">
-<h2 id="8-7-0-version-2018-06-19-docker-tag-em-_-em"><a class="anchor" href="#8-7-0-version-2018-06-19-docker-tag-em-_-em"></a>8.7.0 version 2018-06-19 (docker tag <em>_</em>)</h2>
+<h2 id="8-7-0-version-2018-07-4-docker-tag-em-_-em"><a class="anchor" href="#8-7-0-version-2018-07-4-docker-tag-em-_-em"></a>8.7.0 version 2018-07-4 (docker tag <em>_</em>)</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="new-features"><a class="anchor" href="#new-features"></a>New Features</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>Enabled multi-provider routing for the organization SIP domain</p>
+<p><strong>Multi-provider routing for the organization SIP domain.</strong> RestComm will automatically inject the organization domain when calling to a destination.</p>
+</li>
+<li>
+<p><strong>Support for Organizations in the REST API.</strong> New security constraints applied in order to allow access to organization resources only when hostname of the request match the organization domain that the account credentials belong to.</p>
+</li>
+<li>
+<p><strong>Sorting Call Detail Records.</strong> Added sorting fields for CDR in Administrator Console.</p>
 </li>
 </ul>
 </div>
@@ -23431,8 +23437,13 @@ Countly.q.push(['report_conversion']);
 <div class="ulist">
 <ul>
 <li>
-<p>Send BYE on session expiration for B2BUA calls
-*</p>
+<p>Send BYE on session expiration for B2BUA calls</p>
+</li>
+<li>
+<p>Gather operation now accepts star key as initial input.</p>
+</li>
+<li>
+<p>Elegant call termination during audio recording. <strong>Dialogic XMS only</strong>.</p>
 </li>
 </ul>
 </div>
@@ -23939,7 +23950,7 @@ scripts are available in <strong>commercial</strong> version. Database migration
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-07-02 15:38:48 UTC
+Last updated 2018-07-04 07:57:22 UTC
 </div>
 </div>
 <footer >

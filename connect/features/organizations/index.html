@@ -23378,13 +23378,19 @@ Countly.q.push(['report_conversion']);
 <p>Whitelabeling: Provide the ability to have a customizable user experience for a service provider’s end customers (a skinnable dashboard and RVD, etc.)</p>
 </li>
 <li>
-<p>Custom URL for API calls <a href="https://mydomain.restcomm.com/%E2%80%A6">https://mydomain.restcomm.com/…</a></p>
+<p>Custom URL for API calls <a href="https://mydomain.restcomm.com/%E2%80%A6">https://mydomain.restcomm.com/</a></p>
 </li>
 <li>
 <p>Sharding of organizations/domain for scale, SLA, performance</p>
 </li>
 <li>
 <p>Consolidated billing for a given Organization</p>
+</li>
+<li>
+<p>Relative URLs  will be resolved based on the Organization domain name</p>
+</li>
+<li>
+<p>Security constraints will not allow access to organization resources when hostname of the request doesn&#8217;t match the domain name of the organization, even if valid credential provided.</p>
 </li>
 </ul>
 </div>
@@ -23417,7 +23423,7 @@ Countly.q.push(['report_conversion']);
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-07-02 15:38:48 UTC
+Last updated 2018-07-04 07:57:22 UTC
 </div>
 </div>
 <footer >

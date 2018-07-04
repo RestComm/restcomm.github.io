@@ -23340,6 +23340,7 @@ Countly.q.push(['report_conversion']);
 <ul class="sectlevel2">
 <li><a href="#restcomm-rest-api"><strong>Restcomm REST API</strong></a></li>
 <li><a href="#restcomm-admin-ui"><strong>Restcomm Admin UI</strong></a></li>
+<li><a href="#security-constraints"><strong>Security constraints</strong></a></li>
 </ul>
 </div>
 </div>
@@ -23454,10 +23455,22 @@ The Applications API has a different access control, and allows the accounts to 
 <p>This is the way that multi tenancy support provides access control between accounts, ensuring that only authorized accounts will be able to see and manage another accounts info.  </p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="security-constraints"><a class="anchor" href="#security-constraints"></a><strong>Security constraints</strong></h3>
+<div class="paragraph">
+<p>If the hostname of the request doesn&#8217;t match the organization domain name of the provided account credential Restcomm-Connect will not allow access.</p>
+</div>
+<div class="paragraph">
+<p>For example, if trying to login to 'https://wonderland.restcomm.com' using account credentials that belong to organization 'https://alice.restcomm.com', Restcomm-Connect will drop the request.</p>
+</div>
+<div class="paragraph">
+<p>Same is true for accessing organization/account resources using REST API. If the hostname of the REST API request doesn&#8217;t match the domain name of the organization that the account credentials belong, Restcomm-Connect will drop the request.</p>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-07-02 15:38:48 UTC
+Last updated 2018-07-04 07:57:22 UTC
 </div>
 </div>
 <footer >
