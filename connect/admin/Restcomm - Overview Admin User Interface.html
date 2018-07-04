@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>Login Interface</title>
+<title>Restcomm Login Interface</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -23338,20 +23338,38 @@ Countly.q.push(['report_conversion']);
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel0">
-<li><a href="#login-interface">Login Interface</a></li>
-<li><a href="#passwords-sub-accounts-settings">Passwords, Sub Accounts Settings</a></li>
-<li><a href="#dashboard">Dashboard</a></li>
-<li><a href="#restcomm-numbers">Restcomm Numbers</a></li>
+<li><a href="#restcomm-login-interface">Restcomm Login Interface</a></li>
+<li><a href="#restcomm-console-dashboard">Restcomm Console Dashboard</a></li>
+<li><a href="#restcomm-account-settings">Restcomm Account Settings</a></li>
+<li><a href="#restcomm-applications">Restcomm Applications</a></li>
+<li><a href="#restcomm-numbers">Restcomm Numbers</a>
+<ul class="sectlevel1">
 <li><a href="#register-number">Register Number</a></li>
-<li><a href="#edit-update-number">Edit Update Number</a></li>
-<li><a href="#sip-clients">SIP Clients</a></li>
-<li><a href="#outgoing-callerid">Outgoing CallerId</a></li>
+<li><a href="#edit-update-number">Edit/Update Number</a></li>
+</ul>
+</li>
+<li><a href="#restcomm-clients">Restcomm Clients</a>
+<ul class="sectlevel1">
+<li><a href="#edit-update-restcomm-client">Edit/Update Restcomm Client</a></li>
+</ul>
+</li>
 <li><a href="#logs">Logs</a>
 <ul class="sectlevel1">
-<li><a href="#logs---calls">Logs - Calls</a></li>
-<li><a href="#logs---messages">Logs - Messages</a></li>
-<li><a href="#logs---recordings">Logs - Recordings</a></li>
-<li><a href="#logs---transcriptions">Logs - Transcriptions</a></li>
+<li><a href="#logs---calls">Logs - Calls</a>
+<ul class="sectlevel2">
+<li><a href="#logs-call-details">Logs - Call Details</a></li>
+</ul>
+</li>
+<li><a href="#logs---messages">Logs - Messages</a>
+<ul class="sectlevel2">
+<li><a href="#logs-message-details">Logs - Message Details</a></li>
+</ul>
+</li>
+<li><a href="#logs---recordings">Logs - Recordings</a>
+<ul class="sectlevel2">
+<li><a href="#logs-recordings-details">Logs - Recordings Details</a></li>
+</ul>
+</li>
 <li><a href="#logs---notifications">Logs - Notifications</a></li>
 </ul>
 </li>
@@ -23360,341 +23378,198 @@ Countly.q.push(['report_conversion']);
 </div>
 <div id="content">
 <div class="paragraph">
-<p>The Restcomm Console is a great way to perform repetitive Restcomm task in a orderly manner. Care has been taken to make the user experience intuitive for those new to the platform. In this chapter, you will learn how to use some of the features available to create Clients, Phone Numbers, Check Call Logs, Get Speech-to-Text Transcription and many more</p>
+<p>The Restcomm Console is a great way to perform repetitive Restcomm tasks in a orderly manner. In this guide, you will learn how to use some of the features available to create Applications, Clients, Phone Numbers, Check Call Logs, Messages Logs, Recordings.</p>
 </div>
-<h1 id="login-interface" class="sect0"><a class="anchor" href="#login-interface"></a>Login Interface</h1>
+<h1 id="restcomm-login-interface" class="sect0"><a class="anchor" href="#restcomm-login-interface"></a>Restcomm Login Interface</h1>
 <div class="paragraph">
-<p><span class="image"><img src="./images/restcomm-admin-ui-1.png" alt="restcomm-admin-ui-1" width="300" height="228"></span></p>
+<p>Make sure you use the correct Restcomm Organization URL that you first defined when you created your Restcomm Account and that you received in the sign up email. It should look like <code><a href="https://{mydomain}.restcomm.com/login" class="bare">https://{mydomain}.restcomm.com/login</a></code></p>
 </div>
 <div class="paragraph">
-<p><strong>Login Interface</strong></p>
+<p><span class="image"><img src="./images/console-1.png" alt="console-1"></span></p>
 </div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
+<h1 id="restcomm-console-dashboard" class="sect0"><a class="anchor" href="#restcomm-console-dashboard"></a>Restcomm Console Dashboard</h1>
+<div class="paragraph">
+<p>This is the default page after you log in where you can get latest news and features as well as a usage overview of your Restcomm Account activity.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./images/console-2.png" alt="console-2"></span></p>
+</div>
+<h1 id="restcomm-account-settings" class="sect0"><a class="anchor" href="#restcomm-account-settings"></a>Restcomm Account Settings</h1>
+<div class="paragraph">
+<p>When you click on the drop down representing the name of your Account then <code>Account</code> at the top right corner of the window, as shown in the screenshot below, you will be able to :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Retrieve your Account SID and Auth Token which are required to use the <a href="../api/index.html#API">Restcomm API</a> to place Outbound Calls or send SMS by example.</p>
+</li>
+<li>
+<p>Retrieve your Account Information such as First Name, Last Name, Email, Role.</p>
+</li>
+<li>
+<p>Change your Account password</p>
+</li>
+<li>
+<p>Create Sub-Accounts.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
 <tr>
-<th class="tableblock halign-left valign-top">Number</th>
-<th class="tableblock halign-left valign-top">Description</th>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+All of the information presented visually under the Restcomm Account Settings is also accessible through the <a href="../api/account-api.html#account">Restcomm Accounts API</a>
+</td>
 </tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Host on which Restcomm is running</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">You can log in using either the default email address or the default administrator&#8217;s account SID</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The default password attached to the administrator&#8217;s account</p></td>
-</tr>
-</tbody>
 </table>
-<h1 id="passwords-sub-accounts-settings" class="sect0"><a class="anchor" href="#passwords-sub-accounts-settings"></a>Passwords, Sub Accounts Settings</h1>
-<div class="paragraph">
-<p>You should always change the passwords of the default Administrator&#8217;s Account when you are in a production environment. When you click on the Administrators Account at the top right corner of the window, as shown in the screenshot below, you will be able to change passwords and create Sub Accounts.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="./images/restcomm-admin-ui-12.png" alt="restcomm-admin-ui-12" width="300" height="196"></span></p>
+<p><span class="image"><img src="./images/console-12.png" alt="console-12"></span></p>
+</div>
+<h1 id="restcomm-applications" class="sect0"><a class="anchor" href="#restcomm-applications"></a>Restcomm Applications</h1>
+<div class="paragraph">
+<p>This Section allows you to create, delete, update and search for your Restcomm Applications. When you start the workspace is empty, future updates to the platform will list a number of demo applications to get you started more quickly</p>
 </div>
 <div class="paragraph">
-<p><strong>Account Settings</strong></p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Number</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Shows the current Acount profile</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">You can create new Sub Accounts</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Descriptive name of the user account</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">New password of the current logged in account</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">You can activate or suspend an account</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">There are three options, Trial, Basic and Full(default)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">List of Sub Accounts</p></td>
-</tr>
-</tbody>
-</table>
-<h1 id="dashboard" class="sect0"><a class="anchor" href="#dashboard"></a>Dashboard</h1>
-<div class="paragraph">
-<p>This is the default page where you can get an overview of your Restcomm Installation.</p>
+<p><span class="image"><img src="./images/console-13.png" alt="console-13"></span></p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="./images/restcomm-admin-ui-2.png" alt="restcomm-admin-ui-2" width="300" height="250"></span></p>
+<p>When you click on the <code>Add New App</code> button on the right corner, you can create a new application which leads you to the screen below allowing you to choose between three ways of doing so:</p>
 </div>
 <div class="paragraph">
-<p><strong>Dashboard</strong></p>
+<p><span class="image"><img src="./images/console-14.png" alt="console-14"></span></p>
 </div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Number</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Account SID is the default used by the Administrator&#8217;s account</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Auth Token is the password that is required for any Restcomm operation. You can click on the hidden button to reveal the hashed password.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Debugger lets you troubleshoot any issues you might encounter using Restcomm</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A quick way to get all the API exposed by Restcomm</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Additional information about Calls parsed by Restcomm</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Additional information about SMS parsed by Restcomm</p></td>
-</tr>
-</tbody>
-</table>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Create a URL Application</strong> : This option allows you to create a <a href="../rcml/index.html#RCML">RCML Application</a> which will be hosted externally outside of Restcomm and contain the logic of your application to be executed upon receiving a call or a message. The <a href="../rcml/index.html#RCML">Restcomm Markup language</a> needs to be used to design your application. This option will let you define a name, URL of the RCML application hosted outside of Restcomm and the type of application (Voice or SMS). This option is the longest to get you started and will require that you understand Restcomm better, it&#8217;s usually recommended to start by creating a Visual Designer Application to get started more quickly.</p>
+</li>
+<li>
+<p><strong>Create a Visual Designer Application</strong> : This option allows you to create a <a href="../rvd/index.html#RVD">Restcomm Visual Designer Application</a> which will be hosted by Restcomm and contain the logic of your application to be executed upon receiving a call or a message. Visual Designer is a quick and great way to create Voice and Messaging applications with minimal or no programming skills. This option will let you define a name and the type of application (Voice or SMS). This option is the quickest to get you started and you can already choose from a pre-existing set of templates to get started even more quickly.</p>
+</li>
+<li>
+<p><strong>Import a Visual Designer Application</strong> : This option allows you to import a pre-existing <a href="../rvd/index.html#RVD">Restcomm Visual Designer Application</a> which will be hosted by Restcomm and contain the logic of your application to be executed upon receiving a call or a message. Visual Designer is a quick and great way to create Voice and Messaging applications with minimal or no programming skills. This option will let you define a name and the type of application (Voice or SMS).</p>
+</li>
+</ul>
+</div>
 <h1 id="restcomm-numbers" class="sect0"><a class="anchor" href="#restcomm-numbers"></a>Restcomm Numbers</h1>
 <div class="paragraph">
-<p>This will show the default demo applications that come with Restcomm. When you start creating applications and attaching numbers, they will also be displayed on this page.</p>
+<p>This Section allows you to create, delete, update and search for your Restcomm Numbers. When you start with {Restcomm} this section is empty, future updates to the platform will list a number of demo numbers to get you started more quickly. This section also allows you to link a Number to an Application created in the previous section</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="./images/restcomm-admin-ui-3.png" alt="restcomm-admin-ui-3" width="300" height="183"></span></p>
+<p><span class="image"><img src="./images/console-3.png" alt="console-3"></span></p>
+</div>
+<div class="sect1">
+<h2 id="register-number"><a class="anchor" href="#register-number"></a>Register Number</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When you click on the <code>Register Number</code> button, you will see a screen similar to the screenshots below. This will allow you to create a new phone number that can be attached to a Restcomm application.</p>
 </div>
 <div class="paragraph">
-<p><strong>Restcomm Numbers</strong></p>
+<p>You can register two types of Numbers:</p>
 </div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Number</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The number 1235 is attached to the hello-world.xml application. You must have configured VoiceRSS text-to-speech to use this application</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The number 1236 is attached to a the Gather verb. It will ask you to enter a number and you can hear the number you enter. You must have configured VoiceRSS text-to-speech to use this application</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The number 1234 plays a pre-recorded file.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This icon lets you edit the Name of the entry to a more descriptive one.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This button lets you create a new number that can be attached to a RCML</p></td>
-</tr>
-</tbody>
-</table>
-<h1 id="register-number" class="sect0"><a class="anchor" href="#register-number"></a>Register Number</h1>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>SIP Number</strong>: Those numbers are virtual numbers which are not tied to any Origination PSTN Provider and can be reached via a registered Restcomm Client using SIP or WebRTC. Type the name of the SIP Number you want to create in <code>SIP Address</code> field and give it a name you can remember easily in the <code>Friendly Name</code> field at the top and then click on the <code>Register</code> button, which will lead you to the <code>Edit Number</code> section below to link your newly purchased number to a Restcomm application your previously created
+<span class="image"><img src="./images/console-3-1.png" alt="console-3-1"></span></p>
+</li>
+<li>
+<p><strong>Provider Number</strong>: Those numbers are numbers which are tied to an Origination PSTN Provider and can be reached via a landline or mobile phone as well as through a registered Restcomm Client using SIP or WebRTC. You need to first search for a number from the Provider to purchase it which requires you to select a <code>Country</code> in the dropdown, an optional <code>Number</code> to filter further if you are looking for a specific number pattern, optional capabilities (SMS or Voice), and optional type (Landline, Mobile, Toll-Free) to further filter the search, then click on the Search icon. Once you found a number in the list, click on <code>Register Number</code>, which will lead you to the <code>Edit Number</code> section below to link your newly purchased number to a Restcomm application your previously created
+<span class="image"><img src="./images/console-3-2.png" alt="console-3-2"></span></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="edit-update-number"><a class="anchor" href="#edit-update-number"></a>Edit/Update Number</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>When you click on the Register Number button, you will see a screenshot similar to the one below. This will allow you to create a new phone number that can be attached to a Restcomm application.</p>
+<p>Editing a Restcomm Number can be done after purchase or creation or by clicking on the number in the <code>Numbers</code> list, the screenshot below shows how you can edit a SIP Number but is applicable to a Provider Number as well. You can set or update the Voice or SMS Application to which the number is attached.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="./images/restcomm-admin-ui-4.png" alt="restcomm-admin-ui-4" width="245" height="300"></span></p>
+<p><span class="image"><img src="./images/console-5.png" alt="console-5"></span></p>
 </div>
 <div class="paragraph">
-<p><strong>Table Restcomm Numbers</strong></p>
+<p>You have two options for attaching the application to a number:</p>
 </div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Number</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The field to enter the phone number.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This button will show advanced options if you want to add more features to the phone number like the VoiceUrl</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The friendly name is any descriptive text for your phone number</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">See the Rest API link:[Chapter] for more information</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">See the Rest API link:[Chapter]for more information</p></td>
-</tr>
-</tbody>
-</table>
-<h1 id="edit-update-number" class="sect0"><a class="anchor" href="#edit-update-number"></a>Edit Update Number</h1>
-<div class="paragraph">
-<p>Editing a phone number can be done by clicking on the number, the screenshot below shows how you can edit the number 1235. You can change the VoiceUrl to which the number is attached.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Application</strong>: You can use this dropdown list to select one of the applications you previously created using the Visual Designer.</p>
+</li>
+<li>
+<p><strong>RCML URL</strong>: You can use this field to copy the URL of where your RCML Application is hosted.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="./images/restcomm-admin-ui-5.png" alt="restcomm-admin-ui-5" width="244" height="300"></span></p>
+<p>In addition to that, you can also set <strong>RCML URL</strong> to link another Application for a number of advanced options in clicking on the <code>Advanced</code> link for both SMS or Voice Applications.</p>
 </div>
 <div class="paragraph">
-<p><strong>Edit Update Numbers</strong></p>
+<p><span class="image"><img src="./images/console-5-1.png" alt="console-5-1"></span></p>
 </div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Number</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">You can link the phone number to a VoiceUrl application. See the REST API for more details.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">You can link the phone number to a SMS application. See the REST API for more details</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">You can link the phone number to a USSD application. See the REST API for more details</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Caller Id lookup requires a CNAM provier</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">You can save your changes or press close to discard the changes</p></td>
-</tr>
-</tbody>
-</table>
-<h1 id="sip-clients" class="sect0"><a class="anchor" href="#sip-clients"></a>SIP Clients</h1>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Voice or SMS Fallback URL</strong>: The RCML URL that Restcomm will request if an error occurs retrieving or executing the Application set previously.</p>
+</li>
+<li>
+<p><strong>Voice or SMS Callback URL</strong>: The URL that Restcomm will request to pass status parameters (such as call ended or SMS delivered) to your application.</p>
+</li>
+<li>
+<p><strong>Voice REFER URL</strong>: The RCML URL that Restcomm will request when receiving a SIP REFER request to this number. Read the <a href="../tutorials/Restcomm_SIP_Refer_Support.html#REFER">Restcomm REFER Tutorial</a> to learn more about Restcomm support for REFER.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<h1 id="restcomm-clients" class="sect0"><a class="anchor" href="#restcomm-clients"></a>Restcomm Clients</h1>
 <div class="paragraph">
-<p>SIP Client is a feature that allows you to create a Restcomm profile that can be used for P2P or B2BUA calls. This will be empty until you create a new client. You can create a new client by clicking on the Resgister SIP Clent button.</p>
+<p>This Section allows you to create, delete, update and search for your Restcomm Clients. When you initially start with Restcomm, this section has a default Client that you can use whose username and password is the same that you used to login to your Restcomm Account.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="./images/restcomm-admin-ui-6.png" alt="restcomm-admin-ui-6" width="248" height="300"></span></p>
+<p>A Restcomm Client is an abstraction for storing credentials related to a typical SIP or WebRTC (using SIP Over Websockets) endpoint that can use through traditional SIP Softphone or hardphone or through our <a href="../sdks/index.html#SDKs">Restcomm WebRTC SDKs</a> (Currently in <strong>Preview</strong>)</p>
 </div>
 <div class="paragraph">
-<p><strong>SIP Clients</strong></p>
+<p><span class="image"><img src="./images/console-6.png" alt="console-6"></span></p>
 </div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Number</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The client name. (ex. alice or bob)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The password that will be used to when you want to register the client with restcomm</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Use to open optional parameters windows</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This can be the full name of the client (ex.Alice Wilkinson) or any descriptive name</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This is where you specify the VoiceUrl that is automatically invoked when the client is called. See the REST API for more details.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">See the REST API for more details.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This will validate your changes and create the client.</p></td>
-</tr>
-</tbody>
-</table>
-<h1 id="outgoing-callerid" class="sect0"><a class="anchor" href="#outgoing-callerid"></a>Outgoing CallerId</h1>
+<div class="sect1">
+<h2 id="edit-update-restcomm-client"><a class="anchor" href="#edit-update-restcomm-client"></a>Edit/Update Restcomm Client</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Will be available in future release</p>
+<p>You can change the Restcomm client password and also attach an application to the client (in the same manner that is described above to attach an application to a number) which will be executed upon any outbound calls done by the Restcomm client.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./images/console-6-1.png" alt="console-6-1"></span></p>
+</div>
+</div>
 </div>
 <h1 id="logs" class="sect0"><a class="anchor" href="#logs"></a>Logs</h1>
 <div class="paragraph">
-<p>The log section gives you an overview of current Restcomm system information.</p>
+<p>The log section gives you an overview of Restcomm calls or SMS sent or received.</p>
 </div>
 <div class="sect1">
 <h2 id="logs---calls"><a class="anchor" href="#logs---calls"></a>Logs - Calls</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A list of all calls that have been processed by Restcomm</p>
+<p>A list of all calls that have been received or sent by Restcomm. This section will be empty until you make or receive any calls to a Restcomm number.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="./images/restcomm-admin-ui-7.png" alt="restcomm-admin-ui-7" width="300" height="121"></span></p>
+<p><span class="image"><img src="./images/console-7.png" alt="console-7"></span></p>
+</div>
+<div class="sect2">
+<h3 id="logs-call-details"><a class="anchor" href="#logs-call-details"></a>Logs - Call Details</h3>
+<div class="paragraph">
+<p>If you click on any call details in the list, you will be able to see the full details of the call including its status and if there is a recording link to it be able to download it.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./images/console-7-1.png" alt="console-7-1"></span></p>
+</div>
 </div>
 </div>
 </div>
@@ -23702,10 +23577,19 @@ Countly.q.push(['report_conversion']);
 <h2 id="logs---messages"><a class="anchor" href="#logs---messages"></a>Logs - Messages</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A list of all SMS messages that have been processed by Restcomm</p>
+<p>A list of all SMS and Messages that have been received or sent by Restcomm. This section will be empty until you make or receive any SMS or Messages to a Restcomm number.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="./images/restcomm-admin-ui-8.png" alt="restcomm-admin-ui-8" width="300" height="124"></span></p>
+<p><span class="image"><img src="./images/console-8.png" alt="console-8"></span></p>
+</div>
+<div class="sect2">
+<h3 id="logs-message-details"><a class="anchor" href="#logs-message-details"></a>Logs - Message Details</h3>
+<div class="paragraph">
+<p>If you click on any message in the list, you will be able to see the full details of the message including its delivery status.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./images/console-8-1.png" alt="console-8-1"></span></p>
+</div>
 </div>
 </div>
 </div>
@@ -23713,21 +23597,19 @@ Countly.q.push(['report_conversion']);
 <h2 id="logs---recordings"><a class="anchor" href="#logs---recordings"></a>Logs - Recordings</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A list of all Recordings (using the Record Verb) that have been processed by Restcomm</p>
+<p>A list of all Recordings (using the Record Verb) that have been received or sent by Restcomm. This section will be empty until you record any calls with Restcomm.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="./images/restcomm-admin-ui-9.png" alt="restcomm-admin-ui-9" width="300" height="123"></span></p>
+<p><span class="image"><img src="./images/console-9.png" alt="console-9"></span></p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="logs---transcriptions"><a class="anchor" href="#logs---transcriptions"></a>Logs - Transcriptions</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="logs-recordings-details"><a class="anchor" href="#logs-recordings-details"></a>Logs - Recordings Details</h3>
 <div class="paragraph">
-<p>A list of all Transcriptions that have (using the Transcribe parameters of the Record Verb) that have been processed by Restcomm.</p>
+<p>If you click on any recordings details in the list, you will be able to see the full details of the recording and download or delete it.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="./images/restcomm-admin-ui-10.png" alt="restcomm-admin-ui-10" width="404" height="163"></span></p>
+<p><span class="image"><img src="./images/console-9-1.png" alt="console-9-1"></span></p>
+</div>
 </div>
 </div>
 </div>
@@ -23738,14 +23620,14 @@ Countly.q.push(['report_conversion']);
 <p>A list of all Notifications received by Restcomm.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="./images/restcomm-admin-ui-11.png" alt="restcomm-admin-ui-11" width="300" height="122"></span></p>
+<p><span class="image"><img src="./images/console-11.png" alt="console-11"></span></p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-07-04 10:24:17 UTC
+Last updated 2018-07-04 14:43:15 UTC
 </div>
 </div>
 <footer >
