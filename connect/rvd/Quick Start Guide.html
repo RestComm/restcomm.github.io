@@ -23360,8 +23360,8 @@ Countly.q.push(['report_conversion']);
 <div class="sect3">
 <h4 id="create-the-application"><a class="anchor" href="#create-the-application"></a>Create the application</h4>
 <div class="paragraph">
-<p>New applications are easily created from within the Console. Sign into your account and navigate to the
-application list view. For cloud accounts this is:</p>
+<p>New applications are easily created from within the Restcomm Console. Sign into your account and navigate to the
+application list view. For Restcomm Cloud accounts this is:</p>
 </div>
 <div class="paragraph">
 <p><a href="https://cloud.restcomm.com/#/applications" class="bare">https://cloud.restcomm.com/#/applications</a></p>
@@ -23372,16 +23372,16 @@ application list view. For cloud accounts this is:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Click on the <code>Add New App</code> button. This will start the application creation wizzard.</p>
+<p>Click on the <code>Add New App</code> button. This will start the application creation wizard.</p>
 </li>
 <li>
 <p>Choose <code>Create a Visual Designer Application</code> in the next view.
-Other options are <a href="importing application from local file.html">[importing application from local file]</a> or <a href="linking to an external one.html">[linking to an external one]</a>.
+Other options are importing application from local file or linking to an external one.
 We will review these options later.</p>
 </li>
 <li>
 <p>In the Template Gallery pick the <code>Blank</code> template. That&#8217;s the most basic Visual Designer application.
-<a href="Template Gallery.html">[Template Gallery]</a> offers a range of options to kick start your application and can save you a great deal of time
+Template Gallery offers a range of options to kick start your application and can save you a great deal of time
 and effort. We will stick to the bare minimum for now.</p>
 </li>
 <li>
@@ -23391,12 +23391,12 @@ We&#8217;ll use <code>greeting-app</code> for the purpose of this example.</p>
 </li>
 <li>
 <p>The <em>type</em> determines whether this application will respond to voice calls or SMS messages.
-Choose <code>voice</code> for now. You may learn more about application types <a href="here.html">[here]</a>.</p>
+Choose <code>voice</code> for now.</p>
 </li>
 <li>
 <p>When done, click <code>Create</code>. This will create your application and navigate you to the
 application details page. Here, you can perform management operations like
-application removal. Other helpfull information, such as which numbers are bound to it, is displayed too.</p>
+application removal. Other helpful information, such as which numbers are bound to it, is displayed too.</p>
 </li>
 <li>
 <p>Click <code>Design</code> to open the Visual Designer editor in a new tab.</p>
@@ -23414,7 +23414,7 @@ application removal. Other helpfull information, such as which numbers are bound
 <div class="paragraph">
 <p>You&#8217;re almost there. Your application is operational and will greet you with the default message when called.
 You do need a way to reach it though. To do that, you&#8217;ll have to
-<a href="bind it to a DID.html">[bind it to a DID]</a> (a number you can call to) and finally <a href="make a call using a SIP client.html">[make a call using a SIP client]</a>.</p>
+bind it to a DID (a number you can call to) and finally make a call using a SIP client.</p>
 </div>
 </div>
 <div class="sect3">
@@ -23422,7 +23422,7 @@ You do need a way to reach it though. To do that, you&#8217;ll have to
 <div class="paragraph">
 <p>You&#8217;ve just created a <em>voice</em> application. Such applications are triggered
 and respond to voice calls. You will need some sort of handle to make a call to. We call this handle a <em>DID</em> or <em>Incoming Number</em>.
-In cloud Console you can manage these entities in the <code>Numbers</code> section. In cloud this is:</p>
+In Restcomm Console you can manage these entities in the <code>Numbers</code> section. In Cloud this is:</p>
 </div>
 <div class="paragraph">
 <p><a href="https://cloud.restcomm.com/#/numbers/incoming" class="bare">https://cloud.restcomm.com/#/numbers/incoming</a></p>
@@ -23451,16 +23451,13 @@ see an entry named <code>greeting-app</code>. Select it.</p>
 </li>
 <li>
 <p>Click <code>Save changes</code> at the bottom.</p>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">image</dt>
-<dd>
-<p><a href="https://www.restcomm.com/wp-content/uploads/2018/07/Screenshot-from-2018-07-02-16-42-35.png">Bind greeting application to a phone number</a></p>
-</dd>
-</dl>
-</div>
 </li>
 </ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://www.restcomm.com/wp-content/uploads/2018/07/Screenshot-from-2018-07-02-16-42-35.png" alt="Bind greeting application to a phone number">
+</div>
 </div>
 <div class="paragraph">
 <p>Your number is now linked to the application.</p>
@@ -23470,10 +23467,10 @@ see an entry named <code>greeting-app</code>. Select it.</p>
 <h4 id="call-the-application"><a class="anchor" href="#call-the-application"></a>Call the application</h4>
 <div class="paragraph">
 <p>Time to execute the application. Voice applications respond to voice calls. In order to make such
-one, you can use a SIP client to call the number you just registered. In cloud you can use the <a href="WebRTC Demo client.html">[WebRTC Demo client]</a>.</p>
+one, you can use a SIP client to call the number you just registered. In Cloud you can use the WebRTC Demo client.</p>
 </div>
 <div class="paragraph">
-<p>Get back to the Console</p>
+<p>Get back to the Restcomm Console</p>
 </div>
 <div class="ulist">
 <ul>
@@ -23518,7 +23515,7 @@ one, you can use a SIP client to call the number you just registered. In cloud y
 <h4 id="elements"><a class="anchor" href="#elements"></a>Elements</h4>
 <div class="paragraph">
 <p>On the left you will notice a long list of buttons. We call these <code>elements</code>. You can&#8217;t click on them, but
-you can drag and drop them into modules. <a href="Elements.html">[Elements]</a> are the building blocks of each Visual Designer application.</p>
+you can drag and drop them into modules. Elements are the building blocks of each Visual Designer application.</p>
 </div>
 <div class="paragraph">
 <p>You will notice that your application already contains a <code>Say</code> element. It contains the greeting that
@@ -23531,7 +23528,7 @@ verbal representations. We call this Text-To-Speech (TTS).</p>
 <div class="paragraph">
 <p><code>Elements</code> are grouped together in sequences we call <code>modules</code>. The whole area next to the
 element toolbox is where modules appear. They are organized in a series of tabs and will accept
-elements when dragged  and dropped over them. <a href="Modules.html">[Modules]</a> are the main execution unit in a Visual Designer application.</p>
+elements when dragged  and dropped over them. Modules are the main execution unit in a Visual Designer application.</p>
 </div>
 <div class="paragraph">
 <p>By default new applications already contain a <em>Welcome</em> module with the <code>Say</code> element we just
@@ -23600,7 +23597,7 @@ This is not required but will result in a cleaner and faster workflow.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-07-04 07:57:22 UTC
+Last updated 2018-07-04 08:35:39 UTC
 </div>
 </div>
 <footer >
