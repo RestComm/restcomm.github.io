@@ -23346,7 +23346,7 @@ Countly.q.push(['report_conversion']);
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel2">
 <li><a href="#tags">Tags</a></li>
-<li><a href="#8-7-0-version-2018-07-4-docker-tag-8-7-0-220">8.7.0 version 2018-07-4 (docker tag 8.7.0-220)</a>
+<li><a href="#8-7-0-version-2018-07-10-docker-tag-8-7-0-226">8.7.0 version 2018-07-10 (docker tag 8.7.0-226)</a>
 <ul class="sectlevel2">
 <li><a href="#new-features">New Features</a></li>
 <li><a href="#breaking-changes">Breaking Changes</a></li>
@@ -23354,7 +23354,7 @@ Countly.q.push(['report_conversion']);
 <li><a href="#migration-notes">Migration Notes</a></li>
 </ul>
 </li>
-<li><a href="#8-6-0-version-2018-06-19-docker-tag-8-6-0-211">8.6.0 version 2018-06-19 (docker tag 8.6.0-211)</a>
+<li><a href="#8-7-0-version-2018-07-4-docker-tag-8-7-0-220">8.7.0 version 2018-07-4 (docker tag 8.7.0-220)</a>
 <ul class="sectlevel2">
 <li><a href="#new-features-2">New Features</a></li>
 <li><a href="#breaking-changes-2">Breaking Changes</a></li>
@@ -23362,7 +23362,7 @@ Countly.q.push(['report_conversion']);
 <li><a href="#migration-notes-2">Migration Notes</a></li>
 </ul>
 </li>
-<li><a href="#8-5-0-version-2018-06-04">8.5.0 version 2018-06-04</a>
+<li><a href="#8-6-0-version-2018-06-19-docker-tag-8-6-0-211">8.6.0 version 2018-06-19 (docker tag 8.6.0-211)</a>
 <ul class="sectlevel2">
 <li><a href="#new-features-3">New Features</a></li>
 <li><a href="#breaking-changes-3">Breaking Changes</a></li>
@@ -23370,21 +23370,29 @@ Countly.q.push(['report_conversion']);
 <li><a href="#migration-notes-3">Migration Notes</a></li>
 </ul>
 </li>
-<li><a href="#8-4-1-version-2018-05-11">8.4.1 version 2018-05-11</a>
+<li><a href="#8-5-0-version-2018-06-04">8.5.0 version 2018-06-04</a>
 <ul class="sectlevel2">
 <li><a href="#new-features-4">New Features</a></li>
 <li><a href="#breaking-changes-4">Breaking Changes</a></li>
 <li><a href="#bug-fixes-4">Bug Fixes</a></li>
 <li><a href="#migration-notes-4">Migration Notes</a></li>
-<li><a href="#external-dependencies-updates">External Dependencies Updates</a></li>
 </ul>
 </li>
-<li><a href="#8-4-0-version-2018-04-19">8.4.0 version 2018-04-19</a>
+<li><a href="#8-4-1-version-2018-05-11">8.4.1 version 2018-05-11</a>
 <ul class="sectlevel2">
 <li><a href="#new-features-5">New Features</a></li>
 <li><a href="#breaking-changes-5">Breaking Changes</a></li>
 <li><a href="#bug-fixes-5">Bug Fixes</a></li>
 <li><a href="#migration-notes-5">Migration Notes</a></li>
+<li><a href="#external-dependencies-updates">External Dependencies Updates</a></li>
+</ul>
+</li>
+<li><a href="#8-4-0-version-2018-04-19">8.4.0 version 2018-04-19</a>
+<ul class="sectlevel2">
+<li><a href="#new-features-6">New Features</a></li>
+<li><a href="#breaking-changes-6">Breaking Changes</a></li>
+<li><a href="#bug-fixes-6">Bug Fixes</a></li>
+<li><a href="#migration-notes-6">Migration Notes</a></li>
 <li><a href="#external-dependencies-updates-2">External Dependencies Updates</a></li>
 </ul>
 </li>
@@ -23416,20 +23424,14 @@ Countly.q.push(['report_conversion']);
 </div>
 </div>
 <div class="sect1">
-<h2 id="8-7-0-version-2018-07-4-docker-tag-8-7-0-220"><a class="anchor" href="#8-7-0-version-2018-07-4-docker-tag-8-7-0-220"></a>8.7.0 version 2018-07-4 (docker tag 8.7.0-220)</h2>
+<h2 id="8-7-0-version-2018-07-10-docker-tag-8-7-0-226"><a class="anchor" href="#8-7-0-version-2018-07-10-docker-tag-8-7-0-226"></a>8.7.0 version 2018-07-10 (docker tag 8.7.0-226)</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="new-features"><a class="anchor" href="#new-features"></a>New Features</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>Multi-provider routing for the organization SIP domain. RestComm will automatically inject the organization domain when calling to a destination.</p>
-</li>
-<li>
-<p>Support for Organizations in the REST API. New security constraints applied in order to allow access to organization resources only when hostname of the request match the organization domain that the account credentials belong to.</p>
-</li>
-<li>
-<p>Sorting Call Detail Records. Added sorting fields for CDR in Administrator Console.</p>
+<p><strong>REVERTED</strong> [New security constraints applied in order to allow access to organization resources only when hostname of the request match the organization domain that the account credentials belong to.]</p>
 </li>
 </ul>
 </div>
@@ -23443,13 +23445,13 @@ Countly.q.push(['report_conversion']);
 <div class="ulist">
 <ul>
 <li>
-<p>Send BYE on session expiration for B2BUA calls</p>
+<p>Disable SecurityFilter check for Organization domain</p>
 </li>
 <li>
-<p>Gather operation now accepts star key as initial input.</p>
+<p>Provided fix for LCE issue that shutdown docker container</p>
 </li>
 <li>
-<p>Elegant call termination during audio recording. <strong>Dialogic XMS only</strong></p>
+<p>Provided fix for Outbound PSTN call is not hanging up properly</p>
 </li>
 </ul>
 </div>
@@ -23501,23 +23503,20 @@ Countly.q.push(['report_conversion']);
 </div>
 </div>
 <div class="sect1">
-<h2 id="8-6-0-version-2018-06-19-docker-tag-8-6-0-211"><a class="anchor" href="#8-6-0-version-2018-06-19-docker-tag-8-6-0-211"></a>8.6.0 version 2018-06-19 (docker tag 8.6.0-211)</h2>
+<h2 id="8-7-0-version-2018-07-4-docker-tag-8-7-0-220"><a class="anchor" href="#8-7-0-version-2018-07-4-docker-tag-8-7-0-220"></a>8.7.0 version 2018-07-4 (docker tag 8.7.0-220)</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="new-features-2"><a class="anchor" href="#new-features-2"></a>New Features</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>SMS CDR Error Codes</p>
+<p>Multi-provider routing for the organization SIP domain. RestComm will automatically inject the organization domain when calling to a destination.</p>
 </li>
 <li>
-<p>REST API Recording removal</p>
+<p>Support for Organizations in the REST API. New security constraints applied in order to allow access to organization resources only when hostname of the request match the organization domain that the account credentials belong to.</p>
 </li>
 <li>
-<p>RC Media Cache configuration</p>
-</li>
-<li>
-<p>REST API Sms Statuscallback and RCML status notifications</p>
+<p>Sorting Call Detail Records. Added sorting fields for CDR in Administrator Console.</p>
 </li>
 </ul>
 </div>
@@ -23531,19 +23530,19 @@ Countly.q.push(['report_conversion']);
 <div class="ulist">
 <ul>
 <li>
-<p>Gracefull shutdown fixed on license issue</p>
+<p>Send BYE on session expiration for B2BUA calls</p>
+</li>
+<li>
+<p>Gather operation now accepts star key as initial input.</p>
+</li>
+<li>
+<p>Elegant call termination during audio recording. <strong>Dialogic XMS only</strong></p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
 <h3 id="migration-notes-2"><a class="anchor" href="#migration-notes-2"></a>Migration Notes</h3>
-<div class="paragraph">
-<p><strong>Important Note</strong> This version is adding a new columns to support SMS Error Code updates, and SMS StatusCallback notifications.</p>
-</div>
-<div class="paragraph">
-<p><strong>Important Note</strong> There is new cache configuration. New settings is CACHE_PATH with value /mnt/restcomm_cache. "docker run" command needs to be inline with this to sync the EFS sharing with app configuration.</p>
-</div>
 <div class="sect3">
 <h4 id="migration-steps-part-1-2"><a class="anchor" href="#migration-steps-part-1-2"></a>Migration steps - part 1</h4>
 <div class="paragraph">
@@ -23574,7 +23573,7 @@ Countly.q.push(['report_conversion']);
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Stop 8.6.0 instance</p>
+<p>Stop 8.7.0 instance</p>
 </li>
 <li>
 <p>Start old version instance.</p>
@@ -23589,20 +23588,23 @@ Countly.q.push(['report_conversion']);
 </div>
 </div>
 <div class="sect1">
-<h2 id="8-5-0-version-2018-06-04"><a class="anchor" href="#8-5-0-version-2018-06-04"></a>8.5.0 version 2018-06-04</h2>
+<h2 id="8-6-0-version-2018-06-19-docker-tag-8-6-0-211"><a class="anchor" href="#8-6-0-version-2018-06-19-docker-tag-8-6-0-211"></a>8.6.0 version 2018-06-19 (docker tag 8.6.0-211)</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="new-features-3"><a class="anchor" href="#new-features-3"></a>New Features</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>SMS CDR Status updates</p>
+<p>SMS CDR Error Codes</p>
 </li>
 <li>
-<p>USSD SDR events</p>
+<p>REST API Recording removal</p>
 </li>
 <li>
-<p>Allow to specify content-type for Email.</p>
+<p>RC Media Cache configuration</p>
+</li>
+<li>
+<p>REST API Sms Statuscallback and RCML status notifications</p>
 </li>
 </ul>
 </div>
@@ -23616,7 +23618,7 @@ Countly.q.push(['report_conversion']);
 <div class="ulist">
 <ul>
 <li>
-<p>Allow Proxy-Authorization header without "algortihm" parameter.<strong>security improvement</strong></p>
+<p>Gracefull shutdown fixed on license issue</p>
 </li>
 </ul>
 </div>
@@ -23624,7 +23626,10 @@ Countly.q.push(['report_conversion']);
 <div class="sect2">
 <h3 id="migration-notes-3"><a class="anchor" href="#migration-notes-3"></a>Migration Notes</h3>
 <div class="paragraph">
-<p><strong>Important Note</strong> This version is adding a new column to support SMS CDR updates.</p>
+<p><strong>Important Note</strong> This version is adding a new columns to support SMS Error Code updates, and SMS StatusCallback notifications.</p>
+</div>
+<div class="paragraph">
+<p><strong>Important Note</strong> There is new cache configuration. New settings is CACHE_PATH with value /mnt/restcomm_cache. "docker run" command needs to be inline with this to sync the EFS sharing with app configuration.</p>
 </div>
 <div class="sect3">
 <h4 id="migration-steps-part-1-3"><a class="anchor" href="#migration-steps-part-1-3"></a>Migration steps - part 1</h4>
@@ -23656,6 +23661,88 @@ Countly.q.push(['report_conversion']);
 <div class="olist arabic">
 <ol class="arabic">
 <li>
+<p>Stop 8.6.0 instance</p>
+</li>
+<li>
+<p>Start old version instance.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>You don&#8217;t need to migrate DB schema</strong></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="8-5-0-version-2018-06-04"><a class="anchor" href="#8-5-0-version-2018-06-04"></a>8.5.0 version 2018-06-04</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="new-features-4"><a class="anchor" href="#new-features-4"></a>New Features</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>SMS CDR Status updates</p>
+</li>
+<li>
+<p>USSD SDR events</p>
+</li>
+<li>
+<p>Allow to specify content-type for Email.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="breaking-changes-4"><a class="anchor" href="#breaking-changes-4"></a>Breaking Changes</h3>
+
+</div>
+<div class="sect2">
+<h3 id="bug-fixes-4"><a class="anchor" href="#bug-fixes-4"></a>Bug Fixes</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Allow Proxy-Authorization header without "algortihm" parameter.<strong>security improvement</strong></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="migration-notes-4"><a class="anchor" href="#migration-notes-4"></a>Migration Notes</h3>
+<div class="paragraph">
+<p><strong>Important Note</strong> This version is adding a new column to support SMS CDR updates.</p>
+</div>
+<div class="sect3">
+<h4 id="migration-steps-part-1-4"><a class="anchor" href="#migration-steps-part-1-4"></a>Migration steps - part 1</h4>
+<div class="paragraph">
+<p>Follow the steps below to upgrade DB schema</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Use full backup database script to backup database - follow <a href="#configuration/MySQL_Backup_Restore_Scripts.html">Mysql backup/restore scripts</a></p>
+</li>
+<li>
+<p>Use database schema upgrade scripts to move DB schema to the latest - follow <a href="configuration/How to use Mysql schema upgrade scripts.html#mysql-schema-upgrade">How to use Mysql schema upgrade scripts</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>At this point, you can upgrade Restcomm-Connect instance.</strong></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="rollback-steps-4"><a class="anchor" href="#rollback-steps-4"></a>Rollback steps</h4>
+<div class="paragraph">
+<p>In case something goes wrong during the migration/upgrade process, you can rollback changes and run the previous version of Restcomm-Connect</p>
+</div>
+<div class="paragraph">
+<p>Follow the steps below:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
 <p>Stop 8.5.0 instance</p>
 </li>
 <li>
@@ -23674,7 +23761,7 @@ Countly.q.push(['report_conversion']);
 <h2 id="8-4-1-version-2018-05-11"><a class="anchor" href="#8-4-1-version-2018-05-11"></a>8.4.1 version 2018-05-11</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="new-features-4"><a class="anchor" href="#new-features-4"></a>New Features</h3>
+<h3 id="new-features-5"><a class="anchor" href="#new-features-5"></a>New Features</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -23687,11 +23774,11 @@ Countly.q.push(['report_conversion']);
 </div>
 </div>
 <div class="sect2">
-<h3 id="breaking-changes-4"><a class="anchor" href="#breaking-changes-4"></a>Breaking Changes</h3>
+<h3 id="breaking-changes-5"><a class="anchor" href="#breaking-changes-5"></a>Breaking Changes</h3>
 
 </div>
 <div class="sect2">
-<h3 id="bug-fixes-4"><a class="anchor" href="#bug-fixes-4"></a>Bug Fixes</h3>
+<h3 id="bug-fixes-5"><a class="anchor" href="#bug-fixes-5"></a>Bug Fixes</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -23701,7 +23788,7 @@ Countly.q.push(['report_conversion']);
 </div>
 </div>
 <div class="sect2">
-<h3 id="migration-notes-4"><a class="anchor" href="#migration-notes-4"></a>Migration Notes</h3>
+<h3 id="migration-notes-5"><a class="anchor" href="#migration-notes-5"></a>Migration Notes</h3>
 <div class="paragraph">
 <p><strong>Important Note</strong> Migration notes are applicable to Restcomm-Connect versions before 8.4.0. If you have upgraded to 8.4.0 already, you can ignore the notes here.</p>
 </div>
@@ -23715,7 +23802,7 @@ Countly.q.push(['report_conversion']);
 <p>As part of the 8.4.1 release, we also provided a set of DB backup/restore bash scripts <a href="configuration/MySQL_Backup_Restore_Scripts.html#mysql-backup-restore-scripts">Mysql backup/restore scripts</a>, that we recommend to use during the migration process.</p>
 </div>
 <div class="sect3">
-<h4 id="migration-steps-part-1-4"><a class="anchor" href="#migration-steps-part-1-4"></a>Migration steps - part 1</h4>
+<h4 id="migration-steps-part-1-5"><a class="anchor" href="#migration-steps-part-1-5"></a>Migration steps - part 1</h4>
 <div class="paragraph">
 <p>Follow the steps below to upgrade DB schema</p>
 </div>
@@ -23759,7 +23846,7 @@ Countly.q.push(['report_conversion']);
 </div>
 </div>
 <div class="sect3">
-<h4 id="rollback-steps-4"><a class="anchor" href="#rollback-steps-4"></a>Rollback steps</h4>
+<h4 id="rollback-steps-5"><a class="anchor" href="#rollback-steps-5"></a>Rollback steps</h4>
 <div class="paragraph">
 <p>In case something goes wrong during the migration/upgrade process, you can rollback changes and run the previous version of Restcomm-Connect</p>
 </div>
@@ -23816,7 +23903,7 @@ Countly.q.push(['report_conversion']);
 <h2 id="8-4-0-version-2018-04-19"><a class="anchor" href="#8-4-0-version-2018-04-19"></a>8.4.0 version 2018-04-19</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="new-features-5"><a class="anchor" href="#new-features-5"></a>New Features</h3>
+<h3 id="new-features-6"><a class="anchor" href="#new-features-6"></a>New Features</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -23832,7 +23919,7 @@ Countly.q.push(['report_conversion']);
 </div>
 </div>
 <div class="sect2">
-<h3 id="breaking-changes-5"><a class="anchor" href="#breaking-changes-5"></a>Breaking Changes</h3>
+<h3 id="breaking-changes-6"><a class="anchor" href="#breaking-changes-6"></a>Breaking Changes</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -23845,7 +23932,7 @@ Countly.q.push(['report_conversion']);
 </div>
 </div>
 <div class="sect2">
-<h3 id="bug-fixes-5"><a class="anchor" href="#bug-fixes-5"></a>Bug Fixes</h3>
+<h3 id="bug-fixes-6"><a class="anchor" href="#bug-fixes-6"></a>Bug Fixes</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -23867,7 +23954,7 @@ Countly.q.push(['report_conversion']);
 </div>
 </div>
 <div class="sect2">
-<h3 id="migration-notes-5"><a class="anchor" href="#migration-notes-5"></a>Migration Notes</h3>
+<h3 id="migration-notes-6"><a class="anchor" href="#migration-notes-6"></a>Migration Notes</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -23956,7 +24043,7 @@ scripts are available in <strong>commercial</strong> version. Database migration
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-07-08 02:15:51 UTC
+Last updated 2018-07-11 14:38:46 UTC
 </div>
 </div>
 <footer >
