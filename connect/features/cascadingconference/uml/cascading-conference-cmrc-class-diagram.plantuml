@@ -1,0 +1,27 @@
+@startuml
+title Class Diagraaaam
+class MMSConferenceController{
+    
+}
+class MediaResourceBroker{
+    
+}
+class MediaGateway{
+    
+}
+class Conference{
+    
+}
+class ConferenceMediaResourceController{
+    
+}
+class MRBMasterMGCPMediaGroup{
+    
+}
+MMSConferenceController "1" o-- "1" MediaResourceBroker: GetMediaGateway
+MediaResourceBroker "1" *--  "many" MediaGateway: creates mediagatewy\nbind mgcp stack
+ConferenceCenter "1" *-- "many" Conference: creates a conference
+MMSConferenceController "1" --*  "1" Conference: Conference\nobserves\nstate changes\nof MMSConferenceController
+ConferenceMediaResourceController "1" *-- "1" MRBMasterMGCPMediaGroup
+ConferenceMediaResourceController "1" --* "1" MMSConferenceController: MMSConferenceController\nobserves state change\nof ConferenceMediaResourceController
+@enduml

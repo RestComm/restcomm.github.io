@@ -23374,6 +23374,12 @@ Countly.q.push(['report_conversion']);
 <li><a href="#request-parameters-3">Request Parameters</a></li>
 </ul>
 </li>
+<li><a href="#sorting-information">Sorting Information</a>
+<ul class="sectlevel2">
+<li><a href="#sortby-attributes">SortBy Attributes</a></li>
+<li><a href="#example-2">Example</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -23785,10 +23791,96 @@ Countly.q.push(['report_conversion']);
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="sorting-information"><a class="anchor" href="#sorting-information"></a>Sorting Information</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>HTTP GET.</strong> You can use the <strong>SortBy</strong> GET query parameter to determine which attribute you want to sort by and in which direction; direction can either be 'asc' for ascending and 'desc' for descending sort ordering. Here&#8217;s the overall format: <strong>SortBy=&lt;sorting attribute&gt;:&lt;direction&gt;</strong>. If no direction parameter is provided, then the listing of notifications is sorted by the attribute in ascending order. Below you can find the possible attributes you can sort by:</p>
+</div>
+<div class="sect2">
+<h3 id="sortby-attributes"><a class="anchor" href="#sortby-attributes"></a>SortBy Attributes</h3>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DateCreated</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the date the notification was created</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Log</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the severity level of the notification</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ErrorCode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the error code of the notification</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CallSid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the CallSid of the notification, if related to a call</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MessageText</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the message text of the notification</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="example-2"><a class="anchor" href="#example-2"></a>Example</h3>
+<div class="paragraph">
+<p>The command below will return notifications sorted by the creation date in ascending order using SortBy parameter:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -X GET  https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/&lt;accountSid&gt;/Notifications?SortBy=DateCreated:asc</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The result of the <strong>SortBy</strong> parameter:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;RestcommResponse&gt;
+    &lt;Notifications&gt;
+        &lt;Notification&gt;
+            &lt;Sid&gt;NObdc6f646cad54b9bbf7f8adaea7e9552&lt;/Sid&gt;
+            &lt;DateCreated&gt;Thu, 5 Jul 2018 10:46:45 +0300&lt;/DateCreated&gt;
+            &lt;DateUpdated&gt;Thu, 5 Jul 2018 10:46:45 +0300&lt;/DateUpdated&gt;
+            &lt;Log&gt;1&lt;/Log&gt;
+            &lt;ErrorCode&gt;12003&lt;/ErrorCode&gt;
+            &lt;MessageText&gt;There is no valid Restcomm SMS Request URL configured for this number : 1235&lt;/MessageText&gt;
+            ...
+        &lt;/Notification&gt;
+        &lt;Notification&gt;
+            &lt;Sid&gt;NO9624c8d6c7b94134bd1d25c80213b86f&lt;/Sid&gt;
+            &lt;DateCreated&gt;Thu, 5 Jul 2018 10:46:54 +0300&lt;/DateCreated&gt;
+            &lt;DateUpdated&gt;Thu, 5 Jul 2018 10:46:54 +0300&lt;/DateUpdated&gt;
+            &lt;Log&gt;1&lt;/Log&gt;
+            &lt;ErrorCode&gt;12003&lt;/ErrorCode&gt;
+            &lt;MessageText&gt;There is no valid Restcomm SMS Request URL configured for this number : 1234&lt;/MessageText&gt;
+            ...
+        &lt;/Notification&gt;
+        ...
+    &lt;/Notifications&gt;
+&lt;/RestcommResponse&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-07-15 02:15:54 UTC
+Last updated 2018-07-18 09:45:56 UTC
 </div>
 </div>
 <footer >

@@ -23383,6 +23383,12 @@ Countly.q.push(['report_conversion']);
 <li><a href="#request-parameters-4">Request Parameters</a></li>
 </ul>
 </li>
+<li><a href="#sorting-information">Sorting Information</a>
+<ul class="sectlevel2">
+<li><a href="#sortby-attributes">SortBy Attributes</a></li>
+<li><a href="#example-2">Example</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -24013,10 +24019,104 @@ Countly.q.push(['report_conversion']);
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="sorting-information"><a class="anchor" href="#sorting-information"></a>Sorting Information</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>HTTP GET.</strong> You can use the <strong>SortBy</strong> GET query parameter to determine which attribute you want to sort by and in which direction; direction can either be 'asc' for ascending and 'desc' for descending sort ordering. Here&#8217;s the overall format: <strong>SortBy=&lt;sorting attribute&gt;:&lt;direction&gt;</strong>. If no direction parameter is provided, then the listing of messages is sorted by the attribute in ascending order. Below you can find the possible attributes you can sort by:</p>
+</div>
+<div class="sect2">
+<h3 id="sortby-attributes"><a class="anchor" href="#sortby-attributes"></a>SortBy Attributes</h3>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DateCreated</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by date at which the message was sent</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">From</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the party who initiated the message</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">To</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the party who received the message</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Direction</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the direction of the message</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the status of the message</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Body</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the text body of the message</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Price</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the price of the message, if applicable</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="example-2"><a class="anchor" href="#example-2"></a>Example</h3>
+<div class="paragraph">
+<p>The command below will return messages sorted by the creation date in ascending order using SortBy parameter:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -X GET  https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/&lt;accountSid&gt;/SMS/Messages?SortBy=DateCreated:asc</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The result of the <strong>SortBy</strong> parameter:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;RestcommResponse&gt;
+    &lt;SMSMessages&gt;
+        &lt;SMSMessage&gt;
+            &lt;Sid&gt;SM316e8344154d4acc963641be78b2b401&lt;/Sid&gt;
+            &lt;DateCreated&gt;Thu, 5 Jul 2018 10:46:45 +0300&lt;/DateCreated&gt;
+            &lt;DateUpdated&gt;Thu, 5 Jul 2018 10:46:45 +0300&lt;/DateUpdated&gt;
+            &lt;From&gt;alice&lt;/From&gt;
+            &lt;To&gt;1235&lt;/To&gt;
+            &lt;Body&gt;Hello there!&lt;/Body&gt;
+            ...
+        &lt;/SMSMessage&gt;
+        &lt;SMSMessage&gt;
+            &lt;Sid&gt;SMcb0a3712e56f4b2b8c5c2eba59d25ceb&lt;/Sid&gt;
+            &lt;DateCreated&gt;Thu, 5 Jul 2018 10:46:54 +0300&lt;/DateCreated&gt;
+            &lt;DateUpdated&gt;Thu, 5 Jul 2018 10:46:54 +0300&lt;/DateUpdated&gt;
+            &lt;From&gt;bob&lt;/From&gt;
+            &lt;To&gt;1235&lt;/To&gt;
+            &lt;Body&gt;How are you doing?&lt;/Body&gt;
+             ....
+        &lt;/SMSMessage&gt;
+        ...
+    &lt;/SMSMessages&gt;
+&lt;/RestcommResponse&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-07-15 02:15:54 UTC
+Last updated 2018-07-18 09:45:56 UTC
 </div>
 </div>
 <footer >

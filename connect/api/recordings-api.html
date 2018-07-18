@@ -23377,6 +23377,12 @@ Countly.q.push(['report_conversion']);
 <li><a href="#request-parameters-3">Request Parameters</a></li>
 </ul>
 </li>
+<li><a href="#sorting-information">Sorting Information</a>
+<ul class="sectlevel2">
+<li><a href="#sortby-attributes">SortBy Attributes</a></li>
+<li><a href="#example-2">Example</a></li>
+</ul>
+</li>
 <li><a href="#delete-a-recording">Delete a Recording</a>
 <ul class="sectlevel2">
 <li><a href="#recording-delete-resource-uri">Recording Delete Resource URI</a></li>
@@ -23790,6 +23796,89 @@ Here is how to access the file using http <strong><a href="https://cloud.restcom
 </div>
 </div>
 <div class="sect1">
+<h2 id="sorting-information"><a class="anchor" href="#sorting-information"></a>Sorting Information</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>HTTP GET.</strong> You can use the <strong>SortBy</strong> GET query parameter to determine which attribute you want to sort by and in which direction; direction can either be 'asc' for ascending and 'desc' for descending sort ordering. Here&#8217;s the overall format: <strong>SortBy=&lt;sorting attribute&gt;:&lt;direction&gt;</strong>. If no direction parameter is provided, then the listing of recordings is sorted by the attribute in ascending order. Below you can find the possible attributes you can sort by:</p>
+</div>
+<div class="sect2">
+<h3 id="sortby-attributes"><a class="anchor" href="#sortby-attributes"></a>SortBy Attributes</h3>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DateCreated</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by date at which the recording was created</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Duration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the duration of the recording</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CallSid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the CallSid of the recording, which points to the call to which the recording is related to</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="example-2"><a class="anchor" href="#example-2"></a>Example</h3>
+<div class="paragraph">
+<p>The command below will return recordings sorted by the creation date in ascending order using SortBy parameter:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -X GET  https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/&lt;accountSid&gt;/Recordings?SortBy=DateCreated:asc</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The result of the <strong>SortBy</strong> parameter:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;RestcommResponse&gt;
+    &lt;Recordings&gt;
+        &lt;Recording&gt;
+            &lt;Sid&gt;REb3d71735549e4f91b3431305652e7309&lt;/Sid&gt;
+            &lt;DateCreated&gt;Tue, 10 Jul 2018 10:58:25 +0300&lt;/DateCreated&gt;
+            &lt;DateUpdated&gt;Tue, 10 Jul 2018 10:58:25 +0300&lt;/DateUpdated&gt;
+            &lt;CallSid&gt;ID8555f97abe0441e0a07ca2da3a081871-CA9f2360fc21e848d291dfaf5f3d32d95b&lt;/CallSid&gt;
+            &lt;Duration&gt;2&lt;/Duration&gt;
+            ...
+        &lt;/Recording&gt;
+        &lt;Recording&gt;
+            &lt;Sid&gt;RE4960cab74a984f85ba1c656485c981ea&lt;/Sid&gt;
+            &lt;DateCreated&gt;Tue, 10 Jul 2018 10:58:33 +0300&lt;/DateCreated&gt;
+            &lt;DateUpdated&gt;Tue, 10 Jul 2018 10:58:33 +0300&lt;/DateUpdated&gt;
+            &lt;CallSid&gt;ID8555f97abe0441e0a07ca2da3a081871-CAfd5703072846456b9093a00c32e8b3f1&lt;/CallSid&gt;
+            &lt;Duration&gt;2&lt;/Duration&gt;
+            ...
+        &lt;/Recording&gt;
+        &lt;Recording&gt;
+            &lt;Sid&gt;RE63d742b8b0f44e7a819302ae97775e26&lt;/Sid&gt;
+            &lt;DateCreated&gt;Tue, 10 Jul 2018 11:00:19 +0300&lt;/DateCreated&gt;
+            &lt;DateUpdated&gt;Tue, 10 Jul 2018 11:00:19 +0300&lt;/DateUpdated&gt;
+            &lt;CallSid&gt;ID8555f97abe0441e0a07ca2da3a081871-CA79f2c079f1d145a1970118012554b154&lt;/CallSid&gt;
+            &lt;Duration&gt;4&lt;/Duration&gt;
+            ...
+        &lt;/Recording&gt;
+    &lt;/Recordings&gt;
+&lt;/RestcommResponse&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="delete-a-recording"><a class="anchor" href="#delete-a-recording"></a>Delete a Recording</h2>
 <div class="sectionbody">
 <div class="sect2">
@@ -23815,7 +23904,7 @@ Here is how to access the file using http <strong><a href="https://cloud.restcom
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-07-15 02:15:54 UTC
+Last updated 2018-07-18 09:45:56 UTC
 </div>
 </div>
 <footer >
