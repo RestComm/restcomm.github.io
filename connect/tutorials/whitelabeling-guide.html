@@ -5,7 +5,8 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>Restcomm API – SMS</title>
+<meta name="author" content="A white label product is a product or service produced by one company that other companies rebrand to make it appear as if they had made it.">
+<title>Introduction</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -23341,71 +23342,42 @@ Countly.q.push(['report_conversion']);
 </head>
 <body class="article">
 <div id="header">
-<h1>Restcomm API – SMS</h1>
+<h1>Introduction</h1>
+<div class="details">
+<span id="author" class="author">A white label product is a product or service produced by one company that other companies rebrand to make it appear as if they had made it.</span><br>
+<span id="revdate">Restcomm allows to be White-labeled and to create separate UI themes (light/dark/custom themes). It works by making UI applications configurable by a set of key/value pairs (CSS variables) and allowing theme designers to provide a set of them. This set is integrated into the system.</span>
+</div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
+<ul class="sectlevel0">
+<li><a href="#definition-of-terms-glossary-abbreviations">Definition of Terms / Glossary / Abbreviations</a></li>
+<li><a href="#theme-naming-application">Theme naming &amp; application</a>
 <ul class="sectlevel1">
-<li><a href="#SMS">SMS</a>
-<ul class="sectlevel2">
-<li><a href="#sms-message-resource-uri">SMS Message Resource URI</a></li>
-<li><a href="#sms-message-list-resource-uri">SMS Message List Resource URI</a></li>
+<li><a href="#vendor-themes">Vendor themes</a></li>
+<li><a href="#vendor-theme-variations">Vendor theme variations</a></li>
+<li><a href="#theme-application-order">Theme application order</a></li>
 </ul>
 </li>
-<li><a href="#using-sms-and-making-did-calls">Using SMS and making DID calls</a></li>
-<li><a href="#send-sms-messages">Send SMS Messages</a></li>
-<li><a href="#get-list-of-sms-messages">Get list of SMS Messages</a></li>
-<li><a href="#example-post-response---xml-and-json">Example POST Response - XML and JSON</a>
+<li><a href="#theme-creator-deliverables">Theme creator deliverables</a></li>
+<li><a href="#css-definitions">CSS definitions</a>
+<ul class="sectlevel1">
+<li><a href="#console-variables">Console variables</a></li>
+<li><a href="#visual-designer-variables">Visual Designer variables</a>
 <ul class="sectlevel2">
-<li><a href="#xml-post-response">XML POST Response</a></li>
-<li><a href="#json-post-response">JSON POST Response</a></li>
+<li><a href="#logo">Logo</a></li>
+<li><a href="#favicon">Favicon</a></li>
 </ul>
 </li>
-<li><a href="#example-get-response">Example GET Response</a>
-<ul class="sectlevel2">
-<li><a href="#json-get-response">JSON GET Response</a></li>
+<li><a href="#olympus-variables">Olympus variables</a></li>
 </ul>
 </li>
-<li><a href="#get-response-using-sms-sid">Get Response Using SMS SID</a></li>
-<li><a href="#list-filter">List Filter</a>
-<ul class="sectlevel2">
-<li><a href="#request-parameters-2">Request Parameters</a></li>
-<li><a href="#filter-using-the-from-parameter">Filter using the From parameter.</a></li>
-</ul>
-</li>
-<li><a href="#paging-information">Paging Information</a>
-<ul class="sectlevel2">
-<li><a href="#request-parameters-3">Request Parameters</a></li>
-<li><a href="#example">Example.</a></li>
-</ul>
-</li>
-<li><a href="#additional-paging-information">Additional Paging Information.</a>
-<ul class="sectlevel2">
-<li><a href="#request-parameters-4">Request Parameters</a></li>
-</ul>
-</li>
-<li><a href="#sorting-information">Sorting Information</a>
-<ul class="sectlevel2">
-<li><a href="#sortby-attributes">SortBy Attributes</a></li>
-<li><a href="#example-2">Example</a></li>
-</ul>
-</li>
+<li><a href="#theme-development">Theme development</a></li>
+<li><a href="#deploying">Deploying</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="SMS"><a class="anchor" href="#SMS"></a>SMS</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>A <strong>SMS Message</strong> resource represents an inbound or outbound SMS message.</p>
-</div>
-<div class="sect2">
-<h3 id="sms-message-resource-uri"><a class="anchor" href="#sms-message-resource-uri"></a>SMS Message Resource URI</h3>
-<div class="paragraph">
-<p><strong>/2012-04-24/Accounts/{AccountSid}/SMS/Messages/{SMSMessageSid}</strong></p>
-</div>
-<div class="sect3">
-<h4 id="resource-properties"><a class="anchor" href="#resource-properties"></a>Resource Properties</h4>
+<h1 id="definition-of-terms-glossary-abbreviations" class="sect0"><a class="anchor" href="#definition-of-terms-glossary-abbreviations"></a>Definition of Terms / Glossary / Abbreviations</h1>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 50%;">
@@ -23413,391 +23385,142 @@ Countly.q.push(['report_conversion']);
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">+Term`</th>
+<th class="tableblock halign-left valign-top">Definition</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sid</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A string that uniquely identifies this SMS Message.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vendor</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A customer that wants to offer the whitelabeled experience. For the purpose of this document it’s the same as an organization.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DateCreated</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The date that this SMS Message was created.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">theme file</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The .css file containing configuration of the theme that is supplied by the theme creator.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DateUpdated</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The date that this SMS Message was last updated.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">+key`</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of a white-labeling configuration option. Essentially,  a CSS variable defined in the :root{} scope. For example: <code>--background-color</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DateSent</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The date that the SMS was sent or received by RestComm.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">+key-value pair`</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name and value of a white-labeling configuration option. It can refer to previously defined keys. for example:
+<code>--default-button-back-color: #ccc</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">AccountSid</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The unique id of the Account that sent or received this SMS message.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">variation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A variation of theme by available by default on Restcomm and switchable from UI i.e. Dark theme variation.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">From</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The phone number or short code that initiated the message.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">verbs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The draggable buttons on the left.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">To</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The phone number or short code that received the message.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Body</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The text body of the SMS message. Up to 160 characters long.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The status of this SMS message. Possible values are queued, sending, sent, failed, received, delivered, and undelivered.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Direction</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The direction of this SMS message. Possible values are incoming, outbound-api, outbound-call.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ApiVersion</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The API version RestComm used to handle the SMS message.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Uri</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The URI for this account, relative to <a href="https://cloud.restcomm.com/restcomm" class="bare">https://cloud.restcomm.com/restcomm</a>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">error_code</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">In case message status is <strong>failed</strong> or <strong>undelivered</strong>, this will give you more information about failure reason. If not, the content will be simply null.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">error_message</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Same as <strong>error_code</strong>, but providing human readable text.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">step</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The panel with details of an element on the center of the screen. Dragging a verb onto a module creates a new step.</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="sect3">
-<h4 id="status-description"><a class="anchor" href="#status-description"></a>Status Description</h4>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sending</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Restcomm has accepted the message and is sending it to provider. Applies to outbound message.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sent</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Restcomm has already sent message to provider. Applies to outbound message.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">failed</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Message failed to progress in provider. Reason could be the message was expired, rejected or deleted by the provider.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">received</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Restcomm has received the message. Applies to inbound message.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">delivered</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The provider has delivered the message into user&#8217;s terminal. Applies to outbound message.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">undelivered</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The provider couldnt deliver the message into user&#8217;s terminal. Applies to outbound message.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="error-code-description"><a class="anchor" href="#error-code-description"></a>Error Code Description</h4>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Code</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Message</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">30001</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Queue overflow</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">30002</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Account suspended</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">30003</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Unreachable destination handset</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">30004</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Message blocked</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">30005</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Unknown destination handset</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">30006</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Landline or unreachable carrier</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">30007</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Carrier violation</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">30008</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Unknown error</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">30009</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Missing segment</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">300010</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Message price exceeds max price</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="supported-operations"><a class="anchor" href="#supported-operations"></a>Supported Operations</h4>
+<h1 id="theme-naming-application" class="sect0"><a class="anchor" href="#theme-naming-application"></a>Theme naming &amp; application</h1>
 <div class="paragraph">
-<p><strong>HTTP GET</strong>. Returns the representation of an SMS Message resource, including the properties above. SMS Message List Resource</p>
+<p>Themes are applied over a default setup. Not all CSS variables need to be defined in a new theme. The missing keys will use values from the default setup.</p>
 </div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="sms-message-list-resource-uri"><a class="anchor" href="#sms-message-list-resource-uri"></a>SMS Message List Resource URI</h3>
+<div class="sect1">
+<h2 id="vendor-themes"><a class="anchor" href="#vendor-themes"></a>Vendor themes</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p><strong>/2012-04-24/Accounts/{AccountSid}/SMS/Messages</strong></p>
+<p>New theme name (i.e. the name of the directory holding the customization files) should be <strong>exactly</strong> the same as the name of the vendor as this is used in the domain name on the cloud. For example, for myorganization.restcomm.com the supplied files should be inside <strong>myorganization</strong> directory. The CSS filenames, inside such directory, should be the same as the standard filenames:</p>
 </div>
-<div class="sect3">
-<h4 id="supported-operations-2"><a class="anchor" href="#supported-operations-2"></a>Supported Operations</h4>
-<div class="sect4">
-<h5 id="http-get"><a class="anchor" href="#http-get"></a>HTTP GET</h5>
-<div class="paragraph">
-<p>Returns the list representation of all the Call resources for this Account, including the properties above.  </p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="http-post"><a class="anchor" href="#http-post"></a>HTTP POST</h5>
-<div class="paragraph">
-<p>Sends a new SMS Message and returns the representation of the SMS Message resource, including the properties above. Below you will find a list of required and optional parameters.</p>
-</div>
-<div class="sect5">
-<h6 id="request-parameters"><a class="anchor" href="#request-parameters"></a>Request Parameters</h6>
-<div class="paragraph">
-<p>Description A phone number that is enabled for SMS. The destination phone number in E.164 format. The text of the message you want to send, limited to 160 characters.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>dashboard.css</p>
+</li>
+<li>
+<p>dashboard-dark.css</p>
+</li>
+<li>
+<p>rvd.css</p>
+</li>
+<li>
+<p>rvd-dark.css</p>
+</li>
+<li>
+<p>favicon.png</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Parameter</p>
-</div>
-<div class="paragraph">
-<p>From(Required)</p>
-</div>
-<div class="paragraph">
-<p>To(Required)</p>
-</div>
-<div class="paragraph">
-<p>Body(Required)</p>
-</div>
-</div>
-</div>
-</div>
+<p>The logo filename should also be prefixed by the organization name, so for the example above, a logo filename should start with <strong>myorganization</strong> eg,  <strong>myorganization-logo.svg</strong>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="using-sms-and-making-did-calls"><a class="anchor" href="#using-sms-and-making-did-calls"></a>Using SMS and making DID calls</h2>
+<h2 id="vendor-theme-variations"><a class="anchor" href="#vendor-theme-variations"></a>Vendor theme variations</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>You need to configure Restcomm to send SMS messages and DID phone calls to a Service Provider for provisioning. In the <strong>restcomm.xml</strong> file, the outbound-proxy-uri and the SMS outbound-endpoint must point to the Service Provider IP address. You may also decide to use Restcomm AMI.</p>
+<p>Restcomm by default supports theme <em>variations</em> based on other aspects besides vendor. <em>Dark</em> theme is such a variation. More fine-grained theming is possible by supplying themes that override these variations instead of the default setup directly. Respective CSS files need to define the name of the <em>variation _name besides the name of the _vendor</em>. Thus the supplied theme file for the dark variation for myorganization vendor in RVD would be <strong>myorganization/rvd-dark.css</strong>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="send-sms-messages"><a class="anchor" href="#send-sms-messages"></a>Send SMS Messages</h2>
+<h2 id="theme-application-order"><a class="anchor" href="#theme-application-order"></a>Theme application order</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Note the encoding used <strong>%2B13216549878</strong> instead of the <strong>13216549878**  The ** sign is encoded to to send SMS from the command line. "</strong>From<strong>" DID number The "</strong>From**" number should be the DID SMS enabled number from your Service Provider. From the bash terminal, you can run the command below:</p>
+<p>Themes are applied using the following order:</p>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages -d "To=%2B13216549878" -d "From=%2B19876543212" -d "Body=This is a test from RestComm"</pre>
+<div class="ulist">
+<ul>
+<li>
+<p><em>default setup</em> theme is always applied</p>
+</li>
+<li>
+<p>default variation themes are applied if a variation is enabled in the UI <em>e.g. rvd-dark.css</em></p>
+</li>
+<li>
+<p>vendor theme is applied if it’s available and vendor information is detected <em>e.g. myorganization/rvd.css</em></p>
+</li>
+<li>
+<p>vendor theme variation is applied if it’s available, vendor information is detected and the variation is enabled in the UI <em>e.g. myorganization/rvd-dark.css</em>.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
+<h1 id="theme-creator-deliverables" class="sect0"><a class="anchor" href="#theme-creator-deliverables"></a>Theme creator deliverables</h1>
+<div class="paragraph">
+<p>To introduce a new vendor theme,  creators needs to supply the following for each application that gets customized:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <em>theme file</em>. This is a .css file with CSS variable override definitions. Note, the theme file naming <a href="#vendor-themes">guidelines</a> on how to name it. If more theme variations are supplied, theme files for those variations should be supplied too.</p>
+</li>
+<li>
+<p>Additional resource files like the logo image file (.svg) used by theme files.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Also, if favicon needs to change:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The favicon.png file</p>
+</li>
+</ul>
+</div>
+<h1 id="css-definitions" class="sect0"><a class="anchor" href="#css-definitions"></a>CSS definitions</h1>
+<div class="paragraph">
+<p>Variable definitions are the contents of the theme file. Different UI applications have their own variable definition sets.</p>
 </div>
 <div class="sect1">
-<h2 id="get-list-of-sms-messages"><a class="anchor" href="#get-list-of-sms-messages"></a>Get list of SMS Messages</h2>
+<h2 id="console-variables"><a class="anchor" href="#console-variables"></a>Console variables</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This will display list of message sent</p>
+<p>Console defines  a large number of CSS variables. Here follows a handy subset of them and their role in theme configuration:</p>
 </div>
-<div class="paragraph">
-<p>From the bash terminal, you can run the command below:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>curl -X GET https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="example-post-response---xml-and-json"><a class="anchor" href="#example-post-response---xml-and-json"></a>Example POST Response - XML and JSON</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="xml-post-response"><a class="anchor" href="#xml-post-response"></a>XML POST Response</h3>
-<div class="listingblock">
-<div class="content">
-<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e0f425248d6a26948c17a9e2acf/SMS/Messages -d "To=%2B1321654879" -d "From=%2B1654123987" -d "Body=This is a test from RestComm"</pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>&lt;RestcommResponse&gt;
-  &lt;SMSMessage&gt;
-    &lt;Sid&gt;SM55ce5cf07b9649c283cbacab4dae56a9&lt;/Sid&gt;
-    &lt;DateCreated&gt;Thu, 19 Nov 2015 07:21:24 -0500&lt;/DateCreated&gt;
-    &lt;DateUpdated&gt;Thu, 19 Nov 2015 07:21:24 -0500&lt;/DateUpdated&gt;
-    &lt;DateSent/&gt;
-    &lt;AccountSid&gt;ACae6e420f425248d6a26948c17a9e2acf&lt;/AccountSid&gt;
-    &lt;From&gt;+1654123987&lt;/From&gt;
-    &lt;To&gt;+1321654879&lt;/To&gt;
-    &lt;Body&gt;This is a test from RestComm&lt;/Body&gt;
-    &lt;Status&gt;sending&lt;/Status&gt;
-    &lt;Direction&gt;outbound-api&lt;/Direction&gt;
-    &lt;Price&gt;0&lt;/Price&gt;
-    &lt;PriceUnit&gt;USD&lt;/PriceUnit&gt;
-    &lt;ApiVersion&gt;2012-04-24&lt;/ApiVersion&gt;
-    &lt;Uri&gt;/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages/SM55ce5cf07b9649c283cbacab4dae56a9&lt;/Uri&gt;
-  &lt;/SMSMessage&gt;</pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="json-post-response"><a class="anchor" href="#json-post-response"></a>JSON POST Response</h3>
-<div class="listingblock">
-<div class="content">
-<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-20f425248d6a26948c17a9e2acf/SMS/Messages.json -d "To=%2B1321654879" -d "From=%2B1654123987" -d "Body=This is a test from RestComm"</pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>{
-  "sid": "SM5dd70f7ea54e47f1a49749debeec3f7f",
-  "date_created":"Thu, 19 Nov 2015 07:21:35 -0500",
-  "date_updated":"Thu, 19 Nov 2015 07:21:35 -0500",
-  "account_sid":"ACae6e420f425248d6a26948c17a9e2acf",
-  "from":"+1654123987",
-  "to":"+1321654879",
-  "body":"This is a test from RestComm",
-  "status":"sending",
-  "direction":"outbound-api",
-  "price":"0",
-  "price_unit":"USD",
-  "api_version":"2012-04-24",
-  "uri":"/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages/SM5dd70f7ea54e47f1a49749debeec3f7f.json"
-}</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="example-get-response"><a class="anchor" href="#example-get-response"></a>Example GET Response</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="json-get-response"><a class="anchor" href="#json-get-response"></a>JSON GET Response</h3>
-<div class="listingblock">
-<div class="content">
-<pre>curl -X GET https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages.json</pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>{"page":0,"num_pages":0,"page_size":50,"total":34,"start":"0","end":"34","uri":"/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages.json","first_page_uri":"/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages.json?Page=0&amp;PageSize=50","previous_page_uri":"null","next_page_uri":"null","last_page_uri":"/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages.json?Page=0&amp;PageSize=50","messages":
-    [
-      {
-        "sid":"SM55ce5cf07b9649c283cbacab4dae56a9",
-        "date_created":"Thu, 19 Nov 2015 07:21:24 -0500",
-        "date_updated":"Thu, 19 Nov 2015 07:21:24 -0500",
-        "date_sent":"2015-11-19T07:21:24.000-05:00",
-        "account_sid":"ACae6e420f425248d6a26948c17a9e2acf",
-        "from":"+19876543212",
-        "to":"+13216549878",
-        "body":"This is a test from RestComm",
-        "status":"sent",
-        "direction":"outbound-api",
-        "price":"0",
-        "price_unit":"USD",
-        "api_version":"2012-04-24",
-        "uri":"/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages/SM55ce5cf07b9649c283cbacab4dae56a9.json"
-      },
-      ...
-    ]
-}</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="get-response-using-sms-sid"><a class="anchor" href="#get-response-using-sms-sid"></a>Get Response Using SMS SID</h2>
-<div class="sectionbody">
-<div class="listingblock">
-<div class="content">
-<pre>curl -X GET https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e42f425248d6a26948c17a9e2acf/SMS/Messages/SM55ce5cf07b9649c283cbacab4dae56a9.json</pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>{
-  "sid":"SM55ce5cf07b9649c283cbacab4dae56a9",
-  "date_created":"Thu, 19 Nov 2015 07:21:24 -0500",
-  "date_updated":"Thu, 19 Nov 2015 07:21:24 -0500",
-  "date_sent":"2015-11-19T07:21:24.000-05:00",
-  "account_sid":"ACae6e420f425248d6a26948c17a9e2acf",
-  "from":"+19876543212",
-  "to":"+13216549878",
-  "body":"This is a test from RestComm",
-  "status":"sent",
-  "direction":"outbound-api",
-  "price":"0",
-  "price_unit":"USD",
-  "api_version":"2012-04-24",
-  "uri":"/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages/SM55ce5cf07b9649c283cbacab4dae56a9.json"
-}</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre> </pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="list-filter"><a class="anchor" href="#list-filter"></a>List Filter</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><strong>HTTP GET</strong>. The following GET query string parameters allow you to limit the list returned. Note, parameters are case-sensitive:</p>
-</div>
-<div class="sect2">
-<h3 id="request-parameters-2"><a class="anchor" href="#request-parameters-2"></a>Request Parameters</h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 50%;">
@@ -23805,87 +23528,89 @@ Countly.q.push(['report_conversion']);
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Variables and sample values</th>
 <th class="tableblock halign-left valign-top">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">To</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Only show messages to this phone number or Client identifier.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--main-logo-url: url(<strong>"path/to/{<strong>name-of-logo-file}</strong>"</strong>);</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Logo image displayed while inside (logge in) the console. Read more on <a href="#logo">logo requirements section</a>.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">From</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Only show messages from this phone number or Client identifier.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--sign-in-logo-url: url(<strong>"path/to/{<strong>name-of-logo-file}</strong>"</strong>);</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Logo image displayed on the console sign in screen. Read more on <a href="#logo">logo requirements section</a>.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">StartTime</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Only show messages that started on this date, given as YYYY-MM-DD. Also supports inequalities, such as StartTime=YYYY-MM-DD for messages that started at or before midnight on a date, and StartTime=YYYY-MM-DD for messages that started at or after midnight on a date.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--footer-image-url: url(<strong>"path/to/{<strong>name-of-logo-file}</strong>"</strong>);</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Logo image displayed on the console footer, only in sign in screen. Read more on <a href="#logo">logo requirements section</a>.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EndTime</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Only show messages that ended on this date, given as YYYY-MM-DD. Also supports inequalities, such as StartTime=YYYY-MM-DD for messages that started at or before midnight on a date, and StartTime=YYYY-MM-DD for messages that started at or after midnight on a date.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--main-bg-color: #ffffff;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Main console background color.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Body</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Only show messages that contain this body.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--main-text-color: #434A5B;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Text color for most places.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--muted-text-color: #bdbdbd;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Text color for more discrete elements (comments, hints, etc).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--primary-color: #1ea5db;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color of components that have a prominent role like buttons, active module, links etc.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--lines-color: #eee;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color of discrete separator lines. Modals and menus typically contain them.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--link-text-color: #141D33;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color for links.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--link-text-hover-color: #4a4a4b;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color for links, on mouse over.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--link-muted-text-color: var(--muted-text-color);</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color for more discrete links.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--link-muted-text-hover-color: var(--link-text-color);</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color for more discrete links, on mouse over.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--link-disabled-text-color: #eeeeee;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color for more disabled links.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--button-bg-color: #d1d1d1;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default background color for buttons.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--button-text-color: #ffffff;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default text color for buttons.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--button-hover-bg-color: #c8c7c7;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default background color for buttons, on mouse over.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--button-hover-text-color: #ffffff;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default text color for buttons, on mouse over.</p></td>
 </tr>
 </tbody>
 </table>
-<div class="literalblock">
-<div class="content">
-<pre> </pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="filter-using-the-from-parameter"><a class="anchor" href="#filter-using-the-from-parameter"></a>Filter using the From parameter.</h3>
-<div class="paragraph">
-<p>The example below will only return Messages made from client Alice</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre> curl -X GET  https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages.json?From=alice</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The result will be similar to the one below</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-decode:true" data-lang="decode:true">{"page":0,"num_pages":0,"page_size":50,"total":1,"start":"0","end":"1","uri":"/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages.json","first_page_uri":"/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages.json?Page=0&amp;PageSize=50","previous_page_uri":"null","next_page_uri":"null","last_page_uri":"/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages.json?Page=0&amp;PageSize=50","messages":
-    [
-      {
-        "sid":"SM55ce5cf07b9649c283cbacab4dae56a9",
-        "date_created":"Thu, 19 Nov 2015 07:21:24 -0500",
-        "date_updated":"Thu, 19 Nov 2015 07:21:24 -0500",
-        "date_sent":"2015-11-19T07:21:24.000-05:00",
-        "account_sid":"ACae6e420f425248d6a26948c17a9e2acf",
-        "from":"alice",
-        "to":"+13216549878",
-        "body":"This is a test from RestComm",
-        "status":"sent",
-        "direction":"outbound-api",
-        "price":"0",
-        "price_unit":"USD",
-        "api_version":"2012-04-24",
-        "uri":"/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages/SM55ce5cf07b9649c283cbacab4dae56a9.json"
-      }
-    ]
-}</code></pre>
-</div>
-</div>
-</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="paging-information"><a class="anchor" href="#paging-information"></a>Paging Information</h2>
+<h2 id="visual-designer-variables"><a class="anchor" href="#visual-designer-variables"></a>Visual Designer variables</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>HTTP GET.</strong> The following GET query string parameters allow you to limit the list returned. Note, parameters are case-sensitive:</p>
+<p>Visual Designer defines  a large number of CSS variables. Here follows a handy subset of them and their role in theme configuration:</p>
 </div>
-<div class="sect2">
-<h3 id="request-parameters-3"><a class="anchor" href="#request-parameters-3"></a>Request Parameters</h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 50%;">
@@ -23893,225 +23618,177 @@ Countly.q.push(['report_conversion']);
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Variables and sample values</th>
 <th class="tableblock halign-left valign-top">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Page</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The current page number. Zero-indexed, so the first page is 0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--logo-url: url(<strong>"path/to/{<strong>name-of-logo-file}</strong>"</strong>);</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Logo image filename supplied by theme creator. The path of the file is relative to the path of the theme .css file. Typically only the filename should be needed. Read more on <a href="#logo">logo requirements section</a>.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NumPages</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The total number of pages.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--background-color: #ffffff;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Main background color. It lies behind steps and modals and controls.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PageSize</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">How many items are in each page</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--text-color: #5b6170;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Text color for most places.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Total</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The total number of items in the list.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--aux-back-color: #f1f1f1;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Background color for surrounding area. Header, toolbox and input-groups  get that.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Start</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The position in the overall list of the first item in this page.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">`--primary-color: #1ea5db; `</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color of components that have a prominent role like buttons, active module, links etc.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">End</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The position in the overall list of the last item in this page.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--secondary-color: #E63828;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color for less prominent links.  Limited use. SUBJECT TO CHANGE.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--border-color: #ccc;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Border color for steps and controls.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--lines-color: #eee;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color of discrete separator lines. Modals and menus typically contain them.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">`--verb-text-color: var(--background-color); `</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Text color for verb buttons and step headings</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--verb-back-color: var(--primary-back-color);</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Background color for verb buttons and step headings</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--link-text-color: var(--primary-color);</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color for links.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--comment-color: #++999</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color for comments and hints.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--danger-hint-color: #E63828;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Error hint color.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--default-button-back-color: #B8BBC1;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Background color for default buttons.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--default-button-text-color: #434A5B;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default text color for buttons.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--primary-button-back-color: #B8BBC1;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Background color for prominent  buttons.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--primary-button-text-color: #434A5B;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Text color for prominent buttons.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--danger-button-back-color: #B8BBC1;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Background color for buttons that typical remove stuff.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--danger-button-text-color: #434A5B;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Text color for buttons that typical remove stuff.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--sortable-band-placeholder-color: #1084AC;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color of the band that appears when dropping a verb on the module.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--drop-area-color: var(--aux-back-color);</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Background color of area that accepts dropped items.</p></td>
 </tr>
 </tbody>
 </table>
-<div class="literalblock">
-<div class="content">
-<pre> </pre>
+<div class="sect2">
+<h3 id="logo"><a class="anchor" href="#logo"></a>Logo</h3>
+<div class="paragraph">
+<p>Logo images should have the following characteristics:</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>Proposed image format is .svg. Other html compatible formats can also me used as long as they support transparency.</p>
+</li>
+<li>
+<p>The image height should be 48px. This is the height of the area that will host it. Higher images will be squeezed.</p>
+</li>
+<li>
+<p>Margins are already in place so they don’t need to be part of the image. Of course one can define extra borders as part of the image itself.</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="example"><a class="anchor" href="#example"></a>Example.</h3>
+<h3 id="favicon"><a class="anchor" href="#favicon"></a>Favicon</h3>
 <div class="paragraph">
-<p>The command below will return a single item from the list of messages using the PageSize parameter</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>curl -X GET  https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages.json?PageSize=1</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The result of the <strong>PageSize</strong> parameter</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-decode:true" data-lang="decode:true">{"page":0,"num_pages":34,"page_size":1,"total":34,"start":"0","end":"0","uri":"/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages.json","first_page_uri":"/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages.json?Page=0&amp;PageSize=1","previous_page_uri":"null","next_page_uri":"/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages.json?Page=1&amp;PageSize=1&amp;AfterSid=SM00ae962506694a61a4e29d776918a747","last_page_uri":"/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages.json?Page=34&amp;PageSize=1","messages":
-    [
-        {
-            "sid":"SM00ae962506694a61a4e29d776918a747",
-            "date_created":"Fri, 5 Jul 2013 21:32:40 +0900",
-            "date_updated":"Fri, 5 Jul 2013 21:32:40 +0900",
-            "account_sid":"ACae6e420f425248d6a26948c17a9e2acf",
-            "from":"19549376176",
-            "to":"+13213557674",
-            "body":"Hello",
-            "status":"received",
-            "direction":"inbound",
-            "price":"0.00",
-            "price_unit":"USD",
-            "api_version":"2012-04-24",
-            "uri":"/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages/SM00ae962506694a61a4e29d776918a747.json"
-        }
-    ]
-}</code></pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre> </pre>
-</div>
+<p>Favicons should use the png format and named <code>favicon.png</code>.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="additional-paging-information"><a class="anchor" href="#additional-paging-information"></a>Additional Paging Information.</h2>
+<h2 id="olympus-variables"><a class="anchor" href="#olympus-variables"></a>Olympus variables</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The API returns URIs to the next, previous, first and last pages of the returned list as shown in the table below:</p>
-</div>
-<div class="sect2">
-<h3 id="request-parameters-4"><a class="anchor" href="#request-parameters-4"></a>Request Parameters</h3>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Uri</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The URI of the current page.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Firstpageuri</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The URI for the first page of this list.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Nextpageuri</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The URI for the next page of this list.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Previouspageuri</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The URI for the previous page of this list.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Lastpageuri</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The URI for the last page of this list.</p></td>
-</tr>
-</tbody>
-</table>
+<p><strong>Olympus is not yet capable of being white-labeled, work is in progress. This section will be updated as soon as the capability is available</strong></p>
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="sorting-information"><a class="anchor" href="#sorting-information"></a>Sorting Information</h2>
-<div class="sectionbody">
+<h1 id="theme-development" class="sect0"><a class="anchor" href="#theme-development"></a>Theme development</h1>
 <div class="paragraph">
-<p><strong>HTTP GET.</strong> You can use the <strong>SortBy</strong> GET query parameter to determine which attribute you want to sort by and in which direction; direction can either be 'asc' for ascending and 'desc' for descending sort ordering. Here&#8217;s the overall format: <strong>SortBy=&lt;sorting attribute&gt;:&lt;direction&gt;</strong>. If no direction parameter is provided, then the listing of messages is sorted by the attribute in ascending order. Below you can find the possible attributes you can sort by:</p>
+<p>Although a full-fledged editor is not yet available, creating a new theme is very simple using the browser developer tools. The provided instructions are for Chrome while others browsers have similar support.</p>
 </div>
-<div class="sect2">
-<h3 id="sortby-attributes"><a class="anchor" href="#sortby-attributes"></a>SortBy Attributes</h3>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DateCreated</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by date at which the message was sent</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">From</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the party who initiated the message</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">To</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the party who received the message</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Direction</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the direction of the message</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the status of the message</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Body</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the text body of the message</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Price</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sort by the price of the message, if applicable</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="example-2"><a class="anchor" href="#example-2"></a>Example</h3>
-<div class="paragraph">
-<p>The command below will return messages sorted by the creation date in ascending order using SortBy parameter:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>curl -X GET  https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/&lt;accountSid&gt;/SMS/Messages?SortBy=DateCreated:asc</pre>
-</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>While at the Restcomm Console, enable the Dark Theme, by clicking <strong>Switch Theme</strong>  at the username dropdown, on the console top-right;</p>
+</li>
+<li>
+<p>Open the Developer Tools by going to the Chrome <em>top-right menu &gt; More Tools &gt; Developer Tools</em> (or just Right-click on any page element and select <em>Inspect</em>).</p>
+</li>
+<li>
+<p>Select the "<strong>Sources</strong>" tab on the Developer Tools window and on the left sidebar, navigate to the resources/css/dashboard-dark.css file and open it.</p>
+</li>
+<li>
+<p>Now the CSS variables used for this theme are displayed and can be modified, providing immediate feedback on the console.</p>
+</li>
+<li>
+<p>Once the result is the desired, right-click on the file edit area and select "Save as&#8230;&#8203;", to save it to the local filesystem, and it&#8217;s ready to be provided for upload.</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
-<p>The result of the <strong>SortBy</strong> parameter:</p>
+<p>The same applies to Visual Designer. You’ll first need to start the Designer in Dark theme mode. In order to do that  start Console, switch to dark theme, navigate to Applications, open a Designer Application details and click <strong>Design</strong> to launch Visual Designer  with the Dark theme. You may then apply steps from (2) onward for the filename css/rvd-dark.css.</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;RestcommResponse&gt;
-    &lt;SMSMessages&gt;
-        &lt;SMSMessage&gt;
-            &lt;Sid&gt;SM316e8344154d4acc963641be78b2b401&lt;/Sid&gt;
-            &lt;DateCreated&gt;Thu, 5 Jul 2018 10:46:45 +0300&lt;/DateCreated&gt;
-            &lt;DateUpdated&gt;Thu, 5 Jul 2018 10:46:45 +0300&lt;/DateUpdated&gt;
-            &lt;From&gt;alice&lt;/From&gt;
-            &lt;To&gt;1235&lt;/To&gt;
-            &lt;Body&gt;Hello there!&lt;/Body&gt;
-            ...
-        &lt;/SMSMessage&gt;
-        &lt;SMSMessage&gt;
-            &lt;Sid&gt;SMcb0a3712e56f4b2b8c5c2eba59d25ceb&lt;/Sid&gt;
-            &lt;DateCreated&gt;Thu, 5 Jul 2018 10:46:54 +0300&lt;/DateCreated&gt;
-            &lt;DateUpdated&gt;Thu, 5 Jul 2018 10:46:54 +0300&lt;/DateUpdated&gt;
-            &lt;From&gt;bob&lt;/From&gt;
-            &lt;To&gt;1235&lt;/To&gt;
-            &lt;Body&gt;How are you doing?&lt;/Body&gt;
-             ....
-        &lt;/SMSMessage&gt;
-        ...
-    &lt;/SMSMessages&gt;
-&lt;/RestcommResponse&gt;</code></pre>
+<div class="paragraph">
+<p>Note:</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>This procedure can also be applied while using the regular theme, by modifying <em>resources/assets/dashboard.&lt;hash&gt;.css</em> (<em>assets/rvd.&lt;hash&gt;.css</em> for RVD) directly.</p>
+</li>
+<li>
+<p>Only the CSS variables tweaking is necessary for an easy and consistent theming experience. More advanced customization such as directly modifying some CSS classes is also possible though not recommended. It produces less compatible themes that are prone to conflicts as base .css evolves.</p>
+</li>
+<li>
+<p>Refreshing one’s browser view will result in losing the work that has been done so far. To alleviate this, current progress can be easily stored temporarily by executing step 5. When the time comes to resume theming iterations, one can replace the in-browser contents of the edited .css file with the contents of the one stored locally.</p>
+</li>
+</ul>
 </div>
-</div>
-</div>
+<h1 id="deploying" class="sect0"><a class="anchor" href="#deploying"></a>Deploying</h1>
+<div class="paragraph">
+<p>Please contact <a href="https://telestax.com/support/">Restcomm support</a> or your <a href="https://www.restcomm.com/contact/">account manager</a> to ask them to deploy your new theme to your Restcomm organization</p>
 </div>
 </div>
 <div id="footer">
