@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>RCML - The Restcomm Markup Language</title>
+<title>Creating your phone number masking application</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -23341,121 +23341,136 @@ Countly.q.push(['report_conversion']);
 </head>
 <body class="article">
 <div id="header">
-<h1>RCML - The Restcomm Markup Language</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#overview">Overview</a></li>
-<li><a href="#the-rcml-verbs">The RCML Verbs</a></li>
-<li><a href="#how-restcomm-interacts-with-your-application">How Restcomm  Interacts with Your Application</a></li>
+<ul class="sectlevel0">
+<li><a href="#creating-your-phone-number-masking-application">Creating your phone number masking application</a></li>
+<li><a href="#designing-your-application">Designing your application</a></li>
+<li><a href="#binding-your-application-to-a-phone-number">Binding your application to a phone number</a></li>
+<li><a href="#testing-your-application-with-restcomm-webrtc-demo">Testing your application with Restcomm WebRTC demo</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="overview"><a class="anchor" href="#overview"></a>Overview</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>RCML is a set of instructions you can use to tell Restcomm what to do when you receive an incoming call or SMS.</p>
+<p>This tutorial will help you to create a number masking application using the Restcomm Visual Designer. Follow the steps below to get started.</p>
 </div>
-<div class="paragraph">
-<p>When someone makes a call or sends an SMS to one of your Restcomm numbers#, Restcomm will look up the URL associated with that phone number and make a request to that URL. Restcomm will read RCML instructions at that URL to determine what to do: record the call#, play a message for the caller#, prompt the caller to press digits on their keypad#, etc.</p>
-</div>
-<div class="paragraph">
-<p>For example#, the following will say a short message#, and then record the caller&#8217;s voice:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;Response&gt;
-    &lt;Say voice="woman"&gt;Please leave a message after the tone.&lt;/Say&gt;
-    &lt;Record maxLength="20" /&gt;
-&lt;/Response&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>RCML is similar to HTML. Only one RCML document is rendered to the caller at once#, but many documents can be linked together to build complex interactive voice applications.</p>
-</div>
-<div class="paragraph">
-<p>Calls from a Restcomm  number to an outside number are controlled using RCML in the same manner as incoming calls. The initial URL for the call is provided as a parameter to the Restcomm  REST API request you make to initiate the call.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="the-rcml-verbs"><a class="anchor" href="#the-rcml-verbs"></a>The RCML Verbs</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>You can use different combinations of the verbs below to create all kinds of interactive voice and messaging applications.</p>
-</div>
+<h1 id="creating-your-phone-number-masking-application" class="sect0"><a class="anchor" href="#creating-your-phone-number-masking-application"></a>Creating your phone number masking application</h1>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="dial-rcml.html#dial">Dial - Add another party to the call</a></p>
+<p>Log into your account</p>
+</li>
+<li>
+<p>Navigate to “<strong>Applications</strong>”</p>
+</li>
+<li>
+<p>Choose “<strong>Create a Visual Designer Application</strong>” option</p>
+</li>
+<li>
+<p>Select “<strong>Number masking</strong>” template from the list available in the Template Gallery</p>
+</li>
+<li>
+<p>Name your application and click “<strong>Create</strong>”</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>See screenshot below:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./images/creating_your_phone_number_masking_application.png" alt="creating_your_phone_number_masking_application"></span></p>
+</div>
+<h1 id="designing-your-application" class="sect0"><a class="anchor" href="#designing-your-application"></a>Designing your application</h1>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="client-rcml.html#client">Client</a></p>
+<p>Click on the “<strong>Design</strong>” button</p>
 </li>
 <li>
-<p><a href="conference-rcml.html#conference">Conference</a></p>
+<p>Next, configure your application parameters</p>
+<div class="ulist">
+<ul>
+<li>
+<p><em>agentPhoneNumber</em> - enter the phone number of the agent that will be dialed</p>
 </li>
 <li>
-<p><a href="number-rcml.html#number">Number</a></p>
-</li>
-<li>
-<p><a href="sip-rcml.html#sip">SIP</a></p>
+<p><em>callerID</em> - specify the caller ID that will be displayed on the agent’s side (e.g. 5555)</p>
 </li>
 </ul>
 </div>
 </li>
-<li>
-<p><a href="email-rcml.html#email">Email- Send an Email</a></p>
-</li>
-<li>
-<p><a href="gather-rcml.html#gather">Gather - Collect digits the caller types on their keypad</a></p>
-</li>
-<li>
-<p><a href="hangup-rcml.html#hangup">Hangup - Hang up the call</a></p>
-</li>
-<li>
-<p><a href="pause-rcml.html#pause">Pause - Wait before executing more instructions</a></p>
-</li>
-<li>
-<p><a href="play-rcml.html#play">Play - Play an audio file for the caller</a></p>
-</li>
-<li>
-<p><a href="record-rcml.html#record">Record - Record the caller&#8217;s voice</a></p>
-</li>
-<li>
-<p><a href="redirect-rcml.html#redirect">Redirect - Redirect call flow to a different RCML document.</a></p>
-</li>
-<li>
-<p><a href="reject-rcml.html#reject">Reject - Decline an incoming call without being billed.</a></p>
-</li>
-<li>
-<p><a href="say-rcml.html#say">Say - Read text to the caller</a></p>
-</li>
-<li>
-<p><a href="sms-rcml.html#sms">SMS - Send an SMS message during a phone call</a></p>
-</li>
 </ul>
 </div>
+<div class="paragraph">
+<p>See screenshot below:</p>
 </div>
+<div class="paragraph">
+<p><span class="image"><img src="./images/designing_your_application.png" alt="designing_your_application"></span></p>
 </div>
-<div class="sect1">
-<h2 id="how-restcomm-interacts-with-your-application"><a class="anchor" href="#how-restcomm-interacts-with-your-application"></a>How Restcomm  Interacts with Your Application</h2>
-<div class="sectionbody">
+<h1 id="binding-your-application-to-a-phone-number" class="sect0"><a class="anchor" href="#binding-your-application-to-a-phone-number"></a>Binding your application to a phone number</h1>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="request-rcml.html">Requests</a></p>
+<p>Head back to the Restcomm Console and navigate to “<strong>Numbers</strong>”</p>
 </li>
 <li>
-<p><a href="response-rcml.html">Responses</a></p>
+<p>Search for available phone number in the region you are interested in</p>
+</li>
+<li>
+<p>Click on “<strong>Register number</strong>”</p>
+</li>
+<li>
+<p>Select your application from the Voice URI drop down</p>
+</li>
+<li>
+<p>Click “<strong>Save</strong>”</p>
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>See screenshot below:</p>
 </div>
+<div class="paragraph">
+<p><span class="image"><img src="./images/binding_your_application_to_a_phone_number.png" alt="binding_your_application_to_a_phone_number"></span></p>
+</div>
+<h1 id="testing-your-application-with-restcomm-webrtc-demo" class="sect0"><a class="anchor" href="#testing-your-application-with-restcomm-webrtc-demo"></a>Testing your application with Restcomm WebRTC demo</h1>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You need to have an active SIP client registered on the Cloud
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Log into your Restcomm WebRTC demo account</p>
+</li>
+<li>
+<p>Click on “<strong>Add contact</strong>” button</p>
+</li>
+<li>
+<p>Enter the phone number your application was bound to</p>
+</li>
+<li>
+<p>Click on “<strong>Add contact</strong>”</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>See screenshot below:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./images/testing_your_application_with_restcomm_webrtc_demo.png" alt="testing_your_application_with_restcomm_webrtc_demo"></span></p>
+</div>
+<div class="paragraph">
+<p>You are all set. Dial the newly added contact. Your agent should receive an incoming call with the previously configured caller ID.</p>
 </div>
 </div>
 <div id="footer">
