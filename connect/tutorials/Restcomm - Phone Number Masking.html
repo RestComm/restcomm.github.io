@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>Untitled</title>
+<title>Creating your phone number masking application</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -23341,98 +23341,136 @@ Countly.q.push(['report_conversion']);
 </head>
 <body class="article">
 <div id="header">
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel0">
+<li><a href="#creating-your-phone-number-masking-application">Creating your phone number masking application</a></li>
+<li><a href="#designing-your-application">Designing your application</a></li>
+<li><a href="#binding-your-application-to-a-phone-number">Binding your application to a phone number</a></li>
+<li><a href="#testing-your-application-with-restcomm-webrtc-demo">Testing your application with Restcomm WebRTC demo</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
-<div id="mysql-schema-upgrade" class="paragraph">
-<p><strong>How to use Mysql schema upgrade scripts</strong></p>
-</div>
 <div class="paragraph">
-<p><strong>Overview</strong></p>
+<p>This tutorial will help you to create a number masking application using the Restcomm Visual Designer. Follow the steps below to get started.</p>
 </div>
-<div class="paragraph">
-<p>The Mysql schema upgrade scripts will take care to upgrade the schema of existing
-Restcomm Mysql database to the latest schema.</p>
-</div>
-<div class="paragraph">
-<p>Before anything, scripts will create a backup of the existing database that will include schema and data.
-Database backup files are located at: <strong>$RESTCOMM_HOME/bin/restcomm/upgrade_scripts/backups</strong></p>
-</div>
-<div class="paragraph">
-<p><strong>Requirements</strong></p>
-</div>
+<h1 id="creating-your-phone-number-masking-application" class="sect0"><a class="anchor" href="#creating-your-phone-number-masking-application"></a>Creating your phone number masking application</h1>
 <div class="ulist">
 <ul>
 <li>
-<p>Install mysql-clients package</p>
+<p>Log into your account</p>
+</li>
+<li>
+<p>Navigate to “<strong>Applications</strong>”</p>
+</li>
+<li>
+<p>Choose “<strong>Create a Visual Designer Application</strong>” option</p>
+</li>
+<li>
+<p>Select “<strong>Number masking</strong>” template from the list available in the Template Gallery</p>
+</li>
+<li>
+<p>Name your application and click “<strong>Create</strong>”</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p><strong>Step 1 – Edit uprgade.conf</strong></p>
+<p>See screenshot below:</p>
 </div>
 <div class="paragraph">
-<p>Edit and save the <strong>$RESTCOMM_HOME/bin/restcomm/upgrade.conf</strong> and provide the following:</p>
+<p><span class="image"><img src="./images/creating_your_phone_number_masking_application.png" alt="creating_your_phone_number_masking_application"></span></p>
 </div>
+<h1 id="designing-your-application" class="sect0"><a class="anchor" href="#designing-your-application"></a>Designing your application</h1>
 <div class="ulist">
 <ul>
 <li>
-<p>MySQL server ip address</p>
+<p>Click on the “<strong>Design</strong>” button</p>
 </li>
 <li>
-<p>MySQL server port</p>
+<p>Next, configure your application parameters</p>
+<div class="ulist">
+<ul>
+<li>
+<p><em>agentPhoneNumber</em> - enter the phone number of the agent that will be dialed</p>
 </li>
 <li>
-<p>MySQL username</p>
+<p><em>callerID</em> - specify the caller ID that will be displayed on the agent’s side (e.g. 5555)</p>
 </li>
-<li>
-<p>MySQL password</p>
-</li>
-<li>
-<p>Restcomm DB name</p>
+</ul>
+</div>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p><strong>Step2 - Run the upgrade.sh script</strong></p>
+<p>See screenshot below:</p>
 </div>
 <div class="paragraph">
-<p>Run the <strong>$RESTCOMM_HOME/bin/restcomm/upgrade.sh</strong> script.</p>
+<p><span class="image"><img src="./images/designing_your_application.png" alt="designing_your_application"></span></p>
+</div>
+<h1 id="binding-your-application-to-a-phone-number" class="sect0"><a class="anchor" href="#binding-your-application-to-a-phone-number"></a>Binding your application to a phone number</h1>
+<div class="ulist">
+<ul>
+<li>
+<p>Head back to the Restcomm Console and navigate to “<strong>Numbers</strong>”</p>
+</li>
+<li>
+<p>Search for available phone number in the region you are interested in</p>
+</li>
+<li>
+<p>Click on “<strong>Register number</strong>”</p>
+</li>
+<li>
+<p>Select your application from the Voice URI drop down</p>
+</li>
+<li>
+<p>Click “<strong>Save</strong>”</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>The script will first create backup of the existing database and then will proceed to apply the sql upgrade scripts.</p>
+<p>See screenshot below:</p>
 </div>
 <div class="paragraph">
-<p>At the end the script will report the result like:</p>
+<p><span class="image"><img src="./images/binding_your_application_to_a_phone_number.png" alt="binding_your_application_to_a_phone_number"></span></p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>+---------+------------------------------------------------------+---------------------+---------+
-| Version | Description                                          | Installed on        | State   |
-+---------+------------------------------------------------------+---------------------+---------+
-| 1       | &lt;&lt; Flyway Baseline &gt;&gt;                                | 2016-05-12 18:25:31 | Baselin |
-| 7.5.1   | For 750 update instance id                           | 2016-05-12 18:25:32 | Success |
-| 7.5.2   | For 750 update restcomm incoming phone numbers table | 2016-05-12 18:25:33 | Success |
-| 7.5.3   | For 750 add instanceId to call details record table  | 2016-05-12 18:25:33 | Success |
-| 7.5.4   | For 750 add instanceid to registrations              | 2016-05-12 18:25:33 | Success |
-| 7.5.5   | For 750 update restcomm sms messages table           | 2016-05-12 18:25:33 | Success |
-| 7.5.6   | For 750 update restcomm application records          | 2016-05-12 18:25:34 | Success |
-+---------+------------------------------------------------------+---------------------+---------+</code></pre>
+<h1 id="testing-your-application-with-restcomm-webrtc-demo" class="sect0"><a class="anchor" href="#testing-your-application-with-restcomm-webrtc-demo"></a>Testing your application with Restcomm WebRTC demo</h1>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You need to have an active SIP client registered on the Cloud
+</td>
+</tr>
+</table>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>Log into your Restcomm WebRTC demo account</p>
+</li>
+<li>
+<p>Click on “<strong>Add contact</strong>” button</p>
+</li>
+<li>
+<p>Enter the phone number your application was bound to</p>
+</li>
+<li>
+<p>Click on “<strong>Add contact</strong>”</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p><strong>Troubleshooting</strong></p>
+<p>See screenshot below:</p>
 </div>
 <div class="paragraph">
-<p>You can run the following script to check the status of the migration:</p>
+<p><span class="image"><img src="./images/testing_your_application_with_restcomm_webrtc_demo.png" alt="testing_your_application_with_restcomm_webrtc_demo"></span></p>
 </div>
 <div class="paragraph">
-<p><strong>$RESTCOMM_HOME/bin/restcomm/db_migration_status.sh</strong></p>
-</div>
-<div class="paragraph">
-<p>If you need to restore a backup run the following backup:</p>
-</div>
-<div class="paragraph">
-<p>mysql -u MYSQL_USER -pMYSQL_PASSWORD -h MYSQL_HOST -P MYSQL_PORT &lt; RESTCOMM_BACKUP_FILE</p>
+<p>You are all set. Dial the newly added contact. Your agent should receive an incoming call with the previously configured caller ID.</p>
 </div>
 </div>
 <div id="footer">
