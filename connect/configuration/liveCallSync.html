@@ -23395,19 +23395,29 @@ LIVE_CALL_SYNC_STATUS_DELETE_LIST="canceled,completed,failed,busy,no-answer"</co
 </div>
 </div>
 <div class="paragraph">
-<p><strong>LIVE_CALL_SYNC_FREQ_MS:</strong> The period between successive executions of live calls archiver (in milliseconds).
-<strong>LIVE_CALL_SYNC_WINDOW:</strong> archiver archives the call records which date_updated are later than <code>lastArchive</code>, <code>lastArchive=LIVE_CALL_SYNC_FREQ_MS * LIVE_CALL_SYNC_WINDOW</code>
-<strong>LIVE_CALL_SYNC_LINGER_INTERVAL_MS:</strong> The amount of time a live call stays in the LiveCall table before being removed
-<strong>LIVE_CALL_SYNC_MAX_CALL_LENGTH_MS:</strong> max call length in milliseconds, this will impact leaked call cleaner.
-<strong>LIVE_CALL_SYNC_STATUS_INSERT_LIST:</strong> comma separated list of call statuses which needs to be inserted in archive table (by default it will include all possible call statuses)
-<strong>LIVE_CALL_SYNC_STATUS_DELETE_LIST:</strong> call record statuses that should not be considered as live call. Hence would be removed from live calls table and archived.</p>
+<p><strong>LIVE_CALL_SYNC_FREQ_MS:</strong> The period between successive executions of live calls archiver (in milliseconds).</p>
+</div>
+<div class="paragraph">
+<p><strong>LIVE_CALL_SYNC_WINDOW:</strong> archiver archives the call records which date_updated are later than <code>lastArchive</code>, <code>lastArchive=LIVE_CALL_SYNC_FREQ_MS * LIVE_CALL_SYNC_WINDOW</code></p>
+</div>
+<div class="paragraph">
+<p><strong>LIVE_CALL_SYNC_LINGER_INTERVAL_MS:</strong> The amount of time a live call stays in the LiveCall table before being removed</p>
+</div>
+<div class="paragraph">
+<p><strong>LIVE_CALL_SYNC_MAX_CALL_LENGTH_MS:</strong> max call length in milliseconds, this will impact leaked call cleaner.</p>
+</div>
+<div class="paragraph">
+<p><strong>LIVE_CALL_SYNC_STATUS_INSERT_LIST:</strong> comma separated list of call statuses which needs to be inserted in archive table (by default it will include all possible call statuses)</p>
+</div>
+<div class="paragraph">
+<p><strong>LIVE_CALL_SYNC_STATUS_DELETE_LIST:</strong> call record statuses that should not be considered as live call. Hence would be removed from live calls table and archived.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-08-15 14:54:18 UTC
+Last updated 2018-08-15 15:37:00 UTC
 </div>
 </div>
 <footer >
