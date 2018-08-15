@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>Restcomm Console</title>
+<title>Restcomm Live Calls Synchronizer</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -23339,14 +23339,70 @@ Countly.q.push(['report_conversion']);
 		</a>
 
 </head>
-<body class="article">
+<body id="intro" class="article">
 <div id="header">
-<h1>Restcomm Console</h1>
+<h1>Restcomm Live Calls Synchronizer</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#live-call-archiver">Live Call Archiver</a></li>
+<li><a href="#leaked-call-cleaner">Leaked Call Cleaner</a></li>
+<li><a href="#configuration">Configuration</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>The Console allows you to interact visually with Restcomm in addition to the RESTful APIs for the capabilities below
-Please read <a href="console-overview.html#console">Restcomm Console Overview</a> for understanding how to interact with the Restcomm platform</p>
+<p>Main job of Restcomm Live Calls Synchronizer is to make sure that only live calls stay in live calls database table.
+This has 2 main sub processes:</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="live-call-archiver"><a class="anchor" href="#live-call-archiver"></a>Live Call Archiver</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Live call archiver; as name suggests, archives the calls records which are no longer live.
+It achieves this by deleting such records from live calls table and inserting them in legacy cdr table.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="leaked-call-cleaner"><a class="anchor" href="#leaked-call-cleaner"></a>Leaked Call Cleaner</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Leaked call cleaner; as name suggests, cleansup the leaked calls.
+It achieves so by archiving any records from live calls table which are older than configured max call length period.</p>
+</div>
+<div class="paragraph">
+<p>Via following configuration you can change how this processes work. If no config is provided, default is applied.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configuration"><a class="anchor" href="#configuration"></a>Configuration</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">LIVE_CALL_SYNC_FREQ_MS=10000
+LIVE_CALL_SYNC_WINDOW=10
+LIVE_CALL_SYNC_LINGER_INTERVAL_MS=10000
+LIVE_CALL_SYNC_MAX_CALL_LENGTH_MS=3600000
+LIVE_CALL_SYNC_STATUS_INSERT_LIST="queued,ringing,in_progress,in-progress,canceled,completed,failed,busy,no-answer"
+LIVE_CALL_SYNC_STATUS_DELETE_LIST="canceled,completed,failed,busy,no-answer"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>LIVE_CALL_SYNC_FREQ_MS:</strong> The period between successive executions of live calls archiver (in milliseconds).
+<strong>LIVE_CALL_SYNC_WINDOW:</strong> archiver archives the call records which date_updated are later than <code>lastArchive</code>, <code>lastArchive=LIVE_CALL_SYNC_FREQ_MS * LIVE_CALL_SYNC_WINDOW</code>
+<strong>LIVE_CALL_SYNC_LINGER_INTERVAL_MS:</strong> The amount of time a live call stays in the LiveCall table before being removed
+<strong>LIVE_CALL_SYNC_MAX_CALL_LENGTH_MS:</strong> max call length in milliseconds, this will impact leaked call cleaner.
+<strong>LIVE_CALL_SYNC_STATUS_INSERT_LIST:</strong> comma separated list of call statuses which needs to be inserted in archive table (by default it will include all possible call statuses)
+<strong>LIVE_CALL_SYNC_STATUS_DELETE_LIST:</strong> call record statuses that should not be considered as live call. Hence would be removed from live calls table and archived.</p>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
