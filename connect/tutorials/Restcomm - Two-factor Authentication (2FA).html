@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>Untitled</title>
+<title>Two-Factor Autehntication (2FA) Overview</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -23280,7 +23280,7 @@ line-height: 35px !important;
 <ul class="mega-sub-menu">
 <li class='mega-menu-item mega-menu-item-type-custom mega-menu-item-object-custom mega-menu-item-1014' id='mega-menu-item-1014'><a class="mega-menu-link" href="/docs/voice/index.html">Programmable Voice</a></li><li class='mega-menu-item mega-menu-item-type-custom mega-menu-item-object-custom mega-menu-item-1015' id='mega-menu-item-1015'><a class="mega-menu-link" href="/docs/sms/index.html">Programmable SMS</a></li><li class='mega-menu-item mega-menu-item-type-custom mega-menu-item-object-custom mega-menu-item-1016' id='mega-menu-item-1016'><a class="mega-menu-link" href="/docs/core/message-exchange/">Message Exchange</a></li><li class='mega-menu-item mega-menu-item-type-custom mega-menu-item-object-custom mega-menu-item-1017' id='mega-menu-item-1017'><a class="mega-menu-link" href="/docs/connect/sdks/index.html"><i>SDKs - Preview</i></a></li></ul>
 </li><li class='mega-menu-item mega-menu-item-type-custom mega-menu-item-object-custom mega-current-menu-item mega-current_page_item mega-menu-item-home mega-menu-item-has-children mega-align-bottom-left mega-menu-flyout mega-menu-item-940' id='mega-menu-item-940'><a class="mega-menu-link" href="" aria-haspopup="true" tabindex="0">Quickstarts</a>
-<li class='mega-menu-item mega-menu-item-type-custom mega-menu-item-object-custom mega-menu-item-1017' id='mega-menu-item-947'><a class="mega-menu-link" href="/docs/connect/rvd/Quick%20Start%20Guide.html">Visual Designer</a></li><li class='mega-menu-item mega-menu-item-type-custom mega-menu-item-object-custom mega-menu-item-1014' id='mega-menu-item-944'><a class="mega-menu-link" href="/docs/restcommone_cloud/Quick%20Start%20Guide_RestcommONE%20Cloud.html">Programmable Voice & SMS</a></li><li class='mega-menu-item mega-menu-item-type-custom mega-menu-item-object-custom mega-menu-item-1016' id='mega-menu-item-946'><a class="mega-menu-link" href="/docs/core/message-exchange/quick_start/index.html#quickstart">Message Exchange</a></li></ul>
+<li class='mega-menu-item mega-menu-item-type-custom mega-menu-item-object-custom mega-menu-item-1017' id='mega-menu-item-947'><a class="mega-menu-link" href="/docs/connect/rvd/Quick%20Start%20Guide.html">Visual Designer</a></li><li class='mega-menu-item mega-menu-item-type-custom mega-menu-item-object-custom mega-menu-item-1014' id='mega-menu-item-944'><a class="mega-menu-link" href="/docs/restcommone_cloud/Quick%20Start%20Guide_RestcommONE%20Cloud.html">Programmable Voice & SMS</a></li><li class='mega-menu-item mega-menu-item-type-custom mega-menu-item-object-custom mega-menu-item-1016' id='mega-menu-item-946'><a class="mega-menu-link" href="/docs/core/message-exchange/quick_start/index.html#quickstart">Message Exchange</a></li><li class="mega-menu-item mega-menu-item-type-custom mega-menu-item-object-custom mega-menu-item-1017" id="mega-menu-item-947"><a class="mega-menu-link" href="/docs/connect/tutorials/">Tutorials</a></li></ul>
 
 </li><li class='mega-menu-item mega-menu-item-type-custom mega-menu-item-object-custom mega-align-bottom-left mega-menu-flyout mega-menu-item-941' id='mega-menu-item-941'><a class="mega-menu-link" href="/docs/connect/rvd/index.html" tabindex="0">Visual Designer</a></li><li class='mega-menu-item mega-menu-item-type-custom mega-menu-item-object-custom mega-align-bottom-left mega-menu-flyout mega-menu-item-945' id='mega-menu-item-945'><a class="mega-menu-link" href="/docs/core/index.html" tabindex="0">Restcomm Legacy Telecom</a></li><li class='mega-menu-item mega-menu-item-type-custom mega-menu-item-object-custom mega-align-bottom-left mega-menu-flyout mega-menu-item-969' id='mega-menu-item-969'><a class="mega-menu-link" href="https://cloud.restcomm.com/#/login" tabindex="0">Sign in</a></li><li class='mega-menu-item mega-menu-item-type-custom mega-menu-item-object-custom mega-align-bottom-left mega-menu-flyout mega-menu-item-943' id='mega-menu-item-943'><a class="mega-menu-link" href="https://www.restcomm.com/sign-up" tabindex="0">Sign up</a></li></ul></div>					</nav>
 			                    					</div>
@@ -23341,10 +23341,11 @@ Countly.q.push(['report_conversion']);
 </head>
 <body class="article">
 <div id="header">
+<h1>Two-Factor Autehntication (2FA) Overview</h1>
 </div>
 <div id="content">
 <div class="paragraph">
-<p>This tutorial will walk you through the steps of setting up your own two-factor authentication service.</p>
+<p>This tutorial will walk you through the steps of setting up your own &lt;&lt;<a href="https://www.restcomm.com/use-cases/two-factor-authentication-2fa/" class="bare">https://www.restcomm.com/use-cases/two-factor-authentication-2fa/</a>, two-factor authentication service&gt;&gt;.</p>
 </div>
 <div class="paragraph">
 <p><strong>User enters your application</strong></p>
@@ -23365,7 +23366,11 @@ Countly.q.push(['report_conversion']);
 <p>Once the user enters a valid phone number, from your application you will need to ask Restcomm to send a verification code to that phone number by using the HTTP REST API Call Below.</p>
 </div>
 <div class="paragraph">
-<p>Sending a verification code requires basic authorization that includes your <a href="/connect/admin/console-overview.html#restcomm-account-settings">account SID and auth token</a>.[account SID and auth token.][] Below is the format you have to use in order to send a verification code to the user’s phone number.</p>
+<p>Sending a verification code requires basic authorization that includes your <a href="/docs/connect/admin/console-overview.html#restcomm-account-settings">account SID and auth token</a>. Below is the format you have to use in order to send a verification code to the user&#8217;s phone number.</p>
+</div>
+<div class="paragraph">
+<p>API Reference
+<sub>~</sub><sub>~</sub>~</p>
 </div>
 <div class="paragraph">
 <p><strong>Base Resource URI</strong></p>
@@ -23437,7 +23442,7 @@ Countly.q.push(['report_conversion']);
 <div class="listingblock">
 <div class="content">
 <pre>curl -X POST \
-  https://{your_organizatio}.restcomm.com/2fa/send \
+  https://{your_organization}.restcomm.com/2fa/send \
 --user  ' {your_account_SID}:{your_account_token}' \
   -H 'Cache-Control: no-cache' \
   -H 'Content-Type: application/json' \
@@ -23450,13 +23455,14 @@ Countly.q.push(['report_conversion']);
 </div>
 </div>
 <div class="paragraph">
-<p>'</p>
-</div>
-<div class="paragraph">
 <p><strong>User enters the PIN to complete app activation</strong></p>
 </div>
 <div class="paragraph">
 <p>User receives the one-time PIN code via SMS, gets back to your application and enters it in order to complete the verification process. Verifying the code is simple and requires basic authorization that includes your account SID and auth token.</p>
+</div>
+<div class="paragraph">
+<p>API Reference
+<sub>~</sub><sub>~</sub>~</p>
 </div>
 <div class="paragraph">
 <p><strong>Base Resource URI</strong></p>
@@ -23535,15 +23541,12 @@ Countly.q.push(['report_conversion']);
 </div>
 </div>
 <div class="paragraph">
-<p>'</p>
-</div>
-<div class="paragraph">
-<p>You can also test your service using Postman or any other alike client.</p>
+<p>You can also test your service using &lt;&lt;<a href="https://www.getpostman.com/" class="bare">https://www.getpostman.com/</a>, Postman&gt;&gt; or any other alike client.</p>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-08-26 02:16:03 UTC
+Last updated 2018-08-27 08:41:03 UTC
 </div>
 </div>
 <footer >
