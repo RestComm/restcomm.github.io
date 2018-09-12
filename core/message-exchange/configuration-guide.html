@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>Restcomm-Xmpp Release Notes</title>
+<title>Restcomm Message Exchange</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -23341,84 +23341,200 @@ Countly.q.push(['report_conversion']);
 </head>
 <body class="article">
 <div id="header">
-<h1>Restcomm-Xmpp Release Notes</h1>
+<h1>Restcomm Message Exchange</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
-<ul class="sectlevel2">
-<li><a href="#tags">Tags</a></li>
-<li><a href="#1-0-0-58-version-2018-09-12-docker-tag-1-0-0-58">1.0.0-58 version 2018-09-12 (docker tag 1.0.0-58)</a>
-<ul class="sectlevel2">
-<li><a href="#new-features">New Features</a></li>
-<li><a href="#breaking-changes">Breaking Changes</a></li>
-<li><a href="#bug-fixes">Bug Fixes</a></li>
-<li><a href="#migration-notes">Migration Notes</a></li>
-<li><a href="#external-dependencies-updates">External Dependencies Updates</a></li>
-</ul>
-</li>
+<ul class="sectlevel1">
+<li><a href="#xmpp-service-configuration-guide">XMPP Service Configuration Guide</a></li>
+<li><a href="#xmpp-server-configuration-guide">XMPP Server Configuration Guide</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect2">
-<h3 id="tags"><a class="anchor" href="#tags"></a>Tags</h3>
-<div class="paragraph">
-<p>The folowing tags are used to categorize and state the scope of a change</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>security improvement</strong> tags changes related to security</p>
-</li>
-</ul>
+<div class="sect1">
+<h2 id="xmpp-service-configuration-guide"><a class="anchor" href="#xmpp-service-configuration-guide"></a>XMPP Service Configuration Guide</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">servlet.context-path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This will become root path to access XMPP service API</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">servlet.port</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This will XMPP service API listening port</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restcomm.xmpp-service.sms-url</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URL used to access RC SMS API, allows placeholders for runtime replacements</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restcomm.xmpp-service.xmpp-url</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URL used to access XMPP server</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restcomm.xmpp-service.super-admin-basic-auth-header</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Superadmin credential used to access RC SMS API. Required to send SMS in behalf on any account.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restcomm.aws.access-key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Access Key for the AWS account to manage Domains.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restcomm.aws.secret-key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Secret Key for the AWS account to manage Domains</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restcomm.aws.region</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Region for the AWS account to manage Domains</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restcomm.aws.security-group-id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SecGroupId for the AWS account to manage Domains</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restcomm.aws.default-whitelist-rules</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Array of IP addresses allowed to access the API</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restcomm.sdr-service.enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">whether to send SDR events or not true/false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restcomm.sdr-service.enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URL pointing to SDR service instance</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restcomm.authorization.enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether or not to use RC API to authorize access</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restcomm.authorization.add-path-patterns</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Array of endpoints paths where RC authorization will be applied</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restcomm.authorization.url</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URL to RC instance provisiing authentication service</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.cache.type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cache used to access DB, check ref on <a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/cache/CacheType.html" class="bare">https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/cache/CacheType.html</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.datasource.url</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JDBC URL pointing to XMPP Service DB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.datasource.username</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Username used to connect to XMPP Service DB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.datasource.password</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Username used to connect to XMPP Service DB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.jpa.hibernate.ddl-auto</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DDL mode, refer to <a href="https://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html#configurations-hbmddl" class="bare">https://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html#configurations-hbmddl</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.jpa.hibernate.properties.hibernate.dialect</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dictionary dialect to use</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
-<h2 id="1-0-0-58-version-2018-09-12-docker-tag-1-0-0-58"><a class="anchor" href="#1-0-0-58-version-2018-09-12-docker-tag-1-0-0-58"></a>1.0.0-58 version 2018-09-12 (docker tag 1.0.0-58)</h2>
+<h2 id="xmpp-server-configuration-guide"><a class="anchor" href="#xmpp-server-configuration-guide"></a>XMPP Server Configuration Guide</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="new-features"><a class="anchor" href="#new-features"></a>New Features</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Using superadmin credential to access RC SMS API</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="breaking-changes"><a class="anchor" href="#breaking-changes"></a>Breaking Changes</h3>
-
-</div>
-<div class="sect2">
-<h3 id="bug-fixes"><a class="anchor" href="#bug-fixes"></a>Bug Fixes</h3>
-<div class="paragraph">
-<p>*</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="migration-notes"><a class="anchor" href="#migration-notes"></a>Migration Notes</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>New configuration property for XMPP service, to provide superadmin credential, is required as in <a href="https://bitbucket.org/telestax/restcomm-cloud/src/748c213385e250e3b11e3e6d19496f3860d3cf87/xmpp_conf_files/staging/service/application.yml#lines-16" class="bare">https://bitbucket.org/telestax/restcomm-cloud/src/748c213385e250e3b11e3e6d19496f3860d3cf87/xmpp_conf_files/staging/service/application.yml#lines-16</a>
-==== Migration steps - part 1</p>
-</li>
-</ul>
-</div>
-<div class="sect3">
-<h4 id="rollback-steps"><a class="anchor" href="#rollback-steps"></a>Rollback steps</h4>
-<div class="paragraph">
-<p>In case something goes wrong during the migration/upgrade process, you can rollback changes and run the previous version of restcomm-xmpp</p>
-</div>
-<div class="paragraph">
-<p>Follow the steps below:</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="external-dependencies-updates"><a class="anchor" href="#external-dependencies-updates"></a>External Dependencies Updates</h3>
-
-</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">spring.main.webenvironment</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether Spring Boot needs to start Web container or not. Set it to false as is not required</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">servlet.port</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This will XMPP service API listening port</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restcomm.xmpp.sms-url</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URL used to access XMPP service SMS API</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restcomm.xmpp.domain-url</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URL used to access XMPP service Domain API. This allows custom domain certificates replication</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xmpp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">settigns for Tigase embedded server</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xmpp.property-file</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">location of Tigase conf file</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xmpp.admins</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">email handle of administrator account</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xmpp.db.type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"mysql" type of DB supporting Tigase server</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xmpp.db.uri</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JBDC URL connecting to Tigase server. Expected to include proper credential params</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xmpp.hosts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Array of domain names owned by this Tigase server instance</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xmpp.ssl.cert-location</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FS directory path to location of SSL certificates</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xmpp.ssl.cert-name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">filename for PEM file where basic certificates are stored. relative to previous directory path</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xmpp.http.port</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Port where Tigase server will listen HTTP traffic</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xmpp.http.context-path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Base path for Tigase Server HTTP endpoints.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xmpp.http.scripts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FS directory path where scripts are located</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xmpp.http.cors.file</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FS file path to XML file container CORS policy</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
