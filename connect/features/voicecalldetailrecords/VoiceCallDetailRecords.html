@@ -5,8 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<meta name="author" content="A white label product is a product or service produced by one company that other companies rebrand to make it appear as if they had made it.">
-<title>Introduction</title>
+<title>Call Detail Records for Voice calls</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -23342,459 +23341,87 @@ Countly.q.push(['report_conversion']);
 </head>
 <body class="article">
 <div id="header">
-<h1>Introduction</h1>
-<div class="details">
-<span id="author" class="author">A white label product is a product or service produced by one company that other companies rebrand to make it appear as if they had made it.</span><br>
-</div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
-<ul class="sectlevel0">
-<li><a href="#definition-of-terms-glossary-abbreviations">Definition of Terms / Glossary / Abbreviations</a></li>
-<li><a href="#theme-naming-application">Theme naming &amp; application</a>
-<ul class="sectlevel1">
-<li><a href="#vendor-themes">Vendor themes</a></li>
-<li><a href="#vendor-theme-variations">Vendor theme variations</a></li>
-<li><a href="#theme-application-order">Theme application order</a></li>
-</ul>
-</li>
-<li><a href="#theme-creator-deliverables">Theme creator deliverables</a></li>
-<li><a href="#css-definitions">CSS definitions</a>
-<ul class="sectlevel1">
-<li><a href="#console-variables">Console variables</a></li>
-<li><a href="#visual-designer-variables">Visual Designer variables</a>
 <ul class="sectlevel2">
-<li><a href="#logo">Logo</a></li>
-<li><a href="#favicon">Favicon</a></li>
-</ul>
-</li>
-<li><a href="#olympus-variables">Olympus variables</a></li>
-</ul>
-</li>
-<li><a href="#theme-development">Theme development</a></li>
-<li><a href="#deploying">Deploying</a></li>
+<li><a href="#call-detail-records-for-voice-calls">Call Detail Records for Voice calls</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>Restcomm allows to be White-labeled and to create separate UI themes (light/dark/custom themes). It works by making UI applications configurable by a set of key/value pairs (CSS variables) and allowing theme designers to provide a set of them. This set is integrated into the system.</p>
-</div>
-</div>
-</div>
-<h1 id="definition-of-terms-glossary-abbreviations" class="sect0"><a class="anchor" href="#definition-of-terms-glossary-abbreviations"></a>Definition of Terms / Glossary / Abbreviations</h1>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Term</th>
-<th class="tableblock halign-left valign-top">Definition</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">vendor</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A customer that wants to offer the whitelabeled experience. For the purpose of this document it’s the same as an organization.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">theme file</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The .css file containing configuration of the theme that is supplied by the theme creator.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">key</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name of a white-labeling configuration option. Essentially,  a CSS variable defined in the :root{} scope. For example: <code>--background-color</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">key-value pair</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name and value of a white-labeling configuration option. It can refer to previously defined keys. for example:
-<code>--default-button-back-color: #ccc</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">variation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A variation of theme by available by default on Restcomm and switchable from UI i.e. Dark theme variation.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">verbs</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The draggable buttons on the left.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">step</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The panel with details of an element on the center of the screen. Dragging a verb onto a module creates a new step.</p></td>
-</tr>
-</tbody>
-</table>
-<h1 id="theme-naming-application" class="sect0"><a class="anchor" href="#theme-naming-application"></a>Theme naming &amp; application</h1>
-<div class="paragraph">
-<p>Themes are applied over a default setup. Not all CSS variables need to be defined in a new theme. The missing keys will use values from the default setup.</p>
-</div>
-<div class="sect1">
-<h2 id="vendor-themes"><a class="anchor" href="#vendor-themes"></a>Vendor themes</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>New theme name (i.e. the name of the directory holding the customization files) should be <strong>exactly</strong> the same as the name of the vendor as this is used in the domain name on the cloud. For example, for <code>myorganization.restcomm.com</code> the supplied files should be inside <strong>myorganization</strong> directory. The CSS filenames, inside such directory, should be the same as the standard filenames:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>dashboard.css</p>
-</li>
-<li>
-<p>dashboard-dark.css</p>
-</li>
-<li>
-<p>rvd.css</p>
-</li>
-<li>
-<p>rvd-dark.css</p>
-</li>
-<li>
-<p>favicon.png</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The logo filename should also be prefixed by the organization name, so for the example above, a logo filename should start with <strong>myorganization</strong> eg,  <strong>myorganization-logo.svg</strong>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="vendor-theme-variations"><a class="anchor" href="#vendor-theme-variations"></a>Vendor theme variations</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Restcomm by default supports theme <em>variations</em> based on other aspects besides vendor. <em>Dark</em> theme is such a variation. More fine-grained theming is possible by supplying themes that override these variations instead of the default setup directly. Respective CSS files need to define the name of the <em>variation _name besides the name of the _vendor</em>. Thus the supplied theme file for the dark variation for myorganization vendor in RVD would be <strong>myorganization/rvd-dark.css</strong>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="theme-application-order"><a class="anchor" href="#theme-application-order"></a>Theme application order</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Themes are applied using the following order:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><em>default setup</em> theme is always applied</p>
-</li>
-<li>
-<p>default variation themes are applied if a variation is enabled in the UI <em>e.g. rvd-dark.css</em></p>
-</li>
-<li>
-<p>vendor theme is applied if it’s available and vendor information is detected <em>e.g. myorganization/rvd.css</em></p>
-</li>
-<li>
-<p>vendor theme variation is applied if it’s available, vendor information is detected and the variation is enabled in the UI <em>e.g. myorganization/rvd-dark.css</em>.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<h1 id="theme-creator-deliverables" class="sect0"><a class="anchor" href="#theme-creator-deliverables"></a>Theme creator deliverables</h1>
-<div class="paragraph">
-<p>To introduce a new vendor theme,  creators needs to supply the following for each application that gets customized:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>The <em>theme file</em>. This is a .css file with CSS variable override definitions. Note, the theme file naming <a href="#vendor-themes">guidelines</a> on how to name it. If more theme variations are supplied, theme files for those variations should be supplied too.</p>
-</li>
-<li>
-<p>Additional resource files like the logo image file (.svg) used by theme files.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Also, if favicon needs to change:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>The favicon.png file</p>
-</li>
-</ul>
-</div>
-<h1 id="css-definitions" class="sect0"><a class="anchor" href="#css-definitions"></a>CSS definitions</h1>
-<div class="paragraph">
-<p>Variable definitions are the contents of the theme file. Different UI applications have their own variable definition sets.</p>
-</div>
-<div class="sect1">
-<h2 id="console-variables"><a class="anchor" href="#console-variables"></a>Console variables</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Console defines  a large number of CSS variables. Here follows a handy subset of them and their role in theme configuration:</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Variables and sample values</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--main-logo-url: url(<strong>"path/to/{<strong>name-of-logo-file}</strong>"</strong>);</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Logo image displayed while inside (logge in) the console. Read more on <a href="#logo">logo requirements section</a>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--sign-in-logo-url: url(<strong>"path/to/{<strong>name-of-logo-file}</strong>"</strong>);</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Logo image displayed on the console sign in screen. Read more on <a href="#logo">logo requirements section</a>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--footer-image-url: url(<strong>"path/to/{<strong>name-of-logo-file}</strong>"</strong>);</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Logo image displayed on the console footer, only in sign in screen. Read more on <a href="#logo">logo requirements section</a>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--main-bg-color: #ffffff;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Main console background color.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--main-text-color: #434A5B;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Text color for most places.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--muted-text-color: #bdbdbd;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Text color for more discrete elements (comments, hints, etc).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--primary-color: #1ea5db;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Color of components that have a prominent role like buttons, active module, links etc.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--lines-color: #eee;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Color of discrete separator lines. Modals and menus typically contain them.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--link-text-color: #141D33;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Color for links.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--link-text-hover-color: #4a4a4b;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Color for links, on mouse over.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--link-muted-text-color: var(--muted-text-color);</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Color for more discrete links.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--link-muted-text-hover-color: var(--link-text-color);</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Color for more discrete links, on mouse over.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--link-disabled-text-color: #eeeeee;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Color for more disabled links.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--button-bg-color: #d1d1d1;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default background color for buttons.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--button-text-color: #ffffff;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default text color for buttons.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--button-hover-bg-color: #c8c7c7;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default background color for buttons, on mouse over.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--button-hover-text-color: #ffffff;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default text color for buttons, on mouse over.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="sect1">
-<h2 id="visual-designer-variables"><a class="anchor" href="#visual-designer-variables"></a>Visual Designer variables</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Visual Designer defines  a large number of CSS variables. Here follows a handy subset of them and their role in theme configuration:</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Variables and sample values</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--logo-url: url(<strong>"path/to/{<strong>name-of-logo-file}</strong>"</strong>);</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Logo image filename supplied by theme creator. The path of the file is relative to the path of the theme .css file. Typically only the filename should be needed. Read more on <a href="#logo">logo requirements section</a>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--background-color: #ffffff;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Main background color. It lies behind steps and modals and controls.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--text-color: #5b6170;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Text color for most places.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--aux-back-color: #f1f1f1;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Background color for surrounding area. Header, toolbox and input-groups  get that.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">`--primary-color: #1ea5db; `</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Color of components that have a prominent role like buttons, active module, links etc.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--secondary-color: #E63828;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Color for less prominent links.  Limited use. SUBJECT TO CHANGE.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--border-color: #ccc;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Border color for steps and controls.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--lines-color: #eee;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Color of discrete separator lines. Modals and menus typically contain them.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">`--verb-text-color: var(--background-color); `</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Text color for verb buttons and step headings</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--verb-back-color: var(--primary-back-color);</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Background color for verb buttons and step headings</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--link-text-color: var(--primary-color);</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Color for links.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--comment-color: #++999</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Color for comments and hints.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--danger-hint-color: #E63828;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Error hint color.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--default-button-back-color: #B8BBC1;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Background color for default buttons.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--default-button-text-color: #434A5B;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default text color for buttons.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--primary-button-back-color: #B8BBC1;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Background color for prominent  buttons.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--primary-button-text-color: #434A5B;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Text color for prominent buttons.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--danger-button-back-color: #B8BBC1;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Background color for buttons that typical remove stuff.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--danger-button-text-color: #434A5B;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Text color for buttons that typical remove stuff.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--sortable-band-placeholder-color: #1084AC;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Color of the band that appears when dropping a verb on the module.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>--drop-area-color: var(--aux-back-color);</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Background color of area that accepts dropped items.</p></td>
-</tr>
-</tbody>
-</table>
 <div class="sect2">
-<h3 id="logo"><a class="anchor" href="#logo"></a>Logo</h3>
+<h3 id="call-detail-records-for-voice-calls"><a class="anchor" href="#call-detail-records-for-voice-calls"></a>Call Detail Records for Voice calls</h3>
 <div class="paragraph">
-<p>Logo images should have the following characteristics:</p>
+<p>The document describes how Call Detail Records (CDRs) are created and updated for voice calls and also how various durations, such as ringing or call duration, are calculated.</p>
 </div>
+<div class="sect3">
+<h4 id="inbound-calls"><a class="anchor" href="#inbound-calls"></a>Inbound Calls</h4>
+<div class="paragraph">
+<p>CDR for incoming calls are created and updated from the VoiceInterpreter actor</p>
+</div>
+<div class="sect4">
+<h5 id="inbound-call-to-hosted-application"><a class="anchor" href="#inbound-call-to-hosted-application"></a>Inbound call to hosted application</h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Proposed image format is .svg. Other html compatible formats can also me used as long as they support transparency.</p>
+<p>When CallManager receives the INVITE and after it checks that the number exists in DB and points to a hosted application, it will create and start VoiceInterpreter and Call actor.</p>
 </li>
 <li>
-<p>The image height should be 48px. This is the height of the area that will host it. Higher images will be squeezed.</p>
+<p>CDR will be created by VI at <code>org.restcomm.connect.interpreter.VoiceInterpreter.createInitialCallRecord</code> with StartTime = DateTime.now() when VoiceInterpreter starts</p>
 </li>
 <li>
-<p>Margins are already in place so they don’t need to be part of the image. Of course one can define extra borders as part of the image itself.</p>
+<p>When the Call actor starts, will send 180 Ringing and VI will start executing RCML. RCML download might succeed or fail but the duration between 180 Ringing and the download RCML response currently is insignificant and thus the ringing time for an inbound call is not calculated UNLESS the RCML executed creates an outbound call, in that case the inbound call ringing time will result to the outbound call ringing time.  On VI state <code>org.restcomm.connect.interpreter.VoiceInterpreter.Finished</code> the inbound call CDR will be updated and ringing duration will be set to the Ringing time of the associated outbound call (if any)</p>
+</li>
+<li>
+<p>Call duration will be set on VI state <code>org.restcomm.connect.interpreter.VoiceInterpreter.Finished</code> and will be set to ((DateTime.now() - StartTime)-RingingTime)</p>
 </li>
 </ul>
 </div>
 </div>
-<div class="sect2">
-<h3 id="favicon"><a class="anchor" href="#favicon"></a>Favicon</h3>
+</div>
+<div class="sect3">
+<h4 id="outbound-calls"><a class="anchor" href="#outbound-calls"></a>Outbound Calls</h4>
 <div class="paragraph">
-<p>Favicons should use the png format and named <code>favicon.png</code>.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="olympus-variables"><a class="anchor" href="#olympus-variables"></a>Olympus variables</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><strong>Olympus is not yet capable of being white-labeled, work is in progress. This section will be updated as soon as the capability is available</strong></p>
-</div>
-</div>
-</div>
-<h1 id="theme-development" class="sect0"><a class="anchor" href="#theme-development"></a>Theme development</h1>
-<div class="paragraph">
-<p>Although a full-fledged editor is not yet available, creating a new theme is very simple using the browser developer tools. The provided instructions are for Chrome while others browsers have similar support.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>While at the Restcomm Console, enable the Dark Theme, by clicking <strong>Switch Theme</strong>  at the username dropdown, on the console top-right;</p>
-</li>
-<li>
-<p>Open the Developer Tools by going to the Chrome <em>top-right menu &gt; More Tools &gt; Developer Tools</em> (or just Right-click on any page element and select <em>Inspect</em>).</p>
-</li>
-<li>
-<p>Select the "<strong>Sources</strong>" tab on the Developer Tools window and on the left sidebar, navigate to the resources/css/dashboard-dark.css file and open it.</p>
-</li>
-<li>
-<p>Now the CSS variables used for this theme are displayed and can be modified, providing immediate feedback on the console.</p>
-</li>
-<li>
-<p>Once the result is the desired, right-click on the file edit area and select "Save as&#8230;&#8203;", to save it to the local filesystem, and it&#8217;s ready to be provided for upload.</p>
-</li>
-</ol>
+<p>CDR for an outbound call is created after the successful process of a Dial RCML verb or by a request to create call on the Call API
+CDRs for outbound calls are created and updated from the Call actor.</p>
 </div>
 <div class="paragraph">
-<p>The same applies to Visual Designer. You’ll first need to start the Designer in Dark theme mode. In order to do that  start Console, switch to dark theme, navigate to Applications, open a Designer Application details and click <strong>Design</strong> to launch Visual Designer  with the Dark theme. You may then apply steps from (2) onward for the filename css/rvd-dark.css.</p>
-</div>
-<div class="paragraph">
-<p>Note:</p>
+<p>The process will be the same for either RCML Dial created calls or Call REST API created calls.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>This procedure can also be applied while using the regular theme, by modifying <em>resources/assets/dashboard.&lt;hash&gt;.css</em> (<em>assets/rvd.&lt;hash&gt;.css</em> for RVD) directly.</p>
+<p>CDR will be created by Call actor on State <code>org.restcomm.connect.telephony.Call.Queued</code>. StartTime will be set to DateTime.now()</p>
 </li>
 <li>
-<p>Only the CSS variables tweaking is necessary for an easy and consistent theming experience. More advanced customization such as directly modifying some CSS classes is also possible though not recommended. It produces less compatible themes that are prone to conflicts as base .css evolves.</p>
+<p>Ringing duration will be updated by Call actor after 200 OK received on state <code>org.restcomm.connect.telephony.Call.UpdatingMediaSession</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Ringing duration in seconds will be set to (DateTime.now() - StartTime)</p>
 </li>
 <li>
-<p>Refreshing one’s browser view will result in losing the work that has been done so far. To alleviate this, current progress can be easily stored temporarily by executing step 5. When the time comes to resume theming iterations, one can replace the in-browser contents of the edited .css file with the contents of the one stored locally.</p>
+<p>Start time will be reset to DateTime.now()</p>
 </li>
 </ul>
 </div>
-<h1 id="deploying" class="sect0"><a class="anchor" href="#deploying"></a>Deploying</h1>
-<div class="paragraph">
-<p>Please contact <a href="https://telestax.com/support/">Restcomm support</a> or your <a href="https://www.restcomm.com/contact/">account manager</a> to ask them to deploy your new theme to your Restcomm organization</p>
+</li>
+<li>
+<p>Call duration will be set by Call actor after BYE received or sent, on state <code>org.restcomm.connect.telephony.Call.Completed</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>End time will be set to DateTime.now()</p>
+</li>
+<li>
+<p>Call Duration will be set to (DateTime.now() - StartTime)</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">

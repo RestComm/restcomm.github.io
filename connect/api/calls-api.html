@@ -23573,11 +23573,11 @@ Countly.q.push(['report_conversion']);
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">StatusCallbackEvent</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>initiated</code>, <code>ringing</code>, <code>answered</code>, <code>completed</code>. Default none</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A comma separated list of events on which we are interested to get a callback on. Possible values are <code>initiated</code>, <code>ringing</code>, <code>answered</code>, <code>completed</code>. Default none</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">StatusCallback</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">any url. Default none</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URL to receive the callback events at. Default none</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">StatusCallbackMethod</p></td>
@@ -23595,7 +23595,7 @@ Countly.q.push(['report_conversion']);
 <p>When creating a Call using the Calls API, an outbound call is initiated. The call transitions from the initiated state to the ringing state when the phone starts ringing. It transitions to the answered state when the call is picked up, and finally to the completed state when the call is over. With <strong>StatusCallbackEvent</strong>, you can subscribe to receive webhooks for the different call progress events: initiated, ringing, answered, or completed for a given call.</p>
 </div>
 <div class="paragraph">
-<p>The <strong>StatusCallbackEvent</strong> attribute allows you to specify which events Restcomm should webhook on. To specify multiple events separate them with a space: initiated ringing answered completed. If a StatusCallback is provided and no status callback events are specified the completed event will be sent by default.</p>
+<p>The <strong>StatusCallbackEvent</strong> attribute allows you to specify which events Restcomm should webhook on. To specify multiple events separate them with a comma like this: <code>initiated,ringing,answered,completed</code>. If a StatusCallback is provided and no status callback events are specified the completed event will be sent by default.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -23726,6 +23726,14 @@ included in the outgoing INVITE message.</p>
 <div class="listingblock">
 <div class="content">
 <pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json -d "From=+16175551212" -d "To=client:alice?X-Custom-Header1=1234&amp;X-Custom-Header2=432" -d "Url=https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/demos/hello-play.xml"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also provide a list of events you are interested in getting notified on and provide a URL to receive them at. Here&#8217;s an example for receiving <code>answered</code> and <code>completed</code> events. The callbacks will be made at <code><a href="http://status.callback.url" class="bare">http://status.callback.url</a></code></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json -d "From=+16175551212" -d "To=client:alice" -d "Url=https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/demos/hello-play.xml" -d "StatusCallback=http://status.callback.url" -d "StatusCallbackEvent=answered,completed"</pre>
 </div>
 </div>
 </div>
@@ -24583,7 +24591,7 @@ The call will now be redirected to the Url specified(hello-world.xml)</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-10-06 04:53:48 UTC
+Last updated 2018-10-07 02:16:22 UTC
 </div>
 </div>
 <footer >
