@@ -1,0 +1,35 @@
+@startuml
+participant restapi
+participant voiceinterpreter
+participant outboundCall
+participant client
+
+participant cdr
+
+alt Outbound call initiated by Calls Rest API
+autonumber 10 10 "<b>[000]"
+restapi -> outboundCall: [Queue]
+end
+alt Outbound call initiated by executing RCML Dial verb
+autonumber 10 10 "<b>[000]"
+... inbound call triggered execution of RCML Dial ...
+voiceinterpreter -> outboundCall: [Queue]
+end
+
+outboundCall -> cdr: [Create CDR:\nStartTime=DateTime.now()]
+
+outboundCall -> client: [protocol:sip\nmethod:INVITE]
+client -> outboundCall: [protocol:sip\nresponse:180 Ringing]
+client -> outboundCall: [protocol:sip\nresponse:180 Ringing]
+client -> outboundCall: [protocol:sip\nresponse:180 Ringing]
+... outbound call ringing time ...
+client -> outboundCall: [protocol:sip\nresponse:200 OK]
+outboundCall -> cdr: [on UpdatingMediaSession state, update CDR:\nRinging=(DateTime.now() - StartTime)\nreset StartTime=DateTime.now()]
+
+... call in progress ...
+
+client -> outboundCall: [protocol:sip\nmethod: Bye]
+outboundCall -> cdr: [on Completed state, update CDR:\nEndTime=DateTime.now()\nCallDuration=(DateTime.now() - StartTime)]
+
+
+@enduml

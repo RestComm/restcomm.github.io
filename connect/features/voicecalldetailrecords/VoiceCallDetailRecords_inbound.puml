@@ -1,0 +1,60 @@
+@startuml
+autonumber 10 10 "<b>[000]"
+
+participant network
+participant callmanager
+participant voiceinterpreter
+participant appserver
+participant call
+
+participant cdr
+
+network -> callmanager: [protocol: SIP,\nmethod:INVITE]
+callmanager -> voiceinterpreter: [Start Interpreter]
+callmanager -> call: [Start Call actor]
+voiceinterpreter -> cdr: [Create CDR,\nStartTime=DateTime.now()]
+call -> network: [protocol:sip,\nresponse: 180 Ringing]
+call -> voiceinterpreter: [call state changed: Ringing]
+note over voiceinterpreter, appserver
+Ringing time for inbound call is the time between call actor sends 180 Ringing
+and the response from Application server on the rcml download request,
+but since the time to get the response is insignificant, CDR for inbound call doesn't
+include it
+end note
+voiceinterpreter -> appserver: [download rcml]
+alt RCML NO Dial verb
+appserver -> voiceinterpreter: [download response - RCML - NO Dial verb]
+voiceinterpreter -> call: [proceed to answer call]
+
+... call in progress...
+
+call -> voiceinterpreter: [call completed]
+voiceinterpreter -> cdr: [on Finish state, Update CDR:\ncall duration=(DateTime.now() - StartTime),\ncall ringing=0]
+end
+alt RCML WITH DIAL verb
+appserver -> voiceinterpreter: [download response - RCML - With Dial verb]
+voiceinterpreter -> call: [proceed to answer call]
+
+voiceinterpreter -> outboundCall: [Create call]
+outboundCall -> client: [protocol:sip\nmethod:INVITE]
+client -> outboundCall: [protocol:sip\nreponse:180 Ringing]
+client -> outboundCall: [protocol:sip\nreponse:180 Ringing]
+client -> outboundCall: [protocol:sip\nreponse:180 Ringing]
+
+... outbound call ringing time...
+client -> outboundCall: [protocol:sip\nresponse:200 Ok]
+
+call <->outboundCall: [call established]
+
+... call in progress...
+
+call -> voiceinterpreter: [call completed]
+note over voiceinterpreter, appserver
+In case RCML creates an outbound call, the outbound call ringing duration is used
+as the inbound call ringing duration. Also the outbound call ringing duration is
+removed from the inbound call duration.
+include it
+end note
+voiceinterpreter -> cdr: [on Finish state, Update CDR:\ncall duration=((DateTime.now() - StartTime)-OutboundCall RingingTime)\ncall ringing=OutboundCall RingingTime]
+end
+@enduml
