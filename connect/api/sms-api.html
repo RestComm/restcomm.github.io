@@ -23448,7 +23448,7 @@ Countly.q.push(['report_conversion']);
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Body</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The text body of the SMS message. Up to 160 characters long.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The text body of the SMS message.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
@@ -23601,19 +23601,87 @@ Countly.q.push(['report_conversion']);
 <div class="paragraph">
 <p>Description A phone number that is enabled for SMS. The destination phone number in E.164 format. The text of the message you want to send, limited to 160 characters.</p>
 </div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="parameters"><a class="anchor" href="#parameters"></a>Parameters</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">From</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The phone number or short code that will be put into a message as a message sender (Required)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">To</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The phone number or short code to which a message will be sent (Required)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Body</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The text body of the SMS message (Required)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">StatusCallback</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A URL for Restcomm to send webhook requests to on all events (Optional)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect5">
+<h6 id="statuscallback"><a class="anchor" href="#statuscallback"></a>StatusCallback</h6>
 <div class="paragraph">
-<p>Parameter</p>
+<p>The <strong>StatusCallback</strong> attribute allows you to specify a URL for Restcomm to send webhook requests to on all events. Two events may be covered:</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>when message has sent (or sending failure) from RC server</p>
+</li>
+<li>
+<p>when a DLR (delivery receipt) was received from a carrier</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="status-callback-http-parameters"><a class="anchor" href="#status-callback-http-parameters"></a>Status Callback HTTP Parameters</h6>
 <div class="paragraph">
-<p>From(Required)</p>
+<p>The parameters Restcomm passes to your application are mostly same as compared with SMS Resource Properties.
+When the SMS events are fired, the Status Callback request also passes these additional parameters:</p>
 </div>
-<div class="paragraph">
-<p>To(Required)</p>
-</div>
-<div class="paragraph">
-<p>Body(Required)</p>
-</div>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MessageSid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A unique identifier for this SMS.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MessageStatus</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A descriptive status for the message. The value is one of <strong><code>sent</code></strong>, <strong><code>failed</code></strong>, <strong><code>delivered</code></strong>, <strong><code>undelivered</code></strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ErrorCode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Some error code associated with a message sending process. It may depend on a provider.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -23635,7 +23703,15 @@ Countly.q.push(['report_conversion']);
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages -d "To=%2B13216549878" -d "From=%2B19876543212" -d "Body=This is a test from RestComm"</pre>
+<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/&lt;accountSid&gt;/SMS/Messages -d "To=%2B13216549878" -d "From=%2B19876543212" -d "Body=This is a test from RestComm"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also provide an URL to receive status events them at. The callbacks will be made at <code><a href="http://status.callback.url" class="bare">http://status.callback.url</a></code></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/&lt;accountSid&gt;/SMS/Messages -d "To=%2B13216549878" -d "From=%2B19876543212" -d "Body=This is a test from RestComm" -d "StatusCallback=http://status.callback.url"</pre>
 </div>
 </div>
 </div>
@@ -23651,7 +23727,7 @@ Countly.q.push(['report_conversion']);
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X GET https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/SMS/Messages</pre>
+<pre>curl -X GET https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/&lt;accountSid&gt;/SMS/Messages</pre>
 </div>
 </div>
 </div>
@@ -23663,7 +23739,7 @@ Countly.q.push(['report_conversion']);
 <h3 id="xml-post-response"><a class="anchor" href="#xml-post-response"></a>XML POST Response</h3>
 <div class="listingblock">
 <div class="content">
-<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e0f425248d6a26948c17a9e2acf/SMS/Messages -d "To=%2B1321654879" -d "From=%2B1654123987" -d "Body=This is a test from RestComm"</pre>
+<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/&lt;accountSid&gt;/SMS/Messages -d "To=%2B1321654879" -d "From=%2B1654123987" -d "Body=This is a test from RestComm"</pre>
 </div>
 </div>
 <div class="listingblock">
@@ -24116,7 +24192,7 @@ Countly.q.push(['report_conversion']);
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-10-20 04:53:43 UTC
+Last updated 2018-10-21 02:16:01 UTC
 </div>
 </div>
 <footer >
