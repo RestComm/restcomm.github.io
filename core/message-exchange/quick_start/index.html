@@ -23816,8 +23816,10 @@ DNS Records propagation might take several time to complete.
 <p>For simplicity let’s assume your domain is testxmpp.com and for UC-One you use sub-domain text.testxmpp.com.
 Next step is to make sure you set DNS SRV for your subdomain to point to your XMPP server (UC One XMPP Server). For simplicity we assume UC One XMPP server is cloud-xmpp-server.restcomm.com. Below is screenshot on how to setup DNS SRV on GoDaddy.</p>
 </div>
-<div class="paragraph">
-<p>image::../images/setting your DNS SRV.png[Setting up your DNS SRV record]</p>
+<div class="imageblock">
+<div class="content">
+<img src="./../images/setting_your_DNS_SRV.png" alt="Setting up your DNS SRV record">
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -23837,8 +23839,10 @@ openssl genrsa -out text.testxmpp.com.key 2048</p>
 <p>2 - Create you CSR  or certification request file
 openssl req -new -key text.testxmpp.com.key -out text.testxmpp.com.csr</p>
 </div>
-<div class="paragraph">
-<p>image::../images/Creating CSR certification request file.png[Creating CSR certification request file]</p>
+<div class="imageblock">
+<div class="content">
+<img src="./../images/Creating_CSR_certification_request_file.png" alt="Creating CSR certification request file">
+</div>
 </div>
 <div class="paragraph">
 <p>3 - Copy the content of the newly created text.testxmpp.com.csr and paste it into the Godaddy CSR enrollment form.</p>
@@ -23846,14 +23850,18 @@ openssl req -new -key text.testxmpp.com.key -out text.testxmpp.com.csr</p>
 <div class="paragraph">
 <p>4 - When you get the confirmation download the certificate zip file from you Godaddy Dashboard</p>
 </div>
-<div class="paragraph">
-<p>image::../images/downloading the certificate zip file.png[Downloading the certificate zip file]</p>
+<div class="imageblock">
+<div class="content">
+<img src="./../images/downloading_the_certificate_zip_file.png" alt="Downloading the certificate zip file">
+</div>
 </div>
 <div class="paragraph">
 <p>5 - The content of the certificate zip file for Tomcat will look like the one below</p>
 </div>
-<div class="paragraph">
-<p>image::../images/content of the certificate zip file.png[Content of the certificate zip file]</p>
+<div class="imageblock">
+<div class="content">
+<img src="./../images/content_of_the_certificate_zip_file.png" alt="Content of the certificate zip file">
+</div>
 </div>
 <div class="paragraph">
 <p>6 - Combine the certificate from Godaddy with the openssl key you generated in step 1</p>
@@ -23864,14 +23872,18 @@ openssl req -new -key text.testxmpp.com.key -out text.testxmpp.com.csr</p>
 <div class="paragraph">
 <p>7 - The newly created text.testxmpp.combined.pem will contain the certificate you need to create a new domain mapping in swagger. Copy and pate the content of the combine.pem to swagger</p>
 </div>
-<div class="paragraph">
-<p>image::../images/newly crated pem file.png[Newly crated pem file]</p>
+<div class="imageblock">
+<div class="content">
+<img src="./../images/newly_crated_pem_file.pngpem_file.png" alt="Newly crated pem file">
+</div>
 </div>
 <div class="paragraph">
 <p>9 - If the mapping and the certificate is valid, you will see the following response</p>
 </div>
-<div class="paragraph">
-<p>image::../images/certificate validation.png[Certificate validation]</p>
+<div class="imageblock">
+<div class="content">
+<img src="./../images/certificate_validation.png" alt="Certificate validation">
+</div>
 </div>
 </div>
 </div>
@@ -23953,7 +23965,7 @@ Please allow few minutes for domain changes to be applied to Restcomm Message Ex
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-10-24 19:30:14 UTC
+Last updated 2018-10-26 10:47:58 UTC
 </div>
 </div>
 <footer >
