@@ -23346,7 +23346,7 @@ Countly.q.push(['report_conversion']);
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel2">
 <li><a href="#tags">Tags</a></li>
-<li><a href="#1-0-0-75-version-2019-01-9-docker-tag-1-0-0-75">1.0.0-75 version 2019-01-9 (docker tag 1.0.0-75)</a>
+<li><a href="#1-0-0-78-version-2019-xx-xx-docker-tag-1-0-0-78">1.0.0-78 version 2019-XX-XX (docker tag 1.0.0-78)</a>
 <ul class="sectlevel2">
 <li><a href="#new-features">New Features</a></li>
 <li><a href="#breaking-changes">Breaking Changes</a></li>
@@ -23355,13 +23355,22 @@ Countly.q.push(['report_conversion']);
 <li><a href="#external-dependencies-updates">External Dependencies Updates</a></li>
 </ul>
 </li>
-<li><a href="#1-0-0-58-version-2018-09-12-docker-tag-1-0-0-58">1.0.0-58 version 2018-09-12 (docker tag 1.0.0-58)</a>
+<li><a href="#1-0-0-75-version-2019-01-9-docker-tag-1-0-0-75">1.0.0-75 version 2019-01-9 (docker tag 1.0.0-75)</a>
 <ul class="sectlevel2">
 <li><a href="#new-features-2">New Features</a></li>
 <li><a href="#breaking-changes-2">Breaking Changes</a></li>
 <li><a href="#bug-fixes-2">Bug Fixes</a></li>
 <li><a href="#migration-notes-2">Migration Notes</a></li>
 <li><a href="#external-dependencies-updates-2">External Dependencies Updates</a></li>
+</ul>
+</li>
+<li><a href="#1-0-0-58-version-2018-09-12-docker-tag-1-0-0-58">1.0.0-58 version 2018-09-12 (docker tag 1.0.0-58)</a>
+<ul class="sectlevel2">
+<li><a href="#new-features-3">New Features</a></li>
+<li><a href="#breaking-changes-3">Breaking Changes</a></li>
+<li><a href="#bug-fixes-3">Bug Fixes</a></li>
+<li><a href="#migration-notes-3">Migration Notes</a></li>
+<li><a href="#external-dependencies-updates-3">External Dependencies Updates</a></li>
 </ul>
 </li>
 </ul>
@@ -23382,14 +23391,17 @@ Countly.q.push(['report_conversion']);
 </div>
 </div>
 <div class="sect1">
-<h2 id="1-0-0-75-version-2019-01-9-docker-tag-1-0-0-75"><a class="anchor" href="#1-0-0-75-version-2019-01-9-docker-tag-1-0-0-75"></a>1.0.0-75 version 2019-01-9 (docker tag 1.0.0-75)</h2>
+<h2 id="1-0-0-78-version-2019-xx-xx-docker-tag-1-0-0-78"><a class="anchor" href="#1-0-0-78-version-2019-xx-xx-docker-tag-1-0-0-78"></a>1.0.0-78 version 2019-XX-XX (docker tag 1.0.0-78)</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="new-features"><a class="anchor" href="#new-features"></a>New Features</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>Introduced configurable Audit logs for provisioning API requests</p>
+<p>Upgraded to Tigase Server Dist 7.1.4</p>
+</li>
+<li>
+<p>Added document for setup requirements and debug tools and procedure</p>
 </li>
 </ul>
 </div>
@@ -23403,7 +23415,7 @@ Countly.q.push(['report_conversion']);
 <div class="ulist">
 <ul>
 <li>
-<p><strong>BS-1373</strong> Proper RCML response on request from RC for handling on inbound SMS</p>
+<p>Create <code>certs</code> folder to store certificates for the XMPP-Server docker image</p>
 </li>
 </ul>
 </div>
@@ -23422,14 +23434,14 @@ Countly.q.push(['report_conversion']);
 </div>
 </div>
 <div class="sect1">
-<h2 id="1-0-0-58-version-2018-09-12-docker-tag-1-0-0-58"><a class="anchor" href="#1-0-0-58-version-2018-09-12-docker-tag-1-0-0-58"></a>1.0.0-58 version 2018-09-12 (docker tag 1.0.0-58)</h2>
+<h2 id="1-0-0-75-version-2019-01-9-docker-tag-1-0-0-75"><a class="anchor" href="#1-0-0-75-version-2019-01-9-docker-tag-1-0-0-75"></a>1.0.0-75 version 2019-01-9 (docker tag 1.0.0-75)</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="new-features-2"><a class="anchor" href="#new-features-2"></a>New Features</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>Using superadmin credential to access RC SMS API</p>
+<p>Introduced configurable Audit logs for provisioning API requests</p>
 </li>
 </ul>
 </div>
@@ -23443,13 +23455,53 @@ Countly.q.push(['report_conversion']);
 <div class="ulist">
 <ul>
 <li>
-<p>Auth challenge fixed when credentials are cached</p>
+<p><strong>BS-1373</strong> Proper RCML response on request from RC for handling on inbound SMS</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
 <h3 id="migration-notes-2"><a class="anchor" href="#migration-notes-2"></a>Migration Notes</h3>
+<div class="sect3">
+<h4 id="rollback-steps-2"><a class="anchor" href="#rollback-steps-2"></a>Rollback steps</h4>
+
+</div>
+</div>
+<div class="sect2">
+<h3 id="external-dependencies-updates-2"><a class="anchor" href="#external-dependencies-updates-2"></a>External Dependencies Updates</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="1-0-0-58-version-2018-09-12-docker-tag-1-0-0-58"><a class="anchor" href="#1-0-0-58-version-2018-09-12-docker-tag-1-0-0-58"></a>1.0.0-58 version 2018-09-12 (docker tag 1.0.0-58)</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="new-features-3"><a class="anchor" href="#new-features-3"></a>New Features</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Using superadmin credential to access RC SMS API</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="breaking-changes-3"><a class="anchor" href="#breaking-changes-3"></a>Breaking Changes</h3>
+
+</div>
+<div class="sect2">
+<h3 id="bug-fixes-3"><a class="anchor" href="#bug-fixes-3"></a>Bug Fixes</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Auth challenge fixed when credentials are cached</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="migration-notes-3"><a class="anchor" href="#migration-notes-3"></a>Migration Notes</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -23459,7 +23511,7 @@ Countly.q.push(['report_conversion']);
 </ul>
 </div>
 <div class="sect3">
-<h4 id="rollback-steps-2"><a class="anchor" href="#rollback-steps-2"></a>Rollback steps</h4>
+<h4 id="rollback-steps-3"><a class="anchor" href="#rollback-steps-3"></a>Rollback steps</h4>
 <div class="paragraph">
 <p>In case something goes wrong during the migration/upgrade process, you can rollback changes and run the previous version of restcomm-xmpp</p>
 </div>
@@ -23469,7 +23521,7 @@ Countly.q.push(['report_conversion']);
 </div>
 </div>
 <div class="sect2">
-<h3 id="external-dependencies-updates-2"><a class="anchor" href="#external-dependencies-updates-2"></a>External Dependencies Updates</h3>
+<h3 id="external-dependencies-updates-3"><a class="anchor" href="#external-dependencies-updates-3"></a>External Dependencies Updates</h3>
 
 </div>
 </div>
@@ -23477,7 +23529,7 @@ Countly.q.push(['report_conversion']);
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-01-29 16:36:21 UTC
+Last updated 2019-01-30 19:30:38 UTC
 </div>
 </div>
 <footer >
