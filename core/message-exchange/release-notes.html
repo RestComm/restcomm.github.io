@@ -23346,7 +23346,7 @@ Countly.q.push(['report_conversion']);
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel2">
 <li><a href="#tags">Tags</a></li>
-<li><a href="#1-0-0-78-version-2019-xx-xx-docker-tag-1-0-0-78">1.0.0-78 version 2019-XX-XX (docker tag 1.0.0-78)</a>
+<li><a href="#1-1-0-version-2019-01-31-docker-tag-1-1-0">1.1.0 version 2019-01-31 (docker tag 1.1.0)</a>
 <ul class="sectlevel2">
 <li><a href="#new-features">New Features</a></li>
 <li><a href="#breaking-changes">Breaking Changes</a></li>
@@ -23391,7 +23391,7 @@ Countly.q.push(['report_conversion']);
 </div>
 </div>
 <div class="sect1">
-<h2 id="1-0-0-78-version-2019-xx-xx-docker-tag-1-0-0-78"><a class="anchor" href="#1-0-0-78-version-2019-xx-xx-docker-tag-1-0-0-78"></a>1.0.0-78 version 2019-XX-XX (docker tag 1.0.0-78)</h2>
+<h2 id="1-1-0-version-2019-01-31-docker-tag-1-1-0"><a class="anchor" href="#1-1-0-version-2019-01-31-docker-tag-1-1-0"></a>1.1.0 version 2019-01-31 (docker tag 1.1.0)</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="new-features"><a class="anchor" href="#new-features"></a>New Features</h3>
@@ -23402,6 +23402,9 @@ Countly.q.push(['report_conversion']);
 </li>
 <li>
 <p>Added document for setup requirements and debug tools and procedure</p>
+</li>
+<li>
+<p>Configuration Externalized</p>
 </li>
 </ul>
 </div>
@@ -23422,6 +23425,15 @@ Countly.q.push(['report_conversion']);
 </div>
 <div class="sect2">
 <h3 id="migration-notes"><a class="anchor" href="#migration-notes"></a>Migration Notes</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Check project README for more details on new configuration. Please check restcomm-cloud Dev for example on new configuration required <a href="https://bitbucket.org/telestax/restcomm-cloud/src/master/xmpp_conf_files/dev/service/" class="bare">https://bitbucket.org/telestax/restcomm-cloud/src/master/xmpp_conf_files/dev/service/</a>.
+Notice applicatin.yml requires tweaking to account for new configuration location in "conf" dir <a href="https://bitbucket.org/telestax/restcomm-cloud/diff/xmpp_conf_files/dev/server/application.yml?at=master&amp;diff2=6923dc51a1488c6a3b2419b4422f6e2b8d623ffb" class="bare">https://bitbucket.org/telestax/restcomm-cloud/diff/xmpp_conf_files/dev/server/application.yml?at=master&amp;diff2=6923dc51a1488c6a3b2419b4422f6e2b8d623ffb</a>.
+Take this PR as reference for required Ansible reworking <a href="https://bitbucket.org/telestax/restcomm-ansible/pull-requests/39/added-monitoring-agent/diff#chg-restcomm-xmpp.yml" class="bare">https://bitbucket.org/telestax/restcomm-ansible/pull-requests/39/added-monitoring-agent/diff#chg-restcomm-xmpp.yml</a></p>
+</li>
+</ul>
+</div>
 <div class="sect3">
 <h4 id="rollback-steps"><a class="anchor" href="#rollback-steps"></a>Rollback steps</h4>
 
@@ -23529,7 +23541,7 @@ Countly.q.push(['report_conversion']);
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-01-31 16:26:24 UTC
+Last updated 2019-01-31 20:25:11 UTC
 </div>
 </div>
 <footer >
