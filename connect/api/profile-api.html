@@ -23407,20 +23407,9 @@ document to store/retrieve any kind of arbitrary information as long as the docu
 a valid JSON document.</p>
 </div>
 <div class="paragraph">
-<p>The Profiles API allow different types of Profile to be provisioned. The Platform profile
-contains behavior only configurable by the SuperAdmin. While Subscriber profile maybe
-managed by the Account administrator. The different kind of profiles are denoted by Content-Type
-header by setting proper schema parameter. Where "rc-profile-schema.json" is for Platform profile,
-and "rc-subscriber-schema.json" is for Subscriber profile.</p>
-</div>
-<div class="paragraph">
-<p>For the Platform profile, the Profiles REST API is only accessible by SuperAdmin credentials.
-With the exception of reading the associated Profile, where all Roles are allowed if the queried profile
+<p>All Profiles REST API is only accesible by SuperAdmin credentials. With the exception
+of reading the associated Profile, where all Roles are allowed if the queried profile
 is associated with the requesting Account credentials.</p>
-</div>
-<div class="paragraph">
-<p>For Subscriber profile, The Profiles REST API is only accessible by Account administrator.
-Where the created Profiles will only be linked to the corresponding account.</p>
 </div>
 <div class="sect2">
 <h3 id="profile-resource-uri"><a class="anchor" href="#profile-resource-uri"></a>Profile Resource URI</h3>
@@ -23650,19 +23639,11 @@ To associate a single Profile with multiple Accounts/Organizations, multiple req
 </div>
 </div>
 <div class="paragraph">
-<p><strong>Add a new Platform Profile.</strong></p>
+<p><strong>Add a new Profile.</strong></p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X POST -H 'Content-Type: application/instance+json;schema=rc-profile-schema.json' --data "@/path/to/filename" https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles</pre>
-</div>
-</div>
-<div class="paragraph">
-<p><strong>Add a new Subscriber Profile.</strong></p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>curl -X POST -H 'Content-Type: application/instance+json;schema=rc-subscriber-schema.json' --data "@/path/to/filename" https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles</pre>
+<pre>curl -X POST -H 'Content-Type: application/instance+json' --data "@/path/to/filename" https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23672,11 +23653,11 @@ To associate a single Profile with multiple Accounts/Organizations, multiple req
 <p>To update a Profile you need to provide the Profile SID</p>
 </div>
 <div class="paragraph">
-<p>For example, update platform Profile using sid:</p>
+<p>For example, update Proile using sid:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X PUT -H 'Content-Type: application/instance+json;schema=rc-profile-schema.json' --data "@/path/to/filename" https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123</pre>
+<pre>curl -X PUT -H 'Content-Type: application/instance+json' --data "@/path/to/filename" https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123</pre>
 </div>
 </div>
 <div class="literalblock">
@@ -23744,42 +23725,6 @@ To associate a single Profile with multiple Accounts/Organizations, multiple req
 <div class="literalblock">
 <div class="content">
 <pre>curl -X PUT -H "X-HTTP-Method-Override:UNLINK" -H  "Link:&lt;https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Organizations/ORafbe225ad37541eba518a74248f0ac4c&gt;;rel=related" https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>A Subscriber profile may look as</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>{
-    "multiprovider": {
-        "outbound-voice": [
-            {
-                "proxy": [
-                    {
-                        "uri":"Uri",
-                        "username":"String",
-                        "password":"String",
-                        "match":"Regex String",
-                        "headers":[
-                            {
-                                "headerName":"String",
-                                "key":"String",
-                                "value":"String"
-                            },
-                            {...}
-                        ]
-                    },
-                    {...}
-                ]
-            }
-        ],
-        "outbound-sms": [
-            {"destination_network_id":"Integer"}
-        ]
-
-    }
-}</pre>
 </div>
 </div>
 </div>
@@ -23876,7 +23821,7 @@ schema.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-02-17 02:15:40 UTC
+Last updated 2019-02-23 04:53:36 UTC
 </div>
 </div>
 <footer >
