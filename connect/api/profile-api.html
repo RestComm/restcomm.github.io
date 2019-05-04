@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>Restcomm API - Profile</title>
+<title>Restcomm API – Profile</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -23341,7 +23341,7 @@ Countly.q.push(['report_conversion']);
 </head>
 <body class="article">
 <div id="header">
-<h1>Restcomm API - Profile</h1>
+<h1>Restcomm API – Profile</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -23407,20 +23407,9 @@ document to store/retrieve any kind of arbitrary information as long as the docu
 a valid JSON document.</p>
 </div>
 <div class="paragraph">
-<p>The Profiles API allow different types of Profile to be provisioned. The Platform profile
-contains behavior only configurable by the SuperAdmin. While Subscriber profile maybe
-managed by the Account administrator. The different kind of profiles are denoted by Content-Type
-header by setting proper schema parameter. Where "rc-profile-schema.json" is for Platform profile,
-and "rc-subscriber-schema.json" is for Subscriber profile.</p>
-</div>
-<div class="paragraph">
-<p>For the Platform profile, the Profiles REST API is only accessible by SuperAdmin credentials.
-With the exception of reading the associated Profile, where all Roles are allowed if the queried profile
+<p>All Profiles REST API is only accesible by SuperAdmin credentials. With the exception
+of reading the associated Profile, where all Roles are allowed if the queried profile
 is associated with the requesting Account credentials.</p>
-</div>
-<div class="paragraph">
-<p>For Subscriber profile, The Profiles REST API is only accessible by Account administrator.
-Where the created Profiles will only be linked to the corresponding account.</p>
 </div>
 <div class="sect2">
 <h3 id="profile-resource-uri"><a class="anchor" href="#profile-resource-uri"></a>Profile Resource URI</h3>
@@ -23499,7 +23488,7 @@ Where the created Profiles will only be linked to the corresponding account.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">a link to the Profile schema with "rel" "describedBy"</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Last-Modified</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Modified-Since</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Date of last modification of the profile.</p></td>
 </tr>
 </tbody>
@@ -23650,19 +23639,11 @@ To associate a single Profile with multiple Accounts/Organizations, multiple req
 </div>
 </div>
 <div class="paragraph">
-<p><strong>Add a new Platform Profile.</strong></p>
+<p><strong>Add a new Profile.</strong></p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles -H "Content-Type: application/instance+json;schema=https://cloud.restcomm.com/restcomm/2012-04-24/Profiles/schemas/rc-profile-schema.json" --data "@/path/to/filename"</pre>
-</div>
-</div>
-<div class="paragraph">
-<p><strong>Add a new Subscriber Profile.</strong></p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles -H 'Content-Type: application/instance+json;schema=https://cloud.restcomm.com/restcomm/2012-04-24/Profiles/schemas/rc-subscriber-schema.json' --data "@/path/to/filename"</pre>
+<pre>curl -X POST -H 'Content-Type: application/instance+json' --data "@/path/to/filename" https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23672,19 +23653,16 @@ To associate a single Profile with multiple Accounts/Organizations, multiple req
 <p>To update a Profile you need to provide the Profile SID</p>
 </div>
 <div class="paragraph">
-<p>For example, update platform Profile using sid:</p>
+<p>For example, update Proile using sid:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X PUT https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123 -H 'Content-Type: application/instance+json;schema=https://cloud.restcomm.com/restcomm/2012-04-24/Profiles/schemas/rc-profile-schema.json' --data "@/path/to/filename"</pre>
+<pre>curl -X PUT -H 'Content-Type: application/instance+json' --data "@/path/to/filename" https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123</pre>
 </div>
-</div>
-<div class="paragraph">
-<p><strong>Getting information about a Profile.</strong></p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X GET  https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123</pre>
+<pre>curl -X GET  https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23695,19 +23673,17 @@ To associate a single Profile with multiple Accounts/Organizations, multiple req
 <pre>{
     "featureEnablement": {
         "DIDPurchase": {
-            "allowedCountries": ["US", "CA"]
+            "allowedCountries": ["US",
+                "CA"]
         },
-        "subaccountsCreation": {
+        "destinations": {
+            "allowedPrefixes": ["+1"]
         },
         "outboundPSTN": {
-          "allowedPrefixes": ["+971","971"],
-          "blockedPrefixes": ["+1", "1"]},
         },
         "inboundPSTN": {
         },
         "outboundSMS": {
-          "allowedPrefixes": ["+971","971"],
-          "blockedPrefixes": ["+1", "1"]},
         },
         "inboundSMS": {
         }
@@ -23724,7 +23700,7 @@ To associate a single Profile with multiple Accounts/Organizations, multiple req
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X PUT  https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123 -H "X-HTTP-Method-Override:LINK" -H "Link:&lt;https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf&gt;;rel=related"</pre>
+<pre>curl -X PUT -H "X-HTTP-Method-Override:LINK" -H "Link:&lt;https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf&gt;;rel=related" https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23732,7 +23708,7 @@ To associate a single Profile with multiple Accounts/Organizations, multiple req
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X PUT  https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123 -H "X-HTTP-Method-Override:UNLINK" -H "Link:&lt;https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf&gt;;rel=related"</pre>
+<pre>curl -X PUT -H "X-HTTP-Method-Override:UNLINK" -H "Link:&lt;https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf&gt;;rel=related" https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23740,7 +23716,7 @@ To associate a single Profile with multiple Accounts/Organizations, multiple req
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X PUT https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123 -H "X-HTTP-Method-Override:LINK" -H "Link:&lt;https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Organizations/ORafbe225ad37541eba518a74248f0ac4c&gt;;rel=related"</pre>
+<pre>curl -X PUT -H "X-HTTP-Method-Override:LINK" -H "Link:&lt;https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Organizations/ORafbe225ad37541eba518a74248f0ac4c&gt;;rel=related" https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23748,43 +23724,7 @@ To associate a single Profile with multiple Accounts/Organizations, multiple req
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X PUT https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123 -H "X-HTTP-Method-Override:UNLINK" -H  "Link:&lt;https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Organizations/ORafbe225ad37541eba518a74248f0ac4c&gt;;rel=related"</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>A Subscriber profile may look as</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>{
-    "multiprovider": {
-        "outbound-voice": [
-            {
-                "proxy": [
-                    {
-                        "uri":"Uri",
-                        "username":"String",
-                        "password":"String",
-                        "match":"Regex String",
-                        "headers":[
-                            {
-                                "headerName":"String",
-                                "key":"String",
-                                "value":"String"
-                            },
-                            {...}
-                        ]
-                    },
-                    {...}
-                ]
-            }
-        ],
-        "outbound-sms": [
-            {"destination_network_id":"Integer"}
-        ]
-
-    }
-}</pre>
+<pre>curl -X PUT -H "X-HTTP-Method-Override:UNLINK" -H  "Link:&lt;https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Organizations/ORafbe225ad37541eba518a74248f0ac4c&gt;;rel=related" https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Profiles/PRae6e420f425248d6a26948c17a9e2123</pre>
 </div>
 </div>
 </div>
@@ -23881,7 +23821,7 @@ schema.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-04-28 02:15:53 UTC
+Last updated 2019-05-04 04:53:55 UTC
 </div>
 </div>
 <footer >

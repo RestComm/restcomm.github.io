@@ -23406,21 +23406,6 @@ Countly.q.push(['report_conversion']);
 <div class="paragraph">
 <p>To download the audio file just append <strong>.wav</strong> after the <strong>RecordingSid.</strong></p>
 </div>
-<div class="paragraph">
-<p>The URLs that contain the actual audio recordings are accessible by everyone without the need to authenticate with Restcomm. This is per design to allow for your apps to easily access the recordings without revealing your credentials. The same is NOT true for the resource to retrieve the list of recordings so unauthenticated users cannot access the RecordingSid and hence not able to download the actual recording.</p>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-Although Recording Sids in Recording URLs are essentially long random strings that are very difficult to guess, you still need to make sure that they don&#8217;t fall in the wrong hands
-</td>
-</tr>
-</table>
-</div>
 </div>
 <div class="sect2">
 <h3 id="resource-properties"><a class="anchor" href="#resource-properties"></a>Resource Properties</h3>
@@ -23624,11 +23609,11 @@ Here is how to access the file using http <strong><a href="https://cloud.restcom
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">StartTime</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Only show recordings that were made on this date/time or later, given as an ISO-8601 date/time string, like <code>YYYY-MM-DDTHH:MM:SS</code> (for example <code>2018-10-05T22:45:32</code>) or, if you want to omit the time, YYYY-MM-DD (for example <code>2018-10-05</code>). When only a date is provided the time is assumed to be at midnight of the given date. Note that the given date/time is inclusive and is assumed to be in UTC timezone.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only show recordings that started on this date, given as YYYY-MM-DD. Also supports inequalities, such as StartTime=YYYY-MM-DD for recordings that started at or before midnight on a date, and StartTime=YYYY-MM-DD for recordings that started at or after midnight on a date.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">EndTime</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Only show recordings that were made on this date/time or earlier, given as an ISO-8601 date/time string, like <code>YYYY-MM-DDTHH:MM:SS</code> (for example <code>2018-10-06T02:10:03</code>) or, if you want to omit the time, YYYY-MM-DD (for example <code>2018-10-06</code>). When only a date is provided the time is assumed to be at midnight of the given date. Note that the given date/time is inclusive and is assumed to be in UTC timezone.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only show recordings that ended on this date, given as YYYY-MM-DD. Also supports inequalities, such as StartTime=YYYY-MM-DD for recordings that started at or before midnight on a date, and StartTime=YYYY-MM-DD for recordings that started at or after midnight on a date.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CallSid</p></td>
@@ -23919,7 +23904,7 @@ Here is how to access the file using http <strong><a href="https://cloud.restcom
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-04-28 02:15:53 UTC
+Last updated 2019-05-04 04:53:55 UTC
 </div>
 </div>
 <footer >

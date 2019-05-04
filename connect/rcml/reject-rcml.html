@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>Restcomm RCML - Reject</title>
+<title>Restcomm RCML – Reject</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -23341,7 +23341,7 @@ Countly.q.push(['report_conversion']);
 </head>
 <body class="article">
 <div id="header">
-<h1>Restcomm RCML - Reject</h1>
+<h1>Restcomm RCML – Reject</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -23360,9 +23360,7 @@ Countly.q.push(['report_conversion']);
 <h2 id="reject"><a class="anchor" href="#reject"></a>Reject</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The &lt;Reject&gt; verb rejects an incoming call to your Restcomm endpoint and can be used for blocking unwanted calls.
-If the first verb in a RCML response is &lt;Reject&gt;, Restcomm will not pick up the call.
-The call ends with 'busy', 'no-answer' or other status, depending on the verb&#8217;s 'reason' attribute. Any verbs after &lt;Reject&gt; are ignored and won&#8217;t be executed.</p>
+<p>The <strong>&lt;Reject&gt;</strong> verb rejects an incoming call to your Restcomm endpoint. This is useful for blocking unwanted calls. If the first verb in a RCML response is <strong>&lt;Reject&gt;</strong>, Restcomm will not pick up the call. The call ends with a status of 'busy' or 'no-answer', depending on the verb&#8217;s 'reason' attribute. Any verbs after <strong>&lt;Reject&gt;</strong> are unreachable and ignored.  </p>
 </div>
 <div class="sect2">
 <h3 id="reject-attributes"><a class="anchor" href="#reject-attributes"></a>Reject Attributes</h3>
@@ -23382,81 +23380,29 @@ The call ends with 'busy', 'no-answer' or other status, depending on the verb&#8
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">reason</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;See table below&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rejected, busy</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">rejected</p></td>
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>reason. The reason attribute takes the values from a table below.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>reason.</strong> The reason attribute takes the values "rejected" and "busy." This tells RestComm what message to play when rejecting a call. Selecting "busy" will play a busy signal to the caller, while selecting "rejected" will play a standard not-in-service response.</p>
+</li>
+</ul>
 </div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Reason</th>
-<th class="tableblock halign-left valign-top">Internal SIP Error and reason phrase Status</th>
-<th class="tableblock halign-left valign-top">Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">rejected</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">603 DECLINE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Will play a standard not-in-service response</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">busy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">486 BUSY</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Will play a busy signal to the caller</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">forbidden</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">403 Forbidden</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Untrusted IP origin/source</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">anonymity_disallowed</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">433 Anonymity Disallowed</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Calling party is anonymous and destination does not accept those calls</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">address_incomplete</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">484 Address Incomplete</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Wrong destination. regex scenario for number not valid (decision made by the external app still in inbound logic)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">no_route</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">404 No Route</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No route to the destination (provider without routing agreement for some countries) if the App makes the decision there is no route to destination dialed (outbound logic)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">service_unavailable</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">503 Service Unavailable</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Redirect traffic to other PoP due to many factors (external App behaving bad, low quality, cloud issues faced, etc)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">unwanted</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">607 Unwanted</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Calling party in a blacklist</p></td>
-</tr>
-</tbody>
-</table>
 </div>
 <div class="sect2">
 <h3 id="nesting"><a class="anchor" href="#nesting"></a>Nesting</h3>
 <div class="paragraph">
-<p>The &lt;Reject&gt; verb can not have any other verbs or nouns nested.</p>
+<p>The <strong>&lt;Reject&gt;</strong> verb can not have any other verbs or nouns nested.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="examples"><a class="anchor" href="#examples"></a>Examples</h3>
 <div class="paragraph">
-<p>Below is an example of how you can use the &lt;Reject&gt; verb.</p>
+<p>For an example of how to use the &lt;Reject&gt; verb see below.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -23471,7 +23417,7 @@ The call ends with 'busy', 'no-answer' or other status, depending on the verb&#8
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-04-28 02:15:53 UTC
+Last updated 2019-05-04 04:53:55 UTC
 </div>
 </div>
 <footer >

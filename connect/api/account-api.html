@@ -23361,7 +23361,7 @@ Countly.q.push(['report_conversion']);
 <li><a href="#Accounts_List">Account List Resource</a>
 <ul class="sectlevel2">
 <li><a href="#supported-operations-2">Supported Operations</a></li>
-<li><a href="#request-parameters-5">Request Parameters</a></li>
+<li><a href="#request-parameters-3">Request Parameters</a></li>
 </ul>
 </li>
 <li><a href="#sub-accounts">Sub-Accounts</a>
@@ -23419,10 +23419,6 @@ Countly.q.push(['report_conversion']);
 <td class="tableblock halign-left valign-top"><p class="tableblock">A description of this account, up to 64 characters long. By default the FriendlyName is your email address.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Role</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The role of the account. Can be <code>Administrator</code>, <code>Developer</code> or <code>ProvisioningAgent</code>. <code>Administrator</code> has full access rights on all platform resources. <code>Developer</code> is like <code>Administrator</code> but is not allowed to manage sub-accounts. <code>ProvisioningAgent</code> is like <code>Developer</code> but is not allowed to read the actual text of SMS messages and cannot remove Recordings.</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The status of this account. Possible values are active, suspended, and closed.</p></td>
 </tr>
@@ -23470,7 +23466,7 @@ Countly.q.push(['report_conversion']);
 </tbody>
 </table>
 <div class="paragraph">
-<p><strong>HTTP POST</strong>. Creates a new Account resource and returns the representation, including the properties above. Below you will find a list of parameters.</p>
+<p><strong>HTTP POST/PUT</strong>. Modifies an Account resource and returns the representation, including the properties above. Below you will find a list of optional parameters.</p>
 </div>
 </div>
 <div class="sect3">
@@ -23498,85 +23494,6 @@ Countly.q.push(['report_conversion']);
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Password</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A password that will be used to generate the AuthToken for the new Account resource.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Role</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The role for the new account. It must be one of <code>Administrator</code>, <code>Developer</code> or <code>ProvisioningAgent</code> (for more details please check the <a href="#resource-properties">Resource Properties</a>)</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>HTTP PUT</strong>. Modifies an Account resource and returns the representation, including the properties above. Below you will find a list of optional parameters.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="request-parameters-2"><a class="anchor" href="#request-parameters-2"></a>Request Parameters</h4>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">FriendlyName</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A description of this account, up to 64 characters long.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The status of this account. Possible values are active, suspended, and closed.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Password</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A password that will be used to generate the AuthToken for the new Account resource.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>HTTP DELETE</strong>. DELETEs an Account resource and returns the representation, including the properties above.</p>
-</div>
-<div class="paragraph">
-<p>The DELETE operation on an account will go through the following steps:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Will set state of the account and all sub-accounts of the accounts to <code>Closed</code></p>
-</li>
-<li>
-<p>Will remove account and sub-accounts resources</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Check also <a href="#close-sub-accounts">Close Sub-Accounts</a>.</p>
-</div>
-<div class="paragraph">
-<p>Below you will find a list of parameters.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="request-parameters-3"><a class="anchor" href="#request-parameters-3"></a>Request Parameters</h4>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sid</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A string that uniquely identifies this account.</p></td>
 </tr>
 </tbody>
 </table>
@@ -23704,7 +23621,7 @@ In the process, all child accounts will also be migrated.</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="request-parameters-4"><a class="anchor" href="#request-parameters-4"></a>Request Parameters</h4>
+<h4 id="request-parameters-2"><a class="anchor" href="#request-parameters-2"></a>Request Parameters</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 50%;">
@@ -23861,7 +23778,7 @@ The above command uses the Account SID of the requestor, and the one below uses 
 </div>
 </div>
 <div class="sect2">
-<h3 id="request-parameters-5"><a class="anchor" href="#request-parameters-5"></a>Request Parameters</h3>
+<h3 id="request-parameters-3"><a class="anchor" href="#request-parameters-3"></a>Request Parameters</h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 50%;">
@@ -24030,7 +23947,7 @@ Account deletion has been deprecated from the REST API. Both of these methods wi
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-04-28 02:15:53 UTC
+Last updated 2019-05-04 04:53:55 UTC
 </div>
 </div>
 <footer >

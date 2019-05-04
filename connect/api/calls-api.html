@@ -23473,7 +23473,7 @@ Countly.q.push(['report_conversion']);
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">EndTime</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The end time of the call. Empty if the call has not ended.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The end time of the call. Empty if the call has not ended..</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Duration</p></td>
@@ -23573,11 +23573,11 @@ Countly.q.push(['report_conversion']);
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">StatusCallbackEvent</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A comma separated list of events on which we are interested to get a callback on. Possible values are <code>initiated</code>, <code>ringing</code>, <code>answered</code>, <code>completed</code>. Default none</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>initiated</code>, <code>ringing</code>, <code>answered</code>, <code>completed</code>. Default none</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">StatusCallback</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">URL to receive the callback events at. Default none</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">any url. Default none</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">StatusCallbackMethod</p></td>
@@ -23595,7 +23595,7 @@ Countly.q.push(['report_conversion']);
 <p>When creating a Call using the Calls API, an outbound call is initiated. The call transitions from the initiated state to the ringing state when the phone starts ringing. It transitions to the answered state when the call is picked up, and finally to the completed state when the call is over. With <strong>StatusCallbackEvent</strong>, you can subscribe to receive webhooks for the different call progress events: initiated, ringing, answered, or completed for a given call.</p>
 </div>
 <div class="paragraph">
-<p>The <strong>StatusCallbackEvent</strong> attribute allows you to specify which events Restcomm should webhook on. To specify multiple events separate them with a comma like this: <code>initiated,ringing,answered,completed</code>. If a StatusCallback is provided and no status callback events are specified the completed event will be sent by default.</p>
+<p>The <strong>StatusCallbackEvent</strong> attribute allows you to specify which events Restcomm should webhook on. To specify multiple events separate them with a space: initiated ringing answered completed. If a StatusCallback is provided and no status callback events are specified the completed event will be sent by default.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -23703,7 +23703,7 @@ Countly.q.push(['report_conversion']);
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/&lt;accountSid&gt;/Calls.json -d "From=+16175551212" -d "To=sip:alice@127.0.0.1:5060" -d "Url=https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/demos/hello-play.xml"</pre>
+<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json -d "From=+16175551212" -d "To=sip:alice@127.0.0.1:5060" -d "Url=https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/demos/hello-play.xml"</pre>
 </div>
 </div>
 </div>
@@ -23716,7 +23716,7 @@ Countly.q.push(['report_conversion']);
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/&lt;accountSid&gt;/Calls.json -d "From=+16175551212" -d "To=client:alice" -d "Url=https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/demos/hello-play.xml"</pre>
+<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json -d "From=+16175551212" -d "To=client:alice" -d "Url=https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/demos/hello-play.xml"</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23725,15 +23725,7 @@ included in the outgoing INVITE message.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/&lt;accountSid&gt;/Calls.json -d "From=+16175551212" -d "To=client:alice?X-Custom-Header1=1234&amp;X-Custom-Header2=432" -d "Url=https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/demos/hello-play.xml"</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can also provide a list of events you are interested in getting notified on and provide a URL to receive them at. Here&#8217;s an example for receiving <code>answered</code> and <code>completed</code> events. The callbacks will be made at <code><a href="http://status.callback.url" class="bare">http://status.callback.url</a></code></p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/&lt;accountSid&gt;/Calls.json -d "From=+16175551212" -d "To=client:alice" -d "Url=https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/demos/hello-play.xml" -d "StatusCallback=http://status.callback.url" -d "StatusCallbackEvent=answered,completed"</pre>
+<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json -d "From=+16175551212" -d "To=client:alice?X-Custom-Header1=1234&amp;X-Custom-Header2=432" -d "Url=https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/demos/hello-play.xml"</pre>
 </div>
 </div>
 </div>
@@ -23754,7 +23746,7 @@ included in the outgoing INVITE message.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X GET  https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/&lt;accountSid&gt;/Calls</pre>
+<pre>curl -X GET  https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23972,7 +23964,7 @@ included in the outgoing INVITE message.</p>
 <div class="sect2">
 <h3 id="redirect-call-to-a-new-rcml"><a class="anchor" href="#redirect-call-to-a-new-rcml"></a>Redirect Call to a new RCML</h3>
 <div class="paragraph">
-<p>Live Call Modification POST request URL : <strong><a href="https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/&lt;accountSid&gt;/Calls.json/CAd62f17e7c7f149ac8095f7574495d988" class="bare">https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/&lt;accountSid&gt;/Calls.json/CAd62f17e7c7f149ac8095f7574495d988</a></strong></p>
+<p>Live Call Modification POST request URL : <strong><a href="https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CAd62f17e7c7f149ac8095f7574495d988" class="bare">https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CAd62f17e7c7f149ac8095f7574495d988</a></strong></p>
 </div>
 <div class="sect3">
 <h4 id="parameters"><a class="anchor" href="#parameters"></a>Parameters:</h4>
@@ -23982,7 +23974,7 @@ included in the outgoing INVITE message.</p>
 <div class="listingblock">
 <div class="content">
 <pre>curl ­X POST
-https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/&lt;accountSid&gt;/Calls.json/CAccccfd3a0c394cc1993803af785abc60 ­-d
+https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CAccccfd3a0c394cc1993803af785abc60 ­-d
 "Url=http://192.168.1.151:8080/restcomm/demos/dial­alice.xml"</pre>
 </div>
 </div>
@@ -23991,7 +23983,7 @@ https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­0
 <div class="sect2">
 <h3 id="redirect-call-to-a-new-rcml-and-connect-both-call-legs"><a class="anchor" href="#redirect-call-to-a-new-rcml-and-connect-both-call-legs"></a>Redirect Call to a new RCML and connect both call legs</h3>
 <div class="paragraph">
-<p>Live Call Modification POST request URL: <strong><a href="https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/&lt;accountSid&gt;/Calls.json/CAd62f17e7c7f149ac8095f7574495d988" class="bare">https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/&lt;accountSid&gt;/Calls.json/CAd62f17e7c7f149ac8095f7574495d988</a></strong></p>
+<p>Live Call Modification POST request URL: <strong><a href="https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CAd62f17e7c7f149ac8095f7574495d988" class="bare">https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CAd62f17e7c7f149ac8095f7574495d988</a></strong></p>
 </div>
 <div class="sect3">
 <h4 id="parameters-2"><a class="anchor" href="#parameters-2"></a>Parameters</h4>
@@ -24001,7 +23993,7 @@ https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­0
 <div class="listingblock">
 <div class="content">
 <pre>curl ­X POST
-https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/&lt;accountSid&gt;/Calls.json/CAccccfd3a0c394cc1993803af785abc60 ­-d
+https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CAccccfd3a0c394cc1993803af785abc60 ­-d
 "Url=http://192.168.1.151:8080/restcomm/demos/conference.xml" ­-d
 "MoveConnectedCallLeg=true"</pre>
 </div>
@@ -24011,7 +24003,7 @@ https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­0
 <div class="sect2">
 <h3 id="terminate-in-progress-call"><a class="anchor" href="#terminate-in-progress-call"></a>Terminate In Progress call</h3>
 <div class="paragraph">
-<p>Live Call Modification POST request URL: <strong><a href="https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/&lt;accountSid&gt;/Calls.json/CAe29bf33b54ba43dc952f0d3eb331567c" class="bare">https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/&lt;accountSid&gt;/Calls.json/CAe29bf33b54ba43dc952f0d3eb331567c</a></strong></p>
+<p>Live Call Modification POST request URL: <strong><a href="https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CAe29bf33b54ba43dc952f0d3eb331567c" class="bare">https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CAe29bf33b54ba43dc952f0d3eb331567c</a></strong></p>
 </div>
 <div class="sect3">
 <h4 id="parameters-3"><a class="anchor" href="#parameters-3"></a>Parameters:</h4>
@@ -24023,7 +24015,7 @@ https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­0
 <div class="sect2">
 <h3 id="terminate-ringing-call"><a class="anchor" href="#terminate-ringing-call"></a>Terminate Ringing call</h3>
 <div class="paragraph">
-<p>Live Call Modification POST request URL: <strong><a href="https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/&lt;accountSid&gt;/Calls.json/CA312824ebd262419dbd4c00b057448d57" class="bare">https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/&lt;accountSid&gt;/Calls.json/CA312824ebd262419dbd4c00b057448d57</a></strong>  </p>
+<p>Live Call Modification POST request URL: <strong><a href="https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CA312824ebd262419dbd4c00b057448d57" class="bare">https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­04­24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json/CA312824ebd262419dbd4c00b057448d57</a></strong>  </p>
 </div>
 <div class="sect3">
 <h4 id="parameters-4"><a class="anchor" href="#parameters-4"></a>Parameters:</h4>
@@ -24064,7 +24056,7 @@ https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012­0
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/&lt;accountSid&gt;/Calls.json -d "From=+16175551212" -d "To=sip:alice@127.0.0.1:5061" -d "Url=https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/demos/hello-play.xml"</pre>
+<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls.json -d "From=+16175551212" -d "To=sip:alice@127.0.0.1:5061" -d "Url=https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/demos/hello-play.xml"</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -24100,7 +24092,7 @@ The call will now be redirected to the Url specified(hello-world.xml)</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/&lt;accountSid&gt;/Calls/CAfa51b104354440b09213d04752f50271 -d "Url=https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/demos/hello-world.xml"</pre>
+<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls/CAfa51b104354440b09213d04752f50271 -d "Url=https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/demos/hello-world.xml"</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -24126,7 +24118,7 @@ The call will now be redirected to the Url specified(hello-world.xml)</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/&lt;accountSid&gt;/Calls/CAfa51b104354440b09213d04752f50271 -d "Url=https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/demos/hello-play.xml"</pre>
+<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls/CAfa51b104354440b09213d04752f50271 -d "Url=https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/demos/hello-play.xml"</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -24152,7 +24144,7 @@ The call will now be redirected to the Url specified(hello-world.xml)</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/&lt;accountSid&gt;/Calls/CAfa51b104354440b09213d04752f50271 -d "Status=completed"</pre>
+<pre>curl -X POST https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls/CAfa51b104354440b09213d04752f50271 -d "Status=completed"</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -24273,11 +24265,7 @@ The call will now be redirected to the Url specified(hello-world.xml)</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">StartTime</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Only show calls that started on this date/time or later, given as an ISO-8601 date/time string, like <code>YYYY-MM-DDTHH:MM:SS</code> (for example <code>2018-10-05T22:45:32</code>) or, if you want to omit the time, YYYY-MM-DD (for example <code>2018-10-05</code>). When only a date is provided the time is assumed to be at midnight of the given date. Note that the given date/time is inclusive and is assumed to be in UTC timezone.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EndTime</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Only show calls that ended on this date/time or earlier, given as an ISO-8601 date/time string, like <code>YYYY-MM-DDTHH:MM:SS</code> (for example <code>2018-10-06T02:10:03</code>) or, if you want to omit the time, YYYY-MM-DD (for example <code>2018-10-06</code>). When only a date is provided the time is assumed to be at midnight of the given date. Note that the given date/time is inclusive and is assumed to be in UTC timezone.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only show calls that started on this date, given as YYYY-MM-DD. Also supports inequalities, such as StartTime=YYYY-MM-DD for calls that started at or before midnight on a date, and StartTime=YYYY-MM-DD for calls that started at or after midnight on a date.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ParentCallSid</p></td>
@@ -24298,7 +24286,7 @@ The call will now be redirected to the Url specified(hello-world.xml)</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre> curl -X GET  http://administrator%40company.com:77f8c12cc7166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/&lt;accountSid&gt;/Calls?From=alice</pre>
+<pre> curl -X GET  http://administrator%40company.com:77f8c12cc7166@127.0.0.1:8080/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls?From=alice</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -24398,7 +24386,7 @@ The call will now be redirected to the Url specified(hello-world.xml)</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>curl -X GET  https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/&lt;accountSid&gt;/Calls?PageSize=1</pre>
+<pre>curl -X GET  https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Accounts/ACae6e420f425248d6a26948c17a9e2acf/Calls?PageSize=1</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -24595,7 +24583,7 @@ The call will now be redirected to the Url specified(hello-world.xml)</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-04-28 02:15:53 UTC
+Last updated 2019-05-04 04:53:55 UTC
 </div>
 </div>
 <footer >

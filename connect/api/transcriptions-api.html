@@ -23531,11 +23531,11 @@ Countly.q.push(['report_conversion']);
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">StartTime</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Only show transcriptions that were done on this date/time or later, given as an ISO-8601 date/time string, like <code>YYYY-MM-DDTHH:MM:SS</code> (for example <code>2018-10-05T22:45:32</code>) or, if you want to omit the time, YYYY-MM-DD (for example <code>2018-10-05</code>). When only a date is provided the time is assumed to be at midnight of the given date. Note that the given date/time is inclusive and is assumed to be in UTC timezone.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only show transcriptions that started on this date, given as YYYY-MM-DD. Also supports inequalities, such as StartTime=YYYY-MM-DD for transcriptions that started at or before midnight on a date, and StartTime=YYYY-MM-DD for transcriptions that started at or after midnight on a date.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">EndTime</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Only show transcriptions that were done on this date/time or earlier, given as an ISO-8601 date/time string, like <code>YYYY-MM-DDTHH:MM:SS</code> (for example <code>2018-10-06T02:10:03</code>) or, if you want to omit the time, YYYY-MM-DD (for example <code>2018-10-06</code>). When only a date is provided the time is assumed to be at midnight of the given date. Note that the given date/time is inclusive and is assumed to be in UTC timezone.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only show transcriptions that ended on this date, given as YYYY-MM-DD. Also supports inequalities, such as StartTime=YYYY-MM-DD for transcriptions that started at or before midnight on a date, and StartTime=YYYY-MM-DD for transcriptions that started at or after midnight on a date.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TranscriptionText</p></td>
@@ -23727,7 +23727,7 @@ Countly.q.push(['report_conversion']);
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-04-28 02:15:53 UTC
+Last updated 2019-05-04 04:53:55 UTC
 </div>
 </div>
 <footer >

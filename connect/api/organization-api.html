@@ -23608,40 +23608,6 @@ Countly.q.push(['report_conversion']);
 </div>
 </div>
 <div class="sect3">
-<h4 id="delete-organization"><a class="anchor" href="#delete-organization"></a>Delete Organization</h4>
-<div class="paragraph">
-<p>An existing Organization can be deleted using the REST API.
-Actually the Delete request will set the Organization to state <code>Closed</code></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>/{Version}/Organizations/{organizationSid}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>HTTP DELETE to above Uri will delete an existing organization and will return the representation of the organization resource.</p>
-</div>
-<div class="sect4">
-<h5 id="uri-parameters-2"><a class="anchor" href="#uri-parameters-2"></a>Uri Parameters</h5>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Property</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">organizationSid</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A string that uniquely identifies this organization.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="sect3">
 <h4 id="migrate-client-passwords"><a class="anchor" href="#migrate-client-passwords"></a>Migrate Client Passwords</h4>
 <div class="sect4">
 <h5 id="rationale-2"><a class="anchor" href="#rationale-2"></a>Rationale</h5>
@@ -23651,7 +23617,7 @@ At this moment, the target algorithm is hardcoded to MD5.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>/{Version}/Organizations/{OrganizationSid}/Migrate</code></pre>
+<pre class="highlight"><code>/{Version}/Organizations(.json)/{OrganizationSid}/Migrate</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23673,7 +23639,7 @@ At this moment, the target algorithm is hardcoded to MD5.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-04-28 02:15:53 UTC
+Last updated 2019-05-04 04:53:55 UTC
 </div>
 </div>
 <footer >

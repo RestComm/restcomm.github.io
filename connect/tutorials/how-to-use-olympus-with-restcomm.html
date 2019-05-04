@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>Restcomm – How to use WebRTC Demo with Restcomm</title>
+<title>Restcomm – How to use Olympus with Restcomm</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -23341,15 +23341,15 @@ Countly.q.push(['report_conversion']);
 </head>
 <body id="restcomm-olympus" class="article">
 <div id="header">
-<h1><strong>Restcomm – How to use WebRTC Demo with Restcomm</strong></h1>
+<h1><strong>Restcomm – How to use Olympus with Restcomm</strong></h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel0">
 <li><a href="#pre-requisites">Pre-requisites</a></li>
 <li><a href="#calling-restcomm-with-webrtc">Calling Restcomm with WebRTC</a>
 <ul class="sectlevel1">
-<li><a href="#call-from-another-restcomm-client">Call from another Restcomm Client</a></li>
-<li><a href="#chatting-with-another-restcomm-client">Chatting with another Restcomm Client</a></li>
+<li><a href="#call-from-bob">Call from Bob</a></li>
+<li><a href="#chatting-with-bob">Chatting with Bob</a></li>
 </ul>
 </li>
 </ul>
@@ -23359,16 +23359,16 @@ Countly.q.push(['report_conversion']);
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Restcomm WebRTC Demo enables fast and convenient set up of Restcomm platform over web interface. With Restcomm&#8217;s WebRTC Demo, Restcomm has evolved from its previous client, described here <a href="http://url">telestax.com/livechat-and-video-call-with-restcomm/</a>.</p>
+<p>Olympus WebRTC client enables fast and convenient set up of Restcomm platform over web interface. With Olympus' WebRTC client, Restcomm has evolved from its previous client, described here <a href="http://url">telestax.com/livechat-and-video-call-with-restcomm/</a>.</p>
 </div>
 <div class="paragraph">
-<p>This tutorial will show you how to use the new Restcomm WebRTC Demo to take advantage of Restcomm’s telephony features.</p>
+<p>This tutorial will show you how to use the new Olympus WebRTC client to take advantage of Restcomm’s telephony features.</p>
 </div>
 </div>
 </div>
 <h1 id="pre-requisites" class="sect0"><a class="anchor" href="#pre-requisites"></a>Pre-requisites</h1>
 <div class="paragraph">
-<p>A valid account on restcomm.com. if you don&#8217;t have one, <a href="https://www.restcomm.com/sign-up">Signup</a> for an account or login to an existing one.</p>
+<p>A Restcomm installation. Please check <a href="http://docs.telestax.com/restcomm-docker-quick-start-guide/">http://docs.telestax.com/restcomm-docker-quick-start-guide/</a> on how to install Restcomm.</p>
 </div>
 <h1 id="calling-restcomm-with-webrtc" class="sect0"><a class="anchor" href="#calling-restcomm-with-webrtc"></a>Calling Restcomm with WebRTC</h1>
 <div class="paragraph">
@@ -23377,13 +23377,10 @@ Countly.q.push(['report_conversion']);
 <div class="ulist">
 <ul>
 <li>
-<p>Open a browser to <code><a href="https://{mydomain}.restcomm.com/login" class="bare">https://{mydomain}.restcomm.com/login</a></code> and Sign in with your credentials</p>
+<p>Open a browser to <a href="https://&lt;restcomm" class="bare">https://&lt;restcomm</a> ip&gt;/olympus and Sign in as Alice</p>
 </li>
 <li>
-<p>Click on your Username at the top right of the screen and click on WebRTC Demo</p>
-</li>
-<li>
-<p>WebRTC demo will ask you to login with your default client. The password is the same that you used to login to your main Restcomm account.</p>
+<p>Olympus will request access to Microphone and Camera and then will present the main screen</p>
 </li>
 <li>
 <p>When the main screen is presented:</p>
@@ -23398,9 +23395,6 @@ Countly.q.push(['report_conversion']);
 <li>
 <p>Click <em>dial</em> to make a call to Restcomm and hear the announcement associated with ‘1235’</p>
 </li>
-<li>
-<p>WebRTC Demo will request access to Microphone and Camera and then will present the main screen</p>
-</li>
 </ol>
 </div>
 </li>
@@ -23410,40 +23404,28 @@ Countly.q.push(['report_conversion']);
 <p>You could follow these steps to call any Restcomm number by either selecting a number from the list or adding a new one in contacts.</p>
 </div>
 <div class="sect1">
-<h2 id="call-from-another-restcomm-client"><a class="anchor" href="#call-from-another-restcomm-client"></a>Call from another Restcomm Client</h2>
+<h2 id="call-from-bob"><a class="anchor" href="#call-from-bob"></a>Call from Bob</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If you want to test Peer to Peer WebRTC Calls, please follow the steps below:</p>
+<p>Say your friend Bob has logged in to Olympus and wants to talk:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>First, create a new Restcomm client from the Restcomm Console under the Clients Tab. For more information, please read <a href="../admin/console-overview.html#restcomm-clients">Restcomm Clients</a></p>
+<p>Use a separate tab to login to Olympus as shown before but this time Sign in as <strong>Bob</strong>, not Alice (for this tutorial we will be using just a separate tab in the same browser, but a more fitting example would be another user from a remote machine)</p>
 </li>
 <li>
-<p>Use a separate tab to login to Restcomm WebRTC Demo as described before but this time Sign in with the new Restcomm Client you just created</p>
-</li>
-<li>
-<p>After you sign in:</p>
+<p>After you sign in as Bob:</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
 <p>Click on the Contacts icon</p>
 </li>
 <li>
-<p>Click on the <code>+</code> icon to add a new contact</p>
-</li>
-<li>
-<p>Enter the username of the new Restcomm Client you just created.</p>
-</li>
-<li>
-<p>Click on the new contact you just created</p>
+<p>Pick Alice as the desired person to call</p>
 </li>
 <li>
 <p>Click on the video call icon</p>
-</li>
-<li>
-<p>WebRTC Demo may request access to Microphone and Camera and then will present the main screen</p>
 </li>
 </ol>
 </div>
@@ -23451,39 +23433,71 @@ Countly.q.push(['report_conversion']);
 </ul>
 </div>
 <div class="paragraph">
-<p>At this time, Restcomm WebRTC Demo will start to ring in the other Client&#8217;s window:</p>
+<p>At this time, Olympus will start to ring in Alice&#8217;s window:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Pick up from the other tab and you are ready to talk!</p>
+<p>Pick up from Alice tab and you are ready to talk!</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="chatting-with-another-restcomm-client"><a class="anchor" href="#chatting-with-another-restcomm-client"></a>Chatting with another Restcomm Client</h2>
+<h2 id="chatting-with-bob"><a class="anchor" href="#chatting-with-bob"></a>Chatting with Bob</h2>
 <div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>After you sign in as Bob:</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
 <p>Click on the Contacts icon</p>
 </li>
 <li>
-<p>Click on the new contact you just created or called before</p>
+<p>Pick Alice</p>
 </li>
 <li>
-<p>Click on the chat text field, enter your message and press Return to send your message ot the other Restcomm Client</p>
+<p>Click on the chat icon</p>
 </li>
 </ol>
+</div>
+</li>
+<li>
+<p>Do the same in the Alice window and pick Bob to chat with</p>
+</li>
+<li>
+<p>From now on all messages from Alice will be sent to Bob and the other way around</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Give it a try and share your experience with the rest of the Restcomm community! Here are some additional resources:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>GitHub repository: <a href="https://github.com/Restcomm/olympus">https://github.com/Restcomm/olympus</a></p>
+</li>
+<li>
+<p>Restcomm forum: <a href="https://groups.google.com/forum/#!forum/restcomm" class="bare">https://groups.google.com/forum/#!forum/restcomm</a></p>
+</li>
+<li>
+<p>Stack Overflow: <a href="http://stackoverflow.com/questions/tagged/restcomm" class="bare">http://stackoverflow.com/questions/tagged/restcomm</a> (remember to tag your questions with 'restcomm')</p>
+</li>
+<li>
+<p>Gitter #Restcomm-Discuss channel at <a href="https://gitter.im/RestComm/Restcomm-discuss" class="bare">https://gitter.im/RestComm/Restcomm-discuss</a></p>
+</li>
+</ul>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-04-28 02:15:53 UTC
+Last updated 2019-05-04 04:53:55 UTC
 </div>
 </div>
 <footer >

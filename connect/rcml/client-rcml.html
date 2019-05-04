@@ -23468,7 +23468,7 @@ included in the outgoing INVITE message.</p>
 <p>When dialing out to a Client using &lt;Dial&gt;, an outbound call is initiated. The call transitions from the initiated state to the ringing state when the phone starts ringing. It transitions to the answered state when the call is picked up, and finally to the completed state when the call is over. With <strong>statusCallbackEvent</strong>, you can subscribe to receive webhooks for the different call progress events: initiated, ringing, answered, or completed for a given call.</p>
 </div>
 <div class="paragraph">
-<p>The <strong>statusCallbackEvent</strong> attribute allows you to specify which events Restcomm should webhook on. To specify multiple events separate them with a comma: <code>initiated,ringing,answered,completed</code>. If a statusCallback is provided and no status callback events are specified the completed event will be sent by default.</p>
+<p>The <strong>statusCallbackEvent</strong> attribute allows you to specify which events Restcomm should webhook on. To specify multiple events separate them with a space: initiated ringing answered completed. If a statusCallback is provided and no status callback events are specified the completed event will be sent by default.</p>
 </div>
 <div class="paragraph">
 <p>As opposed to creating an outbound call via the API, outbound calls created using &lt;Dial&gt; are initiated right away and never queued. The following shows a timeline of possible call events that can be returned and the different call statuses that a &lt;Dial&gt; leg may experience:</p>
@@ -23656,7 +23656,7 @@ included in the outgoing INVITE message.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-04-28 02:15:53 UTC
+Last updated 2019-05-04 04:53:55 UTC
 </div>
 </div>
 <footer >
