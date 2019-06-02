@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>RCML applications</title>
+<title>Restcomm API – HealthCheck</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -23341,67 +23341,96 @@ Countly.q.push(['report_conversion']);
 </head>
 <body class="article">
 <div id="header">
+<h1>Restcomm API – HealthCheck</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
-<ul class="sectlevel3">
-<li><a href="#rcml-applications">RCML applications</a></li>
-<li><a href="#rvd-applications">RVD applications</a></li>
+<ul class="sectlevel1">
+<li><a href="#HealthCheck">Purpose</a></li>
+<li><a href="#usage">Usage</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
+<div class="sect1">
+<h2 id="HealthCheck"><a class="anchor" href="#HealthCheck"></a>Purpose</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Restcomm provides an additional interface to communicate with an RCML/RVD application by means of custom SIP headers. The idea is that all custom SIP headers in a SIP message are detected and converted to HTTP parameters in the request to the RCML application using a convention. The RCML application can consume this parameters. Furthermore, RVD converts these parameters to RVD variables and makes them available to its modules.</p>
-</div>
-<div class="sect3">
-<h4 id="rcml-applications"><a class="anchor" href="#rcml-applications"></a>RCML applications</h4>
-<div class="paragraph">
-<p>The following conventions are followed:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Any SIP header starting with <strong>X-</strong> prefix is custom.</p>
-</li>
-<li>
-<p>HTTP parameters are created out of each custom SIP header by adding the <strong>SipHeader_</strong> prefix to its name.</p>
-</li>
-</ul>
+<p><strong>Health check</strong> request is usage by a HTTP load balancer to get sure that a RC node is healthy.</p>
 </div>
 <div class="paragraph">
-<p>Example mappings from SIP header names to HTTP parameter names:</p>
+<p>RC server is checking of HTTP responses of a node and if there is a big percent of error responses then
+a RC node will be marked as unhealthy forever (we need to restart a RC node if we want to clear this flag).
+When a RC node is healthy (a normal status) a GET request to a health check endpoint will receive 200 response code,
+if not the error code will be 503.</p>
+</div>
+<div class="paragraph">
+<p>This EndPoint is supposed for usage by a load balancer not by an end user.</p>
+</div>
+<div class="paragraph">
+<p>For enabling of this functionality we need to add <strong>&lt;health-check-endpoint&gt;</strong> block into <strong>&lt;runtime-settings&gt;</strong> section of <strong>restcomm.xml</strong> config file. Here is an example :</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">X-My-Header -&gt; SipHeader_X-My-Header</code></pre>
+<pre class="highlight"><code class="language-xml" data-lang="xml">        &lt;health-check-endpoint&gt;
+            &lt;!-- A list of HTTP error codes that will be treated as errors for health a check system. Example: "500;509" --&gt;
+            &lt;responses-status-code&gt;500&lt;/responses-status-code&gt;
+            &lt;!-- An error code responses percent that will trigger of treating a node as unhealthy, 0 value (default) disables the detecting algo,
+                 100 means that only if all HTTP responses are with error than a node is marked as bad.
+                 20  means that already 20% of error responses will trigger a node as bad --&gt;
+            &lt;max-percent-responses-with-error&gt;50&lt;/max-percent-responses-with-error&gt;
+            &lt;!-- Minimum responses that will be taken into account to calculate results (to exalude a case when only one response with error will trigger a node as unstable) --&gt;
+            &lt;min-number-responses-for-calc&gt;10&lt;/min-number-responses-for-calc&gt;
+            &lt;!-- Time in seconds after which we discard count to refresh of calculating (min-number-responses-for-calc value must be achieved also) --&gt;
+            &lt;max-error-time&gt;60&lt;/max-error-time&gt;
+        &lt;/health-check-endpoint&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Thus the SipHeader_X-My-Header will be available as typical GET or POST parameter in the RCML application.</p>
+<p>The attributes of configuring are as follows:</p>
+</div>
+<table class="tableblock frame-top grid-rows spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">responses-status-code</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A list of HTTP error codes that will be treated as errors for health a check system. Example: "500;509". Default value: "500"</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">max-percent-responses-with-error</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An error code responses percent that will trigger of treating a node as unhealthy, 0 value (default) disables the detecting algo, 100 means that only if all HTTP responses are with error than a node is marked as bad. 20  means that already 20% of error responses will trigger a node as bad</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">min-number-responses-for-calc</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Minimum responses that will be taken into account to calculate results (to exalude a case when only one response with error will trigger a node as unstable)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">max-error-time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Time in seconds after which we discard count to refresh of calculating (min-number-responses-for-calc value must be achieved also)</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="rvd-applications"><a class="anchor" href="#rvd-applications"></a>RVD applications</h4>
+<div class="sect1">
+<h2 id="usage"><a class="anchor" href="#usage"></a>Usage</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>RVD will take the previous convention one step further and create an RVD variable out of the parameter. Thus, the mapping from a custom SIP header to an RVD variable will be the following:</p>
+<p>Example of a health check request:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-lang:default" data-lang="lang:default">X-My-Header -&gt; $core_x_my_header</code></pre>
+<pre>$ curl -v -X  GET http://&lt;IP&gt;:8080/restcomm/2012-04-24/HealthCheck</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>So, if <strong>X-My-Header</strong> SIP header arrives at Restcomm, RVD will have a variable named <strong>$core_x_my_header</strong> available in its modules. Note the following:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>All characters are converted to lower case. This happens because although SIP headers are  not case insesitive while RVD variables are.</p>
-</li>
-<li>
-<p>All non alpha numeric characters i.e.<strong> [^A-Za-z0-9_]</strong>,  are converted to `_'  (underscore). That happens because RVD has some additional restrictions for naming variables. Here is the regular expression that is used for invalid characters to underscore:</p>
-</li>
-</ul>
 </div>
 </div>
 </div>
