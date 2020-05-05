@@ -23350,7 +23350,8 @@ Countly.q.push(['report_conversion']);
 <li><a href="#say-attributes">Say Attributes</a></li>
 <li><a href="#nesting">Nesting</a></li>
 <li><a href="#examples">Examples</a></li>
-<li><a href="#useful-information">Useful Information</a></li>
+<li><a href="#dictation">Dictation</a></li>
+<li><a href="#configuring-tts-provider-and-language">Configuring TTS Provider and Language</a></li>
 </ul>
 </li>
 </ul>
@@ -23361,19 +23362,21 @@ Countly.q.push(['report_conversion']);
 <h2 id="say"><a class="anchor" href="#say"></a>Say</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <strong>&lt;Say&gt;</strong> verb is used to synthesize text to speech and play it to the remote party. The voices supported depends on the TTS Service provider plug-in. Below are the voices for our default TTS service provider plug-in which uses Acapela Voice and <strong>VoiceRSS</strong> (default) as a Service.</p>
+<p>The <strong>&lt;Say&gt;</strong> verb is used to synthesize text to speech and play it back to the remote party.</p>
 </div>
 <div class="sect2">
 <h3 id="say-attributes"><a class="anchor" href="#say-attributes"></a>Say Attributes</h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
 </colgroup>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
 <th class="tableblock halign-left valign-top">Allowed Values</th>
 <th class="tableblock halign-left valign-top">Default Value</th>
 </tr>
@@ -23381,39 +23384,29 @@ Countly.q.push(['report_conversion']);
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">voice</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">man, woman</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">man</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The gender of the voice</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">provider-dependent</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">female</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">language</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">bf, bp, en, en-gb,cf, cs, dan, fi es, fr, de, el, it, nl, no, pl, pt, ru, ar, ca, sv, tr</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">en</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The text language. May contain TTS provider.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">provider-dependent</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">voicerss.en</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">loop</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">integer &gt; 1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">How many times to play the synthesized text. Zero will loop indefinitely.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">non-negative integer</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
 </tr>
 </tbody>
 </table>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>voice.</strong> The 'voice' attribute allows you to select the gender of the voice used to synthesize the text to speech for playback.</p>
-</li>
-<li>
-<p><strong>language.</strong> The 'language' attribute allows you pick a specific language for speech synthesis. RestComm currently supports languages 'bf' (Belgium-French), 'bp' (Brazilian-Portugues), 'en' (English), 'en-gb' (British-English), 'cf' (Canadian-French), 'cs' (Czech), 'dan' (Dannish), 'fi' (Finnish), 'es' (Spanish), 'fr' (French), 'de' (German), 'el' (Greek), 'it' (Italian), 'nl' (Netherlands-Dutch), 'no' (Norwegian), 'pl' (Polish), 'pt' (Portuguese), 'ru' (Russian), 'ar' (Saudi-Arabia Arabic), 'ca' (Spain Catalan), 'sv' (Swedish), and 'tr' (Turkish).</p>
-</li>
-<li>
-<p><strong>loop.</strong> The 'loop' attribute specifies how many times you&#8217;d like the text repeated. Specifying '0' will cause the the &lt;Say&gt; verb to loop until the call is hung up.</p>
-</li>
-</ul>
-</div>
 </div>
 <div class="sect2">
 <h3 id="nesting"><a class="anchor" href="#nesting"></a>Nesting</h3>
 <div class="paragraph">
-<p>The <strong>&lt;Say&gt;</strong> verb can not have any other verbs or nouns nested. Only text.</p>
+<p>The <strong>&lt;Say&gt;</strong> verb can not have any other verbs or nouns nested.</p>
 </div>
 </div>
 <div class="sect2">
@@ -23440,16 +23433,104 @@ Countly.q.push(['report_conversion']);
 </div>
 </div>
 <div class="sect2">
-<h3 id="useful-information"><a class="anchor" href="#useful-information"></a>Useful Information</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>When translating text to speech, the Say verb will make assumptions about how to pronounce numbers, dates, times, amounts of money and other abbreviations.</p>
-</li>
-<li>
-<p>When saying numbers, '12345' will be spoken as "twelve thousand three hundred forty-five." Whereas '1 2 3 4 5' will be spoken as "one two three four five."</p>
-</li>
-</ul>
+<h3 id="dictation"><a class="anchor" href="#dictation"></a>Dictation</h3>
+<div class="paragraph">
+<p>By default the &lt;Say&gt; verb will make assumptions about how to pronounce numbers, dates, times, amounts of money and other abbreviations.
+For example, the number '12345' will be spoken as "twelve thousand three hundred forty-five." Whereas '1 2 3 4 5' will be spoken as "one two three four five."</p>
+</div>
+<div class="paragraph">
+<p>To control dictation of synthesized text, users can inject Speech Synthesis Markup Language (SSML) into their text.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;Response&gt;
+&lt;Say&gt;
+  &lt;speak&gt;
+     &lt;say-as interpret-as="ordinal"&gt;12345&lt;/say-as&gt;
+  &lt;/speak&gt;
+&lt;/Say&gt;
+&lt;/Response&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For more information about text to speech and SSML support check out the "SSML Support Guide".</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configuring-tts-provider-and-language"><a class="anchor" href="#configuring-tts-provider-and-language"></a>Configuring TTS Provider and Language</h3>
+<div class="paragraph">
+<p>The supported voices depend on the Text-to-Speech (TTS) Service provider.
+RestComm supports the following list of TTS Provider:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">TTS Provider</th>
+<th class="tableblock halign-left valign-top">Voices</th>
+<th class="tableblock halign-left valign-top">Default Voice</th>
+<th class="tableblock halign-left valign-top">Languages</th>
+<th class="tableblock halign-left valign-top">Default Language</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://www.voicerss.org/">voicerss</a> <strong>(default)</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">female only</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">female</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://www.voicerss.org/api/documentation.aspx">VoiceRSS Documentation</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">en</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://cloud.google.com/text-to-speech">google</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">male,female</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">male</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://cloud.google.com/text-to-speech/docs/voices">Google TTS Documentation</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">en-US-Wavenet-A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://aws.amazon.com/polly/">awspolly</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">male,female</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">male</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.aws.amazon.com/polly/latest/dg/voicelist.html">AWS Polly Documentation</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">en-US</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.acapela-group.com/">acapela</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">man,woman</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">woman</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.acapela-group.com/voices/repertoire/">Acapela Documentation</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">en</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Restcomm default TTS Provider is VoiceRSS
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If a user wishes to use a specific provider he can do so by specifying it in the language parameter of the &lt;Say&gt; tag as
+shown below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>language="acapela.en"
+language="google.en-US-Wavenet-A"</pre>
+</div>
 </div>
 </div>
 </div>
@@ -23457,7 +23538,7 @@ Countly.q.push(['report_conversion']);
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-05-02 04:53:59 UTC
+Last updated 2020-05-05 08:28:36 UTC
 </div>
 </div>
 <footer >

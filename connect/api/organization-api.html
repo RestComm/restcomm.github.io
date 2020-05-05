@@ -23402,7 +23402,7 @@ Countly.q.push(['report_conversion']);
 </table>
 </div>
 <div class="sect3">
-<h4 id="create-new-organization"><a class="anchor" href="#create-new-organization"></a>Create new organization</h4>
+<h4 id="create-organization-with-post-new-as-of-platform-provisioning-1-5-0"><a class="anchor" href="#create-organization-with-post-new-as-of-platform-provisioning-1-5-0"></a>Create Organization with POST (New, as of Platform Provisioning: 1.5.0)</h4>
 <div class="sect4">
 <h5 id="rationale"><a class="anchor" href="#rationale"></a>Rationale</h5>
 <div class="paragraph">
@@ -23410,15 +23410,15 @@ Countly.q.push(['report_conversion']);
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>/{Version}/Organizations/{domainName}</code></pre>
+<pre class="highlight"><code>/{Version}/Organizations</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>HTTP PUT to above Uri will create a new organization and returns the representation of the organization resource, including the properties above.</p>
+<p>HTTP POST to above Uri will create a new organization and returns the representation of the organization resource, including the properties above.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="uri-parameters"><a class="anchor" href="#uri-parameters"></a>Uri Parameters</h5>
+<h5 id="body-parameters"><a class="anchor" href="#body-parameters"></a>Body Parameters</h5>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 50%;">
@@ -23430,7 +23430,7 @@ Countly.q.push(['report_conversion']);
 <td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">domainName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DomainName</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A custom DNS hostname that you create on Restcomm Cloud. It can accept traffic for an account. If anyone makes a SIP/HTTP request using that domain, say the SIP URI sip:alice@cloud.restcomm.com, it will route to Restcomm.
 </p><p class="tableblock">Total Length of domain_name can be upto 255 Characters. It can contain only letters, number and “-” aka hyphen sign.</p></td>
 </tr>
@@ -23440,7 +23440,7 @@ Countly.q.push(['report_conversion']);
 <div class="title">Example 1. Add new organization with domain name "test" - Example</div>
 <div class="content">
 <div class="paragraph">
-<p>curl -X PUT "https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Organizations/test"</p>
+<p>curl -X POST "https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Organizations" -H 'Content-Type: application/x-www-form-urlencoded' -d DomainName=test</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -23478,13 +23478,181 @@ Countly.q.push(['report_conversion']);
 <div class="title">Example 2. Add new organization with domain name "test" under a specific hosted zone - Example</div>
 <div class="content">
 <div class="paragraph">
-<p>curl -X PUT "https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Organizations/test" -d "HostedZoneId=&lt;myHostedZoneId&gt;"</p>
+<p>curl -X PUT "https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Organizations/test?HostedZoneId=&lt;myHostedZoneId&gt;"</p>
 </div>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;Organization&gt;
   &lt;Sid&gt;OR905d1b4e9d3045acb268f8d0fdf259ac&lt;/Sid&gt;
   &lt;DomainName&gt;test.restcomm.com.&lt;/DomainName&gt;
+  &lt;Status&gt;active&lt;/Status&gt;
+  &lt;DateCreated&gt;Thu, 28 Sep 2017 16:11:39 +0000&lt;/DateCreated&gt;
+  &lt;DateUpdated&gt;Thu, 28 Sep 2017 16:11:39 +0000&lt;/DateUpdated&gt;
+&lt;/Organization&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="create-organization-with-put-deprecated-soon-to-be-removed"><a class="anchor" href="#create-organization-with-put-deprecated-soon-to-be-removed"></a>Create Organization with PUT (Deprecated, soon to be removed)</h4>
+<div class="sect4">
+<h5 id="rationale-2"><a class="anchor" href="#rationale-2"></a>Rationale</h5>
+<div class="paragraph">
+<p>Rational to create a new organization pretty simple and described already, we want to onboard a new customer and provide them with their own domain and account on the platform.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>/{Version}/Organizations/{domainName}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>HTTP PUT to above Uri will create a new organization and returns the representation of the organization resource, including the properties above.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="uri-parameters"><a class="anchor" href="#uri-parameters"></a>Uri Parameters</h5>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Property</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">domainName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A custom DNS hostname that you create on Restcomm Cloud. It can accept traffic for an account. If anyone makes a SIP/HTTP request using that domain, say the SIP URI sip:alice@cloud.restcomm.com, it will route to Restcomm.
+</p><p class="tableblock">Total Length of domain_name can be upto 255 Characters. It can contain only letters, number and “-” aka hyphen sign.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="exampleblock">
+<div class="title">Example 3. Add new organization with domain name "test" - Example</div>
+<div class="content">
+<div class="paragraph">
+<p>curl -X PUT "https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Organizations/test"</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;Organization&gt;
+  &lt;Sid&gt;OR905d1b4e9d3045acb268f8d0fdf259ac&lt;/Sid&gt;
+  &lt;DomainName&gt;test.restcomm.com.&lt;/DomainName&gt;
+  &lt;Status&gt;active&lt;/Status&gt;
+  &lt;DateCreated&gt;Thu, 28 Sep 2017 16:11:39 +0000&lt;/DateCreated&gt;
+  &lt;DateUpdated&gt;Thu, 28 Sep 2017 16:11:39 +0000&lt;/DateUpdated&gt;
+&lt;/Organization&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="optional-request-parameters-2"><a class="anchor" href="#optional-request-parameters-2"></a>Optional Request Parameters</h5>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Property</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HostedZoneId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ID of hosted zone on your DNS server, under which you want to create above domainName, if not provided system will use default configured one.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="exampleblock">
+<div class="title">Example 4. Add new organization with domain name "test" under a specific hosted zone - Example</div>
+<div class="content">
+<div class="paragraph">
+<p>curl -X PUT "https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Organizations/test?HostedZoneId=&lt;myHostedZoneId&gt;"</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;Organization&gt;
+  &lt;Sid&gt;OR905d1b4e9d3045acb268f8d0fdf259ac&lt;/Sid&gt;
+  &lt;DomainName&gt;test.restcomm.com.&lt;/DomainName&gt;
+  &lt;Status&gt;active&lt;/Status&gt;
+  &lt;DateCreated&gt;Thu, 28 Sep 2017 16:11:39 +0000&lt;/DateCreated&gt;
+  &lt;DateUpdated&gt;Thu, 28 Sep 2017 16:11:39 +0000&lt;/DateUpdated&gt;
+&lt;/Organization&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="update-existing-organization-new-as-of-platform-provisioning-1-5-0"><a class="anchor" href="#update-existing-organization-new-as-of-platform-provisioning-1-5-0"></a>Update existing organization (New, as of Platform Provisioning: 1.5.0)</h4>
+<div class="sect4">
+<h5 id="rationale-3"><a class="anchor" href="#rationale-3"></a>Rationale</h5>
+<div class="paragraph">
+<p>Update the domain name of an existing organization for customers that utilize custom domains. Important: during such update DNS is not updated -only database is. Also, since this is about custom domains the HostedZoneId query parameter doesn&#8217;t take effect for updates.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>/{Version}/Organizations/{organizationSid}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>HTTP PUT to above Uri with proper x-www-form-urlencoded parameters will update the organization with the provided Organization Sid and return the representation of the updated organization resource.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="uri-parameters-2"><a class="anchor" href="#uri-parameters-2"></a>Uri Parameters</h5>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Property</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">organizationSid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Organization Sid for the organization you want to update.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="body-parameters-2"><a class="anchor" href="#body-parameters-2"></a>Body Parameters</h5>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Property</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DomainName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The new DNS hostname that you want to use for the organization.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="exampleblock">
+<div class="title">Example 5. Update organization with organizationSid OR620c0b3da32647658b6da096b3ac3a3b and change its domain to <code>updated-test</code> - Example</div>
+<div class="content">
+<div class="paragraph">
+<p>curl -X PUT "https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Organizations/OR620c0b3da32647658b6da096b3ac3a3b -H 'Content-Type: application/x-www-form-urlencoded' -d DomainName=updated-test"</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;Organization&gt;
+  &lt;Sid&gt;OR620c0b3da32647658b6da096b3ac3a3b&lt;/Sid&gt;
+  &lt;DomainName&gt;updated-test&lt;/DomainName&gt;
   &lt;Status&gt;active&lt;/Status&gt;
   &lt;DateCreated&gt;Thu, 28 Sep 2017 16:11:39 +0000&lt;/DateCreated&gt;
   &lt;DateUpdated&gt;Thu, 28 Sep 2017 16:11:39 +0000&lt;/DateUpdated&gt;
@@ -23534,7 +23702,7 @@ Countly.q.push(['report_conversion']);
 </tbody>
 </table>
 <div class="exampleblock">
-<div class="title">Example 3. Read Organization Example</div>
+<div class="title">Example 6. Read Organization Example</div>
 <div class="content">
 <div class="paragraph">
 <p>curl -X GET "https://{accountSid}:{authToken}@cloud.restcomm.com/restcomm/2012-04-24/Organizations/{OrganizationSid}"</p>
@@ -23553,7 +23721,7 @@ Countly.q.push(['report_conversion']);
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 4. Read Organization Json Example</div>
+<div class="title">Example 7. Read Organization Json Example</div>
 <div class="content">
 <div class="paragraph">
 <p>curl -X GET "https://{accountSid}:{authToken}@cloud.restcomm.com/restcomm/2012-04-24/Organizations.json/{OrganizationSid}"</p>
@@ -23598,7 +23766,7 @@ Countly.q.push(['report_conversion']);
 </tbody>
 </table>
 <div class="exampleblock">
-<div class="title">Example 5. Read Organization List with filter Example</div>
+<div class="title">Example 8. Read Organization List with filter Example</div>
 <div class="content">
 <div class="paragraph">
 <p>curl -X GET "https://{accountSid}:{authToken}@cloud.restcomm.com/restcomm/2012-04-24/Organizations/{OrganizationSid}.json" -d "Status=active"</p>
@@ -23608,23 +23776,57 @@ Countly.q.push(['report_conversion']);
 </div>
 </div>
 <div class="sect3">
+<h4 id="delete-organization"><a class="anchor" href="#delete-organization"></a>Delete Organization</h4>
+<div class="paragraph">
+<p>An existing Organization can be deleted using the REST API.
+Actually the Delete request will set the Organization to state <code>Closed</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>/{Version}/Organizations/{organizationSid}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>HTTP DELETE to above Uri will delete an existing organization and will return the representation of the organization resource.</p>
+</div>
+<div class="sect4">
+<h5 id="uri-parameters-3"><a class="anchor" href="#uri-parameters-3"></a>Uri Parameters</h5>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Property</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">organizationSid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A string that uniquely identifies this organization.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect3">
 <h4 id="migrate-client-passwords"><a class="anchor" href="#migrate-client-passwords"></a>Migrate Client Passwords</h4>
 <div class="sect4">
-<h5 id="rationale-2"><a class="anchor" href="#rationale-2"></a>Rationale</h5>
+<h5 id="rationale-4"><a class="anchor" href="#rationale-4"></a>Rationale</h5>
 <div class="paragraph">
 <p>This will encrypt all associated Clients passwords to a given encryption algorithm.
 At this moment, the target algorithm is hardcoded to MD5.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>/{Version}/Organizations(.json)/{OrganizationSid}/Migrate</code></pre>
+<pre class="highlight"><code>/{Version}/Organizations/{OrganizationSid}/Migrate</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>HTTP PUT to above Uri will encrypt all Client passwords and returns a list of Clients migrated.</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 6. Migrate Organization Example</div>
+<div class="title">Example 9. Migrate Organization Example</div>
 <div class="content">
 <div class="paragraph">
 <p>curl -X PUT "https://{accountSid}:{authToken}@cloud.restcomm.com/restcomm/2012-04-24/Organizations/{OrganizationSid}.json/Migrate"</p>
@@ -23639,7 +23841,7 @@ At this moment, the target algorithm is hardcoded to MD5.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-05-02 04:53:59 UTC
+Last updated 2020-05-05 08:28:36 UTC
 </div>
 </div>
 <footer >

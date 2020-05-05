@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>Restcomm Visual Designer</title>
+<title>Restcomm API – Outgoing Caller ID</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round|Open+Sans:400italic,600italic,400,600|Ubuntu+Mono:400);
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -23341,54 +23341,271 @@ Countly.q.push(['report_conversion']);
 </head>
 <body class="article">
 <div id="header">
-<h1>Restcomm Visual Designer</h1>
-</div>
-<div id="content">
-<div class="paragraph">
-<p>The Restcomm Visual Designer is a quick and great way to create communications application. Gone are the days when you have to be an expert in a programming language and know everything about telecommunications in order to create a simple voice application.</p>
-</div>
-<div class="paragraph">
-<p>The following articles will guide you through using RVD quickly and efficiently to build powerful communications applications:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="Restcomm - RVD Quick Video Tutorial.html#video">Restcomm RVD Quick Video Tutorials</a></p>
-</li>
-<li>
-<p><a href="Restcomm - Making HTTP requests with External Service client.html#http">Making HTTP requests with External Service client</a></p>
-</li>
-<li>
-<p><a href="Restcomm - Understanding RVD Variables.html#rvd-variables">Restcomm RVD Variables</a></p>
-</li>
-<li>
-<p><a href="Restcomm RVD - Control Element.html">Making decisions - Control element</a></p>
-</li>
-<li>
-<p><a href="Restcomm - External Services Arrays Strings and Objects.html#external-services">Restcomm - External Services Arrays Strings and Objects</a></p>
-</li>
-<li>
-<p><a href="Accessing custom SIP headers from an RCML or RVD application.html#custom-sip-headers">Accessing custom SIP headers from an RCML or RVD application</a></p>
-</li>
-<li>
-<p><a href="Restcomm RVD - Using Web Trigger.html#web-trigger">Restcomm RVD Web Trigger</a></p>
-</li>
-<li>
-<p><a href="Restcomm RVD - Introducing Diagrams.html#diagrams">Restcomm RVD Diagrams</a></p>
-</li>
-<li>
-<p><a href="Restcomm - Quick External Service Demo.html#video">Restcomm RVD External Service Demo</a></p>
-</li>
-<li>
-<p><a href="Restcomm - Enable Application Log in RVD.html#rvd-variables">Restcomm RVD - Enable Application Log</a></p>
-</li>
-<li>
-<p><a href="Hosting RVD External Services in the Cloud.html#web-trigger">Hosting RVD External Services in the Cloud</a></p>
-</li>
-<li>
-<p><a href="Fixing RVD projects with deprecated dynamic routing.html#deprecated-routing">Fixing RVD projects with deprecated dynamic routing</a></p>
+<h1>Restcomm API – Outgoing Caller ID</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#outgoing-caller-id">OutgoingCallerId</a>
+<ul class="sectlevel2">
+<li><a href="#outboundcallerid-resource-uri">OutboundCallerId Resource URI.</a></li>
+<li><a href="#outgoingcallerids-list-resource-uri">OutgoingCallerIds List Resource URI</a></li>
+</ul>
 </li>
 </ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="outgoing-caller-id"><a class="anchor" href="#outgoing-caller-id"></a>OutgoingCallerId</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An OutgoingCallerId instance resource represents either a single or a set (through regex) of verified numbers that may
+be used as a caller ID when making outgoing calls or sending SMS via the REST API and within the RCML &lt;Dial&gt; verb.</p>
+</div>
+<div class="paragraph">
+<p>The OutgoingCallerIds list resource represents the set of an account&#8217;s verified phone numbers.</p>
+</div>
+<div class="sect2">
+<h3 id="outboundcallerid-resource-uri"><a class="anchor" href="#outboundcallerid-resource-uri"></a>OutboundCallerId Resource URI.</h3>
+<div class="paragraph">
+<p><code>/2012-04-24/Accounts/{AccountSid}/OutgoingCallerIds/{OutgoingCallerIdSid}</code></p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Property</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A 34 character string that uniquely identifies this resource</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DateCreated</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The date that this resource was created, given in RFC 2822 format.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DateUpdated</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The date that this resource last updated, given in RFC 2822 format.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FriendlyName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A human readable descriptive text for this resource, up to 64 characters long. By default, the FriendlyName is a nicely formatted version of the phone number.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AccountSid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The unique ID of the Account responsible for this Caller Id.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PhoneNumber</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A valid regular expression. In case of concrete number, it must be formatted with a '+' and country code e.g., ^\+16175551212 (E.164 format).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Uri</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The URI for this resource</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="supported-operations"><a class="anchor" href="#supported-operations"></a>Supported Operations</h4>
+<div class="sect4">
+<h5 id="http-get"><a class="anchor" href="#http-get"></a>HTTP GET</h5>
+<div class="paragraph">
+<p>Gets the details of a particular Outgoing Caller ID.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>curl -X GET 'https://{organization}.restcomm.com/restcomm/2012-04-24/Accounts/{AccountSid}/OutgoingCallerIds/{IncomingPhoneNumberSid}.json' -u {AccountSid}:{AccountToken}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>{
+  "sid": "PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "account_sid": "ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "date_created": "Fri, 21 Aug 2009 00:11:24 +0000",
+  "date_updated": "Fri, 21 Aug 2009 00:11:24 +0000",
+  "friendly_name": "(415) 867-5309",
+  "phone_number": "^\+141586753096",
+  "uri": "/2012-04-24/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/OutgoingCallerIds/PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.json"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="http-put"><a class="anchor" href="#http-put"></a>HTTP PUT</h5>
+<div class="paragraph">
+<p>Updates the caller ID, and returns the updated resource if successful.</p>
+</div>
+<div class="paragraph">
+<p><strong>Only CSP accounts can update existing records.</strong></p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Property</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FriendlyName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A human readable descriptive text for this resource, up to 64 characters long. By default, the FriendlyName is a nicely formatted version of the phone number.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PhoneNumber</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A valid regular expression. Single numbers shall be formatted with a '+' and country code e.g., ^\+16175551212 (E.164 format).</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>curl -X PUT https://{Organization}.restcomm.com/restcomm/2012-04-24/Accounts/{AccountSid}/OutgoingCallerIds/{PhoneNumberSid}.json \
+--data-urlencode "FriendlyName=John Doe" \
+-u {AccountSid}:{AccountToken}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>{
+  "sid": "PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "account_sid": "ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "date_created": "Fri, 21 Aug 2009 00:11:24 +0000",
+  "date_updated": "Fri, 21 Aug 2009 00:11:24 +0000",
+  "friendly_name": "John Doe",
+  "phone_number": "^\+16175551212",
+  "uri": "/2012-04-24/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/OutgoingCallerIds/PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.json"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="http-delete"><a class="anchor" href="#http-delete"></a>HTTP DELETE</h5>
+<div class="paragraph">
+<p>Deletes the caller ID from the account. Returns an HTTP 204 response if successful, with no body.</p>
+</div>
+<div class="paragraph">
+<p><strong>Only CSP accounts can delete existing records.</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>curl -X DELETE 'https://{organization}.restcomm.com/restcomm/2012-04-24/Accounts/{AccountSid}/OutgoingCallerIds/{IncomingPhoneNumberSid}.json' -u {AccountSid}:{AccountToken}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="outgoingcallerids-list-resource-uri"><a class="anchor" href="#outgoingcallerids-list-resource-uri"></a>OutgoingCallerIds List Resource URI</h3>
+<div class="paragraph">
+<p><code>/2012-04-24/Accounts/{AccountSid}/OutgoingCallerIds</code></p>
+</div>
+<div class="sect3">
+<h4 id="supported-operations-2"><a class="anchor" href="#supported-operations-2"></a>Supported Operations</h4>
+<div class="sect4">
+<h5 id="http-get-2"><a class="anchor" href="#http-get-2"></a>HTTP GET</h5>
+<div class="paragraph">
+<p>Returns a list of OutgoingCallerId resource representations, each representing a Caller ID number valid for an account. The list includes paging information.</p>
+</div>
+<div class="paragraph">
+<p><strong>Get the Entire List of an Account&#8217;s Caller IDs</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>curl -X GET 'https://{Organization}.restcomm.com/restcomm/2012-04-24/Accounts/{AccountSid}/OutgoingCallerIds.json?PageSize=20' -u {AccountSid}:{AccountToken}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>{
+  "end": 0,
+  "first_page_uri": "/2012-04-24/Accounts/ACXXXXXX/OutgoingCallerIds.json?Page=0&amp;PageSize=50",
+  "last_page_uri": "/2012-04-24/Accounts/ACXXXXXXX/OutgoingCallerIds.json?Page=0&amp;PageSize=50",
+  "next_page_uri": "/2012-04-24/Accounts/ACXXXXXXXX/OutgoingCallerIds.json?Page=50",
+  "num_pages": 1,
+  "outgoing_caller_ids": [
+    {
+      "account_sid": "ACXXXXXXXX",
+      "date_created": "Fri, 21 Aug 2009 00:11:24 +0000",
+      "date_updated": "Fri, 21 Aug 2009 00:11:24 +0000",
+      "friendly_name": "(415) 867-5309",
+      "phone_number": "^\+141586753096",
+      "sid": "PNXXXXXXXXXXXX",
+      "uri": "/2012-04-24/Accounts/ACXXXXXXX/OutgoingCallerIds/PNXXXXX.json"
+    }
+  ],
+  "page": 0,
+  "page_size": 50,
+  "previous_page_uri": "/2012-04-24/Accounts/ACXXXXXX/OutgoingCallerIds.json?Page=0&amp;PageSize=50",
+  "start": 0,
+  "total": 1,
+  "uri": "/2012-04-24/Accounts/ACXXXXXX/OutgoingCallerIds.json"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="http-post"><a class="anchor" href="#http-post"></a>HTTP POST</h5>
+<div class="paragraph">
+<p>Adds a new Caller ID to an Account.</p>
+</div>
+<div class="paragraph">
+<p><strong>Only CSP accounts can create new records.</strong></p>
+</div>
+<div class="paragraph">
+<p>The following parameters are accepted:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Parameter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PhoneNumber</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A valid regular expression. For specific phone numbers, it should be formatted with a '+' and country code e.g., ^\+16175551212 (E.164 format).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FriendlyName (optional)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A human readable description for the new caller ID with maximum length 64 characters. Defaults to a nicely formatted version of the number.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>curl -X POST https://{Organization}.restcomm.com/restcomm/2012-04-24/Accounts/{AccountSid}/OutgoingCallerIds.json \
+--data-urlencode "FriendlyName=My Home Phone Number" \
+--data-urlencode "PhoneNumber=^\+14158675310" \
+-u {AccountSid}:{AccountToken}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>{
+  "sid": "PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "account_sid": "ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "date_created": "Fri, 21 Aug 2009 00:11:24 +0000",
+  "date_updated": "Fri, 21 Aug 2009 00:11:24 +0000",
+  "friendly_name": "My Home Phone Number",
+  "phone_number": "^\+14158675310",
+  "uri": "/2012-04-24/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/OutgoingCallerIds/PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.json"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
