@@ -1,0 +1,87 @@
+@startuml
+autonumber 10 10 "<b>[000]"
+participant "A" as A
+participant "Restcomm (B)" as RC
+participant "Provisioning" as PlatformProv
+participant "RCML Application" as RCMLApp
+participant "C" as C
+
+== A inbound call ==
+A -> RC: INVITE(to=<incomingPhone>)[SIP]
+RC -> PlatformProv: GET(/numbers/<incomingPhone>)[HTTP]
+PlatformProv -> RC : 200OK(<rcmlURL>)[HTTP]
+RC -> RCMLApp: GET(<rcmlURL>?callSid=sid1)[HTTP]
+RCMLApp -> RC : 200OK(rcml_gather(<gather_action1>,<ivr_menu1>))[HTTP]
+note over RC, RCMLApp
+<Response>
+    <Gather action="/digitsEntered" input="speech dtmf" timeout="3" numDigits="1">
+        <Say>Please press 1 or say sales for sales.</Say>
+    </Gather>
+</Response>
+end note
+RC -> A : 200OK(sdp:<bridgeSDP>)[SIP]
+A -> RC: ACK[SIP]
+
+== A goes into IVR ==
+note over A, RC: A hears menu option, and press some option
+A -> RC : pressDigit(1)[RTP]
+RC -> RCMLApp: GET(/digitsEntered?callSid=1&digit=1)[HTTP]
+RCMLApp -> RC : 200OK(rcml_hold_dial(to=C, action=<consultationRcmlURL>)[HTTP]
+note over RC, RCMLApp
+<Response>
+    <Hold/>
+    <Dial action="/dialCompleted">
+        <Sip url="/consultationRcmlURL">sip:c@domain.com</Sip>
+    </Dial>
+</Response>
+
+We put A on hold
+then dial to C for initiating the transfer
+end note
+
+== Put A leg on Hold ==
+RC -> A : RE-INVITE(sdp=<HoldSDP>)[SIP]
+A -> RC : 200OK(<A_SDP>[SIP]
+RC -> A: ACK[SIP]
+note over A, RC: A is now on hold
+
+== Attended transfer initiated, create call to C ==
+RC -> C : INVITE(sdp=<bridgeSDP2>)[SIP]
+C -> RC : 200OK(<C_SDP>[SIP]
+RC -> C: ACK[SIP]
+RC -> RCMLApp : GET(<consultationRcmlURL>?callSid=2)[HTTP]
+RCMLApp -> RC : 200OK(rcml_gather(<gather_action_2>,<ivr_menu2>))[HTTP]
+note over RC, RCMLApp
+<Response>
+    <Gather action="/digitsEntered" input="dtmf" timeout="3" numDigits="1">
+        <Say>Customer X from Enteprise Y is calling, please press one to accept the transfer or hangup to reject.</Say>
+    </Gather>
+</Response>
+
+Time for consultation, play IVR to C
+end note
+
+note over RC, C: C hears attended transfer info & options but cannot accept the call and hangup
+
+== C rejects transfer, call hangup ==
+C -> RC: BYE[SIP]
+RC -> C: OK[SIP]
+
+RC -> RCMLApp: GET(/dialCompleted)[HTTP]
+RCMLApp -> RC: 200OK(rcml_resume_hangup)[HTTP]
+note over RC, RCMLApp
+<Response>
+    <Resume/>
+    <Say>We are sorry all our agents are busy at this time, please call back later.</Say>
+    <Hangup/>
+</Response>
+end note
+
+RC -> A : RE-INVITE(sdp=<bridgeSDP>)[SIP]
+A -> RC : 200OK(<A_SDP>[SIP]
+RC -> A: ACK[SIP]
+note over A, RC: A is hearing the prompt before RC Hangs up
+
+RC -> A : BYE[SIP]
+A -> RC : 200OK[SIP]
+@enduml
