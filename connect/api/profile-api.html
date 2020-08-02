@@ -24654,15 +24654,18 @@ Example:</p>
 <div class="sect2">
 <h3 id="byoc-subscriber-profile-sms-network-id-considerations"><a class="anchor" href="#byoc-subscriber-profile-sms-network-id-considerations"></a>BYOC Subscriber Profile SMS Network Id considerations</h3>
 <div class="paragraph">
-<p>Since the introduction of self-service BYOC, the SMS Network Id (i.e. destination_network_id) is generated automatically by the server (and stored normally as destination_network_id). Also it has been hidden from the Profile API since customers don&#8217;t really have a use for it and might lead to confusion. Some notes:</p>
+<p>The SMS Network Id (i.e. destination_network_id) is generated automatically by Platform Provisioning and sent to GSS via email. Notice that we avoid storing the generated networkId in the DB and instead store the special <code>999999</code> as destination_network_id to reject any outbound SMS messages (this special networkId is pre-configured in all PoPs). The reason for this is to avoid falling back to Nexmo and incurring charges to the company (as was the case recently) until GSS gets a chance to act on the request (remember SMSC configuration is still manual). Also destination_network_id has been hidden from the Profile API since customers don&#8217;t really have a use for it and might lead to confusion. Some notes:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Subscriber profile APIs invoked by CSP Admin (non-SuperAdmin, to be exact) will hide destination_network_id (if it exists) in all GET results and ignore it if passed in POST/PUT requests (issuing a warning in server logs). An exception is when retrieving a single subscriber profile as SuperAdmin where we show the destination_network_id (if present) for troubleshooting purposes</p>
+<p>Subscriber profile APIs invoked by CSP Admin (non-SuperAdmin, to be exact) will hide destination_network_id (if it exists) in all GET results and <strong>ignore it if passed in POST/PUT requests</strong> (issuing a warning in server logs). An exception is when retrieving a single subscriber profile as SuperAdmin where we show the destination_network_id (if present) for troubleshooting purposes</p>
 </li>
 <li>
-<p>Whenever a new Network Id is automatically generated and updated in db, the full BYOC json document (including updated destination_network_id) is communicated to GSS through the usual email (now triggered through the API to cover customers using API directly)</p>
+<p>Whenever a new Network Id is automatically generated and the special networkId <code>999999</code> is updated in db, the full BYOC json document (including <code>999999</code> as destination_network_id and the generated id as future_network_id) is communicated to GSS through the usual email (now triggered through the API to cover customers using API directly)</p>
+</li>
+<li>
+<p>In case a Network Profile is provisioned with SMS part empty, again the special networkId <code>999999</code> is automatically provisioned to avoid Nexmo fallback.</p>
 </li>
 <li>
 <p>There is still a way (only for internal use) to avoid network id automatic generation and provide it in the request, which is to provide a hidden field in the profile document, <code>internal_network_id</code> (applicable to POST and PUT requests). This is currently used by our migration tool (for migrating BYOC config from multiprovider extension to subscriber profiles) and can also be used by GSS in case they need to avoid automatic generation:</p>
@@ -24723,7 +24726,7 @@ Example:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-07-26 02:16:20 UTC
+Last updated 2020-08-02 12:47:55 UTC
 </div>
 </div>
 <footer >

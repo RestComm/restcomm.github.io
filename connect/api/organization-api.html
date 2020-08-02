@@ -23638,21 +23638,21 @@ Countly.q.push(['report_conversion']);
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">DomainName</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The new DNS hostname that you want to use for the organization.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The new Domain Name that you want to use for the organization.</p></td>
 </tr>
 </tbody>
 </table>
 <div class="exampleblock">
-<div class="title">Example 5. Update organization with organizationSid OR620c0b3da32647658b6da096b3ac3a3b and change its domain to <code>updated-test</code> - Example</div>
+<div class="title">Example 5. Update organization with organizationSid OR620c0b3da32647658b6da096b3ac3a3b and change its domain to <code>new.domain.org</code> - Example</div>
 <div class="content">
 <div class="paragraph">
-<p>curl -X PUT "https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Organizations/OR620c0b3da32647658b6da096b3ac3a3b -H 'Content-Type: application/x-www-form-urlencoded' -d DomainName=updated-test"</p>
+<p>curl -X PUT "https://&lt;accountSid&gt;:&lt;authToken&gt;@cloud.restcomm.com/restcomm/2012-04-24/Organizations/OR620c0b3da32647658b6da096b3ac3a3b -H 'Content-Type: application/x-www-form-urlencoded' -d DomainName=new.domain.org"</p>
 </div>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;Organization&gt;
   &lt;Sid&gt;OR620c0b3da32647658b6da096b3ac3a3b&lt;/Sid&gt;
-  &lt;DomainName&gt;updated-test&lt;/DomainName&gt;
+  &lt;DomainName&gt;new.domain.org&lt;/DomainName&gt;
   &lt;Status&gt;active&lt;/Status&gt;
   &lt;DateCreated&gt;Thu, 28 Sep 2017 16:11:39 +0000&lt;/DateCreated&gt;
   &lt;DateUpdated&gt;Thu, 28 Sep 2017 16:11:39 +0000&lt;/DateUpdated&gt;
@@ -23841,7 +23841,7 @@ At this moment, the target algorithm is hardcoded to MD5.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-07-26 02:16:20 UTC
+Last updated 2020-08-02 12:47:55 UTC
 </div>
 </div>
 <footer >
