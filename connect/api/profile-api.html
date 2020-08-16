@@ -24669,6 +24669,10 @@ Example:</p>
 </li>
 <li>
 <p>There is still a way (only for internal use) to avoid network id automatic generation and provide it in the request, which is to provide a hidden field in the profile document, <code>internal_network_id</code> (applicable to POST and PUT requests). This is currently used by our migration tool (for migrating BYOC config from multiprovider extension to subscriber profiles) and can also be used by GSS in case they need to avoid automatic generation:</p>
+</li>
+</ul>
+</div>
+<hr>
 <div class="literalblock">
 <div class="content">
 <pre>    {
@@ -24686,11 +24690,148 @@ Example:</p>
             ]
         }
     }
--</pre>
+---</pre>
 </div>
 </div>
-</li>
-</ul>
+<div class="sect3">
+<h4 id="routing-of-outbound-messages"><a class="anchor" href="#routing-of-outbound-messages"></a>Routing of outbound messages</h4>
+<div class="paragraph">
+<p>The default processing (when we have no profiles) is: if we have an SMPP connection (that is true now for all pops) then all PSTN messages will be routed to the SMPP connection and all SIP messages will be sent to a SIP network.
+We may want to change this behavior for Accounts(s) / Organization when we want to send messages for sms-outbound to a dedicated server/gateway by SIP protocol and this server/gateway will resend messages with a proper protocol to a needed destination.</p>
+</div>
+<div class="paragraph">
+<p>For applying of this behavior we need to provide a special subsection "channelsRoutingMap" into a section "platformSessionControl". Routing is applied per a protocol scheme. We use "tel" prefix for pstn directioned messages and "sip" for sip directioned messages.
+We may have other protocols for routing when we have implemented them. Important is adding of "bypasslb=true" for we will send messages directly into SMSC GW without a LB. We can use an IP address of SMSC GW like "10.0.0.146" but better to use a domain that is associated with a SMSC GW.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<hr>
+<div class="paragraph">
+<p>{
+  "featureEnablement": {
+     &#8230;&#8203;&#8230;&#8203;&#8230;&#8203;&#8230;&#8203;..
+  },
+  "platformSessionControl" : {
+    "channelsRoutingMap": {
+      "tel": "sip:10.0.0.146:5060;transport=tcp;bypasslb=true"
+    }
+  }
+}
+---</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="mapping-of-billing-headers-in-a-subscriber-profile"><a class="anchor" href="#mapping-of-billing-headers-in-a-subscriber-profile"></a>Mapping of billing headers in a Subscriber profile</h4>
+<div class="paragraph">
+<p>The billing headers are sent in SIP INVITE / MESSAGE requests and responses as SIP custom headers and are sent in SMPP messages as TLV fields.
+"P-Asserted-Service" header is used for identifying which service is originating the traffic (RVD vs 2FA vs NM vs AA) for Charging/billing purposes. Extra headers can be assigned per an Enterprise account.
+There is a functionality for renaming of headers names by adding of a "headerTranslationMap" into a Subscribe profile. Applying of the "headerTranslationMap" occurs just before of sending SIP requests and responses and outgoing SMPP messages.
+This can be specified by voice and messages separately.</p>
+</div>
+<div class="paragraph">
+<p>An example for a voice:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>{"multiProvider": {
+  "outbound-voice":[
+    {
+      "proxy":[
+        {
+          "uri": "replacement1.com",
+          "username": "user1",
+          "password": "pass1",
+          "headerTranslationMap": {
+            "P-Asserted-Service": "X-SomeCustomHeader"
+          },
+        },
+      ]
+    }
+  ]
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>An example for messaging:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>{"multiProvider": {
+  "outbound-sms": [
+    {
+      "destination_network_id":"101",
+      "headerTranslationMap": {
+        "P-Asserted-Service":"X-TLV-COCTET-3000", "X-MSIDN":"X-TLV-COCTET-3001"
+      }
+    }
+  ]
+}}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After applying of this headerTranslationMap "P-Asserted-Service" will be replaced into "X-SomeCustomHeader" for voice and "X-TLV-COCTET-3000" for messaging (if it is a SIP message that reaches to a customer).</p>
+</div>
+<div class="paragraph">
+<p>Translated headers with names starting with "X-TLV-" have a special meaning. Headers with such names will be converted into SMPP TLVs before of sending by SMPP protocol.
+The name contains data in a following format: "X-TLV-&lt;TLV type&gt;-&lt;TLV tag (a decimal value)&gt;". A below table contains a list of possible TLV types.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TLV type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name Example</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value example</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1BYTE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A digital 1-byte value (0..255)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X-TLV-1BYTE-3001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">150</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2BYTE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A digital 2-bytes value (-32768..32767)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X-TLV-2BYTE-3002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-1001</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4BYTE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A digital 4-bytes value (-2147483648..2147483647 )</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X-TLV-4BYTE-3003</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2147483</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">COCTET</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A string value (ASCII only available)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X-TLV-COCTET-3004</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Some text</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OCTET</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A binary value byte per byte hex encoded</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X-TLV-OCTET-3005</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0199FEAB3A5B</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -24726,7 +24867,7 @@ Example:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-08-09 12:48:03 UTC
+Last updated 2020-08-16 12:48:10 UTC
 </div>
 </div>
 <footer >
