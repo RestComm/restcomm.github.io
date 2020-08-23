@@ -24189,7 +24189,7 @@ echo $json_response;
 <p>In Continue to you can set next module to which you want the application to proceed. In this application there isn&#8217;t continue to module.</p>
 </li>
 <li>
-<p>Status callback takes a URL as an argument. When the SMS message is actually sent, or if sending fails, RestComm will make an asynchronous POST request to this URL with the parameters ‘SmsStatus’ and ‘SmsSid’. Note, ‘statusCallback’ always uses HTTP POST to request the given url. You can leave the field blank if you don’t need it.</p>
+<p>Status callback takes a URL as an argument. When the SMS message is actually sent, or if sending fails, RestComm will make an asynchronous POST request to this URL with the parameters ‘MessageStatus’ and ‘MessageSid’. Note, ‘statusCallback’ always uses HTTP POST to request the given url. You can leave the field blank if you don’t need it.</p>
 </li>
 </ul>
 </div>
@@ -24560,7 +24560,7 @@ while($row = mysqli_fetch_array($result)) {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-08-16 12:48:11 UTC
+Last updated 2020-08-23 12:48:15 UTC
 </div>
 </div>
 <footer >

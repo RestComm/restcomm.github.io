@@ -23348,6 +23348,8 @@ Countly.q.push(['report_conversion']);
 <li><a href="#sms">SMS</a>
 <ul class="sectlevel2">
 <li><a href="#sms-attributes">Sms Attributes</a></li>
+<li><a href="#statuscallback">statusCallback</a></li>
+<li><a href="#statuscallbackmethod">statusCallbackMethod</a></li>
 <li><a href="#nesting">Nesting</a></li>
 <li><a href="#examples">Examples</a></li>
 </ul>
@@ -23398,6 +23400,16 @@ Countly.q.push(['report_conversion']);
 <td class="tableblock halign-left valign-top"><p class="tableblock">GET, POST</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">POST</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">statusCallback</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">any url</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">none</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">statusCallbackMethod</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET</code>, <code>POST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST</code></p></td>
+</tr>
 </tbody>
 </table>
 <div class="sect3">
@@ -23415,7 +23427,7 @@ Countly.q.push(['report_conversion']);
 <div class="sect3">
 <h4 id="action"><a class="anchor" href="#action"></a>action</h4>
 <div class="paragraph">
-<p>The 'action' attribute takes a URL as an argument. After processing the &lt;Sms&gt; verb, RestComm will make a GET or POST request to this URL with the form parameters 'SmsStatus' and 'SmsSid'. Using an 'action' URL, your application can receive synchronous notification that the message was successfully enqueued or not.</p>
+<p>The 'action' attribute takes a URL as an argument. After processing the &lt;Sms&gt; verb, RestComm will make a GET or POST request to this URL with the form parameters 'MessageStatus' and 'MessageSid'. Using an 'action' URL, your application can receive synchronous notification that the message was successfully enqueued or not.</p>
 </div>
 <div class="paragraph">
 <p>If you provide an 'action' URL, RestComm will use the RCML received in your response to the 'action' URL request to continue the current call. Any RCML verbs occuring after an &lt;Sms&gt; which specifies an 'action' attribute are unreachable. If no 'action' is provided, &lt;Sms&gt; will finish and RestComm will move on to the next RCML verb in the document. If there is no next verb, RestComm will end the phone call.</p>
@@ -23441,19 +23453,117 @@ Countly.q.push(['report_conversion']);
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SmsSid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MessageSid</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The Sid for the Sms message.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SmsStatus</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MessageStatus</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The current status of the Sms message. Currently the status will be <code>Queued</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="statuscallback"><a class="anchor" href="#statuscallback"></a>statusCallback</h3>
+<div class="paragraph">
+<p>The <strong>statusCallback</strong> attribute allows you to specify a URL for wlparam:replace[textMode="sps",parmText="application_name",text="CPaaS",defaultText="$INFER_FROM_DOMAIN"] to send webhook requests to on each event of message delivery (triggered for status callbacks).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="statuscallbackmethod"><a class="anchor" href="#statuscallbackmethod"></a>statusCallbackMethod</h3>
+<div class="paragraph">
+<p>The <strong>statusCallbackMethod</strong> attribute lets you specify which HTTP method wlparam:replace[textMode="sps",parmText="application_name",text="CPaaS",defaultText="$INFER_FROM_DOMAIN"] should use when requesting the URL in the statusCallback attribute. The default is POST.</p>
+</div>
+<div class="sect3">
+<h4 id="events-for-the-strong-statuscallback-strong"><a class="anchor" href="#events-for-the-strong-statuscallback-strong"></a>Events for the <strong>statusCallback</strong></h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Event</th>
+<th class="tableblock halign-left valign-top">Possible statuses</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sent</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sent</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">completed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">failed, delivered, undelivered</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="statuscallback-parameters"><a class="anchor" href="#statuscallback-parameters"></a>StatusCallback Parameters</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example value</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MessageSid</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Sid for the SMS message</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMc5b1b09cf2b14ffe985461c3587f4c38</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MessageStatus</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Last known status of this message</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">delivered</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">From</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">From address of a message (message sender)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8888001</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">To</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">To address of a message (message receiver)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8888002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Body</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Message body</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hello world</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AccountSid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RC Account</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ACa272717421604a9d924a5837aa23711b</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ErrorCode</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Error code if any, this parameter is optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30001</p></td>
 </tr>
 </tbody>
 </table>
 <div class="literalblock">
 <div class="content">
 <pre> </pre>
-</div>
 </div>
 </div>
 </div>
@@ -23467,12 +23577,22 @@ Countly.q.push(['report_conversion']);
 <div class="sect2">
 <h3 id="examples"><a class="anchor" href="#examples"></a>Examples</h3>
 <div class="paragraph">
-<p>For an example of how to use the &lt;Sms&gt; verb see below.</p>
+<p>Below is a simple example of how you can use the &lt;Sms&gt; verb.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>&lt;Response&gt;
     &lt;Sms&gt;Hello World!&lt;/Sms&gt;
+&lt;/Response&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next example is for how you can use From, To and statusCallback.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;Response&gt;
+    &lt;Sms from="8888001" to="8888002" statusCallback="http://status.callback.url" statusCallbackMethod="POST"&gt;Hello World !!!&lt;/Sms&gt;
 &lt;/Response&gt;</pre>
 </div>
 </div>
@@ -23482,7 +23602,7 @@ Countly.q.push(['report_conversion']);
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-08-16 12:48:11 UTC
+Last updated 2020-08-23 12:48:15 UTC
 </div>
 </div>
 <footer >
