@@ -24722,6 +24722,33 @@ We may have other protocols for routing when we have implemented them. Important
 </div>
 </div>
 <div class="sect3">
+<h4 id="changing-outgoingcallerids-empty-mode-behavior"><a class="anchor" href="#changing-outgoingcallerids-empty-mode-behavior"></a>Changing OutgoingCallerIds empty mode behavior</h4>
+<div class="paragraph">
+<p>By default when no OutgoingCallerIds are provisioned, any outbound session is allowed. If a subscribers wants to block any call
+where From is not in OutgoingCallerIds, a platform profile attribute is available. If value is set to "BLOCK", all sessions will be
+blocked. The default value for this atrbiute is "ALLOW" to ensure backwards compatibility.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<hr>
+<div class="paragraph">
+<p>{
+  "featureEnablement": {
+     &#8230;&#8203;&#8230;&#8203;&#8230;&#8203;&#8230;&#8203;..
+  },
+  "platformSessionControl" : {
+    "fromWhitelistEmptyMode": "BLOCK"</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>  }
+}
+---</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
 <h4 id="mapping-of-billing-headers-in-a-subscriber-profile"><a class="anchor" href="#mapping-of-billing-headers-in-a-subscriber-profile"></a>Mapping of billing headers in a Subscriber profile</h4>
 <div class="paragraph">
 <p>The billing headers are sent in SIP INVITE / MESSAGE requests and responses as SIP custom headers and are sent in SMPP messages as TLV fields.
@@ -24867,7 +24894,7 @@ The name contains data in a following format: "X-TLV-&lt;TLV type&gt;-&lt;TLV ta
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-08-30 12:48:08 UTC
+Last updated 2020-09-06 12:47:58 UTC
 </div>
 </div>
 <footer >
