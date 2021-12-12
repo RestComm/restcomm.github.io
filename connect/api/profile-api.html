@@ -23414,7 +23414,7 @@ Countly.q.push(['report_conversion']);
 <h2 id="Profiles"><a class="anchor" href="#Profiles"></a>Profiles</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Profiles allow to associate behavior configuration to specific Accounts or Organizations. Once a Profile is associated with such Entity, the next session (USSD/Voice/SMS) attempt related to that Entity will use the Profile configuration to tweak the service logic behavior.</p>
+<p>Profiles allow to associate behavior configuration to specific Accounts or Organizations. Once a Profile is associated with such Entity, that Entity will adopt the Profile configuration (depending on the profile type there will be different effects for different components)</p>
 </div>
 <div class="paragraph">
 <p>The Profiles API allow different types of Profile to be provisioned:</p>
@@ -23427,13 +23427,16 @@ Countly.q.push(['report_conversion']);
 <li>
 <p>Subscriber profile is managed by the CSP administrator and is used for configuring behaviour like call &amp; SMS routing with Bring Your Own Carrier (BYOC) and Media Session Control.</p>
 </li>
+<li>
+<p>Management profile is managed by the SuperAdmin and CSP administrator and allows Communications Providers to control access to specific features and applications for each Sub Accountl.</p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
-<p>The different kind of profiles are denoted by Content-Type header by setting proper schema parameter. Where "rc-profile-schema.json" is for Platform profile, and "rc-subscriber-schema.json" is for Subscriber profile.</p>
+<p>The different kind of profiles are denoted by Content-Type header by setting proper schema parameter. Where "rc-profile-schema.json" is for Platform profile, "rc-subscriber-schema.json" is for Subscriber profile, and "rc-management-schema.json" is for Subscriber profile</p>
 </div>
 <div class="paragraph">
-<p>During session creation the service logic will try to find the associated Platform/Subscriber Profile based on this criteria, until a Profile is found:</p>
+<p>During applicable processing the associated/effective Platform/Subscriber/Management Profile will be found based on this criteria, until a Profile is found:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -23441,7 +23444,7 @@ Countly.q.push(['report_conversion']);
 <p>Profile associated to triggering Account</p>
 </li>
 <li>
-<p>Profile associated to parent Account (only for Platform Profiles, not applicable to Subscriber Profiles)</p>
+<p>Profile associated to parent Account (only for Platform Profiles, not applicable to Subscriber and Management Profiles)</p>
 </li>
 <li>
 <p>Profile associated to related Organization</p>
@@ -23452,7 +23455,7 @@ Countly.q.push(['report_conversion']);
 </ol>
 </div>
 <div class="paragraph">
-<p>This also means that Accounts and Organizations are always effectively associated with one Platform and one Subscriber Profile even if we haven&#8217;t set one for them explicitly. Typically those are the Default ones until we override those by configuring more suitable ones that take effect through the 'inheritance' process described above.</p>
+<p>This also means that Accounts and Organizations are always effectively associated with one Platform, one Subscriber and one Management Profile even if we haven&#8217;t set one for them explicitly. Typically, those are the Default ones until we override those by configuring more suitable ones that take effect through the 'inheritance' process described above.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -23461,7 +23464,7 @@ Countly.q.push(['report_conversion']);
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-You can check which Platform and Subscriber Profiles Accounts and Organizations are associated with by retrieving them through their respective API Endpoints and inspecting the <code>Link</code> Response Headers.
+You can check which Platform, Subscriber and Management Profiles, Accounts and Organizations are associated with by retrieving them through their respective API Endpoints and inspecting the <code>Link</code> Response Headers.
 </td>
 </tr>
 </table>
@@ -23477,6 +23480,9 @@ You can check which Platform and Subscriber Profiles Accounts and Organizations 
 <li>
 <p>For Subscriber profile, the Profiles REST API is only accessible by CSP administrator account. Where the created Profiles will only be accessible by the corresponding CSP account.</p>
 </li>
+<li>
+<p>For Management profile, the Profiles REST API is only accessible by SuperAdmin and CSP administrator credentials. With the exception of reading the associated Profile, where all Roles are allowed if the queried profile is associated with the requesting Account credentials</p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -23489,6 +23495,9 @@ You can check which Platform and Subscriber Profiles Accounts and Organizations 
 </li>
 <li>
 <p>The Default Subscriber Profile is pre-provisioned in the system, and can&#8217;t be modified from the REST API. The Default Subscriber Profile Sid is "PR2a61d1839442571eb2eb88262064d1f9"</p>
+</li>
+<li>
+<p>The Default Management Profile is pre-provisioned in the system, and can&#8217;t be modified from the REST API. The Default Management Profile Sid is "PR90ec08939663ff0e97a310643c62db18"</p>
 </li>
 </ul>
 </div>
@@ -23526,6 +23535,9 @@ You can check which Platform and Subscriber Profiles Accounts and Organizations 
 <li>
 <p>Subscriber Profile: <code>application/instance+json;schema="&lt;ENDPOINT&gt;/restcomm/2012-04-24/Profiles/schemas/rc-subscriber-schema.json"</code>.</p>
 </li>
+<li>
+<p>Management Profile: <code>application/instance+json;schema="&lt;ENDPOINT&gt;/restcomm/2012-04-24/Profiles/schemas/rc-management-schema.json"</code>.</p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -23546,6 +23558,9 @@ You can check which Platform and Subscriber Profiles Accounts and Organizations 
 </div>
 <div class="paragraph">
 <p>Subscriber Profiles can only be created by CSP Administrators (i.e. Administrators that have SuperAdmin as parent)</p>
+</div>
+<div class="paragraph">
+<p>Management Profiles can only be created by SuperAdmin and CSP Administrators</p>
 </div>
 </td>
 </tr>
@@ -23668,10 +23683,16 @@ You can check which Platform and Subscriber Profiles Accounts and Organizations 
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Platform Profiles can only be updated by SuperAdmin, except Default Platform Profile (i.e PRae6e420f425248d6a26948c17a9e2acf) that cannot be updated by anyone.</p>
+<p>Platform Profiles can only be updated (both for document updates and link/unlink updates) by SuperAdmin, except Default Platform Profile (i.e PRae6e420f425248d6a26948c17a9e2acf) that cannot be updated by anyone</p>
 </div>
 <div class="paragraph">
-<p>Subscriber Profiles can only be modified by the CSP Administrators that created them except the Default Subscriber Profile (i.e. PR2a61d1839442571eb2eb88262064d1f9) that cannot be updated by anyone. Moreover, (since Platform Provisioning 1.6.1) specially for LINK/UNLINK Profile actions to <code>main</code> organization only SuperAdmin is allowed to perform them</p>
+<p>Subscriber and Management Profiles can only be updated (this only applies to document updates, not link/unlink updates) by SuperAdmin and the CSP Administrators that created them except the Default Subscriber and Management Profile (i.e. PR2a61d1839442571eb2eb88262064d1f9 and PR90ec08939663ff0e97a310643c62db18) that cannot be updated by anyone.</p>
+</div>
+<div class="paragraph">
+<p>Subscriber Profiles can be linked by CSPs to themselves, their children BCs or their Organization. For LINK/UNLINK Profile actions to <code>main</code> organization only SuperAdmin is allowed to perform them.</p>
+</div>
+<div class="paragraph">
+<p>Management Profiles can be linked by SuperAdmin to CSPs' Organizations, and by CSPs to their children BCs.</p>
 </div>
 </td>
 </tr>
@@ -23887,10 +23908,10 @@ When Amazon API GW is being used <code>X-HTTP-Method-Override</code> header as a
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Platform Profiles can only be read by SuperAdmin, or by any account <strong>that has that Profile as effective Platform Profile</strong>.</p>
+<p>Platform Profiles can only be listed by SuperAdmin.</p>
 </div>
 <div class="paragraph">
-<p>Subscriber Profiles can be read by SuperAdmin and CSP Administrators that created them.</p>
+<p>Subscriber and Management Profiles can be listed by SuperAdmin and CSP Administrators that created them.</p>
 </div>
 </td>
 </tr>
@@ -24028,6 +24049,26 @@ When Amazon API GW is being used <code>X-HTTP-Method-Override</code> header as a
 </div>
 <div class="paragraph">
 <p>Returns the representation of a Profile resource. All roles are allowed.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Platform Profiles can only be read by SuperAdmin, or by any account <strong>that has that Profile as effective Platform Profile</strong>.</p>
+</div>
+<div class="paragraph">
+<p>Subscriber Profiles can be read by the CP Administrator who created them</p>
+</div>
+<div class="paragraph">
+<p>Management Profiles can be read by any account <strong>that has that Profile as effective Management Profile</strong>. Other than that, SuperAdmin can read any profile, and CPs can read Profiles they own</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="sect3">
 <h4 id="query-parameters"><a class="anchor" href="#query-parameters"></a>Query Parameters</h4>
@@ -24268,7 +24309,7 @@ Link: &lt;https://cloud.restcomm.com/restcomm/2012-04-24/Accounts/AC75a537c3dcc7
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Profile Relationships are only readable by the account that created the Profile (since Platform Provisioning 1.6.1, previously needed same rights as the owning Profile)</p>
+<p>Access to reading a Profile’s relationships is subject to the same rules as when reading the Profile itself</p>
 </div>
 </td>
 </tr>
@@ -24406,7 +24447,7 @@ Link: &lt;https://cloud.restcomm.com/restcomm/2012-04-24/Accounts/AC75a537c3dcc7
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Specific Profile relationship is only readable by the account that created it (since Platform Provisioning 1.6.1, previously needed same rights as the owning Profile)</p>
+<p>Access to reading a Profile’s relationships is subject to the same rules as when reading the Profile itself</p>
 </div>
 </td>
 </tr>
@@ -24497,7 +24538,7 @@ Link: &lt;https://cloud.restcomm.com/restcomm/2012-04-24/Accounts/AC75a537c3dcc7
 <p>Platform Profiles can only be deleted by SuperAdmin, except Default Platform Profile (i.e PRae6e420f425248d6a26948c17a9e2acf) that cannot be deleted by anyone.</p>
 </div>
 <div class="paragraph">
-<p>Subscriber Profiles can only be deleted by the CSP Administrators that created them except the Default Subscriber Profile (i.e. PR2a61d1839442571eb2eb88262064d1f9) that cannot be deleted by anyone</p>
+<p>Subscriber and Management Profiles can only be deleted by the CSP Administrators that created them except the Default Subscriber and Management Profile (i.e. PR2a61d1839442571eb2eb88262064d1f9 and PR90ec08939663ff0e97a310643c62db18) that cannot be deleted by anyone</p>
 </div>
 </td>
 </tr>
@@ -24894,7 +24935,7 @@ The name contains data in a following format: "X-TLV-&lt;TLV type&gt;-&lt;TLV ta
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-12-05 12:48:17 UTC
+Last updated 2021-12-12 12:48:26 UTC
 </div>
 </div>
 <footer >
